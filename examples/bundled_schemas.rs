@@ -7,10 +7,10 @@
 //!
 //! ```bash
 //! # Without bundled schemas (demonstrates fallback)
-//! cargo run -p command-schema-db --example bundled_schemas
+//! cargo run -p command-schema-examples --example bundled_schemas
 //!
 //! # With bundled schemas (requires schemas in schemas/database/)
-//! cargo run -p command-schema-db --features bundled-schemas --example bundled_schemas
+//! cargo run -p command-schema-examples --features bundled-schemas --example bundled_schemas
 //! ```
 //!
 //! In production, `build.rs` compresses schema JSON files from
@@ -42,7 +42,7 @@ fn main() {
     #[cfg(not(feature = "bundled-schemas"))]
     {
         println!("=== Bundled schemas feature not enabled ===");
-        println!("Run with: cargo run -p command-schema-db --features bundled-schemas --example bundled_schemas");
+        println!("Run with: cargo run -p command-schema-examples --features bundled-schemas --example bundled_schemas");
         println!();
     }
 

@@ -7,7 +7,7 @@
 //! # Usage
 //!
 //! ```bash
-//! cargo run -p command-schema-db --example load_static_db
+//! cargo run -p command-schema-examples --example load_static_db
 //! ```
 //!
 //! This example creates temporary schema files to demonstrate the API.

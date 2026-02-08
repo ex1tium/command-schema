@@ -25,7 +25,7 @@
 //! # Usage
 //!
 //! ```bash
-//! cargo run -p command-schema-sqlite --example wrashpty_integration
+//! cargo run -p command-schema-examples --example wrashpty_integration
 //! ```
 
 use std::collections::HashMap;

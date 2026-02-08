@@ -6,7 +6,7 @@
 //! # Usage
 //!
 //! ```bash
-//! cargo run -p command-schema-discovery --example parse_help
+//! cargo run -p command-schema-examples --example parse_help
 //! ```
 
 use command_schema_discovery::parse_help_text;

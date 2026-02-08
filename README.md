@@ -118,22 +118,23 @@ The SQLite backend provides normalized storage with 8 tables covering commands, 
 
 ## Examples
 
-Working examples are available in each crate's `examples/` directory:
+Working examples are available in the [`examples/`](examples/) directory:
 
-| Example | Crate | Description |
-|---------|-------|-------------|
-| [`parse_help`](discovery/examples/parse_help.rs) | discovery | Basic help text parsing |
-| [`load_static_db`](db/examples/load_static_db.rs) | db | Directory loading and O(1) lookups |
-| [`bundled_schemas`](db/examples/bundled_schemas.rs) | db | Compile-time embedded schemas |
-| [`sqlite_migration`](sqlite/examples/sqlite_migration.rs) | sqlite | Complete SQLite lifecycle |
-| [`wrashpty_integration`](sqlite/examples/wrashpty_integration.rs) | sqlite | Two-tier architecture (HashMap + SQLite) |
+| Example | Description |
+|---------|-------------|
+| [`parse_help`](examples/parse_help.rs) | Basic help text parsing |
+| [`load_static_db`](examples/load_static_db.rs) | Directory loading and O(1) lookups |
+| [`bundled_schemas`](examples/bundled_schemas.rs) | Compile-time embedded schemas |
+| [`sqlite_migration`](examples/sqlite_migration.rs) | Complete SQLite lifecycle |
+| [`wrashpty_integration`](examples/wrashpty_integration.rs) | Two-tier architecture (HashMap + SQLite) |
 
 Run an example:
 
 ```bash
-cargo run -p command-schema-discovery --example parse_help
-cargo run -p command-schema-db --example load_static_db
-cargo run -p command-schema-sqlite --example sqlite_migration
+cargo run -p command-schema-examples --example parse_help
+cargo run -p command-schema-examples --example load_static_db
+cargo run -p command-schema-examples --example sqlite_migration
+cargo run -p command-schema-examples --example wrashpty_integration
 ```
 
 ## Performance

@@ -6,7 +6,7 @@
 //! # Usage
 //!
 //! ```bash
-//! cargo run -p command-schema-sqlite --example sqlite_migration
+//! cargo run -p command-schema-examples --example sqlite_migration
 //! ```
 
 use std::io::Write;
