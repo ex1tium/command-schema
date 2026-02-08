@@ -8,17 +8,27 @@ pub mod usage;
 use super::ast::{ArgCandidate, FlagCandidate, SubcommandCandidate};
 use super::{FormatScore, HelpParser, IndexedLine};
 
+/// Pluggable strategy for extracting CLI schema candidates from help output.
+///
+/// Each strategy targets a different help-output structure (section-based,
+/// GNU-style, npm-style, usage-line). Strategies are run in priority order
+/// determined by [`ranked_strategy_names`].
 pub trait ParserStrategy {
     fn name(&self) -> &'static str;
-    fn parse_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate>;
-    fn parse_subcommands(
+    fn collect_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate>;
+    fn collect_subcommands(
         &self,
         parser: &HelpParser,
         lines: &[IndexedLine],
     ) -> Vec<SubcommandCandidate>;
-    fn parse_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate>;
+    fn collect_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate>;
 }
 
+/// Returns strategy names in priority order based on format classification scores.
+///
+/// "section" always runs first (highest confidence from explicit section headers),
+/// "npm" is added when the top format is Cobra-style, then "gnu" and "usage"
+/// provide fallback coverage for unstructured output.
 pub fn ranked_strategy_names(format_scores: &[FormatScore]) -> Vec<&'static str> {
     let mut names = vec!["section"]; // always run explicit sections first
 

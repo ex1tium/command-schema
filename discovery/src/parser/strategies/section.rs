@@ -11,7 +11,7 @@ impl ParserStrategy for SectionStrategy {
         "section"
     }
 
-    fn parse_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
+    fn collect_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
         let sections = parser.identify_sections(lines);
         let mut out = Vec::new();
 
@@ -57,7 +57,7 @@ impl ParserStrategy for SectionStrategy {
         out
     }
 
-    fn parse_subcommands(
+    fn collect_subcommands(
         &self,
         parser: &HelpParser,
         lines: &[IndexedLine],
@@ -123,7 +123,7 @@ impl ParserStrategy for SectionStrategy {
         out
     }
 
-    fn parse_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate> {
+    fn collect_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate> {
         let sections = parser.identify_sections(lines);
         let mut out = Vec::new();
         if sections.arguments.is_empty() {

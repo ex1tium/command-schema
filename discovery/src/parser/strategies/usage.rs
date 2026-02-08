@@ -4,6 +4,7 @@ use super::ParserStrategy;
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
 use crate::parser::{HelpParser, IndexedLine};
 
+/// Parser strategy for extracting flags and positional arguments from usage/synopsis lines.
 pub struct UsageStrategy;
 
 impl ParserStrategy for UsageStrategy {
@@ -11,7 +12,7 @@ impl ParserStrategy for UsageStrategy {
         "usage"
     }
 
-    fn parse_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
+    fn collect_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
         let (parsed, recognized) = parser.parse_usage_compact_flags(lines);
         let spans = recognized
             .into_iter()
@@ -28,7 +29,7 @@ impl ParserStrategy for UsageStrategy {
             .collect()
     }
 
-    fn parse_subcommands(
+    fn collect_subcommands(
         &self,
         _parser: &HelpParser,
         _lines: &[IndexedLine],
@@ -36,7 +37,7 @@ impl ParserStrategy for UsageStrategy {
         Vec::new()
     }
 
-    fn parse_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate> {
+    fn collect_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate> {
         let (parsed, recognized) = parser.parse_usage_positionals(lines, false);
         let spans = recognized
             .into_iter()

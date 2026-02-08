@@ -1,3 +1,24 @@
+//! Schema and package validation.
+//!
+//! Validates structural invariants of command schemas and schema packages,
+//! catching errors such as duplicate flags, invalid flag formats, subcommand
+//! cycles, and empty names before they cause downstream issues.
+//!
+//! # Examples
+//!
+//! ```
+//! use command_schema_core::*;
+//!
+//! let mut schema = CommandSchema::new("git", SchemaSource::Bootstrap);
+//! schema.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
+//! assert!(validate_schema(&schema).is_empty());
+//!
+//! // Invalid: short flag missing leading dash
+//! let mut bad = CommandSchema::new("git", SchemaSource::Bootstrap);
+//! bad.global_flags.push(FlagSchema::boolean(Some("v"), Some("--verbose")));
+//! assert!(!validate_schema(&bad).is_empty());
+//! ```
+
 use std::collections::HashSet;
 
 use thiserror::Error;
@@ -5,29 +26,59 @@ use thiserror::Error;
 use crate::{CommandSchema, FlagSchema, SchemaPackage, SubcommandSchema};
 
 /// Schema/package validation errors.
+///
+/// Each variant describes a specific structural problem found during
+/// validation. The `Display` impl provides a human-readable message.
 #[derive(Debug, Clone, PartialEq, Eq, Error)]
 pub enum ValidationError {
+    /// Package version string is empty.
     #[error("package version cannot be empty")]
     EmptyPackageVersion,
+    /// Command name is empty or whitespace-only.
     #[error("schema command cannot be empty")]
     EmptyCommandName,
+    /// Two schemas in the same package share a command name.
     #[error("duplicate command in package: {0}")]
     DuplicateCommand(String),
+    /// Short flag does not start with a single dash (e.g., `"v"` instead of `"-v"`).
     #[error("invalid short flag format: {0}")]
     InvalidShortFlag(String),
+    /// Long flag does not start with `--` or is too short.
     #[error("invalid long flag format: {0}")]
     InvalidLongFlag(String),
+    /// A flag has neither short nor long form.
     #[error("flag must define short or long form")]
     MissingFlagName,
+    /// Two flags in the same scope share the same name.
     #[error("duplicate flag in scope: {0}")]
     DuplicateFlag(String),
+    /// Two subcommands in the same scope share the same name.
     #[error("duplicate subcommand in scope: {0}")]
     DuplicateSubcommand(String),
+    /// A subcommand path creates a cycle (e.g., `git remote git`).
     #[error("subcommand cycle detected at path: {0}")]
     SubcommandCycle(String),
 }
 
 /// Validates a full schema package.
+///
+/// Checks for an empty version string, duplicate command names, and
+/// validates each schema individually.
+///
+/// # Examples
+///
+/// ```
+/// use command_schema_core::*;
+///
+/// let mut package = SchemaPackage::new("1.0.0", "2024-01-01T00:00:00Z");
+/// package.schemas.push(CommandSchema::new("git", SchemaSource::Bootstrap));
+/// assert!(validate_package(&package).is_empty());
+///
+/// // Duplicate command → error
+/// package.schemas.push(CommandSchema::new("git", SchemaSource::Bootstrap));
+/// let errors = validate_package(&package);
+/// assert!(errors.iter().any(|e| matches!(e, ValidationError::DuplicateCommand(_))));
+/// ```
 pub fn validate_package(package: &SchemaPackage) -> Vec<ValidationError> {
     let mut errors = Vec::new();
 
@@ -53,6 +104,28 @@ pub fn validate_package(package: &SchemaPackage) -> Vec<ValidationError> {
 }
 
 /// Validates a command schema.
+///
+/// Checks for empty command names, invalid flag formats, duplicate flags,
+/// duplicate subcommands, and subcommand cycles.
+///
+/// # Examples
+///
+/// ```
+/// use command_schema_core::*;
+///
+/// let mut schema = CommandSchema::new("git", SchemaSource::Bootstrap);
+/// schema.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
+/// schema.subcommands.push(SubcommandSchema::new("commit"));
+/// assert!(validate_schema(&schema).is_empty());
+///
+/// // Subcommand cycle: git → remote → git
+/// let mut schema = CommandSchema::new("git", SchemaSource::Bootstrap);
+/// let mut remote = SubcommandSchema::new("remote");
+/// remote.subcommands.push(SubcommandSchema::new("git"));
+/// schema.subcommands.push(remote);
+/// let errors = validate_schema(&schema);
+/// assert!(errors.iter().any(|e| matches!(e, ValidationError::SubcommandCycle(_))));
+/// ```
 pub fn validate_schema(schema: &CommandSchema) -> Vec<ValidationError> {
     let mut errors = Vec::new();
 

@@ -9,6 +9,9 @@ use super::confidence::{score_arg_candidate, score_flag_candidate, score_subcomm
 
 pub use super::confidence::{HIGH_CONFIDENCE_THRESHOLD, MEDIUM_CONFIDENCE_THRESHOLD};
 
+/// Groups candidates by acceptance tier after confidence scoring.
+/// `accepted` holds schema-ready items, `medium_confidence` holds borderline
+/// candidates, and `discarded` holds items below the minimum threshold.
 #[derive(Debug, Clone)]
 pub struct GateResult<T, C> {
     pub accepted: Vec<T>,
@@ -48,6 +51,8 @@ where
     (best, medium, discarded)
 }
 
+/// Merges grouped `FlagCandidate`s by canonical key, scores each group,
+/// and partitions into accepted/medium/discarded tiers based on `threshold`.
 pub fn merge_flag_candidates(
     candidates: Vec<FlagCandidate>,
     threshold: f64,
@@ -89,6 +94,8 @@ pub fn merge_flag_candidates(
     }
 }
 
+/// Merges grouped `SubcommandCandidate`s by canonical key, scores each group,
+/// and partitions into accepted/medium/discarded tiers based on `threshold`.
 pub fn merge_subcommand_candidates(
     candidates: Vec<SubcommandCandidate>,
     threshold: f64,
@@ -130,6 +137,8 @@ pub fn merge_subcommand_candidates(
     }
 }
 
+/// Merges grouped `ArgCandidate`s by canonical key, scores each group,
+/// and partitions into accepted/medium/discarded tiers based on `threshold`.
 pub fn merge_arg_candidates(
     candidates: Vec<ArgCandidate>,
     threshold: f64,
@@ -171,6 +180,8 @@ pub fn merge_arg_candidates(
     }
 }
 
+/// Sorts subcommands, flags, positional args, and aliases within a
+/// `CommandSchema` for deterministic output.
 pub fn finalize_schema(mut schema: CommandSchema) -> CommandSchema {
     schema.subcommands.sort_by(|a, b| a.name.cmp(&b.name));
     schema

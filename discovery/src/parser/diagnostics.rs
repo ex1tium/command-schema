@@ -2,6 +2,8 @@
 
 use super::ast::{ArgCandidate, FlagCandidate, SubcommandCandidate};
 
+/// Diagnostic metadata for parser candidate evaluation, tracking medium-confidence
+/// and discarded candidates alongside false-positive filter statistics.
 #[derive(Debug, Clone, Default)]
 pub struct CandidateDiagnostics {
     pub medium_flags: Vec<FlagCandidate>,
@@ -14,6 +16,8 @@ pub struct CandidateDiagnostics {
 }
 
 impl CandidateDiagnostics {
+    /// Returns human-readable warning messages summarizing medium-confidence findings,
+    /// discarded low-confidence findings, and false-positive filter hits.
     pub fn warnings(&self) -> Vec<String> {
         let mut warnings = Vec::new();
 

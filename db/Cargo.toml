@@ -1,0 +1,27 @@
+[package]
+name = "command-schema-db"
+description = "Static database loading and manifest management for command schemas"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+command-schema-core = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+thiserror = { workspace = true }
+sha2 = { workspace = true }
+
+# Optional dependencies for bundled schemas
+flate2 = { workspace = true, optional = true }
+
+[features]
+bundled-schemas = ["flate2"]
+
+[build-dependencies]
+flate2 = { workspace = true }
+
+[dev-dependencies]
+chrono = { workspace = true }

@@ -16,8 +16,7 @@ fn schema_discover_bin() -> PathBuf {
 
 fn fixture(name: &str) -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("tests")
-        .join("fixtures")
+        .join("../discovery/tests/fixtures")
         .join(name)
 }
 

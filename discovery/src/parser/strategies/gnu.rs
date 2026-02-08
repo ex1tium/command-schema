@@ -11,12 +11,20 @@ impl ParserStrategy for GnuStrategy {
         "gnu"
     }
 
-    fn parse_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
+    fn collect_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
         let (parsed, recognized) = parser.parse_sectionless_flags(lines);
         let spans = recognized
             .into_iter()
             .map(SourceSpan::single)
             .collect::<Vec<_>>();
+
+        if spans.len() != parsed.len() {
+            tracing::warn!(
+                spans = spans.len(),
+                parsed = parsed.len(),
+                "span/parsed length mismatch in gnu strategy"
+            );
+        }
 
         parsed
             .into_iter()
@@ -28,7 +36,7 @@ impl ParserStrategy for GnuStrategy {
             .collect()
     }
 
-    fn parse_subcommands(
+    fn collect_subcommands(
         &self,
         _parser: &HelpParser,
         _lines: &[IndexedLine],
@@ -36,7 +44,7 @@ impl ParserStrategy for GnuStrategy {
         Vec::new()
     }
 
-    fn parse_args(&self, _parser: &HelpParser, _lines: &[IndexedLine]) -> Vec<ArgCandidate> {
+    fn collect_args(&self, _parser: &HelpParser, _lines: &[IndexedLine]) -> Vec<ArgCandidate> {
         Vec::new()
     }
 }

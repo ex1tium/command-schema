@@ -1,7 +1,27 @@
 //! Command schema extraction via help probing.
 //!
-//! Automatically extracts command schemas by running --help commands
-//! and recursively probing subcommands.
+//! Automatically extracts command schemas by running `--help` commands
+//! and recursively probing subcommands up to `MAX_PROBE_DEPTH` (3) levels
+//! deep. The extractor tries multiple help flags (`--help`, `-h`, `help`,
+//! `-?`) and selects the best output.
+//!
+//! # Quality policy
+//!
+//! The [`ExtractionQualityPolicy`] controls acceptance thresholds:
+//! - `min_confidence` — minimum parser confidence score (0.0–1.0)
+//! - `min_coverage` — minimum ratio of recognized help lines (0.0–1.0)
+//! - `allow_low_quality` — whether to emit schemas below thresholds
+//!
+//! # Example
+//!
+//! ```no_run
+//! use command_schema_discovery::extractor::{extract_command_schema, ExtractionQualityPolicy};
+//!
+//! let result = extract_command_schema("cargo");
+//! if let Some(schema) = result.schema {
+//!     println!("{} has {} subcommands", schema.command, schema.subcommands.len());
+//! }
+//! ```
 
 use std::collections::HashSet;
 use std::io::ErrorKind;
@@ -32,6 +52,27 @@ pub const DEFAULT_MIN_CONFIDENCE: f64 = 0.6;
 pub const DEFAULT_MIN_COVERAGE: f64 = 0.2;
 
 /// Policy controlling extraction quality acceptance.
+///
+/// Configures the minimum confidence and coverage thresholds for a schema
+/// to be accepted. Use [`Default::default()`] for production-grade defaults
+/// or [`permissive()`](Self::permissive) for development/testing.
+///
+/// # Examples
+///
+/// ```
+/// use command_schema_discovery::extractor::ExtractionQualityPolicy;
+///
+/// // Production defaults
+/// let policy = ExtractionQualityPolicy::default();
+/// assert_eq!(policy.min_confidence, 0.6);
+/// assert_eq!(policy.min_coverage, 0.2);
+/// assert!(!policy.allow_low_quality);
+///
+/// // Accept everything (for testing)
+/// let permissive = ExtractionQualityPolicy::permissive();
+/// assert_eq!(permissive.min_confidence, 0.0);
+/// assert!(permissive.allow_low_quality);
+/// ```
 #[derive(Debug, Clone, Copy)]
 pub struct ExtractionQualityPolicy {
     pub min_confidence: f64,
@@ -60,6 +101,10 @@ impl ExtractionQualityPolicy {
 }
 
 /// Extraction output with both schema result and diagnostics report.
+///
+/// Combines the parsed [`ExtractionResult`] with a detailed
+/// [`ExtractionReport`] that includes coverage metrics, quality tier,
+/// and probe attempt history.
 pub struct ExtractionRun {
     pub result: ExtractionResult,
     pub report: ExtractionReport,

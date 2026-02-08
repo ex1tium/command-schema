@@ -1,11 +1,28 @@
 //! Help output parser for multiple CLI formats.
 //!
-//! Handles parsing of --help output from various CLI frameworks:
-//! - Clap (Rust)
-//! - Cobra (Go)
-//! - Argparse (Python)
-//! - GNU standard
-//! - And more
+//! This module implements a multi-strategy parser that detects the format of
+//! `--help` output and extracts structured schema data. It handles a wide
+//! variety of CLI frameworks and conventions:
+//!
+//! - **Clap** (Rust) — `Usage:`, `Arguments:`, `Options:` sections
+//! - **Cobra** (Go) — `Available Commands:`, `Flags:` sections
+//! - **Argparse** (Python) — `positional arguments:`, `optional arguments:`
+//! - **GNU standard** — `-s, --long-flag` with indented descriptions
+//! - **NPM-style** — command listings with brief descriptions
+//! - **BSD-style** — compact flag descriptions
+//! - **Generic section-based** — fallback two-column parsing
+//!
+//! # Architecture
+//!
+//! The parser uses a weighted scoring system to detect the most likely format,
+//! then delegates to format-specific strategies. Results are merged and
+//! deduplicated, producing a single [`CommandSchema`] with confidence scoring.
+//!
+//! The primary entry point is [`HelpParser::new`] followed by
+//! [`HelpParser::parse`], but most consumers should use the higher-level
+//! [`parse_help_text`](crate::parse_help_text) function instead.
+//!
+//! [`CommandSchema`]: command_schema_core::CommandSchema
 
 mod ast;
 mod classify;
@@ -354,7 +371,7 @@ impl HelpParser {
 
         // npm-style command lists (All commands:)
         if subcommand_candidates.is_empty() {
-            let npm_subcommands = npm_strategy.parse_subcommands(self, &indexed_lines);
+            let npm_subcommands = npm_strategy.collect_subcommands(self, &indexed_lines);
             if !npm_subcommands.is_empty() {
                 let (_, npm_recognized) = self.parse_npm_style_commands(&indexed_lines);
                 recognized_indices.extend(npm_recognized);
@@ -411,7 +428,7 @@ impl HelpParser {
 
         // GNU and many custom CLIs list additional flags outside explicit
         // "Flags/Options" sections, so always run this as a top-up pass.
-        let fallback_flags = gnu_strategy.parse_flags(self, &indexed_lines);
+        let fallback_flags = gnu_strategy.collect_flags(self, &indexed_lines);
         let (_, fallback_recognized) = self.parse_sectionless_flags(&indexed_lines);
         if !fallback_flags.is_empty() {
             recognized_indices.extend(fallback_recognized);
@@ -422,7 +439,7 @@ impl HelpParser {
         // Compact usage fallback, e.g. tmux:
         // usage: tmux [-2CDlNuVv] [-c shell-command] ...
         if flag_candidates.is_empty() {
-            let usage_flags = usage_strategy.parse_flags(self, &indexed_lines);
+            let usage_flags = usage_strategy.collect_flags(self, &indexed_lines);
             let (_, usage_recognized) = self.parse_usage_compact_flags(&indexed_lines);
             if !usage_flags.is_empty() {
                 recognized_indices.extend(usage_recognized);
@@ -432,7 +449,7 @@ impl HelpParser {
         }
 
         if arg_candidates.is_empty() {
-            let usage_args = usage_strategy.parse_args(self, &indexed_lines);
+            let usage_args = usage_strategy.collect_args(self, &indexed_lines);
             let (_, usage_arg_recognized) =
                 self.parse_usage_positionals(&indexed_lines, !subcommand_candidates.is_empty());
             if !usage_args.is_empty() {
@@ -1337,68 +1354,6 @@ impl HelpParser {
         }
 
         (conflicts, requires)
-    }
-
-    #[allow(dead_code)]
-    fn normalize_help_output(raw: &str) -> String {
-        static ANSI_RE: LazyLock<Regex> =
-            LazyLock::new(|| Regex::new(r"\x1b\[[0-9;?]*[ -/]*[@-~]").unwrap());
-        static OVERSTRIKE_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".\x08").unwrap());
-
-        let stripped = ANSI_RE.replace_all(raw, "");
-        let mut cleaned = stripped.into_owned();
-        while OVERSTRIKE_RE.is_match(&cleaned) {
-            cleaned = OVERSTRIKE_RE.replace_all(&cleaned, "").into_owned();
-        }
-        let replaced = cleaned.replace("\r\n", "\n").replace('\r', "\n");
-
-        let mut normalized: Vec<String> = Vec::new();
-        for line in replaced.lines() {
-            let trimmed_end = line.trim_end();
-            let trimmed_start = trimmed_end.trim_start();
-
-            // Keep paragraph boundaries.
-            if trimmed_end.is_empty() {
-                normalized.push(String::new());
-                continue;
-            }
-
-            // Merge wrapped description lines into previous line.
-            let is_wrapped_continuation = line.starts_with(' ')
-                && !trimmed_start.ends_with(':')
-                && normalized.last().is_some_and(|prev| {
-                    let prev_trimmed = prev.trim();
-                    let prev_is_flag = Self::looks_like_flag_row_start(prev_trimmed);
-                    let prev_is_two_column_subcommand = Self::split_two_columns(prev_trimmed)
-                        .is_some_and(|(left, _)| {
-                            !left.starts_with('-')
-                                && left
-                                    .chars()
-                                    .next()
-                                    .is_some_and(|ch| ch.is_ascii_alphanumeric())
-                        });
-                    let starts_new_flag_row = Self::looks_like_flag_row_start(trimmed_start)
-                        && !trimmed_start.contains(';');
-                    let looks_like_subcommand = Self::looks_like_subcommand_entry(trimmed_start);
-                    (prev_is_flag || prev_is_two_column_subcommand)
-                        && !prev_trimmed.is_empty()
-                        && (!prev_trimmed.ends_with(':') || prev_is_flag)
-                        && (!looks_like_subcommand || prev_is_flag)
-                        && !starts_new_flag_row
-                });
-
-            if is_wrapped_continuation {
-                if let Some(prev) = normalized.last_mut() {
-                    prev.push(' ');
-                    prev.push_str(trimmed_start);
-                }
-                continue;
-            }
-
-            normalized.push(trimmed_end.to_string());
-        }
-
-        normalized.join("\n")
     }
 
     pub(super) fn split_two_columns(line: &str) -> Option<(&str, &str)> {

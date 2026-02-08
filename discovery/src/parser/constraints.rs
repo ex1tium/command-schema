@@ -11,12 +11,15 @@ struct TrieNode {
     children: HashSet<String>,
 }
 
+/// Trie of command-to-subcommand relationships used to detect hierarchy cycles.
 #[derive(Debug, Clone, Default)]
 pub struct CommandTrie {
     nodes: HashMap<String, TrieNode>,
 }
 
 impl CommandTrie {
+    /// Inserts consecutive parent-child pairs from `path` into the trie.
+    /// Skips single-segment paths. Returns `Err` on self-cycles.
     pub fn insert(&mut self, path: &[String]) -> Result<(), String> {
         if path.len() < 2 {
             return Ok(());
@@ -39,6 +42,8 @@ impl CommandTrie {
         Ok(())
     }
 
+    /// Runs DFS-based cycle detection across all nodes.
+    /// Returns a list of error messages for any cycles found.
     pub fn validate(&self) -> Vec<String> {
         let mut errors = Vec::new();
         let mut visiting = HashSet::new();
@@ -77,6 +82,8 @@ impl CommandTrie {
     }
 }
 
+/// Validates the subcommand hierarchy for cycles, recursively walking
+/// all nested subcommand trees.
 pub fn validate_subcommand_hierarchy(
     command: &str,
     subcommands: &[SubcommandSchema],
@@ -84,16 +91,32 @@ pub fn validate_subcommand_hierarchy(
     let mut trie = CommandTrie::default();
     let root = command.to_string();
 
-    for sub in subcommands {
-        let path = vec![root.clone(), sub.name.clone()];
-        if let Err(error) = trie.insert(&path) {
-            return vec![error];
+    fn walk(
+        trie: &mut CommandTrie,
+        path: &mut Vec<String>,
+        subcommands: &[SubcommandSchema],
+    ) -> Result<(), String> {
+        for sub in subcommands {
+            path.push(sub.name.clone());
+            trie.insert(path)?;
+            if !sub.subcommands.is_empty() {
+                walk(trie, path, &sub.subcommands)?;
+            }
+            path.pop();
         }
+        Ok(())
     }
 
+    let mut path = vec![root];
+    if let Err(error) = walk(&mut trie, &mut path, subcommands) {
+        return vec![error];
+    }
     trie.validate()
 }
 
+/// Parses a flag description to extract required and conflicting flags
+/// based on keyword heuristics ("requires", "conflicts with", etc.)
+/// and the provided `all_flags` list. Returns `(requires, conflicts)`.
 pub fn extract_flag_relationships(
     description: &str,
     all_flags: &[String],
@@ -133,6 +156,9 @@ pub fn extract_flag_relationships(
     (requires, conflicts)
 }
 
+/// Walks a mutable slice of `FlagSchema`, extracts relationships from each
+/// flag's description via `extract_flag_relationships`, merges them into each
+/// flag's `requires` and `conflicts_with` lists, and removes self-references.
 pub fn apply_flag_relationships(flags: &mut [FlagSchema]) {
     let mut all = Vec::new();
     for flag in flags.iter() {
