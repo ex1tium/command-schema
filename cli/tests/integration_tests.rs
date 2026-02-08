@@ -18,7 +18,7 @@ impl TempDir {
         &self.path
     }
 
-    fn join(&self, name: &str) -> PathBuf {
+    fn join(&self, name: impl AsRef<std::path::Path>) -> PathBuf {
         self.path.join(name)
     }
 }
@@ -58,7 +58,8 @@ fn write_test_schema(dir: &TempDir, command: &str) -> PathBuf {
     let json = serde_json::json!({
         "schema_version": "1.0",
         "command": command,
-        "source": "help",
+        "source": "HelpCommand",
+        "confidence": 0.9,
         "description": format!("Test schema for {command}"),
         "global_flags": [],
         "subcommands": [],
@@ -126,7 +127,7 @@ fn ci_extract_skips_unchanged_commands() {
         .expect("failed to run schema-discover");
 
     assert!(status.status.success());
-    let first_manifest = fs::read_to_string(&manifest_path).unwrap();
+    let _first_manifest = fs::read_to_string(&manifest_path).unwrap();
 
     // Second run — should skip since nothing changed
     let output2 = std::process::Command::new(bin)

@@ -9,9 +9,10 @@ Given a command's help text, `command-schema` parses it into a typed schema desc
 | Crate | Description |
 |-------|-------------|
 | [`command-schema-core`](core/) | Core types: `CommandSchema`, `FlagSchema`, `ArgSchema`, `SubcommandSchema`, validation, merging |
-| [`command-schema-discovery`](discovery/) | Help text parser, command probing, extraction CLI (`schema-discover`), caching, reporting |
+| [`command-schema-discovery`](discovery/) | Help text parser, command probing, extraction library APIs |
 | [`command-schema-db`](db/) | Static database loading from directories/bundles, manifest tracking, CI configuration, optional compile-time bundling |
 | [`command-schema-sqlite`](sqlite/) | SQLite storage backend with normalized tables, migration lifecycle, and CRUD query interface |
+| [`command-schema-cli`](cli/) | Command-line interface (`schema-discover` binary) for extraction and database management |
 
 ## Quick start
 
@@ -106,6 +107,57 @@ Pre-extracted schemas are stored as individual JSON files and loaded into an in-
 ### SQLite support
 
 The SQLite backend provides normalized storage with 8 tables covering commands, subcommands, flags, positional args, choices, aliases, and flag relationships. All mutations use transactions for atomicity, and cascading foreign keys handle cleanup automatically.
+
+## Static Database
+
+The repository includes a pre-extracted database of ~150-200 command schemas in `schemas/database/`. Each command has its own JSON file (e.g., `git.json`, `docker.json`).
+
+### CI Automation
+
+Schemas are automatically updated weekly via GitHub Actions:
+- **Schedule:** Every Sunday at 2 AM UTC
+- **Manual trigger:** Go to Actions → Extract Command Schemas → Run workflow
+- **Auto-trigger:** Runs when `ci-config.yaml` changes
+
+The workflow:
+1. Installs comprehensive toolset (coreutils, dev tools, system utilities)
+2. Builds the `schema-discover` CLI
+3. Runs `schema-discover ci-extract` with version tracking
+4. Commits only changed schemas (detected via manifest checksums)
+
+### Manifest Tracking
+
+`schemas/database/manifest.json` tracks metadata for each command:
+- Version string (from `--version`)
+- Executable fingerprint (path, mtime, size)
+- Extraction timestamp
+- Quality tier
+- SHA-256 checksum
+
+Commands are re-extracted only when:
+- Version changes
+- Executable fingerprint changes (for version-less commands)
+- Quality policy changes
+- Schema file checksum mismatch
+
+### Configuration
+
+Edit `ci-config.yaml` to:
+- Add/remove commands from the allowlist
+- Adjust quality thresholds
+- Change extraction parallelism
+- Add exclusions
+
+### Local Extraction
+
+Run extraction locally:
+```bash
+cargo build --release -p command-schema-cli
+./target/release/schema-discover ci-extract \
+  --config ci-config.yaml \
+  --manifest schemas/database/manifest.json \
+  --output schemas/database/
+```
 
 ### Multiple consumption patterns
 

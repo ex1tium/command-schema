@@ -13,6 +13,26 @@ use command_schema_discovery::extractor::{
 
 const PACKAGE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
+/// CLI-specific output format enum with clap argument parsing support.
+#[derive(Debug, Clone, Copy, clap::ValueEnum)]
+enum CliOutputFormat {
+    Json,
+    Yaml,
+    Markdown,
+    Table,
+}
+
+impl From<CliOutputFormat> for command_schema_discovery::output::OutputFormat {
+    fn from(fmt: CliOutputFormat) -> Self {
+        match fmt {
+            CliOutputFormat::Json => Self::Json,
+            CliOutputFormat::Yaml => Self::Yaml,
+            CliOutputFormat::Markdown => Self::Markdown,
+            CliOutputFormat::Table => Self::Table,
+        }
+    }
+}
+
 #[derive(Debug, Parser)]
 #[command(name = "schema-discover")]
 #[command(about = "Offline command schema discovery and bundling")]
@@ -79,7 +99,7 @@ struct ExtractArgs {
     no_cache: bool,
     /// Output format for schema and report files (default: json).
     #[arg(long, default_value = "json")]
-    format: command_schema_discovery::output::OutputFormat,
+    format: CliOutputFormat,
 }
 
 #[derive(Debug, Args)]
@@ -115,7 +135,7 @@ struct ParseStdinArgs {
     with_report: bool,
     /// Output format.
     #[arg(long, default_value = "json")]
-    format: command_schema_discovery::output::OutputFormat,
+    format: CliOutputFormat,
 }
 
 #[derive(Debug, Args)]
@@ -131,7 +151,7 @@ struct ParseFileArgs {
     with_report: bool,
     /// Output format.
     #[arg(long, default_value = "json")]
-    format: command_schema_discovery::output::OutputFormat,
+    format: CliOutputFormat,
 }
 
 #[derive(Debug, Args)]
@@ -291,7 +311,7 @@ fn run_extract(args: ExtractArgs) -> Result<(), String> {
         },
     };
 
-    let format = args.format;
+    let format: command_schema_discovery::output::OutputFormat = args.format.into();
     let outcome = discover_and_extract(&config, PACKAGE_VERSION);
 
     let ext = format_extension(format);
@@ -395,13 +415,13 @@ fn run_parse_stdin(args: ParseStdinArgs) -> Result<(), String> {
     std::io::stdin()
         .read_to_string(&mut help_text)
         .map_err(|err| format!("Failed to read stdin: {err}"))?;
-    run_parse_help_text(&args.command, &help_text, args.with_report, args.format)
+    run_parse_help_text(&args.command, &help_text, args.with_report, args.format.into())
 }
 
 fn run_parse_file(args: ParseFileArgs) -> Result<(), String> {
     let help_text = fs::read_to_string(&args.input)
         .map_err(|err| format!("Failed to read '{}': {err}", args.input.display()))?;
-    run_parse_help_text(&args.command, &help_text, args.with_report, args.format)
+    run_parse_help_text(&args.command, &help_text, args.with_report, args.format.into())
 }
 
 fn run_parse_help_text(
@@ -927,7 +947,7 @@ fn format_extension(format: command_schema_discovery::output::OutputFormat) -> &
     }
 }
 
-/// Formats an [`ExtractionReportBundle`] in the requested output format.
+/// Formats an `ExtractionReportBundle` in the requested output format.
 fn format_report_bundle(
     bundle: &command_schema_discovery::report::ExtractionReportBundle,
     format: command_schema_discovery::output::OutputFormat,

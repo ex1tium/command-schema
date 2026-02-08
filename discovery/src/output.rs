@@ -5,7 +5,8 @@ use command_schema_core::CommandSchema;
 use crate::report::ExtractionReport;
 
 /// Supported output formats.
-#[derive(Debug, Clone, Copy, clap::ValueEnum)]
+#[derive(Debug, Clone, Copy)]
+#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 pub enum OutputFormat {
     Json,
     Yaml,

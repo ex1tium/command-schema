@@ -100,6 +100,10 @@ impl SchemaDatabase {
             let entry = entry?;
             let file_path = entry.path();
             if file_path.extension().and_then(|e| e.to_str()) == Some("json") {
+                // Skip known non-schema files (e.g. manifest.json).
+                if file_path.file_stem().and_then(|s| s.to_str()) == Some("manifest") {
+                    continue;
+                }
                 let file = std::fs::File::open(&file_path)?;
                 let reader = std::io::BufReader::new(file);
                 let schema: CommandSchema = serde_json::from_reader(reader)?;

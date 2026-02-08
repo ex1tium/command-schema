@@ -38,6 +38,16 @@
 //! assert!(schema.global_flags.iter().any(|f| f.long.as_deref() == Some("--verbose")));
 //! ```
 //!
+//! # Crate type
+//!
+//! This is a **library-only crate** with no binary targets. For CLI usage, use
+//! the `command-schema-cli` crate which provides the `schema-discover` binary.
+//!
+//! All functionality is available through library APIs:
+//! - [`parse_help_text`] — offline parsing, no command execution required
+//! - [`parse_help_text_with_report`] — offline parsing with quality diagnostics
+//! - [`extractor::extract_command_schema`] — live extraction (runs the command)
+//!
 //! [`CommandSchema`]: command_schema_core::CommandSchema
 
 pub mod cache;

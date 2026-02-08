@@ -163,7 +163,8 @@ impl Migration {
         let mut report = SeedReport::default();
 
         for cmd_name in &commands {
-            let schema = db.get(cmd_name).unwrap();
+            // SAFETY: cmd_name comes from db.commands(), so it is guaranteed to exist.
+            let schema = db.get(cmd_name).expect("command from commands() iterator must exist in database");
             let command_id = convert::insert_command(&tx, &self.prefix, schema)?;
             report.commands_inserted += 1;
 

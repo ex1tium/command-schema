@@ -1,0 +1,151 @@
+name: Extract Command Schemas
+
+on:
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # Allow manual triggering
+  push:
+    branches:
+      - main
+    paths:
+      - 'ci-config.yaml'
+      - '.github/workflows/extract-schemas.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install comprehensive toolset
+        run: |
+          # Update package lists
+          sudo apt-get update
+
+          # Coreutils (most already installed on Ubuntu)
+          sudo apt-get install -y coreutils findutils grep sed gawk
+
+          # Development tools
+          sudo apt-get install -y \
+            git gh docker.io docker-compose \
+            build-essential cmake gcc g++ clang \
+            python3 python3-pip \
+            nodejs npm \
+            ruby ruby-dev \
+            openjdk-17-jdk maven gradle \
+            php composer \
+            perl lua5.4
+
+          # Install Rust tools
+          rustup component add rustfmt clippy
+
+          # Install additional package managers
+          npm install -g yarn pnpm
+
+          # Install kubectl and helm
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+          # Install modern CLI tools
+          cargo install ripgrep fd-find bat
+
+          # Install jq and yq
+          sudo apt-get install -y jq
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+          # System utilities (most already installed)
+          sudo apt-get install -y \
+            systemd net-tools iproute2 iputils-ping \
+            curl wget openssh-client rsync \
+            htop lsof strace
+
+          # Text editors
+          sudo apt-get install -y vim nano
+
+          # Compression tools
+          sudo apt-get install -y \
+            gzip bzip2 xz-utils zip unzip p7zip-full
+
+          # Additional utilities
+          sudo apt-get install -y tmux screen file binutils
+
+      - name: Build schema-discover CLI
+        run: |
+          cargo build --release -p command-schema-cli
+          sudo cp target/release/schema-discover /usr/local/bin/
+
+      - name: Run CI extraction
+        run: |
+          schema-discover ci-extract \
+            --config ci-config.yaml \
+            --manifest schemas/database/manifest.json \
+            --output schemas/database/
+
+      - name: Generate summary
+        id: summary
+        run: |
+          # Count extracted schemas
+          SCHEMA_COUNT=$(find schemas/database/ -name "*.json" -not -name "manifest.json" | wc -l)
+          echo "schema_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT
+
+          # Extract changed commands from manifest
+          if [ -f schemas/database/manifest.json ]; then
+            CHANGED=$(git diff --name-only schemas/database/*.json | grep -v manifest.json | wc -l)
+            echo "changed_count=$CHANGED" >> $GITHUB_OUTPUT
+          else
+            echo "changed_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add schemas/database/
+          git add ci-config.yaml .github/workflows/extract-schemas.yml
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            SCHEMA_COUNT="${{ steps.summary.outputs.schema_count }}"
+            CHANGED_COUNT="${{ steps.summary.outputs.changed_count }}"
+
+            git commit -m "Update command schemas: $CHANGED_COUNT changed, $SCHEMA_COUNT total"
+            git push
+          fi
+
+      - name: Upload extraction report
+        if: always() && hashFiles('schemas/database/extraction-report.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-report
+          path: schemas/database/extraction-report.json
+          if-no-files-found: ignore
+          retention-days: 30

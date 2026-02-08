@@ -608,7 +608,9 @@ fn load_positional_args(
         _ => return Ok(Vec::new()),
     };
 
-    let id_param = command_id.or(subcommand_id).unwrap();
+    // SAFETY: The match above returns early for (None, None) and (Some, Some),
+    // so exactly one of command_id or subcommand_id is Some here.
+    let id_param = command_id.or(subcommand_id).expect("exactly one of command_id or subcommand_id must be Some");
     let rows = stmt.query_map(params![id_param], |row| {
         Ok((
             row.get::<_, i64>(0)?,

@@ -129,53 +129,55 @@ struct HelpPatterns {
 
 impl HelpPatterns {
     fn new() -> Self {
+        // All regexes here are compile-time constants. An expect() failure indicates
+        // a programmer error in the pattern, not a runtime condition.
         Self {
             // -v, -x, -4, -0, -?, -@
-            short_flag: Regex::new(r"^\s*(-[a-zA-Z0-9?@])(?:\s|,|\[|\||$)").unwrap(),
+            short_flag: Regex::new(r"^\s*(-[a-zA-Z0-9?@])(?:\s|,|\[|\||$)").expect("static regex must compile"),
             // -chdir, -log-level, etc (single-dash long options used by some CLIs)
             single_dash_word_flag: Regex::new(
                 r"^\s*(-[a-zA-Z][a-zA-Z0-9-]{1,})(?:\s|,|=|<|\[|\||$)"
             )
-            .unwrap(),
+            .expect("static regex must compile"),
             // --verbose, --help
-            long_flag: Regex::new(r"^\s*(--[a-zA-Z][-a-zA-Z0-9.]*)(?:\s|=|\[|,|\||\)|$)").unwrap(),
+            long_flag: Regex::new(r"^\s*(--[a-zA-Z][-a-zA-Z0-9.]*)(?:\s|=|\[|,|\||\)|$)").expect("static regex must compile"),
             // -v, --verbose  OR  -v/--verbose
             combined_flag: Regex::new(
                 r"^\s*(-[a-zA-Z0-9?@]{1,3})(?:\s*,\s*|\s*/\s*|\s+)(--[a-zA-Z][-a-zA-Z0-9.]*)"
-            ).unwrap(),
+            ).expect("static regex must compile"),
             // --flag=VALUE, --flag <value>, --flag [value], -f VALUE
             // Only match: =VALUE, <VALUE>, [value], or ALLCAPS right after flag
             flag_with_value: Regex::new(
                 r"(?:=([A-Za-z_]+)|[<\[]([A-Za-z_]+)[>\]]|(?:--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9]{1,3})\s+([A-Z][A-Z_]+)(?:\s|$))"
-            ).unwrap(),
+            ).expect("static regex must compile"),
 
             // Section headers (case insensitive)
             subcommands_section: Regex::new(
                 r"(?i)^(commands|all commands|subcommands|available commands|sub-commands)\s*:?\s*$"
-            ).unwrap(),
+            ).expect("static regex must compile"),
             flags_section: Regex::new(
                 r"(?i)^(flags|global flags)\s*:?\s*$"
-            ).unwrap(),
+            ).expect("static regex must compile"),
             options_section: Regex::new(
                 r"(?i)^(options|optional arguments|opts)\s*:?\s*$"
-            ).unwrap(),
+            ).expect("static regex must compile"),
             arguments_section: Regex::new(
                 r"(?i)^(arguments|positional arguments|args)\s*:?\s*$"
-            ).unwrap(),
-            column_break: Regex::new(r"\t+| {2,}").unwrap(),
+            ).expect("static regex must compile"),
+            column_break: Regex::new(r"\t+| {2,}").expect("static regex must compile"),
 
             // Value indicators
             choice_values: Regex::new(
                 r"\{([^}]+)\}"
-            ).unwrap(),
+            ).expect("static regex must compile"),
 
-            line_of_dashes: Regex::new(r"^-{8,}$").unwrap(),
+            line_of_dashes: Regex::new(r"^-{8,}$").expect("static regex must compile"),
 
             // Version number extraction
-            version_number: Regex::new(r"(\d+\.\d+(?:\.\d+)?)").unwrap(),
+            version_number: Regex::new(r"(\d+\.\d+(?:\.\d+)?)").expect("static regex must compile"),
             // Generic banner style: "apt 2.8.3 (amd64)"
             banner_version: Regex::new(r"^\s*[A-Za-z][A-Za-z0-9+._-]*\s+(\d+\.\d+(?:\.\d+)?)\b")
-                .unwrap(),
+                .expect("static regex must compile"),
         }
     }
 }
@@ -1318,8 +1320,9 @@ impl HelpParser {
     }
 
     fn extract_flag_relationships(description: &str) -> (Vec<String>, Vec<String>) {
+        // SAFETY: This regex is a compile-time constant and is validated by tests.
         static FLAG_REF_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").unwrap()
+            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").expect("static regex must compile")
         });
         let lower = description.to_ascii_lowercase();
         let mut conflicts = Vec::new();
@@ -1978,8 +1981,9 @@ impl HelpParser {
         &self,
         lines: &[IndexedLine],
     ) -> (Vec<FlagSchema>, HashSet<usize>) {
+        // SAFETY: This regex is a compile-time constant and is validated by tests.
         static BRACKET_GROUP_RE: LazyLock<Regex> =
-            LazyLock::new(|| Regex::new(r"\[([^\]]+)\]").unwrap());
+            LazyLock::new(|| Regex::new(r"\[([^\]]+)\]").expect("static regex must compile"));
 
         let mut usage_text = String::new();
         let mut recognized = HashSet::new();
@@ -2440,21 +2444,22 @@ impl HelpParser {
         flags: &mut [FlagSchema],
         recognized: &mut HashSet<usize>,
     ) {
+        // SAFETY: These regexes are compile-time constants and are validated by tests.
         static VALID_ARGUMENTS_FOR_RE: LazyLock<Regex> = LazyLock::new(|| {
             Regex::new(r"(?i)^valid arguments for\s+((?:--?)[a-zA-Z0-9?@][a-zA-Z0-9?@.-]*)\s*:\s*$")
-                .unwrap()
+                .expect("static regex must compile")
         });
         static PLACEHOLDER_VALUES_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+is one of the following\s*:\s*$").unwrap()
+            Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+is one of the following\s*:\s*$").expect("static regex must compile")
         });
         static PLACEHOLDER_DETERMINES_RE: LazyLock<Regex> =
-            LazyLock::new(|| Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+determines\b.*:\s*$").unwrap());
+            LazyLock::new(|| Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+determines\b.*:\s*$").expect("static regex must compile"));
         static GENERIC_VALUES_HEADER_RE: LazyLock<Regex> = LazyLock::new(|| {
             Regex::new(r"(?i)^.*\b(here are the values|possible values|available values)\b.*:?\s*$")
-                .unwrap()
+                .expect("static regex must compile")
         });
         static FLAG_REF_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").unwrap()
+            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").expect("static regex must compile")
         });
 
         #[derive(Clone)]

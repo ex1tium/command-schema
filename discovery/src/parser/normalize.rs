@@ -6,9 +6,10 @@ use std::sync::LazyLock;
 use super::{HelpParser, IndexedLine};
 
 pub fn normalize_help_output(raw: &str) -> String {
+    // SAFETY: These regexes are compile-time constants and are validated by tests.
     static ANSI_RE: LazyLock<Regex> =
-        LazyLock::new(|| Regex::new(r"\x1b\[[0-9;?]*[ -/]*[@-~]").unwrap());
-    static OVERSTRIKE_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".\x08").unwrap());
+        LazyLock::new(|| Regex::new(r"\x1b\[[0-9;?]*[ -/]*[@-~]").expect("static regex must compile"));
+    static OVERSTRIKE_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".\x08").expect("static regex must compile"));
 
     let stripped = ANSI_RE.replace_all(raw, "");
     let mut cleaned = stripped.into_owned();

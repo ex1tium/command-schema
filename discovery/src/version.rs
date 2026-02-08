@@ -39,9 +39,11 @@ fn collect_version_candidates(text: &str, command_name: &str) -> Vec<(String, f6
         let line_lower = line.to_ascii_lowercase();
 
         for cap in version_re.captures_iter(line) {
-            let full_match = cap.get(0).unwrap();
+            // SAFETY: Capture group 0 (the entire match) always exists when captures_iter yields.
+            let full_match = cap.get(0).expect("capture group 0 always exists");
             let raw = full_match.as_str().to_string();
-            let core = cap.get(1).unwrap().as_str();
+            // SAFETY: Capture group 1 always exists because the regex requires it for a match.
+            let core = cap.get(1).expect("capture group 1 is required by the regex pattern").as_str();
 
             // Reject date-like patterns (e.g. 2024.01.15, 2024-01-15)
             if is_likely_date(core) {

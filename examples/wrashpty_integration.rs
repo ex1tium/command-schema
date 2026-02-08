@@ -1,11 +1,11 @@
-//! Full integration example: two-tier architecture.
+//! Full integration example: two-tier architecture with bundled schema support.
 //!
 //! Demonstrates the recommended integration pattern for applications that
 //! need both fast O(1) lookups at runtime and persistent storage for learned
 //! schemas. This is the architecture used by wrashpty and similar terminal
 //! applications.
 //!
-//! # Architecture
+//! # Architecture (Flow 4: Bundled → Directory → SQLite Fallback Chain)
 //!
 //! ```text
 //!  ┌─────────────────────────┐
@@ -14,18 +14,26 @@
 //!  └──────────┬──────────────┘
 //!             │ startup: load
 //!  ┌──────────┴──────────────┐
-//!  │   Static schemas (JSON) │  ← Pre-extracted, bundled
+//!  │  Bundled schemas (gzip) │  ← Tier 1: Zero-I/O, build-time embedded
+//!  └─────────────────────────┘
+//!             ↓ fallback
+//!  ┌─────────────────────────┐
+//!  │   Static schemas (JSON) │  ← Tier 2: Directory-based, file I/O
 //!  └─────────────────────────┘
 //!             +
 //!  ┌─────────────────────────┐
-//!  │   SQLite (learned)      │  ← Runtime persistence
+//!  │   SQLite (learned)      │  ← Runtime persistence for discovered schemas
 //!  └─────────────────────────┘
 //! ```
 //!
 //! # Usage
 //!
 //! ```bash
+//! # Without bundled schemas (directory fallback)
 //! cargo run -p command-schema-examples --example wrashpty_integration
+//!
+//! # With bundled schemas (zero-I/O startup)
+//! cargo run -p command-schema-examples --example wrashpty_integration --features bundled-schemas
 //! ```
 
 use std::collections::HashMap;
@@ -96,21 +104,48 @@ impl SchemaRegistry {
 }
 
 fn main() {
-    // === Phase 1: Prepare static schemas ===
-    println!("=== Phase 1: Setup ===");
+    // === Phase 1: Load static schemas (Bundled → Directory fallback) ===
+    println!("=== Phase 1: Static Schema Loading ===");
 
     let schema_dir = std::env::temp_dir().join("cs_wrashpty_example");
     std::fs::create_dir_all(&schema_dir).unwrap();
 
-    // Write static schemas to a temporary directory
+    // Write static schemas to a temporary directory (simulates pre-extracted schemas)
     let git = create_git_schema();
     let docker = create_docker_schema();
     write_schema_file(&schema_dir, &git);
     write_schema_file(&schema_dir, &docker);
 
-    // Load static schemas
-    let static_db = SchemaDatabase::from_dir(&schema_dir).unwrap();
-    println!("Static schemas loaded: {}", static_db.len());
+    // Measure startup time for static schema loading
+    let start = std::time::Instant::now();
+
+    // Use the builder pattern with bundled → directory fallback chain.
+    // When bundled-schemas feature is enabled, bundled schemas are tried first
+    // (zero file I/O). If unavailable, falls back to directory loading.
+    let static_db = SchemaDatabase::builder()
+        .with_bundled()                    // Tier 1: Try bundled first (zero I/O)
+        .from_dir(&schema_dir)             // Tier 2: Fallback to directory
+        .build()
+        .expect("Failed to load static schemas");
+
+    let startup_elapsed = start.elapsed();
+
+    // Report which source was used
+    #[cfg(feature = "bundled-schemas")]
+    {
+        println!("  Source: Bundled schemas (zero I/O, build-time embedded)");
+    }
+    #[cfg(not(feature = "bundled-schemas"))]
+    {
+        println!("  Source: Directory fallback (file I/O)");
+    }
+
+    println!("  Schemas loaded: {}", static_db.len());
+    println!("  Startup time: {:.2?}", startup_elapsed);
+
+    // Estimate memory usage by serializing the loaded schemas
+    let memory_estimate = estimate_memory_usage(&static_db);
+    println!("  Estimated memory: {:.3} MB", memory_estimate);
 
     // === Phase 2: Initialize SQLite ===
     let conn = Connection::open_in_memory().unwrap();
@@ -123,13 +158,13 @@ fn main() {
     let conn = migration.into_connection();
     let query = SchemaQuery::new(conn, "cs_").unwrap();
 
-    // === Phase 3: Create the registry ===
-    println!("\n=== Phase 2: Registry initialization ===");
+    // === Phase 3: Create the registry (merge static + learned) ===
+    println!("\n=== Phase 2: Registry Initialization ===");
     let mut registry = SchemaRegistry::new(static_db, query);
-    println!("Registry initialized with {} schemas", registry.len());
+    println!("  Registry initialized with {} schemas", registry.len());
 
     // === Phase 4: Runtime lookups (O(1)) ===
-    println!("\n=== Phase 3: Runtime lookups ===");
+    println!("\n=== Phase 3: Runtime Lookups ===");
     let start = std::time::Instant::now();
     for _ in 0..10_000 {
         let _ = registry.get("git");
@@ -137,11 +172,11 @@ fn main() {
         let _ = registry.get("nonexistent");
     }
     let elapsed = start.elapsed();
-    println!("30,000 lookups in {elapsed:.2?} ({:.0} lookups/sec)",
+    println!("  30,000 lookups in {elapsed:.2?} ({:.0} lookups/sec)",
         30_000.0 / elapsed.as_secs_f64());
 
     if let Some(git) = registry.get("git") {
-        println!("\ngit: {} flags, {} subcommands",
+        println!("  git: {} flags, {} subcommands",
             git.global_flags.len(), git.subcommands.len());
     }
 
@@ -161,17 +196,36 @@ fn main() {
     );
 
     registry.learn(ripgrep);
-    println!("Learned 'rg' schema");
-    println!("Registry now has {} schemas", registry.len());
+    println!("  Learned 'rg' schema");
+    println!("  Registry now has {} schemas", registry.len());
 
     // The learned schema is immediately available for lookups
     if let Some(rg) = registry.get("rg") {
-        println!("rg: {} flags", rg.global_flags.len());
+        println!("  rg: {} flags", rg.global_flags.len());
     }
+
+    // === Summary ===
+    println!("\n=== Performance Summary ===");
+    println!("  Static schema startup: {:.2?}", startup_elapsed);
+    println!("  Memory footprint: {:.3} MB", memory_estimate);
+    println!("  Schema count: {}", registry.len());
 
     // Cleanup
     std::fs::remove_dir_all(&schema_dir).ok();
     println!("\nDone!");
+}
+
+/// Estimates the memory usage of a SchemaDatabase by serializing its contents.
+fn estimate_memory_usage(db: &SchemaDatabase) -> f64 {
+    let mut total_bytes = 0usize;
+    for name in db.commands() {
+        if let Some(schema) = db.get(name) {
+            if let Ok(json) = serde_json::to_string(schema) {
+                total_bytes += json.len();
+            }
+        }
+    }
+    total_bytes as f64 / (1024.0 * 1024.0)
 }
 
 fn write_schema_file(dir: &std::path::Path, schema: &CommandSchema) {

@@ -121,8 +121,9 @@ pub fn extract_flag_relationships(
     description: &str,
     all_flags: &[String],
 ) -> (Vec<String>, Vec<String>) {
+    // SAFETY: This regex is a compile-time constant and is validated by tests.
     static FLAG_REF_RE: LazyLock<Regex> =
-        LazyLock::new(|| Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").unwrap());
+        LazyLock::new(|| Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").expect("static regex must compile"));
 
     let lower = description.to_ascii_lowercase();
     let mut requires = Vec::new();

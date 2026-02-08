@@ -41,7 +41,9 @@ mod loader;
 mod config;
 
 #[cfg(feature = "bundled-schemas")]
-mod bundled;
+mod bundled {
+    include!(concat!(env!("OUT_DIR"), "/bundled.rs"));
+}
 
 pub use error::{DatabaseError, Result};
 pub use manifest::{Manifest, CommandMetadata, QualityPolicyFingerprint};
