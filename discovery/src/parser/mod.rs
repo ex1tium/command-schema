@@ -382,6 +382,27 @@ impl HelpParser {
             }
         }
 
+        // Dense command-grid sections (e.g. OpenSSL "Standard commands"),
+        // where each row contains multiple command tokens and no per-row
+        // descriptions.
+        if subcommand_candidates.is_empty() && !keybinding_document {
+            let (grid_subcommands, grid_recognized, primary_grid_section) =
+                self.parse_dense_command_grid_subcommands(&indexed_lines);
+            if !grid_subcommands.is_empty() {
+                recognized_indices.extend(grid_recognized);
+                parsers_used.push("dense-command-grid-subcommands".to_string());
+                let stage_confidence = if primary_grid_section { 0.9 } else { 0.82 };
+                for subcommand in grid_subcommands {
+                    subcommand_candidates.push(ast::SubcommandCandidate::from_schema(
+                        subcommand,
+                        ast::SourceSpan::unknown(),
+                        "dense-command-grid-subcommands",
+                        stage_confidence,
+                    ));
+                }
+            }
+        }
+
         // Generic two-column command rows when explicit command sections were not
         // identified (or were empty). This is still structural and should happen
         // before more permissive fallbacks.
@@ -1680,6 +1701,162 @@ impl HelpParser {
         (Self::dedupe_subcommands(subcommands), recognized)
     }
 
+    pub(super) fn parse_dense_command_grid_subcommands(
+        &self,
+        lines: &[IndexedLine],
+    ) -> (Vec<SubcommandSchema>, HashSet<usize>, bool) {
+        #[derive(Debug)]
+        struct GridSection {
+            header_index: usize,
+            row_indices: Vec<usize>,
+            rows: Vec<Vec<String>>,
+            is_primary: bool,
+        }
+
+        let mut sections = Vec::new();
+        let mut current_header_index: Option<usize> = None;
+        let mut current_is_primary = false;
+        let mut current_rows: Vec<Vec<String>> = Vec::new();
+        let mut current_row_indices = Vec::new();
+        let mut current_dense_row_seen = false;
+
+        let flush_section = |out: &mut Vec<GridSection>,
+                             header_index: &mut Option<usize>,
+                             is_primary: &mut bool,
+                             rows: &mut Vec<Vec<String>>,
+                             row_indices: &mut Vec<usize>,
+                             dense_row_seen: &mut bool| {
+            let total_tokens = rows.iter().map(Vec::len).sum::<usize>();
+            if let Some(index) = *header_index
+                && *dense_row_seen
+                && total_tokens >= 3
+                && !rows.is_empty()
+            {
+                out.push(GridSection {
+                    header_index: index,
+                    row_indices: std::mem::take(row_indices),
+                    rows: std::mem::take(rows),
+                    is_primary: *is_primary,
+                });
+            }
+
+            *header_index = None;
+            *is_primary = false;
+            rows.clear();
+            row_indices.clear();
+            *dense_row_seen = false;
+        };
+
+        for line in lines {
+            let trimmed = line.text.trim();
+            if trimmed.is_empty() {
+                flush_section(
+                    &mut sections,
+                    &mut current_header_index,
+                    &mut current_is_primary,
+                    &mut current_rows,
+                    &mut current_row_indices,
+                    &mut current_dense_row_seen,
+                );
+                continue;
+            }
+
+            if let Some(is_primary_header) = Self::classify_dense_command_grid_header(trimmed) {
+                flush_section(
+                    &mut sections,
+                    &mut current_header_index,
+                    &mut current_is_primary,
+                    &mut current_rows,
+                    &mut current_row_indices,
+                    &mut current_dense_row_seen,
+                );
+                current_header_index = Some(line.index);
+                current_is_primary = is_primary_header;
+                continue;
+            }
+
+            if current_header_index.is_none() {
+                continue;
+            }
+
+            if Self::is_section_header_line(trimmed)
+                || Self::is_block_header(trimmed)
+                || trimmed.to_ascii_lowercase().starts_with("usage:")
+            {
+                flush_section(
+                    &mut sections,
+                    &mut current_header_index,
+                    &mut current_is_primary,
+                    &mut current_rows,
+                    &mut current_row_indices,
+                    &mut current_dense_row_seen,
+                );
+                continue;
+            }
+
+            let Some(tokens) = Self::parse_dense_command_grid_row(trimmed) else {
+                flush_section(
+                    &mut sections,
+                    &mut current_header_index,
+                    &mut current_is_primary,
+                    &mut current_rows,
+                    &mut current_row_indices,
+                    &mut current_dense_row_seen,
+                );
+                continue;
+            };
+
+            if tokens.len() >= 2 {
+                current_dense_row_seen = true;
+            } else if !current_dense_row_seen {
+                continue;
+            }
+
+            current_rows.push(tokens.into_iter().map(str::to_string).collect());
+            current_row_indices.push(line.index);
+        }
+
+        flush_section(
+            &mut sections,
+            &mut current_header_index,
+            &mut current_is_primary,
+            &mut current_rows,
+            &mut current_row_indices,
+            &mut current_dense_row_seen,
+        );
+
+        if sections.is_empty() {
+            return (Vec::new(), HashSet::new(), false);
+        }
+
+        let primary_available = sections.iter().any(|section| section.is_primary);
+        let mut recognized = HashSet::new();
+        let mut subcommands = Vec::new();
+        let mut seen = HashSet::new();
+
+        for section in sections {
+            // Mark all detected grid sections as recognized structural content
+            // for coverage diagnostics, even when some sections are intentionally
+            // skipped from top-level command extraction.
+            recognized.insert(section.header_index);
+            recognized.extend(section.row_indices.iter().copied());
+
+            if primary_available && !section.is_primary {
+                continue;
+            }
+
+            for row in section.rows {
+                for token in row {
+                    if seen.insert(token.clone()) {
+                        subcommands.push(SubcommandSchema::new(&token));
+                    }
+                }
+            }
+        }
+
+        (subcommands, recognized, primary_available)
+    }
+
     fn is_block_header(trimmed: &str) -> bool {
         if trimmed.ends_with(':') && trimmed.len() < 64 {
             return true;
@@ -1687,6 +1864,74 @@ impl HelpParser {
 
         let lower = trimmed.to_ascii_lowercase();
         lower.contains("summary of") && lower.contains("commands")
+    }
+
+    fn classify_dense_command_grid_header(trimmed: &str) -> Option<bool> {
+        if trimmed.starts_with('-') {
+            return None;
+        }
+
+        let mut header = trimmed.trim_end_matches(':').trim();
+        if let Some((without_note, _)) = header.split_once(" (") {
+            header = without_note.trim();
+        }
+        if header.is_empty() {
+            return None;
+        }
+
+        let lower = header.to_ascii_lowercase();
+        if !lower.contains("command") {
+            return None;
+        }
+        if lower.contains("summary of") {
+            return None;
+        }
+        if lower.split_whitespace().count() > 5 {
+            return None;
+        }
+
+        let secondary_markers = [
+            "hash",
+            "digest",
+            "cipher",
+            "algorithm",
+            "algorithms",
+            "provider",
+            "providers",
+            "legacy",
+            "deprecated",
+            "debug",
+            "diagnostic",
+            "completion",
+            "completions",
+        ];
+        let is_primary = !secondary_markers
+            .iter()
+            .any(|marker| lower.contains(marker));
+        Some(is_primary)
+    }
+
+    fn parse_dense_command_grid_row(trimmed: &str) -> Option<Vec<&str>> {
+        if trimmed.starts_with('-') {
+            return None;
+        }
+
+        let tokens = PATTERNS
+            .column_break
+            .split(trimmed)
+            .map(str::trim)
+            .filter(|token| !token.is_empty())
+            .collect::<Vec<_>>();
+        if tokens.is_empty() {
+            return None;
+        }
+        if tokens.iter().all(|token| {
+            Self::is_valid_command_name(token) && Self::is_plausible_subcommand_name(token)
+        }) {
+            return Some(tokens);
+        }
+
+        None
     }
 
     fn is_non_command_block_header(header: &str) -> bool {
@@ -3294,6 +3539,30 @@ Common commands:
   -v, --verbose     Enable verbose output
 "#;
 
+    const OPENSSL_STYLE_GRID_HELP: &str = r#"
+help:
+
+Standard commands
+asn1parse         ca                ciphers           cmp
+cms               crl               crl2pkcs7         dgst
+help              info              kdf               list
+x509
+
+Message Digest commands (see the `dgst' command for more details)
+sha256            sha512            sm3
+
+Cipher commands (see the `enc' command for more details)
+aes-128-cbc       aes-128-ecb       aes-256-cbc       aes-256-ecb
+"#;
+
+    const NON_PRIMARY_GRID_ONLY_HELP: &str = r#"
+Hash commands
+sha1              sha256            sha512
+
+Cipher commands
+aes-128-cbc       aes-256-cbc       chacha20
+"#;
+
     const VALUE_TABLE_HELP: &str = r#"
 The version control method may be selected via the --backup option.
 Here are the values:
@@ -3792,6 +4061,49 @@ Flags:
                 .iter()
                 .any(|flag| flag.long.as_deref() == Some("--verbose"))
         );
+    }
+
+    #[test]
+    fn test_parse_dense_command_grid_prefers_primary_command_section() {
+        let mut parser = HelpParser::new("openssl", OPENSSL_STYLE_GRID_HELP);
+        let schema = parser.parse().unwrap();
+        let diagnostics = parser.diagnostics();
+
+        assert!(schema.find_subcommand("asn1parse").is_some());
+        assert!(schema.find_subcommand("ca").is_some());
+        assert!(schema.find_subcommand("cmp").is_some());
+        assert!(schema.find_subcommand("x509").is_some());
+
+        // Digest/cipher aliases should not replace top-level standard commands.
+        assert!(schema.find_subcommand("sha256").is_none());
+        assert!(schema.find_subcommand("aes-128-cbc").is_none());
+
+        assert!(
+            !diagnostics
+                .unresolved_lines
+                .iter()
+                .any(|line| line.contains("sha256")),
+            "digest command grid rows should be recognized as structured content"
+        );
+        assert!(
+            !diagnostics
+                .unresolved_lines
+                .iter()
+                .any(|line| line.contains("aes-128-cbc")),
+            "cipher command grid rows should be recognized as structured content"
+        );
+    }
+
+    #[test]
+    fn test_parse_dense_command_grid_without_primary_uses_all_sections() {
+        let mut parser = HelpParser::new("cryptool", NON_PRIMARY_GRID_ONLY_HELP);
+        let schema = parser.parse().unwrap();
+
+        assert!(schema.find_subcommand("sha1").is_some());
+        assert!(schema.find_subcommand("sha256").is_some());
+        assert!(schema.find_subcommand("sha512").is_some());
+        assert!(schema.find_subcommand("aes-128-cbc").is_some());
+        assert!(schema.find_subcommand("chacha20").is_some());
     }
 
     #[test]
