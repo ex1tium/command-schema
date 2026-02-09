@@ -155,10 +155,7 @@ pub fn detect_quick_version(command: &str) -> Option<String> {
 
 fn resolve_executable(command: &str) -> Option<PathBuf> {
     let base = command.split_whitespace().next().unwrap_or(command);
-    let output = Command::new("which")
-        .arg(base)
-        .output()
-        .ok()?;
+    let output = Command::new("which").arg(base).output().ok()?;
     if !output.status.success() {
         return None;
     }
@@ -167,7 +164,9 @@ fn resolve_executable(command: &str) -> Option<PathBuf> {
         return None;
     }
     // Resolve symlinks to get canonical path
-    fs::canonicalize(&path_str).ok().or_else(|| Some(PathBuf::from(path_str)))
+    fs::canonicalize(&path_str)
+        .ok()
+        .or_else(|| Some(PathBuf::from(path_str)))
 }
 
 fn dirs_cache_dir() -> PathBuf {
@@ -210,6 +209,8 @@ mod tests {
 
         let report = ExtractionReport {
             command: "testcmd".to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success: true,
             accepted_for_suggestions: true,
             quality_tier: crate::report::QualityTier::High,
@@ -286,6 +287,8 @@ mod tests {
 
         let report = ExtractionReport {
             command: "testcmd".to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success: true,
             accepted_for_suggestions: true,
             quality_tier: crate::report::QualityTier::High,
@@ -381,6 +384,8 @@ mod tests {
 
         let report = ExtractionReport {
             command: "probecmd".to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success: true,
             accepted_for_suggestions: true,
             quality_tier: crate::report::QualityTier::Medium,
@@ -400,13 +405,7 @@ mod tests {
             validation_errors: Vec::new(),
         };
 
-        cache.put(
-            key.clone(),
-            None,
-            report,
-            None,
-            Some("cobra".to_string()),
-        );
+        cache.put(key.clone(), None, report, None, Some("cobra".to_string()));
 
         let entry = cache.get(&key).unwrap();
         assert_eq!(entry.probe_mode, Some("cobra".to_string()));

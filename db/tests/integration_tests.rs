@@ -30,6 +30,8 @@ fn sample_metadata(version: Option<&str>, checksum: &str) -> CommandMetadata {
         extracted_at: "2024-01-15T10:30:00Z".into(),
         quality_tier: "high".into(),
         checksum: checksum.into(),
+        implementation: Some("test".into()),
+        schema_file: Some("test.json".into()),
     }
 }
 
@@ -184,7 +186,7 @@ fn test_manifest_workflow() {
 #[cfg(feature = "bundled-schemas")]
 mod bundled_schemas {
     use command_schema_core::CommandSchema;
-    use command_schema_db::{load_bundled_schemas, SchemaDatabase};
+    use command_schema_db::{SchemaDatabase, load_bundled_schemas};
     use std::io::Write;
     use std::path::Path;
 
@@ -532,7 +534,10 @@ fn test_corrupt_json_file_handling() {
 
     // Loading should fail due to the corrupt file
     let result = SchemaDatabase::from_dir(&dir);
-    assert!(result.is_err(), "Loading directory with corrupt JSON should fail");
+    assert!(
+        result.is_err(),
+        "Loading directory with corrupt JSON should fail"
+    );
 
     std::fs::remove_dir_all(&dir).ok();
 }
@@ -540,7 +545,10 @@ fn test_corrupt_json_file_handling() {
 #[test]
 fn test_nonexistent_directory_error() {
     let result = SchemaDatabase::from_dir("/nonexistent/path/that/does/not/exist");
-    assert!(result.is_err(), "Loading from nonexistent directory should fail");
+    assert!(
+        result.is_err(),
+        "Loading from nonexistent directory should fail"
+    );
 }
 
 #[test]
@@ -549,7 +557,10 @@ fn test_manifest_diff_with_empty_manifests() {
     let m2 = Manifest::new("0.1.0".into(), QualityPolicyFingerprint::default());
 
     let diff = m1.diff(&m2);
-    assert!(diff.is_empty(), "Diff of two empty manifests should be empty");
+    assert!(
+        diff.is_empty(),
+        "Diff of two empty manifests should be empty"
+    );
 }
 
 #[test]

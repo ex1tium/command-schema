@@ -199,8 +199,14 @@ impl SchemaQuery {
         // Insert global flags first; the returned map enables cross-scope
         // relationship resolution for subcommand flags.
         let empty = HashMap::new();
-        let (_flag_counts, global_flag_ids) =
-            convert::insert_flags(&tx, &self.prefix, command_id, None, &schema.global_flags, &empty)?;
+        let (_flag_counts, global_flag_ids) = convert::insert_flags(
+            &tx,
+            &self.prefix,
+            command_id,
+            None,
+            &schema.global_flags,
+            &empty,
+        )?;
 
         convert::insert_positional_args(
             &tx,
@@ -241,9 +247,7 @@ impl SchemaQuery {
                 "SELECT COUNT(*) FROM {}commands WHERE name = ?1",
                 self.prefix
             ))?
-            .query_row(params![schema.command], |row| {
-                Ok(row.get::<_, i64>(0)? > 0)
-            })?;
+            .query_row(params![schema.command], |row| Ok(row.get::<_, i64>(0)? > 0))?;
 
         if !exists {
             return Err(SqliteError::SchemaNotFound(schema.command.clone()));
@@ -259,8 +263,14 @@ impl SchemaQuery {
         let command_id = convert::insert_command(&tx, &self.prefix, schema)?;
 
         let empty = HashMap::new();
-        let (_flag_counts, global_flag_ids) =
-            convert::insert_flags(&tx, &self.prefix, command_id, None, &schema.global_flags, &empty)?;
+        let (_flag_counts, global_flag_ids) = convert::insert_flags(
+            &tx,
+            &self.prefix,
+            command_id,
+            None,
+            &schema.global_flags,
+            &empty,
+        )?;
 
         convert::insert_positional_args(
             &tx,

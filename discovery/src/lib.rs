@@ -147,9 +147,8 @@ pub fn parse_help_text_with_report(
 
     let (success, failure_code, failure_detail) = match &schema {
         Some(s) => {
-            let has_entities = !s.global_flags.is_empty()
-                || !s.subcommands.is_empty()
-                || !s.positional.is_empty();
+            let has_entities =
+                !s.global_flags.is_empty() || !s.subcommands.is_empty() || !s.positional.is_empty();
             if has_entities {
                 (true, None, None)
             } else {
@@ -179,6 +178,8 @@ pub fn parse_help_text_with_report(
         },
         report: ExtractionReport {
             command: command.to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success,
             accepted_for_suggestions: false,
             quality_tier: QualityTier::Failed,

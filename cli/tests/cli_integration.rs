@@ -68,7 +68,10 @@ fn test_parse_file_yaml_output() {
     );
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("command: git"), "YAML should contain command field");
+    assert!(
+        stdout.contains("command: git"),
+        "YAML should contain command field"
+    );
 }
 
 #[test]
@@ -120,20 +123,17 @@ fn test_parse_file_table_output() {
     );
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("Command: git"), "Table should contain command label");
+    assert!(
+        stdout.contains("Command: git"),
+        "Table should contain command label"
+    );
 }
 
 #[test]
 fn test_parse_file_with_report() {
     let bin = schema_discover_bin();
     let output = Command::new(&bin)
-        .args([
-            "parse-file",
-            "--command",
-            "git",
-            "--with-report",
-            "--input",
-        ])
+        .args(["parse-file", "--command", "git", "--with-report", "--input"])
         .arg(fixture("git-help.txt").to_str().unwrap())
         .output()
         .expect("failed to run schema-discover");
@@ -149,7 +149,10 @@ fn test_parse_file_with_report() {
         .unwrap_or_else(|e| panic!("Invalid JSON with report: {e}\n{stdout}"));
 
     // Should have both schema and report fields
-    assert!(parsed.get("report").is_some(), "should contain report field");
+    assert!(
+        parsed.get("report").is_some(),
+        "should contain report field"
+    );
     assert!(parsed["report"]["command"] == "git");
 }
 
@@ -158,8 +161,8 @@ fn test_parse_file_with_report() {
 #[test]
 fn test_parse_stdin_json_output() {
     let bin = schema_discover_bin();
-    let help_text = fs::read_to_string(fixture("kubectl-help.txt"))
-        .expect("fixture should be readable");
+    let help_text =
+        fs::read_to_string(fixture("kubectl-help.txt")).expect("fixture should be readable");
 
     let mut child = Command::new(&bin)
         .args(["parse-stdin", "--command", "kubectl"])
@@ -183,16 +186,15 @@ fn test_parse_stdin_json_output() {
     );
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    let parsed: serde_json::Value = serde_json::from_str(&stdout)
-        .unwrap_or_else(|e| panic!("Invalid JSON: {e}\n{stdout}"));
+    let parsed: serde_json::Value =
+        serde_json::from_str(&stdout).unwrap_or_else(|e| panic!("Invalid JSON: {e}\n{stdout}"));
     assert_eq!(parsed["command"], "kubectl");
 }
 
 #[test]
 fn test_parse_stdin_with_report_yaml() {
     let bin = schema_discover_bin();
-    let help_text = fs::read_to_string(fixture("ls-help.txt"))
-        .expect("fixture should be readable");
+    let help_text = fs::read_to_string(fixture("ls-help.txt")).expect("fixture should be readable");
 
     let mut child = Command::new(&bin)
         .args([
@@ -224,7 +226,10 @@ fn test_parse_stdin_with_report_yaml() {
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     // YAML format with --with-report outputs schema then report
-    assert!(stdout.contains("command:"), "YAML output should contain command field");
+    assert!(
+        stdout.contains("command:"),
+        "YAML output should contain command field"
+    );
 }
 
 // ---- library-level integration tests ----
@@ -260,7 +265,8 @@ fn test_parse_help_text_with_report_stamps_version() {
 
 #[test]
 fn test_parse_help_text_failure_returns_no_schema() {
-    let result = command_schema_discovery::parse_help_text("fakecmd", "this is not help text at all");
+    let result =
+        command_schema_discovery::parse_help_text("fakecmd", "this is not help text at all");
     // May or may not succeed depending on parser heuristics, but if no schema
     // is produced, success should be false.
     if result.schema.is_none() {
@@ -276,9 +282,22 @@ fn test_multi_format_output_consistency() {
 
     // All formats should produce non-empty output
     use command_schema_discovery::output::{OutputFormat, format_schema};
-    for format in [OutputFormat::Json, OutputFormat::Yaml, OutputFormat::Markdown, OutputFormat::Table] {
+    for format in [
+        OutputFormat::Json,
+        OutputFormat::Yaml,
+        OutputFormat::Markdown,
+        OutputFormat::Table,
+    ] {
         let output = format_schema(&schema, format).expect("formatting should succeed");
-        assert!(!output.is_empty(), "format {:?} produced empty output", format);
-        assert!(output.contains("git"), "format {:?} should mention 'git'", format);
+        assert!(
+            !output.is_empty(),
+            "format {:?} produced empty output",
+            format
+        );
+        assert!(
+            output.contains("git"),
+            "format {:?} should mention 'git'",
+            format
+        );
     }
 }

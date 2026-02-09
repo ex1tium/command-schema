@@ -408,10 +408,7 @@ impl SubcommandSchema {
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct CommandSchema {
     /// Schema contract version (populated from [`SCHEMA_CONTRACT_VERSION`]).
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none"
-    )]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub schema_version: Option<String>,
     /// The base command name (e.g., "git", "docker")
     pub command: String,

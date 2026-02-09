@@ -35,20 +35,20 @@
 //!   decompression of embedded schemas via the `bundled` module.
 //!   Requires the `flate2` dependency.
 
-mod error;
-mod manifest;
-mod loader;
 mod config;
+mod error;
+mod loader;
+mod manifest;
 
 #[cfg(feature = "bundled-schemas")]
 mod bundled {
     include!(concat!(env!("OUT_DIR"), "/bundled.rs"));
 }
 
+pub use config::{CIConfig, ExtractionConfig, QualityConfig};
 pub use error::{DatabaseError, Result};
-pub use manifest::{Manifest, CommandMetadata, QualityPolicyFingerprint};
-pub use loader::{SchemaDatabase, DatabaseBuilder, DatabaseSource};
-pub use config::{CIConfig, QualityConfig, ExtractionConfig};
+pub use loader::{DatabaseBuilder, DatabaseSource, SchemaDatabase};
+pub use manifest::{CommandMetadata, Manifest, QualityPolicyFingerprint};
 
 #[cfg(feature = "bundled-schemas")]
 pub use bundled::load_bundled_schemas;

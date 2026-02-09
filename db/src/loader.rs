@@ -398,10 +398,7 @@ mod tests {
         std::fs::create_dir_all(&dir).unwrap();
         write_schema(&dir, &test_schema("git"));
 
-        let db = SchemaDatabase::builder()
-            .from_dir(&dir)
-            .build()
-            .unwrap();
+        let db = SchemaDatabase::builder().from_dir(&dir).build().unwrap();
         assert!(db.contains("git"));
 
         std::fs::remove_dir_all(&dir).ok();

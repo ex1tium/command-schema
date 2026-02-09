@@ -158,9 +158,7 @@ pub fn insert_flags(
         if let ValueType::Choice(ref choices) = flag.value_type {
             for choice in choices {
                 conn.execute(
-                    &format!(
-                        "INSERT INTO {prefix}flag_choices (flag_id, choice) VALUES (?1, ?2)"
-                    ),
+                    &format!("INSERT INTO {prefix}flag_choices (flag_id, choice) VALUES (?1, ?2)"),
                     params![flag_id, choice],
                 )?;
                 counts.choices += 1;
@@ -248,18 +246,29 @@ pub fn insert_subcommands(
         }
 
         // Insert subcommand-scoped flags (with global fallback for relationships)
-        let (flag_counts, _local_flag_ids) =
-            insert_flags(conn, prefix, command_id, Some(sub_id), &sub.flags, global_flag_ids)?;
+        let (flag_counts, _local_flag_ids) = insert_flags(
+            conn,
+            prefix,
+            command_id,
+            Some(sub_id),
+            &sub.flags,
+            global_flag_ids,
+        )?;
         counts.merge(&flag_counts);
 
         // Insert subcommand positional args
-        let arg_counts =
-            insert_positional_args(conn, prefix, None, Some(sub_id), &sub.positional)?;
+        let arg_counts = insert_positional_args(conn, prefix, None, Some(sub_id), &sub.positional)?;
         counts.merge(&arg_counts);
 
         // Recurse for nested subcommands
-        let nested_counts =
-            insert_subcommands(conn, prefix, command_id, Some(sub_id), &sub.subcommands, global_flag_ids)?;
+        let nested_counts = insert_subcommands(
+            conn,
+            prefix,
+            command_id,
+            Some(sub_id),
+            &sub.subcommands,
+            global_flag_ids,
+        )?;
         counts.merge(&nested_counts);
     }
 
@@ -303,9 +312,7 @@ pub fn insert_positional_args(
         if let ValueType::Choice(ref choices) = arg.value_type {
             for choice in choices {
                 conn.execute(
-                    &format!(
-                        "INSERT INTO {prefix}arg_choices (arg_id, choice) VALUES (?1, ?2)"
-                    ),
+                    &format!("INSERT INTO {prefix}arg_choices (arg_id, choice) VALUES (?1, ?2)"),
                     params![arg_id, choice],
                 )?;
                 counts.choices += 1;
@@ -440,7 +447,15 @@ fn load_flags_for(
     command_id: i64,
     subcommand_id: Option<i64>,
 ) -> Result<Vec<FlagSchema>> {
-    type FlagRow = (i64, Option<String>, Option<String>, String, bool, Option<String>, bool);
+    type FlagRow = (
+        i64,
+        Option<String>,
+        Option<String>,
+        String,
+        bool,
+        Option<String>,
+        bool,
+    );
 
     // Collect raw row data first to avoid closure type mismatches
     let raw_rows: Vec<FlagRow> = if let Some(sid) = subcommand_id {
@@ -481,7 +496,6 @@ fn load_flags_for(
 
     let mut flags = Vec::new();
     for (flag_id, short, long, value_type_str, takes_value, description, multiple) in raw_rows {
-
         // Load choices for this flag
         let choices = load_flag_choices(conn, prefix, flag_id)?;
 
@@ -549,7 +563,7 @@ fn load_flag_relationships(
 
     let rows = stmt.query_map(params![flag_id], |row| {
         Ok((
-            row.get::<_, String>(1)?, // relationship_type
+            row.get::<_, String>(1)?,         // relationship_type
             row.get::<_, Option<String>>(2)?, // short
             row.get::<_, Option<String>>(3)?, // long
         ))
@@ -610,7 +624,9 @@ fn load_positional_args(
 
     // SAFETY: The match above returns early for (None, None) and (Some, Some),
     // so exactly one of command_id or subcommand_id is Some here.
-    let id_param = command_id.or(subcommand_id).expect("exactly one of command_id or subcommand_id must be Some");
+    let id_param = command_id
+        .or(subcommand_id)
+        .expect("exactly one of command_id or subcommand_id must be Some");
     let rows = stmt.query_map(params![id_param], |row| {
         Ok((
             row.get::<_, i64>(0)?,

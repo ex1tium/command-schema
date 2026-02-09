@@ -30,12 +30,14 @@ fn complex_schema() -> CommandSchema {
     schema.confidence = 0.95;
 
     // Global flags
-    schema.global_flags.push(
-        FlagSchema::boolean(Some("-v"), Some("--verbose")).with_description("Be verbose"),
-    );
     schema
         .global_flags
-        .push(FlagSchema::with_value(None, Some("--git-dir"), ValueType::Directory));
+        .push(FlagSchema::boolean(Some("-v"), Some("--verbose")).with_description("Be verbose"));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--git-dir"),
+        ValueType::Directory,
+    ));
 
     // Global positional arg
     schema
@@ -54,9 +56,9 @@ fn complex_schema() -> CommandSchema {
     commit
         .flags
         .push(FlagSchema::boolean(Some("-a"), Some("--all")).with_description("Stage all changes"));
-    commit.flags.push(
-        FlagSchema::boolean(None, Some("--amend")).with_description("Amend previous commit"),
-    );
+    commit
+        .flags
+        .push(FlagSchema::boolean(None, Some("--amend")).with_description("Amend previous commit"));
 
     // Flag with choices
     commit.flags.push(FlagSchema::with_value(
@@ -160,11 +162,9 @@ fn setup_query() -> SchemaQuery {
     conn.execute_batch("PRAGMA foreign_keys = ON;").unwrap();
 
     // Create tables first
-    let schema_sql = command_schema_sqlite::Migration::new(
-        Connection::open_in_memory().unwrap(),
-        "cs_",
-    )
-    .unwrap();
+    let schema_sql =
+        command_schema_sqlite::Migration::new(Connection::open_in_memory().unwrap(), "cs_")
+            .unwrap();
     // We need to create tables on the actual connection
     drop(schema_sql);
 
@@ -386,20 +386,54 @@ fn test_round_trip_all_value_types() {
     let mut query = setup_query();
 
     let mut schema = CommandSchema::new("types_test", SchemaSource::Learned);
-    schema.global_flags.push(FlagSchema::boolean(None, Some("--bool-flag")));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--string-flag"), ValueType::String));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--number-flag"), ValueType::Number));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--file-flag"), ValueType::File));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--dir-flag"), ValueType::Directory));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--url-flag"), ValueType::Url));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--branch-flag"), ValueType::Branch));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--remote-flag"), ValueType::Remote));
+    schema
+        .global_flags
+        .push(FlagSchema::boolean(None, Some("--bool-flag")));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--string-flag"),
+        ValueType::String,
+    ));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--number-flag"),
+        ValueType::Number,
+    ));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--file-flag"),
+        ValueType::File,
+    ));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--dir-flag"),
+        ValueType::Directory,
+    ));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--url-flag"),
+        ValueType::Url,
+    ));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--branch-flag"),
+        ValueType::Branch,
+    ));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--remote-flag"),
+        ValueType::Remote,
+    ));
     schema.global_flags.push(FlagSchema::with_value(
         None,
         Some("--choice-flag"),
         ValueType::Choice(vec!["a".to_string(), "b".to_string()]),
     ));
-    schema.global_flags.push(FlagSchema::with_value(None, Some("--any-flag"), ValueType::Any));
+    schema.global_flags.push(FlagSchema::with_value(
+        None,
+        Some("--any-flag"),
+        ValueType::Any,
+    ));
 
     query.insert_schema(&schema).unwrap();
     let loaded = query.get_schema("types_test").unwrap().unwrap();
@@ -707,9 +741,9 @@ fn test_cascade_delete_cleans_up_all_related_data() {
 fn test_multiple_flag_round_trip() {
     let mut query = setup_query();
     let mut schema = CommandSchema::new("test", SchemaSource::Bootstrap);
-    schema
-        .global_flags
-        .push(FlagSchema::with_value(Some("-I"), Some("--include"), ValueType::String).allow_multiple());
+    schema.global_flags.push(
+        FlagSchema::with_value(Some("-I"), Some("--include"), ValueType::String).allow_multiple(),
+    );
 
     query.insert_schema(&schema).unwrap();
     let loaded = query.get_schema("test").unwrap().unwrap();

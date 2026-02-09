@@ -8,7 +8,8 @@ struct TempDir {
 
 impl TempDir {
     fn new(name: &str) -> Self {
-        let path = std::env::temp_dir().join(format!("schema_cli_test_{name}_{}", std::process::id()));
+        let path =
+            std::env::temp_dir().join(format!("schema_cli_test_{name}_{}", std::process::id()));
         let _ = fs::remove_dir_all(&path);
         fs::create_dir_all(&path).expect("failed to create temp dir");
         Self { path }
@@ -66,8 +67,7 @@ fn write_test_schema(dir: &TempDir, command: &str) -> PathBuf {
         "positional": []
     });
     let path = dir.join(format!("{command}.json"));
-    fs::write(&path, serde_json::to_string_pretty(&json).unwrap())
-        .expect("failed to write schema");
+    fs::write(&path, serde_json::to_string_pretty(&json).unwrap()).expect("failed to write schema");
     path
 }
 

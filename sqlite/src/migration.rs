@@ -164,15 +164,23 @@ impl Migration {
 
         for cmd_name in &commands {
             // SAFETY: cmd_name comes from db.commands(), so it is guaranteed to exist.
-            let schema = db.get(cmd_name).expect("command from commands() iterator must exist in database");
+            let schema = db
+                .get(cmd_name)
+                .expect("command from commands() iterator must exist in database");
             let command_id = convert::insert_command(&tx, &self.prefix, schema)?;
             report.commands_inserted += 1;
 
             // Insert global flags first; the returned map enables cross-scope
             // relationship resolution for subcommand flags.
             let empty = HashMap::new();
-            let (flag_counts, global_flag_ids) =
-                convert::insert_flags(&tx, &self.prefix, command_id, None, &schema.global_flags, &empty)?;
+            let (flag_counts, global_flag_ids) = convert::insert_flags(
+                &tx,
+                &self.prefix,
+                command_id,
+                None,
+                &schema.global_flags,
+                &empty,
+            )?;
             report.merge_counts(&flag_counts);
 
             // Insert global positional args
@@ -224,9 +232,9 @@ impl Migration {
     /// Checks whether the commands table exists.
     fn tables_exist(&self) -> Result<bool> {
         let table_name = format!("{}commands", self.prefix);
-        let mut stmt = self.conn.prepare(
-            "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=?1",
-        )?;
+        let mut stmt = self
+            .conn
+            .prepare("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=?1")?;
         let count: i64 = stmt.query_row([&table_name], |row| row.get(0))?;
         Ok(count > 0)
     }

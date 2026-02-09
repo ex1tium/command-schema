@@ -24,7 +24,7 @@ fn collect_version_candidates(text: &str, command_name: &str) -> Vec<(String, f6
         (\d{1,4}\.\d{1,4}(?:\.\d{1,6})?) # major.minor[.patch]
         ([-+][a-zA-Z0-9._+-]*)?        # optional pre-release / build
         \b
-        "
+        ",
     )
     .expect("version regex");
 
@@ -43,7 +43,10 @@ fn collect_version_candidates(text: &str, command_name: &str) -> Vec<(String, f6
             let full_match = cap.get(0).expect("capture group 0 always exists");
             let raw = full_match.as_str().to_string();
             // SAFETY: Capture group 1 always exists because the regex requires it for a match.
-            let core = cap.get(1).expect("capture group 1 is required by the regex pattern").as_str();
+            let core = cap
+                .get(1)
+                .expect("capture group 1 is required by the regex pattern")
+                .as_str();
 
             // Reject date-like patterns (e.g. 2024.01.15, 2024-01-15)
             if is_likely_date(core) {
@@ -138,9 +141,9 @@ fn is_likely_ip(version: &str) -> bool {
     if parts.len() >= 3 {
         // IP addresses have 4 octets, version typically has 2-3 components
         // Check if all components look like octets (0-255)
-        let all_octets = parts.iter().all(|p| {
-            p.parse::<u32>().is_ok_and(|n| n <= 255)
-        });
+        let all_octets = parts
+            .iter()
+            .all(|p| p.parse::<u32>().is_ok_and(|n| n <= 255));
         // Only reject if it looks like 4 octets (x.x.x.x pattern)
         if parts.len() >= 4 && all_octets {
             return true;
@@ -168,13 +171,19 @@ mod tests {
     #[test]
     fn test_v_prefix_version() {
         let text = "mycmd v1.2.3-rc1\nUsage: mycmd [options]";
-        assert_eq!(extract_version(text, "mycmd"), Some("1.2.3-rc1".to_string()));
+        assert_eq!(
+            extract_version(text, "mycmd"),
+            Some("1.2.3-rc1".to_string())
+        );
     }
 
     #[test]
     fn test_version_with_build_suffix() {
         let text = "tool version 3.4.5+build123";
-        assert_eq!(extract_version(text, "tool"), Some("3.4.5+build123".to_string()));
+        assert_eq!(
+            extract_version(text, "tool"),
+            Some("3.4.5+build123".to_string())
+        );
     }
 
     #[test]

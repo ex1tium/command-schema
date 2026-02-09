@@ -24,8 +24,14 @@ fn test_parse_kubectl_fixture_extracts_flags_and_subcommands() {
     let schema = parser.parse().expect("fixture should parse");
     assert_eq!(parser.detected_format(), Some(HelpFormat::Cobra));
 
-    assert!(schema.find_subcommand("get").is_some(), "missing 'get' subcommand");
-    assert!(schema.find_subcommand("edit").is_some(), "missing 'edit' subcommand");
+    assert!(
+        schema.find_subcommand("get").is_some(),
+        "missing 'get' subcommand"
+    );
+    assert!(
+        schema.find_subcommand("edit").is_some(),
+        "missing 'edit' subcommand"
+    );
 
     let help_flag = schema
         .global_flags
@@ -93,7 +99,10 @@ fn test_parse_coreutils_and_complex_fixtures() {
     let cp_help = fixture("cp-help.txt");
     let mut cp_parser = HelpParser::new("cp", &cp_help);
     let cp_schema = cp_parser.parse().expect("cp fixture should parse");
-    assert!(cp_schema.find_global_flag("-r").is_some(), "missing '-r' flag");
+    assert!(
+        cp_schema.find_global_flag("-r").is_some(),
+        "missing '-r' flag"
+    );
 
     let mv_help = fixture("mv-help.txt");
     let mut mv_parser = HelpParser::new("mv", &mv_help);

@@ -50,7 +50,10 @@ fn main() {
     println!("  Args inserted: {}", report.args_inserted);
     println!("  Choices inserted: {}", report.choices_inserted);
     println!("  Aliases inserted: {}", report.aliases_inserted);
-    println!("  Relationships inserted: {}", report.relationships_inserted);
+    println!(
+        "  Relationships inserted: {}",
+        report.relationships_inserted
+    );
 
     let status = migration.status().unwrap();
     println!("\nDatabase status:");
@@ -89,8 +92,7 @@ fn main() {
     println!("\n=== Runtime learning ===");
     let mut learned = CommandSchema::new("mycli", SchemaSource::Learned);
     learned.global_flags.push(
-        FlagSchema::boolean(Some("-v"), Some("--verbose"))
-            .with_description("Verbose output"),
+        FlagSchema::boolean(Some("-v"), Some("--verbose")).with_description("Verbose output"),
     );
     query.insert_schema(&learned).unwrap();
     println!("Inserted learned schema for 'mycli'");
@@ -104,8 +106,15 @@ fn main() {
             .with_description("Output file"),
     );
     query.update_schema(&learned).unwrap();
-    println!("Updated 'mycli' schema (now {} flags)",
-        query.get_schema("mycli").unwrap().unwrap().global_flags.len());
+    println!(
+        "Updated 'mycli' schema (now {} flags)",
+        query
+            .get_schema("mycli")
+            .unwrap()
+            .unwrap()
+            .global_flags
+            .len()
+    );
 
     // === Step 7: Delete a schema ===
     query.delete_schema("mycli").unwrap();
@@ -128,10 +137,9 @@ fn create_git_schema() -> CommandSchema {
     let mut schema = CommandSchema::new("git", SchemaSource::Bootstrap);
     schema.description = Some("The stupid content tracker".into());
     schema.version = Some("2.43.0".into());
-    schema.global_flags.push(
-        FlagSchema::boolean(Some("-v"), Some("--verbose"))
-            .with_description("Be verbose"),
-    );
+    schema
+        .global_flags
+        .push(FlagSchema::boolean(Some("-v"), Some("--verbose")).with_description("Be verbose"));
     schema.subcommands.push(
         SubcommandSchema::new("commit")
             .with_flag(
@@ -159,6 +167,8 @@ fn create_curl_schema() -> CommandSchema {
         FlagSchema::with_value(Some("-o"), Some("--output"), ValueType::File)
             .with_description("Write to file instead of stdout"),
     );
-    schema.positional.push(ArgSchema::required("url", ValueType::Url));
+    schema
+        .positional
+        .push(ArgSchema::required("url", ValueType::Url));
     schema
 }

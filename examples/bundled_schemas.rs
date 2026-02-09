@@ -34,7 +34,9 @@ fn main() {
             }
             Err(e) => {
                 println!("No bundled schemas available: {e}");
-                println!("(This is expected if no schemas were in schemas/database/ at build time)");
+                println!(
+                    "(This is expected if no schemas were in schemas/database/ at build time)"
+                );
             }
         }
     }
@@ -42,15 +44,17 @@ fn main() {
     #[cfg(not(feature = "bundled-schemas"))]
     {
         println!("=== Bundled schemas feature not enabled ===");
-        println!("Run with: cargo run -p command-schema-examples --features bundled-schemas --example bundled_schemas");
+        println!(
+            "Run with: cargo run -p command-schema-examples --features bundled-schemas --example bundled_schemas"
+        );
         println!();
     }
 
     // Builder pattern with bundled schemas as fallback
     println!("=== Builder with fallback chain ===");
     let result = SchemaDatabase::builder()
-        .from_dir("schemas/database/")   // Try directory first (development)
-        .with_bundled()                   // Fall back to bundled (production)
+        .from_dir("schemas/database/") // Try directory first (development)
+        .with_bundled() // Fall back to bundled (production)
         .build();
 
     match result {

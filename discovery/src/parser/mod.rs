@@ -595,6 +595,11 @@ impl HelpParser {
             {
                 continue;
             }
+            if Self::split_two_columns(trimmed).is_some_and(|(left, _)| {
+                Self::looks_like_command_token(left) || Self::looks_like_flag_row_start(left)
+            }) {
+                continue;
+            }
             // Found a description line
             if trimmed.len() > 10
                 && !trimmed.contains("--")
@@ -602,10 +607,37 @@ impl HelpParser {
                 && !trimmed.contains(']')
                 && !trimmed.contains("...")
             {
-                return Some(trimmed.to_string());
+                return Self::sanitize_description_text(trimmed);
             }
         }
         None
+    }
+
+    fn sanitize_description_text(raw: &str) -> Option<String> {
+        static DOT_LEADER_PREFIX_RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"^(?:\.+\s+)+").expect("static regex must compile"));
+        static INLINE_DOUBLE_DASH_SENTINEL_RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"\s--\s{2,}.*$").expect("static regex must compile"));
+        static MULTI_WS_RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"\s+").expect("static regex must compile"));
+
+        let mut cleaned = raw.trim().to_string();
+        if cleaned.is_empty() {
+            return None;
+        }
+
+        cleaned = DOT_LEADER_PREFIX_RE.replace(&cleaned, "").into_owned();
+        cleaned = INLINE_DOUBLE_DASH_SENTINEL_RE
+            .replace(&cleaned, "")
+            .into_owned();
+        cleaned = MULTI_WS_RE.replace_all(&cleaned, " ").into_owned();
+
+        let trimmed = cleaned.trim();
+        if trimmed.is_empty() {
+            None
+        } else {
+            Some(trimmed.to_string())
+        }
     }
 
     /// Identifies typed sections in the help output.
@@ -775,7 +807,7 @@ impl HelpParser {
 
             let mut sub = SubcommandSchema::new(primary);
             if let Some(desc) = description.filter(|value| !value.is_empty()) {
-                sub.description = Some(desc.to_string());
+                sub.description = Self::sanitize_description_text(desc);
             }
             sub.aliases = names.into_iter().map(str::to_string).collect();
             subcommands.push(sub);
@@ -866,14 +898,14 @@ impl HelpParser {
 
             let (left, description) =
                 if let Some((name_col, desc_col)) = Self::split_two_columns(trimmed) {
-                    (name_col, Some(desc_col))
+                    (name_col, Self::sanitize_description_text(desc_col))
                 } else {
                     (trimmed, None)
                 };
 
             for mut arg in Self::parse_argument_tokens(left) {
                 if arg.description.is_none() {
-                    arg.description = description.map(ToOwned::to_owned);
+                    arg.description = description.clone();
                 }
                 if arg.value_type == ValueType::String
                     && let Some(desc) = arg.description.as_deref()
@@ -1100,6 +1132,9 @@ impl HelpParser {
     fn parse_flag_entries_from_line(&self, line: &str) -> Vec<FlagSchema> {
         let trimmed = line.trim();
         if !Self::looks_like_flag_row_start(trimmed) {
+            if let Some(flag) = self.parse_compact_option_row_as_flag(trimmed) {
+                return vec![flag];
+            }
             return Vec::new();
         }
 
@@ -1224,7 +1259,7 @@ impl HelpParser {
         // Extract description from the second column if present.
         if let Some(desc) = parsed_description {
             if !desc.is_empty() && !desc.starts_with('-') {
-                description = Some(desc.to_string());
+                description = Self::sanitize_description_text(desc);
             }
         }
 
@@ -1258,6 +1293,38 @@ impl HelpParser {
             takes_value,
             description,
             multiple,
+            conflicts_with,
+            requires,
+        })
+    }
+
+    fn parse_compact_option_row_as_flag(&self, line: &str) -> Option<FlagSchema> {
+        let Some((left, right)) = Self::split_two_columns(line) else {
+            return None;
+        };
+        if left.starts_with('-') || left.contains(' ') {
+            return None;
+        }
+
+        let token = left.trim_end_matches(',');
+        if token.len() != 1 {
+            return None;
+        }
+        let marker = token.chars().next()?;
+        if !marker.is_ascii_alphanumeric() {
+            return None;
+        }
+
+        let description = Self::sanitize_description_text(right)?;
+        let (conflicts_with, requires) = Self::extract_flag_relationships(&description);
+
+        Some(FlagSchema {
+            short: Some(format!("-{marker}")),
+            long: None,
+            value_type: ValueType::Bool,
+            takes_value: false,
+            description: Some(description),
+            multiple: false,
             conflicts_with,
             requires,
         })
@@ -1322,7 +1389,8 @@ impl HelpParser {
     fn extract_flag_relationships(description: &str) -> (Vec<String>, Vec<String>) {
         // SAFETY: This regex is a compile-time constant and is validated by tests.
         static FLAG_REF_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").expect("static regex must compile")
+            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})")
+                .expect("static regex must compile")
         });
         let lower = description.to_ascii_lowercase();
         let mut conflicts = Vec::new();
@@ -1454,6 +1522,46 @@ impl HelpParser {
                     .chars()
                     .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
             })
+    }
+
+    pub(super) fn looks_like_compact_option_row(trimmed: &str) -> bool {
+        let Some((left, _)) = Self::split_two_columns(trimmed) else {
+            return false;
+        };
+        if left.starts_with('-') || left.contains(' ') {
+            return false;
+        }
+
+        let token = left.trim_end_matches(',');
+        token.len() == 1
+            && token
+                .chars()
+                .next()
+                .is_some_and(|ch| ch.is_ascii_alphanumeric())
+    }
+
+    pub(super) fn looks_like_symbolic_option_row(trimmed: &str) -> bool {
+        let Some((left, _)) = Self::split_two_columns(trimmed) else {
+            return false;
+        };
+        let left = left.trim();
+        if left.is_empty() {
+            return false;
+        }
+
+        let Some(marker) = left.chars().next() else {
+            return false;
+        };
+        if marker != '+' && marker != '^' {
+            return false;
+        }
+
+        let head = left.split_whitespace().next().unwrap_or_default();
+        head.len() >= 2
+            && head
+                .chars()
+                .skip(1)
+                .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '?' | '@' | '[' | ']'))
     }
 
     #[allow(dead_code)]
@@ -2157,7 +2265,7 @@ impl HelpParser {
 
             if seen.insert(left.to_string()) {
                 let mut sub = SubcommandSchema::new(left);
-                sub.description = Some(right.to_string());
+                sub.description = Self::sanitize_description_text(right);
                 subcommands.push(sub);
                 recognized.insert(line.index);
             }
@@ -2320,7 +2428,11 @@ impl HelpParser {
             }
         }
 
-        if let Some(incoming_desc) = incoming.description {
+        if let Some(incoming_desc) = incoming
+            .description
+            .as_deref()
+            .and_then(Self::sanitize_description_text)
+        {
             let replace = target
                 .description
                 .as_ref()
@@ -2450,16 +2562,20 @@ impl HelpParser {
                 .expect("static regex must compile")
         });
         static PLACEHOLDER_VALUES_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+is one of the following\s*:\s*$").expect("static regex must compile")
+            Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+is one of the following\s*:\s*$")
+                .expect("static regex must compile")
         });
-        static PLACEHOLDER_DETERMINES_RE: LazyLock<Regex> =
-            LazyLock::new(|| Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+determines\b.*:\s*$").expect("static regex must compile"));
+        static PLACEHOLDER_DETERMINES_RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"^([A-Z][A-Z0-9_-]{1,})\s+determines\b.*:\s*$")
+                .expect("static regex must compile")
+        });
         static GENERIC_VALUES_HEADER_RE: LazyLock<Regex> = LazyLock::new(|| {
             Regex::new(r"(?i)^.*\b(here are the values|possible values|available values)\b.*:?\s*$")
                 .expect("static regex must compile")
         });
         static FLAG_REF_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})").expect("static regex must compile")
+            Regex::new(r"(--[a-zA-Z][-a-zA-Z0-9.]*|-[a-zA-Z0-9?@]{1,3})")
+                .expect("static regex must compile")
         });
 
         #[derive(Clone)]
@@ -3348,6 +3464,47 @@ Options:
   -a, --alpha        ........  Toggle alpha mode.
 "#;
 
+    const SEMICOLON_WRAPPED_FLAG_HELP: &str = r#"
+Options:
+  --flush-cache   clear the fact cache for every host in inventory
+                  --list-hosts          outputs a list of matching hosts; does not execute anything else
+"#;
+
+    const AWK_DOUBLE_DASH_SENTINEL_HELP: &str = r#"
+Options:
+  -v var=value        assigns value to program variable var. --               unambiguous end of options.
+"#;
+
+    const MAWK_HELP_WITH_SEPARATE_DOUBLE_DASH_ROW: &str = r#"
+Usage: mawk [Options] [Program] [file ...]
+
+Program:
+    The -f option value is the name of a file containing program text.
+    If no -f option is given, a "--" ends option processing; the following
+    parameters are the program text.
+
+Options:
+    -f program-file  Program  text is read from file instead of from the
+                     command-line.  Multiple -f options are accepted.
+    -F value         sets the field separator, FS, to value.
+    -v var=value     assigns value to program variable var.
+    --               unambiguous end of options.
+"#;
+
+    const BSD_COMPACT_OPTION_ROWS_HELP: &str = r#"
+Options:
+  -P                   add psr column
+  s                    signal format
+  u                    user-oriented format
+  v                    virtual memory format
+"#;
+
+    const PIP_COMMAND_TABLE_HELP: &str = r#"
+Commands:
+  install                     Install packages.
+  download                    Download packages.
+"#;
+
     const CONTEXTUAL_VALUES_TABLE_HELP: &str = r#"
 Options:
   --backup[=CONTROL]       make a backup of destination file
@@ -4111,6 +4268,114 @@ Special settings:
             .find(|flag| flag.long.as_deref() == Some("--alpha"))
             .expect("--alpha flag should exist");
         assert!(!alpha.multiple);
+        assert_eq!(alpha.description.as_deref(), Some("Toggle alpha mode."));
+    }
+
+    #[test]
+    fn test_semicolon_prefixed_new_flag_row_is_not_merged() {
+        let mut parser = HelpParser::new("ansible", SEMICOLON_WRAPPED_FLAG_HELP);
+        let schema = parser.parse().unwrap();
+
+        let flush_cache = schema
+            .global_flags
+            .iter()
+            .find(|flag| flag.long.as_deref() == Some("--flush-cache"))
+            .expect("--flush-cache should exist");
+        let list_hosts = schema
+            .global_flags
+            .iter()
+            .find(|flag| flag.long.as_deref() == Some("--list-hosts"))
+            .expect("--list-hosts should exist");
+
+        let flush_desc = flush_cache.description.as_deref().unwrap_or_default();
+        assert!(
+            !flush_desc.contains("--list-hosts"),
+            "flush-cache description should not include list-hosts row: {flush_desc}"
+        );
+        assert!(
+            list_hosts
+                .description
+                .as_deref()
+                .unwrap_or_default()
+                .contains("does not execute anything else")
+        );
+    }
+
+    #[test]
+    fn test_strip_double_dash_sentinel_from_description() {
+        let mut parser = HelpParser::new("awk", AWK_DOUBLE_DASH_SENTINEL_HELP);
+        let schema = parser.parse().unwrap();
+        let v_flag = schema
+            .global_flags
+            .iter()
+            .find(|flag| flag.short.as_deref() == Some("-v"))
+            .expect("-v should exist");
+        assert_eq!(
+            v_flag.description.as_deref(),
+            Some("assigns value to program variable var.")
+        );
+    }
+
+    #[test]
+    fn test_mawk_double_dash_row_does_not_leak_into_previous_flag_description() {
+        let mut parser = HelpParser::new("awk", MAWK_HELP_WITH_SEPARATE_DOUBLE_DASH_ROW);
+        let schema = parser.parse().unwrap();
+        let v_flag = schema
+            .global_flags
+            .iter()
+            .find(|flag| flag.short.as_deref() == Some("-v"))
+            .expect("-v should exist");
+        let desc = v_flag.description.as_deref().unwrap_or_default();
+        assert_eq!(desc, "assigns value to program variable var.");
+        assert!(
+            !desc.contains("unambiguous end of options"),
+            "unexpected leaked text in -v description: {desc}"
+        );
+    }
+
+    #[test]
+    fn test_parse_compact_bsd_option_rows_without_merging_into_previous_flag() {
+        let mut parser = HelpParser::new("ps", BSD_COMPACT_OPTION_ROWS_HELP);
+        let schema = parser.parse().unwrap();
+
+        let p_flag = schema
+            .global_flags
+            .iter()
+            .find(|flag| flag.short.as_deref() == Some("-P"))
+            .expect("-P should exist");
+        assert!(
+            !p_flag
+                .description
+                .as_deref()
+                .unwrap_or_default()
+                .contains("signal format")
+        );
+
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-s"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-u"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-v"))
+        );
+    }
+
+    #[test]
+    fn test_extract_description_skips_command_table_rows() {
+        let mut parser = HelpParser::new("pip3", PIP_COMMAND_TABLE_HELP);
+        let schema = parser.parse().unwrap();
+        assert_eq!(schema.description, None);
     }
 
     #[test]

@@ -39,9 +39,7 @@
 use std::collections::HashMap;
 use std::io::Write;
 
-use command_schema_core::{
-    CommandSchema, FlagSchema, SchemaSource, SubcommandSchema, ValueType,
-};
+use command_schema_core::{CommandSchema, FlagSchema, SchemaSource, SubcommandSchema, ValueType};
 use command_schema_db::SchemaDatabase;
 use command_schema_sqlite::{Migration, SchemaQuery};
 use rusqlite::Connection;
@@ -123,8 +121,8 @@ fn main() {
     // When bundled-schemas feature is enabled, bundled schemas are tried first
     // (zero file I/O). If unavailable, falls back to directory loading.
     let static_db = SchemaDatabase::builder()
-        .with_bundled()                    // Tier 1: Try bundled first (zero I/O)
-        .from_dir(&schema_dir)             // Tier 2: Fallback to directory
+        .with_bundled() // Tier 1: Try bundled first (zero I/O)
+        .from_dir(&schema_dir) // Tier 2: Fallback to directory
         .build()
         .expect("Failed to load static schemas");
 
@@ -172,12 +170,17 @@ fn main() {
         let _ = registry.get("nonexistent");
     }
     let elapsed = start.elapsed();
-    println!("  30,000 lookups in {elapsed:.2?} ({:.0} lookups/sec)",
-        30_000.0 / elapsed.as_secs_f64());
+    println!(
+        "  30,000 lookups in {elapsed:.2?} ({:.0} lookups/sec)",
+        30_000.0 / elapsed.as_secs_f64()
+    );
 
     if let Some(git) = registry.get("git") {
-        println!("  git: {} flags, {} subcommands",
-            git.global_flags.len(), git.subcommands.len());
+        println!(
+            "  git: {} flags, {} subcommands",
+            git.global_flags.len(),
+            git.subcommands.len()
+        );
     }
 
     // === Phase 5: Learn new schemas ===
@@ -238,12 +241,15 @@ fn write_schema_file(dir: &std::path::Path, schema: &CommandSchema) {
 fn create_git_schema() -> CommandSchema {
     let mut schema = CommandSchema::new("git", SchemaSource::Bootstrap);
     schema.description = Some("The stupid content tracker".into());
-    schema.global_flags.push(
-        FlagSchema::boolean(Some("-v"), Some("--verbose")),
-    );
+    schema
+        .global_flags
+        .push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
     schema.subcommands.push(
-        SubcommandSchema::new("commit")
-            .with_flag(FlagSchema::with_value(Some("-m"), Some("--message"), ValueType::String)),
+        SubcommandSchema::new("commit").with_flag(FlagSchema::with_value(
+            Some("-m"),
+            Some("--message"),
+            ValueType::String,
+        )),
     );
     schema.subcommands.push(SubcommandSchema::new("push"));
     schema

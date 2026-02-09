@@ -164,6 +164,8 @@ class ProbeAttemptReport:
 @dataclass
 class ExtractionReport:
     command: str = ""
+    resolved_executable_path: Optional[str] = None
+    resolved_implementation: Optional[str] = None
     success: bool = False
     accepted_for_suggestions: bool = False
     quality_tier: Optional[QualityTier] = None
@@ -188,6 +190,8 @@ class ExtractionReport:
         fc = data.get("failure_code")
         return cls(
             command=data.get("command", ""),
+            resolved_executable_path=data.get("resolved_executable_path"),
+            resolved_implementation=data.get("resolved_implementation"),
             success=data.get("success", False),
             accepted_for_suggestions=data.get("accepted_for_suggestions", False),
             quality_tier=QualityTier(tier) if tier else None,

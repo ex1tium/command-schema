@@ -74,6 +74,8 @@ export interface ProbeAttemptReport {
 
 export interface ExtractionReport {
   command: string;
+  resolved_executable_path?: string | null;
+  resolved_implementation?: string | null;
   success: boolean;
   accepted_for_suggestions: boolean;
   quality_tier: QualityTier;

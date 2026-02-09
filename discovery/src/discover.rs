@@ -154,6 +154,9 @@ pub fn discover_tools(config: &DiscoverConfig) -> Vec<String> {
 
     if config.scan_path {
         for cmd in path_executables() {
+            if !is_scan_path_probe_candidate(cmd.as_str()) {
+                continue;
+            }
             if !excluded.contains(cmd.as_str()) {
                 commands.insert(cmd);
             }
@@ -220,11 +223,7 @@ pub fn discover_and_extract(config: &DiscoverConfig, version: &str) -> DiscoverO
         // detected version and probe mode for future invalidation checks.
         if let Some(ref cache) = cache {
             if let Some(key) = cache_key {
-                let detected_version = run
-                    .result
-                    .schema
-                    .as_ref()
-                    .and_then(|s| s.version.clone());
+                let detected_version = run.result.schema.as_ref().and_then(|s| s.version.clone());
                 let probe_mode = run.report.selected_format.clone();
                 cache.put(
                     key,
@@ -467,6 +466,26 @@ fn path_executables() -> Vec<String> {
     commands.into_iter().collect()
 }
 
+fn is_scan_path_probe_candidate(command: &str) -> bool {
+    let lower = command.to_ascii_lowercase();
+
+    if lower.starts_with("xdg-") {
+        return false;
+    }
+
+    !matches!(
+        lower.as_str(),
+        "open"
+            | "browse"
+            | "sensible-browser"
+            | "xmessage"
+            | "xhost"
+            | "xsetmode"
+            | "xsetpointer"
+            | "xkeystone"
+    )
+}
+
 #[cfg(unix)]
 fn is_executable(path: &Path) -> bool {
     use std::os::unix::fs::PermissionsExt;
@@ -561,6 +580,16 @@ mod tests {
             bundle.schema_version,
             Some(command_schema_core::SCHEMA_CONTRACT_VERSION.to_string())
         );
+    }
+
+    #[test]
+    fn test_scan_path_probe_candidate_filters_gui_launchers() {
+        assert!(!is_scan_path_probe_candidate("xdg-open"));
+        assert!(!is_scan_path_probe_candidate("xmessage"));
+        assert!(!is_scan_path_probe_candidate("open"));
+        assert!(!is_scan_path_probe_candidate("sensible-browser"));
+        assert!(is_scan_path_probe_candidate("awk"));
+        assert!(is_scan_path_probe_candidate("cargo"));
     }
 
     fn unique_tmp_dir() -> PathBuf {

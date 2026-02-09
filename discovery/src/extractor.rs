@@ -24,8 +24,10 @@
 //! ```
 
 use std::collections::HashSet;
+use std::fs;
 use std::io::ErrorKind;
 use std::io::Read;
+use std::path::Path;
 use std::process::{Child, Command, ExitStatus, Stdio};
 use std::time::{Duration, Instant};
 use tracing::{debug, info};
@@ -156,6 +158,12 @@ struct DirectProbeOutcome {
     spawn_not_found: bool,
 }
 
+#[derive(Debug, Clone, Default)]
+struct CommandIdentity {
+    resolved_executable_path: Option<String>,
+    resolved_implementation: Option<String>,
+}
+
 /// Probes a command's help output and returns the raw text.
 pub fn probe_command_help(command: &str) -> Option<String> {
     probe_command_help_with_metadata(command).help_output
@@ -173,7 +181,8 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
 
     let mut attempts = Vec::with_capacity(HELP_FLAGS.len());
     let base_command = parts[0].to_ascii_lowercase();
-    let env_overrides = command_specific_probe_env(base_command.as_str());
+    let mut env_overrides = default_probe_env();
+    env_overrides.extend(command_specific_probe_env(base_command.as_str()));
 
     for suffix in command_specific_probe_suffixes(base_command.as_str()) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
@@ -269,6 +278,20 @@ fn command_specific_probe_env(base_command: &str) -> Vec<(&'static str, &'static
         ],
         _ => Vec::new(),
     }
+}
+
+fn default_probe_env() -> Vec<(&'static str, &'static str)> {
+    vec![
+        // Prevent graphical helpers from opening windows during probes.
+        ("DISPLAY", ""),
+        ("WAYLAND_DISPLAY", ""),
+        ("BROWSER", "true"),
+        // Avoid interactive pagers when commands route help through pager tools.
+        ("PAGER", "cat"),
+        ("MANPAGER", "cat"),
+        ("SYSTEMD_PAGER", "cat"),
+        ("GIT_PAGER", "cat"),
+    ]
 }
 
 fn adapt_help_output_for_command(command: &str, help_text: String) -> String {
@@ -806,7 +829,10 @@ fn summarize_probe_failure_reason(probe_attempts: &[ProbeAttemptReport]) -> Opti
     None
 }
 
-pub fn apply_quality_policy(mut run: ExtractionRun, policy: ExtractionQualityPolicy) -> ExtractionRun {
+pub fn apply_quality_policy(
+    mut run: ExtractionRun,
+    policy: ExtractionQualityPolicy,
+) -> ExtractionRun {
     let assessment = assess_extraction_quality(&run, policy);
     run.report.accepted_for_suggestions = assessment.accepted;
     run.report.quality_tier = assessment.tier;
@@ -901,6 +927,7 @@ pub fn extract_command_schema_with_report_and_policy(
 }
 
 fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
+    let identity = resolve_command_identity(command);
     let mut warnings = Vec::new();
     let probe_run = probe_command_help_with_metadata(command);
     let probe_attempts = to_probe_attempt_reports(&probe_run.attempts);
@@ -922,6 +949,8 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
                 },
                 report: ExtractionReport {
                     command: command.to_string(),
+                    resolved_executable_path: identity.resolved_executable_path.clone(),
+                    resolved_implementation: identity.resolved_implementation.clone(),
                     success: false,
                     accepted_for_suggestions: false,
                     quality_tier: QualityTier::Failed,
@@ -965,12 +994,16 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
                 },
                 report: ExtractionReport {
                     command: command.to_string(),
+                    resolved_executable_path: identity.resolved_executable_path.clone(),
+                    resolved_implementation: identity.resolved_implementation.clone(),
                     success: false,
                     accepted_for_suggestions: false,
                     quality_tier: QualityTier::Failed,
                     quality_reasons: Vec::new(),
                     failure_code: Some(FailureCode::ParseFailed),
-                    failure_detail: Some("Help text was found but parsing produced no schema".to_string()),
+                    failure_detail: Some(
+                        "Help text was found but parsing produced no schema".to_string(),
+                    ),
                     selected_format: parser.detected_format().map(help_format_label),
                     format_scores: to_format_score_reports(&diagnostics.format_scores),
                     parsers_used: diagnostics.parsers_used,
@@ -1037,7 +1070,10 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     } else if !validation_errors.is_empty() {
         (
             Some(FailureCode::ParseFailed),
-            Some(format!("Schema validation failed: {}", validation_errors.join("; "))),
+            Some(format!(
+                "Schema validation failed: {}",
+                validation_errors.join("; ")
+            )),
         )
     } else {
         (
@@ -1048,6 +1084,8 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
 
     let report = ExtractionReport {
         command: command.to_string(),
+        resolved_executable_path: identity.resolved_executable_path,
+        resolved_implementation: identity.resolved_implementation,
         success,
         accepted_for_suggestions: false,
         quality_tier: QualityTier::Failed,
@@ -1295,6 +1333,36 @@ pub fn command_exists(command: &str) -> bool {
         .unwrap_or(false)
 }
 
+fn resolve_command_identity(command: &str) -> CommandIdentity {
+    let base = command.split_whitespace().next().unwrap_or(command);
+    if base.is_empty() {
+        return CommandIdentity::default();
+    }
+
+    let output = match Command::new("which").arg(base).output() {
+        Ok(output) if output.status.success() => output,
+        _ => return CommandIdentity::default(),
+    };
+
+    let raw = String::from_utf8_lossy(&output.stdout);
+    let first = raw.lines().next().unwrap_or_default().trim();
+    if first.is_empty() {
+        return CommandIdentity::default();
+    }
+
+    let canonical = fs::canonicalize(first).ok().unwrap_or_else(|| first.into());
+    let resolved_path = canonical.to_string_lossy().to_string();
+    let resolved_impl = Path::new(&canonical)
+        .file_name()
+        .and_then(|name| name.to_str())
+        .map(ToOwned::to_owned);
+
+    CommandIdentity {
+        resolved_executable_path: Some(resolved_path),
+        resolved_implementation: resolved_impl,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1376,6 +1444,8 @@ mod tests {
             },
             report: ExtractionReport {
                 command: "svc".to_string(),
+                resolved_executable_path: None,
+                resolved_implementation: None,
                 success: true,
                 accepted_for_suggestions: false,
                 quality_tier: QualityTier::Failed,

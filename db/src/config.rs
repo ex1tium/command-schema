@@ -301,7 +301,10 @@ extraction:
         assert_eq!(loaded.version, original.version);
         assert_eq!(loaded.allowlist, original.allowlist);
         assert_eq!(loaded.exclude, original.exclude);
-        assert_eq!(loaded.quality.min_confidence, original.quality.min_confidence);
+        assert_eq!(
+            loaded.quality.min_confidence,
+            original.quality.min_confidence
+        );
         assert_eq!(loaded.extraction.jobs, original.extraction.jobs);
 
         std::fs::remove_dir_all(&dir).ok();

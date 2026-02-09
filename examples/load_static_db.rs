@@ -14,9 +14,7 @@
 
 use std::io::Write;
 
-use command_schema_core::{
-    CommandSchema, FlagSchema, SchemaSource, SubcommandSchema, ValueType,
-};
+use command_schema_core::{CommandSchema, FlagSchema, SchemaSource, SubcommandSchema, ValueType};
 use command_schema_db::SchemaDatabase;
 
 fn main() {
@@ -61,7 +59,10 @@ fn main() {
 
         // Get all flags for a subcommand (global + subcommand-specific)
         let push_flags = git.flags_for_subcommand("push");
-        println!("  git push total flags (global + local): {}", push_flags.len());
+        println!(
+            "  git push total flags (global + local): {}",
+            push_flags.len()
+        );
     }
 
     println!();
@@ -83,8 +84,8 @@ fn main() {
     println!();
     println!("Builder pattern with fallback:");
     let db = SchemaDatabase::builder()
-        .from_dir(&dir)                              // Try directory first
-        .from_bundle("/nonexistent/bundle.json")     // Falls back to bundle
+        .from_dir(&dir) // Try directory first
+        .from_bundle("/nonexistent/bundle.json") // Falls back to bundle
         .build()
         .unwrap();
     println!("  Loaded {} schemas via builder", db.len());
@@ -96,10 +97,9 @@ fn main() {
 fn create_git_schema() -> CommandSchema {
     let mut schema = CommandSchema::new("git", SchemaSource::Bootstrap);
     schema.description = Some("The stupid content tracker".into());
-    schema.global_flags.push(
-        FlagSchema::boolean(Some("-v"), Some("--verbose"))
-            .with_description("Be verbose"),
-    );
+    schema
+        .global_flags
+        .push(FlagSchema::boolean(Some("-v"), Some("--verbose")).with_description("Be verbose"));
     schema.global_flags.push(
         FlagSchema::with_value(Some("-C"), Some("--directory"), ValueType::Directory)
             .with_description("Run as if git was started in <path>"),
@@ -122,8 +122,7 @@ fn create_docker_schema() -> CommandSchema {
     let mut schema = CommandSchema::new("docker", SchemaSource::HelpCommand);
     schema.description = Some("A self-sufficient runtime for containers".into());
     schema.global_flags.push(
-        FlagSchema::boolean(Some("-D"), Some("--debug"))
-            .with_description("Enable debug mode"),
+        FlagSchema::boolean(Some("-D"), Some("--debug")).with_description("Enable debug mode"),
     );
     schema.subcommands.push(SubcommandSchema::new("run"));
     schema.subcommands.push(SubcommandSchema::new("build"));
@@ -135,8 +134,7 @@ fn create_cargo_schema() -> CommandSchema {
     let mut schema = CommandSchema::new("cargo", SchemaSource::HelpCommand);
     schema.description = Some("Rust's package manager".into());
     schema.global_flags.push(
-        FlagSchema::boolean(Some("-v"), Some("--verbose"))
-            .with_description("Use verbose output"),
+        FlagSchema::boolean(Some("-v"), Some("--verbose")).with_description("Use verbose output"),
     );
     schema.subcommands.push(SubcommandSchema::new("build"));
     schema.subcommands.push(SubcommandSchema::new("test"));

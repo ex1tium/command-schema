@@ -21,10 +21,7 @@ fn main() {
     let workspace_root = Path::new(&manifest_dir).parent().unwrap();
     let schema_dir = workspace_root.join("schemas").join("database");
 
-    println!(
-        "cargo:rerun-if-changed={}",
-        schema_dir.display()
-    );
+    println!("cargo:rerun-if-changed={}", schema_dir.display());
 
     // Prepare output directory for compressed files.
     let out_dir = std::env::var("OUT_DIR").unwrap();
@@ -56,8 +53,8 @@ fn main() {
                     total_raw_bytes += raw.len() as u64;
 
                     // Compress with flate2.
-                    use flate2::write::GzEncoder;
                     use flate2::Compression;
+                    use flate2::write::GzEncoder;
                     use std::io::Write;
 
                     let mut encoder = GzEncoder::new(Vec::new(), Compression::default());
@@ -88,7 +85,9 @@ fn main() {
     } else {
         0.0
     };
-    println!("cargo:warning=Bundled schemas: {schema_count} schemas, {raw_kb:.1} KB raw -> {compressed_kb:.1} KB compressed ({ratio:.1}% reduction)");
+    println!(
+        "cargo:warning=Bundled schemas: {schema_count} schemas, {raw_kb:.1} KB raw -> {compressed_kb:.1} KB compressed ({ratio:.1}% reduction)"
+    );
 
     entries.sort_by(|a, b| a.0.cmp(&b.0));
 
@@ -169,7 +168,9 @@ fn main() {
     code.push_str("            command_schema_core::SchemaSource::Bootstrap,\n");
     code.push_str("        );\n");
     code.push_str("        let json = serde_json::to_string(&schema).unwrap();\n\n");
-    code.push_str("        let mut encoder = GzEncoder::new(Vec::new(), Compression::default());\n");
+    code.push_str(
+        "        let mut encoder = GzEncoder::new(Vec::new(), Compression::default());\n",
+    );
     code.push_str("        encoder.write_all(json.as_bytes()).unwrap();\n");
     code.push_str("        let compressed = encoder.finish().unwrap();\n\n");
     code.push_str("        let mut decoder = GzDecoder::new(compressed.as_slice());\n");

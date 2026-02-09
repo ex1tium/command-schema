@@ -31,6 +31,8 @@
 //!     extracted_at: "2024-01-15T10:30:00Z".into(),
 //!     quality_tier: "high".into(),
 //!     checksum: "abc123".into(),
+//!     implementation: Some("git".into()),
+//!     schema_file: Some("git.json".into()),
 //! });
 //!
 //! // Save and reload
@@ -110,6 +112,8 @@ impl Default for QualityPolicyFingerprint {
 ///     extracted_at: "2024-01-15T10:30:00Z".into(),
 ///     quality_tier: "high".into(),
 ///     checksum: "abc123def456".into(),
+///     implementation: Some("git".into()),
+///     schema_file: Some("git.json".into()),
 /// };
 /// assert_eq!(meta.version.as_deref(), Some("2.43.0"));
 /// ```
@@ -129,6 +133,12 @@ pub struct CommandMetadata {
     pub quality_tier: String,
     /// SHA-256 hex digest of the schema JSON file on disk.
     pub checksum: String,
+    /// Resolved implementation binary name (e.g. `mawk`, `gawk`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub implementation: Option<String>,
+    /// Output schema file name relative to the schema directory.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub schema_file: Option<String>,
 }
 
 /// Top-level manifest tracking all extracted command schemas.
@@ -239,6 +249,8 @@ impl Manifest {
     ///     executable_path: None, mtime_secs: None, size_bytes: None,
     ///     extracted_at: "2024-01-01T00:00:00Z".into(),
     ///     quality_tier: "high".into(), checksum: "abc".into(),
+    ///     implementation: Some("git".into()),
+    ///     schema_file: Some("git.json".into()),
     /// });
     ///
     /// let mut new = Manifest::new("0.1.0".into(), QualityPolicyFingerprint::default());
@@ -247,6 +259,8 @@ impl Manifest {
     ///     executable_path: None, mtime_secs: None, size_bytes: None,
     ///     extracted_at: "2024-02-01T00:00:00Z".into(),
     ///     quality_tier: "high".into(), checksum: "abc".into(),
+    ///     implementation: Some("git".into()),
+    ///     schema_file: Some("git.json".into()),
     /// });
     ///
     /// let changed = old.diff(&new);
@@ -254,9 +268,7 @@ impl Manifest {
     /// ```
     pub fn diff(&self, other: &Manifest) -> Vec<String> {
         // If quality policy or tool version changed, force re-extraction of all commands.
-        if self.quality_policy != other.quality_policy
-            || self.tool_version != other.tool_version
-        {
+        if self.quality_policy != other.quality_policy || self.tool_version != other.tool_version {
             let mut all: Vec<String> = self.commands.keys().cloned().collect();
             for name in other.commands.keys() {
                 if !self.commands.contains_key(name) {
@@ -273,9 +285,7 @@ impl Manifest {
             match other.commands.get(name) {
                 None => changed.push(name.clone()),
                 Some(other_meta) => {
-                    if meta.version != other_meta.version
-                        || meta.checksum != other_meta.checksum
-                    {
+                    if meta.version != other_meta.version || meta.checksum != other_meta.checksum {
                         changed.push(name.clone());
                     } else if meta.version.is_none() {
                         // Version-less: check executable fingerprint
@@ -354,7 +364,16 @@ fn days_to_ymd(mut days: u64) -> (u64, u64, u64) {
     let month_days: [u64; 12] = [
         31,
         if leap { 29 } else { 28 },
-        31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
     ];
 
     let mut month = 0;
@@ -387,13 +406,18 @@ mod tests {
             extracted_at: "2024-01-15T10:30:00Z".into(),
             quality_tier: "high".into(),
             checksum: checksum.into(),
+            implementation: Some("test".into()),
+            schema_file: Some("test.json".into()),
         }
     }
 
     #[test]
     fn test_manifest_creation() {
         let m = Manifest::new("0.1.0".into(), QualityPolicyFingerprint::default());
-        assert_eq!(m.schema_version, command_schema_core::SCHEMA_CONTRACT_VERSION);
+        assert_eq!(
+            m.schema_version,
+            command_schema_core::SCHEMA_CONTRACT_VERSION
+        );
         assert_eq!(m.version, "1.0");
         assert_eq!(m.tool_version, "0.1.0");
         assert!(m.commands.is_empty());
@@ -412,7 +436,10 @@ mod tests {
         let loaded = Manifest::load(&path).unwrap();
         assert_eq!(loaded.tool_version, "0.1.0");
         assert!(loaded.contains("git"));
-        assert_eq!(loaded.get("git").unwrap().version.as_deref(), Some("2.43.0"));
+        assert_eq!(
+            loaded.get("git").unwrap().version.as_deref(),
+            Some("2.43.0")
+        );
 
         std::fs::remove_dir_all(&dir).ok();
     }

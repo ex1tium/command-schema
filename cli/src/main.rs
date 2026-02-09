@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fs;
 use std::io::Read;
 use std::path::PathBuf;
@@ -315,10 +316,18 @@ fn run_extract(args: ExtractArgs) -> Result<(), String> {
     let outcome = discover_and_extract(&config, PACKAGE_VERSION);
 
     let ext = format_extension(format);
+    let reports_by_command: HashMap<&str, &command_schema_discovery::report::ExtractionReport> =
+        outcome
+            .reports
+            .iter()
+            .map(|report| (report.command.as_str(), report))
+            .collect();
 
     let mut written = 0usize;
     for schema in &outcome.package.schemas {
-        let path = args.output.join(format!("{}.{ext}", schema.command));
+        let report = reports_by_command.get(schema.command.as_str()).copied();
+        let stem = schema_output_stem(schema, report);
+        let path = args.output.join(format!("{stem}.{ext}"));
         let raw = command_schema_discovery::output::format_schema(schema, format)?;
         fs::write(&path, raw)
             .map_err(|err| format!("Failed to write '{}': {err}", path.display()))?;
@@ -327,11 +336,8 @@ fn run_extract(args: ExtractArgs) -> Result<(), String> {
 
     println!("Extracted and wrote {written} schema file(s).");
 
-    let report_bundle = build_report_bundle(
-        PACKAGE_VERSION,
-        outcome.reports,
-        outcome.failures.clone(),
-    );
+    let report_bundle =
+        build_report_bundle(PACKAGE_VERSION, outcome.reports, outcome.failures.clone());
     let report_path = args.output.join(format!("extraction-report.{ext}"));
     let report_raw = format_report_bundle(&report_bundle, format)?;
     fs::write(&report_path, report_raw)
@@ -382,8 +388,8 @@ fn run_validate(args: ValidateArgs) -> Result<(), String> {
 
 fn run_bundle(args: BundleArgs) -> Result<(), String> {
     let paths = collect_schema_paths(&args.inputs).map_err(|e| e.to_string())?;
-    let package =
-        bundle_schema_files(&paths, PACKAGE_VERSION, args.name, args.description).map_err(|e| e.to_string())?;
+    let package = bundle_schema_files(&paths, PACKAGE_VERSION, args.name, args.description)
+        .map_err(|e| e.to_string())?;
 
     if let Some(parent) = args.output.parent() {
         if !parent.as_os_str().is_empty() {
@@ -415,13 +421,23 @@ fn run_parse_stdin(args: ParseStdinArgs) -> Result<(), String> {
     std::io::stdin()
         .read_to_string(&mut help_text)
         .map_err(|err| format!("Failed to read stdin: {err}"))?;
-    run_parse_help_text(&args.command, &help_text, args.with_report, args.format.into())
+    run_parse_help_text(
+        &args.command,
+        &help_text,
+        args.with_report,
+        args.format.into(),
+    )
 }
 
 fn run_parse_file(args: ParseFileArgs) -> Result<(), String> {
     let help_text = fs::read_to_string(&args.input)
         .map_err(|err| format!("Failed to read '{}': {err}", args.input.display()))?;
-    run_parse_help_text(&args.command, &help_text, args.with_report, args.format.into())
+    run_parse_help_text(
+        &args.command,
+        &help_text,
+        args.with_report,
+        args.format.into(),
+    )
 }
 
 fn run_parse_help_text(
@@ -595,8 +611,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
 
                 // Check fingerprint change when no version available
                 if version.is_none() {
-                    let path_str =
-                        exe_path.as_ref().map(|p| p.to_string_lossy().to_string());
+                    let path_str = exe_path.as_ref().map(|p| p.to_string_lossy().to_string());
                     let fingerprint_changed = path_str != existing.executable_path
                         || mtime != existing.mtime_secs
                         || size != existing.size_bytes;
@@ -626,7 +641,11 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                 }
 
                 // Check schema file integrity (missing or checksum mismatch)
-                let schema_path = args.output.join(format!("{}.json", cmd));
+                let schema_file = existing
+                    .schema_file
+                    .clone()
+                    .unwrap_or_else(|| format!("{cmd}.json"));
+                let schema_path = args.output.join(schema_file);
                 let checksum_mismatch =
                     match command_schema_db::Manifest::calculate_checksum(&schema_path) {
                         Ok(current_checksum) => current_checksum != existing.checksum,
@@ -661,6 +680,8 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
     struct ExtractionOutcome {
         command: String,
         reason: String,
+        schema_file: Option<String>,
+        implementation: Option<String>,
         success: bool,
         error: Option<String>,
     }
@@ -682,13 +703,20 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
 
                 match run.result.schema {
                     Some(ref schema) => {
-                        let path = output_dir.join(format!("{}.json", work.command));
+                        let stem = schema_output_stem(schema, Some(&run.report));
+                        let schema_file = format!("{stem}.json");
+                        let path = output_dir.join(&schema_file);
                         match serde_json::to_string_pretty(schema) {
                             Ok(json) => {
                                 if let Err(e) = fs::write(&path, &json) {
                                     return ExtractionOutcome {
                                         command: work.command.clone(),
                                         reason: work.reason.clone(),
+                                        schema_file: None,
+                                        implementation: run
+                                            .report
+                                            .resolved_implementation
+                                            .clone(),
                                         success: false,
                                         error: Some(format!("Failed to write schema: {e}")),
                                     };
@@ -696,6 +724,11 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                                 ExtractionOutcome {
                                     command: work.command.clone(),
                                     reason: work.reason.clone(),
+                                    schema_file: Some(schema_file),
+                                    implementation: run
+                                        .report
+                                        .resolved_implementation
+                                        .clone(),
                                     success: true,
                                     error: None,
                                 }
@@ -703,6 +736,8 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                             Err(e) => ExtractionOutcome {
                                 command: work.command.clone(),
                                 reason: work.reason.clone(),
+                                schema_file: None,
+                                implementation: run.report.resolved_implementation.clone(),
                                 success: false,
                                 error: Some(format!("Serialization failed: {e}")),
                             },
@@ -711,6 +746,8 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                     None => ExtractionOutcome {
                         command: work.command.clone(),
                         reason: work.reason.clone(),
+                        schema_file: None,
+                        implementation: run.report.resolved_implementation.clone(),
                         success: false,
                         error: Some("Extraction produced no schema".to_string()),
                     },
@@ -722,9 +759,18 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
     // 6. Update manifest with successful extractions
     for outcome in &outcomes {
         if outcome.success {
-            let schema_path = args.output.join(format!("{}.json", outcome.command));
-            let checksum = command_schema_db::Manifest::calculate_checksum(&schema_path)
-                .map_err(|e| format!("Failed to calculate checksum for '{}': {e}", outcome.command))?;
+            let schema_file = outcome
+                .schema_file
+                .clone()
+                .unwrap_or_else(|| format!("{}.json", outcome.command));
+            let schema_path = args.output.join(&schema_file);
+            let checksum =
+                command_schema_db::Manifest::calculate_checksum(&schema_path).map_err(|e| {
+                    format!(
+                        "Failed to calculate checksum for '{}': {e}",
+                        outcome.command
+                    )
+                })?;
 
             let version = probe_command_version(&outcome.command);
             let exe_path = resolve_executable_path(&outcome.command);
@@ -750,6 +796,8 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                 extracted_at: chrono::Utc::now().to_rfc3339(),
                 quality_tier: "high".to_string(),
                 checksum,
+                implementation: outcome.implementation.clone(),
+                schema_file: Some(schema_file),
             };
             manifest.update_entry(outcome.command.clone(), metadata);
         }
@@ -762,12 +810,9 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
     }
 
     // 8. Save updated manifest
-    manifest.save(&args.manifest).map_err(|e| {
-        format!(
-            "Failed to save manifest '{}': {e}",
-            args.manifest.display()
-        )
-    })?;
+    manifest
+        .save(&args.manifest)
+        .map_err(|e| format!("Failed to save manifest '{}': {e}", args.manifest.display()))?;
 
     // 8. Print summary report
     let extracted_count = outcomes.iter().filter(|o| o.success).count();
@@ -818,10 +863,7 @@ fn probe_command_version(command: &str) -> Option<String> {
 /// Resolve the absolute path of a command using `which`.
 fn resolve_executable_path(command: &str) -> Option<PathBuf> {
     use std::process::Command as ProcessCommand;
-    let output = ProcessCommand::new("which")
-        .arg(command)
-        .output()
-        .ok()?;
+    let output = ProcessCommand::new("which").arg(command).output().ok()?;
     if output.status.success() {
         let path = String::from_utf8_lossy(&output.stdout).trim().to_string();
         if path.is_empty() {
@@ -956,14 +998,15 @@ fn format_report_bundle(
     match format {
         OutputFormat::Json => serde_json::to_string_pretty(bundle)
             .map_err(|e| format!("JSON serialization failed: {e}")),
-        OutputFormat::Yaml => serde_yaml::to_string(bundle)
-            .map_err(|e| format!("YAML serialization failed: {e}")),
+        OutputFormat::Yaml => {
+            serde_yaml::to_string(bundle).map_err(|e| format!("YAML serialization failed: {e}"))
+        }
         OutputFormat::Markdown | OutputFormat::Table => {
             let mut out = String::new();
             for report in &bundle.reports {
-                out.push_str(
-                    &command_schema_discovery::output::format_report(report, format)?,
-                );
+                out.push_str(&command_schema_discovery::output::format_report(
+                    report, format,
+                )?);
             }
             Ok(out)
         }
@@ -982,9 +1025,41 @@ fn parse_csv_list(raw: Option<String>) -> Vec<String> {
     .unwrap_or_default()
 }
 
+fn schema_output_stem(
+    schema: &command_schema_core::CommandSchema,
+    report: Option<&command_schema_discovery::report::ExtractionReport>,
+) -> String {
+    let command = sanitize_filename_segment(&schema.command);
+    let Some(implementation) = report.and_then(|r| r.resolved_implementation.as_deref()) else {
+        return command;
+    };
+    let implementation = sanitize_filename_segment(implementation);
+    if implementation.is_empty() || implementation.eq_ignore_ascii_case(&command) {
+        return command;
+    }
+    format!("{command}__{implementation}")
+}
+
+fn sanitize_filename_segment(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    for ch in raw.chars() {
+        if ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.') {
+            out.push(ch);
+        } else {
+            out.push('-');
+        }
+    }
+    let cleaned = out.trim_matches('-');
+    if cleaned.is_empty() {
+        "unknown".to_string()
+    } else {
+        cleaned.to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::parse_csv_list;
+    use super::{parse_csv_list, sanitize_filename_segment};
 
     #[test]
     fn test_parse_csv_list_trims_and_drops_empty() {
@@ -996,5 +1071,12 @@ mod tests {
     fn test_parse_csv_list_none_is_empty() {
         let parsed = parse_csv_list(None);
         assert!(parsed.is_empty());
+    }
+
+    #[test]
+    fn test_sanitize_filename_segment_keeps_safe_chars() {
+        assert_eq!(sanitize_filename_segment("awk"), "awk");
+        assert_eq!(sanitize_filename_segment("gawk-5.3"), "gawk-5.3");
+        assert_eq!(sanitize_filename_segment("awk (gnu)"), "awk--gnu");
     }
 }
