@@ -192,22 +192,21 @@ fn test_migration_lifecycle() {
 
 #[test]
 fn test_seed_from_directory() {
-    let dir = std::env::temp_dir().join("cs_sqlite_test_seed");
-    std::fs::create_dir_all(&dir).unwrap();
+    let dir = tempfile::tempdir().unwrap();
 
     // Write test schemas
     let schema1 = simple_schema("curl", SchemaSource::HelpCommand);
     let schema2 = simple_schema("wget", SchemaSource::ManPage);
 
     for schema in [&schema1, &schema2] {
-        let path = dir.join(format!("{}.json", schema.command));
+        let path = dir.path().join(format!("{}.json", schema.command));
         let mut f = std::fs::File::create(&path).unwrap();
         serde_json::to_writer_pretty(&mut f, schema).unwrap();
         f.flush().unwrap();
     }
 
     let mut migration = setup_migration();
-    let report = migration.seed(&dir).unwrap();
+    let report = migration.seed(dir.path()).unwrap();
 
     assert_eq!(report.commands_inserted, 2);
     assert!(report.flags_inserted >= 4); // 2 flags per command
@@ -215,32 +214,27 @@ fn test_seed_from_directory() {
     let status = migration.status().unwrap();
     assert_eq!(status.command_count, 2);
     assert!(status.flag_count >= 4);
-
-    std::fs::remove_dir_all(&dir).ok();
 }
 
 #[test]
 fn test_refresh() {
-    let dir = std::env::temp_dir().join("cs_sqlite_test_refresh");
-    std::fs::create_dir_all(&dir).unwrap();
+    let dir = tempfile::tempdir().unwrap();
 
     let schema = simple_schema("curl", SchemaSource::HelpCommand);
-    let path = dir.join("curl.json");
+    let path = dir.path().join("curl.json");
     let mut f = std::fs::File::create(&path).unwrap();
     serde_json::to_writer_pretty(&mut f, &schema).unwrap();
     f.flush().unwrap();
 
     let mut migration = setup_migration();
-    migration.seed(&dir).unwrap();
+    migration.seed(dir.path()).unwrap();
 
     // Refresh should drop, recreate, and reseed
-    let report = migration.refresh(&dir).unwrap();
+    let report = migration.refresh(dir.path()).unwrap();
     assert_eq!(report.commands_inserted, 1);
 
     let status = migration.status().unwrap();
     assert_eq!(status.command_count, 1);
-
-    std::fs::remove_dir_all(&dir).ok();
 }
 
 // =============================================================================

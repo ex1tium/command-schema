@@ -68,8 +68,12 @@ jobs:
           npm install -g yarn pnpm
 
           # Install kubectl and helm
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+          curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+          curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256"
+          echo "$(cat kubectl.sha256)  kubectl" | sha256sum -c -
           sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          rm -f kubectl.sha256
           HELM_VERSION=$(curl -fsSL https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name')
           curl -fsSL -o helm.tar.gz "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz"
           curl -fsSL -o helm.tar.gz.sha256sum "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz.sha256sum"
@@ -83,8 +87,13 @@ jobs:
 
           # Install jq and yq
           sudo apt-get install -y jq
-          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-          sudo chmod +x /usr/local/bin/yq
+          YQ_VERSION=$(curl -fsSL https://api.github.com/repos/mikefarah/yq/releases/latest | jq -r '.tag_name')
+          curl -fsSL -o yq_linux_amd64 "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
+          curl -fsSL -o yq_checksums "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/checksums"
+          expected_checksum=$(grep "yq_linux_amd64$" yq_checksums | awk '{print $1}')
+          echo "${expected_checksum}  yq_linux_amd64" | sha256sum -c -
+          sudo install -o root -g root -m 0755 yq_linux_amd64 /usr/local/bin/yq
+          rm -f yq_linux_amd64 yq_checksums
 
           # System utilities (most already installed)
           sudo apt-get install -y \

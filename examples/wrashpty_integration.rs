@@ -84,11 +84,11 @@ impl SchemaRegistry {
     fn learn(&mut self, schema: CommandSchema) {
         let name = schema.command.clone();
 
-        // Persist to SQLite
-        if self.query.get_schema(&name).unwrap().is_some() {
-            self.query.update_schema(&schema).unwrap();
-        } else {
-            self.query.insert_schema(&schema).unwrap();
+        // Persist to SQLite (upsert: try insert, fall back to update on conflict)
+        match self.query.get_schema(&name) {
+            Ok(Some(_)) => self.query.update_schema(&schema).unwrap(),
+            Ok(None) => self.query.insert_schema(&schema).unwrap(),
+            Err(e) => panic!("Failed to check schema existence: {e}"),
         }
 
         // Update in-memory cache

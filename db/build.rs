@@ -38,11 +38,10 @@ fn main() {
             for entry in read_dir.flatten() {
                 let path = entry.path();
                 if path.extension().and_then(|e| e.to_str()) == Some("json") {
-                    let stem = path
-                        .file_stem()
-                        .and_then(|s| s.to_str())
-                        .unwrap()
-                        .to_string();
+                    let stem = match path.file_stem().and_then(|s| s.to_str()) {
+                        Some(s) => s.to_string(),
+                        None => continue,
+                    };
 
                     // Skip non-schema JSON files (e.g. manifest.json, extraction-report.json).
                     if stem == "manifest" || stem.starts_with("extraction-report") {

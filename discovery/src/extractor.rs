@@ -158,9 +158,15 @@ struct DirectProbeOutcome {
     spawn_not_found: bool,
 }
 
+/// Resolved identity of a command binary.
+///
+/// Both fields store only the **basename** (not a full path) to avoid leaking
+/// absolute filesystem paths into serialized reports and manifests.
 #[derive(Debug, Clone, Default)]
 struct CommandIdentity {
+    /// Basename of the resolved executable (e.g. `gawk` for `awk`).
     resolved_executable_path: Option<String>,
+    /// Resolved implementation name, typically identical to the executable basename.
     resolved_implementation: Option<String>,
 }
 

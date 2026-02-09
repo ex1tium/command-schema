@@ -631,10 +631,14 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                     }
                 }
 
-                // Check quality policy change
-                let policy_changed = current_policy.min_confidence
-                    != manifest.quality_policy.min_confidence
-                    || current_policy.min_coverage != manifest.quality_policy.min_coverage
+                // Check quality policy change (use epsilon comparison for f64)
+                let policy_changed = (current_policy.min_confidence
+                    - manifest.quality_policy.min_confidence)
+                    .abs()
+                    > f64::EPSILON
+                    || (current_policy.min_coverage - manifest.quality_policy.min_coverage)
+                        .abs()
+                        > f64::EPSILON
                     || current_policy.allow_low_quality
                         != manifest.quality_policy.allow_low_quality;
 
@@ -688,6 +692,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
         reason: String,
         schema_file: Option<String>,
         implementation: Option<String>,
+        quality_tier: String,
         success: bool,
         error: Option<String>,
     }
@@ -707,6 +712,14 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                         policy,
                     );
 
+                let quality_tier = match run.report.quality_tier {
+                    command_schema_discovery::report::QualityTier::High => "high",
+                    command_schema_discovery::report::QualityTier::Medium => "medium",
+                    command_schema_discovery::report::QualityTier::Low => "low",
+                    command_schema_discovery::report::QualityTier::Failed => "failed",
+                }
+                .to_string();
+
                 match run.result.schema {
                     Some(ref schema) => {
                         let stem = schema_output_stem(schema, Some(&run.report));
@@ -723,6 +736,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                                             .report
                                             .resolved_implementation
                                             .clone(),
+                                        quality_tier,
                                         success: false,
                                         error: Some(format!("Failed to write schema: {e}")),
                                     };
@@ -735,6 +749,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                                         .report
                                         .resolved_implementation
                                         .clone(),
+                                    quality_tier,
                                     success: true,
                                     error: None,
                                 }
@@ -744,6 +759,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                                 reason: work.reason.clone(),
                                 schema_file: None,
                                 implementation: run.report.resolved_implementation.clone(),
+                                quality_tier,
                                 success: false,
                                 error: Some(format!("Serialization failed: {e}")),
                             },
@@ -754,6 +770,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                         reason: work.reason.clone(),
                         schema_file: None,
                         implementation: run.report.resolved_implementation.clone(),
+                        quality_tier,
                         success: false,
                         error: Some("Extraction produced no schema".to_string()),
                     },
@@ -800,7 +817,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                 mtime_secs: mtime,
                 size_bytes: size,
                 extracted_at: chrono::Utc::now().to_rfc3339(),
-                quality_tier: "high".to_string(),
+                quality_tier: outcome.quality_tier.clone(),
                 checksum,
                 implementation: outcome.implementation.clone(),
                 schema_file: Some(schema_file),
