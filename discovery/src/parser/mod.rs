@@ -796,6 +796,10 @@ impl HelpParser {
                 } else {
                     (trimmed, None)
                 };
+            let name_part = self.normalize_subcommand_name_part(name_part);
+            if name_part.is_empty() {
+                continue;
+            }
 
             // Support alias forms such as "build, b".
             let mut names: Vec<&str> = name_part
@@ -835,6 +839,55 @@ impl HelpParser {
         }
 
         subcommands
+    }
+
+    fn normalize_subcommand_name_part<'a>(&self, name_part: &'a str) -> &'a str {
+        let trimmed = name_part.trim();
+        if trimmed.is_empty() {
+            return trimmed;
+        }
+
+        let full_command = self.command.trim();
+        if let Some(rest) = Self::strip_command_invocation_prefix(trimmed, full_command)
+            && !rest.is_empty()
+        {
+            return rest;
+        }
+
+        let base_command = self
+            .command
+            .split_whitespace()
+            .next()
+            .unwrap_or(full_command)
+            .trim();
+        if base_command != full_command
+            && let Some(rest) = Self::strip_command_invocation_prefix(trimmed, base_command)
+            && !rest.is_empty()
+        {
+            return rest;
+        }
+
+        trimmed
+    }
+
+    fn strip_command_invocation_prefix<'a>(value: &'a str, prefix: &str) -> Option<&'a str> {
+        let prefix = prefix.trim();
+        if prefix.is_empty() {
+            return None;
+        }
+
+        let rest = value.strip_prefix(prefix)?;
+        if rest.is_empty() {
+            return Some("");
+        }
+
+        let mut chars = rest.chars();
+        let first = chars.next()?;
+        if !first.is_ascii_whitespace() {
+            return None;
+        }
+
+        Some(rest.trim_start())
     }
 
     fn parse_subcommand_name_candidates<'a>(&self, name_part: &'a str) -> Option<Vec<&'a str>> {
@@ -994,41 +1047,7 @@ impl HelpParser {
         lines: &[IndexedLine],
         has_subcommands: bool,
     ) -> (Vec<ArgSchema>, HashSet<usize>) {
-        let mut usage_text = String::new();
-        let mut recognized = HashSet::new();
-        let mut in_usage = false;
-
-        for line in lines {
-            let raw = line.text.as_str();
-            let trimmed = raw.trim();
-            if trimmed.is_empty() {
-                if in_usage {
-                    break;
-                }
-                continue;
-            }
-
-            if trimmed.to_ascii_lowercase().starts_with("usage:") {
-                in_usage = true;
-                recognized.insert(line.index);
-                usage_text.push_str(trimmed);
-                usage_text.push(' ');
-                continue;
-            }
-
-            if !in_usage {
-                continue;
-            }
-
-            if raw.starts_with(' ') || raw.starts_with('\t') {
-                recognized.insert(line.index);
-                usage_text.push_str(trimmed);
-                usage_text.push(' ');
-                continue;
-            }
-
-            break;
-        }
+        let (usage_text, recognized) = self.collect_usage_like_text(lines);
 
         if usage_text.is_empty() {
             return (Vec::new(), HashSet::new());
@@ -2355,42 +2374,7 @@ impl HelpParser {
             .expect("static regex must compile")
         });
 
-        let mut usage_text = String::new();
-        let mut recognized = HashSet::new();
-        let mut in_usage = false;
-
-        for line in lines {
-            let raw = line.text.as_str();
-            let trimmed = raw.trim();
-            if trimmed.is_empty() {
-                if in_usage {
-                    break;
-                }
-                continue;
-            }
-
-            if trimmed.to_lowercase().starts_with("usage:") {
-                in_usage = true;
-                recognized.insert(line.index);
-                usage_text.push_str(trimmed);
-                usage_text.push(' ');
-                continue;
-            }
-
-            if !in_usage {
-                continue;
-            }
-
-            // Continuation lines in usage blocks are typically indented.
-            if raw.starts_with(' ') || raw.starts_with('\t') {
-                recognized.insert(line.index);
-                usage_text.push_str(trimmed);
-                usage_text.push(' ');
-                continue;
-            }
-
-            break;
-        }
+        let (usage_text, recognized) = self.collect_usage_like_text(lines);
 
         if usage_text.is_empty() {
             return (Vec::new(), HashSet::new());
@@ -2594,6 +2578,122 @@ impl HelpParser {
         }
 
         (Self::dedupe_flags(flags), recognized)
+    }
+
+    fn collect_usage_like_text(&self, lines: &[IndexedLine]) -> (String, HashSet<usize>) {
+        let mut usage_text = String::new();
+        let mut recognized = HashSet::new();
+        let mut in_synopsis = false;
+
+        for line in lines {
+            let raw = line.text.as_str();
+            let trimmed = raw.trim();
+            if trimmed.is_empty() {
+                in_synopsis = false;
+                continue;
+            }
+
+            if let Some(payload) = Self::usage_intro_payload(trimmed) {
+                in_synopsis = true;
+                recognized.insert(line.index);
+                usage_text.push_str(&payload);
+                usage_text.push(' ');
+                continue;
+            }
+
+            if Self::looks_like_usage_synopsis_start(trimmed) {
+                in_synopsis = true;
+                recognized.insert(line.index);
+                usage_text.push_str(trimmed);
+                usage_text.push(' ');
+                continue;
+            }
+
+            if in_synopsis
+                && (raw.starts_with(' ') || raw.starts_with('\t'))
+                && Self::looks_like_usage_synopsis_continuation(trimmed)
+            {
+                recognized.insert(line.index);
+                usage_text.push_str(trimmed);
+                usage_text.push(' ');
+                continue;
+            }
+
+            in_synopsis = false;
+        }
+
+        (usage_text, recognized)
+    }
+
+    fn usage_intro_payload(trimmed: &str) -> Option<String> {
+        let lower = trimmed.to_ascii_lowercase();
+        if lower.starts_with("usage:") || lower.starts_with("or:") {
+            return Some(trimmed.to_string());
+        }
+
+        // Handle variants like "zic: usage is zic ...".
+        if let Some(pos) = lower.find("usage is ") {
+            let tail_start = pos + "usage is ".len();
+            if tail_start <= trimmed.len() {
+                let tail = trimmed[tail_start..].trim();
+                if !tail.is_empty() {
+                    return Some(format!("usage: {tail}"));
+                }
+            }
+        }
+
+        None
+    }
+
+    fn looks_like_usage_synopsis_start(trimmed: &str) -> bool {
+        if trimmed.starts_with('-') {
+            return false;
+        }
+        if !(trimmed.contains("--") || trimmed.contains(" -")) {
+            return false;
+        }
+
+        let head = trimmed
+            .split_whitespace()
+            .next()
+            .unwrap_or_default()
+            .trim_matches(|ch: char| matches!(ch, ':' | '`' | '\'' | '"' | '(' | ')' | '{' | '}'));
+        if head.is_empty() {
+            return false;
+        }
+        let words = trimmed.split_whitespace().count();
+        if !trimmed.contains('[') && words > 4 {
+            return false;
+        }
+
+        head.chars().all(|ch| {
+            ch.is_ascii_alphanumeric()
+                || matches!(ch, '_' | '-' | '.' | '/' | '+' | ':')
+        })
+    }
+
+    fn looks_like_usage_synopsis_continuation(trimmed: &str) -> bool {
+        if trimmed.is_empty() {
+            return false;
+        }
+        if trimmed.ends_with('.') {
+            return false;
+        }
+        if trimmed.contains('[') || trimmed.contains("--") || Self::looks_like_flag_row_start(trimmed)
+        {
+            return true;
+        }
+
+        let words = trimmed.split_whitespace().collect::<Vec<_>>();
+        if words.is_empty() || words.len() > 2 {
+            return false;
+        }
+
+        words.iter().all(|word| {
+            word.chars().all(|ch| {
+                ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '<' | '>' | '[' | ']')
+            })
+        })
     }
 
     fn parse_usage_flag_atom(token: &str) -> Option<(Option<String>, Option<String>)> {
@@ -3281,6 +3381,7 @@ impl HelpParser {
             return false;
         }
         if Self::is_usage_line(trimmed)
+            || Self::looks_like_usage_synopsis_start(trimmed)
             || Self::is_section_header_line(trimmed)
             || Self::looks_like_flag_row_start(trimmed)
             || Self::looks_like_structured_two_column(trimmed)
@@ -3332,7 +3433,10 @@ impl HelpParser {
 
     fn is_usage_line(trimmed: &str) -> bool {
         let lower = trimmed.to_ascii_lowercase();
-        lower.starts_with("usage:") || lower.starts_with("or:")
+        lower.starts_with("usage:")
+            || lower.starts_with("or:")
+            || lower.starts_with("usage is ")
+            || lower.contains(": usage is ")
     }
 
     fn is_section_header_line(trimmed: &str) -> bool {
@@ -3535,6 +3639,12 @@ impl HelpParser {
             confidence += 0.15;
         }
 
+        // Presence of positional arguments improves confidence for tools that
+        // intentionally expose little/no flag surface in top-level help.
+        if !schema.positional.is_empty() {
+            confidence += 0.1;
+        }
+
         // Known format = more confidence
         if self.detected_format != Some(HelpFormat::Unknown) {
             confidence += 0.1;
@@ -3655,6 +3765,38 @@ usage: tmux [-2CDlNuVv] [-c shell-command] [-f file] [-L socket-name]
 usage: /usr/bin/nroff [-bcCEhikpRStUVz] [-d ctext] [-d string=text] [-K fallback-encoding] [-m macro-package] [-M macro-directory] [-n page-number] [-o page-list] [-P postprocessor-argument] [-r cnumeric-expression] [-r register=numeric-expression] [-T output-device] [-w warning-category] [-W warning-category] [file ...]
 usage: /usr/bin/nroff {-v | --version}
 usage: /usr/bin/nroff --help
+"#;
+
+    const ZIC_STYLE_USAGE_IS_HELP: &str = r#"
+zic: usage is zic [ --version ] [ --help ] [ -v ] \
+        [ -b {slim|fat} ] [ -d directory ] [ -l localtime ] [ -L leapseconds ] \
+        [ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -t localtime-link ] \
+        [ filename ... ]
+"#;
+
+    const ADDUSER_STYLE_SYNOPSIS_HELP: &str = r#"
+adduser [--uid id] [--firstuid id] [--lastuid id]
+        [--gid id] [--firstgid id] [--lastgid id] [--ingroup group]
+        [--add-extra-groups] [--encrypt-home] [--shell shell]
+        [--comment comment] [--home dir] [--no-create-home]
+        [--allow-all-names] [--allow-bad-names]
+        [--disabled-password] [--disabled-login]
+        [--conf file] [--extrausers] [--quiet] [--verbose] [--debug]
+        user
+    Add a normal user
+
+adduser --system
+        [--uid id] [--group] [--ingroup group] [--gid id]
+        [--shell shell] [--comment comment] [--home dir] [--no-create-home]
+        [--conf file] [--extrausers] [--quiet] [--verbose] [--debug]
+        user
+   Add a system user
+
+addgroup --system
+        [--gid id]
+        [--conf file] [--extrausers] [--quiet] [--verbose] [--debug]
+        group
+   Add a system group
 "#;
 
     const GENERIC_TWO_COLUMN_HELP: &str = r#"
@@ -4189,6 +4331,78 @@ Flags:
     }
 
     #[test]
+    fn test_parse_usage_is_style_synopsis_flags() {
+        let mut parser = HelpParser::new("zic", ZIC_STYLE_USAGE_IS_HELP);
+        let schema = parser.parse().unwrap();
+
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--help"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--version"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-v"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-b"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-d"))
+        );
+    }
+
+    #[test]
+    fn test_parse_command_led_synopsis_blocks_as_usage_flags() {
+        let mut parser = HelpParser::new("adduser", ADDUSER_STYLE_SYNOPSIS_HELP);
+        let schema = parser.parse().unwrap();
+
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--uid"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--system"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--group"))
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--debug"))
+        );
+        assert!(
+            schema.global_flags.len() >= 10,
+            "expected substantial option extraction from synopsis blocks"
+        );
+    }
+
+    #[test]
     fn test_parse_generic_two_column_subcommands_without_section_header() {
         let mut parser = HelpParser::new("svcctl", GENERIC_TWO_COLUMN_HELP);
         let schema = parser.parse().unwrap();
@@ -4215,6 +4429,24 @@ Flags:
 
         assert!(schema.find_subcommand("start").is_some());
         assert!(schema.find_subcommand("stop").is_some());
+    }
+
+    #[test]
+    fn test_parse_command_prefixed_command_rows_without_self_cycle() {
+        let help = r#"
+Commands:
+  opencode completion          generate shell completion script
+  opencode run [message..]     run opencode with a message
+  opencode session             manage sessions
+  opencode [project]           start opencode tui [default]
+"#;
+        let mut parser = HelpParser::new("opencode", help);
+        let schema = parser.parse().unwrap();
+
+        assert!(schema.find_subcommand("completion").is_some());
+        assert!(schema.find_subcommand("run").is_some());
+        assert!(schema.find_subcommand("session").is_some());
+        assert!(schema.find_subcommand("opencode").is_none());
     }
 
     #[test]

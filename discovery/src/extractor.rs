@@ -628,9 +628,20 @@ fn is_help_output(text: &str) -> bool {
     let option_error_markers = [
         "illegal option",
         "unknown option",
+        "unknown argument",
         "invalid option",
         "unrecognized option",
     ];
+    let suggestion_only_help_hint = !has_usage_line
+        && !has_structured_sections
+        && trimmed.lines().filter(|line| !line.trim().is_empty()).count() <= 2
+        && (text_lower.contains(" is unknown, try ")
+            || text_lower.contains("unknown argument")
+            || text_lower.contains("unknown option"))
+        && text_lower.contains(" help");
+    if suggestion_only_help_hint {
+        return false;
+    }
     if option_error_markers
         .iter()
         .any(|marker| leading_window.contains(marker))
@@ -695,6 +706,9 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
         "no new privileges",
         "cannot open audit interface",
         "unable to initialize netlink socket",
+        "can't open display",
+        "cannot open display",
+        "error: can't open display",
     ];
     if environment_blocked_markers
         .iter()
@@ -709,8 +723,10 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
     let option_error_markers = [
         "illegal option",
         "unknown option",
+        "unknown argument",
         "invalid option",
         "unrecognized option",
+        " is unknown, try ",
     ];
     if option_error_markers
         .iter()
@@ -719,6 +735,19 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
         return RejectionClassification {
             reason: "option-error-output".to_string(),
             failure_code: FailureCode::NotHelpOutput,
+        };
+    }
+
+    let not_found_markers = [
+        "command not found",
+        "no such file or directory",
+        "not recognized as an internal or external command",
+        "unknown binary",
+    ];
+    if not_found_markers.iter().any(|marker| lower.contains(marker)) {
+        return RejectionClassification {
+            reason: "not-installed-output".to_string(),
+            failure_code: FailureCode::NotInstalled,
         };
     }
 
@@ -904,6 +933,21 @@ fn derive_probe_failure(
         return (
             FailureCode::PermissionBlocked,
             "Help probing was blocked by environment restrictions".to_string(),
+        );
+    }
+
+    let not_installed_hits = probe_attempts
+        .iter()
+        .filter(|a| {
+            a.rejection_reason
+                .as_deref()
+                .is_some_and(|r| r == "not-installed-output")
+        })
+        .count();
+    if not_installed_hits >= 2 {
+        return (
+            FailureCode::NotInstalled,
+            "Command appears to be unavailable on the system".to_string(),
         );
     }
 
@@ -1391,9 +1435,57 @@ mod tests {
         assert!(!is_help_output("error: command not found"));
         assert!(!is_help_output("short"));
         assert!(!is_help_output("sh: 0: Illegal option -h"));
+        assert!(!is_help_output(
+            "Argument \"--help\" is unknown, try \"rtmon help\"."
+        ));
         assert!(is_help_output(
             "Illegal option --\nUsage: /usr/bin/which [-as] args"
         ));
+    }
+
+    #[test]
+    fn test_classify_rejection_detects_not_installed_and_display_blocked() {
+        let not_found = classify_rejection("bash: line 1: npx: command not found");
+        assert_eq!(not_found.failure_code, FailureCode::NotInstalled);
+        assert_eq!(not_found.reason, "not-installed-output");
+
+        let display = classify_rejection("Error: Can't open display:");
+        assert_eq!(display.failure_code, FailureCode::PermissionBlocked);
+        assert_eq!(display.reason, "environment-blocked");
+    }
+
+    #[test]
+    fn test_derive_probe_failure_prefers_not_installed_when_repeated() {
+        let attempts = vec![
+            ProbeAttemptReport {
+                help_flag: "--help".to_string(),
+                argv: vec!["npx".to_string(), "--help".to_string()],
+                exit_code: Some(127),
+                timed_out: false,
+                error: None,
+                rejection_reason: Some("not-installed-output".to_string()),
+                output_source: Some("stderr".to_string()),
+                output_len: 32,
+                output_preview: Some("bash: npx: command not found".to_string()),
+                accepted: false,
+            },
+            ProbeAttemptReport {
+                help_flag: "-h".to_string(),
+                argv: vec!["npx".to_string(), "-h".to_string()],
+                exit_code: Some(127),
+                timed_out: false,
+                error: None,
+                rejection_reason: Some("not-installed-output".to_string()),
+                output_source: Some("stderr".to_string()),
+                output_len: 32,
+                output_preview: Some("bash: npx: command not found".to_string()),
+                accepted: false,
+            },
+        ];
+
+        let (code, detail) = derive_probe_failure(&attempts, "missing");
+        assert_eq!(code, FailureCode::NotInstalled);
+        assert!(detail.contains("unavailable"));
     }
 
     #[test]
