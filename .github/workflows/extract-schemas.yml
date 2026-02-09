@@ -2,10 +2,10 @@ name: Extract Command Schemas
 
 on:
   workflow_dispatch:
+    # Allow manual triggering
+  schedule:
     # Run weekly on Sundays at 2 AM UTC
     - cron: '0 2 * * 0'
-  workflow_dispatch:
-    # Allow manual triggering
   push:
     branches:
       - main
@@ -123,7 +123,11 @@ jobs:
 
           # Extract changed commands from manifest
           if [ -f schemas/database/manifest.json ]; then
-            CHANGED=$(git diff --name-only schemas/database/*.json | grep -v manifest.json | wc -l)
+            if compgen -G "schemas/database/*.json" > /dev/null 2>&1; then
+              CHANGED=$(git diff --name-only -- 'schemas/database/*.json' | grep -v manifest.json | wc -l)
+            else
+              CHANGED=0
+            fi
             echo "changed_count=$CHANGED" >> $GITHUB_OUTPUT
           else
             echo "changed_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT

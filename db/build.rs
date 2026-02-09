@@ -44,8 +44,8 @@ fn main() {
                         .unwrap()
                         .to_string();
 
-                    // Skip non-schema JSON files (e.g. manifest.json).
-                    if stem == "manifest" {
+                    // Skip non-schema JSON files (e.g. manifest.json, extraction-report.json).
+                    if stem == "manifest" || stem.starts_with("extraction-report") {
                         continue;
                     }
 
@@ -110,7 +110,12 @@ fn main() {
     code.push_str("/// Each entry is `(command_name, gzip_compressed_json_bytes)`.\n");
     code.push_str("pub const BUNDLED_SCHEMAS: &[(&str, &[u8])] = &[\n");
     for (name, path) in &entries {
-        code.push_str(&format!("    (\"{name}\", include_bytes!(\"{path}\")),\n"));
+        // Normalize path separators for include_bytes! string literal
+        // (Windows backslashes must be escaped or replaced with forward slashes)
+        let safe_path = path.replace('\\', "/");
+        code.push_str(&format!(
+            "    (\"{name}\", include_bytes!(\"{safe_path}\")),\n"
+        ));
     }
     code.push_str("];\n\n");
 

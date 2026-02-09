@@ -5,7 +5,7 @@
 
 Parse CLI help text into structured schemas, then consume those schemas from JSON files, bundles, embedded data, or SQLite.
 
-**Quick Links:** [Examples](examples/) | [CHANGELOG](CHANGELOG.md) | [Integration Guide](docs/integration-guide.md) | [Schema Contract](docs/schema-contract.md) | [Architecture Diagrams](spec:664a5aa9-7059-412a-8b05-1da802198ab0/aceee3f5-2ab3-4433-a073-3584bbfe8c12)
+**Quick Links:** [Examples](examples/) | [CHANGELOG](CHANGELOG.md) | [Integration Guide](docs/integration-guide.md) | [Schema Contract](docs/schema-contract.md) | [Architecture Diagrams](#architecture)
 
 ---
 
@@ -311,7 +311,7 @@ sequenceDiagram
 
 **Module organization:** Each crate has a focused responsibility and depends only on `command-schema-core` for shared types. `command-schema-sqlite` additionally depends on `command-schema-db` for seeding operations. The CLI depends on all crates to provide a unified interface.
 
-For full architecture diagrams, see [Architecture Diagrams](spec:664a5aa9-7059-412a-8b05-1da802198ab0/aceee3f5-2ab3-4433-a073-3584bbfe8c12).
+For full architecture diagrams, see [Architecture Diagrams](#architecture).
 
 ---
 

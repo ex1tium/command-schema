@@ -455,22 +455,28 @@ fn run_parse_help_text(
             ExtractionQualityPolicy::permissive(),
         );
 
+        #[derive(serde::Serialize)]
+        struct ParseOutput {
+            #[serde(skip_serializing_if = "Option::is_none")]
+            schema: Option<command_schema_core::CommandSchema>,
+            report: command_schema_discovery::report::ExtractionReport,
+        }
+
+        let output = ParseOutput {
+            schema: run.result.schema.clone(),
+            report: run.report.clone(),
+        };
+
         match format {
             OutputFormat::Json => {
-                #[derive(serde::Serialize)]
-                struct ParseOutput {
-                    #[serde(skip_serializing_if = "Option::is_none")]
-                    schema: Option<command_schema_core::CommandSchema>,
-                    report: command_schema_discovery::report::ExtractionReport,
-                }
-
-                let output = ParseOutput {
-                    schema: run.result.schema,
-                    report: run.report,
-                };
                 let json = serde_json::to_string_pretty(&output)
                     .map_err(|e| format!("Failed to serialize output: {e}"))?;
                 println!("{json}");
+            }
+            OutputFormat::Yaml => {
+                let yaml = serde_yaml::to_string(&output)
+                    .map_err(|e| format!("Failed to serialize output: {e}"))?;
+                println!("{yaml}");
             }
             _ => {
                 if let Some(ref schema) = run.result.schema {

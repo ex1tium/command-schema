@@ -138,7 +138,6 @@ CREATE INDEX IF NOT EXISTS idx_{prefix}subcommands_command ON {prefix}subcommand
 CREATE INDEX IF NOT EXISTS idx_{prefix}subcommands_parent ON {prefix}subcommands(parent_id);
 CREATE INDEX IF NOT EXISTS idx_{prefix}positional_command ON {prefix}positional_args(command_id);
 CREATE INDEX IF NOT EXISTS idx_{prefix}positional_subcommand ON {prefix}positional_args(subcommand_id);
-CREATE INDEX IF NOT EXISTS idx_{prefix}commands_name ON {prefix}commands(name);
 CREATE INDEX IF NOT EXISTS idx_{prefix}commands_source ON {prefix}commands(source);
 "#,
         prefix = prefix
@@ -217,7 +216,8 @@ mod tests {
         assert!(sql.contains("idx_cs_subcommands_parent"));
         assert!(sql.contains("idx_cs_positional_command"));
         assert!(sql.contains("idx_cs_positional_subcommand"));
-        assert!(sql.contains("idx_cs_commands_name"));
+        // commands.name has a UNIQUE constraint, which implicitly creates an index
+        assert!(!sql.contains("idx_cs_commands_name"));
         assert!(sql.contains("idx_cs_commands_source"));
     }
 

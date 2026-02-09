@@ -200,8 +200,6 @@ Multiple schema sets can coexist in the same database using different prefixes:
 use command_schema_sqlite::Migration;
 use rusqlite::Connection;
 
-let conn = Connection::open("schemas.db").unwrap();
-
 // Production schemas
 let mut prod = Migration::new(Connection::open("schemas.db").unwrap(), "prod_").unwrap();
 prod.up().unwrap();

@@ -161,13 +161,6 @@ fn setup_query() -> SchemaQuery {
     let conn = Connection::open_in_memory().unwrap();
     conn.execute_batch("PRAGMA foreign_keys = ON;").unwrap();
 
-    // Create tables first
-    let schema_sql =
-        command_schema_sqlite::Migration::new(Connection::open_in_memory().unwrap(), "cs_")
-            .unwrap();
-    // We need to create tables on the actual connection
-    drop(schema_sql);
-
     let mut migration = Migration::new(conn, "cs_").unwrap();
     migration.up().unwrap();
 
@@ -568,28 +561,6 @@ fn test_get_nonexistent_schema() {
 
 #[test]
 fn test_prefix_isolation() {
-    let conn = Connection::open_in_memory().unwrap();
-
-    // Create tables with prefix "a_"
-    let mut migration_a = Migration::new(conn, "a_").unwrap();
-    migration_a.up().unwrap();
-
-    let conn = migration_a.into_connection();
-
-    // Create tables with prefix "b_" on the same connection
-    let mut migration_b = Migration::new(conn, "b_").unwrap();
-    migration_b.up().unwrap();
-
-    let conn = migration_b.into_connection();
-
-    // Insert into "a_" namespace
-    let mut query_a = SchemaQuery::new(conn, "a_").unwrap();
-    query_a
-        .insert_schema(&simple_schema("curl", SchemaSource::HelpCommand))
-        .unwrap();
-
-    // For a proper prefix isolation test, use the same in-memory database
-    // by creating both prefix tables and inserting into each
     let conn = Connection::open_in_memory().unwrap();
     conn.execute_batch("PRAGMA foreign_keys = ON;").unwrap();
 

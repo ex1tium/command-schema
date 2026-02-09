@@ -8,12 +8,13 @@
 //!
 //! # Architecture
 //!
-//! The crate is organized into four modules:
+//! The crate is organized into five modules:
 //!
 //! - **`schema`** — SQL generation with customizable table prefixes
 //! - **`migration`** — Lifecycle operations (up/down/seed/refresh/status)
 //! - **`convert`** — Bidirectional `CommandSchema` ↔ SQL row transformations
 //! - **`query`** — Runtime schema access (CRUD operations)
+//! - **`error`** — Error types and handling
 //!
 //! # Quick start — migrations
 //!

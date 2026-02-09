@@ -7,6 +7,7 @@ use thiserror::Error;
 
 /// Errors that can occur during SQLite schema operations.
 #[derive(Debug, Error)]
+#[non_exhaustive]
 pub enum SqliteError {
     /// SQLite database operation failure.
     #[error("database error: {0}")]

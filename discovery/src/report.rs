@@ -69,7 +69,10 @@ pub enum QualityTier {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExtractionReport {
     pub command: String,
-    /// Canonical absolute executable path resolved for this command, when available.
+    /// Basename of the resolved executable for this command, when available.
+    ///
+    /// Only the filename component is stored to avoid leaking absolute
+    /// filesystem paths in serialized reports.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub resolved_executable_path: Option<String>,
     /// Resolved implementation/binary name (e.g. `mawk`, `gawk`, `busybox`).

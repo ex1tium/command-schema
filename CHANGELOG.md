@@ -55,7 +55,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bundled schemas: zero filesystem I/O
 
 ### Migration Guide
-- No breaking changes (this is the initial 0.1.0 release)
+
+**Breaking changes:**
+- CLI binary moved from `command-schema-discovery` to the new `command-schema-cli` crate.
+  Consumers who previously ran the binary from `discovery` must now depend on `command-schema-cli`.
+- `command-schema-discovery` is now library-only (no binary target).
+
+**Integration notes:**
 - For wrashpty integration: use `SchemaDatabase::builder()` with fallback chain
 - For SQLite storage: use `Migration::new()` with custom prefix
 - For CI automation: configure `ci-config.yaml` and use `schema-discover ci-extract`

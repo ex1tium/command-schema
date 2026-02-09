@@ -100,8 +100,9 @@ impl SchemaDatabase {
             let entry = entry?;
             let file_path = entry.path();
             if file_path.extension().and_then(|e| e.to_str()) == Some("json") {
-                // Skip known non-schema files (e.g. manifest.json).
-                if file_path.file_stem().and_then(|s| s.to_str()) == Some("manifest") {
+                // Skip known non-schema files (e.g. manifest.json, extraction-report.json).
+                let stem = file_path.file_stem().and_then(|s| s.to_str()).unwrap_or("");
+                if stem == "manifest" || stem.starts_with("extraction-report") {
                     continue;
                 }
                 let file = std::fs::File::open(&file_path)?;

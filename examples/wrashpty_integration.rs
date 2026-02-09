@@ -157,12 +157,12 @@ fn main() {
     let query = SchemaQuery::new(conn, "cs_").unwrap();
 
     // === Phase 3: Create the registry (merge static + learned) ===
-    println!("\n=== Phase 2: Registry Initialization ===");
+    println!("\n=== Phase 3: Registry Initialization ===");
     let mut registry = SchemaRegistry::new(static_db, query);
     println!("  Registry initialized with {} schemas", registry.len());
 
     // === Phase 4: Runtime lookups (O(1)) ===
-    println!("\n=== Phase 3: Runtime Lookups ===");
+    println!("\n=== Phase 4: Runtime Lookups ===");
     let start = std::time::Instant::now();
     for _ in 0..10_000 {
         let _ = registry.get("git");
@@ -184,7 +184,7 @@ fn main() {
     }
 
     // === Phase 5: Learn new schemas ===
-    println!("\n=== Phase 4: Learning ===");
+    println!("\n=== Phase 5: Learning ===");
 
     // Simulate discovering a new command at runtime
     let mut ripgrep = CommandSchema::new("rg", SchemaSource::Learned);

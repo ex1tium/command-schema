@@ -1351,14 +1351,15 @@ fn resolve_command_identity(command: &str) -> CommandIdentity {
     }
 
     let canonical = fs::canonicalize(first).ok().unwrap_or_else(|| first.into());
-    let resolved_path = canonical.to_string_lossy().to_string();
     let resolved_impl = Path::new(&canonical)
         .file_name()
         .and_then(|name| name.to_str())
         .map(ToOwned::to_owned);
+    // Store only the basename to avoid leaking absolute filesystem paths.
+    let resolved_basename = resolved_impl.clone();
 
     CommandIdentity {
-        resolved_executable_path: Some(resolved_path),
+        resolved_executable_path: resolved_basename,
         resolved_implementation: resolved_impl,
     }
 }
