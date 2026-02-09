@@ -1041,6 +1041,14 @@ fn schema_output_stem(
 }
 
 fn sanitize_filename_segment(raw: &str) -> String {
+    fn symbolic_alias(raw: &str) -> Option<&'static str> {
+        match raw {
+            "[" => Some("lbracket"),
+            "]" => Some("rbracket"),
+            _ => None,
+        }
+    }
+
     let mut out = String::with_capacity(raw.len());
     for ch in raw.chars() {
         if ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.') {
@@ -1051,7 +1059,20 @@ fn sanitize_filename_segment(raw: &str) -> String {
     }
     let cleaned = out.trim_matches('-');
     if cleaned.is_empty() {
-        "unknown".to_string()
+        if let Some(alias) = symbolic_alias(raw) {
+            alias.to_string()
+        } else {
+            let mut hex = String::new();
+            for byte in raw.as_bytes() {
+                use std::fmt::Write as _;
+                let _ = write!(&mut hex, "{byte:02x}");
+            }
+            if hex.is_empty() {
+                "unknown".to_string()
+            } else {
+                format!("cmd-{hex}")
+            }
+        }
     } else {
         cleaned.to_string()
     }
@@ -1078,5 +1099,11 @@ mod tests {
         assert_eq!(sanitize_filename_segment("awk"), "awk");
         assert_eq!(sanitize_filename_segment("gawk-5.3"), "gawk-5.3");
         assert_eq!(sanitize_filename_segment("awk (gnu)"), "awk--gnu");
+    }
+
+    #[test]
+    fn test_sanitize_filename_segment_symbolic_command_aliases() {
+        assert_eq!(sanitize_filename_segment("["), "lbracket");
+        assert_eq!(sanitize_filename_segment("]"), "rbracket");
     }
 }
