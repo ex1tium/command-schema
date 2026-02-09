@@ -837,7 +837,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
         .save(&args.manifest)
         .map_err(|e| format!("Failed to save manifest '{}': {e}", args.manifest.display()))?;
 
-    // 8. Print summary report
+    // 9. Print summary report
     let extracted_count = outcomes.iter().filter(|o| o.success).count();
     let failed_count = outcomes.iter().filter(|o| !o.success).count();
 

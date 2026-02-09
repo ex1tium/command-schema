@@ -2337,6 +2337,23 @@ impl HelpParser {
         // SAFETY: This regex is a compile-time constant and is validated by tests.
         static BRACKET_GROUP_RE: LazyLock<Regex> =
             LazyLock::new(|| Regex::new(r"\[([^\]]+)\]").expect("static regex must compile"));
+        // SAFETY: This regex is a compile-time constant and is validated by tests.
+        static BRACE_GROUP_RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"\{([^}]+)\}").expect("static regex must compile"));
+        // SAFETY: This regex is a compile-time constant and is validated by tests.
+        static INLINE_LONG_FLAG_RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
+                r"(?x)(?:^|[\s\{\[\(\|,])(--[a-zA-Z][-a-zA-Z0-9.]*)(?:$|[\s\}\]\)\|,])",
+            )
+                .expect("static regex must compile")
+        });
+        // SAFETY: This regex is a compile-time constant and is validated by tests.
+        static INLINE_SHORT_FLAG_RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(
+                r"(?x)(?:^|[\s\{\[\(\|,])(-[a-zA-Z0-9?@](?:\[[^\]\s]+\])?)(?:$|[\s\}\]\)\|,])",
+            )
+            .expect("static regex must compile")
+        });
 
         let mut usage_text = String::new();
         let mut recognized = HashSet::new();
@@ -2457,7 +2474,172 @@ impl HelpParser {
             }
         }
 
+        // Alternative groups in usage grammar:
+        // "{-v | --version}", "{ -4 | -6 | -j[son] }", etc.
+        for capture in BRACE_GROUP_RE.captures_iter(&usage_text) {
+            let Some(group) = capture.get(1).map(|value| value.as_str().trim()) else {
+                continue;
+            };
+            if group.is_empty() || !group.contains('|') || !group.contains('-') {
+                continue;
+            }
+
+            let mut alt_flags = Vec::new();
+            for alternative in group.split('|') {
+                let alternative = alternative.trim();
+                if alternative.is_empty() {
+                    continue;
+                }
+                let mut tokens = alternative.split_whitespace();
+                let Some(first) = tokens.next() else {
+                    continue;
+                };
+                let takes_value = tokens
+                    .next()
+                    .is_some_and(|next| !next.starts_with('-') && !next.starts_with('{'));
+                if let Some((short, long)) = Self::parse_usage_flag_atom(first) {
+                    alt_flags.push((short, long, takes_value));
+                }
+            }
+
+            if alt_flags.is_empty() {
+                continue;
+            }
+
+            // Common alias form in usage grammar: "{-v | --version}".
+            if alt_flags.len() == 2
+                && alt_flags.iter().all(|(_, _, takes_value)| !takes_value)
+                && alt_flags
+                    .iter()
+                    .any(|(short, long, _)| short.is_some() && long.is_none())
+                && alt_flags
+                    .iter()
+                    .any(|(short, long, _)| short.is_none() && long.is_some())
+            {
+                let short = alt_flags
+                    .iter()
+                    .find_map(|(short, long, _)| (short.is_some() && long.is_none()).then(|| short.clone()))
+                    .flatten();
+                let long = alt_flags
+                    .iter()
+                    .find_map(|(short, long, _)| (short.is_none() && long.is_some()).then(|| long.clone()))
+                    .flatten();
+                flags.push(FlagSchema {
+                    short,
+                    long,
+                    value_type: ValueType::Bool,
+                    takes_value: false,
+                    description: None,
+                    multiple: false,
+                    conflicts_with: Vec::new(),
+                    requires: Vec::new(),
+                });
+                continue;
+            }
+
+            for (short, long, takes_value) in alt_flags {
+                flags.push(FlagSchema {
+                    short,
+                    long,
+                    value_type: if takes_value {
+                        self.infer_value_type(group)
+                    } else {
+                        ValueType::Bool
+                    },
+                    takes_value,
+                    description: None,
+                    multiple: false,
+                    conflicts_with: Vec::new(),
+                    requires: Vec::new(),
+                });
+            }
+        }
+
+        // Standalone usage tokens outside [] / {} groups, e.g.:
+        // "usage: cmd --help" or "usage: cmd --version".
+        for capture in INLINE_LONG_FLAG_RE.captures_iter(&usage_text) {
+            let token = capture.get(1).map(|m| m.as_str()).unwrap_or_default();
+            let Some(long) = Self::normalize_long_flag_token(token) else {
+                continue;
+            };
+            flags.push(FlagSchema {
+                short: None,
+                long: Some(long),
+                value_type: ValueType::Bool,
+                takes_value: false,
+                description: None,
+                multiple: false,
+                conflicts_with: Vec::new(),
+                requires: Vec::new(),
+            });
+        }
+        for capture in INLINE_SHORT_FLAG_RE.captures_iter(&usage_text) {
+            let token = capture.get(1).map(|m| m.as_str()).unwrap_or_default();
+            let Some((short, _long)) = Self::parse_usage_flag_atom(token) else {
+                continue;
+            };
+            let Some(short) = short else {
+                continue;
+            };
+            flags.push(FlagSchema {
+                short: Some(short),
+                long: None,
+                value_type: ValueType::Bool,
+                takes_value: false,
+                description: None,
+                multiple: false,
+                conflicts_with: Vec::new(),
+                requires: Vec::new(),
+            });
+        }
+
         (Self::dedupe_flags(flags), recognized)
+    }
+
+    fn parse_usage_flag_atom(token: &str) -> Option<(Option<String>, Option<String>)> {
+        let token = token
+            .trim()
+            .trim_matches(|ch: char| matches!(ch, '{' | '}' | '(' | ')' | ',' | ';'));
+        if token.is_empty() {
+            return None;
+        }
+
+        if token.starts_with("--") {
+            let long = Self::normalize_long_flag_token(token)?;
+            return Some((None, Some(long)));
+        }
+
+        if !token.starts_with('-') || token == "-" {
+            return None;
+        }
+
+        let rest = &token[1..];
+        if rest.is_empty() {
+            return None;
+        }
+
+        // Short flag with optional long-form hint suffix, e.g. "-V[ersion]".
+        if let Some(marker) = rest.chars().next()
+            && marker.is_ascii_alphanumeric()
+        {
+            let tail = &rest[marker.len_utf8()..];
+            if tail.is_empty() {
+                return Some((Some(format!("-{marker}")), None));
+            }
+            if tail.starts_with('[') && tail.ends_with(']') && tail.len() > 2 {
+                return Some((Some(format!("-{marker}")), None));
+            }
+        }
+
+        // Single-dash word option used by some CLIs.
+        if rest
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-')
+        {
+            return Some((Some(format!("-{rest}")), None));
+        }
+
+        None
     }
 
     pub(super) fn parse_named_setting_rows(
@@ -3469,6 +3651,12 @@ usage: tmux [-2CDlNuVv] [-c shell-command] [-f file] [-L socket-name]
             [-S socket-path] [-T features] [command [flags]]
 "#;
 
+    const NROFF_STYLE_USAGE_HELP: &str = r#"
+usage: /usr/bin/nroff [-bcCEhikpRStUVz] [-d ctext] [-d string=text] [-K fallback-encoding] [-m macro-package] [-M macro-directory] [-n page-number] [-o page-list] [-P postprocessor-argument] [-r cnumeric-expression] [-r register=numeric-expression] [-T output-device] [-w warning-category] [-W warning-category] [file ...]
+usage: /usr/bin/nroff {-v | --version}
+usage: /usr/bin/nroff --help
+"#;
+
     const GENERIC_TWO_COLUMN_HELP: &str = r#"
 Tool for service management
 
@@ -3970,6 +4158,34 @@ Flags:
             .find(|flag| flag.short.as_deref() == Some("-c"))
             .expect("-c flag should exist");
         assert!(c_flag.takes_value);
+    }
+
+    #[test]
+    fn test_parse_usage_brace_alternation_and_standalone_long_flags() {
+        let mut parser = HelpParser::new("nroff", NROFF_STYLE_USAGE_HELP);
+        let schema = parser.parse().unwrap();
+
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.short.as_deref() == Some("-v")),
+            "expected short -v from '{{-v | --version}}'"
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--version")),
+            "expected long --version from '{{-v | --version}}'"
+        );
+        assert!(
+            schema
+                .global_flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--help")),
+            "expected standalone --help from usage line"
+        );
     }
 
     #[test]
