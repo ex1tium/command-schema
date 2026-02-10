@@ -1351,7 +1351,7 @@ impl HelpParser {
             return None;
         }
         let marker = token.chars().next()?;
-        if !marker.is_ascii_alphanumeric() {
+        if !marker.is_ascii_alphabetic() {
             return None;
         }
 
@@ -1748,7 +1748,7 @@ impl HelpParser {
             let total_tokens = rows.iter().map(Vec::len).sum::<usize>();
             if let Some(index) = *header_index
                 && *dense_row_seen
-                && total_tokens >= 3
+                && total_tokens >= 2
                 && !rows.is_empty()
             {
                 out.push(GridSection {
@@ -2361,9 +2361,7 @@ impl HelpParser {
             LazyLock::new(|| Regex::new(r"\{([^}]+)\}").expect("static regex must compile"));
         // SAFETY: This regex is a compile-time constant and is validated by tests.
         static INLINE_LONG_FLAG_RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(
-                r"(?x)(?:^|[\s\{\[\(\|,])(--[a-zA-Z][-a-zA-Z0-9.]*)(?:$|[\s\}\]\)\|,])",
-            )
+            Regex::new(r"(?x)(?:^|[\s\{\[\(\|,])(--[a-zA-Z][-a-zA-Z0-9.]*)(?:$|[\s\}\]\)\|,])")
                 .expect("static regex must compile")
         });
         // SAFETY: This regex is a compile-time constant and is validated by tests.
@@ -2502,11 +2500,15 @@ impl HelpParser {
             {
                 let short = alt_flags
                     .iter()
-                    .find_map(|(short, long, _)| (short.is_some() && long.is_none()).then(|| short.clone()))
+                    .find_map(|(short, long, _)| {
+                        (short.is_some() && long.is_none()).then(|| short.clone())
+                    })
                     .flatten();
                 let long = alt_flags
                     .iter()
-                    .find_map(|(short, long, _)| (short.is_none() && long.is_some()).then(|| long.clone()))
+                    .find_map(|(short, long, _)| {
+                        (short.is_none() && long.is_some()).then(|| long.clone())
+                    })
                     .flatten();
                 flags.push(FlagSchema {
                     short,
@@ -2666,10 +2668,8 @@ impl HelpParser {
             return false;
         }
 
-        head.chars().all(|ch| {
-            ch.is_ascii_alphanumeric()
-                || matches!(ch, '_' | '-' | '.' | '/' | '+' | ':')
-        })
+        head.chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '/' | '+' | ':'))
     }
 
     fn looks_like_usage_synopsis_continuation(trimmed: &str) -> bool {
@@ -2679,7 +2679,9 @@ impl HelpParser {
         if trimmed.ends_with('.') {
             return false;
         }
-        if trimmed.contains('[') || trimmed.contains("--") || Self::looks_like_flag_row_start(trimmed)
+        if trimmed.contains('[')
+            || trimmed.contains("--")
+            || Self::looks_like_flag_row_start(trimmed)
         {
             return true;
         }

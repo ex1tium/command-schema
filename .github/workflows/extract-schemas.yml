@@ -41,6 +41,8 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
 
       - name: Install comprehensive toolset
         run: |
@@ -82,8 +84,8 @@ jobs:
           sudo install -o root -g root -m 0755 linux-amd64/helm /usr/local/bin/helm
           rm -rf helm.tar.gz helm.tar.gz.sha256sum linux-amd64
 
-          # Install modern CLI tools
-          cargo install ripgrep fd-find bat
+          # Install modern CLI tools (pre-built for speed)
+          sudo apt-get install -y ripgrep fd-find bat
 
           # Install jq and yq
           sudo apt-get install -y jq
@@ -130,13 +132,9 @@ jobs:
           SCHEMA_COUNT=$(find schemas/database/ -name "*.json" -not -name "manifest.json" | wc -l)
           echo "schema_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT
 
-          # Extract changed commands from manifest
+          # Count changed schemas (both tracked modifications and untracked new files)
           if [ -f schemas/database/manifest.json ]; then
-            if compgen -G "schemas/database/*.json" > /dev/null 2>&1; then
-              CHANGED=$(git diff --name-only -- 'schemas/database/*.json' | grep -v manifest.json | wc -l)
-            else
-              CHANGED=0
-            fi
+            CHANGED=$(git status --porcelain -- 'schemas/database/' | awk '{print $2}' | grep -v manifest.json | grep '\.json$' | wc -l)
             echo "changed_count=$CHANGED" >> $GITHUB_OUTPUT
           else
             echo "changed_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT

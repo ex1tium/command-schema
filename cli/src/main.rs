@@ -550,12 +550,14 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
     }
 
     let mut to_extract: Vec<CommandWork> = Vec::new();
-    let mut skipped: Vec<String> = Vec::new();
+    let mut skipped_excluded: Vec<String> = Vec::new();
+    let mut skipped_not_installed: Vec<String> = Vec::new();
+    let mut skipped_unchanged: Vec<String> = Vec::new();
 
     for cmd in &config.allowlist {
         // Check if excluded
         if config.is_excluded(cmd) {
-            skipped.push(cmd.clone());
+            skipped_excluded.push(cmd.clone());
             continue;
         }
 
@@ -563,7 +565,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
         if config.extraction.installed_only
             && !command_schema_discovery::extractor::command_exists(cmd)
         {
-            skipped.push(cmd.clone());
+            skipped_not_installed.push(cmd.clone());
             continue;
         }
 
@@ -671,7 +673,7 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                 }
 
                 // No changes detected — skip
-                skipped.push(cmd.clone());
+                skipped_unchanged.push(cmd.clone());
             }
         }
     }
@@ -844,7 +846,13 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
     println!("CI Extract Summary:");
     println!("  Total commands: {}", config.allowlist.len());
     println!("  Extracted: {extracted_count} (new + updated)");
-    println!("  Skipped: {} (unchanged)", skipped.len());
+    println!(
+        "  Skipped: {} (unchanged: {}, excluded: {}, not installed: {})",
+        skipped_unchanged.len() + skipped_excluded.len() + skipped_not_installed.len(),
+        skipped_unchanged.len(),
+        skipped_excluded.len(),
+        skipped_not_installed.len(),
+    );
     println!("  Failed: {failed_count}");
 
     if outcomes.iter().any(|o| o.success) {
@@ -1052,15 +1060,44 @@ fn schema_output_stem(
     schema: &command_schema_core::CommandSchema,
     report: Option<&command_schema_discovery::report::ExtractionReport>,
 ) -> String {
-    let command = sanitize_filename_segment(&schema.command);
+    let command_sanitized = sanitize_filename_segment(&schema.command);
+    let cmd_changed = command_sanitized != schema.command;
+
     let Some(implementation) = report.and_then(|r| r.resolved_implementation.as_deref()) else {
-        return command;
+        if cmd_changed {
+            let hash = short_disambiguator(&schema.command);
+            return format!("{command_sanitized}__{hash}");
+        }
+        return command_sanitized;
     };
-    let implementation = sanitize_filename_segment(implementation);
-    if implementation.is_empty() || implementation.eq_ignore_ascii_case(&command) {
-        return command;
+
+    let impl_sanitized = sanitize_filename_segment(implementation);
+    let impl_changed = impl_sanitized != implementation;
+
+    if impl_sanitized.is_empty() || impl_sanitized.eq_ignore_ascii_case(&command_sanitized) {
+        if cmd_changed {
+            let hash = short_disambiguator(&schema.command);
+            return format!("{command_sanitized}__{hash}");
+        }
+        return command_sanitized;
     }
-    format!("{command}__{implementation}")
+
+    let base = format!("{command_sanitized}__{impl_sanitized}");
+    if cmd_changed || impl_changed {
+        let hash = short_disambiguator(&format!("{}\0{}", schema.command, implementation));
+        format!("{base}__{hash}")
+    } else {
+        base
+    }
+}
+
+/// Produce an 8-char hex disambiguator from the raw input string.
+fn short_disambiguator(input: &str) -> String {
+    use std::hash::{Hash, Hasher};
+    let mut hasher = std::hash::DefaultHasher::new();
+    input.hash(&mut hasher);
+    // Truncate to 32 bits for a short, filesystem-safe suffix
+    format!("{:08x}", hasher.finish() as u32)
 }
 
 fn sanitize_filename_segment(raw: &str) -> String {
@@ -1103,7 +1140,7 @@ fn sanitize_filename_segment(raw: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{parse_csv_list, sanitize_filename_segment};
+    use super::{parse_csv_list, sanitize_filename_segment, schema_output_stem, short_disambiguator};
 
     #[test]
     fn test_parse_csv_list_trims_and_drops_empty() {
@@ -1128,5 +1165,34 @@ mod tests {
     fn test_sanitize_filename_segment_symbolic_command_aliases() {
         assert_eq!(sanitize_filename_segment("["), "lbracket");
         assert_eq!(sanitize_filename_segment("]"), "rbracket");
+    }
+
+    #[test]
+    fn test_short_disambiguator_is_stable() {
+        let h1 = short_disambiguator("foo/bar");
+        let h2 = short_disambiguator("foo/bar");
+        assert_eq!(h1, h2);
+        assert_eq!(h1.len(), 8);
+        // Different inputs produce different hashes
+        assert_ne!(short_disambiguator("foo/bar"), short_disambiguator("foo:bar"));
+    }
+
+    #[test]
+    fn test_schema_output_stem_no_disambiguator_for_clean_names() {
+        let schema = command_schema_core::CommandSchema {
+            command: "git".to_string(),
+            ..Default::default()
+        };
+        assert_eq!(schema_output_stem(&schema, None), "git");
+    }
+
+    #[test]
+    fn test_schema_output_stem_disambiguates_when_sanitized_differs() {
+        let schema = command_schema_core::CommandSchema {
+            command: "foo/bar".to_string(),
+            ..Default::default()
+        };
+        let stem = schema_output_stem(&schema, None);
+        assert!(stem.starts_with("foo-bar__"), "expected disambiguator suffix, got: {stem}");
     }
 }

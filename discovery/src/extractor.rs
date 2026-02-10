@@ -2,8 +2,8 @@
 //!
 //! Automatically extracts command schemas by running `--help` commands
 //! and recursively probing subcommands up to `MAX_PROBE_DEPTH` (3) levels
-//! deep. The extractor tries multiple help flags (`--help`, `-h`, `help`,
-//! `-?`) and selects the best output.
+//! deep. The extractor tries multiple help flags (`--help`, `-h`, `-?`) and
+//! conditionally tries `help` when probe output explicitly suggests it.
 //!
 //! # Quality policy
 //!
@@ -27,9 +27,10 @@ use std::collections::HashSet;
 use std::fs;
 use std::io::ErrorKind;
 use std::io::Read;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::{Child, Command, ExitStatus, Stdio};
-use std::time::{Duration, Instant};
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use tracing::{debug, info};
 
 use super::parser::{FormatScore, HelpParser};
@@ -43,9 +44,10 @@ const MAX_PROBE_DEPTH: usize = 3;
 
 /// Timeout for help commands (milliseconds).
 const HELP_TIMEOUT_MS: u64 = 5000;
+static PROBE_DIR_COUNTER: AtomicU64 = AtomicU64::new(0);
 
 /// Help flags to try in order.
-const HELP_FLAGS: &[&str] = &["--help", "-h", "help", "-?"];
+const HELP_FLAGS: &[&str] = &["--help", "-h", "-?"];
 
 /// Suggested quality threshold for confidence in production runs.
 pub const DEFAULT_MIN_CONFIDENCE: f64 = 0.6;
@@ -158,6 +160,37 @@ struct DirectProbeOutcome {
     spawn_not_found: bool,
 }
 
+struct ProbeWorkspace {
+    path: PathBuf,
+}
+
+impl ProbeWorkspace {
+    fn create() -> Option<Self> {
+        let mut path = std::env::temp_dir();
+        let nanos = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .ok()
+            .map(|duration| duration.as_nanos())
+            .unwrap_or_default();
+        let seq = PROBE_DIR_COUNTER.fetch_add(1, Ordering::Relaxed);
+        path.push(format!(
+            "command-schema-probe-{}-{nanos}-{seq}",
+            std::process::id()
+        ));
+        if fs::create_dir(&path).is_ok() {
+            Some(Self { path })
+        } else {
+            None
+        }
+    }
+}
+
+impl Drop for ProbeWorkspace {
+    fn drop(&mut self) {
+        let _ = fs::remove_dir_all(&self.path);
+    }
+}
+
 /// Resolved identity of a command binary.
 ///
 /// Both fields store only the **basename** (not a full path) to avoid leaking
@@ -211,15 +244,7 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
 
     for help_flag in HELP_FLAGS {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
-
-        // Special case: "help" subcommand goes after the command
-        if *help_flag == "help" && parts.len() > 1 {
-            // For "git remote", try "git help remote"
-            // Insert "help" after the base command, keeping subcommand(s) intact
-            cmd_parts.insert(1, "help".to_string());
-        } else {
-            cmd_parts.push((*help_flag).to_string());
-        }
+        cmd_parts.push((*help_flag).to_string());
 
         debug!(command = ?cmd_parts, "Probing help");
         let outcome = try_direct_probe(&cmd_parts, help_flag, &env_overrides);
@@ -256,10 +281,68 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         }
     }
 
+    if should_probe_help_subcommand(&parts, &attempts) {
+        let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
+        if parts.len() > 1 {
+            // For "git remote", try "git help remote".
+            cmd_parts.insert(1, "help".to_string());
+        } else {
+            cmd_parts.push("help".to_string());
+        }
+
+        debug!(command = ?cmd_parts, "Probing help subcommand");
+        let outcome = try_direct_probe(&cmd_parts, "help", &env_overrides);
+        if outcome.spawn_not_found {
+            let shell_probe = probe_shell_help(&parts, "help", &env_overrides);
+            attempts.push(shell_probe.attempt);
+            if let Some(help_text) = shell_probe.accepted_output {
+                return ProbeRun {
+                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    attempts,
+                };
+            }
+        } else {
+            attempts.push(outcome.attempt);
+            if let Some(help_text) = outcome.accepted_output {
+                return ProbeRun {
+                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    attempts,
+                };
+            }
+        }
+    }
+
     ProbeRun {
         help_output: None,
         attempts,
     }
+}
+
+fn should_probe_help_subcommand(parts: &[&str], attempts: &[ProbeAttempt]) -> bool {
+    if parts.len() > 1 {
+        return true;
+    }
+    let base = parts
+        .first()
+        .copied()
+        .unwrap_or_default()
+        .to_ascii_lowercase();
+    if base.is_empty() {
+        return false;
+    }
+
+    attempts.iter().any(|attempt| {
+        if attempt.accepted {
+            return false;
+        }
+        let Some(preview) = attempt.output_preview.as_deref() else {
+            return false;
+        };
+        let lower = preview.to_ascii_lowercase();
+        (lower.contains("try") || lower.contains("use"))
+            && lower.contains(" help")
+            && lower.contains(&base)
+    })
 }
 
 fn command_specific_probe_suffixes(base_command: &str) -> Vec<Vec<&'static str>> {
@@ -292,6 +375,10 @@ fn default_probe_env() -> Vec<(&'static str, &'static str)> {
         ("DISPLAY", ""),
         ("WAYLAND_DISPLAY", ""),
         ("BROWSER", "true"),
+        // Keep interactive helpers from switching terminal modes.
+        ("DEBIAN_FRONTEND", "noninteractive"),
+        ("TERM", "dumb"),
+        ("NO_COLOR", "1"),
         // Avoid interactive pagers when commands route help through pager tools.
         ("PAGER", "cat"),
         ("MANPAGER", "cat"),
@@ -334,10 +421,15 @@ fn try_direct_probe(
 ) -> DirectProbeOutcome {
     let mut attempt = ProbeAttempt::new(help_flag, cmd_parts.to_vec());
     let mut command = Command::new(&cmd_parts[0]);
+    let probe_workspace = ProbeWorkspace::create();
     command
         .args(&cmd_parts[1..])
+        .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
+    if let Some(workspace) = probe_workspace.as_ref() {
+        command.current_dir(&workspace.path);
+    }
     for (key, value) in env_overrides {
         command.env(key, value);
     }
@@ -473,11 +565,16 @@ fn probe_shell_help(
     let mut attempt = ProbeAttempt::new(help_flag, argv);
 
     let mut command = Command::new("bash");
+    let probe_workspace = ProbeWorkspace::create();
     command
         .arg("-lc")
         .arg(&shell_cmd)
+        .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
+    if let Some(workspace) = probe_workspace.as_ref() {
+        command.current_dir(&workspace.path);
+    }
     for (key, value) in env_overrides {
         command.env(key, value);
     }
@@ -634,7 +731,11 @@ fn is_help_output(text: &str) -> bool {
     ];
     let suggestion_only_help_hint = !has_usage_line
         && !has_structured_sections
-        && trimmed.lines().filter(|line| !line.trim().is_empty()).count() <= 2
+        && trimmed
+            .lines()
+            .filter(|line| !line.trim().is_empty())
+            .count()
+            <= 2
         && (text_lower.contains(" is unknown, try ")
             || text_lower.contains("unknown argument")
             || text_lower.contains("unknown option"))
@@ -662,8 +763,6 @@ fn is_help_output(text: &str) -> bool {
         "options",
         "commands",
         "flags",
-        "--help",
-        "-h",
         "arguments",
         "description",
     ];
@@ -740,11 +839,13 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
 
     let not_found_markers = [
         "command not found",
-        "no such file or directory",
         "not recognized as an internal or external command",
         "unknown binary",
     ];
-    if not_found_markers.iter().any(|marker| lower.contains(marker)) {
+    if not_found_markers
+        .iter()
+        .any(|marker| lower.contains(marker))
+    {
         return RejectionClassification {
             reason: "not-installed-output".to_string(),
             failure_code: FailureCode::NotInstalled,
@@ -1435,6 +1536,7 @@ mod tests {
         assert!(!is_help_output("error: command not found"));
         assert!(!is_help_output("short"));
         assert!(!is_help_output("sh: 0: Illegal option -h"));
+        assert!(!is_help_output("bzexe: --help not a file"));
         assert!(!is_help_output(
             "Argument \"--help\" is unknown, try \"rtmon help\"."
         ));
@@ -1496,6 +1598,44 @@ mod tests {
                 .iter()
                 .any(|suffix| suffix == &vec!["--help", "all"])
         );
+    }
+
+    #[test]
+    fn test_should_probe_help_subcommand_from_hint_for_single_command() {
+        let attempts = vec![ProbeAttempt {
+            help_flag: "--help".to_string(),
+            argv: vec!["rtmon".to_string(), "--help".to_string()],
+            exit_code: Some(255),
+            timed_out: false,
+            error: None,
+            rejection_reason: Some("option-error-output".to_string()),
+            failure_code: Some(FailureCode::NotHelpOutput),
+            output_source: Some("stderr".to_string()),
+            output_len: 48,
+            output_preview: Some("Argument \"--help\" is unknown, try \"rtmon help\".".to_string()),
+            accepted: false,
+        }];
+
+        assert!(should_probe_help_subcommand(&["rtmon"], &attempts));
+    }
+
+    #[test]
+    fn test_should_not_probe_help_subcommand_without_hint_for_single_command() {
+        let attempts = vec![ProbeAttempt {
+            help_flag: "--help".to_string(),
+            argv: vec!["bzexe".to_string(), "--help".to_string()],
+            exit_code: Some(1),
+            timed_out: false,
+            error: None,
+            rejection_reason: Some("not-help-output".to_string()),
+            failure_code: Some(FailureCode::NotHelpOutput),
+            output_source: Some("stdout".to_string()),
+            output_len: 25,
+            output_preview: Some("bzexe: --help not a file".to_string()),
+            accepted: false,
+        }];
+
+        assert!(!should_probe_help_subcommand(&["bzexe"], &attempts));
     }
 
     #[test]
