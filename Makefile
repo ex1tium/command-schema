@@ -14,6 +14,7 @@ FORMAT ?= json
 CONFIG ?= ci-config.yaml
 MANIFEST ?= /tmp/command-schema-manifest.json
 SCHEMA_DIR ?= schemas/database
+SCHEMA_BRANCH ?= schemas
 BUNDLE ?= /tmp/command-schemas-bundle.json
 DB ?= /tmp/command-schemas.db
 PREFIX ?= cs_
@@ -190,6 +191,18 @@ migrate-status: ## Show DB migration status
 smoke: ## Quick sanity flow: extract targeted set, then validate it
 	$(MAKE) extract-commands
 	$(MAKE) validate-target
+
+.PHONY: fetch-schemas
+fetch-schemas: ## Fetch pre-extracted schemas from the schemas branch into SCHEMA_DIR
+	@echo "Fetching schemas from branch '$(SCHEMA_BRANCH)' into $(SCHEMA_DIR)/"
+	@git fetch origin $(SCHEMA_BRANCH)
+	@mkdir -p "$(SCHEMA_DIR)"
+	@git archive origin/$(SCHEMA_BRANCH) | tar -x -C "$(SCHEMA_DIR)/"
+	@echo "Fetched $$(ls "$(SCHEMA_DIR)"/*.json 2>/dev/null | wc -l) schema files."
+
+.PHONY: clean-schemas
+clean-schemas: ## Remove locally fetched schemas
+	rm -rf "$(SCHEMA_DIR)"
 
 .PHONY: clean
 clean: ## Clean Cargo build artifacts
