@@ -14,6 +14,9 @@ The `command-schema` library supports five consumption patterns, each suited to 
 | [SQLite storage](#pattern-4-sqlite-storage) | `command-schema-sqlite` | Runtime persistence |
 | [Hybrid (recommended)](#pattern-5-hybrid-recommended) | Both | Production applications |
 
+> **Prerequisite**: Patterns that load from `schemas/database/` require pre-extracted schemas.
+> Run `make fetch-schemas` to fetch them from the [`schemas`](https://github.com/ex1tium/command-schema/tree/schemas) branch, or extract your own with the CLI.
+
 ## Pattern 1: Directory loading
 
 **Use case**: Development, testing, CI pipelines.
@@ -37,7 +40,7 @@ for name in db.commands() {
 }
 ```
 
-**Performance**: ~100ms startup for ~200 schemas. Lookups are O(1) after loading.
+**Performance**: Lookups are O(1) after loading. Startup time scales linearly with schema count.
 
 **Pros**:
 - Simple to set up and debug (human-readable JSON files)
@@ -96,7 +99,7 @@ Schemas are compressed at build time and embedded directly into the binary. At r
 
 ### Build-time setup
 
-1. Place JSON schema files in `schemas/database/`
+1. Place JSON schema files in `schemas/database/` (run `make fetch-schemas` or extract your own)
 2. Enable the `bundled-schemas` feature:
 
 ```toml
