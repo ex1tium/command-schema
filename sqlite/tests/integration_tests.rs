@@ -148,24 +148,12 @@ fn complex_schema() -> CommandSchema {
     schema
 }
 
-/// Helper to set up a migration and run up().
-fn setup_migration() -> Migration {
+/// Helper to create a connection with cs_* tables already created.
+fn setup_db() -> Connection {
     let conn = Connection::open_in_memory().unwrap();
-    let mut migration = Migration::new(conn, "cs_").unwrap();
+    let migration = Migration::new(&conn, "cs_").unwrap();
     migration.up().unwrap();
-    migration
-}
-
-/// Helper to set up a SchemaQuery with tables already created.
-fn setup_query() -> SchemaQuery {
-    let conn = Connection::open_in_memory().unwrap();
-    conn.execute_batch("PRAGMA foreign_keys = ON;").unwrap();
-
-    let mut migration = Migration::new(conn, "cs_").unwrap();
-    migration.up().unwrap();
-
-    let conn = migration.into_connection();
-    SchemaQuery::new(conn, "cs_").unwrap()
+    conn
 }
 
 // =============================================================================
@@ -174,7 +162,8 @@ fn setup_query() -> SchemaQuery {
 
 #[test]
 fn test_migration_lifecycle() {
-    let mut migration = setup_migration();
+    let conn = setup_db();
+    let migration = Migration::new(&conn, "cs_").unwrap();
 
     // Verify tables exist with 0 rows
     let status = migration.status().unwrap();
@@ -205,7 +194,8 @@ fn test_seed_from_directory() {
         f.flush().unwrap();
     }
 
-    let mut migration = setup_migration();
+    let conn = setup_db();
+    let migration = Migration::new(&conn, "cs_").unwrap();
     let report = migration.seed(dir.path()).unwrap();
 
     assert_eq!(report.commands_inserted, 2);
@@ -226,7 +216,8 @@ fn test_refresh() {
     serde_json::to_writer_pretty(&mut f, &schema).unwrap();
     f.flush().unwrap();
 
-    let mut migration = setup_migration();
+    let conn = setup_db();
+    let migration = Migration::new(&conn, "cs_").unwrap();
     migration.seed(dir.path()).unwrap();
 
     // Refresh should drop, recreate, and reseed
@@ -243,7 +234,8 @@ fn test_refresh() {
 
 #[test]
 fn test_round_trip_simple_schema() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     let original = simple_schema("curl", SchemaSource::HelpCommand);
 
     query.insert_schema(&original).unwrap();
@@ -267,7 +259,8 @@ fn test_round_trip_simple_schema() {
 
 #[test]
 fn test_round_trip_complex_schema() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     let original = complex_schema();
 
     query.insert_schema(&original).unwrap();
@@ -370,7 +363,8 @@ fn test_round_trip_complex_schema() {
 
 #[test]
 fn test_round_trip_all_value_types() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     let mut schema = CommandSchema::new("types_test", SchemaSource::Learned);
     schema
@@ -447,7 +441,8 @@ fn test_round_trip_all_value_types() {
 
 #[test]
 fn test_get_all_schemas() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     query
         .insert_schema(&simple_schema("curl", SchemaSource::HelpCommand))
@@ -470,7 +465,8 @@ fn test_get_all_schemas() {
 
 #[test]
 fn test_get_by_source() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     query
         .insert_schema(&simple_schema("curl", SchemaSource::HelpCommand))
@@ -498,7 +494,8 @@ fn test_get_by_source() {
 
 #[test]
 fn test_update_schema() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     let mut original = simple_schema("curl", SchemaSource::HelpCommand);
     query.insert_schema(&original).unwrap();
@@ -519,14 +516,16 @@ fn test_update_schema() {
 
 #[test]
 fn test_update_nonexistent_schema() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     let schema = simple_schema("nonexistent", SchemaSource::Bootstrap);
     assert!(query.update_schema(&schema).is_err());
 }
 
 #[test]
 fn test_delete_schema() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     query
         .insert_schema(&simple_schema("curl", SchemaSource::HelpCommand))
@@ -539,13 +538,15 @@ fn test_delete_schema() {
 
 #[test]
 fn test_delete_nonexistent_schema() {
-    let query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     assert!(query.delete_schema("nonexistent").is_err());
 }
 
 #[test]
 fn test_get_nonexistent_schema() {
-    let query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     assert!(query.get_schema("nonexistent").unwrap().is_none());
 }
 
@@ -558,84 +559,38 @@ fn test_prefix_isolation() {
     let conn = Connection::open_in_memory().unwrap();
     conn.execute_batch("PRAGMA foreign_keys = ON;").unwrap();
 
-    let mut mig_a = Migration::new(conn, "a_").unwrap();
+    // Create both prefixed table sets on the same connection
+    let mig_a = Migration::new(&conn, "a_").unwrap();
     mig_a.up().unwrap();
-    let conn = mig_a.into_connection();
 
-    let mut mig_b = Migration::new(conn, "b_").unwrap();
+    let mig_b = Migration::new(&conn, "b_").unwrap();
     mig_b.up().unwrap();
-    let mut conn = mig_b.into_connection();
 
-    // Insert schema into prefix "a_"
-    {
-        let schema = simple_schema("curl", SchemaSource::HelpCommand);
-        let tx = conn.transaction().unwrap();
-        command_schema_sqlite_test_helpers::insert_into(&tx, "a_", &schema);
-        tx.commit().unwrap();
-    }
+    // Insert schema into prefix "a_" using SchemaQuery
+    let query_a = SchemaQuery::new(&conn, "a_").unwrap();
+    query_a
+        .insert_schema(&simple_schema("curl", SchemaSource::HelpCommand))
+        .unwrap();
 
     // Insert different schema into prefix "b_"
-    {
-        let schema = simple_schema("wget", SchemaSource::ManPage);
-        let tx = conn.transaction().unwrap();
-        command_schema_sqlite_test_helpers::insert_into(&tx, "b_", &schema);
-        tx.commit().unwrap();
-    }
+    let query_b = SchemaQuery::new(&conn, "b_").unwrap();
+    query_b
+        .insert_schema(&simple_schema("wget", SchemaSource::ManPage))
+        .unwrap();
 
     // Query prefix "a_" - should only have curl
-    let query_a = SchemaQuery::new(conn, "a_").unwrap();
     let all_a = query_a.get_all_schemas().unwrap();
     assert_eq!(all_a.len(), 1);
     assert_eq!(all_a[0].command, "curl");
 
-    // We can't easily reuse the connection for "b_" queries without
-    // into_connection on SchemaQuery, so we verify by checking the
-    // "a_" prefix doesn't contain "wget"
+    // Query prefix "b_" - should only have wget
+    let all_b = query_b.get_all_schemas().unwrap();
+    assert_eq!(all_b.len(), 1);
+    assert_eq!(all_b[0].command, "wget");
+
+    // Cross-prefix isolation
     assert!(query_a.get_schema("wget").unwrap().is_none());
-}
-
-// Helper module for test utilities that need access to convert internals
-mod command_schema_sqlite_test_helpers {
-    use command_schema_core::CommandSchema;
-    use rusqlite::Connection;
-
-    pub fn insert_into(conn: &Connection, prefix: &str, schema: &CommandSchema) {
-        conn.execute(
-            &format!(
-                "INSERT INTO {prefix}commands (name, description, version, source, confidence) \
-                 VALUES (?1, ?2, ?3, ?4, ?5)"
-            ),
-            rusqlite::params![
-                schema.command,
-                schema.description,
-                schema.version,
-                "HelpCommand",
-                schema.confidence,
-            ],
-        )
-        .unwrap();
-
-        let command_id = conn.last_insert_rowid();
-
-        for flag in &schema.global_flags {
-            conn.execute(
-                &format!(
-                    "INSERT INTO {prefix}flags (command_id, short, long, value_type, takes_value, description, multiple) \
-                     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)"
-                ),
-                rusqlite::params![
-                    command_id,
-                    flag.short,
-                    flag.long,
-                    "Bool",
-                    flag.takes_value as i32,
-                    flag.description,
-                    flag.multiple as i32,
-                ],
-            )
-            .unwrap();
-        }
-    }
+    assert!(query_b.get_schema("curl").unwrap().is_none());
 }
 
 // =============================================================================
@@ -644,7 +599,8 @@ mod command_schema_sqlite_test_helpers {
 
 #[test]
 fn test_cascade_delete_cleans_up_all_related_data() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     let schema = complex_schema();
 
     query.insert_schema(&schema).unwrap();
@@ -704,7 +660,8 @@ fn test_cascade_delete_cleans_up_all_related_data() {
 
 #[test]
 fn test_multiple_flag_round_trip() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     let mut schema = CommandSchema::new("test", SchemaSource::Bootstrap);
     schema.global_flags.push(
         FlagSchema::with_value(Some("-I"), Some("--include"), ValueType::String).allow_multiple(),
@@ -722,7 +679,8 @@ fn test_multiple_flag_round_trip() {
 
 #[test]
 fn test_empty_schema_round_trip() {
-    let mut query = setup_query();
+    let conn = setup_db();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
     let schema = CommandSchema::new("empty", SchemaSource::Bootstrap);
 
     query.insert_schema(&schema).unwrap();

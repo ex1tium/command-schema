@@ -45,17 +45,17 @@ use command_schema_sqlite::{Migration, SchemaQuery};
 use rusqlite::Connection;
 
 /// Application-level schema registry combining static and learned schemas.
-struct SchemaRegistry {
+struct SchemaRegistry<'a> {
     /// In-memory cache for O(1) lookups at runtime.
     cache: HashMap<String, CommandSchema>,
-    /// SQLite connection for persisting learned schemas.
-    query: SchemaQuery,
+    /// SQLite query interface for persisting learned schemas.
+    query: SchemaQuery<'a>,
 }
 
-impl SchemaRegistry {
+impl<'a> SchemaRegistry<'a> {
     /// Initializes the registry by loading static schemas and any
     /// previously learned schemas from SQLite.
-    fn new(static_db: SchemaDatabase, query: SchemaQuery) -> Self {
+    fn new(static_db: SchemaDatabase, query: SchemaQuery<'a>) -> Self {
         let mut cache = HashMap::new();
 
         // Load static schemas into the cache
@@ -147,14 +147,14 @@ fn main() {
 
     // === Phase 2: Initialize SQLite ===
     let conn = Connection::open_in_memory().unwrap();
-    let mut migration = Migration::new(conn, "cs_").unwrap();
+    let migration = Migration::new(&conn, "cs_").unwrap();
     migration.up().unwrap();
 
     // Optionally seed SQLite with static schemas too (for querying)
     migration.seed(&schema_dir).unwrap();
+    drop(migration);
 
-    let conn = migration.into_connection();
-    let query = SchemaQuery::new(conn, "cs_").unwrap();
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     // === Phase 3: Create the registry (merge static + learned) ===
     println!("\n=== Phase 3: Registry Initialization ===");

@@ -927,7 +927,7 @@ fn run_migrate(args: MigrateArgs) -> Result<(), String> {
 fn run_migrate_up(args: MigrateUpArgs) -> Result<(), String> {
     let conn = rusqlite::Connection::open(&args.db)
         .map_err(|e| format!("Failed to open database '{}': {e}", args.db.display()))?;
-    let mut migration = command_schema_sqlite::Migration::new(conn, &args.prefix)
+    let migration = command_schema_sqlite::Migration::new(&conn, &args.prefix)
         .map_err(|e| format!("Failed to initialize migration: {e}"))?;
     migration
         .up()
@@ -943,7 +943,7 @@ fn run_migrate_up(args: MigrateUpArgs) -> Result<(), String> {
 fn run_migrate_down(args: MigrateDownArgs) -> Result<(), String> {
     let conn = rusqlite::Connection::open(&args.db)
         .map_err(|e| format!("Failed to open database '{}': {e}", args.db.display()))?;
-    let mut migration = command_schema_sqlite::Migration::new(conn, &args.prefix)
+    let migration = command_schema_sqlite::Migration::new(&conn, &args.prefix)
         .map_err(|e| format!("Failed to initialize migration: {e}"))?;
     migration
         .down()
@@ -959,7 +959,7 @@ fn run_migrate_down(args: MigrateDownArgs) -> Result<(), String> {
 fn run_migrate_seed(args: MigrateSeedArgs) -> Result<(), String> {
     let conn = rusqlite::Connection::open(&args.db)
         .map_err(|e| format!("Failed to open database '{}': {e}", args.db.display()))?;
-    let mut migration = command_schema_sqlite::Migration::new(conn, &args.prefix)
+    let migration = command_schema_sqlite::Migration::new(&conn, &args.prefix)
         .map_err(|e| format!("Failed to initialize migration: {e}"))?;
     let report = migration
         .seed(&args.source)
@@ -975,7 +975,7 @@ fn run_migrate_seed(args: MigrateSeedArgs) -> Result<(), String> {
 fn run_migrate_refresh(args: MigrateRefreshArgs) -> Result<(), String> {
     let conn = rusqlite::Connection::open(&args.db)
         .map_err(|e| format!("Failed to open database '{}': {e}", args.db.display()))?;
-    let mut migration = command_schema_sqlite::Migration::new(conn, &args.prefix)
+    let migration = command_schema_sqlite::Migration::new(&conn, &args.prefix)
         .map_err(|e| format!("Failed to initialize migration: {e}"))?;
     let report = migration
         .refresh(&args.source)
@@ -991,7 +991,7 @@ fn run_migrate_refresh(args: MigrateRefreshArgs) -> Result<(), String> {
 fn run_migrate_status(args: MigrateStatusArgs) -> Result<(), String> {
     let conn = rusqlite::Connection::open(&args.db)
         .map_err(|e| format!("Failed to open database '{}': {e}", args.db.display()))?;
-    let migration = command_schema_sqlite::Migration::new(conn, &args.prefix)
+    let migration = command_schema_sqlite::Migration::new(&conn, &args.prefix)
         .map_err(|e| format!("Failed to initialize migration: {e}"))?;
     let status = migration
         .status()

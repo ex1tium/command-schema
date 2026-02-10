@@ -23,7 +23,7 @@
 //! use rusqlite::Connection;
 //!
 //! let conn = Connection::open("schemas.db").unwrap();
-//! let mut migration = Migration::new(conn, "cs_").unwrap();
+//! let migration = Migration::new(&conn, "cs_").unwrap();
 //!
 //! migration.up().unwrap();
 //! migration.seed("schemas/database/").unwrap();
@@ -40,7 +40,7 @@
 //! use rusqlite::Connection;
 //!
 //! let conn = Connection::open("schemas.db").unwrap();
-//! let mut query = SchemaQuery::new(conn, "cs_").unwrap();
+//! let query = SchemaQuery::new(&conn, "cs_").unwrap();
 //!
 //! if let Some(schema) = query.get_schema("git").unwrap() {
 //!     println!("{} has {} subcommands", schema.command, schema.subcommands.len());
