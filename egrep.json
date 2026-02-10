@@ -1,0 +1,510 @@
+{
+  "schema_version": "1.0.0",
+  "command": "egrep",
+  "description": "Search for PATTERNS in each FILE.",
+  "global_flags": [
+    {
+      "short": "-A",
+      "long": "--after-context",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "print NUM lines of trailing context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": "--basic-regexp",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PATTERNS are basic regular expressions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": "--before-context",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "print NUM lines of leading context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": "--binary",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not strip CR characters at EOL (MSDOS/Windows)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--binary-files",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "assume that binary files are TYPE; TYPE is 'binary', 'text', or 'without-match'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--byte-offset",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print the byte offset with output lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--color",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--colour",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use markers to highlight the matching strings; WHEN is 'always', 'never', or 'auto'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": "--context",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "print NUM lines of output context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--count",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print only a count of selected lines per FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": "--dereference-recursive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "likewise, but follow all symlinks",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": "--devices",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "how to handle devices, FIFOs and sockets; ACTION is 'read' or 'skip'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--directories",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "how to handle directories; ACTION is 'read', 'recurse', or 'skip'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "skip files that match GLOB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude-dir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "skip directories that match GLOB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude-from",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "skip files that match any file pattern from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": "--extended-regexp",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PATTERNS are extended regular expressions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "take PATTERNS from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--files-with-matches",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print only names of FILEs with selected lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": "--files-without-match",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print only names of FILEs with no selected lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": "--fixed-strings",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PATTERNS are strings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--group-separator",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "print SEP on line between matches with context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help text and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--ignore-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore case distinctions in patterns and data",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "search only files that match GLOB (a file pattern)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--initial-tab",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "make tabs line up (if needed)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--invert-match",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "select non-matching lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--label",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "use LABEL as the standard input file name prefix",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--line-buffered",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "flush output on every line",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--line-number",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print line number with output lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--line-regexp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "match only whole lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--max-count",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "stop after NUM selected lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--no-filename",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "suppress the file name prefix on output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-group-separator",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not print separator for matches with context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-ignore-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not ignore case distinctions (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--no-messages",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "suppress error messages",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": "--null",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print 0 byte after FILE name",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": "--null-data",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "a data line ends in 0 byte, not newline",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--only-matching",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show only nonempty parts of lines that match",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": "--perl-regexp",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PATTERNS are Perl regular expressions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "suppress all normal output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--recursive",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "like --directories=recurse",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--regexp",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use PATTERNS for matching",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": "--text",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "equivalent to --binary-files=text",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display version information and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--with-filename",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print file name with output lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--word-regexp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "match only whole words",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "equivalent to --binary-files=without-match",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-NUM",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "same as --context=NUM",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "PATTERNS",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

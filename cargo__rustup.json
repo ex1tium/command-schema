@@ -1,0 +1,4666 @@
+{
+  "schema_version": "1.0.0",
+  "command": "cargo",
+  "description": "Rust's package manager",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--color",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Coloring [possible values: auto, always, never]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--config",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Override a configuration value",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--explain",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Provide a detailed explanation of a rustc error message",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--frozen",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Equivalent to specifying both --locked and --offline",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "--locked",
+        "--offline"
+      ]
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print help",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--list",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "List installed commands",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--locked",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Assert that `Cargo.lock` will remain unchanged",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--offline",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Run without accessing the network",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not print cargo log messages",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use verbose output (-vv very verbose/build.rs output)",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print version info and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "Change to DIRECTORY before doing anything (nightly-only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "add",
+      "description": "Add dependencies to a manifest file",
+      "flags": [
+        {
+          "short": null,
+          "long": "--base",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--branch",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--build",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dev",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--git",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-optional",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-public",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--optional",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--public",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--registry",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rename",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rev",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tag",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "Reference",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "a",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "add",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "as",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "dependency",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "package",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "to",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "bench",
+      "description": "Run the benchmarks",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Alias for --workspace (deprecated)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-targets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark all targets",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bench",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Benchmark only the specified bench target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--benches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark all targets that have `bench = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Benchmark only the specified binary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bins",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark all binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Benchmark only the specified example",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--examples",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark all examples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Exclude packages from the benchmark",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark only this package's library",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fail-fast",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run all benchmarks regardless of failure",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Compile, but don't run benchmarks",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to run benchmarks for",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--test",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Benchmark only the specified test target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tests",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark all targets that have `test = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output build graph in JSON (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Benchmark all packages in the workspace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "BENCHNAME",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": "If specified, only run benches containing this string in their names"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "build",
+      "description": "Compile the current package",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Alias for --workspace (deprecated)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-targets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build all targets",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--artifact-dir",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Copy final artifacts to this directory (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bench",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build only the specified bench target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--benches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build all targets that have `bench = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build only the specified binary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bins",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build all binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build only the specified example",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--examples",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build all examples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Exclude packages from the build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": null,
+          "long": "--future-incompat-report",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Outputs a future incompatibility report at the end of the build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-going",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not abort the build as soon as there is an error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build only this package's library",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to build (see `cargo help pkgid`)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build artifacts in release mode, with optimizations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--test",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build only the specified test target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tests",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build all targets that have `test = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output build graph in JSON (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build all packages in the workspace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "b"
+      ]
+    },
+    {
+      "name": "check",
+      "description": "Analyze the current package and report errors, but don't build object files",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Alias for --workspace (deprecated)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-targets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check all targets",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bench",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Check only the specified bench target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--benches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check all targets that have `bench = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Check only the specified binary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bins",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check all binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Check only the specified example",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--examples",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check all examples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Exclude packages from the check",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": null,
+          "long": "--future-incompat-report",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Outputs a future incompatibility report at the end of the build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-going",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not abort the build as soon as there is an error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check only this package's library",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package(s) to check",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Check artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check artifacts in release mode, with optimizations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Check for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--test",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Check only the specified test target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tests",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check all targets that have `test = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output build graph in JSON (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check all packages in the workspace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "c"
+      ]
+    },
+    {
+      "name": "clean",
+      "description": "Remove the target directory",
+      "flags": [
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--doc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Whether or not to clean just the documentation directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display what would be deleted without deleting anything",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to clean artifacts for",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Clean artifacts of the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Whether or not to clean release artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Target triple to clean output for",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Clean artifacts of the workspace members",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "doc",
+      "description": "Build this package's and its dependencies' documentation",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Alias for --workspace (deprecated)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Document only the specified binary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bins",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Document all binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--document-private-items",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Document private items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Document only the specified example",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--examples",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Document all examples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Exclude packages from the build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-going",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not abort the build as soon as there is an error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Document only this package's library",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-deps",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Don't build documentation for dependencies",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--open",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Opens the docs in a browser after the operation",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to document",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build artifacts in release mode, with optimizations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output build graph in JSON (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Document all packages in the workspace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "d"
+      ]
+    },
+    {
+      "name": "init",
+      "description": "Create a new cargo package in an existing directory",
+      "flags": [
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use a binary (application) template [default]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--edition",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Edition to set for the crate generated [possible values: 2015, 2018, 2021, 2024]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use a library template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Set the resulting package name, defaults to the directory name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--registry",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Registry to use",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vcs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Initialize a new repository for the given version control system, overriding a global configuration. [possible values: git, hg, pijul, fossil, none]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "install",
+      "description": "Install a Rust binary",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Install only the specified binary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bins",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Install all binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--branch",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Branch to use when installing from git",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build in debug mode (with the 'dev' profile) instead of release mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Perform all checks without installing (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Install only the specified example",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--examples",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Install all examples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Force overwriting existing crates or binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": null,
+          "long": "--git",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "Git URL to install the specified crate from",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--index",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Registry index to install from",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-going",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not abort the build as soon as there is an error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all installed packages and their versions",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-track",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not save tracking information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Filesystem path to local crate to install from",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Install artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--registry",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Registry to use",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rev",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specific commit to use when installing from git",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory to install packages into",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tag",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Tag to use when installing from git",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify a version to install",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "new",
+      "description": "Create a new cargo package",
+      "flags": [
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use a binary (application) template [default]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--edition",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Edition to set for the crate generated [possible values: 2015, 2018, 2021, 2024]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use a library template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Set the resulting package name, defaults to the directory name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--registry",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Registry to use",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vcs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Initialize a new repository for the given version control system, overriding a global configuration. [possible values: git, hg, pijul, fossil, none]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "publish",
+      "description": "Package and upload this package to the registry",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-dirty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow dirty working directories to be packaged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Perform all checks without uploading",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Don't publish specified packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--index",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "Registry index URL to upload the package to",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-going",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not abort the build as soon as there is an error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Don't verify the contents by building them",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package(s) to publish",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--registry",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Registry to upload the package to",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Publish all packages in the workspace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "remove",
+      "description": "Remove dependencies from a manifest file",
+      "flags": [
+        {
+          "short": null,
+          "long": "--build",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove from build-dependencies",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dev",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove from dev-dependencies",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Don't actually write the manifest",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to remove from",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Remove from target-dependencies",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "run",
+      "description": "Run a binary or example of the local package",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Name of the bin target to run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Name of the example target to run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-going",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not abort the build as soon as there is an error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package with the target to run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build artifacts in release mode, with optimizations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output build graph in JSON (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "r"
+      ]
+    },
+    {
+      "name": "search",
+      "description": "Search registry for crates",
+      "flags": [
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--index",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "Registry index URL to search packages in",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--limit",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Limit the number of results (default: 10, max: 100)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--registry",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Registry to search packages in",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "test",
+      "description": "Run the tests",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Alias for --workspace (deprecated)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Activate all available features",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-targets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test all targets (does not include doctests)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bench",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Test only the specified bench target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--benches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test all targets that have `bench = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Test only the specified binary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bins",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test all binaries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--doc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test only this library's documentation",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--example",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Test only the specified example",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--examples",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test all examples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Exclude packages from the test",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--features",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Space or comma separated list of features to activate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": null,
+          "long": "--future-incompat-report",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Outputs a future incompatibility report at the end of the build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "Number of parallel jobs, defaults to # of CPUs.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test only this package's library",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--message-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Error format [possible values: human, short, json, json-diagnostic-short, json-diagnostic-rendered-ansi, json-render-diagnostics]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-default-features",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not activate the `default` feature",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fail-fast",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run all tests regardless of failure",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Compile, but don't run tests",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to run tests for",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--profile",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build artifacts with the specified profile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display one character per test instead of one line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Build artifacts in release mode, with optimizations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build for the target triple",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory for all generated artifacts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--test",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Test only the specified test target",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tests",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test all targets that have `test = true` set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timings",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Timing output formats (unstable) (comma separated): html, json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output build graph in JSON (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workspace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Test all packages in the workspace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TESTNAME",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": "If specified, only run tests containing this string in their names"
+        }
+      ],
+      "subcommands": [],
+      "aliases": [
+        "t"
+      ]
+    },
+    {
+      "name": "uninstall",
+      "description": "Uninstall a Rust binary ... See all commands with --list",
+      "flags": [
+        {
+          "short": null,
+          "long": "--bin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Only uninstall the binary NAME",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--package",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Package to uninstall",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory to uninstall packages from",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "update",
+      "description": "Update dependencies listed in Cargo.lock",
+      "flags": [
+        {
+          "short": "-b",
+          "long": "--breaking",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Update [SPEC] to latest SemVer-breaking version (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Coloring [possible values: auto, always, never]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override a configuration value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Don't actually write the lockfile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--frozen",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Equivalent to specifying both --locked and --offline",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "--locked",
+            "--offline"
+          ]
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-rust-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore `rust-version` specification in packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--locked",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Assert that `Cargo.lock` will remain unchanged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--lockfile-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.lock (unstable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to Cargo.toml",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--offline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Run without accessing the network",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--precise",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Update [SPEC] to exactly PRECISE",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not print cargo log messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recursive",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Force updating all dependencies of [SPEC]... as well",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use verbose output (-vv very verbose/build.rs output)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--workspace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Only update the workspace packages [SPEC]... Package to update",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "MANIFEST_RS",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "toolchain",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 1.0,
+  "version": null
+}

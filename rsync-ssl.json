@@ -1,0 +1,1457 @@
+{
+  "schema_version": "1.0.0",
+  "command": "rsync-ssl",
+  "description": "Copyright (C) 1996-2022 by Andrew Tridgell, Wayne Davison, and others.",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--acls",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve ACLs (implies --perms)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--address",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "bind address for outgoing socket to daemon",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--append",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "append data onto shorter files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--append-verify",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--archive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "archive mode is -rlptgoD (no -A,-X,-U,-N,-H)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--atimes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve access (use) times",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--backup",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "make backups (see --suffix & --backup-dir)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--backup-dir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "make backups into hierarchy based in DIR",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--block-size",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "force a fixed checksum block-size",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--blocking-io",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use blocking I/O for the remote shell",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--bwlimit",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "limit socket I/O bandwidth",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--checksum",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "skip based on checksum, not mod-time & size",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--checksum-choice",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "choose the checksum algorithm (aka --cc)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--checksum-seed",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "set block/file checksum seed (advanced)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--chmod",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "affect file and/or directory permissions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--chown",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "simple username/groupname mapping",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compare-dest",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "also compare destination files relative to DIR",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compress",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "compress file data during the transfer",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compress-choice",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "choose the compression algorithm (aka --zc)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compress-level",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "explicitly set compression level (aka --zl)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--contimeout",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set daemon connection timeout in seconds",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-as",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "specify user & optional group for the copy",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-dest",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "and include copies of unchanged files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-devices",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "copy device contents as a regular file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-dirlinks",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "transform symlink to dir into referent dir",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-links",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "transform symlink into referent file/dir",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-unsafe-links",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "only \"unsafe\" symlinks are transformed",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--crtimes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve create times (newness)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cvs-exclude",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "auto-ignore files in the same way CVS does",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "fine-grained debug verbosity",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--del",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an alias for --delete-during",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delay-updates",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "put all updated files into place at end",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "delete extraneous files from dest dirs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete-after",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "receiver deletes after transfer, not during",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete-before",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "receiver deletes before xfer, not during",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete-delay",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "find deletions during, delete after",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete-during",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "receiver deletes during the transfer",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete-excluded",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "also delete excluded files from dest dirs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete-missing-args",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "delete missing source args from destination",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--devices",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve device files (super-user only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "transfer directories without recursing",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dry-run",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "perform a trial run with no changes made",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--early-input",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "use FILE for daemon's early exec input",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "exclude files matching PATTERN",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude-from",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "read exclude patterns from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--executability",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve executability",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--existing",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "skip creating new files on receiver",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fake-super",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "store/recover privileged attrs using xattrs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--files-from",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "read list of source-file names from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--filter",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "add a file-filtering RULE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--force",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "force deletion of dirs even if not empty",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--from0",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "all *-from/filter files are delimited by 0s",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fsync",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "fsync every written file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fuzzy",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "find similar file for basis if no dest file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--group",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve group",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--groupmap",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "custom groupname mapping",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--hard-links",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve hard links",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show this help (* -h is help only on its own)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--human-readable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output numbers in a human-readable format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--iconv",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "request charset conversion of filenames",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-errors",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "delete even if there are I/O errors",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-existing",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "skip updating files that exist on receiver",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-missing-args",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore missing source args without error",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-times",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't skip files that match size and time",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "don't exclude files matching PATTERN",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include-from",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "read include patterns from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--info",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "fine-grained informational verbosity",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--inplace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "update destination files in-place",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ipv4",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "prefer IPv4",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ipv6",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "prefer IPv6",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--itemize-changes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output a change-summary for all updates",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-dirlinks",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "treat symlinked dir on receiver as dir",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--link-dest",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "hardlink to files in DIR when unchanged",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--links",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "copy symlinks as symlinks",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--list-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list the files instead of copying them",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "log what we're doing to the specified FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-file-format",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "log updates using the specified FMT",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-alloc",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "change a limit relating to memory alloc",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-delete",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "don't delete more than NUM files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-size",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "don't transfer any file larger than SIZE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--min-size",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "don't transfer any file smaller than SIZE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mkpath",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "create destination's missing path components",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--modify-window",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "set the accuracy for mod-time comparisons",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--munge-links",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "munge symlinks to make them safe & unusable",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-OPTION",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "turn off an implied OPTION (e.g. --no-D)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-implied-dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't send implied dirs with --relative",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-motd",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "suppress daemon-mode MOTD",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--numeric-ids",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't map uid/gid values by user/group name",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--old-args",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "disable the modern arg-protection idiom",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--old-dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "works like --dirs when talking to old rsync",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--omit-dir-times",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "omit directories from --times",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--omit-link-times",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "omit symlinks from --times",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--one-file-system",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't cross filesystem boundaries",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--only-write-batch",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "like --write-batch but w/o updating dest",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--open-noatime",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "avoid changing the atime on opened files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--out-format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "output updates using the specified FORMAT",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--outbuf",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set out buffering to None, Line, or Block",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--owner",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve owner (super-user only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--partial",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "keep partially transferred files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--partial-dir",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "put a partially transferred file into DIR",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--password-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "read daemon-access password from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--perms",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve permissions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--port",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "specify double-colon alternate port number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preallocate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "allocate dest files before writing them",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--progress",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show progress during transfer",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--protocol",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "force an older protocol version to be used",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prune-empty-dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "prune empty directory chains from file-list",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "suppress non-error messages",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--read-batch",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "read a batched update from FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--recursive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recurse into directories",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--relative",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use relative path names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remote-option",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "send OPTION to the remote side only",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remove-source-files",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "sender removes synchronized files (non-dir)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rsh",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "specify the remote shell to use",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rsync-path",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "specify the rsync to run on remote machine",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--safe-links",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore symlinks that point outside the tree",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--secluded-args",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use the protocol to safely send the args",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--size-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "skip files that match in size",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--skip-compress",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "skip compressing files with suffix in LIST",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sockopts",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "specify custom TCP options",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sparse",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "turn sequences of nulls into sparse blocks",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--specials",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve special files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stats",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "give some file-transfer stats",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stderr",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "change stderr output mode (default: errors)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stop-after",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Stop rsync after MINS minutes have elapsed",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stop-at",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Stop rsync at the specified point in time",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--suffix",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "backup suffix (default ~ w/o --backup-dir)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--super",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "receiver attempts super-user activities",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--temp-dir",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "create temporary files in directory DIR",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--timeout",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set I/O timeout in seconds",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--times",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve modification times",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--trust-sender",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "trust the remote sender's file list",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--update",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "skip files that are newer on the receiver",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--usermap",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "custom username mapping",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "increase verbosity",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print the version + other info and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--whole-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "copy files whole (w/o delta-xfer algorithm)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--write-batch",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "write a batched update to FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--write-devices",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "write to devices as files (implies --inplace)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--xattrs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "preserve extended attributes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "same as --devices --specials",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "same as --filter='dir-merge /.rsync-filter' repeated: --filter='- .rsync-filter'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "same as --partial --progress",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "DEST",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "SRC",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": "3.2.7"
+}

@@ -1,0 +1,432 @@
+{
+  "schema_version": "1.0.0",
+  "command": "conmon",
+  "description": null,
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--api-version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Conmon API version to use",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--bundle",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Location of the OCI Bundle path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--cid",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Identification of Container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": "--conmon-pidfile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "PID file for the conmon process",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--container-pidfile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "PID file for the initial pid inside of container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": "--cuuid",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Container UUID",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--exec",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Exec a command into a running container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exec-attach",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Attach to an exec session",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exec-process-spec",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to the process spec for execution",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exit-command",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to the program to execute when the container terminates its execution",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exit-command-arg",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Additional arg to pass to the exit command. Can be specified multiple times",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exit-delay",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Delay before invoking the exit command (in seconds)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exit-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to the directory where exit files are written",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--full-attach",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't truncate the path to the attach socket. This option causes conmon to ignore --socket-dir-path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show help options",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--leave-stdin-open",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Leave stdin open when attached client disconnects",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-global-size-max",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Maximum size of all log files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-level",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print debug logs based on log level",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--log-path",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Log file path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-size-max",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Maximum size of log file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-tag",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Additional tag to use for logging",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Container name",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-new-keyring",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not create a new session keyring for the container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-pivot",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not use pivot_root",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-sync-log",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not manually call sync on logs after container shutdown",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-0",
+      "long": "--persist-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Persistent directory for a container that can be used for storing container data",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--replace-listen-pid",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Replace listen pid if set for oci-runtime pid",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--restore",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Restore a container from a checkpoint",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--runtime",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to store runtime data for the container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--runtime-arg",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Additional arg to pass to the runtime. Can be specified multiple times",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--runtime-opt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Additional opts to pass to the restore or exec command. Can be specified multiple times",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sdnotify-socket",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to the host's sd-notify socket to relay messages to",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--seccomp-notify-plugins",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Plugins to use for managing the seccomp notifications",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--seccomp-notify-socket",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to the socket where the seccomp notification fd is received",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--socket-dir-path",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Location of container attach sockets",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--stdin",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Open up a pipe to pass stdin to the container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sync",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Keep the main conmon process as its child by only forking once",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--syslog",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Log to syslog (use with cgroupfs cgroup manager)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--systemd-cgroup",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable systemd cgroup manager, rather then use the cgroupfs directly",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--terminal",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Allocate a pseudo-TTY. The default is false",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--timeout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Kill container after specified timeout in seconds.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the version and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.75,
+  "version": null
+}

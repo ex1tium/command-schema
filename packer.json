@@ -1,0 +1,931 @@
+{
+  "schema_version": "1.0.0",
+  "command": "packer",
+  "description": null,
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "build",
+      "description": "build image(s) from template",
+      "flags": [
+        {
+          "short": "-color",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Disable color output. (Default: color)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-debug",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Debug mode enabled for builds.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-except",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Run all builds and post-processors other than these.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-force",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Force a build to continue if artifacts exist, deletes existing artifacts.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-ignore-prerelease-plugins",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Disable the loading of prerelease plugin binaries (x.y.z-dev).",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-machine-readable",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Produce machine-readable output.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-on-error",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-only",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Build only the specified builds.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-parallel-builds",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Number of builds to run in parallel. 1 disables parallelization. 0 means no limit (Default: 0)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-timestamp-ui",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Enable prefixing of each ui output with an RFC3339 timestamp.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-use-sequential-evaluation",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Fallback to using a sequential approach for local/datasource evaluation.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-var",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Variable for templates, can be used multiple times.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-var-file",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "JSON or HCL2 file containing user variables, can be used multiple times.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-warn-on-undeclared-var",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display warnings for user variable files containing undeclared variables.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "console",
+      "description": "creates a console for testing variable interpolation",
+      "flags": [
+        {
+          "short": "-config-type",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Set to 'hcl2' to run in HCL2 mode when no file is passed. Defaults to json.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-use-sequential-evaluation",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Fallback to using a sequential approach for local/datasource evaluation.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-var",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Variable for templates, can be used multiple times.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-var-file",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "JSON or HCL2 file containing user variables.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "fix",
+      "description": "fixes templates from old versions of packer",
+      "flags": [
+        {
+          "short": "-validate",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "If true (default), validates the fixed template.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "amazon-private-ip",
+          "description": "Replaces `\"ssh_private_ip\": true` in amazon builders with `\"ssh_interface\": \"private_ip\"`",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "amazon-shutdown_behavior",
+          "description": "Changes \"shutdown_behaviour\" to \"shutdown_behavior\" in Amazon builders. amazon-enhanced-networking Replaces \"enhanced_networking\" in builders with \"ena_support\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "amazon-temp-sec-cidrs",
+          "description": "Replaces \"temporary_security_group_source_cidr\" (string) with \"temporary_security_group_source_cidrs\" (list of strings)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "azure-exclude_from_latest",
+          "description": "Changes \"exlude_from_latest\" to \"exclude_from_latest\" in Azure builders.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "clean-image-name",
+          "description": "Replaces /clean_(image|ami)_name/ in builder configs with \"clean_resource_name\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "comm-config",
+          "description": "Remove ssh prefixes from communicator port forwarding configuration (host_port_min, host_port_max, skip_nat_mapping)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "createtime",
+          "description": "Replaces \".CreateTime\" in builder configs with \"{{timestamp}}\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "docker-email",
+          "description": "Removes \"login_email\" from the Docker builder.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "docker-tag-tags",
+          "description": "Updates \"docker\" post-processor so any \"tag\" field is renamed to \"tags\".",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "galaxy-command",
+          "description": "Replaces \"galaxycommand\" in ansible-local provisioner configs with \"galaxy_command\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "hyperv-cpu-and-ram",
+          "description": "Replaces \"cpu\" with \"cpus\" and \"ram_size\" with \"memory\"in Hyper-V VMCX builder templates",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "hyperv-deprecations",
+          "description": "Removes the deprecated \"vhd_temp_path\" setting from Hyper-V ISO builder templates",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "hyperv-vmxc-typo",
+          "description": "Fixes a typo replacing \"clone_from_vmxc_path\" with \"clone_from_vmcx_path\" in Hyper-V VMCX builder templates",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "iso-checksum-type-and-url",
+          "description": "Puts content of potential \"iso_checksum_url\" and \"iso_checksum_url\" in \"iso_checksum\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "iso-md5",
+          "description": "Replaces \"iso_md5\" in builders with \"iso_checksum\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "manifest-filename",
+          "description": "Updates \"manifest\" post-processor so any \"filename\" field is renamed to \"output\".",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "parallels-deprecations",
+          "description": "Removes deprecated \"parallels_tools_host_path\" from Parallels builders and changes \"guest_os_distribution\" to \"guest_os_type\".",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "parallels-headless",
+          "description": "Removes unused \"headless\" from Parallels builders",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "powershell-escapes",
+          "description": "Removes PowerShell escapes from user env vars and elevated username and password strings",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "pp-vagrant-override",
+          "description": "Fixes provider-specific overrides for Vagrant post-processor",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "proxmox-type",
+          "description": "Updates the builder type proxmox to proxmox-iso",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "qemu-disk-size",
+          "description": "Updates \"disk_size\" from int to string in QEMU builders.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "qemu-host-port",
+          "description": "Updates ssh_host_port_min and ssh_host_port_max to host_port_min and host_port_max",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "scaleway-access-key",
+          "description": "Updates builders using \"access_key\" to use \"organization_id\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "spot-price-auto-product",
+          "description": "Removes the deprecated \"spot_price_auto_product\" setting from Amazon builder templates",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "ssh-wait-timeout",
+          "description": "Replaces \"ssh_wait_timeout\" with \"ssh_timeout\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "sshdisableagent",
+          "description": "Updates builders using \"ssh_disable_agent\" to use \"ssh_disable_agent_forwarding\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "sshkeypath",
+          "description": "Updates builders using \"ssh_key_path\" to use \"ssh_private_key_file\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "virtualbox-gaattach",
+          "description": "Updates VirtualBox builders using \"guest_additions_attach\" to use \"guest_additions_mode\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "virtualbox-rename",
+          "description": "Updates \"virtualbox\" builders to \"virtualbox-iso\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "vmware-compaction",
+          "description": "Adds \"skip_compaction = true\" to \"vmware-iso\" builders with incompatible disk_type_id",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "vmware-rename",
+          "description": "Updates \"vmware\" builders to \"vmware-iso\"",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "vsphere-iso-net-disk",
+          "description": "Removes deprecated network and disk fields from \"vsphere-iso\" builder",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "fmt",
+      "description": "Rewrites HCL2 config files to canonical format",
+      "flags": [
+        {
+          "short": "-check",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Check if the input is formatted. Exit status will be 0 if all input is properly formatted and non-zero otherwise.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-diff",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display diffs of formatting change",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-recursive",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Also process files in subdirectories. By default, only the given directory (or current directory) is processed.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-write",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Don't write to source files (always disabled if using -check)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "hcl2_upgrade",
+      "description": "transform a JSON template into an HCL2 configuration",
+      "flags": [
+        {
+          "short": "-output-file",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Set output file name. By default this will be the TEMPLATE name with \".pkr.hcl\" appended to it. To be a valid Packer HCL template, it must have the suffix \".pkr.hcl\"",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-with-annotations",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Add helper annotation comments to the file to help new HCL2 users understand the template format.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "hcl2_upgrade",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "init",
+      "description": "Install missing plugins or upgrade plugins",
+      "flags": [
+        {
+          "short": "-force",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Forces reinstallation of plugins, even if already installed.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-upgrade",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "On top of installing missing plugins, update installed plugins to the latest available version, if there is a new higher one. Note that this still takes into consideration the version constraint of the config.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "inspect",
+      "description": "see components of a template",
+      "flags": [
+        {
+          "short": "-machine-readable",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Machine-readable output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-use-sequential-evaluation",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Fallback to using a sequential approach for local/datasource evaluation.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "plugins",
+      "description": "Interact with Packer plugins and catalog",
+      "flags": [],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "install",
+          "description": "Install latest Packer plugin [matching version constraint]",
+          "flags": [
+            {
+              "short": "-force",
+              "long": null,
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "Forces reinstallation of plugins, even if already installed.",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-path",
+              "long": null,
+              "value_type": "File",
+              "takes_value": true,
+              "description": "Install the plugin from a locally-sourced plugin binary. This installs the plugin where a normal invocation would, but will not try to download it from a remote location, and instead install the binary in the Packer plugins path. This option cannot be specified with a version constraint.",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [
+            {
+              "name": "plugin",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "version",
+              "value_type": "String",
+              "required": false,
+              "multiple": false,
+              "description": null
+            }
+          ],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "installed",
+          "description": "List all installed Packer plugin binaries",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "remove",
+          "description": "Remove Packer plugins [matching a version]",
+          "flags": [],
+          "positional": [
+            {
+              "name": "plugin",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "version",
+              "value_type": "String",
+              "required": false,
+              "multiple": false,
+              "description": null
+            }
+          ],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "required",
+          "description": "List plugins required by a config",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "validate",
+      "description": "check that a template is valid",
+      "flags": [
+        {
+          "short": "-evaluate-datasources",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Evaluate data sources during validation (HCL2 only, may incur costs); Defaults to false.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-except",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Validate all builds other than these.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-ignore-prerelease-plugins",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Disable the loading of prerelease plugin binaries (x.y.z-dev).",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-machine-readable",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Produce machine-readable output.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-no-warn-undeclared-var",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Disable warnings for user variable files containing undeclared variables.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-only",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Validate only these builds.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-syntax-only",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Only check syntax. Do not verify config of the template.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-use-sequential-evaluation",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Fallback to using a sequential approach for local/datasource evaluation.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-var",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Variable for templates, can be used multiple times.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-var-file",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "JSON or HCL2 file containing user variables, can be used multiple times.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TEMPLATE",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "version",
+      "description": "Prints the Packer version",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.7999999999999999,
+  "version": null
+}

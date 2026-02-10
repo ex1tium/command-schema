@@ -1,0 +1,927 @@
+{
+  "schema_version": "1.0.0",
+  "command": "objcopy",
+  "description": "Copies a binary file, possibly transforming it in the process",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--add-gnu-debuglink",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add section .gnu_debuglink linking to <file>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--add-section",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add section <name> found in <file> to output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--add-symbol",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Add a symbol",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--alt-machine-code",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use the target's <index>'th alternative machine",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": "--binary-architecture",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set output arch, when input is arch-less",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--byte",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Select byte <num> in every interleaved block",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--change-leading-char",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Force output format's leading character style",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--change-section-lma",
+      "value_type": {
+        "Choice": [
+          "=",
+          "+",
+          "-"
+        ]
+      },
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--change-section-vma",
+      "value_type": {
+        "Choice": [
+          "=",
+          "+",
+          "-"
+        ]
+      },
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compress-debug-sections",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debugging",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Convert debugging information, if possible",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--decompress-debug-sections",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Decompress DWARF debug sections using zlib",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": "--disable-deterministic-archives",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--discard-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove all non-global symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": "--discard-locals",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove any compiler-generated symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dump-section",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Dump the contents of section <name> into <file>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--elf-stt-common",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Generate ELF common symbols with STT_COMMON type",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": "--enable-deterministic-archives",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--extract-dwo",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Copy only DWO sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--extract-symbol",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove section contents but keep symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--file-alignment",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Set PE file alignment to <num>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--gap-fill",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Fill gaps between sections with <val>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--globalize-symbol",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force symbol <name> to be marked as a global",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--globalize-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--heap",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set PE reserve/commit heap to <reserve>/ <commit>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display this output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--image-base",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set PE image base to <address>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--impure",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Mark the output file as impure",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--info",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "List object formats & architectures supported",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": "--input-target",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Assume input file is in format <bfdname>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--interleave",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Only copy N out of every <number> bytes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--interleave-width",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Set N for --interleave",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-file-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not strip file symbol(s)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": "--keep-global-symbol",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Localize all symbols except <name>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-global-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Do not strip section <name>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-section-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not strip section symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-K",
+      "long": "--keep-symbol",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Do not strip symbol <name>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--localize-hidden",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Turn all ELF hidden symbols into locals",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": "--localize-symbol",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Force symbol <name> to be marked as a local",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--localize-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--long-section-names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": "--merge-notes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-merge-notes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not attempt to remove redundant notes (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--only-keep-debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Strip everything but the debug information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-j",
+      "long": "--only-section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Only copy section <name> into the output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": "--output-target",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Create an output file in format <bfdname>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--pad-to",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Pad the last section up to address <addr>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prefix-alloc-sections",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prefix-sections",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Add <prefix> to start of every section name",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prefix-symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Add <prefix> to start of every symbol name",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--preserve-dates",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Copy modified/access timestamps to the output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--pure",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Mark the output file as demand paged",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--readonly-text",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Make the output text write protected",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--redefine-sym",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Redefine symbol name <old> to <new>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--redefine-syms",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remove-leading-char",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove leading character from global symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remove-relocations",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Remove relocations from section <name>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": "--remove-section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Remove section <name> from the output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rename-section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reverse-bytes",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Reverse <num> bytes at a time, in output sections with content",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--section-alignment",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Set PE section alignment to <num>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--set-section-alignment",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--set-section-flags",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--set-start",
+      "value_type": {
+        "Choice": [
+          "--change-start",
+          "--adjust-start"
+        ]
+      },
+      "takes_value": true,
+      "description": "Set the start address to <addr> {--change-start|--adjust-start} <incr> Add <incr> to the start address {--change-addresses|--adjust-vma} <incr> Add <incr> to LMA, VMA and start addresses {--change-section-address|--adjust-section-vma} <name>{=|+|-}<val> Change LMA and VMA of section <name> by <val>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--srec-forceS3",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Restrict the type of generated Srecords to S3",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--srec-len",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Restrict the length of generated Srecords",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stack",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set PE reserve/commit stack to <reserve>/ <commit>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--strip-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove all symbol and relocation information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": "--strip-debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove all debugging symbols & sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-dwo",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove all DWO sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-section-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Strip section header from the output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--strip-symbol",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Do not copy symbol <name>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-unneeded",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove all symbols not needed by relocations",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-unneeded-symbol",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-unneeded-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--subsystem",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": "--target",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set both input and output format to <bfdname>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--update-section",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "List all object files modified @<file> Read options from <file>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verilog-data-width",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display this program's version number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--weaken",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Force all global symbols to be marked as weak",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W",
+      "long": "--weaken-symbol",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Force symbol <name> to be marked as a weak",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--weaken-symbols",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--wildcard",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Permit wildcard in symbol comparison",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--writable-text",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Mark the output text as writable",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "out-file",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

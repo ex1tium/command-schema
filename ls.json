@@ -1,0 +1,608 @@
+{
+  "schema_version": "1.0.0",
+  "command": "ls",
+  "description": "List information about the FILEs (the current directory by default).",
+  "global_flags": [
+    {
+      "short": "-a",
+      "long": "--all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not ignore entries starting with .",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": "--almost-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not list implied . and ..",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--author",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "with -l, print the author of each file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--block-size",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "with -l, scale sizes by SIZE when printing them; e.g., '--block-size=M'; see SIZE format below",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": "--classify",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "append indicator (one of */=>@|) to entries WHEN",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--color",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "color the output WHEN; more info below",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": "--context",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print any security context of each file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": "--dereference",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "when showing file information for a symbolic link, show information for the file the link references rather than for the link itself",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--dereference-command-line",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dereference-command-line-symlink-to-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--directory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list directories themselves, not their contents",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": "--dired",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "generate output designed for Emacs' dired mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--escape",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print C-style escapes for nongraphic characters",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--file-type",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "likewise, except do not append '*'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "across -x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--full-time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "like -l --time-style=full-iso",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--group-directories-first",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--hide",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "do not list implied entries matching shell PATTERN (overridden by -a or -A)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--hide-control-chars",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print ? instead of nongraphic characters",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--human-readable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "with -l and -s, print sizes like 1K 234M 2G etc.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--hyperlink",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "hyperlink file names WHEN",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": "--ignore",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "do not list implied entries matching shell PATTERN",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": "--ignore-backups",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not list implied entries ending with ~",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--indicator-style",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--inode",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print the index number of each file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": "--kibibytes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "default to 1024-byte blocks for file system usage; used only with -s and per directory totals",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-byt",
+        "-s"
+      ]
+    },
+    {
+      "short": "-N",
+      "long": "--literal",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print entry names without quoting",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": "--no-group",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "in a long listing, don't print group names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--numeric-uid-gid",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "like -l, but list numeric user and group IDs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": "--quote-name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "enclose entry names in double quotes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--quoting-style",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use quoting style WORD for entry names: literal, locale, shell, shell-always, shell-escape, shell-escape-always, c, escape (overrides QUOTING_STYLE environment variable)",
+      "multiple": false,
+      "conflicts_with": [
+        "-alw",
+        "-esc"
+      ],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": "--recursive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list subdirectories recursively",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--reverse",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "reverse order while sorting",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-control-chars",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show nongraphic characters as-is (the default, unless program is 'ls' and output is a terminal)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--si",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "likewise, but use powers of 1000 not 1024",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--size",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print the allocated size of each file, in blocks",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sort",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "sort by WORD instead of name: none (-U), size (-S), time (-t), version (-v), extension (-X), width",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--tabsize",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "assume tab stops at each COLS instead of 8",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "select which timestamp used to display or sort; access time (-u): atime, access, use; metadata change time (-c): ctime, status; modified time (default): mtime, modification; birth time: birth, creation; with -l, WORD determines which time to show; with --sort=time, sort by WORD (newest first)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--time-style",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output version information and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--width",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set output width to COLS. 0 means no limit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--zero",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "end each output line with NUL, not newline",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-1",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list one file per line",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list entries by columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "sort by file size, largest first",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not sort; list entries in directory order",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "sort alphabetically by entry extension",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "with -lt: sort by, and show, ctime (time of last change of file status information); with -l: show ctime and sort by name; otherwise: sort by ctime, newest first",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list all entries in directory order",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "like -l, but do not list owner",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use a long listing format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "fill width with a comma separated list of entries",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "like -l, but do not list group information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "sort by time, newest first; see --time",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "with -lt: sort by, and show, access time; with -l: show access time and sort by name; otherwise: sort by access time, newest first",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "natural sort of (version) numbers within text",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list entries by lines instead of by columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.8,
+  "version": null
+}

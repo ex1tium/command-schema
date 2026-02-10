@@ -1,0 +1,520 @@
+{
+  "schema_version": "1.0.0",
+  "command": "diff",
+  "description": "Compare FILES line by line.",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--GTYPE-group-format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "format GTYPE input groups with GFMT",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--LTYPE-line-format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "format LTYPE input lines with LFMT These format options provide fine-grained control over the output of diff, generalizing -D/--ifdef. LTYPE is 'old', 'new', or 'unchanged'. GTYPE is LTYPE or 'changed'.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--brief",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "report only when files differ",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--color",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "color output; WHEN is 'never', 'always', or 'auto'; plain --color means --color='auto'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--ed",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output an ed script",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--exclude",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "exclude files that match PAT",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": "--exclude-from",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "exclude files that match any pattern in FILE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--expand-tabs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "expand tabs to spaces in output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--from-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "compare FILE1 to all operands; FILE1 can be a directory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--horizon-lines",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "keep NUM lines of the common prefix and suffix",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": "--ifdef",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "output merged file with '#ifdef NAME' diffs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--ignore-all-space",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore all white space",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": "--ignore-blank-lines",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore changes where lines are all blank",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--ignore-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore case differences in file contents",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-file-name-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore case when comparing file names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": "--ignore-matching-lines",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "ignore changes where all lines match RE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--ignore-space-change",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore changes in the amount of white space",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": "--ignore-tab-expansion",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore changes due to tab expansion",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": "--ignore-trailing-space",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore white space at line end",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--initial-tab",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "make tabs line up by prepending a tab",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--label",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "use LABEL instead of file name and timestamp (can be repeated)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--left-column",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output only the left column of common lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--line-format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "format all input lines with LFMT",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--minimal",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "try hard to find a smaller set of changes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--new-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "treat absent files as empty",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-dereference",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't follow symbolic links",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-ignore-file-name-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "consider case when comparing file names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--normal",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output a normal diff (the default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--paginate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "pass output through 'pr' to paginate it",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--palette",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the colors to use when --color is active; PALETTE is a colon-separated list of terminfo capabilities",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--rcs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output an RCS format diff",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--recursive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recursively compare any subdirectories found",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--report-identical-files",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "report when two files are the same",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--show-c-function",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show which C function each change is in",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": "--show-function-line",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "show the most recent line matching RE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-y",
+      "long": "--side-by-side",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output in two columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--speed-large-files",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "assume large files and many scattered small changes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--starting-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "start with FILE when comparing directories",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-trailing-cr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "strip trailing carriage return on input",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--suppress-blank-empty",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "suppress space or tab before empty output lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--suppress-common-lines",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not output common lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tabsize",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "tab stops every NUM (default 8) print columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": "--text",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "treat all files as text",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--to-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "compare all operands to FILE2; FILE2 can be a directory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unidirectional-new-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "treat absent first files as empty",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output version information and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W",
+      "long": "--width",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "output at most NUM (default 130) print columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "output NUM (default 3) lines of copied context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "output NUM (default 3) lines of unified context",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "FILES",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

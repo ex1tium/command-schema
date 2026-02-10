@@ -1,0 +1,458 @@
+{
+  "schema_version": "1.0.0",
+  "command": "capsh",
+  "description": null,
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--addamb",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "add xxx,... capabilities to ambient set",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cap-uid",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use libcap cap_setuid() to change uid",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--caps",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set caps as per cap_from_text()",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--chroot",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "chroot(2) to this path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--current",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show current caps and IAB vectors",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--decode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "decode a hex string to a list of caps",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delamb",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "remove xxx,... capabilities from ambient",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--drop",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "drop xxx,... caps from bounding set",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--explain",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "explain what capability xxx permits",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--forkfor",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "fork and make child sleep for <n> sec",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--gid",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set gid to <n> (hint: id <username>)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--groups",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--has-a",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "exit 1 if capability xxx not ambient",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--has-ambient",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "exit 1 unless ambient vector supported",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--has-b",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "exit 1 if capability xxx not dropped",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--has-i",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "exit 1 if capability xxx not inheritable",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--has-no-new-privs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "exit 1 if privs not limited",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--has-p",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "exit 1 if capability xxx not permitted",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "this message (or try 'man capsh')",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--iab",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use cap_iab_from_text() to set iab",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--inh",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set xxx,.. inheritable set",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--inmode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--is-gid",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "exit 1 if gid != <n>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--is-uid",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "exit 1 if uid != <n>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set keep-capability bit to <n>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--killit",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "send signal(n) to child",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--license",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display license info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set libcap mode to <xxx>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--modes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list libcap named modes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-new-privs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--noamb",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "reset (drop) all ambient capabilities",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--noenv",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "no fixup of env vars (for --user)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display capability relevant state",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "if first argument skip max cap check",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--secbits",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "write a new value for securebits",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--shell",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strict",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "toggle --caps, --drop and --inh fixups",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--suggest",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--supports",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--uid",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set uid to <n> (hint: id <username>)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--user",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "set uid,gid and groups to that of user == re-exec(capsh) with args as for -- =+ cap_launch capsh with args as for -+",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "IAB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "capsh",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "n",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "username",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "xxx",
+      "value_type": "String",
+      "required": true,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.85,
+  "version": null
+}

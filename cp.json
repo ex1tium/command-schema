@@ -1,0 +1,400 @@
+{
+  "schema_version": "1.0.0",
+  "command": "cp",
+  "description": "Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.",
+  "global_flags": [
+    {
+      "short": "-a",
+      "long": "--archive",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "same as -dR --preserve=all",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--attributes-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't copy the file data, just the attributes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--backup",
+      "value_type": {
+        "Choice": [
+          "none",
+          "off",
+          "numbered",
+          "t",
+          "existing",
+          "nil",
+          "simple",
+          "never"
+        ]
+      },
+      "takes_value": true,
+      "description": "make a backup of each existing destination file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--context",
+      "value_type": "Url",
+      "takes_value": true,
+      "description": "like -Z, or if CTX is specified then set the SELinux or SMACK security context to CTX",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-contents",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "copy contents of special files when recursive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "explain how a file is copied. Implies -v",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": "--dereference",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "always follow symbolic links in SOURCE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--force",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "if an existing destination file cannot be opened, remove it and try again (this option is ignored when the -n option is also used)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--interactive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "prompt before overwrite (overrides a previous -n option)",
+      "multiple": false,
+      "conflicts_with": [
+        "-n"
+      ],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--link",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "hard link files instead of copying",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--no-clobber",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not overwrite an existing file and do not fail (overrides a -u or previous -i option). See also",
+      "multiple": false,
+      "conflicts_with": [
+        "-u",
+        "-i"
+      ],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": "--no-dereference",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "never follow symbolic links in SOURCE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-preserve",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "don't preserve the specified attributes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--no-target-directory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "treat DEST as a normal file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--one-file-system",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "stay on this file system",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--parents",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use full source file name under DIRECTORY",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preserve",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "preserve the specified attributes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reflink",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "control clone/CoW copies. See below",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remove-destination",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "remove each existing destination file before attempting to open it (contrast with --force)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sparse",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "control creation of sparse files. See below",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-trailing-slashes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "remove any trailing slashes from each SOURCE argument",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--suffix",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "override the usual backup suffix",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--symbolic-link",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "make symbolic links instead of copying",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--target-directory",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "copy all SOURCE arguments into DIRECTORY",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--update",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "control which existing files are updated; UPDATE={all,none,older(default)}. See below",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "explain what is being done",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output version information and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "follow command-line symbolic links in SOURCE",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "copy directories recursively",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "set SELinux security context of destination file to default type",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "like --backup but does not accept an argument",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "same as --no-dereference --preserve=links",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "same as --preserve=mode,ownership,timestamps",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "equivalent to --update[=older]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "DEST",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "DIRECTORY",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "SOURCE",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

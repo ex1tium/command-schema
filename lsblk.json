@@ -1,0 +1,350 @@
+{
+  "schema_version": "1.0.0",
+  "command": "lsblk",
+  "description": "List information about block devices.",
+  "global_flags": [
+    {
+      "short": "-a",
+      "long": "--all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print all devices",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--ascii",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use ascii characters only",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--bytes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print SIZE in bytes rather than in human readable format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": "--dedup",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": "--discard",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print discard capabilities",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--exclude",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--fs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output info about filesystems",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": "--include",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--inverse",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "inverse dependencies",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-J",
+      "long": "--json",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use JSON output format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--list",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use list format output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": "--merge",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "group parents of sub-trees (usable for RAIDs, Multi-path)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--nodeps",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't print slaves or holders",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": "--noempty",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't print empty devices",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--noheadings",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't print headings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--nvme",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output info about NVMe devices",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--output",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "output columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": "--output-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output all columns",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": "--pairs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use key=\"value\" output format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--paths",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print complete device path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--perms",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output info about permissions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--raw",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use raw output format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--scsi",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output info about SCSI devices",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-y",
+      "long": "--shell",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use column names to be usable as shell variable identifiers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--sort",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "sort output by <column>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sysroot",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "use specified directory as system root",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--topology",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output info about topology",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--tree",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--virtio",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output info about virtio devices",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--width",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "specifies output width as number of characters",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": "--zoned",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print zone related information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

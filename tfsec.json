@@ -1,0 +1,410 @@
+{
+  "schema_version": "1.0.0",
+  "command": "tfsec",
+  "description": "tfsec is a simple tool to detect potential security vulnerabilities in your terraformed infrastructure.",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--code-theme",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Theme for annotated code. Either 'light' or 'dark'. (default \"dark\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--concise-output",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Reduce the amount of output and no statistics",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--config-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Config file to use during run",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--config-file-url",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Config file to download from a remote location. Must be json or yaml",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--custom-check-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Explicitly set the custom checks dir location",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--custom-check-url",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download a custom check file from a remote location. Must be json or yaml",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable debug logging (same as verbose)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": "--disable-grouping",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable grouping of similar results",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--exclude",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Provide comma-separated list of rule IDs to exclude from run.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude-downloaded-modules",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove results for downloaded modules in .terraform folder",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": "--exclude-ignores",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Provide comma-separated list of ignored rule to exclude from run.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude-path",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Folder path to exclude, can be used multiple times and evaluated in order of specification",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--filter-results",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Filter results to return specific checks only (supports comma-delimited input).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--force-all-dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't search for tf files, include everything below provided directory.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--format",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Select output format: lovely, json, csv, checkstyle, junit, sarif, text, markdown, html, gif. To use multiple formats, separate with a comma and specify a base output filename with --out. A file will be written for each type. The first format will additionally be written stdout. (default \"lovely\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "help for tfsec",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-hcl-errors",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not report an error if an HCL parse error is encountered",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include-ignored",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Include ignored checks in the result output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include-passed",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Include passed checks in the result output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--migrate-ignores",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Migrate ignore codes to the new ID structure",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--minimum-severity",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The minimum severity to report. One of CRITICAL, HIGH, MEDIUM, LOW.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-code",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't include the code snippets in the output.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-color",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable colored output (American style!)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-colour",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable coloured output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-ignores",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not apply any ignore rules - normally ignored checks will fail",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-module-downloads",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not download remote modules.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": "--out",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set output file. This filename will have a format descriptor appended if multiple formats are specified with --format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-rego-input",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print a JSON representation of the input supplied to rego policies.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rego-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Run rego policies exclusively.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rego-policy-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Directory to load rego policies from (recursively).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--run-statistics",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "View statistics table of current findings.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--single-thread",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Run checks using a single thread",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--soft-fail",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Runs checks but suppresses error code",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tfvars-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to .tfvars file, can be used multiple times and evaluated in order of specification",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--update",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Update to latest version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--var-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Path to .tfvars file, can be used multiple times and evaluated in order of specification (same functionality as --tfvars-file but consistent with Terraform)",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable verbose logging (same as debug)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show version information and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--workspace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Specify a workspace for ignore limits (default \"default\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

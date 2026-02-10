@@ -1,0 +1,586 @@
+{
+  "schema_version": "1.0.0",
+  "command": "vsce",
+  "description": "VS Code Extensions Manager",
+  "global_flags": [
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display help for command",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output the version number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "ls",
+      "description": "Lists all the files that will be published/packaged",
+      "flags": [
+        {
+          "short": null,
+          "long": "--dependencies",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Enable dependency detection via npm or yarn",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--follow-symlinks",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Recurse into symlinked directories instead of treating them as files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display help for command",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignoreFile",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Indicate alternative .vscodeignore",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-dependencies",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Disable dependency detection via npm or yarn",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-yarn",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use npm instead of yarn (default inferred from absence of yarn.lock or .yarnrc)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--packagedDependencies",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Select packages that should be published only (includes dependencies)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--readme-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to README file (defaults to README.md)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tree",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Prints the files in a tree format (default: false)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--yarn",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use yarn instead of npm (default inferred from presence of yarn.lock or .yarnrc)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "publish",
+      "description": "Publishes an extension",
+      "flags": [
+        {
+          "short": null,
+          "long": "--allow-all-proposed-apis",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow all proposed APIs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-missing-repository",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow missing a repository URL in package.json",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-package-all-secrets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow to package all kinds of secrets",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-package-env-file",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow packaging .env files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-package-secrets",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow packaging a specific type of secret. The type of the secrets can be found in the error message ([SECRET_TYPE]).",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-proposed-apis",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow specific proposed APIs",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-star-activation",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow using * in activation events",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-unused-files-pattern",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow include patterns for the files field in package.json that does not match any file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--azure-credential",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use Microsoft Entra ID for authentication",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--baseContentUrl",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "Prepend all relative links in README.md with the specified URL.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--baseImagesUrl",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "Prepend all relative image links in README.md with the specified URL.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--changelog-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to CHANGELOG file (defaults to CHANGELOG.md)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dependencies",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Enable dependency detection via npm or yarn",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--follow-symlinks",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Recurse into symlinked directories instead of treating them as files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--githubBranch",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "The GitHub branch used to infer relative links in README.md. Can be overridden by --baseContentUrl and --baseImagesUrl.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--gitlabBranch",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "The GitLab branch used to infer relative links in README.md. Can be overridden by --baseContentUrl and --baseImagesUrl.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display help for command",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-other-target-folders",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Ignore other target folders. Valid only when --target <target> is provided.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignoreFile",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Indicate alternative .vscodeignore",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifestPath",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Manifest files to publish alongside the VSIX packages.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--message",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Commit message used when calling `npm version`.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-dependencies",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Disable dependency detection via npm or yarn",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-git-tag-version",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not create a version commit and tag when calling `npm version`. Valid only when [version] is provided.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-update-package-json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not update `package.json`. Valid only when [version] is provided.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow all proposed APIs (deprecated: use --allow-all-proposed-apis instead)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-yarn",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use npm instead of yarn (default inferred from absence of yarn.lock or .yarnrc)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--packagePath",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Publish the provided VSIX packages.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pat",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Personal Access Token (defaults to VSCE_PAT environment variable)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pre-release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Mark this package as a pre-release",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--readme-path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to README file (defaults to README.md)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sign-tool",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Path to the VSIX signing tool. Will be invoked with two arguments: `SIGNTOOL <path/to/extension.signature.manifest> <path/to/extension.signature.p7s>`. This will be ignored if --sigzipPath is provided.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--signaturePath",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Signature files to publish alongside the VSIX packages.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sigzipPath",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Signature archives to publish alongside the VSIX packages.",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--skip-duplicate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Fail silently if version already exists on the marketplace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--skip-license",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Allow publishing without license file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Target architectures. Valid targets: win32-x64, win32-arm64, linux-x64, linux-arm64, linux-armhf, darwin-x64, darwin-arm64, alpine-x64, alpine-arm64, web",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--yarn",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use yarn instead of npm (default inferred from presence of yarn.lock or .yarnrc)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "version",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "unpublish",
+      "description": "Removes an extension from the marketplace.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--azure-credential",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use Microsoft Entra ID for authentication",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Skip confirmation prompt when unpublishing an extension",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display help for command",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pat",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Personal Access Token",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "extensionid",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.85,
+  "version": null
+}

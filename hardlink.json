@@ -1,0 +1,252 @@
+{
+  "schema_version": "1.0.0",
+  "command": "hardlink",
+  "description": "Consolidate duplicate files using hardlinks.",
+  "global_flags": [
+    {
+      "short": "-r",
+      "long": "--cache-size",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "memory limit for cached file content data",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--content",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "compare only file contents, same as -pot",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--dry-run",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't actually link anything",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--exclude",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "regular expression to exclude files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--ignore-mode",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore changes of file mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--ignore-owner",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore owner changes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--ignore-time",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ignore timestamps (when testing for equality)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--include",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "regular expression to include files/dirs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--io-size",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "I/O buffer size for file reading (speedup, using more RAM)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": "--keep-oldest",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "keep the oldest file of multiple equal files (lower precedence than minimize/maximize)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--maximize",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "maximize the hardlink count, remove the file with lowest hardlink count",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--maximum-size",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "maximum size for files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-y",
+      "long": "--method",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "file content comparison method",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": "--minimize",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "reverse the meaning of -m",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--minimum-size",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "minimum size for files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "quiet mode - don't print anything",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reflink",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "create clone/CoW copies (auto, always, never)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--respect-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "directory names have to be identical",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--respect-name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "filenames have to be identical",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": "--respect-xattrs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "respect extended attributes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--skip-reflinks",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "skip already cloned files (enabled on --reflink)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "verbose output (repeat for more verbosity)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.8,
+  "version": null
+}

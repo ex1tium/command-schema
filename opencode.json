@@ -1,0 +1,3221 @@
+{
+  "schema_version": "1.0.0",
+  "command": "opencode",
+  "description": "█▀▀█ █▀▀█ █▀▀█ █▀▀▄ █▀▀▀ █▀▀█ █▀▀█ █▀▀█",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--agent",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "agent to use [string]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--continue",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "continue the last session [boolean]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cors",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "additional domains to allow for CORS [array] [default: []]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "show help [boolean]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--hostname",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "hostname to listen on [string] [default: \"127.0.0.1\"]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-level",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mdns",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "enable mDNS service discovery (defaults hostname to 0.0.0.0) [boolean] [default: false]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mdns-domain",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "custom domain name for mDNS service (default: opencode.local) [string] [default: \"opencode.local\"]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--model",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "model to use in the format of provider/model [string]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--port",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "port to listen on [number] [default: 0]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-logs",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "print logs to stderr [boolean]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prompt",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "prompt to use [string]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--session",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "session id to continue [string]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--version",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "show version number [boolean]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "acp",
+      "description": "start ACP (Agent Client Protocol) server",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cors",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "additional domains to allow for CORS [array] [default: []]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cwd",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "working directory [string] [default: \"/tmp/command-schema-probe-1155815-1770737086886440687-1993\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "hostname to listen on [string] [default: \"127.0.0.1\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mdns",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "enable mDNS service discovery (defaults hostname to 0.0.0.0) [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mdns-domain",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "custom domain name for mDNS service (default: opencode.local) [string] [default: \"opencode.local\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--port",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "port to listen on [number] [default: 0]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "agent",
+      "description": "manage agents",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "create",
+          "description": "create a new agent",
+          "flags": [
+            {
+              "short": null,
+              "long": "--description",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "what the agent should do [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--mode",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "agent mode [string] [choices: \"all\", \"primary\", \"subagent\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-m",
+              "long": "--model",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "model to use in the format of provider/model [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--path",
+              "value_type": "File",
+              "takes_value": true,
+              "description": "directory path to generate the agent file [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tools",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "comma-separated list of tools to enable (default: all). Available: \"bash, read, write, edit, list, glob, grep, webfetch, task, todowrite, todoread\" [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "list all available agents",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "attach",
+      "description": "attach to a running opencode server",
+      "flags": [
+        {
+          "short": null,
+          "long": "--dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "directory to run in [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--password",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "basic auth password (defaults to OPENCODE_SERVER_PASSWORD) [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--session",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "session id to continue [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "auth",
+      "description": "manage credentials",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "list",
+          "description": "list providers [aliases: ls]",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "login",
+          "description": "log in to a provider",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "logout",
+          "description": "log out from a configured provider",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "completion",
+      "description": "generate shell completion script",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "debug",
+      "description": "debugging and troubleshooting tools",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "agent",
+          "description": "show agent configuration details",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--params",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "Tool params as JSON or a JS object literal [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tool",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "Tool id to execute [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "config",
+          "description": "show resolved configuration",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "lsp",
+          "description": "LSP debugging utilities",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [
+            {
+              "name": "diagnostics",
+              "description": "get diagnostics for a file",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            },
+            {
+              "name": "document-symbols",
+              "description": "get symbols from a document",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            },
+            {
+              "name": "symbols",
+              "description": "search workspace symbols",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "name": "paths",
+          "description": "show global paths (data, config, cache, state)",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "rg",
+          "description": "ripgrep debugging utilities",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [
+            {
+              "name": "files",
+              "description": "list files using ripgrep",
+              "flags": [
+                {
+                  "short": null,
+                  "long": "--glob",
+                  "value_type": "File",
+                  "takes_value": true,
+                  "description": "Glob pattern to match files [string]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--limit",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "Limit number of results [number]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--query",
+                  "value_type": "File",
+                  "takes_value": true,
+                  "description": "Filter files by query [string]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            },
+            {
+              "name": "search",
+              "description": "search file contents using ripgrep",
+              "flags": [
+                {
+                  "short": null,
+                  "long": "--glob",
+                  "value_type": "File",
+                  "takes_value": true,
+                  "description": "File glob patterns [array]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--limit",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "Limit number of results [number]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            },
+            {
+              "name": "tree",
+              "description": "show file tree using ripgrep",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--limit",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "[number]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "name": "scrap",
+          "description": "list all known projects",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "skill",
+          "description": "list all available skills",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "snapshot",
+          "description": "snapshot debugging utilities",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [
+            {
+              "name": "diff",
+              "description": "show diff for a snapshot hash",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            },
+            {
+              "name": "patch",
+              "description": "show patch for a snapshot hash",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            },
+            {
+              "name": "track",
+              "description": "track current snapshot state",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "name": "wait",
+          "description": "wait indefinitely (for debugging)",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "export",
+      "description": "export session data as JSON",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "github",
+      "description": "manage GitHub agent",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "install",
+          "description": "install the GitHub agent",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "run",
+          "description": "run the GitHub agent",
+          "flags": [
+            {
+              "short": null,
+              "long": "--event",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "GitHub mock event to run the agent for [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--token",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "GitHub personal access token (github_pat_********) [string]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "import",
+      "description": "import session data from JSON file or URL",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "mcp",
+      "description": "manage MCP (Model Context Protocol) servers",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "add",
+          "description": "add an MCP server",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "auth",
+          "description": "authenticate with an OAuth-enabled MCP server",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [
+            {
+              "name": "list",
+              "description": "list OAuth-capable MCP servers and their auth status [aliases: ls]",
+              "flags": [
+                {
+                  "short": "-h",
+                  "long": "--help",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "show help [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--log-level",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": null,
+                  "long": "--print-logs",
+                  "value_type": "String",
+                  "takes_value": true,
+                  "description": "print logs to stderr [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                },
+                {
+                  "short": "-v",
+                  "long": "--version",
+                  "value_type": "Number",
+                  "takes_value": true,
+                  "description": "show version number [boolean]",
+                  "multiple": false,
+                  "conflicts_with": [],
+                  "requires": []
+                }
+              ],
+              "positional": [],
+              "subcommands": [],
+              "aliases": []
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "name": "debug",
+          "description": "debug OAuth connection for an MCP server",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "list MCP servers and their status [aliases: ls]",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "logout",
+          "description": "remove OAuth credentials for an MCP server",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "models",
+      "description": "list all available models",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--refresh",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "refresh the models cache from models.dev [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verbose",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "use more verbose model output (includes metadata like costs) [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "pr",
+      "description": "fetch and checkout a GitHub PR branch, then run opencode",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "run",
+      "description": "run opencode with a message",
+      "flags": [
+        {
+          "short": null,
+          "long": "--agent",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "agent to use [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--attach",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "attach to a running opencode server (e.g., http://localhost:4096) [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--command",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "the command to run, use message for args [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--continue",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "continue the last session [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "file(s) to attach to message [array]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "format: default (formatted) or json (raw JSON events) [string] [choices: \"default\", \"json\"] [default: \"default\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--model",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "model to use in the format of provider/model [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--port",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "port for the local server (defaults to random port if no value provided)[number]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--session",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "session id to continue [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--share",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "share the session [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thinking",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show thinking blocks [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--title",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "title for the session (uses truncated prompt if no value provided) [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--variant",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "model variant (provider-specific reasoning effort, e.g., high, max, minimal) [string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "serve",
+      "description": "starts a headless opencode server",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cors",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "additional domains to allow for CORS [array] [default: []]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "hostname to listen on [string] [default: \"127.0.0.1\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mdns",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "enable mDNS service discovery (defaults hostname to 0.0.0.0) [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mdns-domain",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "custom domain name for mDNS service (default: opencode.local) [string] [default: \"opencode.local\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--port",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "port to listen on [number] [default: 0]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "session",
+      "description": "manage sessions",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "list",
+          "description": "list sessions",
+          "flags": [
+            {
+              "short": null,
+              "long": "--format",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "output format [string] [choices: \"table\", \"json\"] [default: \"table\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "show help [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--log-level",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-n",
+              "long": "--max-count",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "limit to N most recent sessions [number]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--print-logs",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "print logs to stderr [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-v",
+              "long": "--version",
+              "value_type": "Number",
+              "takes_value": true,
+              "description": "show version number [boolean]",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "stats",
+      "description": "show token usage and cost statistics",
+      "flags": [
+        {
+          "short": null,
+          "long": "--days",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show stats for the last N days (default: all time) [number]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--models",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show model statistics (default: hidden). Pass a number to show top N, otherwise shows all",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--project",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "filter by project (default: all projects, empty string: current project)[string]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tools",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "number of tools to show (default: all) [number]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "uninstall",
+      "description": "uninstall opencode and remove all related files",
+      "flags": [
+        {
+          "short": null,
+          "long": "--dry-run",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show what would be removed without removing [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "skip confirmation prompts [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--keep-config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "keep configuration files [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--keep-data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "keep session data and snapshots [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "upgrade",
+      "description": "upgrade opencode to the latest or a specific version",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--method",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": "installation method to use [string] [choices: \"curl\", \"npm\", \"pnpm\", \"bun\", \"brew\", \"choco\", \"scoop\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "web",
+      "description": "start opencode server and open web interface",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cors",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "additional domains to allow for CORS [array] [default: []]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "show help [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "hostname to listen on [string] [default: \"127.0.0.1\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log-level",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "log level [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mdns",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "enable mDNS service discovery (defaults hostname to 0.0.0.0) [boolean] [default: false]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mdns-domain",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "custom domain name for mDNS service (default: opencode.local) [string] [default: \"opencode.local\"]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--port",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "port to listen on [number] [default: 0]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print-logs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "print logs to stderr [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--version",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "show version number [boolean]",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 1.0,
+  "version": null
+}

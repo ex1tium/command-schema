@@ -1,0 +1,529 @@
+{
+  "schema_version": "1.0.0",
+  "command": "systemd-analyze",
+  "description": "Profile systemd, show unit dependencies, check unit files.",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--base-time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Calculate calendar times relative to specified time",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--from-pattern",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show only origins in the graph",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fuzz",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Also print services which finished SECONDS earlier than the latest in the branch",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--generators",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Do [not] run unit generators (requires privileges)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--global",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Operate on global user configuration",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show this help",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--host",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Operate on remote host",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--image",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Operate on disk image as filesystem root",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--image-policy",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Specify disk image dissection policy",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--iterations",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Show the specified number of iterations",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--json",
+      "value_type": "Url",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": "--machine",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Operate on local container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--man",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Do [not] check for existence of man pages",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-legend",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable column headers and hints in plot with either --table or --json=",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-pager",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not pipe output into a pager",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--offline",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Perform a security review on unit file(s)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--order",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show only order in the graph",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--profile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Include the specified profile in the security review of the unit(s)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not emit hints",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--recursive-errors",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--require",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show only requirement in the graph",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--root",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Operate on an alternate filesystem root",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--security-policy",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Use custom JSON security policy instead of built-in one",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--system",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Operate on system systemd instance",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--table",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output plot's raw time data as a table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--threshold",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Exit with a non-zero status when overall exposure level is over threshold value",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tldr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Skip comments and empty lines",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--to-pattern",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show only destinations in the graph",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--user",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Operate on user systemd instance",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show package version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "blame",
+      "description": "Print list of running units ordered by time to init",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "calendar",
+      "description": "Validate repetitive calendar time",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "capability",
+      "description": "List capability definitions",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "cat-config",
+      "description": "Show configuration file and drop-ins",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "condition",
+      "description": "Evaluate conditions and asserts compare-versions VERSION1 [OP] VERSION2 Compare two version strings",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "critical-chain",
+      "description": "Print a tree of the time critical chain of units",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "dot",
+      "description": "Output dependency graph in dot(1) format",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "dump",
+      "description": "Output state serialization of service",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "events",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "exit-status",
+      "description": "List exit status definitions",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "fdstore",
+      "description": "Show file descriptor store contents of service",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "filesystems",
+      "description": "List known filesystems",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "image-policy",
+      "description": "Analyze image policy string",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "initialization",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "inspect-elf",
+      "description": "Parse and print ELF package metadata",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "malloc",
+      "description": "Dump malloc stats of a D-Bus service",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "manager",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "pcrs",
+      "description": "Show TPM2 PCRs and their names",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "plot",
+      "description": "Output SVG graphic showing service",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "security",
+      "description": "Analyze security of unit",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "srk",
+      "description": "Write TPM2 SRK to stdout",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "syscall-filter",
+      "description": "List syscalls in seccomp filters",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "timespan",
+      "description": "Validate a time span",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "timestamp",
+      "description": "Validate a timestamp",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "unit-files",
+      "description": "List files and symlinks for units",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "unit-paths",
+      "description": "List load directories for units",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "verify",
+      "description": "Check unit files for correctness",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 1.0,
+  "version": null
+}

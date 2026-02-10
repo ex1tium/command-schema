@@ -1,0 +1,4559 @@
+{
+  "schema_version": "1.0.0",
+  "command": "buildah",
+  "description": "A tool that facilitates building OCI images",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--cgroup-manager",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "cgroup manager (default \"cgroupfs\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "help for buildah",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-level",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the log level to be used, one of \"trace\", \"debug\", \"info\", \"warn\", \"error\", \"fatal\", or \"panic\" (default \"warn\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--registries-conf",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "path to registries.conf file (not usually used)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--registries-conf-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "path to registries.conf.d directory (not usually used)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--root",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "storage root dir (default \"/home/ex1tium/.distrobox/coding-home/.local/share/containers/storage\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--runroot",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "storage state dir (default \"/run/user/1000/containers\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--short-name-alias-conf",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "path to short name alias cache file (not usually used)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--storage-driver",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "storage-driver (default \"overlay\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--storage-opt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "storage driver option",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--userns-gid-map",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "default ctrID:hostID:length GID mapping to use",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--userns-uid-map",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "default ctrID:hostID:length UID mapping to use",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "version for buildah",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "add",
+      "description": "Add content to the container",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add an entry for this operation to the image's history. Use BUILDAH_HISTORY environment variable to override. (default false)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--chmod",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the access permissions of the destination content",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--chown",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the user and group ownership of the destination content",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--contextdir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "context directory path",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the specified container's or image's root directory as the source root directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for add",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignorefile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path to .containerignore file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't output a digest of the newly-added/copied content",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of times to retry in case of failure when performing pull (default 3)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry-delay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delay between retries in case of pull failures (default \"2s\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "build",
+      "description": "Build an image using instructions in a Containerfile",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-host",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a custom host-to-IP mapping (host:ip) (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-platforms",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "attempt to build for all base image platforms",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--annotation",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set metadata for an image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--arch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the ARCH of the image to the provided value instead of the architecture of the host (default \"amd64\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--build-arg",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "argument=value to supply to the builder",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--build-arg-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "argfile.conf containing lines of argument=value to supply to the builder",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--build-context",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "argument=value to supply additional build context to the builder",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cache-from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remote repository list to utilise as potential cache source.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cache-to",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remote repository list to utilise as potential cache destination.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cache-ttl",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "only consider cache images under specified duration.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cap-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add the specified capability when running (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cap-drop",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "drop the specified capability when running (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cert-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use certificates at the specified path to access the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cgroup-parent",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "optional parent cgroup for the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cgroupns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--compress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "this is a legacy option, which has no effect on the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpp-flag",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set additional flag to pass to C preprocessor (cpp)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpu-period",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "limit the CPU CFS (Completely Fair Scheduler) period",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpu-quota",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "limit the CPU CFS (Completely Fair Scheduler) quota",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cpu-shares",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "CPU shares (relative weight)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpuset-cpus",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "CPUs in which to allow execution (0-3, 0,1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpuset-mems",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--creds",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use [username[:password]] for accessing the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cw",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "confidential workload options",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decryption-key",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "key needed to decrypt the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--device",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "additional devices to be used within containers (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--disable-compression",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't compress layers by default (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--disable-content-trust",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "this is a Docker specific option and is a NOOP",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set custom DNS servers or disable it completely by setting it to 'none', which prevents the automatic creation of /etc/resolv.conf.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dns-option",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set custom DNS options",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dns-search",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set custom DNS search domains",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--env",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set environment variable for the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--file",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "pathname or URL of a Dockerfile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force-rm",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "always remove intermediate containers after a build, even if the build is unsuccessful.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "format of the built image's manifest and metadata. Use BUILDAH_FORMAT environment variable to override. (default \"oci\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "image name used to replace the value in the first FROM instruction in the Containerfile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--group-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hooks-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the OCI hooks directory path (may be set multiple times)",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--http-proxy",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "pass through HTTP Proxy environment variables (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--identity-label",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add default identity label (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignorefile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path to an alternate .dockerignore file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--iidfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "file to write the image ID to",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ipc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', path of IPC namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--isolation",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "type of process isolation to use. Use BUILDAH_ISOLATION environment variable to override. (default \"rootless\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--jobs",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "how many stages to run in parallel (default 1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--label",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set metadata for an image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--layer-label",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set metadata for an intermediate image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--layers",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use intermediate layers during build. Use BUILDAH_LAYERS environment variable to override.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--logfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "log to file instead of stdout/stderr",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--logsplit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "split logfile to different files for each platform",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add the image to the specified manifest list. Creates manifest list if it does not exist",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--memory",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "memory limit (format: <number>[<unit>], where unit = b, k, m or g)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--memory-swap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "swap limit equal to memory plus swap: '-1' to enable unlimited swap",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', 'none', 'ns:path' of network namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-cache",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not use existing cached images for the container build. Build from the start with a new set of cached layers.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not create new /etc/hostname file for RUN instructions, use the one from the base image.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hosts",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not create new /etc/hosts file for RUN instructions, use the one from the base image.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--omit-history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "omit build history information from built image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the OS to the provided value instead of the current operating system of the host (default \"linux\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os-feature",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set required OS feature for the target image in addition to values from the base image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set required OS version for the target image instead of the value from the base image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "output destination (format: type=local,dest=path)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private, path of PID namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--platform",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the OS/ARCH[/VARIANT] of the image to the provided value instead of the current operating system and architecture of the host (for example \"linux/arm\") (default [linux/amd64])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pull",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "pull the image from the registry if newer or not present in store, if false, only pull the image if not present, if always, pull the image even if the named image is present in store, if never, only use the image present in store if available (default \"true\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "refrain from announcing build instructions and image read/write progress",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of times to retry in case of failure when performing push/pull (default 3)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry-delay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delay between retries in case of push/pull failures (default \"2s\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rm",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove intermediate containers after a successful build (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--runtime",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path to an alternate runtime. Use BUILDAH_RUNTIME environment variable to override. (default \"crun\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--runtime-flag",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add global flags for the container runtime",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--secret",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "secret file to expose to the build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--security-opt",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "security options (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shm-size",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "size of '/dev/shm'. The format is <number><unit>. (default \"65536k\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sign-by",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "sign the image using a GPG key with the specified FINGERPRINT",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--skip-unused-stages",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "skips stages in multi-stage builds which do not affect the final target (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--squash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "squash all image layers into a single layer",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ssh",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "SSH agent socket or keys to expose to the build. (format: default|<id>[=<socket>|<key>[,<key>]])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stdin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "pass stdin into containers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--tag",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "tagged name to apply to the built image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the target build stage to build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set created timestamp to the specified epoch seconds to allow for deterministic builds, defaults to current time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tls-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "require HTTPS and verify certificates when accessing the registry (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ulimit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "ulimit options",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unsetenv",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unset environment variable from final image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unsetlabel",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unset label when inheriting labels from base image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'container', path of user namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-gid-map",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "containerGID:hostGID:length GID mapping to use in user namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-gid-map-group",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name of entries from /etc/subgid to use to set user namespace GID mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-uid-map",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "containerUID:hostUID:length UID mapping to use in user namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-uid-map-user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name of entries from /etc/subuid to use to set user namespace UID mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--uts",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private, :path of UTS namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--variant",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "override the variant of the specified image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--volume",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "bind mount a volume into the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "CONTEXT",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "commit",
+      "description": "Create an image from a working container",
+      "flags": [
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cert-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use certificates at the specified path to access the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--change",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "apply containerfile instructions to the committed image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "apply configuration JSON file to the committed image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--creds",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use [username[:password]] for accessing the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cw",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "confidential workload options",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--disable-compression",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't compress layers (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--encrypt-layer",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "layers to encrypt, 0-indexed layer indices with support for negative indexing (e.g. 0 is the first layer, -1 is the last layer). If not defined, will encrypt all layers if encryption-key flag is specified",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--encryption-key",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "key with the encryption protocol to use needed to encrypt the image (e.g. jwe:/path/to/key.pem)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "format of the image manifest and metadata (default \"oci\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--identity-label",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add default builder label (default true) (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--iidfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write the image ID to the file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--manifest",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "adds created image to the specified manifest list. Creates manifest list if it does not exist",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--omit-history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "omit build history information from the built image (default false)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't output progress information when writing images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rm",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove the container and its content after committing it to an image. Default leaves the container and its content in place.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sign-by",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "sign the image using a GPG key with the specified FINGERPRINT",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--squash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "produce an image with only one layer",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set created timestamp to epoch seconds to allow for deterministic builds, defaults to current time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tls-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unsetenv",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unset env from final image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "config",
+      "description": "Update image configuration settings",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add an entry for this operation to the image's history. Use BUILDAH_HISTORY environment variable to override. (default false)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--annotation",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "add annotation e.g. annotation=value, for the target image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--arch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set architecture of the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--author",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set image author contact information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cmd",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the default command to run for containers based on the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--comment",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set a comment in the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--created-by",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set description of how the image was created",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--domainname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set a domain name for containers based on image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--entrypoint",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set entry point for containers based on image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--env",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add environment variable to be set when running containers based on image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--healthcheck",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set a healthcheck command for the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--healthcheck-interval",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the interval between runs of the `healthcheck` command for the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--healthcheck-retries",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the number of times the `healthcheck` command has to fail",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--healthcheck-start-period",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the amount of time to wait after starting a container before a failed `healthcheck` command will count as a failure",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--healthcheck-timeout",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the maximum amount of time to wait for a `healthcheck` command for the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for config",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--history-comment",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set a comment for the history of the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set a hostname for containers based on image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--label",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "add image configuration label e.g. label=value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--onbuild",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add onbuild command to be run on images based on this image. Only supported on 'docker' formatted images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set operating system of the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os-feature",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set required OS feature for the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set required OS version for the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--port",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add port to expose when running containers based on image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shell",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add shell to run in containers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stop-signal",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set stop signal for containers based on image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unsetlabel",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove image configuration label",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set default user to run inside containers based on image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--variant",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set architecture variant of the target image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--volume",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add default volume path to be created for containers based on image (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workingdir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set working directory for containers based on image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "containers",
+      "description": "List working containers and their base images",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "also list non-buildah containers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--filter",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "filter output based on conditions provided",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "pretty-print containers using a Go template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for containers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in JSON format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--noheading",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not print column headings",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--notruncate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not truncate output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display only container IDs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "copy",
+      "description": "Copy content into the container",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add an entry for this operation to the image's history. Use BUILDAH_HISTORY environment variable to override. (default false)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--chmod",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the access permissions of the destination content",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--chown",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the user and group ownership of the destination content",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--contextdir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "context directory path",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the specified container's or image's root directory as the source root directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for copy",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignorefile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path to .containerignore file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't output a digest of the newly-added/copied content",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of times to retry in case of failure when performing pull (default 3)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry-delay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delay between retries in case of pull failures (default \"2s\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "from",
+      "description": "Create a working container based on an image",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-host",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a custom host-to-IP mapping (host:ip) (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--arch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the ARCH of the image to the provided value instead of the architecture of the host (default \"amd64\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cap-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add the specified capability when running (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cap-drop",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "drop the specified capability when running (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cert-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use certificates at the specified path to access the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cgroup-parent",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "optional parent cgroup for the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cgroupns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cidfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write the container ID to the file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpu-period",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "limit the CPU CFS (Completely Fair Scheduler) period",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpu-quota",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "limit the CPU CFS (Completely Fair Scheduler) quota",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cpu-shares",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "CPU shares (relative weight)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpuset-cpus",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "CPUs in which to allow execution (0-3, 0,1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cpuset-mems",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--creds",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use [username[:password]] for accessing the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decryption-key",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "key needed to decrypt the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--device",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "additional devices to be used within containers (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set custom DNS servers or disable it completely by setting it to 'none', which prevents the automatic creation of /etc/resolv.conf.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dns-option",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set custom DNS options",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dns-search",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set custom DNS search domains",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "format of the image manifest and metadata (default \"oci\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--group-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for from",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--http-proxy",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "pass through HTTP Proxy environment variables (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ipc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', path of IPC namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--isolation",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "type of process isolation to use. Use BUILDAH_ISOLATION environment variable to override. (default \"rootless\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--memory",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "memory limit (format: <number>[<unit>], where unit = b, k, m or g)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--memory-swap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "swap limit equal to memory plus swap: '-1' to enable unlimited swap",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name for the working container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', 'none', 'ns:path' of network namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "prefer OS instead of the running OS when pulling images (default \"linux\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private, path of PID namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--platform",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the OS/ARCH[/VARIANT] of the image to the provided value instead of the current operating system and architecture of the host (for example \"linux/arm\") (default [linux/amd64])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pull",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "pull the image from the registry if newer or not present in store, if false, only pull the image if not present, if always, pull the image even if the named image is present in store, if never, only use the image present in store if available (default \"true\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't output progress information when pulling images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of times to retry in case of failure when performing push/pull (default 3)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry-delay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delay between retries in case of push/pull failures (default \"2s\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--security-opt",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "security options (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shm-size",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "size of '/dev/shm'. The format is <number><unit>. (default \"65536k\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tls-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ulimit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "ulimit options",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'container', path of user namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-gid-map",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "containerGID:hostGID:length GID mapping to use in user namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-gid-map-group",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name of entries from /etc/subgid to use to set user namespace GID mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-uid-map",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "containerUID:hostUID:length UID mapping to use in user namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userns-uid-map-user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name of entries from /etc/subuid to use to set user namespace UID mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--uts",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private, :path of UTS namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--variant",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "override the variant of the specified image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--volume",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "bind mount a volume into the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "help",
+      "description": "Help about any command",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "images",
+      "description": "List images in local storage",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show all images, including intermediate images from a build",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--digests",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show digests",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--filter",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "filter output based on conditions provided",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "pretty-print images using a Go template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display the image name history",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in JSON format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-trunc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not truncate output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--noheading",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not print column headings",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display only image IDs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "imageName",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "info",
+      "description": "Display Buildah system information",
+      "flags": [
+        {
+          "short": "-d",
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display additional debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use format as a Go template to format the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for info",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "inspect",
+      "description": "Inspect the configuration of a container or image",
+      "flags": [
+        {
+          "short": "-f",
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use format as a Go template to format the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for inspect",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "look at the item of the specified type (container or image) and name (default \"container\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "login",
+      "description": "Login to a container registry",
+      "flags": [
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cert-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use certificates at the specified path to access the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--compat-auth-file",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of a Docker-compatible config file to update instead",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--get-login",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "return the current login user for the registry (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for login",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--password",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Password for registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--password-stdin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Take the password from stdin",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tls-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--username",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Username for registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Write more detailed information to stdout",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "logout",
+      "description": "Logout of a container registry",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove the cached credentials for all registries in the auth file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--compat-auth-file",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of a Docker-compatible config file to update instead",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for logout",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "manifest",
+      "description": "Manipulate manifest lists and image indexes",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for manifest",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "add",
+          "description": "Add images to a manifest list or image index",
+          "flags": [
+            {
+              "short": null,
+              "long": "--all",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "add all of the list's images if the image is a list",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--annotation",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "set an annotation for the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--arch",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the architecture of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--authfile",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--cert-dir",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use certificates at the specified path to access the registry",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--creds",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use [username[:password]] for accessing the registry",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--features",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the features of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for add",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--os",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "override the OS of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--os-features",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the OS features of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--os-version",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the OS version of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tls-verify",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--variant",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the variant of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "annotate",
+          "description": "Add or update information about an entry in a manifest list or image index",
+          "flags": [
+            {
+              "short": null,
+              "long": "--annotation",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "set an annotation for the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--arch",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the Architecture of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--features",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the features of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for annotate",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--os",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "override the OS of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--os-features",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the os features of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--os-version",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the os version of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--variant",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "override the Variant of the specified image",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "create",
+          "description": "Create manifest list or image index",
+          "flags": [
+            {
+              "short": null,
+              "long": "--all",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "add all of the lists' images if the images to add are lists",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--amend",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "modify an existing list if one with the desired name already exists",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for create",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tls-verify",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "exists",
+          "description": "Check if a manifest list exists in local storage",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for exists",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "inspect",
+          "description": "Display the contents of a manifest list or image index",
+          "flags": [
+            {
+              "short": null,
+              "long": "--authfile",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for inspect",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tls-verify",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "push",
+          "description": "Push a manifest list or image index to a registry",
+          "flags": [
+            {
+              "short": null,
+              "long": "--add-compression",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "add instances with selected compression while pushing",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--all",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "also push the images in the list",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--authfile",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--cert-dir",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use certificates at the specified path to access the registry",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--compression-format",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "compression format to use",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--compression-level",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "compression level to use",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--creds",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use [username[:password]] for accessing the registry",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--digestfile",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "after copying the image, write the digest of the resulting digest to the file",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--force-compression",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use the specified compression algorithm if the destination contains a differently-compressed variant already",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-f",
+              "long": "--format",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "manifest type (oci or v2s2) to attempt to use when pushing the manifest list (default is manifest type of source)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for push",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-q",
+              "long": "--quiet",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "don't output progress information when pushing lists",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--remove-signatures",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "don't copy signatures when pushing images",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--rm",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "remove the manifest list if push succeeds",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--sign-by",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "sign the image using a GPG key with the specified FINGERPRINT",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tls-verify",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "remove",
+          "description": "Remove an entry from a manifest list or image index",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for remove",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "rm",
+          "description": "Remove manifest list or image index",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for rm",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "mkcw",
+      "description": "Convert a conventional image to a confidential workload image",
+      "flags": [
+        {
+          "short": "-u",
+          "long": "--attestation-url",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "attestation server URL",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--base-image",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "alternate base image (default: scratch)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cpus",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of CPUs to expect",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--firmware-library",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "location of libkrunfw-sev.so",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for mkcw",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--memory",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "amount of memory to expect (MB)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--passphrase",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "disk encryption passphrase",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--slop",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "extra space needed for converting a container rootfs to a disk image (default \"25%\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "TEE (trusted execution environment) type: SEV,SNP (default: SNP)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--workload-id",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "workload ID",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "mount",
+      "description": "Mount a working container's root filesystem",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for mount",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in JSON format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "prune",
+      "description": "Cleanup intermediate images as well as build and mount cache",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove all unused images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force removal of the image and any containers using the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for prune",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "pull",
+      "description": "Pull an image from the specified location",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all-tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "download all tagged images in the repository",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--arch",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "prefer ARCH instead of the architecture of the machine for choosing images (default \"amd64\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cert-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use certificates at the specified path to access the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--creds",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use [username[:password]] for accessing the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decryption-key",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "key needed to decrypt the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for pull",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--os",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "prefer OS instead of the running OS for choosing images (default \"linux\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--platform",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "prefer OS/ARCH instead of the current operating system and architecture for choosing images (default [linux/amd64])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--policy",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "missing, always, ifnewer, or never. (default \"missing\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't output progress information when pulling images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-signatures",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't copy signatures when pulling image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of times to retry in case of failure when performing pull (default 3)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry-delay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delay between retries in case of pull failures (default \"2s\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tls-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--variant",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "override the variant of the specified image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "push",
+      "description": "Push an image to a specified destination",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "push all of the images referenced by the manifest list",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--authfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cert-dir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use certificates at the specified path to access the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--compression-format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "compression format to use",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--compression-level",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "compression level to use",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--creds",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use [username[:password]] for accessing the registry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--digestfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "after copying the image, write the digest of the resulting image to the file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--disable-compression",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't compress layers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--encrypt-layer",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "layers to encrypt, 0-indexed layer indices with support for negative indexing (e.g. 0 is the first layer, -1 is the last layer). If not defined, will encrypt all layers if encryption-key flag is specified",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--encryption-key",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "key with the encryption protocol to use needed to encrypt the image (e.g. jwe:/path/to/key.pem)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force-compression",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the specified compression algorithm if the destination contains a differently-compressed variant already",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "manifest type (oci, v2s1, or v2s2) to use in the destination (default is manifest type of source, with fallbacks)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for push",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't output progress information when pushing images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-signatures",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't copy signatures when pushing image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "number of times to retry in case of failure when performing push/pull (default 3)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--retry-delay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delay between retries in case of push/pull failures (default \"2s\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rm",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove the manifest list if push succeeds",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sign-by",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "sign the image using a GPG key with the specified FINGERPRINT",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tls-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "require HTTPS and verify certificates when accessing the registry. TLS verification cannot be used when talking to an insecure registry. (default true)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "rename",
+      "description": "Rename a container",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for rename",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "rm",
+      "description": "Remove one or more working containers",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove all containers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for rm",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "rmi",
+      "description": "Remove one or more images from local storage",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove all images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force removal of the image and any containers using the image",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for rmi",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--prune",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "prune dangling images",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "run",
+      "description": "Run a command inside of the container",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-history",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add an entry for this operation to the image's history. Use BUILDAH_HISTORY environment variable to override. (default false)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cap-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add the specified capability (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cap-drop",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "drop the specified capability (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cgroupns",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--contextdir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "context directory path",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--env",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add environment variable to be set temporarily when running command (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the hostname inside of the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ipc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', path of IPC namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--isolation",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "type of process isolation to use. Use BUILDAH_ISOLATION environment variable to override.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mount",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "attach a filesystem mount to the container (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "'private', 'none', 'ns:path' of network namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not override the /etc/hostname file within the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hosts",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not override the /etc/hosts file within the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pivot",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not use pivot root to jail process inside rootfs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private, path of PID namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--runtime",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path to an alternate OCI runtime (default \"crun\")",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--runtime-flag",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add global flags for the container runtime",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--terminal",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allocate a pseudo-TTY in the container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "user[:group] to run the command as",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--uts",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private, :path of UTS namespace to join, or 'host'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--volume",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "bind mount a host location into the container while running the command",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--workingdir",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "temporarily set working directory for command (default to container's workingdir)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "source",
+      "description": "Manage source containers",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for source",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "add",
+          "description": "Add a source artifact to a source image",
+          "flags": [
+            {
+              "short": null,
+              "long": "--annotation",
+              "value_type": "String",
+              "takes_value": true,
+              "description": "add an annotation (format: key=value)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for add",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "create",
+          "description": "Create a source image",
+          "flags": [
+            {
+              "short": null,
+              "long": "--author",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "set the author",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for create",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--time-stamp",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "set the \"created\" time stamp (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "pull",
+          "description": "Pull a source image from a registry to a specified path",
+          "flags": [
+            {
+              "short": null,
+              "long": "--creds",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use [username[:password]] for accessing the registry",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for pull",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-q",
+              "long": "--quiet",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "don't output pull progress information",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tls-verify",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "require HTTPS and verify certificates when accessing the registry (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "push",
+          "description": "Push a source image from a specified path to a registry",
+          "flags": [
+            {
+              "short": null,
+              "long": "--creds",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "use [username[:password]] for accessing the registry",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "help for push",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-q",
+              "long": "--quiet",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "don't output push progress information",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--tls-verify",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "require HTTPS and verify certificates when accessing the registry (default true)",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "tag",
+      "description": "Add an additional name to a local image",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for tag",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "umount",
+      "description": "Unmount the root file system of the specified working containers",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "umount all of the currently mounted containers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for umount",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "unshare",
+      "description": "Run a command in a modified user namespace",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "help for unshare",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--mount",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "mount the specified containers (default [])",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "version",
+      "description": "Display the Buildah version information",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 1.0,
+  "version": null
+}
