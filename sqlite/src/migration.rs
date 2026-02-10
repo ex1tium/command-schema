@@ -11,7 +11,7 @@
 //! use rusqlite::Connection;
 //!
 //! let conn = Connection::open("schemas.db").unwrap();
-//! let mut migration = Migration::new(conn, "cs_").unwrap();
+//! let migration = Migration::new(&conn, "cs_").unwrap();
 //!
 //! // Create tables
 //! migration.up().unwrap();
@@ -53,7 +53,7 @@ use crate::schema::{generate_drop_sql, generate_schema_sql, validate_prefix};
 /// use rusqlite::Connection;
 ///
 /// let conn = Connection::open("schemas.db").unwrap();
-/// let mut migration = Migration::new(conn, "cs_").unwrap();
+/// let migration = Migration::new(&conn, "cs_").unwrap();
 ///
 /// // Create tables
 /// migration.up().unwrap();
@@ -71,18 +71,18 @@ use crate::schema::{generate_drop_sql, generate_schema_sql, validate_prefix};
 /// // Full reset (drop + recreate + seed)
 /// migration.refresh("schemas/database/").unwrap();
 /// ```
-pub struct Migration {
-    conn: Connection,
+pub struct Migration<'a> {
+    conn: &'a Connection,
     prefix: String,
 }
 
-impl Migration {
+impl<'a> Migration<'a> {
     /// Creates a new migration manager for the given connection and table prefix.
     ///
     /// # Errors
     ///
     /// Returns [`SqliteError::InvalidPrefix`] if the prefix contains invalid characters.
-    pub fn new(conn: Connection, prefix: impl Into<String>) -> Result<Self> {
+    pub fn new(conn: &'a Connection, prefix: impl Into<String>) -> Result<Self> {
         let prefix = prefix.into();
         validate_prefix(&prefix)?;
         conn.execute_batch("PRAGMA foreign_keys = ON;")?;
@@ -93,9 +93,9 @@ impl Migration {
     ///
     /// Uses `CREATE TABLE IF NOT EXISTS` so it is safe to call multiple times.
     /// Executes within a transaction for atomicity.
-    pub fn up(&mut self) -> Result<()> {
+    pub fn up(&self) -> Result<()> {
         let sql = generate_schema_sql(&self.prefix)?;
-        let tx = self.conn.transaction()?;
+        let tx = self.conn.unchecked_transaction()?;
         tx.execute_batch(&sql)
             .map_err(|e| SqliteError::MigrationError(format!("failed to create tables: {e}")))?;
         tx.commit()?;
@@ -106,9 +106,9 @@ impl Migration {
     ///
     /// Uses `DROP TABLE IF EXISTS` so it is safe to call even if tables
     /// do not exist. Executes within a transaction for atomicity.
-    pub fn down(&mut self) -> Result<()> {
+    pub fn down(&self) -> Result<()> {
         let sql = generate_drop_sql(&self.prefix)?;
-        let tx = self.conn.transaction()?;
+        let tx = self.conn.unchecked_transaction()?;
         tx.execute_batch(&sql)
             .map_err(|e| SqliteError::MigrationError(format!("failed to drop tables: {e}")))?;
         tx.commit()?;
@@ -155,11 +155,11 @@ impl Migration {
     ///
     /// Returns [`SqliteError::LoaderError`] if the directory cannot be read,
     /// or [`SqliteError::DatabaseError`] if insertion fails.
-    pub fn seed(&mut self, source_dir: impl AsRef<Path>) -> Result<SeedReport> {
+    pub fn seed(&self, source_dir: impl AsRef<Path>) -> Result<SeedReport> {
         let db = SchemaDatabase::from_dir(source_dir)?;
         let commands: Vec<_> = db.commands().map(String::from).collect();
 
-        let tx = self.conn.transaction()?;
+        let tx = self.conn.unchecked_transaction()?;
         let mut report = SeedReport::default();
 
         for cmd_name in &commands {
@@ -213,7 +213,7 @@ impl Migration {
     ///
     /// Equivalent to calling [`down`](Self::down), [`up`](Self::up), then
     /// [`seed`](Self::seed) in sequence.
-    pub fn refresh(&mut self, source_dir: impl AsRef<Path>) -> Result<SeedReport> {
+    pub fn refresh(&self, source_dir: impl AsRef<Path>) -> Result<SeedReport> {
         self.down()?;
         self.up()?;
         self.seed(source_dir)
@@ -221,11 +221,6 @@ impl Migration {
 
     /// Returns a reference to the underlying connection.
     pub fn connection(&self) -> &Connection {
-        &self.conn
-    }
-
-    /// Consumes the migration and returns the underlying connection.
-    pub fn into_connection(self) -> Connection {
         self.conn
     }
 
@@ -310,19 +305,19 @@ mod tests {
     #[test]
     fn test_migration_new_validates_prefix() {
         let conn = Connection::open_in_memory().unwrap();
-        assert!(Migration::new(conn, "valid_prefix_").is_ok());
+        assert!(Migration::new(&conn, "valid_prefix_").is_ok());
 
         let conn = Connection::open_in_memory().unwrap();
-        assert!(Migration::new(conn, "").is_err());
+        assert!(Migration::new(&conn, "").is_err());
 
         let conn = Connection::open_in_memory().unwrap();
-        assert!(Migration::new(conn, "drop;--").is_err());
+        assert!(Migration::new(&conn, "drop;--").is_err());
     }
 
     #[test]
     fn test_status_on_empty_database() {
         let conn = Connection::open_in_memory().unwrap();
-        let migration = Migration::new(conn, "cs_").unwrap();
+        let migration = Migration::new(&conn, "cs_").unwrap();
         let status = migration.status().unwrap();
         assert!(!status.tables_exist);
         assert_eq!(status.command_count, 0);
@@ -331,7 +326,7 @@ mod tests {
     #[test]
     fn test_up_and_status() {
         let conn = Connection::open_in_memory().unwrap();
-        let mut migration = Migration::new(conn, "cs_").unwrap();
+        let migration = Migration::new(&conn, "cs_").unwrap();
         migration.up().unwrap();
         let status = migration.status().unwrap();
         assert!(status.tables_exist);
@@ -342,7 +337,7 @@ mod tests {
     #[test]
     fn test_up_is_idempotent() {
         let conn = Connection::open_in_memory().unwrap();
-        let mut migration = Migration::new(conn, "cs_").unwrap();
+        let migration = Migration::new(&conn, "cs_").unwrap();
         migration.up().unwrap();
         migration.up().unwrap(); // Should not fail
         assert!(migration.status().unwrap().tables_exist);
@@ -351,7 +346,7 @@ mod tests {
     #[test]
     fn test_down_removes_tables() {
         let conn = Connection::open_in_memory().unwrap();
-        let mut migration = Migration::new(conn, "cs_").unwrap();
+        let migration = Migration::new(&conn, "cs_").unwrap();
         migration.up().unwrap();
         assert!(migration.status().unwrap().tables_exist);
 
@@ -362,7 +357,7 @@ mod tests {
     #[test]
     fn test_down_is_idempotent() {
         let conn = Connection::open_in_memory().unwrap();
-        let mut migration = Migration::new(conn, "cs_").unwrap();
+        let migration = Migration::new(&conn, "cs_").unwrap();
         migration.down().unwrap(); // No tables to drop, should be fine
     }
 }

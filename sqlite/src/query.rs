@@ -13,7 +13,7 @@
 //! use rusqlite::Connection;
 //!
 //! let conn = Connection::open("schemas.db").unwrap();
-//! let mut query = SchemaQuery::new(conn, "cs_").unwrap();
+//! let query = SchemaQuery::new(&conn, "cs_").unwrap();
 //!
 //! // Insert a schema
 //! let schema = CommandSchema::new("git", SchemaSource::Bootstrap);
@@ -51,7 +51,7 @@ use crate::schema::validate_prefix;
 /// use rusqlite::Connection;
 ///
 /// let conn = Connection::open("schemas.db").unwrap();
-/// let mut query = SchemaQuery::new(conn, "cs_").unwrap();
+/// let query = SchemaQuery::new(&conn, "cs_").unwrap();
 ///
 /// // Insert a schema
 /// let schema = CommandSchema::new("git", SchemaSource::Bootstrap);
@@ -69,18 +69,18 @@ use crate::schema::validate_prefix;
 /// let learned = query.get_by_source(SchemaSource::Learned).unwrap();
 /// println!("Learned schemas: {}", learned.len());
 /// ```
-pub struct SchemaQuery {
-    conn: Connection,
+pub struct SchemaQuery<'a> {
+    conn: &'a Connection,
     prefix: String,
 }
 
-impl SchemaQuery {
+impl<'a> SchemaQuery<'a> {
     /// Creates a new query interface for the given connection and table prefix.
     ///
     /// # Errors
     ///
     /// Returns [`SqliteError::InvalidPrefix`] if the prefix is invalid.
-    pub fn new(conn: Connection, prefix: impl Into<String>) -> Result<Self> {
+    pub fn new(conn: &'a Connection, prefix: impl Into<String>) -> Result<Self> {
         let prefix = prefix.into();
         validate_prefix(&prefix)?;
         conn.execute_batch("PRAGMA foreign_keys = ON;")?;
@@ -99,14 +99,14 @@ impl SchemaQuery {
     /// # use command_schema_sqlite::SchemaQuery;
     /// # use rusqlite::Connection;
     /// # let conn = Connection::open("schemas.db").unwrap();
-    /// # let query = SchemaQuery::new(conn, "cs_").unwrap();
+    /// # let query = SchemaQuery::new(&conn, "cs_").unwrap();
     /// match query.get_schema("docker").unwrap() {
     ///     Some(schema) => println!("{} subcommands", schema.subcommands.len()),
     ///     None => println!("docker schema not found"),
     /// }
     /// ```
     pub fn get_schema(&self, command: &str) -> Result<Option<CommandSchema>> {
-        convert::load_command(&self.conn, &self.prefix, command)
+        convert::load_command(self.conn, &self.prefix, command)
     }
 
     /// Loads all command schemas from the database.
@@ -144,7 +144,7 @@ impl SchemaQuery {
     /// # use command_schema_core::SchemaSource;
     /// # use rusqlite::Connection;
     /// # let conn = Connection::open("schemas.db").unwrap();
-    /// # let query = SchemaQuery::new(conn, "cs_").unwrap();
+    /// # let query = SchemaQuery::new(&conn, "cs_").unwrap();
     /// let learned = query.get_by_source(SchemaSource::Learned).unwrap();
     /// for schema in &learned {
     ///     println!("Learned: {}", schema.command);
@@ -186,13 +186,13 @@ impl SchemaQuery {
     /// # use command_schema_core::{CommandSchema, SchemaSource, FlagSchema};
     /// # use rusqlite::Connection;
     /// # let conn = Connection::open("schemas.db").unwrap();
-    /// # let mut query = SchemaQuery::new(conn, "cs_").unwrap();
+    /// # let query = SchemaQuery::new(&conn, "cs_").unwrap();
     /// let mut schema = CommandSchema::new("mycli", SchemaSource::Learned);
     /// schema.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
     /// query.insert_schema(&schema).unwrap();
     /// ```
-    pub fn insert_schema(&mut self, schema: &CommandSchema) -> Result<()> {
-        let tx = self.conn.transaction()?;
+    pub fn insert_schema(&self, schema: &CommandSchema) -> Result<()> {
+        let tx = self.conn.unchecked_transaction()?;
 
         let command_id = convert::insert_command(&tx, &self.prefix, schema)?;
 
@@ -238,8 +238,8 @@ impl SchemaQuery {
     ///
     /// Returns [`SqliteError::SchemaNotFound`] if no command with the
     /// schema's name exists.
-    pub fn update_schema(&mut self, schema: &CommandSchema) -> Result<()> {
-        let tx = self.conn.transaction()?;
+    pub fn update_schema(&self, schema: &CommandSchema) -> Result<()> {
+        let tx = self.conn.unchecked_transaction()?;
 
         // Check existence
         let exists: bool = tx
@@ -318,7 +318,7 @@ impl SchemaQuery {
 
     /// Returns a reference to the underlying connection.
     pub fn connection(&self) -> &Connection {
-        &self.conn
+        self.conn
     }
 }
 
@@ -329,9 +329,9 @@ mod tests {
     #[test]
     fn test_schema_query_validates_prefix() {
         let conn = Connection::open_in_memory().unwrap();
-        assert!(SchemaQuery::new(conn, "valid_").is_ok());
+        assert!(SchemaQuery::new(&conn, "valid_").is_ok());
 
         let conn = Connection::open_in_memory().unwrap();
-        assert!(SchemaQuery::new(conn, "").is_err());
+        assert!(SchemaQuery::new(&conn, "").is_err());
     }
 }

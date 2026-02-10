@@ -29,7 +29,7 @@ fn main() {
     // === Step 2: Create SQLite database and run migrations ===
     println!("=== Migration ===");
     let conn = Connection::open_in_memory().unwrap();
-    let mut migration = Migration::new(conn, "cs_").unwrap();
+    let migration = Migration::new(&conn, "cs_").unwrap();
 
     // Check initial status
     let status = migration.status().unwrap();
@@ -63,8 +63,8 @@ fn main() {
 
     // === Step 4: Query schemas ===
     println!("\n=== Querying ===");
-    let conn = migration.into_connection();
-    let mut query = SchemaQuery::new(conn, "cs_").unwrap();
+    drop(migration);
+    let query = SchemaQuery::new(&conn, "cs_").unwrap();
 
     // Get a single schema
     if let Some(git) = query.get_schema("git").unwrap() {
