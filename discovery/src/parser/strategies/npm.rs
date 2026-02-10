@@ -4,6 +4,7 @@ use super::ParserStrategy;
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
 use crate::parser::{HelpParser, IndexedLine};
 
+/// Parser strategy for npm-style `--help` output.
 pub struct NpmStrategy;
 
 impl ParserStrategy for NpmStrategy {
@@ -11,11 +12,11 @@ impl ParserStrategy for NpmStrategy {
         "npm"
     }
 
-    fn parse_flags(&self, _parser: &HelpParser, _lines: &[IndexedLine]) -> Vec<FlagCandidate> {
+    fn collect_flags(&self, _parser: &HelpParser, _lines: &[IndexedLine]) -> Vec<FlagCandidate> {
         Vec::new()
     }
 
-    fn parse_subcommands(
+    fn collect_subcommands(
         &self,
         parser: &HelpParser,
         lines: &[IndexedLine],
@@ -36,7 +37,7 @@ impl ParserStrategy for NpmStrategy {
             .collect()
     }
 
-    fn parse_args(&self, _parser: &HelpParser, _lines: &[IndexedLine]) -> Vec<ArgCandidate> {
+    fn collect_args(&self, _parser: &HelpParser, _lines: &[IndexedLine]) -> Vec<ArgCandidate> {
         Vec::new()
     }
 }

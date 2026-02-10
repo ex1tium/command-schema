@@ -5,19 +5,24 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
+repository = "https://github.com/ex1tium/command-schema"
+readme = "README.md"
+keywords = ["cli", "help", "parser", "extraction", "command-line"]
+categories = ["command-line-utilities", "parsing"]
 
-[[bin]]
-name = "schema-discover"
-path = "src/main.rs"
+[features]
+default = []
+clap = ["dep:clap"]
 
 [dependencies]
 command-schema-core = { workspace = true }
 regex = { workspace = true }
 tracing = { workspace = true }
-clap = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 chrono = { workspace = true }
 rayon = { workspace = true }
 serde_yaml = { workspace = true }
 wait-timeout = { workspace = true }
+thiserror = { workspace = true }
+clap = { workspace = true, features = ["derive"], optional = true }

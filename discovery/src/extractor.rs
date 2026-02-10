@@ -1,13 +1,36 @@
 //! Command schema extraction via help probing.
 //!
-//! Automatically extracts command schemas by running --help commands
-//! and recursively probing subcommands.
+//! Automatically extracts command schemas by running `--help` commands
+//! and recursively probing subcommands up to `MAX_PROBE_DEPTH` (3) levels
+//! deep. The extractor tries multiple help flags (`--help`, `-h`, `-?`) and
+//! conditionally tries `help` when probe output explicitly suggests it.
+//!
+//! # Quality policy
+//!
+//! The [`ExtractionQualityPolicy`] controls acceptance thresholds:
+//! - `min_confidence` — minimum parser confidence score (0.0–1.0)
+//! - `min_coverage` — minimum ratio of recognized help lines (0.0–1.0)
+//! - `allow_low_quality` — whether to emit schemas below thresholds
+//!
+//! # Example
+//!
+//! ```no_run
+//! use command_schema_discovery::extractor::{extract_command_schema, ExtractionQualityPolicy};
+//!
+//! let result = extract_command_schema("cargo");
+//! if let Some(schema) = result.schema {
+//!     println!("{} has {} subcommands", schema.command, schema.subcommands.len());
+//! }
+//! ```
 
 use std::collections::HashSet;
+use std::fs;
 use std::io::ErrorKind;
 use std::io::Read;
+use std::path::{Path, PathBuf};
 use std::process::{Child, Command, ExitStatus, Stdio};
-use std::time::{Duration, Instant};
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use tracing::{debug, info};
 
 use super::parser::{FormatScore, HelpParser};
@@ -21,9 +44,10 @@ const MAX_PROBE_DEPTH: usize = 3;
 
 /// Timeout for help commands (milliseconds).
 const HELP_TIMEOUT_MS: u64 = 5000;
+static PROBE_DIR_COUNTER: AtomicU64 = AtomicU64::new(0);
 
 /// Help flags to try in order.
-const HELP_FLAGS: &[&str] = &["--help", "-h", "help", "-?"];
+const HELP_FLAGS: &[&str] = &["--help", "-h", "-?"];
 
 /// Suggested quality threshold for confidence in production runs.
 pub const DEFAULT_MIN_CONFIDENCE: f64 = 0.6;
@@ -32,6 +56,27 @@ pub const DEFAULT_MIN_CONFIDENCE: f64 = 0.6;
 pub const DEFAULT_MIN_COVERAGE: f64 = 0.2;
 
 /// Policy controlling extraction quality acceptance.
+///
+/// Configures the minimum confidence and coverage thresholds for a schema
+/// to be accepted. Use [`Default::default()`] for production-grade defaults
+/// or [`permissive()`](Self::permissive) for development/testing.
+///
+/// # Examples
+///
+/// ```
+/// use command_schema_discovery::extractor::ExtractionQualityPolicy;
+///
+/// // Production defaults
+/// let policy = ExtractionQualityPolicy::default();
+/// assert_eq!(policy.min_confidence, 0.6);
+/// assert_eq!(policy.min_coverage, 0.2);
+/// assert!(!policy.allow_low_quality);
+///
+/// // Accept everything (for testing)
+/// let permissive = ExtractionQualityPolicy::permissive();
+/// assert_eq!(permissive.min_confidence, 0.0);
+/// assert!(permissive.allow_low_quality);
+/// ```
 #[derive(Debug, Clone, Copy)]
 pub struct ExtractionQualityPolicy {
     pub min_confidence: f64,
@@ -60,6 +105,10 @@ impl ExtractionQualityPolicy {
 }
 
 /// Extraction output with both schema result and diagnostics report.
+///
+/// Combines the parsed [`ExtractionResult`] with a detailed
+/// [`ExtractionReport`] that includes coverage metrics, quality tier,
+/// and probe attempt history.
 pub struct ExtractionRun {
     pub result: ExtractionResult,
     pub report: ExtractionReport,
@@ -111,6 +160,49 @@ struct DirectProbeOutcome {
     spawn_not_found: bool,
 }
 
+struct ProbeWorkspace {
+    path: PathBuf,
+}
+
+impl ProbeWorkspace {
+    fn create() -> Option<Self> {
+        let mut path = std::env::temp_dir();
+        let nanos = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .ok()
+            .map(|duration| duration.as_nanos())
+            .unwrap_or_default();
+        let seq = PROBE_DIR_COUNTER.fetch_add(1, Ordering::Relaxed);
+        path.push(format!(
+            "command-schema-probe-{}-{nanos}-{seq}",
+            std::process::id()
+        ));
+        if fs::create_dir(&path).is_ok() {
+            Some(Self { path })
+        } else {
+            None
+        }
+    }
+}
+
+impl Drop for ProbeWorkspace {
+    fn drop(&mut self) {
+        let _ = fs::remove_dir_all(&self.path);
+    }
+}
+
+/// Resolved identity of a command binary.
+///
+/// Both fields store only the **basename** (not a full path) to avoid leaking
+/// absolute filesystem paths into serialized reports and manifests.
+#[derive(Debug, Clone, Default)]
+struct CommandIdentity {
+    /// Basename of the resolved executable (e.g. `gawk` for `awk`).
+    resolved_executable_path: Option<String>,
+    /// Resolved implementation name, typically identical to the executable basename.
+    resolved_implementation: Option<String>,
+}
+
 /// Probes a command's help output and returns the raw text.
 pub fn probe_command_help(command: &str) -> Option<String> {
     probe_command_help_with_metadata(command).help_output
@@ -128,7 +220,8 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
 
     let mut attempts = Vec::with_capacity(HELP_FLAGS.len());
     let base_command = parts[0].to_ascii_lowercase();
-    let env_overrides = command_specific_probe_env(base_command.as_str());
+    let mut env_overrides = default_probe_env();
+    env_overrides.extend(command_specific_probe_env(base_command.as_str()));
 
     for suffix in command_specific_probe_suffixes(base_command.as_str()) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
@@ -151,15 +244,7 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
 
     for help_flag in HELP_FLAGS {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
-
-        // Special case: "help" subcommand goes after the command
-        if *help_flag == "help" && parts.len() > 1 {
-            // For "git remote", try "git help remote"
-            // Insert "help" after the base command, keeping subcommand(s) intact
-            cmd_parts.insert(1, "help".to_string());
-        } else {
-            cmd_parts.push((*help_flag).to_string());
-        }
+        cmd_parts.push((*help_flag).to_string());
 
         debug!(command = ?cmd_parts, "Probing help");
         let outcome = try_direct_probe(&cmd_parts, help_flag, &env_overrides);
@@ -196,10 +281,68 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         }
     }
 
+    if should_probe_help_subcommand(&parts, &attempts) {
+        let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
+        if parts.len() > 1 {
+            // For "git remote", try "git help remote".
+            cmd_parts.insert(1, "help".to_string());
+        } else {
+            cmd_parts.push("help".to_string());
+        }
+
+        debug!(command = ?cmd_parts, "Probing help subcommand");
+        let outcome = try_direct_probe(&cmd_parts, "help", &env_overrides);
+        if outcome.spawn_not_found {
+            let shell_probe = probe_shell_help(&parts, "help", &env_overrides);
+            attempts.push(shell_probe.attempt);
+            if let Some(help_text) = shell_probe.accepted_output {
+                return ProbeRun {
+                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    attempts,
+                };
+            }
+        } else {
+            attempts.push(outcome.attempt);
+            if let Some(help_text) = outcome.accepted_output {
+                return ProbeRun {
+                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    attempts,
+                };
+            }
+        }
+    }
+
     ProbeRun {
         help_output: None,
         attempts,
     }
+}
+
+fn should_probe_help_subcommand(parts: &[&str], attempts: &[ProbeAttempt]) -> bool {
+    if parts.len() > 1 {
+        return true;
+    }
+    let base = parts
+        .first()
+        .copied()
+        .unwrap_or_default()
+        .to_ascii_lowercase();
+    if base.is_empty() {
+        return false;
+    }
+
+    attempts.iter().any(|attempt| {
+        if attempt.accepted {
+            return false;
+        }
+        let Some(preview) = attempt.output_preview.as_deref() else {
+            return false;
+        };
+        let lower = preview.to_ascii_lowercase();
+        (lower.contains("try") || lower.contains("use"))
+            && lower.contains(" help")
+            && lower.contains(&base)
+    })
 }
 
 fn command_specific_probe_suffixes(base_command: &str) -> Vec<Vec<&'static str>> {
@@ -224,6 +367,24 @@ fn command_specific_probe_env(base_command: &str) -> Vec<(&'static str, &'static
         ],
         _ => Vec::new(),
     }
+}
+
+fn default_probe_env() -> Vec<(&'static str, &'static str)> {
+    vec![
+        // Prevent graphical helpers from opening windows during probes.
+        ("DISPLAY", ""),
+        ("WAYLAND_DISPLAY", ""),
+        ("BROWSER", "true"),
+        // Keep interactive helpers from switching terminal modes.
+        ("DEBIAN_FRONTEND", "noninteractive"),
+        ("TERM", "dumb"),
+        ("NO_COLOR", "1"),
+        // Avoid interactive pagers when commands route help through pager tools.
+        ("PAGER", "cat"),
+        ("MANPAGER", "cat"),
+        ("SYSTEMD_PAGER", "cat"),
+        ("GIT_PAGER", "cat"),
+    ]
 }
 
 fn adapt_help_output_for_command(command: &str, help_text: String) -> String {
@@ -260,10 +421,15 @@ fn try_direct_probe(
 ) -> DirectProbeOutcome {
     let mut attempt = ProbeAttempt::new(help_flag, cmd_parts.to_vec());
     let mut command = Command::new(&cmd_parts[0]);
+    let probe_workspace = ProbeWorkspace::create();
     command
         .args(&cmd_parts[1..])
+        .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
+    if let Some(workspace) = probe_workspace.as_ref() {
+        command.current_dir(&workspace.path);
+    }
     for (key, value) in env_overrides {
         command.env(key, value);
     }
@@ -271,29 +437,51 @@ fn try_direct_probe(
 
     match spawn_result {
         Ok(mut child) => {
-            let mut stdout_pipe = child.stdout.take();
-            let mut stderr_pipe = child.stderr.take();
+            // Drain stdout and stderr in background threads to prevent
+            // deadlock when the child's pipe buffer fills before it exits.
+            let stdout_thread = child.stdout.take().map(|pipe| {
+                std::thread::spawn(move || {
+                    let mut buf = Vec::new();
+                    let mut pipe = pipe;
+                    let result = pipe.read_to_end(&mut buf);
+                    (buf, result)
+                })
+            });
+            let stderr_thread = child.stderr.take().map(|pipe| {
+                std::thread::spawn(move || {
+                    let mut buf = Vec::new();
+                    let mut pipe = pipe;
+                    let result = pipe.read_to_end(&mut buf);
+                    (buf, result)
+                })
+            });
 
             let timeout = Duration::from_millis(HELP_TIMEOUT_MS);
             match wait_for_child_with_timeout(&mut child, timeout) {
                 Ok(Some(status)) => {
                     attempt.exit_code = status.code();
-                    let mut stdout_buf = Vec::new();
-                    let mut stderr_buf = Vec::new();
                     let mut io_errors = Vec::new();
 
-                    if let Some(ref mut pipe) = stdout_pipe
-                        && let Err(e) = pipe.read_to_end(&mut stdout_buf)
-                    {
-                        debug!(command = ?cmd_parts, error = %e, "Failed to read stdout");
-                        io_errors.push(format!("stdout read failed: {e}"));
-                    }
-                    if let Some(ref mut pipe) = stderr_pipe
-                        && let Err(e) = pipe.read_to_end(&mut stderr_buf)
-                    {
-                        debug!(command = ?cmd_parts, error = %e, "Failed to read stderr");
-                        io_errors.push(format!("stderr read failed: {e}"));
-                    }
+                    let stdout_buf = stdout_thread
+                        .and_then(|t| t.join().ok())
+                        .map(|(buf, res)| {
+                            if let Err(e) = res {
+                                debug!(command = ?cmd_parts, error = %e, "Failed to read stdout");
+                                io_errors.push(format!("stdout read failed: {e}"));
+                            }
+                            buf
+                        })
+                        .unwrap_or_default();
+                    let stderr_buf = stderr_thread
+                        .and_then(|t| t.join().ok())
+                        .map(|(buf, res)| {
+                            if let Err(e) = res {
+                                debug!(command = ?cmd_parts, error = %e, "Failed to read stderr");
+                                io_errors.push(format!("stderr read failed: {e}"));
+                            }
+                            buf
+                        })
+                        .unwrap_or_default();
                     if !io_errors.is_empty() {
                         attempt.error = Some(io_errors.join("; "));
                     }
@@ -384,11 +572,31 @@ struct ShellProbeResult {
     accepted_output: Option<String>,
 }
 
+/// Returns `true` if `s` contains shell metacharacters that could allow injection.
+fn contains_shell_metacharacters(s: &str) -> bool {
+    s.chars()
+        .any(|ch| matches!(ch, '|' | ';' | '&' | '$' | '`' | '(' | ')' | '{' | '}' | '<' | '>' | '!' | '\'' | '"' | '\\' | '\n' | '\r'))
+}
+
 fn probe_shell_help(
     parts: &[&str],
     help_flag: &str,
     env_overrides: &[(&str, &str)],
 ) -> ShellProbeResult {
+    // Reject commands containing shell metacharacters to prevent injection
+    // since we pass the joined string to `bash -lc`.
+    if parts.iter().any(|p| contains_shell_metacharacters(p))
+        || contains_shell_metacharacters(help_flag)
+    {
+        let argv = vec!["bash".to_string(), "-lc".to_string(), parts.join(" ")];
+        let mut attempt = ProbeAttempt::new(help_flag, argv);
+        attempt.error = Some("rejected: command contains shell metacharacters".to_string());
+        return ShellProbeResult {
+            attempt,
+            accepted_output: None,
+        };
+    }
+
     let shell_cmd = if help_flag == "help" {
         format!("help {}", parts.join(" "))
     } else {
@@ -399,11 +607,16 @@ fn probe_shell_help(
     let mut attempt = ProbeAttempt::new(help_flag, argv);
 
     let mut command = Command::new("bash");
+    let probe_workspace = ProbeWorkspace::create();
     command
         .arg("-lc")
         .arg(&shell_cmd)
+        .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
+    if let Some(workspace) = probe_workspace.as_ref() {
+        command.current_dir(&workspace.path);
+    }
     for (key, value) in env_overrides {
         command.env(key, value);
     }
@@ -421,27 +634,48 @@ fn probe_shell_help(
         };
     };
 
-    let mut stdout_pipe = child.stdout.take();
-    let mut stderr_pipe = child.stderr.take();
+    // Drain pipes concurrently to prevent deadlock when buffer fills.
+    let stdout_thread = child.stdout.take().map(|pipe| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            let mut pipe = pipe;
+            let result = pipe.read_to_end(&mut buf);
+            (buf, result)
+        })
+    });
+    let stderr_thread = child.stderr.take().map(|pipe| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            let mut pipe = pipe;
+            let result = pipe.read_to_end(&mut buf);
+            (buf, result)
+        })
+    });
     let timeout = Duration::from_millis(HELP_TIMEOUT_MS);
 
     match wait_for_child_with_timeout(&mut child, timeout) {
         Ok(Some(status)) => {
             attempt.exit_code = status.code();
-            let mut stdout_buf = Vec::new();
-            let mut stderr_buf = Vec::new();
             let mut io_errors = Vec::new();
 
-            if let Some(ref mut pipe) = stdout_pipe
-                && let Err(e) = pipe.read_to_end(&mut stdout_buf)
-            {
-                io_errors.push(format!("stdout read failed: {e}"));
-            }
-            if let Some(ref mut pipe) = stderr_pipe
-                && let Err(e) = pipe.read_to_end(&mut stderr_buf)
-            {
-                io_errors.push(format!("stderr read failed: {e}"));
-            }
+            let stdout_buf = stdout_thread
+                .and_then(|t| t.join().ok())
+                .map(|(buf, res)| {
+                    if let Err(e) = res {
+                        io_errors.push(format!("stdout read failed: {e}"));
+                    }
+                    buf
+                })
+                .unwrap_or_default();
+            let stderr_buf = stderr_thread
+                .and_then(|t| t.join().ok())
+                .map(|(buf, res)| {
+                    if let Err(e) = res {
+                        io_errors.push(format!("stderr read failed: {e}"));
+                    }
+                    buf
+                })
+                .unwrap_or_default();
             if !io_errors.is_empty() {
                 attempt.error = Some(io_errors.join("; "));
             }
@@ -554,9 +788,24 @@ fn is_help_output(text: &str) -> bool {
     let option_error_markers = [
         "illegal option",
         "unknown option",
+        "unknown argument",
         "invalid option",
         "unrecognized option",
     ];
+    let suggestion_only_help_hint = !has_usage_line
+        && !has_structured_sections
+        && trimmed
+            .lines()
+            .filter(|line| !line.trim().is_empty())
+            .count()
+            <= 2
+        && (text_lower.contains(" is unknown, try ")
+            || text_lower.contains("unknown argument")
+            || text_lower.contains("unknown option"))
+        && text_lower.contains(" help");
+    if suggestion_only_help_hint {
+        return false;
+    }
     if option_error_markers
         .iter()
         .any(|marker| leading_window.contains(marker))
@@ -577,8 +826,6 @@ fn is_help_output(text: &str) -> bool {
         "options",
         "commands",
         "flags",
-        "--help",
-        "-h",
         "arguments",
         "description",
     ];
@@ -621,6 +868,9 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
         "no new privileges",
         "cannot open audit interface",
         "unable to initialize netlink socket",
+        "can't open display",
+        "cannot open display",
+        "error: can't open display",
     ];
     if environment_blocked_markers
         .iter()
@@ -635,8 +885,10 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
     let option_error_markers = [
         "illegal option",
         "unknown option",
+        "unknown argument",
         "invalid option",
         "unrecognized option",
+        " is unknown, try ",
     ];
     if option_error_markers
         .iter()
@@ -645,6 +897,21 @@ fn classify_rejection(help_text: &str) -> RejectionClassification {
         return RejectionClassification {
             reason: "option-error-output".to_string(),
             failure_code: FailureCode::NotHelpOutput,
+        };
+    }
+
+    let not_found_markers = [
+        "command not found",
+        "not recognized as an internal or external command",
+        "unknown binary",
+    ];
+    if not_found_markers
+        .iter()
+        .any(|marker| lower.contains(marker))
+    {
+        return RejectionClassification {
+            reason: "not-installed-output".to_string(),
+            failure_code: FailureCode::NotInstalled,
         };
     }
 
@@ -761,7 +1028,10 @@ fn summarize_probe_failure_reason(probe_attempts: &[ProbeAttemptReport]) -> Opti
     None
 }
 
-pub fn apply_quality_policy(mut run: ExtractionRun, policy: ExtractionQualityPolicy) -> ExtractionRun {
+pub fn apply_quality_policy(
+    mut run: ExtractionRun,
+    policy: ExtractionQualityPolicy,
+) -> ExtractionRun {
     let assessment = assess_extraction_quality(&run, policy);
     run.report.accepted_for_suggestions = assessment.accepted;
     run.report.quality_tier = assessment.tier;
@@ -830,6 +1100,21 @@ fn derive_probe_failure(
         );
     }
 
+    let not_installed_hits = probe_attempts
+        .iter()
+        .filter(|a| {
+            a.rejection_reason
+                .as_deref()
+                .is_some_and(|r| r == "not-installed-output")
+        })
+        .count();
+    if not_installed_hits >= 2 {
+        return (
+            FailureCode::NotInstalled,
+            "Command appears to be unavailable on the system".to_string(),
+        );
+    }
+
     (
         FailureCode::NotHelpOutput,
         "Probe output did not contain recognizable help text".to_string(),
@@ -856,6 +1141,7 @@ pub fn extract_command_schema_with_report_and_policy(
 }
 
 fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
+    let identity = resolve_command_identity(command);
     let mut warnings = Vec::new();
     let probe_run = probe_command_help_with_metadata(command);
     let probe_attempts = to_probe_attempt_reports(&probe_run.attempts);
@@ -877,6 +1163,8 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
                 },
                 report: ExtractionReport {
                     command: command.to_string(),
+                    resolved_executable_path: identity.resolved_executable_path.clone(),
+                    resolved_implementation: identity.resolved_implementation.clone(),
                     success: false,
                     accepted_for_suggestions: false,
                     quality_tier: QualityTier::Failed,
@@ -920,12 +1208,16 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
                 },
                 report: ExtractionReport {
                     command: command.to_string(),
+                    resolved_executable_path: identity.resolved_executable_path.clone(),
+                    resolved_implementation: identity.resolved_implementation.clone(),
                     success: false,
                     accepted_for_suggestions: false,
                     quality_tier: QualityTier::Failed,
                     quality_reasons: Vec::new(),
                     failure_code: Some(FailureCode::ParseFailed),
-                    failure_detail: Some("Help text was found but parsing produced no schema".to_string()),
+                    failure_detail: Some(
+                        "Help text was found but parsing produced no schema".to_string(),
+                    ),
                     selected_format: parser.detected_format().map(help_format_label),
                     format_scores: to_format_score_reports(&diagnostics.format_scores),
                     parsers_used: diagnostics.parsers_used,
@@ -992,7 +1284,10 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     } else if !validation_errors.is_empty() {
         (
             Some(FailureCode::ParseFailed),
-            Some(format!("Schema validation failed: {}", validation_errors.join("; "))),
+            Some(format!(
+                "Schema validation failed: {}",
+                validation_errors.join("; ")
+            )),
         )
     } else {
         (
@@ -1003,6 +1298,8 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
 
     let report = ExtractionReport {
         command: command.to_string(),
+        resolved_executable_path: identity.resolved_executable_path,
+        resolved_implementation: identity.resolved_implementation,
         success,
         accepted_for_suggestions: false,
         quality_tier: QualityTier::Failed,
@@ -1250,6 +1547,37 @@ pub fn command_exists(command: &str) -> bool {
         .unwrap_or(false)
 }
 
+fn resolve_command_identity(command: &str) -> CommandIdentity {
+    let base = command.split_whitespace().next().unwrap_or(command);
+    if base.is_empty() {
+        return CommandIdentity::default();
+    }
+
+    let output = match Command::new("which").arg(base).output() {
+        Ok(output) if output.status.success() => output,
+        _ => return CommandIdentity::default(),
+    };
+
+    let raw = String::from_utf8_lossy(&output.stdout);
+    let first = raw.lines().next().unwrap_or_default().trim();
+    if first.is_empty() {
+        return CommandIdentity::default();
+    }
+
+    let canonical = fs::canonicalize(first).ok().unwrap_or_else(|| first.into());
+    let resolved_impl = Path::new(&canonical)
+        .file_name()
+        .and_then(|name| name.to_str())
+        .map(ToOwned::to_owned);
+    // Store only the basename to avoid leaking absolute filesystem paths.
+    let resolved_basename = resolved_impl.clone();
+
+    CommandIdentity {
+        resolved_executable_path: resolved_basename,
+        resolved_implementation: resolved_impl,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1271,9 +1599,58 @@ mod tests {
         assert!(!is_help_output("error: command not found"));
         assert!(!is_help_output("short"));
         assert!(!is_help_output("sh: 0: Illegal option -h"));
+        assert!(!is_help_output("bzexe: --help not a file"));
+        assert!(!is_help_output(
+            "Argument \"--help\" is unknown, try \"rtmon help\"."
+        ));
         assert!(is_help_output(
             "Illegal option --\nUsage: /usr/bin/which [-as] args"
         ));
+    }
+
+    #[test]
+    fn test_classify_rejection_detects_not_installed_and_display_blocked() {
+        let not_found = classify_rejection("bash: line 1: npx: command not found");
+        assert_eq!(not_found.failure_code, FailureCode::NotInstalled);
+        assert_eq!(not_found.reason, "not-installed-output");
+
+        let display = classify_rejection("Error: Can't open display:");
+        assert_eq!(display.failure_code, FailureCode::PermissionBlocked);
+        assert_eq!(display.reason, "environment-blocked");
+    }
+
+    #[test]
+    fn test_derive_probe_failure_prefers_not_installed_when_repeated() {
+        let attempts = vec![
+            ProbeAttemptReport {
+                help_flag: "--help".to_string(),
+                argv: vec!["npx".to_string(), "--help".to_string()],
+                exit_code: Some(127),
+                timed_out: false,
+                error: None,
+                rejection_reason: Some("not-installed-output".to_string()),
+                output_source: Some("stderr".to_string()),
+                output_len: 32,
+                output_preview: Some("bash: npx: command not found".to_string()),
+                accepted: false,
+            },
+            ProbeAttemptReport {
+                help_flag: "-h".to_string(),
+                argv: vec!["npx".to_string(), "-h".to_string()],
+                exit_code: Some(127),
+                timed_out: false,
+                error: None,
+                rejection_reason: Some("not-installed-output".to_string()),
+                output_source: Some("stderr".to_string()),
+                output_len: 32,
+                output_preview: Some("bash: npx: command not found".to_string()),
+                accepted: false,
+            },
+        ];
+
+        let (code, detail) = derive_probe_failure(&attempts, "missing");
+        assert_eq!(code, FailureCode::NotInstalled);
+        assert!(detail.contains("unavailable"));
     }
 
     #[test]
@@ -1284,6 +1661,44 @@ mod tests {
                 .iter()
                 .any(|suffix| suffix == &vec!["--help", "all"])
         );
+    }
+
+    #[test]
+    fn test_should_probe_help_subcommand_from_hint_for_single_command() {
+        let attempts = vec![ProbeAttempt {
+            help_flag: "--help".to_string(),
+            argv: vec!["rtmon".to_string(), "--help".to_string()],
+            exit_code: Some(255),
+            timed_out: false,
+            error: None,
+            rejection_reason: Some("option-error-output".to_string()),
+            failure_code: Some(FailureCode::NotHelpOutput),
+            output_source: Some("stderr".to_string()),
+            output_len: 48,
+            output_preview: Some("Argument \"--help\" is unknown, try \"rtmon help\".".to_string()),
+            accepted: false,
+        }];
+
+        assert!(should_probe_help_subcommand(&["rtmon"], &attempts));
+    }
+
+    #[test]
+    fn test_should_not_probe_help_subcommand_without_hint_for_single_command() {
+        let attempts = vec![ProbeAttempt {
+            help_flag: "--help".to_string(),
+            argv: vec!["bzexe".to_string(), "--help".to_string()],
+            exit_code: Some(1),
+            timed_out: false,
+            error: None,
+            rejection_reason: Some("not-help-output".to_string()),
+            failure_code: Some(FailureCode::NotHelpOutput),
+            output_source: Some("stdout".to_string()),
+            output_len: 25,
+            output_preview: Some("bzexe: --help not a file".to_string()),
+            accepted: false,
+        }];
+
+        assert!(!should_probe_help_subcommand(&["bzexe"], &attempts));
     }
 
     #[test]
@@ -1331,6 +1746,8 @@ mod tests {
             },
             report: ExtractionReport {
                 command: "svc".to_string(),
+                resolved_executable_path: None,
+                resolved_implementation: None,
                 success: true,
                 accepted_for_suggestions: false,
                 quality_tier: QualityTier::Failed,

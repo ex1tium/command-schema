@@ -2,6 +2,7 @@
 
 use command_schema_core::{ArgSchema, FlagSchema, SubcommandSchema, ValueType};
 
+/// Source line range within the normalized help output, used for diagnostics.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SourceSpan {
     pub line_start: usize,
@@ -24,6 +25,7 @@ impl SourceSpan {
     }
 }
 
+/// A detected usage text with provenance metadata (source span, strategy, confidence).
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct UsageNode {
@@ -33,6 +35,8 @@ pub struct UsageNode {
     pub confidence: f64,
 }
 
+/// Candidate flag extracted by a parser strategy, carrying evidence metadata
+/// (source span, originating strategy, confidence score) for downstream merging.
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct FlagCandidate {
@@ -49,6 +53,8 @@ pub struct FlagCandidate {
     pub confidence: f64,
 }
 
+/// Candidate subcommand with provenance, produced by parser strategies for
+/// confidence scoring and deduplication in the merge pipeline.
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct SubcommandCandidate {
@@ -60,6 +66,7 @@ pub struct SubcommandCandidate {
     pub confidence: f64,
 }
 
+/// Candidate positional argument with provenance metadata for the merge pipeline.
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct ArgCandidate {
@@ -73,6 +80,8 @@ pub struct ArgCandidate {
     pub confidence: f64,
 }
 
+/// Candidate flag constraint (requires/conflicts_with) extracted from flag
+/// descriptions, carrying provenance for confidence-based filtering.
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct ConstraintCandidate {

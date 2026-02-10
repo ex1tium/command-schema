@@ -69,6 +69,15 @@ pub enum QualityTier {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExtractionReport {
     pub command: String,
+    /// Basename of the resolved executable for this command, when available.
+    ///
+    /// Only the filename component is stored to avoid leaking absolute
+    /// filesystem paths in serialized reports.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub resolved_executable_path: Option<String>,
+    /// Resolved implementation/binary name (e.g. `mawk`, `gawk`, `busybox`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub resolved_implementation: Option<String>,
     pub success: bool,
     pub accepted_for_suggestions: bool,
     pub quality_tier: QualityTier,
@@ -142,6 +151,8 @@ mod tests {
     fn test_extraction_report_omits_none_failure_fields() {
         let report = ExtractionReport {
             command: "test".to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success: true,
             accepted_for_suggestions: true,
             quality_tier: QualityTier::High,
@@ -170,6 +181,8 @@ mod tests {
     fn test_extraction_report_includes_failure_fields_when_set() {
         let report = ExtractionReport {
             command: "test".to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success: false,
             accepted_for_suggestions: false,
             quality_tier: QualityTier::Failed,
@@ -199,10 +212,7 @@ mod tests {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExtractionReportBundle {
     /// Schema contract version.
-    #[serde(
-        default,
-        skip_serializing_if = "Option::is_none"
-    )]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub schema_version: Option<String>,
     pub generated_at: String,
     pub version: String,

@@ -7,6 +7,8 @@ use command_schema_core::HelpFormat;
 
 use super::{FormatScore, IndexedLine};
 
+/// Scores the given help output lines against known `HelpFormat` variants.
+/// Returns a descending-sorted vector of `FormatScore` entries.
 pub fn classify_formats(lines: &[&str]) -> Vec<FormatScore> {
     let mut scores = vec![
         FormatScore {
@@ -123,6 +125,7 @@ pub fn classify_formats(lines: &[&str]) -> Vec<FormatScore> {
     scores
 }
 
+/// Returns `true` if `text` matches a common placeholder token (e.g. COMMAND, FILE, ARG).
 pub fn is_placeholder_token(text: &str) -> bool {
     matches!(
         text.trim().to_ascii_uppercase().as_str(),
@@ -139,6 +142,8 @@ pub fn is_placeholder_token(text: &str) -> bool {
     )
 }
 
+/// Returns `true` if `line` looks like an environment variable assignment row
+/// (e.g. `export FOO=bar` or `MY_VAR=value`).
 pub fn is_env_var_row(line: &str) -> bool {
     let trimmed = line.trim();
     if trimmed.starts_with("export ") {
@@ -156,6 +161,7 @@ pub fn is_env_var_row(line: &str) -> bool {
             .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '_')
 }
 
+/// Returns `true` if `line` contains keybinding-like patterns (Ctrl+, ^, Esc-, arrow keys).
 pub fn is_keybinding_row(line: &str) -> bool {
     let trimmed = line.trim();
     if trimmed.contains("Ctrl+") || trimmed.contains("ctrl+") || trimmed.contains('^') {
@@ -169,6 +175,8 @@ pub fn is_keybinding_row(line: &str) -> bool {
         || lower.contains("delete")
 }
 
+/// Returns `true` if `line` matches a table-like prose header
+/// (e.g. "name  description", "command  description").
 pub fn is_prose_header(line: &str) -> bool {
     let lower = line.trim().to_ascii_lowercase();
     matches!(
@@ -182,6 +190,8 @@ pub fn is_prose_header(line: &str) -> bool {
     )
 }
 
+/// Counts how many of the given `IndexedLine`s match hard-negative filters
+/// (env var rows, keybinding rows, or prose headers).
 pub fn count_filter_hits(lines: &[IndexedLine]) -> usize {
     lines
         .iter()

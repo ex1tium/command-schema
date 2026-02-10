@@ -1,26 +1,90 @@
+//! Schema merging with configurable conflict resolution.
+//!
+//! When the same command has schemas from multiple sources (e.g., `--help`
+//! extraction and user history), [`merge_schemas`] combines them into a
+//! single schema using a [`MergeStrategy`] to resolve conflicts.
+//!
+//! # Example
+//!
+//! ```
+//! use command_schema_core::*;
+//!
+//! let mut base = CommandSchema::new("git", SchemaSource::Bootstrap);
+//! base.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
+//!
+//! let mut overlay = CommandSchema::new("git", SchemaSource::Learned);
+//! overlay.global_flags.push(
+//!     FlagSchema::with_value(Some("-m"), Some("--message"), ValueType::String),
+//! );
+//!
+//! let merged = merge_schemas(&base, &overlay, MergeStrategy::Union);
+//! assert_eq!(merged.global_flags.len(), 2);
+//! ```
+
 use std::collections::HashMap;
 
 use crate::{CommandSchema, FlagSchema, SubcommandSchema};
 
 /// Schema merge behavior.
+///
+/// Controls how conflicts between a base and overlay schema are resolved.
+///
+/// # Examples
+///
+/// ```
+/// use command_schema_core::*;
+///
+/// let mut base = CommandSchema::new("git", SchemaSource::Bootstrap);
+/// base.description = Some("base desc".into());
+///
+/// let mut overlay = CommandSchema::new("git", SchemaSource::Learned);
+/// overlay.description = Some("overlay desc".into());
+///
+/// let m1 = merge_schemas(&base, &overlay, MergeStrategy::PreferBase);
+/// assert_eq!(m1.description.as_deref(), Some("base desc"));
+///
+/// let m2 = merge_schemas(&base, &overlay, MergeStrategy::PreferOverlay);
+/// assert_eq!(m2.description.as_deref(), Some("overlay desc"));
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MergeStrategy {
     /// Keep base values when conflicts occur.
     PreferBase,
     /// Keep overlay values when conflicts occur.
     PreferOverlay,
-    /// Combine both with conflict-aware unions.
+    /// Combine both with conflict-aware unions (overlay wins for description).
     Union,
 }
 
 /// Merges two command schemas into one schema.
+///
+/// Flags and subcommands are deduplicated by canonical name. The `strategy`
+/// determines which side wins when both schemas define the same entity.
+///
+/// # Examples
+///
+/// ```
+/// use command_schema_core::*;
+///
+/// let mut base = CommandSchema::new("git", SchemaSource::Bootstrap);
+/// base.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
+///
+/// let mut overlay = CommandSchema::new("git", SchemaSource::Learned);
+/// overlay.global_flags.push(
+///     FlagSchema::with_value(Some("-m"), Some("--message"), ValueType::String),
+/// );
+/// // overlay also has --verbose
+/// overlay.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
+///
+/// let merged = merge_schemas(&base, &overlay, MergeStrategy::Union);
+/// assert_eq!(merged.global_flags.len(), 2); // deduplicated
+/// ```
 pub fn merge_schemas(
     base: &CommandSchema,
     overlay: &CommandSchema,
     strategy: MergeStrategy,
 ) -> CommandSchema {
     let mut merged = base.clone();
-    merged.command = base.command.clone();
 
     merged.description = match strategy {
         MergeStrategy::PreferBase => base
@@ -83,7 +147,13 @@ fn merge_flags(
         }
     }
 
-    by_name.into_values().collect()
+    let mut flags: Vec<_> = by_name.into_values().collect();
+    flags.sort_by(|a, b| {
+        let key_a = a.long.as_ref().or(a.short.as_ref());
+        let key_b = b.long.as_ref().or(b.short.as_ref());
+        key_a.cmp(&key_b)
+    });
+    flags
 }
 
 fn merge_subcommands(
@@ -108,7 +178,9 @@ fn merge_subcommands(
         }
     }
 
-    map.into_values().collect()
+    let mut subcommands: Vec<_> = map.into_values().collect();
+    subcommands.sort_by(|a, b| a.name.cmp(&b.name));
+    subcommands
 }
 
 fn merge_subcommand(

@@ -14,6 +14,26 @@ use crate::extractor::{
 };
 use crate::report::{ExtractionReport, ExtractionReportBundle};
 
+/// Typed error for schema discovery file operations.
+#[derive(Debug, thiserror::Error)]
+pub enum DiscoverError {
+    /// Filesystem I/O failure.
+    #[error("IO error: {0}")]
+    Io(#[from] std::io::Error),
+
+    /// JSON parsing or serialization failure.
+    #[error("JSON error: {0}")]
+    Json(#[from] serde_json::Error),
+
+    /// Schema or package validation failure.
+    #[error("validation failed: {0}")]
+    Validation(String),
+
+    /// Invalid or missing input (e.g. non-existent path, wrong extension).
+    #[error("{0}")]
+    InvalidInput(String),
+}
+
 /// Default allowlist for schema extraction.
 pub const DEFAULT_ALLOWLIST: &[&str] = &[
     "awk",
@@ -134,6 +154,9 @@ pub fn discover_tools(config: &DiscoverConfig) -> Vec<String> {
 
     if config.scan_path {
         for cmd in path_executables() {
+            if !is_scan_path_probe_candidate(cmd.as_str()) {
+                continue;
+            }
             if !excluded.contains(cmd.as_str()) {
                 commands.insert(cmd);
             }
@@ -200,11 +223,7 @@ pub fn discover_and_extract(config: &DiscoverConfig, version: &str) -> DiscoverO
         // detected version and probe mode for future invalidation checks.
         if let Some(ref cache) = cache {
             if let Some(key) = cache_key {
-                let detected_version = run
-                    .result
-                    .schema
-                    .as_ref()
-                    .and_then(|s| s.version.clone());
+                let detected_version = run.result.schema.as_ref().and_then(|s| s.version.clone());
                 let probe_mode = run.report.selected_format.clone();
                 cache.put(
                     key,
@@ -320,25 +339,21 @@ pub fn build_report_bundle(
 }
 
 /// Collects JSON schema file paths from input files and/or directories.
-pub fn collect_schema_paths(inputs: &[PathBuf]) -> Result<Vec<PathBuf>, String> {
+pub fn collect_schema_paths(inputs: &[PathBuf]) -> Result<Vec<PathBuf>, DiscoverError> {
     if inputs.is_empty() {
-        return Err("No schema paths were provided".to_string());
+        return Err(DiscoverError::InvalidInput(
+            "No schema paths were provided".to_string(),
+        ));
     }
 
     let mut paths = BTreeSet::new();
 
     for input in inputs {
         if input.is_dir() {
-            let entries = fs::read_dir(input)
-                .map_err(|err| format!("Failed to read directory '{}': {err}", input.display()))?;
+            let entries = fs::read_dir(input)?;
 
             for entry in entries {
-                let entry = entry.map_err(|err| {
-                    format!(
-                        "Failed to read directory entry in '{}': {err}",
-                        input.display()
-                    )
-                })?;
+                let entry = entry?;
                 let path = entry.path();
                 let is_json = path.extension() == Some(OsStr::new("json"));
                 let is_report = path
@@ -354,41 +369,44 @@ pub fn collect_schema_paths(inputs: &[PathBuf]) -> Result<Vec<PathBuf>, String> 
 
         if input.is_file() {
             if input.extension() != Some(OsStr::new("json")) {
-                return Err(format!(
+                return Err(DiscoverError::InvalidInput(format!(
                     "Schema file '{}' must end in .json",
                     input.display()
-                ));
+                )));
             }
             paths.insert(input.clone());
             continue;
         }
 
-        return Err(format!("Schema path '{}' does not exist", input.display()));
+        return Err(DiscoverError::InvalidInput(format!(
+            "Schema path '{}' does not exist",
+            input.display(),
+        )));
     }
 
     if paths.is_empty() {
-        return Err("No schema JSON files found in provided paths".to_string());
+        return Err(DiscoverError::InvalidInput(
+            "No schema JSON files found in provided paths".to_string(),
+        ));
     }
 
     Ok(paths.into_iter().collect())
 }
 
 /// Loads and validates all command schemas from files.
-pub fn load_and_validate_schemas(paths: &[PathBuf]) -> Result<Vec<CommandSchema>, String> {
+pub fn load_and_validate_schemas(paths: &[PathBuf]) -> Result<Vec<CommandSchema>, DiscoverError> {
     let mut schemas = Vec::with_capacity(paths.len());
 
     for path in paths {
-        let raw = fs::read_to_string(path)
-            .map_err(|err| format!("Failed to read '{}': {err}", path.display()))?;
-        let schema: CommandSchema = serde_json::from_str(&raw)
-            .map_err(|err| format!("Invalid schema JSON '{}': {err}", path.display()))?;
+        let raw = fs::read_to_string(path)?;
+        let schema: CommandSchema = serde_json::from_str(&raw)?;
 
         let errors = validate_schema(&schema);
         if let Some(first) = errors.first() {
-            return Err(format!(
+            return Err(DiscoverError::Validation(format!(
                 "Schema validation failed for '{}': {first}",
                 path.display()
-            ));
+            )));
         }
 
         schemas.push(schema);
@@ -403,7 +421,7 @@ pub fn bundle_schema_files(
     version: &str,
     name: Option<String>,
     description: Option<String>,
-) -> Result<SchemaPackage, String> {
+) -> Result<SchemaPackage, DiscoverError> {
     let schemas = load_and_validate_schemas(paths)?;
 
     let mut package = SchemaPackage::new(version, Utc::now().to_rfc3339());
@@ -413,7 +431,9 @@ pub fn bundle_schema_files(
 
     let errors = validate_package(&package);
     if let Some(first) = errors.first() {
-        return Err(format!("Schema package validation failed: {first}"));
+        return Err(DiscoverError::Validation(format!(
+            "Schema package validation failed: {first}"
+        )));
     }
 
     Ok(package)
@@ -444,6 +464,26 @@ fn path_executables() -> Vec<String> {
     }
 
     commands.into_iter().collect()
+}
+
+fn is_scan_path_probe_candidate(command: &str) -> bool {
+    let lower = command.to_ascii_lowercase();
+
+    if lower.starts_with("xdg-") {
+        return false;
+    }
+
+    !matches!(
+        lower.as_str(),
+        "open"
+            | "browse"
+            | "sensible-browser"
+            | "xmessage"
+            | "xhost"
+            | "xsetmode"
+            | "xsetpointer"
+            | "xkeystone"
+    )
 }
 
 #[cfg(unix)]
@@ -540,6 +580,16 @@ mod tests {
             bundle.schema_version,
             Some(command_schema_core::SCHEMA_CONTRACT_VERSION.to_string())
         );
+    }
+
+    #[test]
+    fn test_scan_path_probe_candidate_filters_gui_launchers() {
+        assert!(!is_scan_path_probe_candidate("xdg-open"));
+        assert!(!is_scan_path_probe_candidate("xmessage"));
+        assert!(!is_scan_path_probe_candidate("open"));
+        assert!(!is_scan_path_probe_candidate("sensible-browser"));
+        assert!(is_scan_path_probe_candidate("awk"));
+        assert!(is_scan_path_probe_candidate("cargo"));
     }
 
     fn unique_tmp_dir() -> PathBuf {

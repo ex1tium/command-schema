@@ -5,7 +5,8 @@ use command_schema_core::CommandSchema;
 use crate::report::ExtractionReport;
 
 /// Supported output formats.
-#[derive(Debug, Clone, Copy, clap::ValueEnum)]
+#[derive(Debug, Clone, Copy)]
+#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 pub enum OutputFormat {
     Json,
     Yaml,
@@ -18,8 +19,9 @@ pub fn format_schema(schema: &CommandSchema, format: OutputFormat) -> Result<Str
     match format {
         OutputFormat::Json => serde_json::to_string_pretty(schema)
             .map_err(|e| format!("JSON serialization failed: {e}")),
-        OutputFormat::Yaml => serde_yaml::to_string(schema)
-            .map_err(|e| format!("YAML serialization failed: {e}")),
+        OutputFormat::Yaml => {
+            serde_yaml::to_string(schema).map_err(|e| format!("YAML serialization failed: {e}"))
+        }
         OutputFormat::Markdown => Ok(schema_to_markdown(schema)),
         OutputFormat::Table => Ok(schema_to_table(schema)),
     }
@@ -238,7 +240,9 @@ mod tests {
     #[test]
     fn test_format_schema_markdown() {
         let mut schema = CommandSchema::new("test", SchemaSource::HelpCommand);
-        schema.global_flags.push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
+        schema
+            .global_flags
+            .push(FlagSchema::boolean(Some("-v"), Some("--verbose")));
         schema.subcommands.push(SubcommandSchema::new("build"));
 
         let result = format_schema(&schema, OutputFormat::Markdown);
@@ -260,6 +264,8 @@ mod tests {
     fn sample_report() -> ExtractionReport {
         ExtractionReport {
             command: "mycmd".to_string(),
+            resolved_executable_path: None,
+            resolved_implementation: None,
             success: true,
             accepted_for_suggestions: true,
             quality_tier: crate::report::QualityTier::High,
