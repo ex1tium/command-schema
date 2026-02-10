@@ -617,20 +617,23 @@ fn run_ci_extract(args: CiExtractArgs) -> Result<(), String> {
                     continue;
                 }
 
-                // Check fingerprint change when no version available
-                if version.is_none() {
-                    let path_str = exe_path.as_ref().map(|p| p.to_string_lossy().to_string());
-                    let fingerprint_changed = path_str != existing.executable_path
-                        || mtime != existing.mtime_secs
-                        || size != existing.size_bytes;
+                // Check fingerprint change (binary path, mtime, or size)
+                let path_str = exe_path.as_ref().map(|p| p.to_string_lossy().to_string());
+                let fingerprint_changed = path_str != existing.executable_path
+                    || mtime != existing.mtime_secs
+                    || size != existing.size_bytes;
 
-                    if fingerprint_changed {
-                        to_extract.push(CommandWork {
-                            command: cmd.clone(),
-                            reason: "fingerprint changed".to_string(),
-                        });
-                        continue;
-                    }
+                if fingerprint_changed {
+                    let reason = if version.is_some() {
+                        "fingerprint changed (version unchanged)".to_string()
+                    } else {
+                        "fingerprint changed".to_string()
+                    };
+                    to_extract.push(CommandWork {
+                        command: cmd.clone(),
+                        reason,
+                    });
+                    continue;
                 }
 
                 // Check quality policy change (use epsilon comparison for f64)

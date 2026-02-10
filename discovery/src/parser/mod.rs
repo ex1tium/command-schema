@@ -1577,7 +1577,7 @@ impl HelpParser {
             && token
                 .chars()
                 .next()
-                .is_some_and(|ch| ch.is_ascii_alphanumeric())
+                .is_some_and(|ch| ch.is_ascii_alphabetic())
     }
 
     pub(super) fn looks_like_symbolic_option_row(trimmed: &str) -> bool {

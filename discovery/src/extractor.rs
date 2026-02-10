@@ -437,29 +437,51 @@ fn try_direct_probe(
 
     match spawn_result {
         Ok(mut child) => {
-            let mut stdout_pipe = child.stdout.take();
-            let mut stderr_pipe = child.stderr.take();
+            // Drain stdout and stderr in background threads to prevent
+            // deadlock when the child's pipe buffer fills before it exits.
+            let stdout_thread = child.stdout.take().map(|pipe| {
+                std::thread::spawn(move || {
+                    let mut buf = Vec::new();
+                    let mut pipe = pipe;
+                    let result = pipe.read_to_end(&mut buf);
+                    (buf, result)
+                })
+            });
+            let stderr_thread = child.stderr.take().map(|pipe| {
+                std::thread::spawn(move || {
+                    let mut buf = Vec::new();
+                    let mut pipe = pipe;
+                    let result = pipe.read_to_end(&mut buf);
+                    (buf, result)
+                })
+            });
 
             let timeout = Duration::from_millis(HELP_TIMEOUT_MS);
             match wait_for_child_with_timeout(&mut child, timeout) {
                 Ok(Some(status)) => {
                     attempt.exit_code = status.code();
-                    let mut stdout_buf = Vec::new();
-                    let mut stderr_buf = Vec::new();
                     let mut io_errors = Vec::new();
 
-                    if let Some(ref mut pipe) = stdout_pipe
-                        && let Err(e) = pipe.read_to_end(&mut stdout_buf)
-                    {
-                        debug!(command = ?cmd_parts, error = %e, "Failed to read stdout");
-                        io_errors.push(format!("stdout read failed: {e}"));
-                    }
-                    if let Some(ref mut pipe) = stderr_pipe
-                        && let Err(e) = pipe.read_to_end(&mut stderr_buf)
-                    {
-                        debug!(command = ?cmd_parts, error = %e, "Failed to read stderr");
-                        io_errors.push(format!("stderr read failed: {e}"));
-                    }
+                    let stdout_buf = stdout_thread
+                        .and_then(|t| t.join().ok())
+                        .map(|(buf, res)| {
+                            if let Err(e) = res {
+                                debug!(command = ?cmd_parts, error = %e, "Failed to read stdout");
+                                io_errors.push(format!("stdout read failed: {e}"));
+                            }
+                            buf
+                        })
+                        .unwrap_or_default();
+                    let stderr_buf = stderr_thread
+                        .and_then(|t| t.join().ok())
+                        .map(|(buf, res)| {
+                            if let Err(e) = res {
+                                debug!(command = ?cmd_parts, error = %e, "Failed to read stderr");
+                                io_errors.push(format!("stderr read failed: {e}"));
+                            }
+                            buf
+                        })
+                        .unwrap_or_default();
                     if !io_errors.is_empty() {
                         attempt.error = Some(io_errors.join("; "));
                     }
@@ -550,11 +572,31 @@ struct ShellProbeResult {
     accepted_output: Option<String>,
 }
 
+/// Returns `true` if `s` contains shell metacharacters that could allow injection.
+fn contains_shell_metacharacters(s: &str) -> bool {
+    s.chars()
+        .any(|ch| matches!(ch, '|' | ';' | '&' | '$' | '`' | '(' | ')' | '{' | '}' | '<' | '>' | '!' | '\'' | '"' | '\\' | '\n' | '\r'))
+}
+
 fn probe_shell_help(
     parts: &[&str],
     help_flag: &str,
     env_overrides: &[(&str, &str)],
 ) -> ShellProbeResult {
+    // Reject commands containing shell metacharacters to prevent injection
+    // since we pass the joined string to `bash -lc`.
+    if parts.iter().any(|p| contains_shell_metacharacters(p))
+        || contains_shell_metacharacters(help_flag)
+    {
+        let argv = vec!["bash".to_string(), "-lc".to_string(), parts.join(" ")];
+        let mut attempt = ProbeAttempt::new(help_flag, argv);
+        attempt.error = Some("rejected: command contains shell metacharacters".to_string());
+        return ShellProbeResult {
+            attempt,
+            accepted_output: None,
+        };
+    }
+
     let shell_cmd = if help_flag == "help" {
         format!("help {}", parts.join(" "))
     } else {
@@ -592,27 +634,48 @@ fn probe_shell_help(
         };
     };
 
-    let mut stdout_pipe = child.stdout.take();
-    let mut stderr_pipe = child.stderr.take();
+    // Drain pipes concurrently to prevent deadlock when buffer fills.
+    let stdout_thread = child.stdout.take().map(|pipe| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            let mut pipe = pipe;
+            let result = pipe.read_to_end(&mut buf);
+            (buf, result)
+        })
+    });
+    let stderr_thread = child.stderr.take().map(|pipe| {
+        std::thread::spawn(move || {
+            let mut buf = Vec::new();
+            let mut pipe = pipe;
+            let result = pipe.read_to_end(&mut buf);
+            (buf, result)
+        })
+    });
     let timeout = Duration::from_millis(HELP_TIMEOUT_MS);
 
     match wait_for_child_with_timeout(&mut child, timeout) {
         Ok(Some(status)) => {
             attempt.exit_code = status.code();
-            let mut stdout_buf = Vec::new();
-            let mut stderr_buf = Vec::new();
             let mut io_errors = Vec::new();
 
-            if let Some(ref mut pipe) = stdout_pipe
-                && let Err(e) = pipe.read_to_end(&mut stdout_buf)
-            {
-                io_errors.push(format!("stdout read failed: {e}"));
-            }
-            if let Some(ref mut pipe) = stderr_pipe
-                && let Err(e) = pipe.read_to_end(&mut stderr_buf)
-            {
-                io_errors.push(format!("stderr read failed: {e}"));
-            }
+            let stdout_buf = stdout_thread
+                .and_then(|t| t.join().ok())
+                .map(|(buf, res)| {
+                    if let Err(e) = res {
+                        io_errors.push(format!("stdout read failed: {e}"));
+                    }
+                    buf
+                })
+                .unwrap_or_default();
+            let stderr_buf = stderr_thread
+                .and_then(|t| t.join().ok())
+                .map(|(buf, res)| {
+                    if let Err(e) = res {
+                        io_errors.push(format!("stderr read failed: {e}"));
+                    }
+                    buf
+                })
+                .unwrap_or_default();
             if !io_errors.is_empty() {
                 attempt.error = Some(io_errors.join("; "));
             }
