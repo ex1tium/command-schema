@@ -21,9 +21,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout main (for CLI build and config)
         uses: actions/checkout@v4
         with:
+          ref: main
+          path: workspace
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout schemas branch
+        uses: actions/checkout@v4
+        with:
+          ref: schemas
+          path: schemas-branch
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Rust toolchain
@@ -39,8 +48,8 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+            workspace/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('workspace/**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
 
@@ -114,6 +123,7 @@ jobs:
           sudo apt-get install -y tmux screen file binutils
 
       - name: Build schema-discover CLI
+        working-directory: workspace
         run: |
           cargo build --release -p command-schema-cli
           sudo cp target/release/schema-discover /usr/local/bin/
@@ -121,32 +131,33 @@ jobs:
       - name: Run CI extraction
         run: |
           schema-discover ci-extract \
-            --config ci-config.yaml \
-            --manifest schemas/database/manifest.json \
-            --output schemas/database/
+            --config workspace/ci-config.yaml \
+            --manifest schemas-branch/manifest.json \
+            --output schemas-branch/
 
       - name: Generate summary
         id: summary
         run: |
           # Count extracted schemas
-          SCHEMA_COUNT=$(find schemas/database/ -name "*.json" -not -name "manifest.json" | wc -l)
+          SCHEMA_COUNT=$(find schemas-branch/ -maxdepth 1 -name "*.json" -not -name "manifest.json" | wc -l)
           echo "schema_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT
 
           # Count changed schemas (both tracked modifications and untracked new files)
-          if [ -f schemas/database/manifest.json ]; then
-            CHANGED=$(git status --porcelain -- 'schemas/database/' | awk '{print $2}' | grep -v manifest.json | grep '\.json$' | wc -l)
+          cd schemas-branch
+          if [ -f manifest.json ]; then
+            CHANGED=$(git status --porcelain | awk '{print $2}' | grep -v manifest.json | grep -v README.md | grep '\.json$' | wc -l)
             echo "changed_count=$CHANGED" >> $GITHUB_OUTPUT
           else
             echo "changed_count=$SCHEMA_COUNT" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit and push changes
+      - name: Commit and push to schemas branch
+        working-directory: schemas-branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add schemas/database/
-          git add ci-config.yaml .github/workflows/extract-schemas.yml
+          git add -A
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
@@ -155,14 +166,14 @@ jobs:
             CHANGED_COUNT="${{ steps.summary.outputs.changed_count }}"
 
             git commit -m "Update command schemas: $CHANGED_COUNT changed, $SCHEMA_COUNT total"
-            git push
+            git push origin schemas
           fi
 
       - name: Upload extraction report
-        if: always() && hashFiles('schemas/database/extraction-report.json') != ''
+        if: always() && hashFiles('schemas-branch/extraction-report.json') != ''
         uses: actions/upload-artifact@v4
         with:
           name: extraction-report
-          path: schemas/database/extraction-report.json
+          path: schemas-branch/extraction-report.json
           if-no-files-found: ignore
           retention-days: 30

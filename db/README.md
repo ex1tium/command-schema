@@ -20,6 +20,8 @@ This crate provides in-memory schema storage with multiple loading strategies, m
 
 ## Quick Example
 
+Pre-extracted schemas are maintained on the [`schemas`](https://github.com/ex1tium/command-schema/tree/schemas) branch. Fetch them locally with `make fetch-schemas` to populate `schemas/database/`.
+
 ```rust,no_run
 use command_schema_db::SchemaDatabase;
 
@@ -49,18 +51,14 @@ The `bundled-schemas` feature embeds gzip-compressed schemas at build time for z
 
 ### Startup Time
 
-| Source | Schemas | Time |
-|--------|---------|------|
-| Directory loading | ~107 | ~20-50ms |
-| Bundled loading | ~107 | ~5-15ms |
-| **Target** | **200** | **<100ms** |
+| Source | Time |
+|--------|------|
+| Directory loading | ~20-50ms |
+| Bundled loading | ~5-15ms |
 
 ### Memory Usage
 
-| Metric | Value |
-|--------|-------|
-| In-memory HashMap | ~2-5 MB for 107 schemas |
-| **Target** | **<10 MB for 200 schemas** |
+Typically ~2-5 MB in-memory for the HashMap, scaling linearly with schema count.
 
 ### Binary Size Impact
 
@@ -68,7 +66,6 @@ The `bundled-schemas` feature embeds gzip-compressed schemas at build time for z
 |-------|------|
 | Without `bundled-schemas` | baseline |
 | With `bundled-schemas` | baseline + ~1-3 MB |
-| **Target increase** | **<5 MB for 200 schemas** |
 
 ### Compression Ratio
 

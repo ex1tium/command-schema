@@ -24,6 +24,8 @@ This crate provides relational storage for command schemas with a full migration
 
 ## Quick Example
 
+Pre-extracted schemas are maintained on the [`schemas`](https://github.com/ex1tium/command-schema/tree/schemas) branch. Run `make fetch-schemas` to populate `schemas/database/` before seeding.
+
 ```rust,no_run
 use command_schema_sqlite::{Migration, SchemaQuery};
 use rusqlite::Connection;

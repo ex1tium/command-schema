@@ -14,7 +14,7 @@ Parse CLI help text into structured schemas, then consume those schemas from JSO
 CLI tools expose their interface through `--help` text, but that text is unstructured and varies wildly across tools. **command-schema** parses help text from any CLI tool into a structured schema, then provides multiple storage and retrieval patterns so applications can consume those schemas at runtime.
 
 - **Multi-strategy help text parsing** with confidence scoring (GNU, NPM, Clap, generic formats)
-- **Pre-extracted database** of 107+ command schemas ready to use
+- **Pre-extracted schema database** available on the [`schemas`](https://github.com/ex1tium/command-schema/tree/schemas) branch
 - **Multiple storage patterns**: directory, bundle, compile-time embedded, SQLite
 - **O(1) in-memory lookups** via HashMap (~10M lookups/sec)
 - **CI automation** for schema maintenance with version tracking and change detection
@@ -46,6 +46,22 @@ Add as a git dependency (not yet published to crates.io):
 command-schema-db = { git = "https://github.com/ex1tium/command-schema" }
 command-schema-discovery = { git = "https://github.com/ex1tium/command-schema" }
 ```
+
+### Fetch the Schema Database
+
+Pre-extracted schemas are maintained on a separate [`schemas`](https://github.com/ex1tium/command-schema/tree/schemas) branch and are **not** included on `main`. To use them locally:
+
+```bash
+# Fetch schemas into schemas/database/
+make fetch-schemas
+
+# Or manually:
+git fetch origin schemas
+mkdir -p schemas/database
+git archive origin/schemas | tar -x -C schemas/database/
+```
+
+This populates `schemas/database/` which is used by directory loading, SQLite seeding, compile-time bundling, and most examples. The directory is gitignored on main.
 
 ### Parse Help Text
 
@@ -85,6 +101,8 @@ See [examples/parse_help.rs](examples/parse_help.rs) for a full working example.
 
 ### Load Pre-extracted Schemas
 
+After running `make fetch-schemas` (see above), load schemas into an in-memory database:
+
 ```rust
 use command_schema_db::SchemaDatabase;
 
@@ -94,9 +112,11 @@ if let Some(schema) = db.get("git") {
 }
 ```
 
-107 pre-extracted schemas are available in [`schemas/database/`](schemas/database/). See [examples/load_static_db.rs](examples/load_static_db.rs) for a full working example.
+See [examples/load_static_db.rs](examples/load_static_db.rs) for a full working example.
 
 ### Use SQLite Storage
+
+Seed a SQLite database from the fetched schemas for persistent, queryable storage:
 
 ```rust
 use command_schema_sqlite::{Migration, SchemaQuery};
@@ -105,7 +125,7 @@ use rusqlite::Connection;
 let conn = Connection::open("schemas.db")?;
 let mut migration = Migration::new(conn, "cs_")?;
 migration.up()?;
-migration.seed("schemas/database/")?;
+migration.seed("schemas/database/")?;  // requires make fetch-schemas
 
 let conn = migration.into_connection();
 let mut query = SchemaQuery::new(conn, "cs_")?;
@@ -151,6 +171,7 @@ if result.success {
 ```rust
 use command_schema_db::SchemaDatabase;
 
+// Load from fetched schema directory (make fetch-schemas)
 let db = SchemaDatabase::from_dir("schemas/database/")?;
 if let Some(git) = db.get("git") {
     let push_flags = git.flags_for_subcommand("push");
@@ -160,6 +181,7 @@ if let Some(git) = db.get("git") {
 
 - **Dependencies:** `command-schema-db`
 - **Performance:** ~20-50ms startup, O(1) lookups (~10M/sec)
+- **Setup:** Requires `make fetch-schemas` or your own extracted schemas
 
 ### Pattern 3: Zero-I/O Embedded
 
@@ -176,7 +198,7 @@ let db = SchemaDatabase::builder()
 
 - **Dependencies:** `command-schema-db` with `bundled-schemas` feature
 - **Performance:** ~5-15ms startup, +1-3MB binary size
-- **Note:** Requires schemas in `schemas/database/` at build time
+- **Note:** Requires schemas in `schemas/database/` at build time (run `make fetch-schemas` first)
 
 ### Pattern 4: SQLite Storage
 
@@ -251,7 +273,7 @@ sequenceDiagram
 
     Note over App,SQL: Startup Phase
     App->>Static: Load bundled/directory
-    Static-->>Cache: 107 schemas
+    Static-->>Cache: All schemas
     App->>SQL: Load learned schemas
     SQL-->>Cache: Merge into cache
 
@@ -278,8 +300,7 @@ sequenceDiagram
 | **SQLite** | 10-20ms | 2-5MB | Database | 1-5ms/query | Baseline | Persistent Storage |
 | **Two-Tier** | ~100ms | 2-5MB | Both | O(1) ~10M/sec | Baseline | Terminal Apps |
 
-- All measurements based on 107 schemas
-- Target: <100ms startup, <10MB memory for 200 schemas
+- Target: <100ms startup, <10MB memory for 200+ schemas
 - Lookup performance measured on modern hardware (2020+)
 
 ---
@@ -317,22 +338,22 @@ For full architecture diagrams, see [Architecture Diagrams](#architecture).
 
 ## Examples
 
-| Example | Description | Command | Demonstrates |
-|---------|-------------|---------|--------------|
-| `parse_help.rs` | Parse help text without executing commands | `cargo run -p command-schema-examples --example parse_help` | Basic parsing, confidence scoring |
-| `load_static_db.rs` | Load schemas from directory | `cargo run -p command-schema-examples --example load_static_db` | Directory loading, O(1) lookups, builder pattern |
-| `bundled_schemas.rs` | Zero-I/O embedded schemas | `cargo run -p command-schema-examples --example bundled_schemas --features bundled-schemas` | Compile-time embedding, fallback chain |
-| `sqlite_migration.rs` | SQLite lifecycle and CRUD | `cargo run -p command-schema-examples --example sqlite_migration` | Migrations, seeding, queries, learning |
-| `wrashpty_integration.rs` | Two-tier architecture | `cargo run -p command-schema-examples --example wrashpty_integration` | Production pattern, registry, performance |
+| Example | Description | Command | Needs Schemas? |
+|---------|-------------|---------|:--------------:|
+| `parse_help.rs` | Parse help text without executing commands | `cargo run -p command-schema-examples --example parse_help` | No |
+| `load_static_db.rs` | Load schemas from directory | `cargo run -p command-schema-examples --example load_static_db` | Yes |
+| `bundled_schemas.rs` | Zero-I/O embedded schemas | `cargo run -p command-schema-examples --example bundled_schemas --features bundled-schemas` | Yes (at build time) |
+| `sqlite_migration.rs` | SQLite lifecycle and CRUD | `cargo run -p command-schema-examples --example sqlite_migration` | Yes |
+| `wrashpty_integration.rs` | Two-tier architecture | `cargo run -p command-schema-examples --example wrashpty_integration` | Yes |
 
-All examples are fully working and tested. See [`examples/`](examples/) for source code.
+Run `make fetch-schemas` before running examples that need schemas. See [`examples/`](examples/) for source code.
 
 ---
 
 ## FAQ / Troubleshooting
 
-**Q: How do I add a new command to the static database?**
-A: Run `schema-discover extract --commands <command> --output schemas/database/` or add it to [`ci-config.yaml`](ci-config.yaml) and let CI extract it automatically.
+**Q: How do I add a new command to the schema database?**
+A: Add it to [`ci-config.yaml`](ci-config.yaml) and submit a PR. CI will automatically extract and publish it to the [`schemas`](https://github.com/ex1tium/command-schema/tree/schemas) branch. For local extraction, use `schema-discover extract --commands <command> --output schemas/database/`.
 
 **Q: How do I customize the SQLite table prefix?**
 A: Pass a custom prefix to `Migration::new(conn, "your_prefix_")` and `SchemaQuery::new(conn, "your_prefix_")`.
@@ -347,7 +368,7 @@ A: Add commands to [`ci-config.yaml`](ci-config.yaml) and submit a PR. CI will a
 A: Ensure you're using the in-memory HashMap pattern (`SchemaDatabase`) for O(1) lookups. SQLite queries are slower (1-5ms) but still fast for most use cases.
 
 **Q: How do I update schemas when commands change?**
-A: Re-run extraction with `schema-discover ci-extract`. The manifest tracks versions and only re-extracts changed commands.
+A: CI runs weekly and on config changes, pushing updated schemas to the `schemas` branch automatically. Run `make fetch-schemas` to pull the latest. For local re-extraction, use `schema-discover ci-extract`.
 
 **Q: Can I use this with non-Rust projects?**
 A: Yes! The CLI tool (`schema-discover`) can be used standalone. Schemas are JSON files that any language can consume. See [`discovery/wrappers/`](discovery/wrappers/) for Node.js and Python clients.
@@ -367,6 +388,9 @@ A: Yes! The CLI tool (`schema-discover`) can be used standalone. Schemas are JSO
 **Development workflow:**
 
 ```bash
+# Fetch the pre-extracted schema database
+make fetch-schemas
+
 # Run all tests
 cargo test
 
@@ -376,8 +400,9 @@ cargo test -p command-schema-db
 # Extract schemas locally
 cargo run -p command-schema-cli -- extract --commands git,docker --output ./dev-schemas
 
-# Run examples
+# Run examples (most require make fetch-schemas first)
 cargo run -p command-schema-examples --example parse_help
+cargo run -p command-schema-examples --example load_static_db
 ```
 
 **See also:**
@@ -401,7 +426,7 @@ cargo run -p command-schema-examples --example parse_help
 
 **Resources:**
 
-- Pre-extracted schemas: [`schemas/database/`](schemas/database/) (107 commands)
+- Pre-extracted schemas: [`schemas` branch](https://github.com/ex1tium/command-schema/tree/schemas) (fetch locally with `make fetch-schemas`)
 - Schema JSON Schemas: [`schemas/json-schema/`](schemas/json-schema/)
 - Runnable examples: [`examples/`](examples/)
 - CI configuration: [`ci-config.yaml`](ci-config.yaml)
