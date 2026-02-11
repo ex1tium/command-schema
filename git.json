@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "git",
-  "description": "start a working area (see also: git help tutorial)",
+  "description": null,
   "global_flags": [
     {
       "short": null,
@@ -16,8 +16,8 @@
     {
       "short": null,
       "long": "--config-env",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -26,8 +26,8 @@
     {
       "short": null,
       "long": "--exec-path",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -36,15 +36,15 @@
     {
       "short": null,
       "long": "--git-dir",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
@@ -86,8 +86,8 @@
     {
       "short": null,
       "long": "--namespace",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -114,7 +114,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--paginate",
       "value_type": "Bool",
       "takes_value": false,
@@ -124,7 +124,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
@@ -136,8 +136,8 @@
     {
       "short": null,
       "long": "--work-tree",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -172,36 +172,6 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [
@@ -211,27 +181,37 @@
       "flags": [
         {
           "short": "-A",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "add changes from all tracked and untracked files --[no-]ignore-removal ignore paths removed in the working tree (same as --no-all) --[no-]refresh don't add, only refresh the index --[no-]ignore-errors just skip files which cannot be added because of errors --[no-]ignore-missing check if - even missing - files are ignored in dry run --[no-]sparse allow updating entries outside of the sparse-checkout cone --[no-]chmod (+|-)x override the executable bit of the listed files --[no-]pathspec-from-file <file> read pathspec from file --[no-]pathspec-file-nul with --pathspec-from-file, pathspec elements are separated with NUL character",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add changes from all tracked and untracked files",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-N",
-          "long": null,
+          "short": null,
+          "long": "--chmod",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "override the executable bit of the listed files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-e",
-          "long": null,
+          "long": "--edit",
           "value_type": "Bool",
           "takes_value": false,
           "description": "edit current diff and apply",
@@ -241,7 +221,7 @@
         },
         {
           "short": "-f",
-          "long": null,
+          "long": "--force",
           "value_type": "Bool",
           "takes_value": false,
           "description": "allow adding otherwise ignored files",
@@ -250,8 +230,18 @@
           "requires": []
         },
         {
-          "short": "-i",
-          "long": null,
+          "short": null,
+          "long": "--ignore-errors",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "just skip files which cannot be added because of errors",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-missing",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -260,18 +250,38 @@
           "requires": []
         },
         {
-          "short": "-n",
-          "long": null,
+          "short": null,
+          "long": "--ignore-removal",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "dry run",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--intent-to-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--interactive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-p",
-          "long": null,
+          "long": "--patch",
           "value_type": "Bool",
           "takes_value": false,
           "description": "select hunks interactively",
@@ -280,18 +290,68 @@
           "requires": []
         },
         {
-          "short": "-u",
-          "long": null,
+          "short": null,
+          "long": "--pathspec-file-nul",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "update tracked files --[no-]renormalize renormalize EOL of tracked files (implies -u)",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--refresh",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't add, only refresh the index",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--renormalize",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "renormalize EOL of tracked files (implies -u)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sparse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow updating entries outside of the sparse-checkout cone",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--update",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "update tracked files",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-v",
-          "long": null,
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
           "description": "be verbose",
@@ -330,7 +390,7 @@
         },
         {
           "short": null,
-          "long": "--term-(new|bad)",
+          "long": "--term-(new",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -351,8 +411,8 @@
         {
           "short": null,
           "long": "--term-good",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -390,11 +450,41 @@
       "description": "List, create, or delete branches",
       "flags": [
         {
+          "short": null,
+          "long": "--abbrev",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "use <n> digits to display object names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-a",
           "long": "--all",
           "value_type": "Bool",
           "takes_value": false,
           "description": "list both remote-tracking and local branches",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--column",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -410,6 +500,86 @@
           "requires": []
         },
         {
+          "short": "-c",
+          "long": "--copy",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "copy a branch and its reflog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--create-reflog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create the branch's reflog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--delete",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delete fully merged branch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--edit-description",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force creation, move/rename, deletion",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--ignore-case",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list branch names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--merged",
           "value_type": "String",
@@ -420,11 +590,21 @@
           "requires": []
         },
         {
+          "short": "-m",
+          "long": "--move",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "move/rename a branch and its reflog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--no-contains",
           "value_type": "String",
           "takes_value": true,
-          "description": "use <n> digits to display object names",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -434,7 +614,47 @@
           "long": "--no-merged",
           "value_type": "String",
           "takes_value": true,
-          "description": "print only branches that are not merged --[no-]column[=<style>] list branches in columns --[no-]sort <key> field name to sort on --[no-]points-at <object> print only branches of the object",
+          "description": "print only branches that are not merged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--omit-empty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not output a newline after empty formatted refs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--points-at",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress informational messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -445,6 +665,66 @@
           "value_type": "Bool",
           "takes_value": false,
           "description": "act on remote-tracking branches",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--set-upstream-to",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-current",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show current branch name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sort",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "field name to sort on",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--track",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unset-upstream",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show hash and subject, give twice for upstream branch",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -474,107 +754,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "move/rename a branch, even if target exists --[no-]omit-empty do not output a newline after empty formatted refs",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "copy a branch and its reflog",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-d",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "delete fully merged branch",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "force creation, move/rename, deletion",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "list branch names --[no-]show-current show current branch name --[no-]create-reflog create the branch's reflog --[no-]edit-description edit the description for the branch",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "move/rename a branch and its reflog",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "suppress informational messages",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-u",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "show hash and subject, give twice for upstream branch",
+          "description": "move/rename a branch, even if target exists",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -619,10 +799,90 @@
       "flags": [
         {
           "short": null,
+          "long": "--also-filter-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bare",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create a bare repository",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--branch",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--bundle-uri",
+          "value_type": "Url",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--checkout",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "opposite of --no-checkout --[no-]bare create a bare repository --[no-]mirror create a mirror repository (implies bare)",
+          "description": "opposite of --no-checkout",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--config",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--depth",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "create a shallow clone of that depth",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dissociate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use --reference only while cloning",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--filter",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "object filtering",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -650,9 +910,39 @@
         {
           "short": "-6",
           "long": "--ipv6",
-          "value_type": "File",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use IPv6 addresses only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
           "takes_value": true,
-          "description": "use IPv6 addresses only --[no-]filter <args> object filtering --[no-]also-filter-submodules apply partial clone filters to submodules --[no-]remote-submodules any cloned submodules will use their remote-tracking branch --[no-]sparse initialize sparse-checkout file to include only files at root --[no-]bundle-uri <uri> a URI for downloading bundles before fetching from origin remote",
+          "description": "number of submodules cloned in parallel",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--local",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "to clone from a local repository",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mirror",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create a mirror repository (implies bare)",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -688,98 +978,208 @@
           "requires": []
         },
         {
+          "short": "-o",
+          "long": "--origin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
-          "long": "--tags",
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "opposite of --no-tags --[no-]shallow-submodules any cloned submodules will be shallow --[no-]separate-git-dir <gitdir> separate git dir from working tree",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-b",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "number of submodules cloned in parallel --[no-]template <template-directory> directory from which templates will be used --[no-]reference <repo> reference repository --[no-]reference-if-able <repo> reference repository --[no-]dissociate use --reference only while cloning",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": null,
+          "long": "--progress",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "to clone from a local repository",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-o",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
+          "description": "force progress reporting",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-q",
-          "long": null,
+          "long": "--quiet",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "be more quiet --[no-]progress force progress reporting --[no-]reject-shallow don't clone shallow repository",
+          "description": "be more quiet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recursive",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reference",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reference-if-able",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reject-shallow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remote-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--separate-git-dir",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--server-option",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-s",
-          "long": null,
-          "value_type": "File",
+          "long": "--shared",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "setup as shared repository",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--single-branch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "clone only one branch, HEAD or --branch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sparse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "initialize sparse-checkout file to include only files at root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "opposite of --no-tags",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--template",
+          "value_type": "String",
           "takes_value": true,
-          "description": "setup as shared repository --[no-]recurse-submodules[=<pathspec>] initialize submodules in the clone --[no-]recursive[=<pathspec>] alias of --recurse-submodules",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-u",
-          "long": null,
+          "long": "--upload-pack",
           "value_type": "File",
           "takes_value": true,
-          "description": "create a shallow clone of that depth --[no-]shallow-since <time> create a shallow clone since a specific time --[no-]shallow-exclude <revision> deepen history of shallow clone, excluding rev --[no-]single-branch clone only one branch, HEAD or --branch",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-v",
-          "long": null,
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
           "description": "be more verbose",
@@ -813,6 +1213,166 @@
       "flags": [
         {
           "short": null,
+          "long": "--ahead-behind",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "compute full ahead/behind values",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "commit all changed files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--amend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "amend previous commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--author",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--branch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show branch information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cleanup",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--date",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "override date for commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show what would be committed",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--edit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force edit of commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fixup",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--gpg-sign",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--include",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add specified files to index for commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--interactive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "interactively add files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--long",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show status in long format (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--message",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--no-post-rewrite",
           "value_type": "Bool",
           "takes_value": false,
@@ -832,11 +1392,161 @@
           "requires": []
         },
         {
+          "short": "-z",
+          "long": "--null",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "terminate entries with NUL",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "commit only specified files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--patch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "interactively add changes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-file-nul",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--porcelain",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "machine-readable output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--post-rewrite",
           "value_type": "Bool",
           "takes_value": false,
           "description": "opposite of --no-post-rewrite",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress summary after successful commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--reedit-message",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reset-author",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "the commit is authored by me now (used with -C/-c/--amend)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": "--reuse-message",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--short",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show status concisely",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--signoff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a Signed-off-by trailer",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--squash",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--status",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "include status in commit message template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--template",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -852,148 +1562,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--verify",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "opposite of --no-verify --[no-]dry-run show what would be committed --[no-]short show status concisely --[no-]branch show branch information --[no-]ahead-behind compute full ahead/behind values --[no-]porcelain machine-readable output --[no-]long show status in long format (default)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-C",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "the commit is authored by me now (used with -C/-c/--amend)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-F",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "override date for commit",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-S",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-a",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "commit all changed files",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-e",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "force edit of commit --[no-]cleanup <mode> how to strip spaces and #comments from message --[no-]status include status in commit message template",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "add specified files to index for commit --[no-]interactive interactively add files",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-o",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "commit only specified files",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "interactively add changes",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "suppress summary after successful commit",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "add a Signed-off-by trailer",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-u",
-          "long": null,
+          "long": "--untracked-files",
           "value_type": "File",
           "takes_value": true,
           "description": null,
@@ -1003,7 +1573,7 @@
         },
         {
           "short": "-v",
-          "long": null,
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
           "description": "show diff in commit message template",
@@ -1012,11 +1582,11 @@
           "requires": []
         },
         {
-          "short": "-z",
-          "long": null,
+          "short": null,
+          "long": "--verify",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "terminate entries with NUL --[no-]amend amend previous commit",
+          "description": "opposite of --no-verify",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1047,6 +1617,16 @@
       "flags": [
         {
           "short": null,
+          "long": "--abbrev",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "use <n> digits to display object names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--anchored",
           "value_type": "String",
           "takes_value": true,
@@ -1058,9 +1638,9 @@
         {
           "short": null,
           "long": "--binary",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "output a binary diff that can be applied --[no-]full-index show full pre- and post-image object names on the \"index\" lines --[no-]color[=<when>] show colored diff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output a binary diff that can be applied",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1087,9 +1667,49 @@
         },
         {
           "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color-moved",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color-moved-ws",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--color-words",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--compact-summary",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1166,10 +1786,40 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--exit-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "exit with 1 if there were differences, 0 otherwise",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ext-diff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow an external diff helper to be executed",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-C",
           "long": "--find-copies",
-          "value_type": "File",
+          "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--find-copies-harder",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1188,6 +1838,36 @@
         {
           "short": "-M",
           "long": "--find-renames",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "continue listing the history of a file beyond renames",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--full-index",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show full pre- and post-image object names on the \"index\" lines",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": "--function-context",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1236,6 +1916,16 @@
           "requires": []
         },
         {
+          "short": "-I",
+          "long": "--ignore-matching-lines",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--ignore-space-at-eol",
           "value_type": "Bool",
@@ -1260,6 +1950,16 @@
           "long": "--ignore-submodules",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--indent-heuristic",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1370,7 +2070,7 @@
           "long": "--no-renames",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "disable rename detection --[no-]rename-empty use empty blobs as rename source --[no-]follow continue listing the history of a file beyond renames",
+          "description": "disable rename detection",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1487,10 +2187,40 @@
         },
         {
           "short": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "disable all output of the program",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--raw",
           "value_type": "Bool",
           "takes_value": false,
           "description": "generate the diff in raw format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--relative",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rename-empty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use empty blobs as rename source",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1550,7 +2280,7 @@
           "long": "--stat-count",
           "value_type": "Number",
           "takes_value": true,
-          "description": "generate diffstat with limited lines --[no-]compact-summary generate compact summary in diffstat",
+          "description": "generate diffstat with limited lines",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1606,6 +2336,26 @@
           "requires": []
         },
         {
+          "short": "-a",
+          "long": "--text",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "treat all files as text",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--textconv",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "run external text conversion filters when comparing binary files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-U",
           "long": "--unified",
           "value_type": "String",
@@ -1656,16 +2406,6 @@
           "requires": []
         },
         {
-          "short": "-I",
-          "long": null,
-          "value_type": "Url",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-O",
           "long": null,
           "value_type": "File",
@@ -1680,7 +2420,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "swap two inputs, reverse the diff --[no-]exit-code exit with 1 if there were differences, 0 otherwise --[no-]quiet disable all output of the program --[no-]ext-diff allow an external diff helper to be executed --[no-]textconv run external text conversion filters when comparing binary files",
+          "description": "swap two inputs, reverse the diff",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1691,26 +2431,6 @@
           "value_type": "Number",
           "takes_value": true,
           "description": "look for differences that change the number of occurrences of the specified string",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-W",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-a",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "treat all files as text",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1738,9 +2458,9 @@
         {
           "short": "-z",
           "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "do not munge pathnames and use NULs as output field terminators in --raw or --numstat --[no-]abbrev[=<n>] use <n> digits to display object names",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not munge pathnames and use NULs as output field terminators in --raw or --numstat",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1755,6 +2475,106 @@
       "description": "Download objects and refs from another repository",
       "flags": [
         {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "fetch from all remotes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--append",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "append to .git/FETCH_HEAD instead of overwriting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--atomic",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use atomic transaction to update references",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--auto-gc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "run 'maintenance --auto' after fetching",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--auto-maintenance",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--deepen",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "deepen history of shallow clone",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--depth",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "deepen history of shallow clone",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--filter",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "object filtering",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force overwrite of local reference",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-4",
           "long": "--ipv4",
           "value_type": "Bool",
@@ -1767,9 +2587,129 @@
         {
           "short": "-6",
           "long": "--ipv6",
-          "value_type": "File",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use IPv6 addresses only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
           "takes_value": true,
-          "description": "use IPv6 addresses only --[no-]negotiation-tip <revision> report that we have only objects reachable from this object --[no-]negotiate-only do not fetch a packfile; instead, print ancestors of negotiation tips --[no-]filter <args> object filtering --[no-]auto-maintenance run 'maintenance --auto' after fetching --[no-]auto-gc run 'maintenance --auto' after fetching --[no-]show-forced-updates check for forced-updates on all updated branches --[no-]write-commit-graph write the commit-graph after fetching --[no-]stdin accept refspecs from stdin",
+          "description": "number of submodules fetched in parallel",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--keep",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "keep downloaded pack",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--multiple",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "fetch from multiple remotes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--negotiate-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--negotiation-tip",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--porcelain",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "machine-readable output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--prefetch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "modify the refspec to place all refs within refs/prefetch/",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--progress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--prune",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "prune remote-tracking branches no longer on remote",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": "--prune-tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be more quiet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1779,7 +2719,7 @@
           "long": "--refetch",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "re-fetch without negotiating common commits --[no-]update-shallow accept refs that update .git/shallow",
+          "description": "re-fetch without negotiating common commits",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1795,6 +2735,76 @@
           "requires": []
         },
         {
+          "short": "-o",
+          "long": "--server-option",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--set-upstream",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set upstream for git pull/fetch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-forced-updates",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stdin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "accept refspecs from stdin",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "fetch all tags and associated objects",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--unshallow",
           "value_type": "Bool",
@@ -1805,61 +2815,61 @@
           "requires": []
         },
         {
-          "short": "-P",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "dry run --[no-]porcelain machine-readable output --[no-]write-fetch-head write fetched references to the FETCH_HEAD file",
+          "short": "-u",
+          "long": "--update-head-ok",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-a",
-          "long": null,
+          "short": null,
+          "long": "--update-shallow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--upload-pack",
           "value_type": "File",
           "takes_value": true,
-          "description": "append to .git/FETCH_HEAD instead of overwriting --[no-]atomic use atomic transaction to update references --[no-]upload-pack <path> path to upload pack on remote end",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-f",
-          "long": null,
+          "short": "-v",
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "force overwrite of local reference",
+          "description": "be more verbose",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-j",
-          "long": null,
-          "value_type": "Number",
-          "takes_value": true,
-          "description": "number of submodules fetched in parallel --[no-]prefetch modify the refspec to place all refs within refs/prefetch/",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-k",
-          "long": null,
+          "short": null,
+          "long": "--write-commit-graph",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "keep downloaded pack",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-m",
-          "long": null,
+          "short": null,
+          "long": "--write-fetch-head",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "fetch from multiple remotes",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1870,66 +2880,6 @@
           "value_type": "Bool",
           "takes_value": false,
           "description": "do not fetch all tags (--no-tags)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-o",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "prune remote-tracking branches no longer on remote",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be more quiet --[no-]all fetch from all remotes --[no-]set-upstream set upstream for git pull/fetch",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "fetch all tags and associated objects",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-u",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "force progress reporting --[no-]depth <depth> deepen history of shallow clone --[no-]shallow-since <time> deepen history of shallow repository based on time --[no-]shallow-exclude <revision> deepen history of shallow clone, excluding rev --[no-]deepen <n> deepen history of shallow clone",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be more verbose",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1959,6 +2909,26 @@
       "description": "Print lines matching a pattern",
       "flags": [
         {
+          "short": "-A",
+          "long": "--after-context",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show only matches from files that match all patterns",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--and",
           "value_type": "Bool",
@@ -1969,11 +2939,221 @@
           "requires": []
         },
         {
+          "short": "-G",
+          "long": "--basic-regexp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": "--before-context",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--break",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print empty line between matches from different files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cached",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "search in index instead of in the work tree",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--column",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show column number of first match",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": "--context",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show the number of matches instead of matching lines",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exclude-standard",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ext-grep",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow calling of grep(1) (ignored by this build)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": "--extended-regexp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--files-with-matches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": "--files-without-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--fixed-strings",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--full-name",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show filenames relative to top directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": "--function-context",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--heading",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show filename only once above matches from same file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--ignore-case",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--index",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "opposite of --no-index --[no-]untracked search in both tracked and untracked files --[no-]exclude-standard ignore files specified via '.gitignore' --[no-]recurse-submodules recursively search in each submodule",
+          "description": "opposite of --no-index",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--invert-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--line-number",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--max-count",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1984,6 +3164,16 @@
           "value_type": "String",
           "takes_value": true,
           "description": "descend at most <n> levels",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "synonym for --files-with-matches",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2009,6 +3199,36 @@
           "requires": []
         },
         {
+          "short": "-z",
+          "long": "--null",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print NUL after filenames",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--only-matching",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--open-files-in-pager",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--or",
           "value_type": "Bool",
@@ -2019,8 +3239,78 @@
           "requires": []
         },
         {
-          "short": "-A",
-          "long": null,
+          "short": "-P",
+          "long": "--perl-regexp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "indicate hit with exit status without output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--recursive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "search in subdirectories (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--show-function",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--text",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "process binary files as text",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--textconv",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "process binary files with textconv filters",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--threads",
           "value_type": "String",
           "takes_value": true,
           "description": "use <n> worker threads",
@@ -2029,48 +3319,18 @@
           "requires": []
         },
         {
-          "short": "-B",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-C",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-E",
-          "long": null,
+          "short": null,
+          "long": "--untracked",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "search in both tracked and untracked files",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-F",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-G",
-          "long": null,
+          "short": "-w",
+          "long": "--word-regexp",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -2083,7 +3343,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "show filenames --[no-]full-name show filenames relative to top directory",
+          "description": "show filenames",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2093,17 +3353,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "don't match patterns in binary files --[no-]textconv process binary files with textconv filters",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-L",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
+          "description": "don't match patterns in binary files",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2114,56 +3364,6 @@
           "value_type": "Number",
           "takes_value": true,
           "description": "shortcut for -C NUM",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-O",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "allow calling of grep(1) (ignored by this build)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-P",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-W",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-a",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "process binary files as text",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "show the number of matches instead of matching lines --[no-]color[=<when>] highlight matches --[no-]break print empty line between matches from different files --[no-]heading show filename only once above matches from same file",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2197,116 +3397,6 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
-        },
-        {
-          "short": "-i",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "synonym for --files-with-matches",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-n",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "show column number of first match",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-o",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "indicate hit with exit status without output --[no-]all-match show only matches from files that match all patterns",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-r",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "search in subdirectories (default)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-w",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-z",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "print NUL after filenames",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
         }
       ],
       "positional": [
@@ -2335,7 +3425,17 @@
       "flags": [
         {
           "short": null,
-          "long": "--shared",
+          "long": "--bare",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create a bare repository",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--initial-branch",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2344,8 +3444,8 @@
           "requires": []
         },
         {
-          "short": "-b",
-          "long": null,
+          "short": null,
+          "long": "--object-format",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2355,10 +3455,40 @@
         },
         {
           "short": "-q",
-          "long": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be quiet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--separate-git-dir",
           "value_type": "Directory",
           "takes_value": true,
-          "description": "be quiet --[no-]separate-git-dir <gitdir> separate git dir from working tree",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shared",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--template",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2397,9 +3527,79 @@
         {
           "short": null,
           "long": "--clear-decorations",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "clear all previously-defined decoration filters",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decorate",
           "value_type": "String",
           "takes_value": true,
-          "description": "clear all previously-defined decoration filters --[no-]decorate-refs <pattern> only decorate refs that match <pattern> --[no-]decorate-refs-exclude <pattern> do not decorate refs that match <pattern> --[no-]decorate[=...] decorate options",
+          "description": null,
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decorate-refs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decorate-refs-exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mailmap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "alias of --use-mailmap",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress diff output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--source",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show source",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--use-mailmap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use mail map file",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2410,16 +3610,6 @@
           "value_type": "File",
           "takes_value": true,
           "description": "trace the evolution of line range <start>,<end> or function :<funcname> in <file>",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "suppress diff output --[no-]source show source --[no-]use-mailmap use mail map file --[no-]mailmap alias of --use-mailmap",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2443,16 +3633,92 @@
       "flags": [
         {
           "short": null,
+          "long": "--abort",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "abort the current in-progress merge",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-unrelated-histories",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--autostash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "automatically stash/stash pop before and after",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cleanup",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--commit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "perform a commit if the merge succeeds (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--continue",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "continue the current in-progress merge",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--edit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "edit message before committing",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow fast-forward (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--ff-only",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "abort if fast-forward is not possible --[no-]rerere-autoupdate update the index with reused conflict resolution if possible --[no-]verify-signatures verify that the named commit has a valid GPG signature",
+          "description": "abort if fast-forward is not possible",
           "multiple": false,
-          "conflicts_with": [
-            "-for",
-            "-aut",
-            "-sig"
-          ],
+          "conflicts_with": [],
           "requires": []
         },
         {
@@ -2460,7 +3726,47 @@
           "long": "--file",
           "value_type": "File",
           "takes_value": true,
-          "description": "read message from file --[no-]into-name <name> use <name> instead of the real target",
+          "description": "read message from file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--gpg-sign",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--into-name",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "add (at most <n>) entries from shortlog to merge commit message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--message",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2477,6 +3783,126 @@
         },
         {
           "short": null,
+          "long": "--overwrite-ignore",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--progress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be more quiet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--quit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rerere-autoupdate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--signoff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a Signed-off-by trailer",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--squash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create a single commit instead of doing a merge",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stat",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show a diffstat at the end of the merge",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strategy",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": "--strategy-option",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--summary",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "(synonym to --stat)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be more verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--verify",
           "value_type": "Bool",
           "takes_value": false,
@@ -2486,40 +3912,10 @@
           "requires": []
         },
         {
-          "short": "-S",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "automatically stash/stash pop before and after --[no-]overwrite-ignore update ignored files (default) --[no-]signoff add a Signed-off-by trailer",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-X",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-e",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "edit message before committing --[no-]cleanup <mode> how to strip spaces and #comments from message --[no-]ff allow fast-forward (default)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
+          "short": null,
+          "long": "--verify-signatures",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2528,39 +3924,9 @@
         {
           "short": "-n",
           "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "do not show a diffstat at the end of the merge --[no-]stat show a diffstat at the end of the merge --[no-]summary (synonym to --stat) --[no-]log[=<n>] add (at most <n>) entries from shortlog to merge commit message --[no-]squash create a single commit instead of doing a merge --[no-]commit perform a commit if the merge succeeds (default)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "be more quiet --[no-]abort abort the current in-progress merge --[no-]quit --abort but leave index and working tree alone --[no-]continue continue the current in-progress merge --[no-]allow-unrelated-histories allow merging unrelated histories --[no-]progress force progress reporting",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be more verbose",
+          "description": "do not show a diffstat at the end of the merge",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2575,11 +3941,41 @@
       "description": "Move or rename a file, a directory, or a symlink",
       "flags": [
         {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-f",
-          "long": null,
+          "long": "--force",
           "value_type": "Bool",
           "takes_value": false,
           "description": "force move/rename even if target exists",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sparse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow updating entries outside of the sparse-checkout cone",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be verbose",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2589,27 +3985,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "skip move/rename errors --[no-]sparse allow updating entries outside of the sparse-checkout cone",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-n",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "dry run",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be verbose",
+          "description": "skip move/rename errors",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2633,10 +4009,250 @@
       "flags": [
         {
           "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "fetch from all remotes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--allow-unrelated-histories",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--append",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "append to .git/FETCH_HEAD instead of overwriting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--autostash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "automatically stash/stash pop before and after",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cleanup",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--commit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "perform a commit if the merge succeeds (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--deepen",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "deepen history of shallow clone",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--depth",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "deepen history of shallow clone",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--edit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "edit message before committing",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow fast-forward",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--ff-only",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "abort if fast-forward is not possible --[no-]verify control use of pre-merge-commit and commit-msg hooks --[no-]verify-signatures verify that the named commit has a valid GPG signature --[no-]autostash automatically stash/stash pop before and after",
+          "description": "abort if fast-forward is not possible",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force overwrite of local branch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--gpg-sign",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": "--ipv4",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use IPv4 addresses only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": "--ipv6",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use IPv6 addresses only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": "--jobs",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--keep",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "keep downloaded pack",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--log",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "add (at most <n>) entries from shortlog to merge commit message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--negotiation-tip",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--progress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--prune",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "prune remote-tracking branches no longer on remote",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be more quiet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--rebase",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2652,38 +4268,88 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--unshallow",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "convert to a complete repository --[no-]update-shallow accept refs that update .git/shallow",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-4",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "use IPv4 addresses only",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-6",
-          "long": null,
+          "short": "-o",
+          "long": "--server-option",
           "value_type": "String",
           "takes_value": true,
-          "description": "use IPv6 addresses only --[no-]negotiation-tip <revision> report that we have only objects reachable from this object --[no-]show-forced-updates check for forced-updates on all updated branches --[no-]set-upstream set upstream for git pull/fetch",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-S",
-          "long": null,
+          "short": null,
+          "long": "--set-upstream",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set upstream for git pull/fetch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--shallow-since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-forced-updates",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--signoff",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "add a Signed-off-by trailer",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--squash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create a single commit instead of doing a merge",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stat",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show a diffstat at the end of the merge",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strategy",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2693,107 +4359,7 @@
         },
         {
           "short": "-X",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-a",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "append to .git/FETCH_HEAD instead of overwriting --[no-]upload-pack <path> path to upload pack on remote end",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "force overwrite of local branch",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "Number",
-          "takes_value": true,
-          "description": "dry run",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-k",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "keep downloaded pack --[no-]depth <depth> deepen history of shallow clone --[no-]shallow-since <time> deepen history of shallow repository based on time --[no-]shallow-exclude <revision> deepen history of shallow clone, excluding rev --[no-]deepen <n> deepen history of shallow clone",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-n",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "do not show a diffstat at the end of the merge --[no-]stat show a diffstat at the end of the merge --[no-]log[=<n>] add (at most <n>) entries from shortlog to merge commit message --[no-]signoff[=...] add a Signed-off-by trailer --[no-]squash create a single commit instead of doing a merge --[no-]commit perform a commit if the merge succeeds (default) --[no-]edit edit message before committing --[no-]cleanup <mode> how to strip spaces and #comments from message --[no-]ff allow fast-forward",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-o",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "prune remote-tracking branches no longer on remote",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be more quiet --[no-]progress force progress reporting --[no-]recurse-submodules[=<on-demand>] control for recursive fetching of submodules",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-r",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
+          "long": "--strategy-option",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2803,7 +4369,7 @@
         },
         {
           "short": "-t",
-          "long": null,
+          "long": "--tags",
           "value_type": "Bool",
           "takes_value": false,
           "description": "fetch all tags and associated objects",
@@ -2812,11 +4378,71 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--unshallow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "convert to a complete repository",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--update-shallow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--upload-pack",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-v",
-          "long": null,
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
           "description": "be more verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "control use of pre-merge-commit and commit-msg hooks",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify-signatures",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not show a diffstat at the end of the merge",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2839,6 +4465,106 @@
       "description": "Update remote refs along with associated objects",
       "flags": [
         {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "push all branches",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--atomic",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "request atomic transaction on remote side",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--branches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "alias of --all",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--delete",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delete refs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exec",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--follow-tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "push missing but relevant tags",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force updates",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force-if-includes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force-with-lease",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-4",
           "long": "--ipv4",
           "value_type": "Bool",
@@ -2860,6 +4586,16 @@
         },
         {
           "short": null,
+          "long": "--mirror",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "mirror all refs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--no-verify",
           "value_type": "Bool",
           "takes_value": false,
@@ -2870,55 +4606,37 @@
         },
         {
           "short": null,
-          "long": "--verify",
+          "long": "--porcelain",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "opposite of --no-verify --[no-]follow-tags push missing but relevant tags --[no-]signed[=(yes|no|if-asked)] GPG sign the push --[no-]atomic request atomic transaction on remote side",
+          "description": "machine-readable output",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-d",
-          "long": null,
+          "short": null,
+          "long": "--progress",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "delete refs --[no-]tags push tags (can't be used with --all or --branches or --mirror)",
+          "description": "force progress reporting",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-f",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "force updates --[no-]force-with-lease[=<refname>:<expect>] require old value of ref to be at this value --[no-]force-if-includes require remote updates to be integrated locally --[no-]recurse-submodules (check|on-demand|no) control recursive pushing of submodules --[no-]thin use thin pack --[no-]receive-pack <receive-pack> receive pack program --[no-]exec <receive-pack> receive pack program",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": [
-            "-wit",
-            "-lea",
-            "-if",
-            "-inc",
-            "-sub",
-            "-dem",
-            "-pac"
-          ]
-        },
-        {
-          "short": "-n",
-          "long": null,
+          "short": null,
+          "long": "--prune",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "dry run --[no-]porcelain machine-readable output",
+          "description": "prune locally removed refs",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-o",
-          "long": null,
+          "long": "--push-option",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2928,30 +4646,100 @@
         },
         {
           "short": "-q",
-          "long": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be more quiet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--receive-pack",
           "value_type": "String",
           "takes_value": true,
-          "description": "be more quiet --[no-]repo <repository> repository --[no-]all push all branches --[no-]branches alias of --all --[no-]mirror mirror all refs",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--repo",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-u",
-          "long": null,
+          "long": "--set-upstream",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "force progress reporting --[no-]prune prune locally removed refs",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--signed",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "push tags (can't be used with --all or --branches or --mirror)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use thin pack",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-v",
-          "long": null,
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
           "description": "be more verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "opposite of --no-verify",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2995,6 +4783,36 @@
         },
         {
           "short": null,
+          "long": "--autosquash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "move commits that begin with squash!/fixup! under -i",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--autostash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "automatically stash/stash pop before and after",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--committer-date-is-author-date",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--continue",
           "value_type": "Bool",
           "takes_value": false,
@@ -3018,7 +4836,17 @@
           "long": "--empty",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "move commits that begin with squash!/fixup! under -i --[no-]update-refs update branches that point to commits that are being rebased",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--exec",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3034,15 +4862,63 @@
           "requires": []
         },
         {
+          "short": "-f",
+          "long": "--force-rebase",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fork-point",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use 'merge-base --fork-point' to refine upstream",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--gpg-sign",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-whitespace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-i",
           "long": "--interactive",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "let the user edit the list of commits to rebase --[no-]rerere-autoupdate update the index with reused conflict resolution if possible",
+          "description": "let the user edit the list of commits to rebase",
           "multiple": false,
-          "conflicts_with": [
-            "-aut"
-          ],
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-base",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the merge-base of upstream and branch as the current base",
+          "multiple": false,
+          "conflicts_with": [],
           "requires": []
         },
         {
@@ -3087,6 +4963,26 @@
         },
         {
           "short": null,
+          "long": "--onto",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be quiet. implies --no-stat",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--quit",
           "value_type": "Bool",
           "takes_value": false,
@@ -3097,10 +4993,80 @@
         },
         {
           "short": null,
+          "long": "--reapply-cherry-picks",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--rebase-merges",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rerere-autoupdate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reschedule-failed-exec",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reset-author-date",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "rebase all reachable commits up to the root(s)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--show-current-patch",
           "value_type": "Bool",
           "takes_value": false,
           "description": "show the patch file being applied or merged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--signoff",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a Signed-off-by trailer to each commit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3120,7 +5086,47 @@
           "long": "--stat",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "opposite of --no-stat --[no-]signoff add a Signed-off-by trailer to each commit --[no-]committer-date-is-author-date make committer date match author date --[no-]reset-author-date ignore author date and use current date",
+          "description": "opposite of --no-stat",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strategy",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": "--strategy-option",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--update-refs",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "update branches that point to commits that are being rebased",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display a diffstat of what changed upstream",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3136,91 +5142,21 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--whitespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-C",
           "long": null,
           "value_type": "String",
           "takes_value": true,
-          "description": "passed to 'git apply' --[no-]ignore-whitespace ignore changes in whitespace --[no-]whitespace <action> passed to 'git apply'",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-S",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "automatically stash/stash pop before and after",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-X",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "rebase all reachable commits up to the root(s) --[no-]reschedule-failed-exec automatically re-schedule any `exec` that fails --[no-]reapply-cherry-picks apply all changes, even those already present upstream",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be quiet. implies --no-stat",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-r",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "use 'merge-base --fork-point' to refine upstream",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "display a diffstat of what changed upstream",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-x",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
+          "description": "passed to 'git apply'",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3267,11 +5203,21 @@
           "requires": []
         },
         {
+          "short": "-N",
+          "long": "--intent-to-add",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--keep",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "reset HEAD but keep local changes --[no-]recurse-submodules[=<reset>] control recursive updating of submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "reset HEAD but keep local changes",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3307,6 +5253,56 @@
           "requires": []
         },
         {
+          "short": "-p",
+          "long": "--patch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "select hunks interactively",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-file-nul",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be quiet, only report errors",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--refresh",
           "value_type": "Bool",
@@ -3322,36 +5318,6 @@
           "value_type": "Bool",
           "takes_value": false,
           "description": "reset only HEAD",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-N",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "select hunks interactively",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "be quiet, only report errors",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3381,11 +5347,141 @@
       "description": "Restore working tree files",
       "flags": [
         {
+          "short": null,
+          "long": "--conflict",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-skip-worktree-bits",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-unmerged",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "perform a 3-way merge with the new branch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-2",
           "long": "--ours",
           "value_type": "Bool",
           "takes_value": false,
           "description": "checkout our version for unmerged files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--overlay",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use overlay mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--patch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "select hunks interactively",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-file-nul",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--progress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--source",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--staged",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "restore the index",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3401,63 +5497,11 @@
           "requires": []
         },
         {
-          "short": "-S",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "restore the index",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-W",
-          "long": null,
+          "long": "--worktree",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "restore the working tree (default) --[no-]ignore-unmerged ignore unmerged entries --[no-]overlay use overlay mode",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "perform a 3-way merge with the new branch --[no-]conflict <style> conflict style (merge, diff3, or zdiff3)",
-          "multiple": false,
-          "conflicts_with": [
-            "-way"
-          ],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "select hunks interactively --[no-]ignore-skip-worktree-bits do not limit pathspecs to sparse entries only --[no-]pathspec-from-file <file> read pathspec from file --[no-]pathspec-file-nul with --pathspec-from-file, pathspec elements are separated with NUL character",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "suppress progress reporting --[no-]recurse-submodules[=<checkout>] control recursive updating of submodules --[no-]progress force progress reporting",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
+          "description": "restore the working tree (default)",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3472,18 +5516,18 @@
       "description": "Remove files from the working tree and from the index",
       "flags": [
         {
-          "short": "-f",
-          "long": null,
+          "short": null,
+          "long": "--cached",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "override the up-to-date check",
+          "description": "only remove from the index",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-n",
-          "long": null,
+          "long": "--dry-run",
           "value_type": "Bool",
           "takes_value": false,
           "description": "dry run",
@@ -3492,11 +5536,61 @@
           "requires": []
         },
         {
-          "short": "-q",
-          "long": null,
+          "short": "-f",
+          "long": "--force",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "do not list removed files --[no-]cached only remove from the index",
+          "description": "override the up-to-date check",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-unmatch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-file-nul",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not list removed files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sparse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow updating entries outside of the sparse-checkout cone",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3504,9 +5598,9 @@
         {
           "short": "-r",
           "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": "allow recursive removal --[no-]ignore-unmatch exit with a zero status even if nothing matched --[no-]sparse allow updating entries outside of the sparse-checkout cone --[no-]pathspec-from-file <file> read pathspec from file --[no-]pathspec-file-nul with --pathspec-from-file, pathspec elements are separated with NUL character",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow recursive removal",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3523,9 +5617,79 @@
         {
           "short": null,
           "long": "--clear-decorations",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "clear all previously-defined decoration filters",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decorate",
           "value_type": "String",
           "takes_value": true,
-          "description": "clear all previously-defined decoration filters --[no-]decorate-refs <pattern> only decorate refs that match <pattern> --[no-]decorate-refs-exclude <pattern> do not decorate refs that match <pattern> --[no-]decorate[=...] decorate options",
+          "description": null,
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decorate-refs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--decorate-refs-exclude",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mailmap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "alias of --use-mailmap",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress diff output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--source",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show source",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--use-mailmap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use mail map file",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3536,16 +5700,6 @@
           "value_type": "File",
           "takes_value": true,
           "description": "trace the evolution of line range <start>,<end> or function :<funcname> in <file>",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "suppress diff output --[no-]source show source --[no-]use-mailmap use mail map file --[no-]mailmap alias of --use-mailmap",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3568,11 +5722,71 @@
       "description": "Show the working tree status",
       "flags": [
         {
+          "short": null,
+          "long": "--ahead-behind",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "compute full ahead/behind values",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--branch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show branch information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--column",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-M",
           "long": "--find-renames",
           "value_type": "String",
           "takes_value": true,
           "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-submodules",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignored",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--long",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show status in long format (default)",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3588,6 +5802,26 @@
           "requires": []
         },
         {
+          "short": "-z",
+          "long": "--null",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "terminate entries with NUL",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--porcelain",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--renames",
           "value_type": "Bool",
@@ -3598,18 +5832,8 @@
           "requires": []
         },
         {
-          "short": "-b",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "show branch information --[no-]show-stash show stash information --[no-]ahead-behind compute full ahead/behind values --[no-]porcelain[=<version>] machine-readable output --[no-]long show status in long format (default)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-s",
-          "long": null,
+          "long": "--short",
           "value_type": "Bool",
           "takes_value": false,
           "description": "show status concisely",
@@ -3618,8 +5842,18 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--show-stash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show stash information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-u",
-          "long": null,
+          "long": "--untracked-files",
           "value_type": "File",
           "takes_value": true,
           "description": null,
@@ -3629,20 +5863,10 @@
         },
         {
           "short": "-v",
-          "long": null,
+          "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
           "description": "be verbose",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-z",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "terminate entries with NUL",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3657,18 +5881,18 @@
       "description": "Switch branches",
       "flags": [
         {
-          "short": "-C",
-          "long": null,
+          "short": null,
+          "long": "--conflict",
           "value_type": "String",
           "takes_value": true,
-          "description": "second guess 'git switch <no-such-branch>' --[no-]discard-changes throw away local modifications",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-c",
-          "long": null,
+          "long": "--create",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3678,7 +5902,7 @@
         },
         {
           "short": "-d",
-          "long": null,
+          "long": "--detach",
           "value_type": "Bool",
           "takes_value": false,
           "description": "detach HEAD at named commit",
@@ -3687,40 +5911,118 @@
           "requires": []
         },
         {
-          "short": "-f",
-          "long": null,
+          "short": null,
+          "long": "--discard-changes",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "force checkout (throw away local modifications) --[no-]orphan <new-branch> new unparented branch --[no-]overwrite-ignore update ignored files (default) --[no-]ignore-other-worktrees do not check if another worktree is holding the given ref",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force checkout (throw away local modifications)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": "--force-create",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--guess",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "second guess 'git switch <no-such-branch>'",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-other-worktrees",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-m",
-          "long": null,
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "perform a 3-way merge with the new branch",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--orphan",
           "value_type": "String",
           "takes_value": true,
-          "description": "perform a 3-way merge with the new branch --[no-]conflict <style> conflict style (merge, diff3, or zdiff3)",
+          "description": null,
           "multiple": false,
-          "conflicts_with": [
-            "-way"
-          ],
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--overwrite-ignore",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--progress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-q",
-          "long": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress progress reporting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
           "value_type": "String",
           "takes_value": true,
-          "description": "suppress progress reporting --[no-]recurse-submodules[=<checkout>] control recursive updating of submodules --[no-]progress force progress reporting",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-t",
-          "long": null,
+          "long": "--track",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3746,11 +6048,61 @@
       "description": "Create, list, delete or verify a tag object signed with GPG",
       "flags": [
         {
+          "short": "-a",
+          "long": "--annotate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "annotated tag, needs a message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cleanup",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--column",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": null,
           "long": "--contains",
           "value_type": "String",
           "takes_value": true,
           "description": "print only tags that contain the commit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--create-reflog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "create a reflog",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3766,11 +6118,71 @@
           "requires": []
         },
         {
+          "short": "-e",
+          "long": "--edit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force edit of tag message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "replace the tag if exists",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--ignore-case",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-l",
           "long": "--list",
           "value_type": "Bool",
           "takes_value": false,
           "description": "list tag names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--local-user",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3810,7 +6222,47 @@
           "long": "--no-merged",
           "value_type": "String",
           "takes_value": true,
-          "description": "print only tags that are not merged --[no-]omit-empty do not output a newline after empty formatted refs --[no-]sort <key> field name to sort on --[no-]points-at <object> print only tags of the object --[no-]format <format> format to use for the output --[no-]color[=<when>] respect format colors",
+          "description": "print only tags that are not merged",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--omit-empty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not output a newline after empty formatted refs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--points-at",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--sign",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "annotated and GPG-signed tag",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sort",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "field name to sort on",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3826,81 +6278,11 @@
           "requires": []
         },
         {
-          "short": "-F",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-a",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "annotated tag, needs a message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-e",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "force edit of tag message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "replace the tag if exists --[no-]create-reflog create a reflog",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-n",
           "long": null,
           "value_type": "String",
           "takes_value": true,
           "description": "print <n> lines of each tag message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "annotated and GPG-signed tag --[no-]cleanup <mode> how to strip spaces and #comments from message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-u",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3949,6 +6331,6 @@
   ],
   "positional": [],
   "source": "HelpCommand",
-  "confidence": 1.0,
+  "confidence": 0.95,
   "version": null
 }
