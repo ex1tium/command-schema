@@ -673,6 +673,10 @@ impl HelpParser {
             {
                 continue;
             }
+            // Skip man page title/header lines like "GIT(1) Git Manual GIT(1)"
+            if util::looks_like_man_title_line(trimmed) {
+                continue;
+            }
             if Self::split_two_columns(trimmed).is_some_and(|(left, _)| {
                 Self::looks_like_command_token(left) || Self::looks_like_flag_row_start(left)
             }) {
@@ -1119,6 +1123,13 @@ impl HelpParser {
                 continue;
             }
             if token.eq_ignore_ascii_case(&self.command) {
+                continue;
+            }
+            // Also skip the base command name (last component of a
+            // multi-word command like "git add" → skip "add").
+            if let Some(base) = self.command.split_whitespace().last()
+                && token.eq_ignore_ascii_case(base)
+            {
                 continue;
             }
             if token.contains("::=") {
@@ -2209,6 +2220,11 @@ impl HelpParser {
             lower.as_str(),
             "none"
                 | "off"
+                | "on"
+                | "true"
+                | "false"
+                | "yes"
+                | "no"
                 | "numbered"
                 | "existing"
                 | "simple"
@@ -2231,6 +2247,30 @@ impl HelpParser {
                 | "gnu"
                 | "report"
                 | "full"
+                // Common git flag values that look like subcommands
+                | "inherit"
+                | "amend"
+                | "reword"
+                | "fixup"
+                | "squash"
+                | "direct"
+                | "shallow"
+                | "immediate"
+                | "local"
+                | "recursive"
+                | "verbose"
+                | "quiet"
+                | "silent"
+                | "interactive"
+                | "manual"
+                | "normal"
+                | "short"
+                | "long"
+                | "porcelain"
+                | "columns"
+                | "plain"
+                | "dense"
+                | "sparse"
         )
     }
 

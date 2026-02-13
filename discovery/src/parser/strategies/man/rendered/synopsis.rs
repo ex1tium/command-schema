@@ -40,17 +40,22 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
 
             let aliases = split_flag_aliases(token);
             for alias in aliases {
-                let (name, inline_value) = alias
+                let (raw_name, inline_value) = alias
                     .split_once('=')
                     .map(|(head, _)| (head, true))
                     .unwrap_or((alias.as_str(), false));
 
+                let name = normalize_flag_name(raw_name);
+                if !is_valid_flag_name(&name) {
+                    continue;
+                }
+
                 let mut schema = if name.starts_with("--") {
-                    FlagSchema::boolean(None, Some(name))
+                    FlagSchema::boolean(None, Some(&name))
                 } else {
                     // Treat all single-dash forms as short-style flags to
                     // avoid invalid long names like "-foo".
-                    FlagSchema::boolean(Some(name), None)
+                    FlagSchema::boolean(Some(&name), None)
                 };
 
                 if inline_value {
@@ -95,45 +100,99 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
     let joined = join_synopsis_text(section);
     let all_subcommands = extract_synopsis_subcommand_heads(&joined);
 
+    // Collect all flag names so we can skip their value placeholders.
+    let synopsis_flags = collect_synopsis_flag_names(section);
+
+    // Extract the root command name from the first non-empty synopsis line
+    // (e.g. "git-add" or "apt-get") so we can filter it from all positions.
+    let root_command = section
+        .lines
+        .iter()
+        .map(|l| l.text.trim())
+        .find(|t| !t.is_empty())
+        .and_then(|first| first.split_whitespace().next())
+        .map(|t| normalize_synopsis_arg_token(t).to_ascii_lowercase())
+        .unwrap_or_default();
+
     for line in &section.lines {
         let trimmed = line.text.trim();
         if trimmed.is_empty() {
             continue;
         }
 
-        for (idx, raw) in trimmed.split_whitespace().enumerate() {
-            if raw.starts_with('-') {
+        let words: Vec<&str> = trimmed.split_whitespace().collect();
+        let mut idx = 0;
+        while idx < words.len() {
+            let raw = words[idx];
+
+            // Track flag tokens and skip their value placeholder.
+            if raw.starts_with('-') || normalize_synopsis_arg_token(raw).starts_with('-') {
+                // If the next token looks like a value placeholder for this
+                // flag (e.g. `--depth <n>`), skip it too.
+                if idx + 1 < words.len() {
+                    let next = words[idx + 1];
+                    let next_norm = normalize_synopsis_arg_token(next);
+                    if !next.starts_with('-')
+                        && !next_norm.starts_with('-')
+                        && (next.contains('<')
+                            || next.contains('>')
+                            || next_norm
+                                .chars()
+                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-'))
+                    {
+                        idx += 2;
+                        continue;
+                    }
+                }
+                idx += 1;
                 continue;
             }
+
             let bracketed = raw.contains('[') || raw.contains('<') || raw.contains('{');
             let token = normalize_synopsis_arg_token(raw);
-            if token.is_empty() {
+            if token.is_empty() || token.starts_with('-') {
+                idx += 1;
                 continue;
             }
-            if token.starts_with('-') {
+
+            // Skip the root command name at any position.
+            let token_lower = token.to_ascii_lowercase();
+            if !root_command.is_empty() && token_lower == root_command {
+                idx += 1;
                 continue;
             }
 
             // Synopsis lines are usually "<command> [args...]"; avoid treating the
             // command token itself as a positional arg when unbracketed.
             if idx == 0 && !bracketed {
+                idx += 1;
                 continue;
             }
 
             let required = !raw.contains('[');
             let multiple = raw.contains("...");
             if !looks_like_arg_token(&token) {
+                idx += 1;
                 continue;
             }
-            if is_placeholder_command_token(&token.to_ascii_lowercase()) {
+            if is_placeholder_command_token(&token_lower) {
+                idx += 1;
                 continue;
             }
-            if all_subcommands.contains(&token.to_ascii_lowercase()) {
+            if all_subcommands.contains(&token_lower) {
+                idx += 1;
+                continue;
+            }
+            // Skip tokens that match a known flag's value name (e.g. "depth"
+            // from `--depth <depth>`).
+            if synopsis_flags.contains(&token_lower) {
+                idx += 1;
                 continue;
             }
 
-            let name = token.to_ascii_lowercase();
+            let name = token_lower;
             if !seen.insert(name.clone()) {
+                idx += 1;
                 continue;
             }
 
@@ -150,10 +209,33 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
                 "man-rendered-synopsis-args",
                 0.75,
             ));
+            idx += 1;
         }
     }
 
     out
+}
+
+/// Collects flag body names from the synopsis (e.g. `--depth` → "depth",
+/// `--upload-pack` → "upload-pack") so they can be filtered from positional
+/// candidates.
+fn collect_synopsis_flag_names(section: &ManSection) -> HashSet<String> {
+    let mut names = HashSet::new();
+    for line in &section.lines {
+        for raw in line.text.split_whitespace() {
+            let token = normalize_synopsis_arg_token(raw);
+            if let Some(body) = token.strip_prefix("--") {
+                let clean = body
+                    .split_once('=')
+                    .map_or(body, |(head, _)| head)
+                    .trim_end_matches(|ch: char| matches!(ch, '[' | '<'));
+                if !clean.is_empty() {
+                    names.insert(clean.to_ascii_lowercase());
+                }
+            }
+        }
+    }
+    names
 }
 
 pub fn parse_synopsis_subcommands(section: &ManSection) -> Vec<SubcommandCandidate> {
@@ -193,7 +275,7 @@ fn normalize_synopsis_arg_token(raw: &str) -> String {
     raw.trim_matches(|ch: char| {
         matches!(
             ch,
-            '[' | ']' | '<' | '>' | '{' | '}' | '(' | ')' | ',' | ';'
+            '[' | ']' | '<' | '>' | '{' | '}' | '(' | ')' | ',' | ';' | '.'
         )
     })
     .trim_end_matches("...")
@@ -283,8 +365,50 @@ fn split_flag_aliases(token: &str) -> Vec<String> {
         .split(|ch: char| ch == '|' || ch == ',')
         .map(str::trim)
         .filter(|part| !part.is_empty() && part.starts_with('-'))
-        .map(ToString::to_string)
+        .map(|part| {
+            // Expand --[no-]foo → --foo
+            if let Some(rest) = part.strip_prefix("--[no-]") {
+                format!("--{rest}")
+            } else {
+                part.to_string()
+            }
+        })
         .collect()
+}
+
+/// Strips trailing punctuation from a flag name that leaks through from man
+/// page notation (e.g. `--exec-path[` → `--exec-path`, `--set-upstream-to.` →
+/// `--set-upstream-to`).
+fn normalize_flag_name(raw: &str) -> String {
+    raw.trim_end_matches(|ch: char| matches!(ch, '[' | ']' | '<' | '>' | '.' | ','))
+        .to_string()
+}
+
+/// Returns `true` when a flag name looks structurally valid.
+///
+/// Rejects garbage like `-)x`, `-S[<keyid`, `-m/-c/-C/-F).`, `-98`, and
+/// other malformed short-flag artifacts from man-page notation.
+fn is_valid_flag_name(name: &str) -> bool {
+    if name.is_empty() {
+        return false;
+    }
+    if name.starts_with("--") {
+        // Long flag: must have at least one char after `--`, only
+        // alphanumeric/hyphen characters allowed.
+        let body = &name[2..];
+        !body.is_empty()
+            && body
+                .chars()
+                .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
+    } else if name.starts_with('-') {
+        // Short flag: `-` followed by 1-2 alphanumeric chars.
+        let body = &name[1..];
+        !body.is_empty()
+            && body.len() <= 2
+            && body.chars().all(|ch| ch.is_ascii_alphanumeric())
+    } else {
+        false
+    }
 }
 
 fn looks_like_command_name(token: &str) -> bool {
