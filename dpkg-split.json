@@ -8,7 +8,7 @@
       "long": "--admindir",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  administrative  directory  to  directory  (since  dpkg  1.21.10).  This is where the statoverride file is stored.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
+      "description": "where  the  statoverride  file  is  stored.   Defaults  to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--depotdir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default is /var/lib/dpkg/parts.",
+      "description": "an alternative directory for the queue of parts awaiting automatic reassembly.  The default is /var/lib/dpkg/parts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -35,10 +35,20 @@
     },
     {
       "short": null,
-      "long": "--msdos",
+      "long": "--listq",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate 8.3 filenames.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--msdos",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  output  filenames  generated  by  --split to be MSDOS- compatible.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--npquiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "doing  automatic  queue-or-reassembly dpkg-split usually prints a message if it is given a part that is not a binary package part. This option suppresses this message, to allow programs such as dpkg to cope with both  split  and  unsplit  packages  without  producing spurious messages.",
+      "description": "prints a  message if it is given a part that is not a binary package part. This option suppresses this message, to allow programs such as dpkg to cope with both split  and  unsplit  packages  without  producing spurious messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--partsize",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default is 450 KiB.",
+      "description": "(1024 bytes).  The default is 450 KiB.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--root",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "and  the  administrative directory to «directory/var/lib/dpkg» if DPKG_ROOT has not been set.",
+      "description": "the  root  directory  to directory (since dpkg 1.21.10), which sets  the   installation   directory   to   «directory»   and   the administrative  directory  to «directory/var/lib/dpkg» if DPKG_ROOT has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -157,7 +167,7 @@
   "subcommands": [
     {
       "name": "For",
-      "description": "each  package  file of which parts are in the queue the output gives the name of the package, the parts in the queue, and the total number of bytes stored in the queue.",
+      "description": "each  package  file of which parts are in the queue the output gives the name of the package, the parts  in  the  queue,  and  the total number of bytes stored in the queue.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -165,7 +175,7 @@
     },
     {
       "name": "If",
-      "description": "part is not a split binary package part then dpkg-split will exit with status 1; if some other trouble occurs then it will exit with status 2.",
+      "description": "no  prefix  is  supplied  then the complete-archive filename is taken, including directory, with any trailing .deb removed.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -173,43 +183,14 @@
     },
     {
       "name": "The",
-      "description": "part files given as arguments must be all the parts of exactly the same original binary file.  Each part must occur exactly once in the argument list, though the parts to not need to be listed in order.",
+      "description": "parts  are  named  prefix.NofM.deb where N is the part number, starting at 1, and  M  is  the  total  number  of  parts  (both  in decimal).",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     }
   ],
-  "positional": [
-    {
-      "name": "ALSO",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "EXIT",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "SEE",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "STATUS",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    }
-  ],
+  "positional": [],
   "source": "Merged",
   "confidence": 1.0,
   "version": null

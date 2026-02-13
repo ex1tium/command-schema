@@ -18,7 +18,7 @@
       "long": "--deb-format",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allowed values are 2.0 for the new format, and 0.939000 for  the old one (default is 2.0).",
+      "description": "the  archive  format  version  used  when building (since dpkg 1.17.0).  Allowed values are 2.0 for the new format,  and  0.939000 for the old one (default is 2.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--nocheck",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "You can build any archive  you  want,  no  matter  how broken, this way.",
+      "description": "proposed  contents of  an  archive.  You can build any archive you want, no matter how broken, this way.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--root-owner-group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Forces the owner and groups to root.",
+      "description": "the owner and group for each entry in the filesystem tree data to root with id 0 (since dpkg 1.19.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--showformat",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  is  used  to  specify  the  format of the output --show will produce.  The format is a string that will be output for each package listed.",
+      "description": "The format is a string  that  will  be  output  for  each package listed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--threads-max",
       "value_type": "String",
       "takes_value": true,
-      "description": "Use at most <threads> with compressor. --[no-]uniform-compression Use the compression params on all members.",
+      "description": "allowed  for  compressors  that support multi-threaded operations (since dpkg 1.21.9).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--uniform-compression",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "1.17.6). Otherwise  only  the  data.tar  member will use those parameters.  The only supported compression types allowed to be uniformly used are none, gzip, xz and zstd.  The --no-uniform-compression option disables uniform compression (since dpkg 1.19.0).  Uniform compression  is the default (since dpkg 1.19.0).",
+      "description": "The only  supported  compression types allowed to be uniformly used are none, gzip,  xz  and  zstd.   The  --no-uniform-compression  option disables   uniform   compression   (since  dpkg  1.19.0).   Uniform compression is the default (since dpkg 1.19.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This currently only affects --extract making it behave like --vextract.",
+      "description": "This  currently  only affects --extract making it behave like --vextract.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -217,51 +217,30 @@
   "subcommands": [
     {
       "name": "If",
-      "description": "the second argument is a directory then dpkg-deb will write to the file directory/package_version_arch.deb.  When a target directory is specified, rather than a file, the --nocheck option may not be used (since dpkg-deb needs to read and parse the package control  file to determine which filename to use).",
+      "description": "no  archive  is  specified then dpkg-deb will write the package into the file binary-directory.deb.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "Unless",
-      "description": "you  specify  --nocheck,  dpkg-deb  will  read  DEBIAN/control and parse it.  It will check the file for syntax errors and other problems, and display the name of the binary package being built.  dpkg-deb will also check the permissions of  the  maintainer  scripts and other files found in the DEBIAN control information directory.",
+      "name": "Note",
+      "description": "that  extracting  a  package  to  the root directory will not result in a correct installation!  Use dpkg to install packages.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "The",
+      "description": "input  archive  is  not (currently) processed sequentially, so reading it from standard input («-») is not supported.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     }
   ],
-  "positional": [
-    {
-      "name": "ALSO",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "EXIT",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "SEE",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "STATUS",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    }
-  ],
+  "positional": [],
   "source": "Merged",
   "confidence": 1.0,
   "version": null

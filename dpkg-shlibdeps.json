@@ -8,7 +8,7 @@
       "long": "--admindir",
       "value_type": "String",
       "takes_value": true,
-      "description": "The default location is /var/lib/dpkg.",
+      "description": "the location of the dpkg database (since dpkg 1.14.0).  The default location is /var/lib/dpkg.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--ignore-missing-info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Usage of this option is discouraged, all libraries should provide dependency information (either with shlibs files, or with symbols files) even if they are not yet used by other packages.",
+      "description": "not  fail if dependency information can't be found for a shared library (since dpkg 1.14.8).  Usage of this option is  discouraged, all  libraries  should  provide dependency information (either with shlibs files, or with symbols files) even if they are not yet  used by other packages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--warnings",
       "value_type": "String",
       "takes_value": true,
-      "description": "Bit 0  (value=1)  enables the  warning  “symbol  sym  used  by  binary found in none of the libraries”, bit 1 (value=2) enables the warning “package could avoid a useless dependency” and bit 2 (value=4) enables the warning “binary should not be linked against library”.  The default value is 3:  the first two warnings are active by default, the last one is not.  Set value to 7 if you want all warnings to be active.",
+      "description": "is  a  bit  field  defining  the set of warnings that can be emitted by dpkg-shlibdeps (since dpkg 1.14.17).   Bit  0  (value=1) enables the warning “symbol sym used by binary found in none of the libraries”,  bit  1  (value=2)  enables  the warning “package could avoid a useless dependency” and bit 2 (value=4) enables the warning “binary should not be linked against library”.  The  default  value is 3: the first two warnings are active by default, the last one is not.  Set value to 7 if you want all warnings to be active.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "added  to  the substitution variables file (debian/substvars by default).",
+      "description": "substitution  variable  settings  to  standard  output  (or filename if specified, since dpkg 1.17.2), rather than being  added to the substitution variables file (debian/substvars by default).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option can be used multiple times.",
+      "description": "dependencies appropriate for the shared libraries required by executable.  This option can be used multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "directory  to  the  list  of  directories  to search for private shared libraries (since dpkg 1.17.0).  This option can be used multiple times.",
+      "description": "private shared  libraries  (since  dpkg  1.17.0).   This option can be used multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "shared  library  dependency information tagged for the given package type.  If no tagged information is available, falls back to untagged information.  The default package type is deb.  Shared library dependency information is tagged for a given type  by  prefixing it with the name of the type, a colon, and whitespace.",
+      "description": "shared  library dependency information tagged for the given package type.  If no tagged information is available, falls back to untagged information.  The default package  type  is  deb.   Shared library  dependency  information  is  tagged  for  a  given type by prefixing it with the name of the type, a colon, and whitespace.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable verbose mode (since dpkg 1.14.8).  Numerous messages are displayed to explain what dpkg-shlibdeps does.",
+      "description": "Enable verbose mode (since dpkg  1.14.8).   Numerous  messages  are displayed to explain what dpkg-shlibdeps does.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "the  package from the generated dependencies (since dpkg 1.14.8).  This is useful to avoid self-dependencies for packages which provide ELF binaries (executables or library plugins) using a library contained in the same package.  This option can be  used  multiple times to exclude several packages.",
+      "description": "the  package  from  the generated dependencies (since dpkg 1.14.8).  This is useful to avoid  self-dependencies  for  packages which provide ELF binaries (executables or library plugins) using a library  contained  in  the  same package.  This option can be used multiple times to exclude several packages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

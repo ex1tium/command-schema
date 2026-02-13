@@ -28,7 +28,7 @@
       "long": "--add-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "a new symbol called <name> to the output symbol table, in the section named <section>, with value <value>. If <section> is not",
+      "description": "a new symbol called <name> to the output symbol table, in the section named <section>, with value <value>. If <section> is not specified, the symbol is added as an absolute symbol. The",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--allow-broken-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be set to zero.",
+      "description": "Allow the tool to remove sections even if it would leave invalid section references. The appropriate sh_link fields will be set to zero.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--change-start",
       "value_type": "String",
       "takes_value": true,
-      "description": "Add <incr> to the start address. Can be specified multiple times, all values will be applied cumulatively",
+      "description": "be applied cumula‐ tively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--compress-debug-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": "DWARF debug sections in the output, using the specified format. Supported formats are zlib and zstd. Use zlib if <format> is omitted.",
+      "description": "Supported formats are zlib and zstd. Use zlib if <for‐ mat> is omitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--extract-dwo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all sections that are not DWARF .dwo sections from file",
+      "description": "sections from the output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--gap-fill",
       "value_type": "String",
       "takes_value": true,
-      "description": "Fill the gaps between sections with <value> instead of zero. <value> must be an unsigned 8-bit integer. This option is only supported for ELF input and binary output",
+      "description": "binary outputs, fill the gaps between sections with <value> instead of zero. The value must be an unsigned 8-bit integer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--globalize-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Can be specified multiple times to mark multiple symbols.",
+      "description": "Can be specified multiple times to mark multiple sym‐ bols.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -198,8 +198,8 @@
       "long": "--globalize-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": "the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified mul‐ tiple times to read names from multiple files.",
-      "multiple": false,
+      "description": "a list of names from the file <filename> and mark defined symbols with those names as global in the output. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be spec‐ ified multiple times to read names from multiple files.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -208,7 +208,7 @@
       "long": "--input-target",
       "value_type": "String",
       "takes_value": true,
-      "description": "will attempt to determine the format automatically.",
+      "description": "See SUPPORTED FORMATS for a list of valid <format> values. If unspecified, llvm-obj‐ copy will attempt to determine the format automatically.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--keep-file-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not remove file symbols",
+      "description": "otherwise be stripped.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--keep-global-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": "line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "all symbols local in the output, except for symbols named in the file <filename>. In the file, each line represents a sin‐ gle symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -248,8 +248,8 @@
       "long": "--keep-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "Keep <section>",
-      "multiple": false,
+      "description": "remove sections named <section>. Can be specified multiple times to keep multi‐ ple sections.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -258,8 +258,8 @@
       "long": "--keep-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "keep multiple sym‐ bols.",
-      "multiple": false,
+      "description": "do not remove symbols named <symbol>. Can be specified multiple times to keep multiple symbols.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -268,8 +268,8 @@
       "long": "--keep-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": "removing symbols from the output do not remove symbols named in the file <filename>. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
-      "multiple": true,
+      "description": "removing symbols from the output do not remove symbols named in the file <filename>. In the file, each line represents",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -308,7 +308,7 @@
       "long": "--localize-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": "the output. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "a list of names from the file <filename> and mark defined non-common symbols with those names as local in the output. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -501,7 +501,7 @@
       "long": "--strip-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ELF objects, remove from the output all symbols and non-alloc sections not within segments, except for .gnu.warning, .ARM.at‐ tribute sections and the section name table.",
+      "description": "non-al‐ loc sections not within segments, except for .gnu.warning, .ARM.attribute sections and the section name table.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -511,7 +511,7 @@
       "long": "--strip-all-gnu",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Compatible with GNU's --strip-all",
+      "description": "This option is equivalent to GNU objcopy's --strip-all switch.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -571,7 +571,7 @@
       "long": "--strip-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": "line represents a single symbol name, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "the file <filename>, from the output. In the file, each line represents a single sym‐ bol name, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -581,7 +581,7 @@
       "long": "--strip-unneeded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all symbols not needed by relocations",
+      "description": "from the output all local or undefined symbols that are not required by relocations. Also remove all debug sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -601,7 +601,7 @@
       "long": "--strip-unneeded-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": "In the file, each line represents a single symbol name, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "all symbols whose names appear in the file <filename>, from the output, if they are local or undefined and are not re‐ quired by any relocation. In the file, each line represents a single symbol name, with leading and trailing whitespace ig‐ nored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -631,7 +631,7 @@
       "long": "--update-section",
       "value_type": "File",
       "takes_value": true,
-      "description": "segment, the new contents cannot be larger than the existing section.",
+      "description": "with contents from the file <file>. If the section <name> is part of a segment, the new contents cannot be larger than the existing section.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -681,9 +681,12 @@
       "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allow wildcard syntax for symbol-related flags. Incompatible with --regex. Allows using '*' to match any number of characters, '?' to match any single character, '' to escape special characters, and '[]' to define character classes. Wildcards beginning with '!' will prevent a match, for example \"-N '*' -N '!x'\" will strip all symbols except for \"x\".",
+      "description": "wildcard syntax for symbol-related flags. On by default for section-related flags. Incompatible with --regex.",
       "multiple": false,
-      "conflicts_with": [],
+      "conflicts_with": [
+        "-rel",
+        "--regex"
+      ],
       "requires": []
     },
     {
@@ -759,8 +762,8 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Alias for --strip-symbol",
       "multiple": false,
       "conflicts_with": [],
@@ -832,6 +835,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Alias for --discard-locals",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "single symbol, with leading and trailing whitespace ignored,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

@@ -194,16 +194,6 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--type",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-v",
       "long": "--version",
       "value_type": "Bool",
@@ -341,6 +331,16 @@
         },
         {
           "short": null,
+          "long": "--literal-pathspecs",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--no-all",
           "value_type": "Bool",
           "takes_value": false,
@@ -400,10 +400,10 @@
           "requires": []
         },
         {
-          "short": null,
+          "short": "-u",
           "long": "--renormalize",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -414,16 +414,6 @@
           "long": "--sparse",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-u",
-          "long": "--update",
-          "value_type": "String",
-          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -648,11 +638,11 @@
           "requires": []
         },
         {
-          "short": "-l",
+          "short": null,
           "long": "--list",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "git branch --list 'maint-*', list only the branches that match the pattern(s).",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -712,6 +702,16 @@
           "long": "--no-contains",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-create-reflog",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -822,7 +822,7 @@
           "long": "--sort",
           "value_type": "String",
           "takes_value": true,
-          "description": "prefix). This lists detached HEAD (if present) first, then local branches and finally remote-tracking branches. See git-config(1).",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -960,7 +960,7 @@
           "long": "--branch",
           "value_type": "String",
           "takes_value": true,
-          "description": "--branch can also take tags and detaches the HEAD at that commit in the resulting repository.",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1067,6 +1067,26 @@
         },
         {
           "short": null,
+          "long": "--no-local",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-single-branch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--no-tags",
           "value_type": "String",
           "takes_value": true,
@@ -1138,6 +1158,16 @@
         {
           "short": null,
           "long": "--reject-shallow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remote",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -1331,6 +1361,16 @@
         },
         {
           "short": null,
+          "long": "--autosquash",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--branch",
           "value_type": "Bool",
           "takes_value": false,
@@ -1394,7 +1434,7 @@
           "long": "--fixup",
           "value_type": "String",
           "takes_value": true,
-          "description": "--fixup=amend:<commit> is similar but creates an \"amend!\" commit which also replaces the log message of <commit> with the log message of the \"amend!\" commit.  --fixup=reword:<commit> creates an \"amend!\" commit which replaces the log message of <commit> with its own log message but makes no changes to the content of <commit>.",
+          "description": "--fixup=amend:<commit> is similar but creates an \"amend!\" commit which also replaces the log message of <commit> with the log message of the \"amend!\" commit.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1412,6 +1452,16 @@
         {
           "short": null,
           "long": "--interactive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--literal-pathspecs",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -1490,7 +1540,7 @@
           "requires": []
         },
         {
-          "short": "-o",
+          "short": null,
           "long": "--only",
           "value_type": "Bool",
           "takes_value": false,
@@ -1634,7 +1684,7 @@
           "long": "--trailer",
           "value_type": "String",
           "takes_value": true,
-          "description": "git commit --trailer \"Signed-off-by:C O Mitter \\ <committer@example.com>\" --trailer \"Helped-by:C O Mitter \\ <committer@example.com>\" will add the \"Signed-off-by\" trailer and the \"Helped-by\" trailer to the commit message.) The trailer.*  configuration variables (git-interpret-trailers(1)) can be used to define if a duplicated trailer is omitted, where in the run of trailers each trailer would appear, and other details.",
+          "description": "git commit --trailer \"Signed-off-by:C O Mitter \\ <committer@example.com>\" --trailer \"Helped-by:C O Mitter \\ <committer@example.com>\" will add the \"Signed-off-by\" trailer and the \"Helped-by\" trailer to the commit message.) The trailer.* configuration variables (git-interpret-trailers(1)) can be used to define if a duplicated trailer is omitted, where in the run of trailers each trailer would appear, and other details.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1662,6 +1712,16 @@
         {
           "short": "-n",
           "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -1761,7 +1821,7 @@
           "long": "--color",
           "value_type": "String",
           "takes_value": true,
-          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto. It can be changed by the color.ui and color.diff configuration settings.",
+          "description": "--color (i.e. without =<when>) is the same as",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2068,16 +2128,6 @@
         },
         {
           "short": null,
-          "long": "--ita-visible-in-index",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
           "long": "--line-prefix",
           "value_type": "String",
           "takes_value": true,
@@ -2208,6 +2258,16 @@
         },
         {
           "short": null,
+          "long": "--no-relative",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--no-renames",
           "value_type": "Bool",
           "takes_value": false,
@@ -2229,6 +2289,16 @@
         {
           "short": null,
           "long": "--output",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--output-indicator-context",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2268,6 +2338,16 @@
         },
         {
           "short": null,
+          "long": "--pickaxe-regex",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--quiet",
           "value_type": "Bool",
           "takes_value": false,
@@ -2289,9 +2369,9 @@
         {
           "short": null,
           "long": "--relative",
-          "value_type": "Number",
+          "value_type": "String",
           "takes_value": true,
-          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2321,7 +2401,7 @@
           "long": "--skip-to",
           "value_type": "String",
           "takes_value": true,
-          "description": "skip to), or move them to the end of the output (i.e.  rotate to). These options were invented primarily for the use of the git difftool command, and may not be very useful otherwise.",
+          "description": "rotate to). These options were invented primarily for the use of the git difftool command, and may not be very useful otherwise.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2341,6 +2421,16 @@
           "long": "--stat",
           "value_type": "String",
           "takes_value": true,
+          "description": "if there are more.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stat-count",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2348,10 +2438,10 @@
         },
         {
           "short": null,
-          "long": "--stat-graph-width",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "if there are more.",
+          "long": "--stat-width",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2451,16 +2541,6 @@
           "long": null,
           "value_type": "String",
           "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-M05",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2591,6 +2671,16 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--filter",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-f",
           "long": "--force",
           "value_type": "Bool",
@@ -2653,8 +2743,8 @@
         {
           "short": null,
           "long": "--negotiate-only",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2693,6 +2783,16 @@
         {
           "short": "-n",
           "long": "--no-tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-write-fetch-head",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -2773,8 +2873,8 @@
         {
           "short": null,
           "long": "--refetch",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2964,64 +3064,7 @@
           "description": null
         }
       ],
-      "subcommands": [
-        {
-          "name": "from",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "it",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reason",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "summary",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "t",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "to",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "unless",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
+      "subcommands": [],
       "aliases": []
     },
     {
@@ -3053,7 +3096,7 @@
           "long": "--and",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "--or is the default operator.  --and has higher precedence than",
+          "description": "--or is the default operator.  --and has higher precedence than --or.  -e has to be used for all patterns.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3361,9 +3404,9 @@
         {
           "short": null,
           "long": "--or",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "-e has to be used for all patterns.",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3612,7 +3655,7 @@
           "long": "--object-format",
           "value_type": "String",
           "takes_value": true,
-          "description": "sha1 is the default.",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3866,7 +3909,7 @@
         },
         {
           "short": null,
-          "long": "--decorate",
+          "long": "--decorate-refs",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3876,9 +3919,9 @@
         },
         {
           "short": null,
-          "long": "--decorate-refs",
-          "value_type": "String",
-          "takes_value": true,
+          "long": "--decorate-refs-exclude",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3949,7 +3992,7 @@
           "long": "--expand-tabs",
           "value_type": "String",
           "takes_value": true,
-          "description": "--expand-tabs is a short-hand for --expand-tabs=8, and --no-expand-tabs is a short-hand for",
+          "description": "--expand-tabs is a short-hand for --expand-tabs=8, and --no-expand-tabs is a short-hand for --expand-tabs=0, which disables tab expansion.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3987,6 +4030,16 @@
         {
           "short": null,
           "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -4137,8 +4190,8 @@
         {
           "short": null,
           "long": "--merges",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4149,6 +4202,16 @@
           "long": "--min-parents",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name-status",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4167,6 +4230,16 @@
         {
           "short": null,
           "long": "--no-decorate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-max-parents",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4229,6 +4302,16 @@
           "long": "--notes",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--numstat",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4337,16 +4420,6 @@
         {
           "short": null,
           "long": "--reverse",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--shortstat",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -4564,7 +4637,16 @@
           "description": null
         }
       ],
-      "subcommands": [],
+      "subcommands": [
+        {
+          "name": "but",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
@@ -4646,7 +4728,7 @@
           "long": "--ff",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "--ff is the default unless merging an annotated (and possibly signed) tag that is not stored in its natural place in the refs/tags/ hierarchy, in which case",
+          "description": "--ff is the default unless merging an annotated (and possibly signed) tag that is not stored in its natural place in the refs/tags/ hierarchy, in which case --no-ff is assumed.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -4703,7 +4785,7 @@
         },
         {
           "short": null,
-          "long": "--no-ff",
+          "long": "--no-rerere-autoupdate",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -4766,7 +4848,7 @@
           "long": "--rerere-autoupdate",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "--no-rerere-autoupdate is a good way to double-check what rerere did and catch potential mismerges, before committing the result to the index with a separate git add.",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -5154,9 +5236,19 @@
         },
         {
           "short": null,
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--negotiate-only",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -5167,6 +5259,16 @@
           "long": "--negotiation-tip",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ff",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -5195,6 +5297,16 @@
         {
           "short": null,
           "long": "--no-tags",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-verify",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -5619,8 +5731,8 @@
         {
           "short": null,
           "long": "--no-verify",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -5792,6 +5904,16 @@
         },
         {
           "short": null,
+          "long": "--ancestry-path",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--apply",
           "value_type": "Bool",
           "takes_value": false,
@@ -5803,9 +5925,9 @@
         {
           "short": "-i",
           "long": "--autosquash",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "if the commit subject matches, or if the ...  refers to the commit’s hash. As a fall-back, partial matches of the commit subject work, too. The recommended way to create fixup/amend/squash commits is by using the --fixup, --fixup=amend: or",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "if the commit subject matches, or if the ...  refers to the commit’s hash. As a fall-back, partial matches of the commit subject work, too. The recommended way to create fixup/amend/squash commits is by using the --fixup, --fixup=amend: or --fixup=reword: and --squash options respectively of git- commit(1).",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -5872,16 +5994,6 @@
         },
         {
           "short": null,
-          "long": "--fixup",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
           "long": "--fork-point",
           "value_type": "Bool",
           "takes_value": false,
@@ -5922,6 +6034,16 @@
         },
         {
           "short": null,
+          "long": "--interactive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--keep-base",
           "value_type": "Bool",
           "takes_value": false,
@@ -5953,6 +6075,26 @@
         {
           "short": null,
           "long": "--no-keep-empty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-rebase-merges",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "--no-rebase-merges can be used to countermand both the rebase.rebaseMerges config option and a previous --rebase-merges.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-rerere-autoupdate",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -6035,7 +6177,7 @@
           "long": "--rerere-autoupdate",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "--no-rerere-autoupdate is a good way to double-check what rerere did and catch potential mismerges, before committing the result to the index with a separate git add.",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -6159,6 +6301,16 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         }
       ],
       "positional": [
@@ -6180,7 +6332,23 @@
           "aliases": []
         },
         {
+          "name": "but",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
           "name": "master",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "omitting",
           "description": null,
           "flags": [],
           "positional": [],
@@ -6209,6 +6377,16 @@
           "long": "--keep",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--literal-pathspecs",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -6315,6 +6493,16 @@
           "requires": []
         },
         {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-p",
           "long": null,
           "value_type": "String",
@@ -6378,6 +6566,16 @@
         {
           "short": null,
           "long": "--ignore-unmerged",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--literal-pathspecs",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -6496,16 +6694,6 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--theirs",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-W",
           "long": "--worktree",
           "value_type": "Bool",
@@ -6574,6 +6762,16 @@
         },
         {
           "short": null,
+          "long": "--literal-pathspecs",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--pathspec-file-nul",
           "value_type": "String",
           "takes_value": true,
@@ -6632,7 +6830,32 @@
           "description": null
         }
       ],
-      "subcommands": [],
+      "subcommands": [
+        {
+          "name": "additions",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "as",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "directory",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
@@ -6644,16 +6867,6 @@
           "long": "--abbrev-commit",
           "value_type": "String",
           "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cc",
-          "value_type": "Bool",
-          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -6674,7 +6887,27 @@
           "long": "--expand-tabs",
           "value_type": "String",
           "takes_value": true,
-          "description": "--expand-tabs is a short-hand for --expand-tabs=8, and --no-expand-tabs is a short-hand for",
+          "description": "--expand-tabs is a short-hand for --expand-tabs=8, and --no-expand-tabs is a short-hand for --expand-tabs=0, which disables tab expansion.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -6968,6 +7201,16 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         }
       ],
       "positional": [
@@ -6999,8 +7242,8 @@
         {
           "short": "-c",
           "long": "--create",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],

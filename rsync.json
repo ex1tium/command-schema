@@ -8,7 +8,7 @@
       "long": "--acls",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The option also implies --perms.",
+      "description": "option  causes  rsync to update the destination ACLs to be the same as the source ACLs.  The option also implies --perms.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--address",
       "value_type": "String",
       "takes_value": true,
-      "description": "default rsync will bind to the wildcard address when connecting to an rsync daemon.  The --address option allows you to specify a specific IP address (or hostname) to bind to.",
+      "description": "The  --address  option  allows  you  to specify a specific IP address (or hostname) to bind to.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--append",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  the receiving  side  is  also known to be the same as the content on the sender.  The use of --append can be dangerous if you aren't 100% sure that all the files in the transfer are shared, growing files.  You should thus use filter rules to ensure that you weed out  any files that do not fit this criteria.",
+      "description": "special  copy  mode only works to efficiently update files that are known to be growing larger where any  existing  content on  the  receiving side is also known to be the same as the con‐ tent on the sender.  The use of --append can be dangerous if you aren't 100% sure that all the files in the transfer are  shared, growing  files.  You should thus use filter rules to ensure that you weed out any files that do not fit this criteria.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--append-verify",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "special  copy mode works like --append except that all the data in the file is included in the checksum verification (making it less efficient but also potentially safer).  This option can be dangerous if you aren't 100% sure that all the files in the  transfer are shared, growing files.  See the --append option for more details.",
+      "description": "all  the data  in the file is included in the checksum verification (mak‐ ing it less efficient but also potentially safer).  This  option can  be  dangerous if you aren't 100% sure that all the files in the transfer are shared, growing files.  See the --append option for more details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-a",
       "long": "--archive",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "is  equivalent  to  -rlptgoD.  It is a quick way of saying you want recursion and want to preserve almost everything.  Be aware that it does not include preserving ACLs (-A), xattrs (-X), atimes (-U), crtimes (-N), nor the finding and  preserving  of  hardlinks (-H).",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "It is a quick way of saying you want recursion and want to preserve almost everything.  Be aware that  it  does  not  include  preserving ACLs (-A), xattrs (-X), atimes (-U), crtimes (-N), nor the  finding  and  preserving  of hardlinks (-H).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--atimes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "preserve access (use) times",
+      "description": "tells  rsync to set the access (use) times of the destina‐ tion files to the same value as the source files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--backup",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "You can control where the backup file goes and what (if any) suffix gets appended using the --backup-dir and --suffix options.",
+      "description": "this  option, preexisting destination files are renamed as each file is transferred or deleted.  You can control where  the backup  file  goes  and what (if any) suffix gets appended using the --backup-dir and --suffix options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--backup-dir",
       "value_type": "File",
       "takes_value": true,
-      "description": "This can be used  for incremental backups.  You can additionally specify a backup suffix using the --suffix option (otherwise the files backed up in the specified directory will keep their original filenames).",
+      "description": "implies  the --backup option, and tells rsync to store all backups in the specified directory on the receiving side.   This can be used for incremental backups.  You can additionally spec‐ ify  a  backup  suffix  using the --suffix option (otherwise the files backed up in the specified directory will keep their orig‐ inal filenames).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--block-size",
       "value_type": "File",
       "takes_value": true,
-      "description": "It is normally selected based on the  size  of each file being updated.  See the technical report for details.",
+      "description": "algo‐ rithm  to  a  fixed value.  It is normally selected based on the size of each file being updated.  See the technical  report  for details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--blocking-io",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If the remote shell is either rsh or remsh, rsync  de‐ faults to using blocking I/O, otherwise it defaults to using non-blocking I/O. (Note that ssh prefers non-blocking I/O.)",
+      "description": "when  launching  a  remote shell  transport.   If  the remote shell is either rsh or remsh, rsync defaults to using blocking I/O, otherwise it  defaults  to using  non-blocking  I/O.  (Note  that  ssh prefers non-blocking I/O.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--bwlimit",
       "value_type": "String",
       "takes_value": true,
-      "description": "per  second.   The RATE  value  can be suffixed with a string to indicate a size multiplier, and may be a fractional value (e.g. --bwlimit=1.5m).  If no suffix is specified, the value will be assumed to be in units of 1024 bytes (as if \"K\" or \"KiB\" had been appended).  See  the  --max- size option for a description of all the available suffixes.  A value of 0 specifies no limit.",
+      "description": "for the  data  sent  over the socket, specified in units per second. The RATE value can be suffixed with a string to indicate a  size multiplier, and may be a fractional value (e.g. --bwlimit=1.5m). If  no  suffix  is specified, the value will be assumed to be in units of 1024 bytes (as if \"K\" or \"KiB\" had been appended).  See the --max-size option for a description  of  all  the  available suffixes.  A value of 0 specifies no limit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--checksum",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "changes  the  way rsync checks if the files have been changed and are in need of a transfer.  Without this option, rsync uses a \"quick check\" that (by default) checks if each file's size and time of last modification match between the sender and receiver.  This option changes this to compare a 128-bit checksum for each file that has a matching size.  Generating the checksums means  that  both sides  will  expend  a  lot of disk I/O reading all the data in the files in the transfer, so this can slow things down significantly (and this is prior to any reading that will be done to transfer changed files)",
+      "description": "Without this option, rsync  uses a \"quick check\" that (by default) checks if each file's size and time of last modification match between the sender and receiver. This  option changes this to compare a 128-bit checksum for each file that has a matching size.  Generating the  checksums  means that  both  sides  will expend a lot of disk I/O reading all the data in the files in the transfer, so this can slow things  down significantly  (and  this  is  prior to any reading that will be done to transfer changed files)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--checksum-choice",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  overrides  the checksum algorithms.  If one algorithm name is specified, it is used for both the transfer checksums and (assuming --checksum is specified) the pre-transfer checksums.  If two comma-separated names are supplied, the first name affects the transfer checksums, and the second name affects the pre-transfer checksums (-c).",
+      "description": "If one algorithm name is specified, it is used for both  the  transfer  checksums and  (assuming  --checksum is specified) the pre-transfer check‐ sums.  If two comma-separated names are supplied, the first name affects the transfer checksums, and the second name affects  the pre-transfer checksums (-c).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--checksum-seed",
       "value_type": "File",
       "takes_value": true,
-      "description": "This 4 byte checksum seed is included in each block and MD4 file checksum calculation (the more  modern  MD5 file checksums don't use a seed).  By default the checksum seed is generated by the server and defaults to the cur‐ rent time().  This option is used to set a specific checksum seed, which is useful for applications that want repeatable block check‐ sums, or in the case where the user wants a more random checksum seed.  Setting NUM to 0 causes rsync to use the  default  of  time() for checksum seed.",
+      "description": "the checksum seed to the integer NUM.  This 4 byte checksum seed is included in each block and MD4 file checksum calculation (the more modern MD5 file checksums don't use a seed).   By  de‐ fault  the checksum seed is generated by the server and defaults to the current time().  This option is used to  set  a  specific checksum  seed,  which  is useful for applications that want re‐ peatable block checksums, or in the case where the user wants  a more random checksum seed.  Setting NUM to 0 causes rsync to use the default of time() for checksum seed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": null,
       "long": "--chmod",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "affect file and/or directory permissions",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "en‐ abled).   If  you'd  care to make this latter behavior easier to type, you could define a popt alias for it, such as putting this line in the file ~/.popt (the following defines the  -Z  option, and  includes --no-g to use the default group of the destination dir):",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--chown",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is a simpler interface than using --usermap & --groupmap di‐ rectly, but it is implemented using those options internally so they cannot be mixed.  If either the USER or GROUP is empty, no  map‐ ping  for  the  omitted user/group will occur.  If GROUP is empty, the trailing colon may be omitted, but if USER is empty, a leading colon must be supplied.",
+      "description": "owned  by  USER  with  group GROUP.   This  is  a  simpler  interface  than using --usermap &",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +166,9 @@
     {
       "short": null,
       "long": "--compare-dest",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "also compare destination files relative to DIR",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  destination  ma‐ chine  as  an  additional hierarchy to compare destination files against doing transfers (if the files are missing in the  desti‐ nation  directory).  If a file is found in DIR that is identical to the sender's file, the file will NOT be  transferred  to  the destination  directory.   This  is  useful for creating a sparse backup of just files that have changed from an  earlier  backup. This  option  is  typically used to copy into an empty (or newly created) directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--compress",
       "value_type": "String",
       "takes_value": true,
-      "description": "The --compress option is implied as long as the level chosen is not a \"don't compress\" level for the compression algorithm that is in effect (e.g. zlib compression treats level 0 as \"off\").",
+      "description": "The --compress option is implied as long as the level chosen is not a \"don't compress\" level for the compression algorithm that is in effect (e.g. zlib compres‐ sion treats level 0 as \"off\").",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--compress-choice",
       "value_type": "String",
       "takes_value": true,
-      "description": "The option implies --compress unless \"none\" was specified, which instead implies --no-compress.",
+      "description": "compression  algorithm that occurs when --compress is used. The option implies --compress unless \"none\" was specified, which instead implies --no-compress.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--contimeout",
       "value_type": "String",
       "takes_value": true,
-      "description": "If the time‐ out is reached, rsync exits with an error.",
+      "description": "for  its connection to an rsync daemon to succeed.  If the timeout is reached, rsync exits with an error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--copy-as",
       "value_type": "String",
       "takes_value": true,
-      "description": "This only  works  if the  user  that  is  running rsync has the ability to change users.  If the group is not specified then the user's default groups are used.",
+      "description": "and  (if  specified after  a  colon)  the  GROUP for the copy operations.  This only works if the user that is  running  rsync  has  the  ability  to change users.  If the group is not specified then the user's de‐ fault groups are used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--copy-dest",
       "value_type": "File",
       "takes_value": true,
-      "description": "using  a local  copy.  This is useful for doing transfers to a new destination while leaving existing files intact, and then doing a flash-cu‐ tover when all files have been successfully transferred.",
+      "description": "but  rsync  will  also copy  unchanged  files found in DIR to the destination directory using a local copy.  This is useful for doing transfers to a new destination while leaving existing files intact, and then  doing a  flash-cutover  when  all  files have been successfully trans‐ ferred.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--copy-devices",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "tells  rsync to treat a device on the sending side as a regular file, allowing it to be copied to a normal destination file (or another device if --write-devices was also specified).",
+      "description": "copy device contents as a regular file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--copy-dirlinks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  causes  the  sending  side to treat a symlink to a directory as though it were a real directory.  This is useful if you don't want symlinks to non-directories to be affected, as they would be using --copy-links.",
+      "description": "di‐ rectory  as  though it were a real directory.  This is useful if you don't want symlinks to non-directories to  be  affected,  as they would be using --copy-links.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--copy-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If a symlink chain is broken, an error is output and the file is dropped from the transfer.",
+      "description": "the  transfer into  the referent item, following the symlink chain to the file or directory that it references.  If a symlink chain is  broken, an error is output and the file is dropped from the transfer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--copy-unsafe-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Absolute symlinks are also treated  like ordinary files, and so are any symlinks in the source path itself when --relative is used.",
+      "description": "of  symbolic  links  that point  outside  the  copied  tree.   Absolute  symlinks are also treated like ordinary files, and so  are  any  symlinks  in  the source path itself when --relative is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--cvs-exclude",
       "value_type": "File",
       "takes_value": true,
-      "description": "is  a  useful  shorthand for excluding a broad range of files that you often don't want to transfer between systems.  It uses a similar algorithm to CVS to determine if a file should be ignored.",
+      "description": "is a useful shorthand for excluding a broad range of files that you often don't want to transfer between systems.  It  uses a  similar algorithm to CVS to determine if a file should be ig‐ nored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--debug",
       "value_type": "Number",
       "takes_value": true,
-      "description": "An individual flag name may be followed  by  a level  number,  with  0 meaning to silence that output, 1 being the default output level, and higher numbers increasing the output of that flag (for those that support higher levels).  Use --debug=help to see all the available flag names, what they output,  and  what flag names are added for each increase in the verbose level.  Some examples:",
+      "description": "over  the  debug output you want to see.  An individual flag name may be followed by  a level number, with 0 meaning to silence that output, 1 be‐ ing the default output level, and higher numbers increasing  the output of that flag (for those that support higher levels).  Use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,12 +318,9 @@
       "long": "--delay-updates",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option puts the temporary file from each updated file into a holding directory until the end of the transfer, at which time all the files are renamed into place in rapid succession.  This attempts to make the updating of the files a little more atomic.  By  de‐ fault the files are placed into a directory named .~tmp~ in each file's destination directory, but if you've specified the --partial- dir  option,  that directory will be used instead.  See the comments in the --partial-dir section for a discussion of how this .~tmp~ dir will be excluded from the transfer, and what you can do if you want rsync to cleanup old .~tmp~ dirs that might be lying  around. Conflicts with --inplace and --append.",
+      "description": "into a holding directory until the end of the transfer, at which time all  the files are renamed into place in rapid succession.  This attempts to make the updating of the files a little more atomic. By default the files are placed into a directory named .~tmp~ in each file's destination directory, but if you've  specified  the",
       "multiple": false,
-      "conflicts_with": [
-        "--partial-dir",
-        "--inplace"
-      ],
+      "conflicts_with": [],
       "requires": []
     },
     {
@@ -331,7 +328,7 @@
       "long": "--delete",
       "value_type": "File",
       "takes_value": true,
-      "description": "You must have asked rsync to send the whole directory (e.g. \"dir\" or \"dir/\") without using a wild‐ card  for the directory's contents (e.g. \"dir/*\") since the wildcard is expanded by the shell and rsync thus gets a request to trans‐ fer individual files, not the files' parent directory.  Files that are excluded from  the  transfer  are  also  excluded  from  being deleted  unless  you use the --delete-excluded option or mark the rules as only matching on the sending side (see the include/exclude modifiers in the FILTER RULES section).",
+      "description": "tells  rsync to delete extraneous files from the receiving side (ones that aren't on the sending side), but  only  for  the directories  that  are  being synchronized.  You must have asked rsync to send the whole directory (e.g. \"dir\" or \"dir/\") without using a wildcard for the  directory's  contents  (e.g.  \"dir/*\") since  the wildcard is expanded by the shell and rsync thus gets a request to transfer individual files, not  the  files'  parent directory.   Files  that are excluded from the transfer are also excluded from being deleted unless you use the --delete-excluded option or mark the rules as only matching on  the  sending  side (see the include/exclude modifiers in the FILTER RULES section).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -341,20 +338,17 @@
       "long": "--delete-after",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is useful if  you  are  sending new per-directory merge files as a part of the transfer and you want their exclusions to take effect for the delete phase of the cur‐ rent transfer.  It also forces rsync to use the old, non-incremental recursion algorithm that requires rsync to scan all the files in the transfer into memory at once (see --recursive). See --delete (which is implied) for more details on file-deletion.",
+      "description": "receiver deletes after transfer, not during",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "--recursive",
-        "--delete"
-      ]
+      "requires": []
     },
     {
       "short": null,
       "long": "--delete-before",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  the file-deletions on the receiving side be done before the transfer starts.  See --delete (which is implied) for more details on file-deletion.",
+      "description": "that  the  file-deletions on the receiving side be done before the transfer starts.  See --delete (which is implied) for more details on file-deletion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -364,7 +358,7 @@
       "long": "--delete-delay",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "after the transfer completes.  This is useful when combined with --delay-updates and/or --fuzzy, and is more efficient than using --delete- after  (but  can  behave differently, since --delete-after computes the deletions in a separate pass after all updates are done).  If the number of removed files overflows an internal buffer, a temporary file will be created on the receiving side to  hold  the  names (it is removed while open, so you shouldn't see it during the transfer).  If the creation of the temporary file fails, rsync will try to  fall  back  to using --delete-after (which it cannot do if --recursive is doing an incremental scan).  See --delete (which is im‐ plied) for more details on file-deletion.",
+      "description": "side  be  com‐ puted  during  the transfer (like --delete-during), and then re‐ moved after the transfer completes.  This is  useful  when  com‐ bined with --delay-updates and/or --fuzzy, and is more efficient than  using  --delete-after  (but  can behave differently, since",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -374,7 +368,7 @@
       "long": "--delete-during",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  the file-deletions on the receiving side be done incrementally as the transfer happens.  The per-directory delete scan is done right before each directory is checked for updates, so it behaves like a more efficient --delete-before, including doing  the deletions  prior  to any per-directory filter files being updated.  This option was first added in rsync version 2.6.4.  See --delete (which is implied) for more details on file-deletion.",
+      "description": "that  the  file-deletions on the receiving side be done incrementally as the transfer happens.  The per-directory delete scan is done right before each directory is checked for updates, so it behaves like a more efficient  --delete-before,  including doing  the deletions prior to any per-directory filter files be‐ ing updated.  This option  was  first  added  in  rsync  version 2.6.4.   See  --delete  (which  is  implied) for more details on file-deletion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -384,7 +378,7 @@
       "long": "--delete-excluded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "also delete excluded files from dest dirs",
+      "description": "unqualified  exclude/include  rules  into server-side rules that do not affect the receiver's deletions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -394,7 +388,7 @@
       "long": "--delete-missing-args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "deletion request of the corresponding destination file on the receiving side (should it exist).  If the destination file is a non-empty direc‐ tory,  it will only be successfully deleted if --force or --delete are in effect.  Other than that, this option is independent of any other type of delete processing.",
+      "description": "(implied)  --ignore-miss‐ ing-args  option  a step farther: each missing arg will become a deletion request of the corresponding destination  file  on  the receiving  side (should it exist).  If the destination file is a non-empty directory, it will only  be  successfully  deleted  if",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -404,17 +398,17 @@
       "long": "--devices",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If the receiv‐ ing  rsync  is not being run as the super-user, rsync silently skips creating the device files (see also the --super and --fake-super options).",
+      "description": "option causes rsync to transfer character and block device files to the remote system to recreate these  devices.   If  the receiving  rsync  is  not  being  run  as  the super-user, rsync silently skips creating the device files (see also  the  --super and --fake-super options).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-d",
+      "short": null,
       "long": "--dirs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Unlike --recursive, a directory's contents are not copied un‐ less the directory name specified is \".\" or ends with a trailing slash (e.g.  \".\", \"dir/.\", \"dir/\", etc.).  Without  this  option  or the  --recursive  option,  rsync  will skip all directories it encounters (and output a message to that effect for each one).  If you specify both --dirs and --recursive, --recursive takes precedence.",
+      "description": "(-d)  for an option that allows the scanning of a single directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -424,7 +418,7 @@
       "long": "--dry-run",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "makes  rsync perform a trial run that doesn't make any changes (and produces mostly the same output as a real run).  It is most commonly used in combination with the --verbose (-v) and/or --itemize-changes (-i) options to see what an rsync command is  going  to do before one actually runs it.",
+      "description": "makes  rsync  perform  a  trial  run that doesn't make any changes (and produces mostly the same output as a real run).  It is most commonly used in combination  with  the  --verbose  (-v) and/or  --itemize-changes (-i) options to see what an rsync com‐ mand is going to do before one actually runs it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -434,7 +428,7 @@
       "long": "--early-input",
       "value_type": "File",
       "takes_value": true,
-      "description": "One possible use of this data is to  give the script a secret that can be used to mount an encrypted filesystem (which you should unmount in the the \"post-xfer exec\" script).",
+      "description": "option allows rsync to send up to 5K of data to the \"early exec\" script on its stdin.  One possible use of this data is  to give  the script a secret that can be used to mount an encrypted filesystem (which you should unmount in the the \"post-xfer exec\" script).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -444,7 +438,7 @@
       "long": "--exclude",
       "value_type": "String",
       "takes_value": true,
-      "description": "option is a simplified form of the --filter option that specifies an exclude rule and does not allow the full rule-parsing syn‐ tax of normal filter rules.  This is equivalent to specifying -f'- PATTERN'.",
+      "description": "option  is  a  simplified form of the --filter option that specifies an exclude rule and does not allow the full rule-pars‐ ing syntax of normal filter rules.  This is equivalent to speci‐ fying -f'- PATTERN'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -454,7 +448,7 @@
       "long": "--exclude-from",
       "value_type": "File",
       "takes_value": true,
-      "description": "Blank  lines in  the file are ignored, as are whole-line comments that start with ';' or '#' (filename rules that contain those characters are un‐ affected).",
+      "description": "FILE  that  contains  exclude patterns (one per line).  Blank lines in the file are ignored, as are whole-line  comments  that start with ';' or '#' (filename rules that contain those charac‐ ters are unaffected).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -464,7 +458,7 @@
       "long": "--executability",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option causes rsync to preserve the executability (or non-executability) of regular files when --perms is not enabled.  A regu‐ lar file is considered to be executable if at least one 'x' is turned on in its permissions.  When an existing destination file's ex‐ ecutability differs from that of the corresponding source file, rsync modifies the destination file's permissions as follows:",
+      "description": "option causes rsync to preserve the executability (or non- executability) of regular files when --perms is not enabled.   A regular  file is considered to be executable if at least one 'x' is turned on in its permissions.  When an  existing  destination file's  executability  differs  from  that  of the corresponding source file, rsync modifies the destination  file's  permissions as follows:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -484,7 +478,7 @@
       "long": "--fake-super",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  are  attached  to  each file (as needed).  This includes the file's owner and group (if it is not the default), the file's device info (device & special files are created as empty text files), and any permission bits that we won't allow to be set on the real file (e.g. the real file gets u-s,g-s,o-t for safety) or that would limit the owner's access (since the real super-user  can always access/change a file, the files we create can always be accessed/changed by the creating user).  This option also handles ACLs (if --acls was specified) and non-user extended attributes (if --xattrs was specified).",
+      "description": "this option is enabled, rsync simulates super-user activi‐ ties by saving/restoring the privileged attributes  via  special extended  attributes that are attached to each file (as needed). This includes the file's owner and group (if it is not  the  de‐ fault),  the file's device info (device & special files are cre‐ ated as empty text files), and any permission bits that we won't allow to be set on the real file (e.g. the real file gets u-s,g- s,o-t for safety) or that would limit the owner's access  (since the  real  super-user can always access/change a file, the files we create can always be accessed/changed by the creating  user). This option also handles ACLs (if --acls was specified) and non- user extended attributes (if --xattrs was specified).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -492,9 +486,9 @@
     {
       "short": null,
       "long": "--files-from",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "this option allows you to specify the exact list of files to transfer (as read from the specified FILE or '-' for standard in‐ put).  It also tweaks the default behavior of rsync to make transferring just the specified files and directories easier:",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "read list of source-file names from FILE",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -514,7 +508,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is only relevant if dele‐ tions are not active (see --delete for details).",
+      "description": "Other than that, this option is independent of any other type of delete processing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -524,7 +518,7 @@
       "long": "--from0",
       "value_type": "File",
       "takes_value": true,
-      "description": "NL,  CR,  or  CR+LF. This  affects  --exclude-from,  --include-from,  --files-from, and any merged files specified in a --filter rule.  It does not affect",
+      "description": "tells  rsync that the rules/filenames it reads from a file are terminated by a null ('\\0') character,  not  a  NL,  CR,  or CR+LF.   This  affects  --exclude-from, --include-from, --files- from, and any merged files specified in  a  --filter  rule.   It does  not  affect  --cvs-exclude  (since  all  names read from a .cvsignore file are split on whitespace).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -534,7 +528,7 @@
       "long": "--fsync",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  receiving  side to fsync each finished file.  This may slow down the transfer, but can help to provide peace of mind when updating critical files.",
+      "description": "the receiving side to fsync each finished file.  This may slow down the transfer, but can help to provide  peace  of  mind when updating critical files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -544,7 +538,7 @@
       "long": "--fuzzy",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  tells rsync that it should look for a basis file for any destination file that is missing.  The current algorithm looks in the same directory as the destination file for either a file that has an identical size and modified-time,  or  a  similarly-named file.  If found, rsync uses the fuzzy basis file to try to speed up the transfer.",
+      "description": "destination  file  that  is missing.  The current algorithm looks in the same directory as the destination file for either a file that has an identical size and modified-time,  or  a  simi‐ larly-named  file.  If found, rsync uses the fuzzy basis file to try to speed up the transfer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -554,7 +548,7 @@
       "long": "--group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If the receiving program is not running as the super-user (or if --no-super was specified), only groups that the invoking user on the receiving side is a  member  of will be preserved.  Without this option, the group is set to the default group of the invoking user on the receiving side.",
+      "description": "group  of  the  destination file  to  be the same as the source file.  If the receiving pro‐ gram is not running as the  super-user  (or  if  --no-super  was specified),  only groups that the invoking user on the receiving side is a member of will be preserved.  Without this option, the group is set to the default group of the invoking  user  on  the receiving side.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -564,7 +558,7 @@
       "long": "--groupmap",
       "value_type": "String",
       "takes_value": true,
-      "description": "custom groupname mapping",
+      "description": "those  options internally so they cannot be mixed.  If either the USER or GROUP is  empty, no mapping for the omitted user/group will occur.  If GROUP is empty, the trailing colon may be omitted, but  if  USER is empty, a leading colon must be supplied.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -574,7 +568,7 @@
       "long": "--hard-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "tells  rsync to look for hard-linked files in the source and link together the corresponding files on the destination.  Without this option, hard-linked files in the source are treated as though they were separate files.",
+      "description": "With‐ out  this option, hard-linked files in the source are treated as though they were separate files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -584,7 +578,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a  short help page describing the options available in rsync and exit.  You can also use -h for --help when it is used without any other options (since it normally means --human-readable).",
+      "description": "describing  the  options  available  in rsync  and exit.  You can also use -h for --help when it is used without any other options (since it normally means --human-read‐ able).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -594,7 +588,7 @@
       "long": "--human-readable",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "See the --list-only option for one difference.",
+      "description": "format.   There  are  3 possible levels:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -604,7 +598,7 @@
       "long": "--iconv",
       "value_type": "File",
       "takes_value": true,
-      "description": "Using a CONVERT_SPEC of \".\" tells rsync to look up the default character-set via the locale setting.  Alternately, you can fully specify what conversion to do  by  giving  a  local  and  a  remote charset  separated by a comma in the order --iconv=LOCAL,REMOTE, e.g. --iconv=utf8,iso88591.  This order ensures that the option will stay the same whether you're pushing or pulling files.  Finally, you can specify either --no-iconv or a CONVERT_SPEC of \"-\"  to  turn off  any  conversion.   The default setting of this option is site-specific, and can also be affected via the RSYNC_ICONV environment variable.",
+      "description": "can  convert  filenames between character sets using this option.  Using a CONVERT_SPEC of \".\" tells rsync to look up  the default  character-set via the locale setting.  Alternately, you can fully specify what conversion to do by giving a local and  a remote  charset  separated  by  a comma in the order --iconv=LO‐ CAL,REMOTE, e.g. --iconv=utf8,iso88591.  This order ensures that the option will stay the same whether you're pushing or  pulling files.   Finally,  you  can  specify either --no-iconv or a CON‐ VERT_SPEC of \"-\" to turn off any conversion.  The  default  set‐ ting  of  this option is site-specific, and can also be affected via the RSYNC_ICONV environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -614,7 +608,7 @@
       "long": "--ignore-errors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "delete even if there are I/O errors",
+      "description": "--delete to go ahead and delete files even when there are I/O errors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -624,7 +618,7 @@
       "long": "--ignore-existing",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "tells rsync to skip updating files that already exist on the destination (this does not ignore existing directories, or nothing would get done).  See also --ignore-non-existing.",
+      "description": "already  exist  on the  destination  (this does not ignore existing directories, or nothing would get done).  See also --ignore-non-existing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -634,7 +628,7 @@
       "long": "--ignore-missing-args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "command-line arguments or --files-from  entries),  it  is normally  an error if the file cannot be found.  This option suppresses that error, and does not try to transfer the file.  This does not affect subsequent vanished-file errors if a file was initially found to be present and later is no longer there.",
+      "description": "requested  source files (e.g.  command-line arguments or --files-from entries), it is  normally  an error if the file cannot be found.  This option suppresses that error, and does not try to  transfer  the  file. This  does  not affect subsequent vanished-file errors if a file was initially found to be present and later is no longer there.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -644,7 +638,7 @@
       "long": "--ignore-non-existing",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If this option is combined with the --ignore-existing option, no files will be updated (which can be useful if all you want to do is delete extraneous files).",
+      "description": "in that that they cause rsync to transfer fewer files, while this option causes  rsync  to  transfer  more files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -654,7 +648,7 @@
       "long": "--ignore-times",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "rsync  will  skip any files that are already the same size and have the same modification timestamp.  This option turns off this \"quick check\" behavior, causing all files to be updated.",
+      "description": "rsync  will  skip  any files that are already the same size and have the  same  modification  timestamp.   This  option turns  off  this \"quick check\" behavior, causing all files to be updated.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -664,7 +658,7 @@
       "long": "--inc-recursive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option explicitly enables on incremental recursion when scanning for files, which is enabled by default when using the --recur‐ sive option and both sides of the transfer are running rsync 3.0.0 or newer.",
+      "description": "on  incremental  recursion  when scanning  for  files, which is enabled by default when using the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -674,7 +668,7 @@
       "long": "--include",
       "value_type": "String",
       "takes_value": true,
-      "description": "option is a simplified form of the --filter option that specifies an include rule and does not allow the full rule-parsing syn‐ tax of normal filter rules.  This is equivalent to specifying -f'+ PATTERN'.",
+      "description": "option  is  a  simplified form of the --filter option that specifies an include rule and does not allow the full rule-pars‐ ing syntax of normal filter rules.  This is equivalent to speci‐ fying -f'+ PATTERN'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -684,7 +678,7 @@
       "long": "--include-from",
       "value_type": "File",
       "takes_value": true,
-      "description": "Blank  lines in  the file are ignored, as are whole-line comments that start with ';' or '#' (filename rules that contain those characters are un‐ affected).",
+      "description": "FILE  that  contains  include patterns (one per line).  Blank lines in the file are ignored, as are whole-line  comments  that start with ';' or '#' (filename rules that contain those charac‐ ters are unaffected).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -692,9 +686,9 @@
     {
       "short": null,
       "long": "--info",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "fine-grained informational verbosity",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "output  you  want  to see.  An individual flag name may be followed by a level number, with 0 meaning to silence that  out‐ put,  1  being  the default output level, and higher numbers in‐ creasing the output of that flag (for those that support  higher levels).   Use  --info=help to see all the available flag names, what they output, and what flag names are  added  for  each  in‐ crease in the verbose level.  Some examples:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -704,7 +698,7 @@
       "long": "--inplace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "of  creating  a  new copy  of  the  file  and  moving it into place when it is complete, rsync instead writes the updated data directly to the destination file.",
+      "description": "option  changes  how  rsync transfers a file when its data needs to be updated: instead of the default method of creating a new copy of the file and moving it into place when  it  is  com‐ plete,  rsync  instead  writes  the updated data directly to the destination file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -714,7 +708,7 @@
       "long": "--ipv4",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "rsync to prefer IPv4/IPv6 when creating sockets or running ssh.  This affects sockets that rsync has direct control over, such as the outgoing socket when directly contacting an rsync daemon, as well as the forwarding of the -4 or -6 option to ssh  when  rsync can  deduce  that  ssh is being used as the remote shell.  For other remote shells you'll need to specify the \"--rsh SHELL -4\" option directly (or whatever IPv4/IPv6 hint options it uses).",
+      "description": "This affects sockets that rsync has direct  control  over, such  as  the  outgoing socket when directly contacting an rsync daemon, as well as the forwarding of the -4 or -6 option to  ssh when  rsync  can  deduce  that  ssh  is being used as the remote shell.  For other remote  shells  you'll  need  to  specify  the \"--rsh SHELL -4\" option directly (or whatever IPv4/IPv6 hint op‐ tions it uses).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -734,7 +728,7 @@
       "long": "--itemize-changes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a  simple  itemized list of the changes that are being made to each file, including attribute changes.  This is exactly the same as specifying --out-format='%i %n%L'.  If you repeat the option, unchanged files will also be output, but only if the  receiving rsync  is  at  least  version 2.6.7 (you can use -vv with older versions of rsync, but that also turns on the output of other verbose messages).",
+      "description": "a  simple  itemized list of the changes that are being made to each file, including attribute changes.  This is exactly the same as specifying --out-format='%i %n%L'.   If  you  repeat the option, unchanged files will also be output, but only if the receiving  rsync is at least version 2.6.7 (you can use -vv with older versions of rsync, but that also turns on  the  output  of other verbose messages).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -744,7 +738,7 @@
       "long": "--keep-dirlinks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a real directory from the sender.  Without this option, the receiver's symlink would be deleted and replaced with a real directory.",
+      "description": "option  causes  the receiving side to treat a symlink to a directory as though it were a real directory,  but  only  if  it matches  a real directory from the sender.  Without this option, the receiver's symlink would be deleted and replaced with a real directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -752,9 +746,9 @@
     {
       "short": null,
       "long": "--link-dest",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "option  behaves like --copy-dest, but unchanged files are hard linked from DIR to the destination directory.  The files must be identical in all preserved attributes (e.g. permissions, possibly ownership) in order for the files to be linked together.  An  exam‐ ple:",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "hardlink to files in DIR when unchanged",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -764,7 +758,7 @@
       "long": "--links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "for  each  symlink  encoun‐ tered.  You can alternately silence the warning by specifying --info=nonreg0.",
+      "description": "ignor‐ ing  them with a \"non-regular file\" warning for each symlink en‐ countered.  You can alternately silence the warning by  specify‐ ing --info=nonreg0.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -774,7 +768,7 @@
       "long": "--list-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is inferred if there is a single source arg and no destination specified, so its main uses are:",
+      "description": "usage)  if",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -784,7 +778,7 @@
       "long": "--log-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "option causes rsync to log what it is doing to a file.  This is similar to the logging that a daemon does, but can be requested for the client side and/or the server side of a non-daemon transfer.  If specified as a client option, transfer logging will  be  en‐ abled with a default format of \"%i %n%L\".  See the --log-file-format option if you wish to override this.",
+      "description": "option  causes  rsync  to  log what it is doing to a file. This is similar to the logging that a daemon does,  but  can  be requested  for  the client side and/or the server side of a non- daemon transfer.  If specified as a client option, transfer log‐ ging will be enabled with a default format of  \"%i  %n%L\".   See the --log-file-format option if you wish to override this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -794,7 +788,7 @@
       "long": "--log-file-format",
       "value_type": "File",
       "takes_value": true,
-      "description": "allows  you to specify exactly what per-update logging is put into the file specified by the --log-file option (which must also be specified for this option to have any effect).  If you specify an empty string, updated files will not be  mentioned  in  the  log file.  For a list of the possible escape characters, see the log format setting in the rsyncd.conf manpage.",
+      "description": "allows  you  to specify exactly what per-update logging is put into the file specified by the --log-file option (which must also be specified for this option to have any effect).   If  you specify  an empty string, updated files will not be mentioned in the log file.  For a list of the possible escape characters, see the log format setting in the rsyncd.conf manpage.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -804,7 +798,7 @@
       "long": "--max-alloc",
       "value_type": "File",
       "takes_value": true,
-      "description": "For most people this limit works just fine and prevents a protocol  error  causing  rsync  to  request massive amounts of memory.  However, if you have many millions of files in a transfer, a large amount of server memory, and you don't want to split up your transfer into multiple parts, you can increase the  per-allocation limit to something larger and rsync will consume more memory.",
+      "description": "malloc/realloc  to  about 1GB  in  size.   For  most people this limit works just fine and prevents a protocol  error  causing  rsync  to  request  massive amounts  of memory.  However, if you have many millions of files in a transfer, a large amount of server memory,  and  you  don't want  to split up your transfer into multiple parts, you can in‐ crease the per-allocation limit to something  larger  and  rsync will consume more memory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -814,7 +808,7 @@
       "long": "--max-delete",
       "value_type": "File",
       "takes_value": true,
-      "description": "tells  rsync  not  to  delete more than NUM files or directories.  If that limit is exceeded, all further deletions are skipped through the end of the transfer.  At the end, rsync outputs a warning (including a count of the skipped deletions) and exits with  an error code of 25 (unless some more important error condition also occurred).",
+      "description": "tells  rsync not to delete more than NUM files or directo‐ ries.  If that limit is  exceeded,  all  further  deletions  are skipped through the end of the transfer.  At the end, rsync out‐ puts  a warning (including a count of the skipped deletions) and exits with an error code of 25 (unless some more important error condition also occurred).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -822,9 +816,9 @@
     {
       "short": null,
       "long": "--max-size",
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "A numeric  value  can  be  suffixed  with  a string to indicate the numeric units or left unqualified to specify bytes.  Feel free to use a fractional value along with the units, such as --max-size=1.5m.",
+      "description": "tells  rsync to avoid transferring any file that is larger than the specified SIZE.  A numeric value can be suffixed with a string to indicate the numeric  units  or  left  unqualified  to specify  bytes.   Feel free to use a fractional value along with the units, such as --max-size=1.5m.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -834,7 +828,7 @@
       "long": "--min-size",
       "value_type": "File",
       "takes_value": true,
-      "description": "not  transferring  small, junk files.  See the --max-size option for a description of SIZE and other info.",
+      "description": "smaller than  the  specified  SIZE,  which  can help in not transferring small, junk files.  See the --max-size option for a  description of SIZE and other info.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -854,7 +848,7 @@
       "long": "--modify-window",
       "value_type": "File",
       "takes_value": true,
-      "description": "comparing  two  timestamps,  rsync treats the timestamps as being equal if they differ by no more than the modify-window value. The default is 0, which matches just integer seconds.  If you specify a negative value (and the receiver is at least  version  3.1.3) then  nanoseconds will also be taken into account.  Specifying 1 is useful for copies to/from MS Windows FAT filesystems, because FAT represents times with a 2-second resolution (allowing times to differ from the original by up to 1 second).",
+      "description": "comparing  two  timestamps, rsync treats the timestamps as being equal if they differ by no  more  than  the  modify-window value.   The  default  is 0, which matches just integer seconds. If you specify a negative value (and the receiver  is  at  least version 3.1.3) then nanoseconds will also be taken into account. Specifying  1  is  useful  for  copies  to/from  MS  Windows FAT filesystems, because FAT represents times with a 2-second  reso‐ lution  (allowing  times  to differ from the original by up to 1 second).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -864,7 +858,7 @@
       "long": "--munge-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option affects just one side of the transfer and tells rsync to munge symlink values when it is receiving files or unmunge sym‐ link values when it is sending files.  The munged values make the symlinks unusable on disk but allows the original contents  of  the symlinks to be recovered.",
+      "description": "option  affects  just  one  side of the transfer and tells rsync to munge symlink values when it is receiving files or  un‐ munge  symlink values when it is sending files.  The munged val‐ ues make the symlinks unusable on disk but allows  the  original contents of the symlinks to be recovered.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -874,44 +868,14 @@
       "long": "--no-OPTION",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "may turn off one or more implied options by prefixing the option name with \"no-\".  Not all positive options have a negated oppo‐ site, but a lot do, including those that can be used to disable an implied option (e.g.  --no-D, --no-perms) or  have  different  de‐ faults  in  various  circumstances  (e.g. --no-whole-file, --no-blocking-io, --no-dirs).  Every valid negated option accepts both the short and the long option name after the \"no-\" prefix (e.g. --no-R is the same as --no-relative).",
+      "description": "may  turn  off one or more implied options by prefixing the option name with \"no-\".  Not all positive options have a negated opposite, but a lot do, including those that can be used to dis‐ able an implied option (e.g.  --no-D, --no-perms) or  have  dif‐ ferent  defaults in various circumstances (e.g. --no-whole-file,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--no-implied-dirs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "option  affects the default behavior of the --relative option.  When it is specified, the attributes of the implied directories from the source names are not included in the transfer.  This means that the corresponding path elements on  the  destination  system are  left  unchanged  if they exist, and any missing implied directories are created with default attributes.  This even allows these implied path elements to have big differences, such as being a symlink to a directory on the receiving side.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-inc-recursive",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "the  new incremental recursion algorithm of the --recursive option.  This makes rsync scan the full file list before it be‐ gins to transfer files.  See --inc-recursive for more info.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-motd",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "option affects the information that is output by the client at the start of a daemon transfer.  This suppresses the message-of- the-day (MOTD) text, but it also affects the list of modules that the daemon sends in response to the \"rsync host::\" request (due  to a limitation in the rsync protocol), so omit this option if you want to request the list of modules from the daemon.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-relative",
+      "long": "--no-R",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -921,10 +885,60 @@
     },
     {
       "short": null,
+      "long": "--no-blocking-io",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Every valid  negated  option  ac‐ cepts  both  the  short and the long option name after the \"no-\" prefix (e.g. --no-R is the same as --no-relative).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-implied-dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "--relative  op‐ tion.   When  it is specified, the attributes of the implied di‐ rectories from the source names are not included in  the  trans‐ fer.   This  means  that  the corresponding path elements on the destination system are left unchanged if  they  exist,  and  any missing implied directories are created with default attributes. This even allows these implied path elements to have big differ‐ ences,  such  as being a symlink to a directory on the receiving side.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-inc-recursive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This makes rsync scan the full file list before it begins to transfer files.  See --inc-recursive for more info.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-motd",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This suppresses the message- of-the-day  (MOTD) text, but it also affects the list of modules that the daemon sends in response to the \"rsync host::\"  request (due to a limitation in the rsync protocol), so omit this option if you want to request the list of modules from the daemon.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-secluded-args",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This environment variable is also superseded by a non-zero RSYNC_OLD_ARGS export.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--no-whole-file",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "whole-file updating when it is enabled by default for a local transfer.  This usually slows rsync down, but it can be useful if you are trying to minimize the writes to the destination file (if combined with --inplace) or for testing the  checksum-based  up‐ date algorithm.",
+      "description": "whole-file updating when it is enabled by default for a local transfer.  This usually slows rsync down, but  it  can  be useful  if you are trying to minimize the writes to the destina‐ tion file (if combined with --inplace) or for testing the check‐ sum-based update algorithm.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -934,7 +948,7 @@
       "long": "--numeric-ids",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't map uid/gid values by user/group name",
+      "description": "this option rsync will transfer numeric group and user IDs rather than using user and group names and mapping them at  both ends.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -944,7 +958,7 @@
       "long": "--old-args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It also allows the client to treat an empty arg as a \".\" instead of generating an error.",
+      "description": "disable the modern arg-protection idiom",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -964,7 +978,7 @@
       "long": "--omit-dir-times",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "If NFS is sharing the directories on the receiving side, it is a good idea to use -O.  This option is inferred if you use --backup without --backup-dir.",
+      "description": "access,  and create times.  If NFS is sharing the di‐ rectories on the receiving side, it is a good idea  to  use  -O. This  option  is  inferred if you use --backup without --backup- dir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -974,7 +988,7 @@
       "long": "--omit-link-times",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "omit symlinks from --times",
+      "description": "modifi‐ cation, access, and create times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -984,7 +998,7 @@
       "long": "--one-file-system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This does not limit the user's ability to specify items  to copy  from multiple filesystems, just rsync's recursion through the hierarchy of each directory that the user specified, and also the analogous recursion on the receiving side during deletion.  Also keep in mind that rsync treats a \"bind\" mount to the same device  as being on the same filesystem.",
+      "description": "tells  rsync  to avoid crossing a filesystem boundary when recursing.  This does not limit the user's  ability  to  specify items  to copy from multiple filesystems, just rsync's recursion through the hierarchy of each directory that the user specified, and also the analogous recursion on the  receiving  side  during deletion.  Also keep in mind that rsync treats a \"bind\" mount to the same device as being on the same filesystem.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -994,7 +1008,7 @@
       "long": "--only-write-batch",
       "value_type": "String",
       "takes_value": true,
-      "description": "This lets you transport the changes to the destination system via some other means and then apply the changes via --read-batch.",
+      "description": "system  when  creating  the  batch.   This lets you transport the changes to the destination system via  some  other means and then apply the changes via --read-batch.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1014,7 +1028,7 @@
       "long": "--out-format",
       "value_type": "File",
       "takes_value": true,
-      "description": "The format is a text string con‐ taining  embedded  single-character escape sequences prefixed with a percent (%) character.  A default format of \"%n%L\" is assumed if either --info=name or -v is specified (this tells you just the name of the file and, if the item is a link, where it points).  For  a full list of the possible escape characters, see the log format setting in the rsyncd.conf manpage.",
+      "description": "The format is a text  string containing  embedded  single-character escape sequences prefixed with a percent (%) character.  A default format of \"%n%L\" is as‐ sumed if either --info=name or -v is specified (this  tells  you just  the  name of the file and, if the item is a link, where it points).  For a full list of the possible escape characters, see the log format setting in the rsyncd.conf manpage.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1024,17 +1038,17 @@
       "long": "--outbuf",
       "value_type": "String",
       "takes_value": true,
-      "description": "The mode can be None (aka Unbuffered), Line, or Block (aka Full).  You may specify as little as a single letter for the mode, and use upper or lower case.",
+      "description": "The mode can be None  (aka Unbuffered), Line, or Block (aka Full).  You may specify as lit‐ tle  as  a  single  letter  for the mode, and use upper or lower case.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-o",
+      "short": null,
       "long": "--owner",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option causes rsync to set the owner of the destination file to be the same as the source file, but only if the receiving rsync is being run as the super-user (see also the --super and --fake-super options).  Without this option, the owner of new and/or  trans‐ ferred files are set to the invoking user on the receiving side.",
+      "description": "(-o),  instead  of  converting -a into -rlptgD, you can specify -a --no-o (aka --archive --no-owner).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1044,7 +1058,7 @@
       "long": "--partial",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "In some circumstances it is more desir‐ able to keep partially transferred files.  Using the --partial option tells rsync to keep the partial file which should make a subse‐ quent transfer of the rest of the file much faster.",
+      "description": "default, rsync will delete any partially transferred file if the transfer is interrupted.  In some circumstances it  is  more desirable to keep partially transferred files.  Using the --par‐ tial  option  tells  rsync to keep the partial file which should make a subsequent transfer of the rest of the file much faster.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1054,7 +1068,7 @@
       "long": "--partial-dir",
       "value_type": "File",
       "takes_value": true,
-      "description": "This enhanced partial-file  method puts  any partially transferred files into the specified DIR instead of writing the partial file out to the destination file.  On the next transfer, rsync will use a file found in this dir as data to speed up the resumption of the transfer and then delete it after it has served its purpose.",
+      "description": "while also  implying  that  it be enabled.  This enhanced partial-file method puts any partially transferred files into  the  specified DIR  instead  of writing the partial file out to the destination file.  On the next transfer, rsync will use a file found in this dir as data to speed up the resumption of the transfer and  then delete it after it has served its purpose.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1064,7 +1078,7 @@
       "long": "--password-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "The  file should  contain  just  the  password on the first line (all other lines are ignored).  Rsync will exit with an error if FILE is world readable or if a root-run rsync command finds a non-root-owned file.",
+      "description": "for  accessing  an rsync daemon via a file or via standard input if FILE is -.  The file  should  contain  just  the password on the first line (all other lines are ignored).  Rsync will exit with an error if FILE is world readable or if a root-run rsync command  finds  a  non- root-owned file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1074,7 +1088,7 @@
       "long": "--perms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "permissions.  (See  also  the",
+      "description": "set  the  destination permissions  to be the same as the source permissions. (See also the --chmod option for a way to modify what rsync  considers  to be the source permissions.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1084,7 +1098,7 @@
       "long": "--port",
       "value_type": "Url",
       "takes_value": true,
-      "description": "This is only needed if you are using the  double- colon (::) syntax to connect with an rsync daemon (since the URL syntax has a way to specify the port as a part of the URL).",
+      "description": "specifies  an alternate TCP port number to use rather than the default of 873.  This is only needed if you  are  using  the double-colon  (::) syntax to connect with an rsync daemon (since the URL syntax has a way to specify the port as a  part  of  the URL).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1094,7 +1108,7 @@
       "long": "--preallocate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Rsync will only  use the  real filesystem-level preallocation support provided by Linux's fallocate(2) system call or Cygwin's posix_fallocate(3), not the slow glibc implementation that writes a null byte into each block.",
+      "description": "size before writing data to the file.  Rsync will only use the real filesystem-level preallocation support provided  by Linux's fallocate(2) system call or Cygwin's posix_fallocate(3), not  the  slow glibc implementation that writes a null byte into each block.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1104,7 +1118,7 @@
       "long": "--progress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This gives a bored user something to watch.  With a  modern rsync this is the same as specifying --info=flist2,name,progress, but any user-supplied settings for those info flags takes precedence (e.g.  --info=flist0 --progress).",
+      "description": "option  tells  rsync  to  print  information  showing  the progress of the transfer.  This gives a bored user something  to watch.   With  a  modern  rsync  this  is the same as specifying",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1114,7 +1128,7 @@
       "long": "--protocol",
       "value_type": "File",
       "takes_value": true,
-      "description": "an  older  protocol  version to be used.  This is useful for creating a batch file that is compatible with an older version of rsync.  For instance, if rsync 2.6.4 is being used with the --write-batch option, but rsync 2.6.3 is what will be  used  to  run  the",
+      "description": "an older protocol version to be used.  This is useful for creating a batch file that is compatible with an  older  version of  rsync.   For instance, if rsync 2.6.4 is being used with the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1124,7 +1138,7 @@
       "long": "--prune-empty-dirs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "have  no non-directory  children.  This is useful for avoiding the creation of a bunch of useless directories when the sending rsync is recur‐ sively scanning a hierarchy of files using include/exclude/filter rules.",
+      "description": "from  the  file-list,  including nested directories that have no non-directory children.  This is useful for avoiding the creation of a bunch of  useless  directories  when  the  sending rsync  is  recursively  scanning  a hierarchy of files using in‐ clude/exclude/filter rules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1134,7 +1148,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the remote server.  This option is useful when invoking rsync from cron.",
+      "description": "you  are  given during  the  transfer,  notably suppressing information messages from the remote server.  This option  is  useful  when  invoking rsync from cron.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1144,7 +1158,7 @@
       "long": "--read-batch",
       "value_type": "File",
       "takes_value": true,
-      "description": "If FILE is -, the batch  data  will  be  read from standard input. See the \"BATCH MODE\" section for details.",
+      "description": "gen‐ erated  by  --write-batch.  If FILE is -, the batch data will be read from standard input. See the \"BATCH MODE\" section  for  de‐ tails.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1154,7 +1168,7 @@
       "long": "--recursive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "See also --dirs (-d) for an option that allows the scanning of a single directory.",
+      "description": "copy  directories  recursively.   See  also",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1164,7 +1178,7 @@
       "long": "--relative",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This means that the full path names specified on the command line are sent to the server rather  than  just  the last  parts of the filenames.  This is particularly useful when you want to send several different directories at the same time.  For example, if you used this command:",
+      "description": "relative paths.  This means that the full path names speci‐ fied on the command line are sent to the server rather than just the last parts of the filenames.  This  is  particularly  useful when  you want to send several different directories at the same time.  For example, if you used this command:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1174,7 +1188,7 @@
       "long": "--remote-option",
       "value_type": "File",
       "takes_value": true,
-      "description": "For instance, if you want to pass --log-file=FILE and --fake-super to the remote system, specify it like this:",
+      "description": "option is used for more advanced situations where you want certain effects to be limited to one side of the transfer  only. For instance, if you want to pass --log-file=FILE and --fake-su‐ per to the remote system, specify it like this:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1184,7 +1198,7 @@
       "long": "--remove-source-files",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "and  have  been successfully duplicated on the receiving side.",
+      "description": "tells  rsync  to  remove  from  the sending side the files (meaning non-directories) that are a part of  the  transfer  and have been successfully duplicated on the receiving side.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1194,7 +1208,7 @@
       "long": "--rsh",
       "value_type": "String",
       "takes_value": true,
-      "description": "option allows you to choose an alternative remote shell program to use for communication between the local and remote copies of rsync.  Typically, rsync is configured to use ssh by default, but you may prefer to use rsh on a local network.",
+      "description": "an  alternative  remote  shell program  to  use  for communication between the local and remote copies of rsync.  Typically, rsync is configured to use  ssh  by default, but you may prefer to use rsh on a local network.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1204,7 +1218,7 @@
       "long": "--rsync-path",
       "value_type": "File",
       "takes_value": true,
-      "description": "this  to specify what program is to be run on the remote machine to start-up rsync.  Often used when rsync is not in the default remote-shell's path (e.g. --rsync-path=/usr/local/bin/rsync).  Note that PROGRAM is run with the help of a shell, so it  can  be  any program,  script,  or command sequence you'd care to run, so long as it does not corrupt the standard-in & standard-out that rsync is using to communicate.",
+      "description": "this to specify what program is to be run on the remote ma‐ chine to start-up rsync.  Often used when rsync is  not  in  the default    remote-shell's   path   (e.g.   --rsync-path=/usr/lo‐ cal/bin/rsync).  Note that PROGRAM is run with  the  help  of  a shell,  so  it  can  be any program, script, or command sequence you'd care to run, so long as it does not corrupt the  standard- in & standard-out that rsync is using to communicate.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1214,7 +1228,7 @@
       "long": "--safe-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "tells  the receiving rsync to ignore any symbolic links in the transfer which point outside the copied tree.  All absolute sym‐ links are also ignored.",
+      "description": "links  in the  transfer which point outside the copied tree.  All absolute symlinks are also ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1224,7 +1238,7 @@
       "long": "--secluded-args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  remote  shell  command  line)  which avoids letting the remote shell modify them.  Wildcards are expanded on the remote host by rsync instead of a shell.",
+      "description": "option  sends all filenames and most options to the remote rsync via the protocol (not the remote shell command line) which avoids letting the remote shell modify them.  Wildcards are  ex‐ panded on the remote host by rsync instead of a shell.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1234,7 +1248,7 @@
       "long": "--size-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "modifies  rsync's \"quick check\" algorithm for finding files that need to be transferred, changing it from the default of trans‐ ferring files with either a changed size or a changed last-modified time to just looking for files that have changed in  size.   This is useful when starting to use rsync after using another mirroring system which may not preserve timestamps exactly.",
+      "description": "modifies rsync's \"quick check\" algorithm for finding files that need to be transferred, changing it  from  the  default  of transferring files with either a changed size or a changed last- modified  time  to  just  looking for files that have changed in size.  This is useful when starting to use rsync after using an‐ other mirroring system which may  not  preserve  timestamps  ex‐ actly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1254,7 +1268,7 @@
       "long": "--sockopts",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "option can provide endless fun for people who like to tune their systems to the utmost degree.  You can set all sorts of socket options which may make transfers faster (or slower!).  Read the manpage for the setsockopt() system call for details on some  of  the options  you may be able to set.  By default no special socket options are set.  This only affects direct socket connections to a re‐ mote rsync daemon.",
+      "description": "option can provide endless fun for people who like to tune their systems to the utmost degree.  You can set  all  sorts  of socket  options  which  may  make transfers faster (or slower!). Read the manpage for the setsockopt() system call for details on some of the options you may be able to set.  By default no  spe‐ cial  socket  options  are set.  This only affects direct socket connections to a remote rsync daemon.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1264,7 +1278,7 @@
       "long": "--sparse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If combined with --inplace  the  file  created might  not  end  up with sparse blocks with some combinations of kernel version and/or filesystem type.  If --whole-file is in effect (e.g. for a local copy) then it will always work because rsync truncates the file prior to writing out the updated version.",
+      "description": "to  handle  sparse  files  efficiently so they take up less space on the destination.  If combined with --inplace  the  file created  might  not end up with sparse blocks with some combina‐ tions of kernel version and/or filesystem type.  If --whole-file is in effect (e.g. for a local copy) then it  will  always  work because  rsync  truncates  the file prior to writing out the up‐ dated version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1274,7 +1288,7 @@
       "long": "--specials",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option causes rsync to transfer special files, such as named sockets and fifos.  If the receiving rsync is not being run as the super-user, rsync silently skips creating the special files (see also the --super and --fake-super options).",
+      "description": "option  causes  rsync  to  transfer special files, such as named sockets and fifos.  If the receiving rsync  is  not  being run as the super-user, rsync silently skips creating the special files (see also the --super and --fake-super options).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1284,7 +1298,7 @@
       "long": "--stats",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is for your data.  This option is equivalent to --info=stats2 if combined with 0 or 1 -v options, or --info=stats3 if com‐ bined with 2 or more -v options.",
+      "description": "tells  rsync  to  print a verbose set of statistics on the file transfer, allowing you to tell how effective rsync's delta- transfer algorithm is for your data.  This option is  equivalent to  --info=stats2  if  combined  with  0  or  1  -v  options, or",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1294,7 +1308,7 @@
       "long": "--stderr",
       "value_type": "String",
       "takes_value": true,
-      "description": "The mode strings can  be  ab‐ breviated, so feel free to use a single letter value.  The 3 possible choices are:",
+      "description": "change stderr output mode (default: errors)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1302,9 +1316,9 @@
     {
       "short": null,
       "long": "--stop-after",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Stop rsync after MINS minutes have elapsed",
+      "description": "option tells rsync to stop copying when the specified num‐ ber of minutes has elapsed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1314,7 +1328,7 @@
       "long": "--stop-at",
       "value_type": "Number",
       "takes_value": true,
-      "description": "in a  numeric  format  of year-month-dayThour:minute (e.g. 2000-12-31T23:59) in the local timezone.  You may choose to separate the date numbers using slashes instead of dashes.",
+      "description": "a  numeric  format   of   year-month-dayThour:minute   (e.g. 2000-12-31T23:59) in the local timezone.  You may choose to sep‐ arate the date numbers using slashes instead of dashes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1322,9 +1336,9 @@
     {
       "short": null,
       "long": "--suffix",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "option  allows  you  to override the default backup suffix used with the --backup (-b) option.  The default suffix is a ~ if no",
+      "description": "option  allows  you  to override the default backup suffix used with the --backup (-b) option.  The default suffix is  a  ~ if  no  --backup-dir  was  specified,  otherwise  it is an empty string.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1334,7 +1348,7 @@
       "long": "--super",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "These  ac‐ tivities include: preserving users via the --owner option, preserving all groups (not just the current user's groups) via the --group option, and copying devices via the --devices option.  This is useful for systems that allow such activities without being the super- user, and also for ensuring that you will get errors if the receiving side isn't being run as the super-user.  To turn off super-user activities, the super-user can use --no-super.",
+      "description": "tells  the receiving side to attempt super-user activities even if the receiving rsync wasn't run by the super-user.  These activities include: preserving users  via  the  --owner  option, preserving  all  groups (not just the current user's groups) via the --group option, and copying devices via  the  --devices  op‐ tion.   This  is  useful  for systems that allow such activities without being the super-user, and also  for  ensuring  that  you will get errors if the receiving side isn't being run as the su‐ per-user.  To turn off super-user activities, the super-user can use --no-super.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1344,7 +1358,7 @@
       "long": "--temp-dir",
       "value_type": "File",
       "takes_value": true,
-      "description": "receiv‐ ing side.  The default behavior is to create each temporary file in the same directory as the associated destination file.  Beginning with  rsync 3.1.1, the temp-file names inside the specified DIR will not be prefixed with an extra dot (though they will still have a random suffix added).",
+      "description": "a  scratch  directory when  creating  temporary copies of the files transferred on the receiving side.  The default behavior is to create  each  tempo‐ rary  file  in  the same directory as the associated destination file.  Beginning with rsync 3.1.1, the  temp-file  names  inside the specified DIR will not be prefixed with an extra dot (though they will still have a random suffix added).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1354,7 +1368,7 @@
       "long": "--timeout",
       "value_type": "String",
       "takes_value": true,
-      "description": "If no data is transferred for the specified  time  then  rsync  will exit.  The default is 0, which means no timeout.",
+      "description": "seconds. If no data is transferred for the specified time then rsync will exit.  The default is 0, which means no timeout.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1364,7 +1378,7 @@
       "long": "--times",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "tells rsync to transfer modification times along with the files and update them on the remote system.  Note that if this option is not used, the optimization that excludes files that have not been modified cannot be effective; in other words, a missing  -t  (or",
+      "description": "with  the files  and  update them on the remote system.  Note that if this option is not used, the optimization that  excludes  files  that have  not  been  modified cannot be effective; in other words, a missing -t (or -a) will cause the next transfer to behave as  if it  used  --ignore-times  (-I),  causing all files to be updated (though rsync's delta-transfer algorithm will  make  the  update fairly  efficient  if the files haven't actually changed, you're much better off using -t).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1374,7 +1388,7 @@
       "long": "--trust-sender",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  disables  two extra validation checks that a local client performs on the file list generated by a remote sender.  This option should only be used if you trust the sender to not put something malicious in the file list (something that could possibly  be done via a modified rsync, a modified shell, or some other similar manipulation).",
+      "description": "option  disables  two extra validation checks that a local client performs on the file list generated by a  remote  sender. This  option  should only be used if you trust the sender to not put something malicious in the file list (something  that  could possibly be done via a modified rsync, a modified shell, or some other similar manipulation).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1384,7 +1398,7 @@
       "long": "--update",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "file.  (If an existing destination file has a modification time equal to the source file's, it will be updated if the sizes are different.)",
+      "description": "destina‐ tion  and  have  a  modified  time that is newer than the source file. (If an existing destination file has a  modification  time equal  to the source file's, it will be updated if the sizes are different.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1394,7 +1408,7 @@
       "long": "--usermap",
       "value_type": "Number",
       "takes_value": true,
-      "description": "The STRING  is  one or  more  FROM:TO  pairs of values separated by commas.  Any matching FROM value from the sender is replaced with a TO value from the receiver.  You may specify usernames or user IDs for the FROM and TO values, and the FROM value may also be a wild-card string, which will be matched against the sender's names (wild-cards do NOT match against ID numbers, though see below for why a '*' matches every‐ thing).  You may instead specify a range of ID numbers via an inclusive range: LOW-HIGH.  For example:",
+      "description": "should be  mapped to other values by the receiving side.  The STRING is one or more FROM:TO pairs of values separated  by  commas.   Any matching  FROM value from the sender is replaced with a TO value from the receiver.  You may specify usernames or  user  IDs  for the  FROM  and TO values, and the FROM value may also be a wild- card string, which will be matched against  the  sender's  names (wild-cards  do  NOT  match against ID numbers, though see below for why a '*' matches everything).  You may  instead  specify  a range of ID numbers via an inclusive range: LOW-HIGH.  For exam‐ ple:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1404,7 +1418,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  increases  the amount of information you are given during the transfer.  By default, rsync works silently.  A single -v will give you information about what files are being transferred and a brief summary at the end.  Two -v options will give you infor‐ mation on what files are being skipped and slightly more information at the end.  More than two -v options should only be used if you are debugging rsync.",
+      "description": "you  are  given during  the transfer.  By default, rsync works silently.  A sin‐ gle -v will give you information  about  what  files  are  being transferred and a brief summary at the end.  Two -v options will give  you  information  on  what  files  are  being  skipped and slightly more information at the end.  More than two -v  options should only be used if you are debugging rsync.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1414,7 +1428,7 @@
       "long": "--version",
       "value_type": "String",
       "takes_value": true,
-      "description": "When repeated, the information is output is a JSON format  that  is  still  fairly readable (client side only).",
+      "description": "info  and  exit.   When  re‐ peated, the information is output is a JSON format that is still fairly readable (client side only).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1424,7 +1438,7 @@
       "long": "--whole-file",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  disables  rsync's  delta-transfer  algorithm, which causes all transferred files to be sent whole.  The transfer may be faster if this option is used when the bandwidth between the source and destination machines is higher than  the  bandwidth  to  disk (especially when the \"disk\" is actually a networked filesystem).  This is the default when both the source and destination are speci‐ fied as local paths, but only if no batch-writing option is in effect.",
+      "description": "option  disables  rsync's  delta-transfer algorithm, which causes all transferred files to be sent whole.  The transfer may be faster if this option is used when the bandwidth between  the source  and destination machines is higher than the bandwidth to disk  (especially  when  the  \"disk\"  is  actually  a  networked filesystem).   This is the default when both the source and des‐ tination are specified as local paths, but  only  if  no  batch- writing option is in effect.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1432,9 +1446,9 @@
     {
       "short": null,
       "long": "--write-batch",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "See the \"BATCH  MODE\"  section  for  de‐ tails, and also the --only-write-batch option.",
+      "description": "a  file  that  can later be applied to another identical destination with --read-batch.  See the \"BATCH MODE\" section for details, and also the --only-write-batch option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1444,7 +1458,7 @@
       "long": "--write-devices",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "write to devices as files (implies --inplace)",
+      "description": "tells  rsync  to treat a device on the receiving side as a regular file, allowing the writing of file data into a device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1454,7 +1468,7 @@
       "long": "--xattrs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "preserve extended attributes",
+      "description": "at‐ tributes to be the same as the source ones.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1464,7 +1478,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "valid  in the current locale and escaping the invalid ones.  All control characters (but never tabs) are always escaped, regardless of this op‐ tion's setting.",
+      "description": "unescaped  in the  output  instead  of  trying  to test them to see if they're valid in the current locale and escaping the invalid ones.   All control  characters (but never tabs) are always escaped, regard‐ less of this option's setting.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1484,7 +1498,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The -F option is a shorthand for adding two --filter rules to your command.  The first time it is used is a shorthand for this rule:",
+      "description": "The  -F  option  is a shorthand for adding two --filter rules to your command.  The first time it is used is a shorthand for this rule:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1494,7 +1508,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The -P option is equivalent to \"--partial --progress\".  Its purpose is to make it much easier to specify these two options for a long transfer that may be interrupted.",
+      "description": "The -P option is equivalent to \"--partial --progress\".  Its pur‐ pose  is to make it much easier to specify these two options for a long transfer that may be interrupted.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1503,7 +1527,7 @@
   "subcommands": [
     {
       "name": "--no-old-args",
-      "description": null,
+      "description": "--se‐ cluded-args is specified on the command line.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1518,6 +1542,70 @@
       "aliases": []
     },
     {
+      "name": "batch",
+      "description": "option is used: it will be named the same as the batch file with \".sh\" appended. This script file contains a command-line suitable for",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "by",
+      "description": "default. When this environment variable is set to a non-zero value, it supersedes the RSYNC_PROTECT_ARGS variable.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "checksum",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "due",
+      "description": "to a transfer rule, the receiving side does not request the file.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "empty-dirs",
+      "description": "option will not judge a directory as being empty even if it contains only files that the transfer rules omitted.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "executed",
+      "description": "using a Bourne (or Bourne-like) shell, optionally passing in",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "get",
+      "description": "deleted on the receiving side. For example, if the file \"foo\" is",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "not",
+      "description": "remove a matching file named \"foo\" on the receiving side. On the",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "o",
       "description": "an option was specified that is supported by the client and not by the server",
       "flags": [],
@@ -1526,8 +1614,80 @@
       "aliases": []
     },
     {
-      "name": "reduced",
-      "description": "list of names. Use the command rsync --version to see the available compression names. See the --compress option for full details.",
+      "name": "ple",
+      "description": "destination trees. Multicast transport protocols can be used to",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "script",
+      "description": "named rrsync (for restricted rsync) that can be used with a re‐ stricted ssh login.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "set",
+      "description": "If both are set, USER takes precedence.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "shell",
+      "description": "in combination with a daemon connection. This allows a script such as rsync-ssl to be able to know the port number that the user specified on the command line.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "should",
+      "description": "never be typed by a user under normal circumstances. Some",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "stance",
+      "description": "example",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "such",
+      "description": "as",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "the",
+      "description": "--prune-",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "this",
+      "description": "using batch mode, rsync is run with the write-batch option to ap‐",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "when",
+      "description": "setting up a login that can only run an rsync command. For in‐",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1537,27 +1697,6 @@
   "positional": [
     {
       "name": "and",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "at",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "available",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "copying",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -1586,20 +1725,6 @@
     },
     {
       "name": "includes",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "instead",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "is",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -1684,13 +1809,6 @@
     },
     {
       "name": "this",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "topics",
       "value_type": "String",
       "required": true,
       "multiple": false,

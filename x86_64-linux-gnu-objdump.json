@@ -8,7 +8,7 @@
       "long": "--adjust-vma",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is useful if the section addresses do not  correspond  to the  symbol  table,  which  can happen when putting sections at particular addresses when using a format which can not represent section addresses, such as a.out.",
+      "description": "add  offset  to  all  the  section addresses.   This  is  useful  if  the  section  addresses  do  not correspond to the symbol  table,  which  can  happen  when  putting sections  at particular addresses when using a format which can not represent section addresses, such as a.out.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--all-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Using -x is equivalent to  specifying  all of -a -f -h -p -r -t.",
+      "description": "all  available  header  information,  including the symbol table and relocation entries.  Using -x is equivalent to specifying all of -a -f -h -p -r -t.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--architecture",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  architecture  to  use  when  disassembling  object files.  This can be useful when disassembling object files which do not describe architecture information, such as S-records.  You can list the available architectures with the -i option.",
+      "description": "the  architecture  to use when disassembling object files. This can be useful when disassembling object  files  which  do  not describe architecture information, such as S-records.  You can list the available architectures with the -i option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--archive-header",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "any  of  the  objfile  files  are  archives,  display  the  archive  header information (in a format similar to ls -l).  Besides the information you could list with ar tv, objdump -a shows the object file format of each archive member.",
+      "description": "any  of  the  objfile  files  are archives, display the archive header information (in a format similar to  ls  -l).   Besides  the information  you could list with ar tv, objdump -a shows the object file format of each archive member.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--ctf",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  contents  of  the  specified CTF section.  CTF sections themselves contain many subsections, all of which are displayed in order.",
+      "description": "the  contents  of the specified CTF section.  CTF sections themselves contain many subsections, all of which are displayed  in order.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,17 @@
       "long": "--ctf-parent",
       "value_type": "String",
       "takes_value": true,
-      "description": "from  one dictionary  containing  unambiguous  types.  This member is by default named .ctf, like the section containing it, but it is possible to change this name using the \"ctf_link_set_memb_name_changer\" function at link time.  When looking at CTF archives that have been  created by  a  linker  that uses the name changer to rename the parent archive member, --ctf-parent can be used to specify the name used for the parent.",
+      "description": "contains  ambiguously-defined  types,  it  will consist of an archive of many CTF dictionaries, all inheriting from one  dictionary  containing  unambiguous  types.  This member is by default named .ctf, like the  section  containing  it,  but  it  is possible      to      change      this      name      using     the \"ctf_link_set_memb_name_changer\"  function  at  link  time.    When looking  at  CTF  archives  that have been created by a linker that uses  the  name  changer  to  rename  the  parent  archive  member,",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": "--debugging",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "debugging  information.   This  attempts  to  parse  STABS debugging  format  information  stored in the file and print it out using a C like syntax.  If no STABS debugging was found this option falls back on the -W option to print any DWARF information  in  the file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--debugging-tags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display debug information using ctags style",
+      "description": "-g,  but  the information is generated in a format compatible with ctags tool.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--decompress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "-Z  option is meant to be used in conunction with the -s option.  It instructs objdump to decompress any compressed sections before displaying their contents.",
+      "description": "sections  before displaying their contents.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +108,7 @@
       "long": "--demangle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Besides removing any initial underscore prepended by the  system,  this makes  C++  function  names readable.  Different compilers have different mangling styles. The optional demangling style argument can be used to choose an appropriate demangling style for your compiler.",
+      "description": "names  into  user-level  names. Besides  removing  any  initial underscore prepended by the system, this makes C++ function names readable.  Different  compilers  have different  mangling  styles. The optional demangling style argument can be used to choose an  appropriate  demangling  style  for  your compiler.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": "--disassemble-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "-d,  but  disassemble  the contents of all non-empty non-bss sections, not just those expected to contain instructions.  -j may be used to select specific sections.",
+      "description": "contents  of  all  non-empty  non-bss sections,  not just those expected to contain instructions.  -j may be used to select specific sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--disassemble-zeroes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option directs the disassembler to disassemble those blocks, just like any other data.",
+      "description": "zeroes.   This option  directs  the disassembler to disassemble those blocks, just like any other data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": "--disassembler-options",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "target  specific  information  to  the disassembler.  Only supported on some targets.  If it is necessary to specify more than one disassembler option then multiple -M options can be used or can be placed together into a comma separated list.",
+      "description": "target  specific  information  to  the  disassembler.    Only supported on some targets.  If it is necessary to specify more than one disassembler option then multiple -M options can be used or can be placed together into a comma separated list.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": "--dwarf",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  contents  of  the  DWARF  debug  sections  in  the file, if any are present.  Compressed debug sections are automatically decompressed (temporarily) before they are displayed.  If one or more of the optional letters or words  follows  the  switch  then  only those type(s) of data will be dumped.  The letters and words refer to the following information:",
+      "description": "file,  if any  are  present.   Compressed  debug  sections  are automatically decompressed (temporarily) before they are displayed.   If  one  or more  of the optional letters or words follows the switch then only those type(s) of data will be dumped.  The letters and words  refer to the following information:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +186,9 @@
     {
       "short": null,
       "long": "--dwarf-depth",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not display DIEs at depth N or greater",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This is only useful with --debug-dump=info.  The default is  to  print  all DIEs; the special value 0 for n will also have this effect.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +198,7 @@
       "long": "--dwarf-start",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is only useful with --debug-dump=info.",
+      "description": "This  is  only useful with --debug-dump=info.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +208,7 @@
       "long": "--dynamic-reloc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  dynamic  relocation  entries  of  the  file.   This  is only meaningful for dynamic objects, such as certain types of shared libraries.  As for -r, if used with -d or -D, the relocations are printed interspersed with the disassembly.",
+      "description": "the  dynamic  relocation  entries of the file.  This is only meaningful for dynamic objects, such as  certain  types  of  shared libraries.   As  for -r, if used with -d or -D, the relocations are printed interspersed with the disassembly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +218,17 @@
       "long": "--dynamic-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is only meaningful for dynamic  objects,  such  as  certain  types  of  shared libraries.  This is similar to the information provided by the nm program when given the -D (--dynamic) option.",
+      "description": "This  is  only meaningful  for  dynamic  objects,  such as certain types of shared libraries.  This is similar to the information provided by  the  nm program when given the -D (--dynamic) option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enable-follow-debug-links",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "or",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +238,7 @@
       "long": "--endian",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  endianness of the object files.  This only affects disassembly.  This can be useful when disassembling a file format which does not describe endianness information, such as S-records.",
+      "description": "the  endianness  of  the  object files.  This only affects disassembly.  This can be useful when disassembling a  file  format which does not describe endianness information, such as S-records.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +248,7 @@
       "long": "--file-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of the overall file header",
+      "description": "summary information from the overall header of each of the objfile files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +258,7 @@
       "long": "--file-offsets",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  is  about  to  be dumped.   If  zeroes are being skipped, then when disassembly resumes, tell the user how many zeroes were skipped and the file offset of the location from where the disassembly resumes.  When dumping sections, display the file offset of the location  from  where  the  dump starts.",
+      "description": "displayed,  also display  the  file offset of the region of data that is about to be dumped.   If  zeroes  are  being  skipped,  then  when  disassembly resumes,  tell  the  user how many zeroes were skipped and the file offset of the location from where the  disassembly  resumes.   When dumping  sections,  display  the  file  offset of the location from where the dump starts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +268,7 @@
       "long": "--file-start-context",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  when  displaying interlisted source code/disassembly (assumes -S) from a file that has not yet been displayed, extend the context to the start of the file.",
+      "description": "interlisted  source  code/disassembly (assumes  -S)  from  a file that has not yet been displayed, extend the context to the start of the file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +278,7 @@
       "long": "--full-contents",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "By default all non-empty non-bss sections are displayed.  By default any compressed section will be displayed in its compressed form.  In order to see the contents in  a decompressed form add the -Z option to the command line.",
+      "description": "used  in  combination with  -j  to  request  specific sections.  By default all non-empty non-bss sections are displayed.  By default any compressed  section will  be  displayed  in  its  compressed form.  In order to see the contents in a decompressed form add the -Z option  to  the  command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +288,7 @@
       "long": "--headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "object file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +318,7 @@
       "long": "--info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List object formats and architectures supported",
+      "description": "a  list  showing  all  architectures  and  object  formats available for specification with -b or -m.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +338,7 @@
       "long": "--insn-width",
       "value_type": "String",
       "takes_value": true,
-      "description": "Display WIDTH bytes on a single line for -d",
+      "description": "width   bytes   on   a  single  line  when  disassembling instructions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +348,7 @@
       "long": "--line-numbers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "object  code  or  relocs shown.  Only useful with -d, -D, or -r.",
+      "description": "the  display (using debugging information) with the filename and source line numbers corresponding to the object code or  relocs shown.  Only useful with -d, -D, or -r.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +358,7 @@
       "long": "--no-addresses",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "In  combination  with  --no-show-raw-insn this may be useful for comparing compiler output.",
+      "description": "disassembling,  don't  print  addresses  on  each line or for symbols   and   relocation   offsets.     In    combination    with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +378,7 @@
       "long": "--no-recursion-limit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Since the name mangling formats  allow  for an  infinite  level of recursion it is possible to create strings whose decoding will exhaust the amount of stack space available on the host machine, triggering a memory fault.  The limit tries to prevent this from happening by restricting  recursion  to  2048  levels  of nesting.",
+      "description": "or  disables  a limit on the amount of recursion performed whilst demangling strings.  Since the name mangling  formats  allow for an infinite level of recursion it is possible to create strings whose  decoding will exhaust the amount of stack space available on the host machine, triggering a memory fault.  The  limit  tries  to prevent this from happening by restricting recursion to 2048 levels of nesting.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +388,7 @@
       "long": "--no-show-raw-insn",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is the default when --prefix-addresses is used.",
+      "description": "this  may  be  useful  for  comparing  compiler output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -396,9 +416,9 @@
     {
       "short": null,
       "long": "--prefix-strip",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Strip initial directory names for -S",
+      "description": "how  many  initial  directory  names  to  strip  off  the hardwired absolute paths. It has no effect without --prefix=prefix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +428,7 @@
       "long": "--private",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The argument options is a comma separated list that depends on the format (the lists of options is displayed with the help).",
+      "description": "information that is specific to the object file format.  The argument options is a comma separated  list  that  depends  on  the format (the lists of options is displayed with the help).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +438,7 @@
       "long": "--private-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The exact information printed depends upon the object file  format.   For some object file formats, no additional information is printed.",
+      "description": "The exact information printed depends upon the object file format.  For some object file formats, no additional information is printed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +448,7 @@
       "long": "--process-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  contents  of  non-debug  sections  found  in  separate  debuginfo  files  that  are  linked to the main file.  This option automatically implies the -WK option, and only sections requested by other command line options will be displayed.",
+      "description": "contents  of  non-debug  sections  found  in  separate debuginfo  files  that  are  linked  to the main file.  This option automatically implies the -WK option, and only  sections  requested by other command line options will be displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,16 +478,16 @@
       "long": "--reloc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If used with -d or -D, the relocations are printed interspersed with the disassembly.",
+      "description": "If used with -d  or  -D, the relocations are printed interspersed with the disassembly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-j",
       "long": "--section",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "This option may be specified multiple times.",
       "multiple": false,
       "conflicts_with": [],
@@ -498,7 +518,7 @@
       "long": "--show-all-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When disassembling, display all symbols at a given address",
+      "description": "show  all  the  symbols  that  match  a  given address, not just the first one.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +528,7 @@
       "long": "--show-raw-insn",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disassembling  instructions,  print  the  instruction  in  hex  as  well  as  in  symbolic  form.  This is the default except when",
+      "description": "in  hex  as well  as  in  symbolic  form.   This  is  the  default  except when",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +538,7 @@
       "long": "--source",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Implies -d.",
+      "description": "source  code  intermixed  with  disassembly,  if possible. Implies -d.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +548,7 @@
       "long": "--source-comment",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  -S option, but all source code lines are displayed with a prefix of txt.  Typically txt will be a comment string which can be used to distinguish the assembler code from the source code.  If txt is not provided then a default string of \"# \" (hash followed  by  a space), will be used.",
+      "description": "the -S option, but all source code lines are displayed with a prefix of txt.  Typically txt will be a comment string which can be used to distinguish the assembler code from the  source  code.   If txt is not provided then a default string of \"# \" (hash followed by a space), will be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,7 +558,7 @@
       "long": "--special-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "displaying  symbols include those which the target considers to be special in some way and which would not normally be of interest to the user.",
+      "description": "special in some way and which would not normally be of interest to the user.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +568,7 @@
       "long": "--stabs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of the .stab and .stab.index and .stab.excl sections from  an ELF  file.   This  is only useful on systems (such as Solaris 2.0) in which \".stab\" debugging symbol-table entries are carried in an ELF section.  In most other file formats, debugging symbol-table entries are interleaved with linkage symbols, and are visible in the --syms output.",
+      "description": "the  full contents of any sections requested.  Display the contents of the .stab and .stab.index and .stab.excl sections  from an  ELF file.  This is only useful on systems (such as Solaris 2.0) in which \".stab\" debugging symbol-table entries are carried  in  an ELF  section.   In  most other file formats, debugging symbol-table entries are interleaved with linkage symbols, and  are  visible  in the --syms output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -558,7 +578,7 @@
       "long": "--start-address",
       "value_type": "String",
       "takes_value": true,
-      "description": "This affects the output of the -d, -r and -s options.",
+      "description": "displaying  data at the specified address.  This affects the output of the -d, -r and -s options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +588,7 @@
       "long": "--stop-address",
       "value_type": "String",
       "takes_value": true,
-      "description": "This affects the output of the -d, -r and -s options.",
+      "description": "This  affects  the output of the -d, -r and -s options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -578,17 +598,17 @@
       "long": "--syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is similar to the information provided by the nm program, although the display  format is  different.  The format of the output depends upon the format of the file being dumped, but there are two main types.  One looks like this:",
+      "description": "This is similar to the information provided by the nm program, although the display format is  different.  The format of the output depends upon the format of the file being dumped, but there are two  main  types.   One  looks like this:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-b",
       "long": "--target",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "This option  may  not  be  necessary;  objdump  can  automatically recognize many formats.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  object-code  format  for  the  object  files  is bfdname.    This   option   may   not  be  necessary;  objdump  can automatically recognize many formats.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -596,9 +616,9 @@
     {
       "short": null,
       "long": "--unicode",
-      "value_type": "String",
+      "value_type": "Url",
       "takes_value": true,
-      "description": "The default (--unicode=default)  is  to  give  them  no  special treatment.   The  --unicode=locale  option  displays the sequence in the current locale, which may or may not support them.  The options",
+      "description": "of  UTF-8  encoded  multibyte  characters  in strings.   The  default  (--unicode=default)  is  to  give  them no special  treatment.   The  --unicode=locale  option  displays   the sequence  in the current locale, which may or may not support them. The options --unicode=hex and --unicode=invalid display them as hex byte sequences enclosed by either angle brackets or curly braces.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,7 +638,7 @@
       "long": "--visualize-jumps",
       "value_type": "String",
       "takes_value": true,
-      "description": "The optional  =color  argument adds color to the output using simple terminal colors.  Alternatively the =extended-color argument will add color using 8bit colors, but these might not work on all terminals.",
+      "description": "drawing  ASCII  art between  the  start  and  target  addresses.   The  optional =color argument adds color to the output  using  simple  terminal  colors. Alternatively  the  =extended-color  argument  will add color using 8bit colors, but these might not work on all terminals.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -628,7 +648,7 @@
       "long": "--wide",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Also do not truncate symbol names when they are displayed.",
+      "description": "for  output  devices  that  have  more  than  80 columns.    Also  do  not  truncate  symbol  names  when  they  are displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -665,16 +685,6 @@
     },
     {
       "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-d",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,

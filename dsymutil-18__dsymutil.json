@@ -18,7 +18,7 @@
       "long": "--arch",
       "value_type": "String",
       "takes_value": true,
-      "description": "Architectures may be specified by name. When using this  op‐ tion,  an  error will be returned if any architectures can not be properly linked.  This option can be specified multiple times, once for each desired architecture. All CPU architectures will be linked by default and any architectures that can't  be  properly  linked will cause dsymutil to return an error.",
+      "description": "Architectures may be specified by name. When using this option, an error will be returned if any architectures  can  not be  properly  linked.   This  option  can  be specified multiple times, once for each desired architecture. All CPU architectures will be linked by default and any architectures  that  can't  be properly linked will cause dsymutil to return an error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--build-variant-suffix",
       "value_type": "File",
       "takes_value": true,
-      "description": "There can be multiple variants for the binary of a product, each built slightly differently. The most common build variants are 'debug' and 'profile'. Setting the DYLD_IMAGE_SUFFIX environment vari‐ able will cause dyld to load the specified variant at runtime.",
+      "description": "the  build  variant suffix used to build the executable file.  There can be multiple variants for the binary of a  prod‐ uct,  each  built  slightly  differently.  The most common build variants are 'debug' and 'profile'. Setting the  DYLD_IMAGE_SUF‐ FIX  environment  variable will cause dyld to load the specified variant at runtime.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--dump-debug-map",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  executable's  debug-map  (the list of the object files containing the debug information) in YAML format and exit. No DWARF link will take place.",
+      "description": "the  object  files containing  the  debug  information) in YAML format and exit. No DWARF link will take place.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--flat",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Produce a flat dSYM file (not a bundle).",
+      "description": "executable  name  unless the output file is specified using the -o option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": null,
       "long": "--gen-reproducer",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Generate a reproducer consisting of the input object files. Alias for --reproducer=GenerateOnExit.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "of  the  input  object  files. Alias for --reproducer=GenerateOnExit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--keep-function-for-static",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "a  static  variable keep the enclosing function even if it would have been omitted otherwise.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--minimize",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "and  .debug_pub‐ types sections since dsymutil currently has better equivalents: .apple_names and .apple_types. When used in conjunction with --update option, this option will cause redundant accelerator tables to be removed.",
+      "description": "will  suppress the  emission  of  the .debug_inlines, .debug_pubnames, and .de‐ bug_pubtypes sections since dsymutil currently has better equiv‐ alents: .apple_names and .apple_types. When used in  conjunction with --update option, this option will cause redundant accelera‐ tor tables to be removed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--num-threads",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --num-threads",
+      "description": "the maximum number (n) of simultaneous threads to use when linking multiple architectures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": null,
       "long": "--object-prefix-map",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "object  file  paths  (but  no source paths) before processing.  Use this for Clang objects where the module cache location was remapped using -fdebug-prefix-map; to help dsymutil find the Clang module cache.",
+      "description": "location  was remapped  using  -fdebug-prefix-map;  to  help dsymutil find the Clang module cache.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--oso-prepend-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "all  debug  symbol  object  file paths.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--out",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  the  executable name.",
+      "description": "an  alternate  path to place the dSYM bundle. The de‐ fault dSYM bundle path is created by appending .dSYM to the exe‐ cutable name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--remarks-drop-without-debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "flags, all remarks are kept.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--remarks-output-format",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  format  to be used when serializing the linked re‐ marks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--remarks-prepend-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "remark files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--reproducer",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Specify the reproducer generation mode. Valid options are 'GenerateOnExit', 'GenerateOnCrash', 'Off'.",
+      "description": "the reproducer generation mode. Valid options are 'Gen‐ erateOnExit', 'GenerateOnCrash', 'Use', 'Off'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--statistics",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "statistics about the contribution of each object file to the linked debug info. This prints a table after linking with the ob‐ ject file name, the size of the debug info in the object file (in bytes) and the size contributed (in bytes) to the linked dSYM.  The table is sorted by the output size listing the object files with the largest contribution first.",
+      "description": "file  to the  linked  debug  info. This prints a table after linking with the object file name, the size of the debug info in  the  object file  (in  bytes)  and  the  size  contributed (in bytes) to the linked dSYM. The table is sorted by the output size listing  the object files with the largest contribution first.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--update",
       "value_type": "File",
       "takes_value": true,
-      "description": "an  existing  dSYM  file to contain the latest accelerator tables and other DWARF optimizations. This option will rebuild the '.apple_names' and '.apple_types' hashed accelerator tables.",
+      "description": "an  existing dSYM file to contain the latest accelerator tables and other DWARF optimizations. This option  will  rebuild the '.apple_names' and '.apple_types' hashed accelerator tables.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,9 +276,9 @@
     {
       "short": null,
       "long": "--use-reproducer",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  object files from the given reproducer path. Alias for",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

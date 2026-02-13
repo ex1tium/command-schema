@@ -28,7 +28,7 @@
       "long": "--admindir",
       "value_type": "File",
       "takes_value": true,
-      "description": "This directory contains many files that give information about status  of  installed  or uninstalled packages, etc.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
+      "description": "the  administrative  directory  to  directory.  This directory contains many files that give information about status of installed or uninstalled  packages,  etc.   Defaults  to  «/var/lib/dpkg»  if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--auto-deconfigure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  the  removed  package.   Specifying  this option will cause automatic deconfiguration of the package which depended on the removed package.",
+      "description": "is  a  possibility  that  another installed package depended on the removed package.  Specifying this option  will  cause  automatic deconfiguration of the package which depended on the removed package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,8 +86,8 @@
     {
       "short": null,
       "long": "--configure",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "<package>... | -a|--pending",
       "multiple": false,
       "conflicts_with": [],
@@ -98,7 +98,7 @@
       "long": "--debug",
       "value_type": "String",
       "takes_value": true,
-      "description": "octal is formed by bitwise-ORing desired values together from the list below (note that these values may change in future releases).  -Dh or --debug=help display these debugging values.",
+      "description": "octal  is  formed  by  bitwise-ORing  desired values  together  from  the  list below (note that these values may change in future releases).   -Dh  or  --debug=help  display  these debugging values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -115,10 +115,20 @@
     },
     {
       "short": null,
-      "long": "--force-confdef",
+      "long": "--force-confnew",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "which  case it will use that to decide the final action.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--force-confold",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "given,  it  will  be used to decide the final action.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +188,7 @@
       "long": "--ignore-depends",
       "value_type": "String",
       "takes_value": true,
-      "description": "This affects the Pre-Depends, Depends and Breaks fields.",
+      "description": "dependency-checking   for  specified  packages  (actually, checking is performed, but only warnings about conflicts are given, nothing else).  This affects the Pre-Depends,  Depends  and  Breaks fields.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +198,7 @@
       "long": "--instdir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the installation directory, which refers to the directory where packages are to be installed.  instdir is also the directory passed to chroot(2) before running package's installation scripts, which means that the scripts see instdir as a root directory.   Defaults  to «/».",
+      "description": "instdir is also the directory passed to  chroot(2)  before running package's installation scripts, which means that the scripts see instdir as a root  directory.   Defaults to «/».",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +208,7 @@
       "long": "--log",
       "value_type": "File",
       "takes_value": true,
-      "description": "status  change  updates and actions to filename, instead of the default /var/log/dpkg.log.  If this option is given multiple times, the last filename is used.  Log messages are of the form:",
+      "description": "status  change updates and actions to filename, instead of the default /var/log/dpkg.log.  If this option is given multiple times, the last filename is used.  Log messages are of the form:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,7 @@
       "long": "--no-act",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "everything  which  is  supposed  to  be done, but don't write any changes.  This is used to see what would happen with the specified action, without actually modifying anything.",
+      "description": "everything  which  is  supposed to be done, but don't write any changes.  This is used to see what would happen with the  specified action, without actually modifying anything.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +248,7 @@
       "long": "--no-force-things",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "or  refuse  (no-force  and  refuse  mean the same thing) to do some things.  things is a comma separated list of things specified below.  --force-help displays a message describing them.  Things marked with (*) are forced by default.",
+      "description": "or  refuse  (no-force  and refuse mean the same thing) to do some things.  things is a comma separated list of things  specified below.   --force-help  displays  a message describing them.  Things marked with (*) are forced by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +258,7 @@
       "long": "--no-pager",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Disables the use of any pager.",
+      "description": "dpkg 1.19.2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +268,7 @@
       "long": "--no-triggers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  run any triggers in this run (since dpkg 1.14.17), but activations will still be recorded.  If used with --configure package or",
+      "description": "not  run  any  triggers  in  this run (since dpkg 1.14.17), but activations will still  be  recorded.   If  used  with  --configure package  or --triggers-only package then the named package postinst will still be run even if only a triggers run is  needed.   Use  of this option may leave packages in the improper triggers-awaited and triggers-pending  states.  This can be fixed later by running: dpkg",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,17 +288,7 @@
       "long": "--path-include",
       "value_type": "File",
       "takes_value": true,
-      "description": "glob-pattern as a path filter, either by excluding or re-including previously excluded paths matching the specified patterns during install (since dpkg 1.15.8).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--pending",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "filter,  either  by  excluding  or  re- including previously excluded paths matching the specified patterns during install (since dpkg 1.15.8).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--post-invoke",
       "value_type": "File",
       "takes_value": true,
-      "description": "remove and  purge  actions  (since dpkg 1.15.4), and add-architecture and remove-architecture actions (since dpkg 1.17.19).  This option can be specified multiple times.  The order the options are specified  is  preserved,  with  the  ones  from  the  configuration  files  taking precedence.  The environment variable DPKG_HOOK_ACTION is set for the hooks to the current dpkg action.",
+      "description": "before  or  after the  dpkg  run  for  the unpack, configure, install, triggers-only, remove and purge actions (since dpkg 1.15.4), and  add-architecture and  remove-architecture actions (since dpkg 1.17.19).  This option can be  specified  multiple  times.   The  order  the  options  are specified  is preserved, with the ones from the configuration files taking precedence.  The environment  variable  DPKG_HOOK_ACTION  is set for the hooks to the current dpkg action.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--recursive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "handle  all regular files matching pattern *.deb found at specified directories and all of its subdirectories.  This can be used with -i, -A, --install, --unpack and --record-avail actions.",
+      "description": "handle  all regular files matching pattern *.deb found at specified directories and all of its subdirectories.   This  can be  used  with  -i,  -A,  --install,  --unpack  and  --record-avail actions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +368,7 @@
       "long": "--robot",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a  machine-readable  output  format.  This provides an interface for programs that need to parse the output of some of the commands that do not otherwise emit a machine-readable output format.  No localization will be used, and the output will be modified to  make  it easier to parse.",
+      "description": "This provides  an  interface for  programs that need to parse the output of some of the commands that do not otherwise emit a machine-readable  output  format.   No localization  will be used, and the output will be modified to make it easier to parse.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": "--root",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the  root  directory  to  directory,  which  sets  the  installation  directory  to  «dir»  and  the  administrative  directory  to «dir/var/lib/dpkg».",
+      "description": "the  root  directory to directory, which sets the installation directory  to   «dir»   and   the   administrative   directory   to «dir/var/lib/dpkg».",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +388,7 @@
       "long": "--selected-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The actual marking is done with dselect  or  by  dpkg,  when  it  handles packages.  For example, when a package is removed, it will be marked selected for deinstallation.",
+      "description": "process the packages that are selected for installation.  The actual marking is done with dselect or by  dpkg,  when  it  handles packages.   For  example,  when  a  package  is removed, it will be marked selected for deinstallation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--skip-same-version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Skip packages with same installed version/arch.",
+      "description": "architecture  of the package is already installed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +418,7 @@
       "long": "--status-fd",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option can be specified multiple  times.   The information is generally one record per line, in one of the following forms:",
+      "description": "progress  information  to file  descriptor  n.   This option can be specified multiple times. The information is generally one record per line,  in  one  of  the following forms:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +428,7 @@
       "long": "--status-logger",
       "value_type": "String",
       "takes_value": true,
-      "description": "(since  dpkg 1.16.0).  This option can be specified multiple times.  The output format used is the same as in --status-fd.",
+      "description": "progress  information  to the  shell  command's  standard input, to be run via “sh -c” (since dpkg 1.16.0).  This option can be specified  multiple  times.   The output format used is the same as in --status-fd.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -446,9 +446,9 @@
     {
       "short": null,
       "long": "--triggers-only",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use of this option may leave packages in the improper triggers-awaited and triggers-pending states.  This can be  fixed  later  by  running:  dpkg  --configure",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<package>... | -a|--pending",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +478,7 @@
       "long": "--verify-format",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Verify output format (supported: 'rpm').",
+      "description": "the  output  format  for  the  --verify  command  (since dpkg 1.17.2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +548,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't install a package if a newer version of the same package is already installed.  This is an alias of --refuse-downgrade.",
+      "description": "Don't install a package if a newer version of the same  package  is already installed.  This is an alias of --refuse-downgrade.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

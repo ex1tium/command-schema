@@ -18,17 +18,19 @@
       "long": "--as-root",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Requires that the target be run with root rights.",
+      "description": "meaningful  together  with  --target  (since  dpkg  1.15.0). Requires that the target be run with root rights.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": []
+      "requires": [
+        "--target"
+      ]
     },
     {
       "short": null,
       "long": "--before-build",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "and stops the package build process here (since dpkg 1.15.0, long option since dpkg 1.18.8, multi-target support since dpkg 1.18.16).  If --as-root is also given, then the command is executed as root (see --root-command).  Note that known targets that are required to be run as root do not need this option (i.e. the clean, binary, binary-arch and binary-indep targets).",
+      "description": "process  here  (since dpkg  1.15.0,  long  option since dpkg 1.18.8, multi-target support since dpkg 1.18.16).  If --as-root is also given, then the  command is  executed as root (see --root-command).  Note that known targets that are required to be run as root do not need this  option  (i.e. the clean, binary, binary-arch and binary-indep targets).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +40,7 @@
       "long": "--build",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  build  type from a comma-separated list of components (since dpkg 1.18.5).  All the specified components get combined to select the single build type to use, which implies a single build run with a single .changes file generated.  Passed to dpkg-genchanges.",
+      "description": "the build type from a comma-separated list of components (since dpkg 1.18.5).  All the specified components get combined  to select  the  single build type to use, which implies a single build run with  a  single  .changes  file  generated.   Passed  to  dpkg- genchanges.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +60,7 @@
       "long": "--build-profiles",
       "value_type": "File",
       "takes_value": true,
-      "description": "The default behavior  is to  build  for  no  specific  profile.   Also sets them (as a space separated list) as the DEB_BUILD_PROFILES environment variable which allows, for example, debian/rules files to use this information for conditional builds.",
+      "description": "list  (since dpkg  1.17.2, long option since dpkg 1.18.8).  The default behavior is to build for no specific profile.  Also sets them  (as  a  space separated  list)  as  the  DEB_BUILD_PROFILES  environment variable which  allows,  for  example,  debian/rules  files  to   use   this information for conditional builds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +68,9 @@
     {
       "short": null,
       "long": "--buildinfo-file",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  filename  for  the  generated .buildinfo file (since dpkg 1.21.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +80,7 @@
       "long": "--buildinfo-option",
       "value_type": "String",
       "takes_value": true,
-      "description": "Can be used multiple times.",
+      "description": "Can  be used multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +98,9 @@
     {
       "short": null,
       "long": "--changes-file",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "set the .changes filename to generate.",
+      "description": "the  filename  for  the  generated  .changes  file (since dpkg 1.21.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +110,7 @@
       "long": "--changes-option",
       "value_type": "String",
       "takes_value": true,
-      "description": "Can be used multiple times.",
+      "description": "dpkg  1.15.6).   Can  be used multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +120,7 @@
       "long": "--check-builddeps",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is the default behavior.",
+      "description": "(long option since dpkg 1.18.8).  This is the default behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +130,7 @@
       "long": "--check-command",
       "value_type": "File",
       "takes_value": true,
-      "description": "used  to  check the .changes file itself and any artifact built referenced in the file (since dpkg 1.17.6).  The command should take the .changes pathname as an argument.  This command will usually be lintian.",
+      "description": "used  to  check  the .changes file itself and any artifact built referenced in the file  (since  dpkg  1.17.6).   The  command should  take  the  .changes  pathname as an argument.  This command will usually be lintian.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +140,7 @@
       "long": "--check-option",
       "value_type": "String",
       "takes_value": true,
-      "description": "1.17.6).   Can  be  used  multiple times.",
+      "description": "option   opt   to   the   check-command    specified    with DEB_CHECK_COMMAND  or  --check-command (since dpkg 1.17.6).  Can be used multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +180,7 @@
       "long": "--force-sign",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  signing  of  the  resulting files (since dpkg 1.17.0), regardless of -us, --unsigned-source, -ui, --unsigned-buildinfo, -uc,",
+      "description": "the  resulting  files  (since  dpkg  1.17.0), regardless  of  -us,  --unsigned-source, -ui, --unsigned-buildinfo,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +200,7 @@
       "long": "--hook-hook-name",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the  specified  shell  code  hook-command as the hook hook-name, which will run at the times specified in the run steps (since dpkg 1.17.6).  The hooks will always be executed even if the following action is not performed (except for the binary hook).  All  the  hooks will run in the unpacked source directory.",
+      "description": "the  hook  hook-name, which  will run at the times specified in the run steps (since dpkg 1.17.6).  The hooks will always be executed even if  the  following action  is  not  performed  (except  for the binary hook).  All the hooks will run in the unpacked source directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +210,7 @@
       "long": "--host-arch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "1.17.17).   The  architecture  of  the  machine  we  build  on  is determined automatically, and is also the default for the host machine.",
+      "description": "for  (long  option  since dpkg  1.17.17).   The  architecture  of  the machine we build on is determined automatically, and is also  the  default  for  the  host machine.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +220,7 @@
       "long": "--host-type",
       "value_type": "String",
       "takes_value": true,
-      "description": "It can be used in place of --host-arch or as a complement to override the default GNU system type of the host Debian architecture.",
+      "description": "the  GNU  system type we build for (long option since dpkg 1.17.17).  It  can  be  used  in  place  of  --host-arch  or  as  a complement  to  override  the  default  GNU system type of the host Debian architecture.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +230,7 @@
       "long": "--ignore-builtin-builddeps",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  check  built-in  build  dependencies  and  conflicts  (since  dpkg 1.18.2).  These are the distribution specific implicit build dependencies usually required in a build environment, the so called Build-Essential package set.",
+      "description": "dpkg 1.18.2).   These  are  the  distribution  specific  implicit  build dependencies usually required in a build environment, the so called Build-Essential package set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +240,7 @@
       "long": "--jobs",
       "value_type": "Number",
       "takes_value": true,
-      "description": "The  number  of  jobs matching  the  number of online processors if auto is specified (since dpkg 1.17.10), or unlimited number if jobs is not specified.  The default behavior is auto (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer to  use  with  any package including those that are not parallel-build safe.  Setting the number of jobs to 1 will restore serial execution.",
+      "description": "the  number  of  jobs  allowed  to be run simultaneously (since dpkg 1.14.7, long option since dpkg 1.18.8).  The number  of jobs  matching the number of online processors if auto is specified (since dpkg 1.17.10), or unlimited number if jobs is not specified. The default behavior is auto (since  dpkg  1.18.11)  in  non-forced mode  (since  dpkg  1.21.10), and as such it is always safer to use with any package including those that are not parallel-build  safe. Setting the number of jobs to 1 will restore serial execution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +250,7 @@
       "long": "--jobs-force",
       "value_type": "String",
       "takes_value": true,
-      "description": "option (since dpkg 1.21.10) is equivalent to the --jobs option except that it will enable forced parallel mode, by adding the make",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +260,7 @@
       "long": "--jobs-try",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "option  (since dpkg 1.18.2, long option since dpkg 1.18.8) is equivalent to the -j above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +270,7 @@
       "long": "--no-check-builddeps",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not check build dependencies and conflicts.",
+      "description": "not  check  build dependencies and conflicts (long option since dpkg 1.18.8).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +280,7 @@
       "long": "--no-post-clean",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is the default behavior.",
+      "description": "after  the  package  has  been  built (since dpkg 1.19.1).  This is the default behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +290,7 @@
       "long": "--no-pre-clean",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Implies -b if nothing else has been  selected  among  -F,",
+      "description": "not  clean  the  source tree before building (long option since dpkg 1.18.8).  Implies -b if nothing else has been  selected  among",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +300,7 @@
       "long": "--no-sign",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not sign any file.",
+      "description": "not  sign  any  file,  this  includes  the  source package, the .buildinfo file and the .changes file (since dpkg 1.18.20).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +310,7 @@
       "long": "--post-clean",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "post clean source tree.",
+      "description": "the source tree (using gain-root-command debian/rules clean) after the package has been built (long option since dpkg 1.18.8).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +340,7 @@
       "long": "--root-command",
       "value_type": "File",
       "takes_value": true,
-      "description": "Otherwise, if none has been specified, fakeroot will be used by default, if the command is present.  gain-root-command should start with the name of a program on the PATH and will get as arguments  the  name  of  the real  command  to  run and the arguments it should take.  gain-root-command can include parameters (they must be space-separated) but no shell metacharacters.  gain-root-command might typically be fakeroot, sudo, super or really.  su is not  suitable,  since  it  can  only invoke the user's shell with -c instead of passing arguments individually to the command to be run.",
+      "description": "build  process as root, it prefixes the command it executes with gain-root-command if  one  has  been  specified  (long  option  since  dpkg  1.18.8). Otherwise, if none has been specified, fakeroot  will  be  used  by default, if the command is present.  gain-root-command should start with  the  name  of a program on the PATH and will get as arguments the name of the real command to run and  the  arguments  it  should take.   gain-root-command  can  include  parameters  (they  must be space-separated) but no  shell  metacharacters.   gain-root-command might  typically  be  fakeroot,  sudo,  super or really.  su is not suitable, since it can only invoke the user's shell with -c instead of passing arguments individually to the command to be run.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +350,7 @@
       "long": "--rules-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "since dpkg 1.18.8).  With this option it's possible to use another program invocation to build the package (it can include space separated parameters).  Alternatively it can be used to execute the standard rules file with another make program (for example by  using /usr/local/bin/make -f debian/rules as rules-file).",
+      "description": "parameters  (since  dpkg  1.14.17, long  option since dpkg 1.18.8).  With this option it's possible to use another program invocation to build the package (it can include space separated parameters).   Alternatively  it  can  be  used  to execute  the  standard  rules  file  with another make program (for example by using  /usr/local/bin/make  -f  debian/rules  as  rules- file).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +360,7 @@
       "long": "--rules-requires-root",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "assume legacy Rules-Requires-Root field value.",
+      "description": "falling  back  to  its legacy default value (since dpkg 1.19.1).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +370,7 @@
       "long": "--rules-target",
       "value_type": "String",
       "takes_value": true,
-      "description": "specified,  after  having  setup  the  build  environment  (except  for  calling  dpkg-source",
+      "description": "after  having setup   the  build  environment  (except  for  calling  dpkg-source",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +380,7 @@
       "long": "--sanitize-env",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  build  environment  (since  dpkg  1.20.0).  This will reset or remove environment variables, umask, and any other process attributes that might otherwise adversely affect the build of  packages.   Because  the  official  entry  point  to  build  packages  is debian/rules,  packages  cannot rely on these settings being in place, and thus should work even when they are not.  What to sanitize is vendor specific.",
+      "description": "the  build  environment  (since  dpkg 1.20.0).  This will reset or remove environment variables, umask, and any other process attributes that might  otherwise  adversely  affect  the  build  of packages.   Because  the  official entry point to build packages is debian/rules, packages cannot  rely  on  these  settings  being  in place,  and  thus  should  work  even  when  they are not.  What to sanitize is vendor specific.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -396,9 +398,9 @@
     {
       "short": "-p",
       "long": "--sign-command",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "backend  command  (long  option since  dpkg  1.18.8).   sign-command will get all the backend specific arguments according to the --sign-backend selected.  sign-command should not contain spaces or any other shell metacharacters.",
+      "description": "dpkg-buildpackage needs to execute an OpenPGP backend command to sign a source control  (.dsc)  file,  a  .buildinfo  file  or  a .changes  file  it  will  run  sign-command  (searching the PATH if necessary) instead of the default or auto-detected backend  command (long  option  since  dpkg  1.18.8).  sign-command will get all the backend  specific  arguments  according   to   the   --sign-backend selected.   sign-command  should  not  contain  spaces or any other shell metacharacters.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +410,7 @@
       "long": "--sign-key",
       "value_type": "String",
       "takes_value": true,
-      "description": "packages  (--sign-key  since  dpkg 1.18.8, --sign-keyid since dpkg 1.21.10).",
+      "description": "user-ID)  for the  secret key to use when signing packages (--sign-key since dpkg 1.18.8, --sign-keyid since dpkg 1.21.10).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +420,7 @@
       "long": "--sign-keyfile",
       "value_type": "String",
       "takes_value": true,
-      "description": "the key file to use for signing.",
+      "description": "use  when signing packages (since dpkg 1.21.10).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +460,7 @@
       "long": "--source-option",
       "value_type": "String",
       "takes_value": true,
-      "description": "Can be used multiple times.",
+      "description": "Can  be  used multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +490,7 @@
       "long": "--target-arch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default value is the host machine.",
+      "description": "build  for (since dpkg 1.17.17).  The default value is the host machine.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +500,7 @@
       "long": "--target-type",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  GNU  system type the binaries built will build for (since dpkg 1.17.17).  It can be used in place of --target-arch or as a complement to override the default GNU system type of the target Debian architecture.",
+      "description": "the  GNU  system  type  the  binaries built will build for (since dpkg 1.17.17).  It can be used in place of --target-arch  or as  a  complement  to  override  the default GNU system type of the target Debian architecture.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +520,7 @@
       "long": "--unsigned-changes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "unsigned .buildinfo and .changes file.",
+      "description": "(long  option  since dpkg 1.18.8).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +570,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Equivalent to --build=full, --build=source,binary or --build=source,any,all (since dpkg 1.15.8).",
+      "description": "Equivalent     to     --build=full,     --build=source,binary    or",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -755,23 +757,8 @@
     }
   ],
   "subcommands": [],
-  "positional": [
-    {
-      "name": "ALSO",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "SEE",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    }
-  ],
+  "positional": [],
   "source": "Merged",
-  "confidence": 0.9,
+  "confidence": 0.8,
   "version": null
 }

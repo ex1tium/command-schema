@@ -28,7 +28,7 @@
       "long": "--arch-specific",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display architecture-specific information",
+      "description": "attrib‐ utes section on ARM.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--bb-addr-map",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the relative offset of each basic block.",
+      "description": "the contents of the basic block address map section(s), which contain the address of each function, along with the rela‐ tive offset of each basic block.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--decompress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If the section(s) are not compressed, they are displayed as is.",
+      "description": "decompressed section content when used with -x or -p. If the section(s) are not compressed, they are displayed as is.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,9 +238,11 @@
       "long": "--dyn-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --dyn-syms",
+      "description": "respectively. llvm-readelf does not provide these aliases, to avoid conflicting with grouped flags.",
       "multiple": false,
-      "conflicts_with": [],
+      "conflicts_with": [
+        "-rea"
+      ],
       "requires": []
     },
     {
@@ -288,7 +290,7 @@
       "long": "--elf-output-style",
       "value_type": "String",
       "takes_value": true,
-      "description": "ELF information in the specified style. Valid options are LLVM, GNU, and JSON. LLVM output (the default) is an expanded and structured format. GNU output mimics the equivalent GNU readelf output. JSON is JSON formatted output intended for machine consump‐ tion.",
+      "description": "is an expanded and structured format. GNU output mimics the equivalent GNU readelf output. JSON is JSON formatted output intended for ma‐ chine consumption.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +310,7 @@
       "long": "--expand-relocs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Expand each shown relocation to multiple lines",
+      "description": "expanded multi-line format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +370,7 @@
       "long": "--headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Equivalent to setting: --file-header, --program-headers, --section-headers",
+      "description": "to setting: --file-header, --program-headers, and",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +390,7 @@
       "long": "--hex-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "bytes. section may be a section index or section name.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +570,7 @@
       "long": "--raw-relr",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not decode relocations in SHT_RELR section, display raw contents",
+      "description": "dis‐ playing them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -668,7 +670,7 @@
       "long": "--section-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option has no effect for GNU style output.",
+      "description": "used with --sections, display symbols for each section shown. This option has no effect for GNU style output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -679,7 +681,7 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Alias for --section-headers",
-      "multiple": false,
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -698,7 +700,7 @@
       "long": "--sort-symbols",
       "value_type": "String",
       "takes_value": true,
-      "description": "Valid values for sort_key are name and type.",
+      "description": "to sort symbols before displaying symtab. Valid values for sort_key are name and type.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -748,7 +750,7 @@
       "long": "--string-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "the specified section(s) as a list of strings. section may be a section index or section name.",
       "multiple": true,
       "conflicts_with": [],
       "requires": []
@@ -859,6 +861,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Alias for --section-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-SW",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "llvm-readelf -S -W). llvm-readobj does not allow grouping.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1037,24 +1049,10 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "LLVM",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "OVERVIEW",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "input",
       "value_type": "String",
-      "required": true,
-      "multiple": false,
+      "required": false,
+      "multiple": true,
       "description": null
     }
   ],

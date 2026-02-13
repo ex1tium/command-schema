@@ -68,7 +68,7 @@
       "long": "--additional-so",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is useful if you are debugging programs which  de‐ pend on non-LLVM libraries (such as the X or curses libraries) to run.",
+      "description": "the  dynamic shared object library into the test program when‐ ever it is run.  This is useful if you are debugging programs  which depend  on non-LLVM libraries (such as the X or curses libraries) to run.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +226,9 @@
     {
       "short": null,
       "long": "--append-exit-code",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "output  file  so  that  a change in exit code is considered a test failure. Defaults to false.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  arguments specified after --args to the test program whenever it runs.  Note that if any of the program args start with a \"-\", you should use:",
+      "description": "all arguments specified after --args to the test program when‐ ever it runs.  Note that if any of the program  args  start  with  a \"-\", you should use:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +478,7 @@
       "long": "--compile-command",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with  a failure  exit  code  if  the file is \"interesting\" and should exit with a success exit code (i.e. 0) otherwise (this is the same as if it crashed on \"interesting\" inputs).",
+      "description": "exit code if the file is \"interesting\" and should exit with a success exit code (i.e. 0) otherwise (this is the same  as  if  it crashed on \"interesting\" inputs).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1118,7 +1118,7 @@
       "long": "--enable-valgrind",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "valgrind to find faults in the optimization phase. This will allow bugpoint to find otherwise asymptomatic problems caused by memory mis-management.",
+      "description": "mem‐ ory mis-management.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1126,9 +1126,9 @@
     {
       "short": null,
       "long": "--exec-command",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "option defines the command to use with the --run-custom and --safe-custom options to execute the bitcode testcase. This can be use‐ ful for cross-compilation.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "JIT  backends cannot currently be used as the \"safe\" backends.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1378,7 +1378,7 @@
       "long": "--input",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "test  program, whenever it runs, to come from that file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1618,7 +1618,7 @@
       "long": "--load",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This object should register new optimization passes.  Once loaded, the object  will add  new  command  line options to enable various optimizations.  To see the new complete list of optimizations, use the -help and --load options together; for example:",
+      "description": "the  dynamic  object plugin into bugpoint itself.  This object should register new optimization passes.  Once  loaded,  the  object will  add  new command line options to enable various optimizations. To see the new complete list of optimizations,  use  the  -help  and",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1998,7 +1998,7 @@
       "long": "--mlimit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "an  upper  limit  on memory usage of the optimization and codegen. Set to zero to disable the limit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2178,7 +2178,7 @@
       "long": "--opt-args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "all  arguments specified after --opt-args to the invocation of opt.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2208,7 +2208,7 @@
       "long": "--output",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(the  \"reference  out‐ put\"). If you do not use this option, bugpoint will attempt to generate a reference output by compiling the program with the \"safe\" back‐ end and running it.",
+      "description": "on  its  standard  output stream,  it  should  match  the contents of filename (the \"reference output\"). If you do not use this option, bugpoint  will  attempt  to generate a reference output by compiling the program with the \"safe\" backend and running it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3255,10 +3255,20 @@
     },
     {
       "short": null,
+      "long": "--safe-custom",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "can  be useful for cross-compilation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--safe-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "command  to  execute  with  the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3288,7 +3298,7 @@
       "long": "--safe-tool-args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "to  the  \"safe\" execution tool.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3618,7 +3628,7 @@
       "long": "--tool-args",
       "value_type": "String",
       "takes_value": true,
-      "description": "You should use this option in the following way:",
+      "description": "all arguments specified after --tool-args to the LLVM tool un‐ der test (llc, lli, etc.) whenever it runs.  You should use this op‐ tion in the following way:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3668,7 +3678,7 @@
       "long": "--verbose-errors",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  crashing  program  to stderr. This is useful to make sure it is the same error being tracked down and not a different error that happens to crash the compiler as well. Defaults to false.",
+      "description": "same  error  being  tracked down and not a different error that happens to crash the compiler as well. Defaults to false.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3894,10 +3904,49 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "15",
+      "description": "2024-05-27 BUGPOINT(1)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "2003-2024",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "not",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
-      "name": "gcc-tool",
+      "name": "arguments",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "files",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "gram",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -3906,33 +3955,19 @@
     {
       "name": "input",
       "value_type": "String",
-      "required": true,
+      "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "opt",
+      "name": "llvm",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "program",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "safe-tool",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "tool",
+      "name": "passes",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -3940,6 +3975,6 @@
     }
   ],
   "source": "Merged",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

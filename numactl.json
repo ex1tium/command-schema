@@ -8,7 +8,7 @@
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "can  use  all  possible CPUs/nodes for following policy settings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-b",
       "long": "--balancing",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Linux  kernel NUMA balancing for the process if it is supported by kernel.  This should only be used with --membind, -m only, otherwise ignored.",
+      "description": "This should only be used with  --membind,  -m only, otherwise ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,8 +26,8 @@
     {
       "short": null,
       "long": "--cpu-compress",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "Number",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -38,7 +38,7 @@
       "long": "--cpunodebind",
       "value_type": "String",
       "takes_value": true,
-      "description": "Note that nodes may consist of multiple CPUs.  nodes may be specified as noted above.",
+      "description": "Note that nodes  may consist  of  multiple  CPUs.   nodes  may  be specified as noted above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--file",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "above  (  --interleave,  --localalloc,  --preferred,",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--hardware",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "option is set show cpu ranges. This is not default not break any existing scripts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--huge",
       "value_type": "String",
       "takes_value": true,
-      "description": "Only valid before --shmid or --shm",
+      "description": "creating a SYSV shared memory segment use huge pages.  Only valid before --shmid or --shm",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--interleave",
       "value_type": "String",
       "takes_value": true,
-      "description": "When memory cannot be allocated on the  current interleave target fall back to other nodes.  Multiple nodes may be specified on --interleave, --membind and --cpunodebind.",
+      "description": "a  memory interleave policy. Memory will be allocated using round robin on nodes.  When memory cannot be  allocated  on  the current  interleave  target  fall back to other nodes.  Multiple nodes may be specified on --interleave, --membind and --cpunode‐ bind.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--length",
       "value_type": "String",
       "takes_value": true,
-      "description": "remaining  length  Required when  a  shared  memory  segment is created and specifies the length of the new segment then. Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
+      "description": "policy  to length range in the shared memory segment or make the segment length long Default is to use  the  remaining  length  Required when a shared memory segment is created and specifies the length of the new  segment  then. Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--localalloc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "to allocate on the current node of the process, but if mem‐ ory cannot be allocated there fall back to other nodes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--membind",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allocation will fail when there is not enough memory available on these nodes.  nodes may be speci‐ fied as noted above.",
+      "description": "nodes.   Allocation  will  fail  when there  is not enough memory available on these nodes.  nodes may be specified as noted above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--offset",
       "value_type": "String",
       "takes_value": true,
-      "description": "Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
+      "description": "Valid  units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--physcpubind",
       "value_type": "Number",
       "takes_value": true,
-      "description": "execute  process  on  cpus.  This accepts cpu numbers as shown in the processor fields of /proc/cpuinfo, or relative cpus as in relative to the current cpuset.  You may specify \"all\", which means all cpus in the current cpuset.  Physical cpus may  be  specified as  N,N,N or  N-N or N,N-N or  N-N,N-N and so forth.  Relative cpus may be specified as +N,N,N or  +N-N or +N,N-N and so forth. The + indicates that the cpu numbers are relative to the process' set of allowed cpus in its current cpuset.  A !N-N notation indicates the inverse of N-N, in other words all cpus except N-N.  If used with + notation, specify !+N-N.",
+      "description": "This accepts cpu numbers as shown in the processor fields of /proc/cpuinfo, or relative cpus as in relative to the current cpuset.  You may  specify  \"all\",  which means  all  cpus  in  the  current cpuset.  Physical cpus may be specified as N,N,N or  N-N or N,N-N or  N-N,N-N  and  so  forth. Relative  cpus may be specified as +N,N,N or  +N-N or +N,N-N and so forth. The + indicates that the cpu numbers are  relative  to the  process' set of allowed cpus in its current cpuset.  A !N-N notation indicates the inverse of N-N, in other words  all  cpus except N-N.  If used with + notation, specify !+N-N.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--preferred",
       "value_type": "Number",
       "takes_value": true,
-      "description": "This option takes only a  sin‐ gle node number.  Relative notation may be used.",
+      "description": "al‐ located  there fall back to other nodes.  This option takes only a single node number.  Relative notation may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--preferred-many",
       "value_type": "String",
       "takes_value": true,
-      "description": "This option takes a  mask  of preferred nodes where the closest node to local is considered most preferred.  Relative notation may be used.",
+      "description": "there  fall  back  to other nodes.  This option takes a mask of preferred nodes where the closest node to local is  con‐ sidered most preferred.  Relative notation may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": null,
       "long": "--shm",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "with  the  ID  generated  using ftok(3) from shmkeyfile",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +186,9 @@
     {
       "short": null,
       "long": "--shmid",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "--interleave,  --localalloc,  --pre‐ ferred, --preferred-many, --membind ).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--shmmode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "memory  seg‐ ment set it to numeric mode shmmode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--strict",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an error when a page in the policied area in the shared memory segment already was faulted in with a conflicting policy. Default is to silently ignore this.",
+      "description": "an  error  when  a page in the policied area in the shared memory segment already was faulted in with a conflicting policy. Default is to silently ignore this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--touch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "pages to enforce policy early. Default is to not touch them, the policy is applied when an applications maps and accesses a page.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

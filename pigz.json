@@ -8,7 +8,7 @@
       "long": "--alias",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use xxx as the name for any --zip entry from stdin",
+      "description": "default name is \"-\").",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--comment",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Put comment ccc in the gzip or zip header",
+      "description": "the  provided comment in the gzip header or zip central file header.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -44,11 +44,11 @@
       "requires": []
     },
     {
-      "short": "-1",
+      "short": null,
       "long": "--fast",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "and -9 or --best indicates the slowest compression method (best compression).  -0 is no compression.  -11 gives a few per‐ cent better compression at a severe cost in execution time, using the zopfli algorithm by Jyrki Alakuijala.  The default is -6.",
+      "description": "digit  #, where  -1  or  --fast  indicates  the fastest compression method (less compression) and -9 or --best indicates the  slowest  com‐ pression  method (best compression).  -0 is no compression.  -11 gives a few percent better compression at a severe cost in  exe‐ cution  time,  using  the  zopfli algorithm by Jyrki Alakuijala. The default is -6.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--name",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Store or restore file name and mod time",
+      "description": "or  restore both the file name and the modification time. This is the default when compressing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--no-name",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not store or restore file name or mod time",
+      "description": "not store or restore the file name or the modification time. This is the default when decompressing. When the  file  name  is not  restored  from  the header, the name of the compressed file with the suffix stripped is the name of the  decompressed  file. When  the modification time is not restored from the header, the modification time of the compressed file is used (not  the  cur‐ rent time).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--no-time",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not store or restore mod time",
+      "description": "that  the order of the options is important.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--time",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Store or restore mod time",
+      "description": "or  restore  the modification time. -nM will store or re‐ store the modification time, but not the name. Note that the or‐ der of the options is important. Modification times  are  stored only for regular files, not pipes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -356,6 +356,13 @@
   ],
   "subcommands": [],
   "positional": [
+    {
+      "name": "fix",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "name",
       "value_type": "String",

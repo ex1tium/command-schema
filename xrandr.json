@@ -6,8 +6,8 @@
     {
       "short": null,
       "long": "--above",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -28,7 +28,7 @@
       "long": "--auto",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "connected but disabled outputs, this will enable them using their first preferred mode (or, something close to 96dpi if they have no preferred mode). For disconnected but  enabled  outputs, this will disable them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--brightness",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "value.  Useful  for  overly  bright  or overly  dim  outputs.  However, this is a software only modification, if your hardware has support to actually change the brightness, you will probably prefer to use xbacklight.",
+      "description": "the output  to specified floating value. Useful for overly bright or overly dim outputs.  However, this is a software only  modifica‐ tion,  if  your  hardware  has  support  to  actually change the brightness, you will probably prefer to use xbacklight.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--crtc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  specified  crtc  (either as an index in the list of CRTCs or XID).  In normal usage, this option is not required as xrandr tries to make sensible choices about which crtc to use with each output. When that fails for some reason, this  option  can  override the normal selection.",
+      "description": "In normal usage, this option is not required as xrandr tries to make sensible choices about which crtc to use with each output. When that fails for some reason, this option  can  over‐ ride the normal selection.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--current",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  current  screen  configuration, without polling for hardware changes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--display",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "option  selects  the X display to use. Note this refers to the X screen abstraction, not the monitor (or output).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--dryrun",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "no  changes  are made.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--fb",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  screen to the specified size. All configured monitors must fit within this size. When this option is not provided, xrandr computes the smallest screen size that will hold the set of configured outputs; this option provides a way  to  override  that behaviour.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--fbmm",
       "value_type": "String",
       "takes_value": true,
-      "description": "monitors  with different DPIs, the value has no physical meaning, but it may be used by some legacy clients which do not support RandR version 1.2 to compute a reference font scaling. Normally, xrandr resets the reported physical size values to keep the DPI con‐ stant.  This overrides that computation. Default DPI value is 96.",
+      "description": "screen  as  a whole (union of all configured monitors). In configurations with multiple monitors with different DPIs, the value has no physical meaning,  but it may be used by some legacy clients which do not support RandR version 1.2 to compute a reference  font  scaling. Normally,  xrandr  resets  the  reported physical size values to keep the DPI constant.  This overrides that computation. Default DPI value is 96.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--filter",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Can be either 'bilinear' or 'nearest'.",
+      "description": "the scaling filter method to be applied when the screen is scaled or transformed.  Can be either  'bilinear'  or  'near‐ est'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--gamma",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If green and blue are not specified,  the  red  value  will be used for all three components.  Note that you cannot get two different values for cloned outputs (i.e.: which share the same crtc) and that switching an output to another crtc doesn't change the crtc gamma corrections at all.",
+      "description": "the  specified floating point values as gamma correction on the crtc currently attached to this output.  If green  and  blue are not specified, the red value will be used for all three com‐ ponents.   Note  that  you  cannot  get two different values for cloned outputs (i.e.:  which  share  the  same  crtc)  and  that switching  an  output  to  another  crtc doesn't change the crtc gamma corrections at all.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--left-of",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "one of these options to position the output relative to the position of another output. This allows convenient tiling of outputs within the screen.  The position is always computed relative to the new position of the other output, so  it  is  not  valid  to  say",
+      "description": "the position  of  another  output.  This allows convenient tiling of outputs within the screen.  The position is always computed rel‐ ative to the new position of the other  output,  so  it  is  not valid to say --output a --left-of b --output b --left-of a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--newmode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option does the former. The mode is specified  using the  ModeLine  syntax for xorg.conf: clock hdisp hsyncstart hsyncend htotal vdisp vsyncstart vsyncend vtotal flags. flags can be zero or more of +HSync, -HSync, +VSync, -VSync, Interlace, DoubleScan, CSync, +CSync, -CSync. Several tools permit to  compute  the  usual modeline from a height, width, and refresh rate, for instance you can use cvt.",
+      "description": "server  and  then  associated with  outputs.   This option does the former. The mode is speci‐ fied using the ModeLine syntax for xorg.conf: clock hdisp hsync‐ start hsyncend htotal vdisp vsyncstart  vsyncend  vtotal  flags. flags can be zero or more of +HSync, -HSync, +VSync, -VSync, In‐ terlace, DoubleScan, CSync, +CSync, -CSync. Several tools permit to  compute the usual modeline from a height, width, and refresh rate, for instance you can use cvt.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--nograb",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the modifications without grabbing the screen. It avoids to block other applications during the update but it might also cause some applications that detect screen resize to receive old values.",
+      "description": "the  modifications without grabbing the screen. It avoids to block other applications during the update but it might  also cause some applications that detect screen resize to receive old values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,9 +266,9 @@
     {
       "short": "-o",
       "long": "--orientation",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "specifies the orientation of the screen, and can be one of normal, inverted, left or right.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--output",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  name  of  the output or the XID.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--panning",
       "value_type": "String",
       "takes_value": true,
-      "description": "As soon as panning is enabled, the CRTC position can change with every pointer  move.   The first  four parameters specify the total panning area, the next four the pointer tracking area (which defaults to the same area). The last four parameters specify the border and default to 0. A width or height set to zero disables panning on the according  axis.  You typically have to set the screen size with --fb simultaneously.",
+      "description": "As soon as panning  is enabled,  the  CRTC position can change with every pointer move. The first four parameters specify the total  panning  area,  the next  four the pointer tracking area (which defaults to the same area). The last four parameters specify the border  and  default to  0. A width or height set to zero disables panning on the ac‐ cording axis. You typically have to set  the  screen  size  with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--pos",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the output within the screen using pixel coordinates. In case reflection or rotation is applied, the translation is applied after the effects.",
+      "description": "pixel  coordinates. In  case  reflection  or rotation is applied, the translation is applied after the effects.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": "--preferred",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "selects  the same mode as --auto, but it doesn't automati‐ cally enable or disable the output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": "--primary",
       "value_type": "String",
       "takes_value": true,
-      "description": "It will be sorted first in Xinerama and RANDR geometry requests.",
+      "description": "It will be sorted first in  Xinerama and RANDR geometry requests.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": "--prop",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "properties for each output. --verbose also enables --prop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": "--q1",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Forces the usage of the RandR version 1.1 protocol, even if a higher version is available.",
+      "description": "Forces the usage of the RandR version 1.1 protocol,  even  if  a higher version is available.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--q12",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Forces the usage of the RandR version 1.2 protocol, even if the display does not report it as supported or a higher version is avail‐ able.",
+      "description": "Forces  the usage of the RandR version 1.2 protocol, even if the display does not report it as supported or a higher  version  is available.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +358,7 @@
       "long": "--query",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Please note that the gamma and brightness information are only approximations of the complete color profile stored in the server. When used along with options that reconfigure the system, progress will be reported while executing the configuration changes.",
+      "description": "this  option  is present, or when no configuration changes are requested, xrandr will display the current state of the sys‐ tem.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +368,7 @@
       "long": "--rate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the one with the nearest refresh rate.",
+      "description": "select the one with the nearest refresh rate.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": "--reflect",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "can be one of 'normal' 'x', 'y' or 'xy'. This causes the output contents to be reflected across the specified axes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--rotate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "'inverted'. This  causes  the output contents to be rotated in the specified direction. 'right' specifies a clockwise rotation of the picture and 'left' specifies a counter-clockwise rotation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,17 +428,7 @@
       "long": "--scale",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If the y value is omitted, the x value will  be  used  for  both  dimensions.   Values larger  than  1  lead  to a compressed screen (screen dimension bigger than the dimension of the output mode), and values less than 1 lead to a zoom in on the output.  This option is actually a shortcut version of the --transform option.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--scale-",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "description": "If the y value is omitted,  the  x value will be used for both dimensions.  Values larger than 1 lead to a compressed screen (screen dimension big‐ ger than the dimension of the output mode), and values less than 1 lead to a zoom in on the output.  This option  is  actually  a shortcut version of the --transform option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +438,7 @@
       "long": "--scale-from",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is actually a shortcut  ver‐ sion of the --transform option.",
+      "description": "the  size in pixels of the area of the framebuffer to be displayed on this output.  This option is actually a shortcut version of the --transform option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,7 +458,7 @@
       "long": "--set",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an  output property. Integer properties may be specified as a valid (see --prop) comma-separated list of decimal or hexadecimal (with a leading 0x) values.  Atom properties may be set to any of the valid atoms (see --prop).  String properties may be set to  any value.",
+      "description": "an output property. Integer properties may be specified as a valid (see --prop) comma-separated list of decimal or hexadec‐ imal (with a leading 0x) values.  Atom properties may be set  to any  of  the valid atoms (see --prop).  String properties may be set to any value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +468,7 @@
       "long": "--setmonitor",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The output list is either the keyword  none  or  a comma-separated  list  of  outputs.   The geometry is either the keyword auto, in which case the monitor will automatically track the geometry of the associated outputs, or a manual specification in the form w/mmwxh/mmh+x+y where w, h, x, y are in pixels and mmw, mmh are the physical dimensions of the monitor.",
+      "description": "associated  to the  given  outputs.  The output list is either the keyword none or a comma-separated list of outputs.  The  geometry  is  either the  keyword  auto, in which case the monitor will automatically track the geometry of the associated outputs, or a manual speci‐ fication in the form w/mmwxh/mmh+x+y where w, h,  x,  y  are  in pixels and mmw, mmh are the physical dimensions of the monitor.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +478,7 @@
       "long": "--setprovideroffloadsink",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "provider  as  a render offload device for sink.  This is only possible if provider and sink have the Source Offload and Sink Of‐ fload capabilities, respectively.  If sink is 0x0, then provider is disconnected from its current render offload sink.",
+      "description": "provider as a render offload device for sink.  This is only possible if provider and sink have the Source Offload  and  Sink Offload  capabilities,  respectively.   If  sink  is  0x0,  then provider is disconnected from its current render offload sink.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +488,7 @@
       "long": "--setprovideroutputsource",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is only possible if source and provider have the Source  Output and Sink Output capabilities, respectively.  If source is 0x0, then provider is disconnected from its current output source.",
+      "description": "provider. This  is  only  possible  if source and provider have the Source Output and Sink Output capabilities, respectively.  If source is 0x0, then provider  is  disconnected  from  its  current  output source.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +498,7 @@
       "long": "--size",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "the index into the list of available sizes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +508,7 @@
       "long": "--transform",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a transformation matrix to apply on the output.  A bilinear filter is selected automatically unless the --filter parameter is also specified.  The mathematical form corresponds to: a b c d e f g h i The transformation is based on homogeneous coordinates. The matrix multiplied by the coordinate vector of a pixel of the output gives the transformed coordinate vector of a pixel in the graphic buffer.  More precisely, the vector (x y) of the output pixel is extended to 3 values (x y w), with 1 as the w coordinate and multiplied against the matrix. The final device coordinates of the pixel are then calculated with the so-called homogenic division by the transformed w coordinate.  In other words, the device coordinates (x' y')  of the transformed pixel are: x' = (ax + by + c) / w'   and y' = (dx + ey + f) / w'   , with  w' = (gx + hy + i)  . Typically,  a  and  e corresponds to the scaling on the X and Y axes, c and f corresponds to the translation on those axes, and g, h, and i are respectively 0, 0 and 1. The matrix can also be used to express more complex transformations such as  keystone  correction, or rotation.  For a rotation of an angle T, this formula can be used: cos T  -sin T   0 sin T   cos T   0 0       0      1 As  a  special argument, instead of passing a matrix, one can pass the string none, in which case the default values are used (a unit matrix without filter).",
+      "description": "A bi‐ linear  filter is selected automatically unless the --filter pa‐ rameter is also specified.  The  mathematical  form  corresponds to: a b c d e f g h i The  transformation is based on homogeneous coordinates. The ma‐ trix multiplied by the coordinate vector of a pixel of the  out‐ put  gives  the  transformed coordinate vector of a pixel in the graphic buffer.  More precisely, the vector (x y) of the  output pixel  is  extended to 3 values (x y w), with 1 as the w coordi‐ nate and multiplied against the matrix. The final device coordi‐ nates of the pixel are then calculated with  the  so-called  ho‐ mogenic  division  by  the  transformed  w coordinate.  In other words, the device coordinates (x' y') of the  transformed  pixel are: x' = (ax + by + c) / w'   and y' = (dx + ey + f) / w'   , with  w' = (gx + hy + i)  . Typically,  a  and  e  corresponds to the scaling on the X and Y axes, c and f corresponds to the translation on those axes,  and g,  h, and i are respectively 0, 0 and 1. The matrix can also be used to express more complex transformations  such  as  keystone correction,  or  rotation.   For  a rotation of an angle T, this formula can be used: cos T  -sin T   0 sin T   cos T   0 0       0      1 As a special argument, instead of passing a matrix, one can pass the string none, in which case the default values  are  used  (a unit matrix without filter).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +518,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "xrandr to be more verbose. When used with -q (or without other options), xrandr will display more information  about  the server state. Please note that the gamma and brightness informa‐ tion  are  only  approximations  of  the  complete color profile stored in the server. When used along with options  that  recon‐ figure the system, progress will be reported while executing the configuration changes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -591,7 +581,28 @@
       "description": null
     },
     {
+      "name": "orientation",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "outputs",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "provider",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "put",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -612,21 +623,7 @@
       "description": null
     },
     {
-      "name": "tion",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "value",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "wxh",
       "value_type": "String",
       "required": true,
       "multiple": false,

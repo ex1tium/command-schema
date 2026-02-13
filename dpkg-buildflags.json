@@ -8,7 +8,7 @@
       "long": "--dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "to standard output all compilation flags and their values. It prints one flag per line separated from its value by an equal sign (“flag=value”). This is the default action.",
+      "description": "and their values. It prints one flag per line separated from its value by an equal sign (“flag=value”). This is the default action.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--export",
       "value_type": "String",
       "takes_value": true,
-      "description": "If the format value is not given, sh is assumed. Only compilation flags starting with an upper case character are included, others are assumed to not be",
+      "description": "to standard output commands that can be used to export all the compilation flags for some particular tool. If the format value is not given, sh is assumed. Only compilation flags starting with an upper case character are included, others are assumed to",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--get",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Exits with 0 if the flag is known otherwise exits with 1.",
+      "description": "the value of the flag on standard output. Exits with 0 if the flag is known otherwise exits with 1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "See the \"SUPPORTED FLAGS\" section for more information about them.",
+      "description": "vendor (one per line). See the \"SUPPORTED FLAGS\" section for more information about them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--origin",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the origin of the value that is returned by --get. Exits with 0 if the flag is known otherwise exits with 1. The origin can be",
+      "description": "returned by --get. Exits with 0 if the flag is known otherwise exits with 1. The origin can",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--param",
       "value_type": "String",
       "takes_value": true,
-      "description": "FCFLAGS. This adds safety checks against stack overwrites. This renders many potential code injection attacks into aborting situations. In the best case this turns code injection vulnerabilities into denial of service or into non-issues (depending on the application).",
+      "description": "to CFLAGS, CXXFLAGS, OBJCFLAGS, OBJCXXFLAGS, FFLAGS and FCFLAGS. This adds safety checks against stack overwrites. This renders many potential code injection attacks into aborting situations. In the best case this turns code injection vulnerabilities into denial of service or into non-issues (depending on the application).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--query",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "compiler (since dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).",
+      "description": "program: current vendor, relevant environment variables, feature areas, state of all feature flags, whether a feature is handled as a builtin default by the compiler (since dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--status",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "any information that can be useful to explain the behavior of dpkg-buildflags (since dpkg 1.16.5): relevant environment variables, current vendor, state of all feature flags. Also print the resulting compiler flags with their origin.",
+      "description": "behavior of dpkg-buildflags (since dpkg 1.16.5): relevant environment variables, current vendor, state of all feature flags. Also print the resulting compiler flags with their origin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -114,11 +114,11 @@
       "requires": []
     },
     {
-      "short": "-O0",
+      "short": "-Wdate-time",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "to CPPFLAGS. This will cause warnings when the __TIME__, __DATE__ and __TIMESTAMP__ macros are used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "to LDFLAGS. During program load, several ELF memory sections need to be written to by the linker. This flags the loader to turn these sections read-only before turning over control to the program. Most notably this prevents GOT overwrite attacks. If this option is disabled, bindnow will become disabled as well.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,37 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "be linked into any program, but not a shared library (recommended).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fcf-protection",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "arm64 to CFLAGS, CXXFLAGS, OBJCFLAGS, OBJCXXFLAGS, FFLAGS and FCFLAGS. This adds branch protection to indirect calls, jumps and returns to check whether these are valid at run-time.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fdebug-prefix-map",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "to CFLAGS, CXXFLAGS, OBJCFLAGS, OBJCXXFLAGS, FFLAGS and FCFLAGS where BUILDPATH is set to the top-level directory of the package being built. This has the effect of removing the build path from any generated debug symbols and replacing it with /usr/src/PKGNAME-PKGVER, where PKGNAME is the source package name and PKGVER is the source package version.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ffile-prefix-map",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "to CFLAGS, CXXFLAGS, OBJCFLAGS, OBJCXXFLAGS, FFLAGS and FCFLAGS where BUILDPATH is set to the top- level directory of the package being built. This has the effect of removing the build path from any generated file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -189,6 +219,46 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fno-omit-frame-pointer",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fsanitize",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "to LDFLAGS and",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fstack-clash-protection",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "on amd64, arm64, armhf and armel to CFLAGS, CXXFLAGS, OBJCFLAGS, OBJCXXFLAGS, FFLAGS and FCFLAGS. This adds code to prevent stack clash style attacks.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fstack-protector-strong",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "to CFLAGS, CXXFLAGS, OBJCFLAGS, OBJCXXFLAGS, FFLAGS and FCFLAGS. This is a stronger variant of stackprotector, but without significant performance penalties.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,8 +326,8 @@
   ],
   "subcommands": [
     {
-      "name": "Arguments",
-      "description": "to  pass  to  a  build  program's command line to use all the compilation flags (since dpkg 1.17.0).  The flag values are quoted in shell syntax.",
+      "name": "The",
+      "description": "output is in RFC822 format, with one section per feature.  For example:",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -289,7 +359,7 @@
     },
     {
       "name": "sh",
-      "description": "Shell commands to set and export all the compilation flags in the environment.  The flag values are quoted so the  output  is  ready for evaluation by a shell.",
+      "description": "Shell commands to set and export all the compilation  flags  in the  environment.   The flag values are quoted so the output is ready for evaluation by a shell.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -322,20 +392,6 @@
   ],
   "positional": [
     {
-      "name": "AREAS",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "ASFLAGS",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "CFLAGS",
       "value_type": "String",
       "required": true,
@@ -364,21 +420,7 @@
       "description": null
     },
     {
-      "name": "FEATURE",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "LDFLAGS",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "SUPPORTED",
       "value_type": "String",
       "required": true,
       "multiple": false,

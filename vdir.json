@@ -6,8 +6,8 @@
     {
       "short": "-a",
       "long": "--all",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "do not ignore entries starting with .",
       "multiple": false,
       "conflicts_with": [],
@@ -38,7 +38,7 @@
       "long": "--block-size",
       "value_type": "String",
       "takes_value": true,
-      "description": "with -l, scale sizes by SIZE when printing them; e.g., '--block-size=M'; see SIZE format below",
+      "description": "-l,  scale  sizes  by  SIZE  when  printing  them;   e.g., '--block-size=M'; see SIZE format below",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--dereference",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "when showing file information for a symbolic link, show information for the file the link references rather than for the link itself",
+      "description": "the  link itself",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--dereference-command-line-symlink-to-dir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "each  command line symbolic link that points to a direc‐ tory",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -144,11 +144,11 @@
       "requires": []
     },
     {
-      "short": "-x",
+      "short": null,
       "long": "--format",
       "value_type": "String",
       "takes_value": true,
-      "description": "list entries by lines instead of by columns",
+      "description": "-x, commas -m, horizontal -x, long -l, single-column -1, verbose -l, vertical -C",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -164,11 +164,11 @@
       "requires": []
     },
     {
-      "short": "-U",
+      "short": null,
       "long": "--group-directories-first",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "do not sort; list entries in directory order",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "a  --sort option, but any use of --sort=none (-U) disables grouping",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--hide",
       "value_type": "String",
       "takes_value": true,
-      "description": "do not list implied entries matching shell PATTERN (overridden by -a or -A)",
+      "description": "PATTERN  (overridden by -a or -A)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,10 +268,12 @@
       "long": "--kibibytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "default to 1024-byte blocks for file system usage; used only with -s and per directory totals",
+      "description": "to  1024-byte  blocks  for file system usage; used only with -s and per directory totals",
       "multiple": false,
       "conflicts_with": [],
-      "requires": []
+      "requires": [
+        "-s"
+      ]
     },
     {
       "short": "-N",
@@ -318,7 +320,7 @@
       "long": "--quoting-style",
       "value_type": "String",
       "takes_value": true,
-      "description": "use quoting style WORD for entry names: literal, locale, shell, shell-always, shell-escape, shell-escape-always, c, escape (overrides QUOTING_STYLE environment variable)",
+      "description": "quoting style WORD for entry names: literal, locale, shell, shell-always,  shell-escape,  shell-escape-always,   c,   escape (overrides QUOTING_STYLE environment variable)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +380,7 @@
       "long": "--sort",
       "value_type": "String",
       "takes_value": true,
-      "description": "sort by WORD instead of name: none (-U), size (-S), time (-t), version (-v), extension (-X), width",
+      "description": "by  WORD instead of name: none (-U), size (-S), time (-t), version (-v), extension (-X), width",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +400,7 @@
       "long": "--time",
       "value_type": "String",
       "takes_value": true,
-      "description": "select which timestamp used to display or sort; access time (-u): atime, access, use; metadata change time (-c): ctime, status; modified time (default): mtime, modification; birth time: birth, creation; with -l, WORD determines which time to show; with --sort=time, sort by WORD (newest first)",
+      "description": "display  or  sort;  access  time (-u): atime, access, use; metadata change time (-c): ctime, sta‐ tus;  modified  time (default): mtime, modification; birth time: birth, creation;",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -474,6 +476,16 @@
       "requires": []
     },
     {
+      "short": "-U",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not sort; list entries in directory order",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-X",
       "long": null,
       "value_type": "Bool",
@@ -488,7 +500,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with -lt: sort by, and show, ctime (time of last change of file status information); with -l: show ctime and sort by name; otherwise: sort by ctime, newest first",
+      "description": "with  -lt: sort by, and show, ctime (time of last change of file status information); with -l: show ctime and sort by name;  oth‐ erwise: sort by ctime, newest first",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +560,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with -lt: sort by, and show, access time; with -l: show access time and sort by name; otherwise: sort by access time, newest first",
+      "description": "with  -lt:  sort by, and show, access time; with -l: show access time and sort by name; otherwise: sort by  access  time,  newest first",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -559,6 +571,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "natural sort of (version) numbers within text",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list entries by lines instead of by columns",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

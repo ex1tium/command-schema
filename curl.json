@@ -8,7 +8,7 @@
       "long": "--abstract-unix-socket",
       "value_type": "File",
       "takes_value": true,
-      "description": "Note: netstat shows the  path  of  an  abstract socket prefixed with '@', however the <path> argument should not have this leading character.",
+      "description": "Connect  through an abstract Unix domain socket, instead of using the network.  Note: netstat shows the path  of  an  ab‐ stract  socket  prefixed  with  '@', however the <path> argument should not have this leading character.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--alt-svc",
       "value_type": "File",
       "takes_value": true,
-      "description": "This  option  enables the alt-svc parser in curl. If the file name points to an existing alt-svc cache file, that gets used. After a completed transfer, the cache is saved to the file name again if it has been modified.",
+      "description": "This  option enables the alt-svc parser in curl. If the file name points to an existing alt-svc cache  file,  that  gets used. After a completed transfer, the cache is saved to the file name again if it has been modified.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--anyauth",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is  done by first doing a request and checking the response-headers, thus possibly inducing an extra network round-trip. This is used instead of setting a specific authentication method, which you can do with --basic, --digest, --ntlm, and --negotiate.",
+      "description": "to  support. This  is  done  by  first  doing  a request and checking the re‐ sponse-headers,  thus  possibly  inducing   an   extra   network round-trip. This is used instead of setting a specific authenti‐ cation  method, which you can do with --basic, --digest, --ntlm, and --negotiate.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-a",
       "long": "--append",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "SFTP)  When  used  in an upload, this option makes curl append to the target file instead of overwriting it. If the remote file does not exist, it is created. Note that this flag is ignored by some SFTP servers (including OpenSSH).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--basic",
       "value_type": "String",
       "takes_value": true,
-      "description": "is  usually  pointless, unless you use it to override a previously set option that sets a different authentication method (such as --ntlm, --digest, or --ne‐ gotiate).",
+      "description": "re‐ mote host. This is the default and this option is usually point‐ less, unless you use it to override a previously set option that sets  a  different  authentication method (such as --ntlm, --di‐ gest, or --negotiate).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--ca-native",
       "value_type": "File",
       "takes_value": true,
-      "description": "Tells curl to use the CA store from the native operating system to verify the peer. By default, curl otherwise uses a CA store provided in a single file or directory, but when using this option it interfaces the operating system's own vault.",
+      "description": "native  operating system  to verify the peer. By default, curl otherwise uses a CA store provided in a single file or  directory,  but  when  using this option it interfaces the operating system's own vault.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--cacert",
       "value_type": "File",
       "takes_value": true,
-      "description": "Tells  curl  to use the specified certificate file to verify the peer. The file may contain multiple CA certificates. The cer‐ tificate(s) must be in PEM format. Normally curl is built to use a default file for this, so this option is typically used  to  alter that default file.",
+      "description": "peer.  The  file  may contain multiple CA certificates. The certificate(s) must be in PEM format. Normally curl is built  to use a default file for this, so this option is typically used to alter that default file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,34 +88,14 @@
       "long": "--capath",
       "value_type": "File",
       "takes_value": true,
-      "description": "Tells  curl  to  use the specified certificate directory to verify the peer. Multiple paths can be provided by separating them with \":\" (e.g.  \"path1:path2:path3\"). The certificates must be in PEM format, and if curl is built  against  OpenSSL,  the  directory must  have  been  processed  using  the c_rehash utility supplied with OpenSSL. Using --capath can allow OpenSSL-powered curl to make SSL-connections much more efficiently than using --cacert if the --cacert file contains many CA certificates.",
+      "description": "Tells  curl to use the specified certificate directory to verify the peer. Multiple paths can be  provided  by  separating them with \":\" (e.g.  \"path1:path2:path3\"). The certificates must be  in PEM format, and if curl is built against OpenSSL, the di‐ rectory must have been processed using the c_rehash utility sup‐ plied with OpenSSL. Using  --capath  can  allow  OpenSSL-powered curl  to  make  SSL-connections much more efficiently than using",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-E",
+      "short": null,
       "long": "--cert",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "key  and  the client certificate concatenated. See -E, --cert and --key to specify them independently.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--cert-status",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "ex‐ tension.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--cert-type",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -125,10 +105,30 @@
     },
     {
       "short": null,
+      "long": "--cert-status",
+      "value_type": "Url",
+      "takes_value": true,
+      "description": "Tells curl to verify the status of the server certificate by using the Certificate Status Request (aka. OCSP stapling) TLS extension.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cert-type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "client  certificate  is using. PEM, DER, ENG and P12 are recognized types.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--ciphers",
       "value_type": "Url",
       "takes_value": true,
-      "description": "SSL  cipher  list details on this URL:",
+      "description": "ciphers  must  specify  valid ciphers. Read up on SSL cipher list details on this URL:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--config",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a text file to read curl arguments from. The command line arguments found in the text file are used as if they were provided on the command line.",
+      "description": "a  text  file  to read curl arguments from. The command line arguments found in the text file are used as if  they  were provided on the command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--connect-timeout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "time in seconds that you allow curl's connection to take.  This only limits the connection phase, so if curl connects within the given period it continues - if not it exits.",
+      "description": "you  allow  curl's  connection  to take.   This  only  limits the connection phase, so if curl con‐ nects within the given period it continues - if not it exits.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -234,11 +234,31 @@
       "requires": []
     },
     {
+      "short": null,
+      "long": "--show-error",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-s",
       "long": "--silent",
       "value_type": "Bool",
       "takes_value": false,
       "description": "Silent mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--trace-ids",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Make the operation more talkative",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -269,16 +289,6 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Send User-Agent <name> to server",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Make the operation more talkative",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

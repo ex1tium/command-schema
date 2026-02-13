@@ -96,8 +96,8 @@
     {
       "short": "-k",
       "long": "--dmesg",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Show kernel message log from the current boot",
       "multiple": false,
       "conflicts_with": [],
@@ -116,10 +116,10 @@
     {
       "short": null,
       "long": "--facility",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
       "description": "Show entries with the specified facilities",
-      "multiple": false,
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -236,7 +236,7 @@
     {
       "short": null,
       "long": "--image-policy",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Specify disk image dissection policy",
       "multiple": false,
@@ -346,8 +346,8 @@
     {
       "short": null,
       "long": "--no-tail",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Show all lines, even in follow mode",
       "multiple": false,
       "conflicts_with": [],
@@ -388,7 +388,7 @@
       "long": "--priority",
       "value_type": "String",
       "takes_value": true,
-      "description": "\"emerg\" (0), \"alert\" (1), \"crit\" (2), \"err\" (3), \"warning\" (4), \"notice\" (5), \"info\" (6), \"debug\" (7). If a single log level is specified, all messages with this log level or a lower (hence more important) log level are shown. If a range is specified, all messages within the range are shown, including both the start and the end value of the range. This will add \"PRIORITY=\" matches for the specified priorities.",
+      "description": "Show entries with the specified priority",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,7 +468,7 @@
       "long": "--since",
       "value_type": "String",
       "takes_value": true,
-      "description": "\"now\" refers to the current time. Finally, relative times may be specified, prefixed with \"-\" or \"+\", referring to times before or after the current time, respectively. For complete time and date specification, see systemd.time(7). Note that",
+      "description": "Show entries not older than the specified date",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -643,12 +643,16 @@
       "subcommands": [],
       "aliases": [
         "crit",
-        "debug",
-        "err",
-        "info",
-        "notice",
-        "warning"
+        "err"
       ]
+    },
+    {
+      "name": "automatically",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "files",
@@ -659,7 +663,7 @@
       "aliases": []
     },
     {
-      "name": "new",
+      "name": "kmsg",
       "description": null,
       "flags": [],
       "positional": [],
@@ -667,12 +671,16 @@
       "aliases": []
     },
     {
-      "name": "the",
+      "name": "warning",
       "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
-      "aliases": []
+      "aliases": [
+        "debug",
+        "info",
+        "notice"
+      ]
     }
   ],
   "positional": [
@@ -685,6 +693,6 @@
     }
   ],
   "source": "Merged",
-  "confidence": 1.0,
+  "confidence": 0.95,
   "version": null
 }
