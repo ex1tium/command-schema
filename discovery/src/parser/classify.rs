@@ -264,6 +264,41 @@ pub fn is_placeholder_token(text: &str) -> bool {
     )
 }
 
+/// Returns `true` when `name` is a common English prose word that should never
+/// appear as a positional argument name.
+///
+/// This filter catches garbage that leaks through when help-text or man-page
+/// prose paragraphs are misinterpreted as argument definitions—for example
+/// words like "the", "a", "in", "of" extracted from justified man-page text.
+pub fn is_prose_word(name: &str) -> bool {
+    matches!(
+        name.to_ascii_lowercase().as_str(),
+        // Articles
+        "a" | "an" | "the"
+        // Prepositions
+        | "in" | "of" | "to" | "for" | "with" | "from" | "by" | "at" | "on" | "as"
+        | "into" | "about" | "between" | "before" | "after" | "during" | "until"
+        | "without" | "within" | "through" | "under" | "above" | "below" | "upon"
+        // Conjunctions
+        | "and" | "or" | "but" | "if" | "when" | "then" | "than" | "while"
+        | "because" | "although" | "unless" | "whether" | "since"
+        // Pronouns / determiners
+        | "it" | "its" | "this" | "that" | "these" | "those" | "their" | "they"
+        | "he" | "she" | "we" | "you" | "them" | "our" | "your" | "my"
+        // Auxiliary / common verbs
+        | "is" | "are" | "be" | "was" | "were" | "been" | "being"
+        | "has" | "have" | "had" | "can" | "may" | "will" | "shall"
+        | "should" | "would" | "could" | "might" | "must" | "do" | "does" | "did"
+        // Adverbs / misc
+        | "not" | "no" | "all" | "any" | "each" | "every" | "some" | "only"
+        | "also" | "more" | "most" | "such" | "well" | "very" | "just"
+        | "both" | "either" | "neither" | "other" | "same" | "so" | "how"
+        // Common prose fragments that appear as first word on a line
+        | "here" | "there" | "where" | "which" | "what" | "who" | "whom"
+        | "one" | "two" | "many" | "several" | "using" | "used" | "see"
+    )
+}
+
 /// Returns `true` if `line` looks like an environment variable assignment row
 /// (e.g. `export FOO=bar` or `MY_VAR=value`).
 pub fn is_env_var_row(line: &str) -> bool {

@@ -545,7 +545,8 @@ impl HelpParser {
             !drop
         });
         arg_candidates.retain(|candidate| {
-            let drop = classify::is_placeholder_token(candidate.name.as_str());
+            let drop = classify::is_placeholder_token(candidate.name.as_str())
+                || classify::is_prose_word(candidate.name.as_str());
             if drop {
                 false_positive_filter_hits += 1;
             }
