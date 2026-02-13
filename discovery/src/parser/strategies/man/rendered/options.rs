@@ -97,10 +97,10 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
 
         let mut schema = if name.starts_with("--") {
             FlagSchema::boolean(None, Some(name))
-        } else if name.len() == 2 {
-            FlagSchema::boolean(Some(name), None)
         } else {
-            FlagSchema::boolean(None, Some(name))
+            // Treat all single-dash forms as short-style flags to avoid
+            // generating invalid long names like "-foo".
+            FlagSchema::boolean(Some(name), None)
         };
 
         if inline_value || has_value_hint {
@@ -126,5 +126,18 @@ fn infer_value_type(description: &str) -> ValueType {
         ValueType::Number
     } else {
         ValueType::String
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_flag_definition_single_dash_multi_char_is_short() {
+        let flags = parse_flag_definition("-eany", None);
+        assert_eq!(flags.len(), 1);
+        assert_eq!(flags[0].short.as_deref(), Some("-eany"));
+        assert!(flags[0].long.is_none());
     }
 }

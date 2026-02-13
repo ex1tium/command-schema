@@ -38,41 +38,44 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
                 continue;
             }
 
-            let (name, inline_value) = token
-                .split_once('=')
-                .map(|(head, _)| (head, true))
-                .unwrap_or((token, false));
+            let aliases = split_flag_aliases(token);
+            for alias in aliases {
+                let (name, inline_value) = alias
+                    .split_once('=')
+                    .map(|(head, _)| (head, true))
+                    .unwrap_or((alias.as_str(), false));
 
-            let mut schema = if name.starts_with("--") {
-                FlagSchema::boolean(None, Some(name))
-            } else if name.len() == 2 {
-                FlagSchema::boolean(Some(name), None)
-            } else {
-                FlagSchema::boolean(None, Some(name))
-            };
+                let mut schema = if name.starts_with("--") {
+                    FlagSchema::boolean(None, Some(name))
+                } else {
+                    // Treat all single-dash forms as short-style flags to
+                    // avoid invalid long names like "-foo".
+                    FlagSchema::boolean(Some(name), None)
+                };
 
-            if inline_value {
-                schema.takes_value = true;
-                schema.value_type = ValueType::String;
-            } else if let Some(next) = tokens.get(idx + 1)
-                && looks_like_value_placeholder(next)
-            {
-                schema.takes_value = true;
-                schema.value_type = infer_value_type(next);
-            }
+                if inline_value {
+                    schema.takes_value = true;
+                    schema.value_type = ValueType::String;
+                } else if let Some(next) = tokens.get(idx + 1)
+                    && looks_like_value_placeholder(next)
+                {
+                    schema.takes_value = true;
+                    schema.value_type = infer_value_type(next);
+                }
 
-            let key = schema
-                .long
-                .clone()
-                .or(schema.short.clone())
-                .unwrap_or_default();
-            if !key.is_empty() && seen.insert(key) {
-                out.push(FlagCandidate::from_schema(
-                    schema,
-                    SourceSpan::single(line.index),
-                    "man-rendered-synopsis-flags",
-                    0.70,
-                ));
+                let key = schema
+                    .long
+                    .clone()
+                    .or(schema.short.clone())
+                    .unwrap_or_default();
+                if !key.is_empty() && seen.insert(key) {
+                    out.push(FlagCandidate::from_schema(
+                        schema,
+                        SourceSpan::single(line.index),
+                        "man-rendered-synopsis-flags",
+                        0.70,
+                    ));
+                }
             }
 
             idx += 1;
@@ -174,5 +177,53 @@ fn infer_value_type(token: &str) -> ValueType {
         ValueType::Number
     } else {
         ValueType::String
+    }
+}
+
+fn split_flag_aliases(token: &str) -> Vec<String> {
+    token
+        .split(|ch: char| ch == '|' || ch == ',')
+        .map(str::trim)
+        .filter(|part| !part.is_empty() && part.starts_with('-'))
+        .map(ToString::to_string)
+        .collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::parser::IndexedLine;
+    use crate::parser::strategies::man::rendered::sections::ManSection;
+
+    #[test]
+    fn test_parse_synopsis_flags_splits_pipe_aliases() {
+        let section = ManSection {
+            name: "SYNOPSIS".to_string(),
+            start_line: 0,
+            end_line: 0,
+            lines: vec![IndexedLine {
+                index: 0,
+                text: "tool -p|--paginate|-P|--no-pager".to_string(),
+            }],
+        };
+
+        let flags = parse_synopsis_flags(&section);
+        assert!(flags.iter().any(|flag| flag.short.as_deref() == Some("-p")));
+        assert!(flags.iter().any(|flag| flag.short.as_deref() == Some("-P")));
+        assert!(
+            flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--paginate"))
+        );
+        assert!(
+            flags
+                .iter()
+                .any(|flag| flag.long.as_deref() == Some("--no-pager"))
+        );
+        assert!(flags.iter().all(|flag| {
+            flag.long
+                .as_deref()
+                .is_none_or(|long| long.starts_with("--"))
+        }));
     }
 }

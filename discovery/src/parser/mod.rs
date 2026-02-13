@@ -272,6 +272,11 @@ impl HelpParser {
         }
 
         let man_bundle = man_strategy.collect_all(self, &indexed_lines);
+        let man_detected = man_bundle.format.is_some();
+        let man_has_entities = man_bundle.has_entities();
+        if self.detected_format == Some(HelpFormat::Man) || (man_has_entities && man_detected) {
+            schema.source = SchemaSource::ManPage;
+        }
         if let Some(format) = man_bundle.format {
             let label = match format {
                 strategies::man::detect::ManFormat::Mdoc => "mdoc",
@@ -280,7 +285,7 @@ impl HelpParser {
             };
             parsers_used.push(format!("man-detected:{label}"));
         }
-        if man_bundle.has_entities() {
+        if man_has_entities {
             recognized_indices.extend(man_bundle.recognized_indices());
             parsers_used.push("man-primary".to_string());
             flag_candidates.extend(man_bundle.flags);
@@ -543,6 +548,15 @@ impl HelpParser {
         schema.global_flags = flag_result.accepted;
         schema.subcommands = subcommand_result.accepted;
         schema.positional = arg_result.accepted;
+        let command_leaf = self
+            .command
+            .split_whitespace()
+            .last()
+            .unwrap_or(self.command.as_str())
+            .to_ascii_lowercase();
+        schema
+            .subcommands
+            .retain(|sub| sub.name.to_ascii_lowercase() != command_leaf);
 
         constraints::apply_flag_relationships(&mut schema.global_flags);
         for error in constraints::validate_subcommand_hierarchy(&self.command, &schema.subcommands)

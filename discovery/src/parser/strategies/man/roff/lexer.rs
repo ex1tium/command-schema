@@ -64,8 +64,13 @@ fn parse_macro_line(line: &str) -> Option<(String, Vec<String>)> {
 
     let mut macro_chars = rest.chars();
     let a = macro_chars.next()?;
-    let b = macro_chars.next()?;
-    if !a.is_ascii_alphabetic() || !b.is_ascii_alphabetic() {
+    if !a.is_ascii_alphabetic() {
+        return None;
+    }
+    if let Some(b) = macro_chars.next()
+        && !b.is_ascii_alphanumeric()
+        && !b.is_ascii_whitespace()
+    {
         return None;
     }
 

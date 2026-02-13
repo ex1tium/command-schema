@@ -74,7 +74,19 @@ pub fn merge_flag_candidates(
         if let Some(best_candidate) = best {
             let score = score_flag_candidate(&best_candidate);
             if score >= threshold {
-                accepted.push(best_candidate.into_schema());
+                let schema = best_candidate.into_schema();
+                if is_valid_flag_schema(&schema) {
+                    accepted.push(schema);
+                } else {
+                    // Invalid names (for example bare "-" / "--") should not
+                    // fail the full schema; keep them out of accepted output.
+                    low.push(FlagCandidate::from_schema(
+                        schema,
+                        super::ast::SourceSpan::unknown(),
+                        "merge-invalid-flag",
+                        0.0,
+                    ));
+                }
             } else if score >= MEDIUM_CONFIDENCE_THRESHOLD {
                 medium.push(best_candidate);
             } else {
@@ -91,6 +103,52 @@ pub fn merge_flag_candidates(
         accepted,
         medium_confidence,
         discarded,
+    }
+}
+
+fn is_valid_flag_schema(flag: &FlagSchema) -> bool {
+    let short_ok = flag
+        .short
+        .as_deref()
+        .is_none_or(|short| short.starts_with('-') && !short.starts_with("--") && short.len() >= 2);
+    let long_ok = flag
+        .long
+        .as_deref()
+        .is_none_or(|long| long.starts_with("--") && long.len() >= 3);
+    short_ok && long_ok
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_valid_flag_schema_rejects_bare_dash_names() {
+        assert!(!is_valid_flag_schema(&FlagSchema::boolean(Some("-"), None)));
+        assert!(!is_valid_flag_schema(&FlagSchema::boolean(
+            None,
+            Some("--")
+        )));
+    }
+
+    #[test]
+    fn test_merge_flag_candidates_drops_invalid_long_names() {
+        let candidates = vec![FlagCandidate {
+            short: None,
+            long: Some("-bad".to_string()),
+            value_type: command_schema_core::ValueType::String,
+            takes_value: false,
+            description: None,
+            multiple: false,
+            conflicts_with: Vec::new(),
+            requires: Vec::new(),
+            source_span: super::super::ast::SourceSpan::single(1),
+            strategy: "test",
+            confidence: 1.0,
+        }];
+
+        let merged = merge_flag_candidates(candidates, HIGH_CONFIDENCE_THRESHOLD);
+        assert!(merged.accepted.is_empty());
     }
 }
 

@@ -115,8 +115,11 @@ extract-repo-commands: ## Non-destructive: extract COMMANDS and merge results in
 .PHONY: extract-repo-system
 extract-repo-system: ## Scan PATH + LIST_GLOB CSV lists, extract installed commands, merge into SCHEMA_DIR (FORCE=1 overwrites)
 	mkdir -p "$(SCHEMA_DIR)"
-	@stage_dir="$$(mktemp -d /tmp/command-schema-stage-XXXXXX)"; \
+	@set -eu; \
+	stage_dir="$$(mktemp -d /tmp/command-schema-stage-XXXXXX)"; \
 	list_tmp="$$(mktemp /tmp/command-schema-list-XXXXXX)"; \
+	cleanup() { rm -rf "$$stage_dir" "$$list_tmp"; }; \
+	trap cleanup EXIT INT TERM; \
 	echo "Staging extraction in $$stage_dir"; \
 	echo "Collecting commands from $(LIST_GLOB)"; \
 	cat $(LIST_GLOB) 2>/dev/null | tr ',\r' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$$//' | grep -E '^[A-Za-z0-9][A-Za-z0-9+._-]*$$' | sort -u > "$$list_tmp" || true; \
@@ -128,6 +131,10 @@ extract-repo-system: ## Scan PATH + LIST_GLOB CSV lists, extract installed comma
 		echo "No valid commands found in list files; running scan-path only."; \
 		$(CLI) extract --scan-path --installed-only --output "$$stage_dir" --no-cache; \
 	fi; \
+	if [ ! -f "$$stage_dir/extraction-report.json" ]; then \
+		echo "Extraction failed: missing extraction-report.json in $$stage_dir"; \
+		exit 1; \
+	fi; \
 	if [ "$(FORCE)" = "1" ] || [ "$(FORCE)" = "true" ] || [ "$(FORCE)" = "yes" ]; then \
 		cp_mode="-f"; \
 		echo "Merge mode: overwrite existing schemas (FORCE=$(FORCE))"; \
@@ -138,8 +145,7 @@ extract-repo-system: ## Scan PATH + LIST_GLOB CSV lists, extract installed comma
 	find "$$stage_dir" -maxdepth 1 -type f -name '*.json' ! -name 'extraction-report.json' -exec cp $$cp_mode {} "$(SCHEMA_DIR)/" \;; \
 	cp -f "$$stage_dir/extraction-report.json" "$(REPORT_OUTPUT)"; \
 	echo "Merged extracted schemas into $(SCHEMA_DIR). Existing files for missing commands were left untouched."; \
-	echo "Extraction report: $(REPORT_OUTPUT)"; \
-	rm -rf "$$stage_dir" "$$list_tmp"
+	echo "Extraction report: $(REPORT_OUTPUT)"
 
 .PHONY: extract-repo-system-force
 extract-repo-system-force: ## Same as extract-repo-system with overwrite enabled

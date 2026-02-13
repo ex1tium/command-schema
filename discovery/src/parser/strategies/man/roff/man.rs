@@ -8,41 +8,54 @@ use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCand
 
 use super::lexer::Token;
 
+/// Parsed representation of a legacy `man`-macro document.
+///
+/// `title` and `section` are optional metadata from `.TH`; `sections` preserves
+/// document order and owns all extracted content.
 #[derive(Debug, Clone, Default)]
 pub struct ManDocument {
+    /// Command/manual title from `.TH`, when present.
     pub title: Option<String>,
+    /// Manual section identifier from `.TH`, when present.
     pub section: Option<String>,
+    /// Ordered top-level sections extracted from `.SH` boundaries.
     pub sections: Vec<ManSection>,
 }
 
+/// A top-level legacy-man section and its parsed elements.
 #[derive(Debug, Clone, Default)]
 pub struct ManSection {
+    /// Canonical section name (typically uppercase).
     pub name: String,
+    /// Elements parsed from the section body in source order.
     pub content: Vec<ManElement>,
 }
 
 #[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum ManElement {
+    /// A `.TP`-style definition list row (`tag`, `description`, source `line`).
     TaggedParagraph {
         tag: String,
         description: String,
         line: usize,
     },
+    /// An `.IP`-style indented row with optional `tag`, body `text`, and `line`.
     IndentedParagraph {
         tag: Option<String>,
         text: String,
         line: usize,
     },
-    Text {
-        value: String,
-        line: usize,
-    },
-    Paragraph {
-        line: usize,
-    },
+    /// Free text content and its source `line`.
+    Text { value: String, line: usize },
+    /// Paragraph boundary marker with source `line`.
+    Paragraph { line: usize },
 }
 
+/// Parses legacy `man` macro tokens into a structured [`ManDocument`].
+///
+/// Unknown macros are preserved as text-like content; the function never
+/// returns an error.
 pub fn parse_man_source(tokens: &[Token]) -> ManDocument {
     let mut doc = ManDocument::default();
     let mut current_section = "UNKNOWN".to_string();
@@ -235,6 +248,9 @@ pub fn parse_man_source(tokens: &[Token]) -> ManDocument {
     doc
 }
 
+/// Extracts flag candidates from parsed legacy-man sections.
+///
+/// Primarily reads `OPTIONS`/`SYNOPSIS` tagged and indented paragraphs.
 pub fn extract_flags_from_man(doc: &ManDocument) -> Vec<FlagCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
@@ -278,6 +294,9 @@ pub fn extract_flags_from_man(doc: &ManDocument) -> Vec<FlagCandidate> {
     out
 }
 
+/// Extracts positional argument candidates from `SYNOPSIS` content.
+///
+/// Synopsis text is tokenized heuristically and deduplicated by lowercase name.
 pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
@@ -315,6 +334,9 @@ pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
     out
 }
 
+/// Extracts subcommand candidates from `COMMANDS`-like sections.
+///
+/// Tagged definitions provide command names and optional descriptions.
 pub fn extract_subcommands_from_man(doc: &ManDocument) -> Vec<SubcommandCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
@@ -433,10 +455,10 @@ fn parse_flag_defs(definition: &str, description: &str) -> Vec<FlagSchema> {
 
         let mut schema = if raw_name.starts_with("--") {
             FlagSchema::boolean(None, Some(raw_name))
-        } else if raw_name.len() == 2 {
-            FlagSchema::boolean(Some(raw_name), None)
         } else {
-            FlagSchema::boolean(None, Some(raw_name))
+            // Treat all single-dash forms as short-style flags to avoid
+            // generating invalid long names like "-foo".
+            FlagSchema::boolean(Some(raw_name), None)
         };
 
         if inline_value || value_hint {

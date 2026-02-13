@@ -8,45 +8,56 @@ use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCand
 
 use super::lexer::Token;
 
+/// Parsed representation of an `mdoc` document.
+///
+/// `title` and `section` come from `.Dt`; `sections` keeps parsed content in
+/// document order.
 #[derive(Debug, Clone, Default)]
 pub struct MdocDocument {
+    /// Document title from `.Dt`, when present.
     pub title: Option<String>,
+    /// Manual section from `.Dt`, when present.
     pub section: Option<String>,
+    /// Ordered top-level sections derived from `.Sh`.
     pub sections: Vec<MdocSection>,
 }
 
+/// A top-level `mdoc` section and its parsed elements.
 #[derive(Debug, Clone, Default)]
 pub struct MdocSection {
+    /// Section heading name (typically uppercase after normalization).
     pub name: String,
+    /// Elements captured from the section in source order.
     pub content: Vec<MdocElement>,
 }
 
 #[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum MdocElement {
+    /// A flag token with optionality and source line.
     Flag {
         name: String,
         optional: bool,
         line: usize,
     },
+    /// A positional argument token with optionality and source line.
     Arg {
         name: String,
         optional: bool,
         line: usize,
     },
-    Command {
-        name: String,
-        line: usize,
-    },
-    Text {
-        value: String,
-        line: usize,
-    },
-    Paragraph {
-        line: usize,
-    },
+    /// A subcommand token and source line.
+    Command { name: String, line: usize },
+    /// Free text content and source line.
+    Text { value: String, line: usize },
+    /// Paragraph boundary marker and source line.
+    Paragraph { line: usize },
 }
 
+/// Parses `mdoc` tokens into a structured [`MdocDocument`].
+///
+/// Unknown macros are retained as text-like elements; the parser does not
+/// return errors.
 pub fn parse_mdoc_source(tokens: &[Token]) -> MdocDocument {
     let mut doc = MdocDocument::default();
     let mut current_section = "UNKNOWN".to_string();
@@ -220,6 +231,9 @@ pub fn parse_mdoc_source(tokens: &[Token]) -> MdocDocument {
     doc
 }
 
+/// Extracts flag candidates from parsed `mdoc` sections.
+///
+/// Flags are sourced from option macros and list-item content.
 pub fn extract_flags_from_mdoc(doc: &MdocDocument) -> Vec<FlagCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
@@ -266,6 +280,9 @@ pub fn extract_flags_from_mdoc(doc: &MdocDocument) -> Vec<FlagCandidate> {
     out
 }
 
+/// Extracts positional argument candidates from `SYNOPSIS`/`USAGE` sections.
+///
+/// Argument names are normalized and deduplicated by lowercase key.
 pub fn extract_args_from_mdoc(doc: &MdocDocument) -> Vec<ArgCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
@@ -310,6 +327,9 @@ pub fn extract_args_from_mdoc(doc: &MdocDocument) -> Vec<ArgCandidate> {
     out
 }
 
+/// Extracts subcommand candidates from `COMMANDS`-like sections.
+///
+/// Command entries are deduplicated case-insensitively.
 pub fn extract_subcommands_from_mdoc(doc: &MdocDocument) -> Vec<SubcommandCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
@@ -383,10 +403,9 @@ fn parse_flag_from_name(name: &str) -> Option<FlagSchema> {
         return Some(FlagSchema::boolean(None, Some(name)));
     }
     if name.starts_with('-') {
-        if name.len() == 2 {
-            return Some(FlagSchema::boolean(Some(name), None));
-        }
-        return Some(FlagSchema::boolean(None, Some(name)));
+        // Treat all single-dash forms as short-style flags to avoid
+        // generating invalid long names like "-foo".
+        return Some(FlagSchema::boolean(Some(name), None));
     }
     None
 }
@@ -486,7 +505,10 @@ fn parse_it_elements(args: &[String], line: usize) -> Vec<MdocElement> {
                 idx = idx.saturating_add(2);
             }
             _ => {
-                if let Some(name) = normalize_flag_name(&args[idx]) {
+                let raw = args[idx].trim();
+                if raw.starts_with('-')
+                    && let Some(name) = normalize_flag_name(raw)
+                {
                     out.push(MdocElement::Flag {
                         name,
                         optional: item_optional || pending_optional,

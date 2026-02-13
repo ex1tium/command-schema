@@ -1,15 +1,20 @@
 //! Man page format detection.
 
+/// Normalized format buckets used by the man strategy detector.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ManFormat {
-    /// Semantic mdoc macro format (.Dt, .Sh, .Fl, .Ar ...)
+    /// Semantic `mdoc` macro source such as `.Dt`, `.Sh`, `.Fl`, and `.Ar`.
     Mdoc,
-    /// Legacy man macro format (.TH, .SH, .TP, .IP ...)
+    /// Legacy `man` macro source such as `.TH`, `.SH`, `.TP`, and `.IP`.
     Man,
-    /// Already rendered manual output.
+    /// Rendered manual text (no raw roff macros).
     Rendered,
 }
 
+/// Returns `true` when the first 20 lines look like raw roff source.
+///
+/// The input slice should contain normalized output lines; at least two macro
+/// lines must be detected for a positive match.
 pub fn is_raw_roff(lines: &[&str]) -> bool {
     lines
         .iter()
@@ -19,6 +24,10 @@ pub fn is_raw_roff(lines: &[&str]) -> bool {
         >= 2
 }
 
+/// Detects whether `lines` represent `mdoc`, `man`, rendered man output, or none.
+///
+/// Raw roff classification inspects up to 64 lines and prefers `.Dt`/`.TH`
+/// signals when both macro families are present.
 pub fn detect_roff_variant(lines: &[&str]) -> Option<ManFormat> {
     if !is_raw_roff(lines) {
         if is_rendered_man_page(lines) {
@@ -67,34 +76,63 @@ pub fn detect_roff_variant(lines: &[&str]) -> Option<ManFormat> {
     }
 }
 
+/// Returns `true` when `lines` resemble rendered man-page text.
+///
+/// Detection uses title/header, section-header, and prose hints over bounded
+/// windows (`take(12)` and `take(160)`).
 pub fn is_rendered_man_page(lines: &[&str]) -> bool {
     if lines.is_empty() {
         return false;
     }
 
-    let header_hits = lines
+    let has_title_line = lines
         .iter()
         .take(12)
-        .filter(|line| looks_like_man_title_line(line.trim()))
-        .count();
+        .any(|line| looks_like_man_title_line(line.trim()));
 
-    let section_hits = lines
-        .iter()
-        .filter(|line| looks_like_rendered_section_header(line))
-        .count();
+    if has_title_line {
+        return true;
+    }
 
-    let prose_hits = lines
-        .iter()
-        .take(160)
-        .filter(|line| {
-            let lower = line.to_ascii_lowercase();
-            lower.contains("see also") || lower.contains("git manual") || lower.contains("man page")
-        })
-        .count();
+    let mut has_name = false;
+    let mut has_synopsis = false;
+    let mut has_structural_section = false;
 
-    header_hits > 0 || (section_hits >= 2 && prose_hits > 0) || section_hits >= 3
+    for line in lines.iter().take(200) {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let normalized = trimmed
+            .trim_end_matches(':')
+            .split_whitespace()
+            .collect::<Vec<_>>()
+            .join(" ")
+            .to_ascii_uppercase();
+        match normalized.as_str() {
+            "NAME" => has_name = true,
+            "SYNOPSIS" => has_synopsis = true,
+            "OPTIONS" | "COMMAND OPTIONS" | "GLOBAL OPTIONS" | "DESCRIPTION" | "COMMANDS" => {
+                has_structural_section = true
+            }
+            _ => {}
+        }
+    }
+
+    // Manual/prose hints are supportive only; core section structure is required
+    // in this branch to avoid classifying generic help as rendered man.
+    let _manual_hint_present = lines.iter().take(160).any(|line| {
+        let lower = line.to_ascii_lowercase();
+        lower.contains("see also") || lower.contains("git manual") || lower.contains("man page")
+    });
+
+    has_name && has_synopsis && has_structural_section
 }
 
+/// Computes a confidence score for detected man input in the `0.0..=1.0` range.
+///
+/// Raw roff formats score from macro density in the first 20 lines; rendered
+/// format scores from recognized section-header density.
 #[allow(dead_code)]
 pub fn man_page_confidence(format: ManFormat, lines: &[&str]) -> f64 {
     match format {
@@ -116,6 +154,7 @@ pub fn man_page_confidence(format: ManFormat, lines: &[&str]) -> f64 {
     }
 }
 
+/// Returns `true` when `line` matches a known rendered man section header.
 pub fn looks_like_rendered_section_header(line: &str) -> bool {
     let trimmed = line.trim().trim_end_matches(':');
     if trimmed.is_empty() || trimmed.len() > 48 {
@@ -144,6 +183,7 @@ pub fn looks_like_rendered_section_header(line: &str) -> bool {
     )
 }
 
+/// Returns `true` when `trimmed` matches a rendered man title banner token.
 pub fn looks_like_man_title_line(trimmed: &str) -> bool {
     if trimmed.is_empty() {
         return false;
@@ -212,5 +252,30 @@ mod tests {
             "OPTIONS",
         ];
         assert_eq!(detect_roff_variant(&lines), Some(ManFormat::Rendered));
+    }
+
+    #[test]
+    fn test_rendered_detection_rejects_generic_help_sections_only() {
+        let lines = [
+            "NAME",
+            "USAGE",
+            "COMMANDS",
+            "OPTIONS",
+            "A generic help page without man title or synopsis section",
+        ];
+        assert!(!is_rendered_man_page(&lines));
+    }
+
+    #[test]
+    fn test_rendered_detection_accepts_without_options_section() {
+        let lines = [
+            "NAME",
+            "  tool - example command",
+            "SYNOPSIS",
+            "  tool [mode]",
+            "DESCRIPTION",
+            "  Detailed manual-style description text.",
+        ];
+        assert!(is_rendered_man_page(&lines));
     }
 }
