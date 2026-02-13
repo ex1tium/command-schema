@@ -188,8 +188,12 @@ fn score_man_format(lines: &[&str]) -> f64 {
 
     if rendered_header_hits > 0 {
         score += 0.80;
+        score += (section_hits.min(4) as f64) * 0.10;
+    } else if section_hits >= 2 {
+        // Without a title line, require at least two structural headers
+        // to avoid misclassifying generic help as rendered man.
+        score += (section_hits.min(4) as f64) * 0.10;
     }
-    score += (section_hits.min(4) as f64) * 0.10;
     score.clamp(0.0, 1.0)
 }
 

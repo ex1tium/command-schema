@@ -1033,7 +1033,11 @@ impl HelpParser {
                     (trimmed, None)
                 };
 
-            for mut arg in Self::parse_argument_tokens(left) {
+            // When a two-column description is present, the left column is
+            // clearly an argument name — relax strict mode so lowercase
+            // tokens like "file" or "path" are accepted.
+            let strict = description.is_none();
+            for mut arg in Self::parse_argument_tokens_inner(left, strict) {
                 if arg.description.is_none() {
                     arg.description = description.clone();
                 }
@@ -1050,10 +1054,6 @@ impl HelpParser {
         }
 
         positional
-    }
-
-    fn parse_argument_tokens(value: &str) -> Vec<ArgSchema> {
-        Self::parse_argument_tokens_inner(value, true)
     }
 
     /// Parses positional argument tokens from a whitespace-separated string.

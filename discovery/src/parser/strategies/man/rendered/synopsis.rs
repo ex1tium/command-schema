@@ -51,11 +51,40 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
                 // Detect packed short-flag clusters like -abc or -cw
                 // (single dash, body of 2+ alphanumeric chars) and expand
                 // into individual short flags, all boolean.
+                //
+                // Avoid expanding attached-value tokens like -j4 or -oFILE:
+                // if the second character is a digit or uppercase, treat the
+                // token as a single short flag with an attached value instead.
                 if !name.starts_with("--") && name.starts_with('-') {
                     let body = &name[1..];
                     if body.len() >= 2
                         && body.chars().all(|ch| ch.is_ascii_alphanumeric())
                     {
+                        let has_attached_value = body
+                            .chars()
+                            .skip(1)
+                            .any(|ch| ch.is_ascii_digit() || ch.is_ascii_uppercase());
+                        if has_attached_value {
+                            // Treat as short flag + attached value (e.g. -j4 → -j takes value).
+                            let short = format!("-{}", body.chars().next().unwrap());
+                            if is_valid_flag_name(&short) {
+                                let mut schema =
+                                    FlagSchema::boolean(Some(&short), None);
+                                schema.takes_value = true;
+                                schema.value_type = ValueType::String;
+                                let key =
+                                    schema.short.clone().unwrap_or_default();
+                                if !key.is_empty() && seen.insert(key) {
+                                    out.push(FlagCandidate::from_schema(
+                                        schema,
+                                        SourceSpan::single(line.index),
+                                        "man-rendered-synopsis-flags",
+                                        0.70,
+                                    ));
+                                }
+                            }
+                            continue;
+                        }
                         for ch in body.chars() {
                             let short_name = format!("-{ch}");
                             if !is_valid_flag_name(&short_name) {

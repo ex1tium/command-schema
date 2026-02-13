@@ -86,16 +86,29 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
 
     let has_value_hint = definition.contains('=')
         || definition.split_whitespace().any(|token| {
+            // Skip flag-like tokens (e.g. -C, --FOO) so uppercase flags
+            // aren't mistaken for value placeholders.
+            if token.trim_start_matches(|ch: char| {
+                matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
+            }).starts_with('-') {
+                return false;
+            }
             let normalized = token.trim_matches(|ch: char| {
                 matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
             });
             !normalized.is_empty()
+                && normalized.len() > 1
                 && normalized
                     .chars()
                     .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
         })
         || description.is_some_and(|desc| {
             desc.split_whitespace().any(|token| {
+                if token.trim_start_matches(|ch: char| {
+                    matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
+                }).starts_with('-') {
+                    return false;
+                }
                 let normalized = token.trim_matches(|ch: char| {
                     matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
                 });
