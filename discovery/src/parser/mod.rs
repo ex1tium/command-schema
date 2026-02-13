@@ -1125,10 +1125,12 @@ impl HelpParser {
             if token.eq_ignore_ascii_case(&self.command) {
                 continue;
             }
-            // Also skip the base command name (last component of a
-            // multi-word command like "git add" → skip "add").
-            if let Some(base) = self.command.split_whitespace().last()
-                && token.eq_ignore_ascii_case(base)
+            // Also skip individual components of the command name (e.g. for
+            // "git add" → skip both "git" and "add").
+            if self
+                .command
+                .split_whitespace()
+                .any(|part| token.eq_ignore_ascii_case(part))
             {
                 continue;
             }

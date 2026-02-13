@@ -107,14 +107,28 @@ pub fn merge_flag_candidates(
 }
 
 fn is_valid_flag_schema(flag: &FlagSchema) -> bool {
-    let short_ok = flag
-        .short
-        .as_deref()
-        .is_none_or(|short| short.starts_with('-') && !short.starts_with("--") && short.len() >= 2);
-    let long_ok = flag
-        .long
-        .as_deref()
-        .is_none_or(|long| long.starts_with("--") && long.len() >= 3);
+    let short_ok = flag.short.as_deref().is_none_or(|short| {
+        short.starts_with('-')
+            && !short.starts_with("--")
+            && short.len() >= 2
+            // Body must not contain brackets, slashes, parens, or angle brackets
+            && !short[1..]
+                .chars()
+                .any(|ch| matches!(ch, '[' | ']' | '<' | '>' | '(' | ')' | '/'))
+    });
+    let long_ok = flag.long.as_deref().is_none_or(|long| {
+        long.starts_with("--")
+            && long.len() >= 3
+            // Body must start with a letter (rejects "---" and ASCII art)
+            && long[2..]
+                .chars()
+                .next()
+                .is_some_and(|ch| ch.is_ascii_alphabetic())
+            // Body must be alphanumeric + hyphens + dots + underscores (no brackets, etc.)
+            && long[2..]
+                .chars()
+                .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.'))
+    });
     short_ok && long_ok
 }
 

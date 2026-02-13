@@ -127,9 +127,15 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
             .trim_end_matches(|ch: char| matches!(ch, ']' | '>' | '[' | '.' | ','));
 
         if name.starts_with("--") {
-            // Long flag: must have valid body (alphanumeric + hyphens)
+            // Long flag: must have valid body — starts with a letter,
+            // contains only alphanumeric/hyphen/underscore, and doesn't
+            // start with another dash (rejects "---" and ASCII art).
             let body = &name[2..];
             if !body.is_empty()
+                && body
+                    .chars()
+                    .next()
+                    .is_some_and(|ch| ch.is_ascii_alphabetic())
                 && body
                     .chars()
                     .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
@@ -138,10 +144,10 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
                 first_long = Some(name.to_string());
             }
         } else {
-            // Short flag: `-` followed by 1-2 alphanumeric chars.
+            // Short flag: `-` followed by alphanumeric chars only (no
+            // brackets, slashes, periods, or other punctuation).
             let body = &name[1..];
             if !body.is_empty()
-                && body.len() <= 2
                 && body.chars().all(|ch| ch.is_ascii_alphanumeric())
                 && first_short.is_none()
             {

@@ -103,15 +103,28 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
     // Collect all flag names so we can skip their value placeholders.
     let synopsis_flags = collect_synopsis_flag_names(section);
 
-    // Extract the root command name from the first non-empty synopsis line
-    // (e.g. "git-add" or "apt-get") so we can filter it from all positions.
-    let root_command = section
+    // Extract the leading unbracketed command tokens from the first non-empty
+    // synopsis line (e.g. "git add" → {"git", "add"}, "apt-get" → {"apt-get"})
+    // so we can filter them from positional candidates.
+    let command_tokens: HashSet<String> = section
         .lines
         .iter()
         .map(|l| l.text.trim())
         .find(|t| !t.is_empty())
-        .and_then(|first| first.split_whitespace().next())
-        .map(|t| normalize_synopsis_arg_token(t).to_ascii_lowercase())
+        .map(|first| {
+            first
+                .split_whitespace()
+                .take_while(|w| {
+                    !w.starts_with('-')
+                        && !w.contains('[')
+                        && !w.contains('<')
+                        && !w.contains('{')
+                        && !w.contains('(')
+                })
+                .map(|w| normalize_synopsis_arg_token(w).to_ascii_lowercase())
+                .filter(|w| !w.is_empty())
+                .collect()
+        })
         .unwrap_or_default();
 
     for line in &section.lines {
@@ -155,9 +168,11 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
                 continue;
             }
 
-            // Skip the root command name at any position.
             let token_lower = token.to_ascii_lowercase();
-            if !root_command.is_empty() && token_lower == root_command {
+
+            // Skip command name tokens at any position (e.g. "git", "add"
+            // from "git add [options] <pathspec>...").
+            if command_tokens.contains(&token_lower) && !bracketed {
                 idx += 1;
                 continue;
             }
@@ -393,10 +408,15 @@ fn is_valid_flag_name(name: &str) -> bool {
         return false;
     }
     if name.starts_with("--") {
-        // Long flag: must have at least one char after `--`, only
-        // alphanumeric/hyphen characters allowed.
+        // Long flag: body must start with a letter (rejects "---" and
+        // ASCII art like "---o---O---P---Q"), only alphanumeric/hyphen
+        // characters allowed.
         let body = &name[2..];
         !body.is_empty()
+            && body
+                .chars()
+                .next()
+                .is_some_and(|ch| ch.is_ascii_alphabetic())
             && body
                 .chars()
                 .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
