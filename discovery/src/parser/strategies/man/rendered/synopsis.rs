@@ -304,17 +304,26 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
         return out;
     }
 
-    let root = line
+    // Strip parenthesized groups that contain pipes — these are flag-value
+    // alternatives (e.g. `(amend|reword)`, `(direct|inherit)`) not subcommands.
+    // Also strip `=[...]` and `=<...>` patterns for the same reason.
+    let cleaned = strip_flag_value_alternatives(line);
+
+    if !cleaned.contains('|') {
+        return out;
+    }
+
+    let root = cleaned
         .split_whitespace()
         .next()
-        .map(normalize_synopsis_arg_token)
+        .map(|t| normalize_synopsis_arg_token(t))
         .unwrap_or_default();
     if !looks_like_command_name(&root) {
         return out;
     }
     let root_lower = root.to_ascii_lowercase();
 
-    for segment in line.split('|') {
+    for segment in cleaned.split('|') {
         // Scan past the root command name and any flag-like or non-command
         // tokens to find the first subcommand candidate in this segment.
         for raw in segment.split_whitespace() {
@@ -345,6 +354,66 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
     }
 
     out
+}
+
+/// Removes parenthesized groups that contain `|` (flag-value alternatives like
+/// `(amend|reword)` or `(direct|inherit)`) and `=`-prefixed bracketed groups
+/// from the synopsis text. This prevents flag value enums from being
+/// misidentified as subcommand alternatives.
+fn strip_flag_value_alternatives(line: &str) -> String {
+    let mut result = String::with_capacity(line.len());
+    let chars: Vec<char> = line.chars().collect();
+    let mut i = 0;
+
+    while i < chars.len() {
+        // Match `=(...)` or `=[...]` patterns: skip from `=` to closing bracket.
+        if chars[i] == '=' && i + 1 < chars.len() && matches!(chars[i + 1], '(' | '[') {
+            let close = if chars[i + 1] == '(' { ')' } else { ']' };
+            let mut depth = 1;
+            let mut j = i + 2;
+            while j < chars.len() && depth > 0 {
+                if chars[j] == chars[i + 1] {
+                    depth += 1;
+                } else if chars[j] == close {
+                    depth -= 1;
+                }
+                j += 1;
+            }
+            result.push(' ');
+            i = j;
+            continue;
+        }
+
+        // Match standalone `(...)` groups that contain `|` — these are enum
+        // value lists, not subcommand alternatives.
+        if chars[i] == '(' {
+            let mut depth = 1;
+            let mut j = i + 1;
+            let mut has_pipe = false;
+            while j < chars.len() && depth > 0 {
+                if chars[j] == '(' {
+                    depth += 1;
+                } else if chars[j] == ')' {
+                    depth -= 1;
+                } else if chars[j] == '|' && depth == 1 {
+                    has_pipe = true;
+                }
+                j += 1;
+            }
+            if has_pipe && depth == 0 {
+                // This group had pipes inside parens — skip it entirely.
+                result.push(' ');
+                i = j;
+                continue;
+            }
+            // No pipe inside parens — keep it.
+        }
+
+        result.push(chars[i]);
+        i += 1;
+    }
+
+    result
 }
 
 /// Joins all non-empty lines in a SYNOPSIS section into a single string so
