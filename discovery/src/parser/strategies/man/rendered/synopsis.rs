@@ -121,7 +121,18 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
 
                 if inline_value {
                     schema.takes_value = true;
-                    schema.value_type = ValueType::String;
+                    // Infer a richer value type from the inline placeholder
+                    // (e.g. --output=FILE → File, -u<URL> → Url).
+                    let value_hint = alias
+                        .split_once('=')
+                        .map(|(_, v)| v)
+                        .or_else(|| {
+                            alias
+                                .find(|ch: char| ch == '<' || ch == '[')
+                                .map(|pos| &alias[pos..])
+                        })
+                        .unwrap_or("");
+                    schema.value_type = infer_value_type(value_hint);
                 } else if let Some(next) = tokens.get(idx + 1)
                     && !next.starts_with('-')
                     && looks_like_value_placeholder(next)
@@ -246,23 +257,17 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
                     if !next.starts_with('-')
                         && !next_norm.starts_with('-')
                         // Structured value placeholder: <n>, FILE, etc.
+                        // Only skip tokens with explicit placeholder markers
+                        // or ALLCAPS names; bare lowercase words are left for
+                        // positional-arg extraction to avoid swallowing args
+                        // like "file" in `--verbose file`.
                         && (next.contains('<')
                             || next.contains('>')
-                            || next_norm
-                                .chars()
-                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
-                            // Bare lowercase word after an unbracketed flag
-                            // (e.g. "label" in `--label label`): treat as
-                            // flag value when the flag is not self-contained.
-                            || (!self_contained
-                                && !raw.contains('=')
-                                && !next.contains('[')
-                                && !next.contains('<')
-                                && !next.contains('{')
-                                && !next_norm.is_empty()
+                            || (!next_norm.is_empty()
+                                && next_norm.len() > 1
                                 && next_norm
                                     .chars()
-                                    .all(|ch| ch.is_ascii_alphanumeric() || ch == '_' || ch == '-')))
+                                    .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')))
                     {
                         idx += 2;
                         continue;
