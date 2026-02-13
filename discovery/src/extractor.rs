@@ -37,11 +37,14 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use tracing::{debug, info};
 
 use super::parser::util::looks_like_man_title_line;
-use super::parser::{FormatScore, HelpParser};
+use super::parser::{FormatScore, HelpParser, ParseDiagnostics};
 use super::report::{
     ExtractionReport, FailureCode, FormatScoreReport, ProbeAttemptReport, QualityTier,
 };
-use command_schema_core::{ExtractionResult, HelpFormat, SubcommandSchema, validate_schema};
+use command_schema_core::{
+    CommandSchema, ExtractionResult, HelpFormat, MergeStrategy, SchemaSource, SubcommandSchema,
+    merge_schemas, validate_schema,
+};
 
 /// Maximum depth for recursive subcommand probing.
 const MAX_RECURSIVE_PROBE_DEPTH: usize = 6;
@@ -162,7 +165,10 @@ impl ProbeAttempt {
 
 #[derive(Debug, Clone)]
 struct ProbeRun {
-    help_output: Option<String>,
+    /// Pre-parsed man page evaluation (if a man page was found).
+    man_eval: Option<EvaluatedOutput>,
+    /// Pre-parsed help output evaluation (if --help succeeded).
+    help_eval: Option<EvaluatedOutput>,
     attempts: Vec<ProbeAttempt>,
 }
 
@@ -173,6 +179,17 @@ struct ProbeOutputQuality {
     coverage: f64,
     has_subcommands: bool,
     bytes: usize,
+}
+
+/// Bundles quality metrics with the parsed schema to avoid double-parsing.
+#[derive(Debug, Clone)]
+struct EvaluatedOutput {
+    raw_text: String,
+    quality: ProbeOutputQuality,
+    schema: Option<CommandSchema>,
+    diagnostics: ParseDiagnostics,
+    warnings: Vec<String>,
+    detected_format: Option<HelpFormat>,
 }
 
 #[derive(Debug)]
@@ -226,8 +243,24 @@ struct CommandIdentity {
 }
 
 /// Probes a command's help output and returns the raw text.
+///
+/// When both man and help sources are available, prefers the source whose
+/// parse produced a schema. Falls back to the other source.
 pub fn probe_command_help(command: &str) -> Option<String> {
-    probe_command_help_with_metadata(command).help_output
+    let run = probe_command_help_with_metadata(command);
+    // Prefer help output when it parsed successfully; fall back to man.
+    run.help_eval
+        .as_ref()
+        .filter(|e| e.schema.is_some())
+        .map(|e| e.raw_text.clone())
+        .or_else(|| {
+            run.man_eval
+                .as_ref()
+                .filter(|e| e.schema.is_some())
+                .map(|e| e.raw_text.clone())
+        })
+        .or_else(|| run.help_eval.map(|e| e.raw_text))
+        .or_else(|| run.man_eval.map(|e| e.raw_text))
 }
 
 fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
@@ -235,7 +268,8 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
     let parts: Vec<&str> = command.split_whitespace().collect();
     if parts.is_empty() {
         return ProbeRun {
-            help_output: None,
+            man_eval: None,
+            help_eval: None,
             attempts: Vec::new(),
         };
     }
@@ -244,8 +278,9 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
     let base_command = parts[0].to_ascii_lowercase();
     let mut env_overrides = default_probe_env();
     env_overrides.extend(command_specific_probe_env(base_command.as_str()));
-    let mut best_man_output: Option<String> = None;
-    let mut best_man_quality: Option<ProbeOutputQuality> = None;
+
+    // --- Phase 1: Probe man pages ---
+    let mut best_man_eval: Option<EvaluatedOutput> = None;
 
     for man_page in man_probe_pages(&parts) {
         let cmd_parts = vec!["man".to_string(), man_page.clone()];
@@ -261,24 +296,23 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         attempts.push(outcome.attempt);
         if let Some(help_text) = outcome.accepted_output {
             let adapted = adapt_help_output_for_command(command, help_text);
-            let quality = evaluate_help_output_quality(command, adapted.as_str());
-            if best_man_quality
-                .map(|current| output_quality_score(quality) > output_quality_score(current))
+            let eval = evaluate_help_output(command, adapted.as_str());
+            if best_man_eval
+                .as_ref()
+                .map(|current| {
+                    output_quality_score(eval.quality) > output_quality_score(current.quality)
+                })
                 .unwrap_or(true)
             {
-                best_man_output = Some(adapted.clone());
-                best_man_quality = Some(quality);
-            }
-
-            if man_output_is_sufficient(&parts, quality) {
-                return ProbeRun {
-                    help_output: Some(adapted),
-                    attempts,
-                };
+                best_man_eval = Some(eval);
             }
         }
     }
 
+    // --- Phase 2: Probe help output (--help, -h, etc.) ---
+    let mut best_help_eval: Option<EvaluatedOutput> = None;
+
+    // Try command-specific help suffixes first (e.g. "ps --help all").
     for suffix in command_specific_probe_suffixes(base_command.as_str()) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
         cmd_parts.extend(suffix.iter().map(|part| (*part).to_string()));
@@ -291,74 +325,55 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         }
         attempts.push(outcome.attempt);
         if let Some(help_text) = outcome.accepted_output {
-            let selected = select_output_after_fallback(
-                command,
-                &parts,
-                best_man_output.take(),
-                best_man_quality,
-                help_text,
-            );
-            return ProbeRun {
-                help_output: Some(selected),
-                attempts,
-            };
+            let adapted = adapt_help_output_for_command(command, help_text);
+            best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
+            break;
         }
     }
 
-    for help_flag in HELP_FLAGS {
-        let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
-        cmd_parts.push((*help_flag).to_string());
+    // Try standard help flags if no command-specific help was found.
+    if best_help_eval.is_none() {
+        for help_flag in HELP_FLAGS {
+            let mut cmd_parts: Vec<String> =
+                parts.iter().map(|part| (*part).to_string()).collect();
+            cmd_parts.push((*help_flag).to_string());
 
-        debug!(command = ?cmd_parts, "Probing help");
-        let outcome = try_direct_probe(&cmd_parts, help_flag, &env_overrides);
-        if outcome.spawn_not_found {
-            // Shell builtin fallback (e.g. `cd`) for commands that don't exist
-            // as standalone executables.
-            debug!(
-                command = ?cmd_parts,
-                "Direct spawn failed, trying shell fallback probe"
-            );
-            let shell_probe = probe_shell_help(&parts, help_flag, &env_overrides);
-            attempts.push(shell_probe.attempt);
-            if let Some(help_text) = shell_probe.accepted_output {
-                let selected = select_output_after_fallback(
-                    command,
-                    &parts,
-                    best_man_output.take(),
-                    best_man_quality,
-                    help_text,
+            debug!(command = ?cmd_parts, "Probing help");
+            let outcome = try_direct_probe(&cmd_parts, help_flag, &env_overrides);
+            if outcome.spawn_not_found {
+                // Shell builtin fallback (e.g. `cd`) for commands that don't exist
+                // as standalone executables.
+                debug!(
+                    command = ?cmd_parts,
+                    "Direct spawn failed, trying shell fallback probe"
                 );
-                return ProbeRun {
-                    help_output: Some(selected),
-                    attempts,
-                };
+                let shell_probe = probe_shell_help(&parts, help_flag, &env_overrides);
+                attempts.push(shell_probe.attempt);
+                if let Some(help_text) = shell_probe.accepted_output {
+                    let adapted = adapt_help_output_for_command(command, help_text);
+                    best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
+                    break;
+                }
+                continue;
             }
-            continue;
-        }
 
-        attempts.push(outcome.attempt);
-        if let Some(help_text) = outcome.accepted_output {
-            debug!(
-                command = command,
-                help_flag = help_flag,
-                length = help_text.len(),
-                "Got help output"
-            );
-            let selected = select_output_after_fallback(
-                command,
-                &parts,
-                best_man_output.take(),
-                best_man_quality,
-                help_text,
-            );
-            return ProbeRun {
-                help_output: Some(selected),
-                attempts,
-            };
+            attempts.push(outcome.attempt);
+            if let Some(help_text) = outcome.accepted_output {
+                debug!(
+                    command = command,
+                    help_flag = help_flag,
+                    length = help_text.len(),
+                    "Got help output"
+                );
+                let adapted = adapt_help_output_for_command(command, help_text);
+                best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
+                break;
+            }
         }
     }
 
-    if should_probe_help_subcommand(&parts, &attempts) {
+    // Try "help" subcommand if standard flags failed.
+    if best_help_eval.is_none() && should_probe_help_subcommand(&parts, &attempts) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
         if parts.len() > 1 {
             // For "git remote", try "git help remote".
@@ -373,60 +388,39 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
             let shell_probe = probe_shell_help(&parts, "help", &env_overrides);
             attempts.push(shell_probe.attempt);
             if let Some(help_text) = shell_probe.accepted_output {
-                let selected = select_output_after_fallback(
-                    command,
-                    &parts,
-                    best_man_output.take(),
-                    best_man_quality,
-                    help_text,
-                );
-                return ProbeRun {
-                    help_output: Some(selected),
-                    attempts,
-                };
+                let adapted = adapt_help_output_for_command(command, help_text);
+                best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
             }
         } else {
             attempts.push(outcome.attempt);
             if let Some(help_text) = outcome.accepted_output {
-                let selected = select_output_after_fallback(
-                    command,
-                    &parts,
-                    best_man_output.take(),
-                    best_man_quality,
-                    help_text,
-                );
-                return ProbeRun {
-                    help_output: Some(selected),
-                    attempts,
-                };
+                let adapted = adapt_help_output_for_command(command, help_text);
+                best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
             }
         }
     }
 
-    if let Some(man_output) = best_man_output {
-        return ProbeRun {
-            help_output: Some(man_output),
-            attempts,
-        };
-    }
-
     ProbeRun {
-        help_output: None,
+        man_eval: best_man_eval,
+        help_eval: best_help_eval,
         attempts,
     }
 }
 
-fn evaluate_help_output_quality(command: &str, output: &str) -> ProbeOutputQuality {
+fn evaluate_help_output(command: &str, output: &str) -> EvaluatedOutput {
     let mut parser = HelpParser::new(command, output);
     let schema = parser.parse();
     let coverage = parser.diagnostics().coverage();
+    let diagnostics = parser.diagnostics().clone();
+    let warnings = parser.warnings().to_vec();
+    let detected_format = parser.detected_format();
 
-    match schema {
-        Some(schema) => ProbeOutputQuality {
-            entities: schema.global_flags.len() + schema.subcommands.len() + schema.positional.len(),
-            confidence: schema.confidence,
+    let quality = match &schema {
+        Some(s) => ProbeOutputQuality {
+            entities: s.global_flags.len() + s.subcommands.len() + s.positional.len(),
+            confidence: s.confidence,
             coverage,
-            has_subcommands: !schema.subcommands.is_empty(),
+            has_subcommands: !s.subcommands.is_empty(),
             bytes: output.len(),
         },
         None => ProbeOutputQuality {
@@ -436,6 +430,15 @@ fn evaluate_help_output_quality(command: &str, output: &str) -> ProbeOutputQuali
             has_subcommands: false,
             bytes: output.len(),
         },
+    };
+
+    EvaluatedOutput {
+        raw_text: output.to_string(),
+        quality,
+        schema,
+        diagnostics,
+        warnings,
+        detected_format,
     }
 }
 
@@ -446,64 +449,6 @@ fn output_quality_score(quality: ProbeOutputQuality) -> f64 {
         + quality.confidence * 2.0
         + subcommand_bonus
         + ((quality.bytes.min(12_000) as f64) / 12_000.0)
-}
-
-fn man_output_is_sufficient(parts: &[&str], quality: ProbeOutputQuality) -> bool {
-    if parts.len() <= 1 {
-        // Root commands generally need command tables to be useful.
-        return (quality.has_subcommands && quality.entities >= 6)
-            || (quality.entities >= 18 && quality.coverage >= 0.20);
-    }
-
-    // Nested command pages are often option-dense and do not expose further
-    // subcommand tables, so lower requirements are acceptable.
-    (quality.entities >= 4) || (quality.entities >= 2 && quality.coverage >= 0.20)
-}
-
-fn prefer_fallback_help_over_man(
-    parts: &[&str],
-    man_quality: ProbeOutputQuality,
-    fallback_quality: ProbeOutputQuality,
-) -> bool {
-    if fallback_quality.entities == 0 {
-        return false;
-    }
-    if parts.len() <= 1 && fallback_quality.has_subcommands && !man_quality.has_subcommands {
-        return true;
-    }
-    if fallback_quality.entities >= man_quality.entities + 6 {
-        return true;
-    }
-    if fallback_quality.coverage >= man_quality.coverage + 0.15
-        && fallback_quality.entities >= man_quality.entities
-    {
-        return true;
-    }
-
-    output_quality_score(fallback_quality) > output_quality_score(man_quality) + 1.0
-}
-
-fn select_output_after_fallback(
-    command: &str,
-    parts: &[&str],
-    man_output: Option<String>,
-    man_quality: Option<ProbeOutputQuality>,
-    fallback_output: String,
-) -> String {
-    let adapted_fallback = adapt_help_output_for_command(command, fallback_output);
-    let Some(man_output) = man_output else {
-        return adapted_fallback;
-    };
-    let Some(man_quality) = man_quality else {
-        return adapted_fallback;
-    };
-
-    let fallback_quality = evaluate_help_output_quality(command, adapted_fallback.as_str());
-    if prefer_fallback_help_over_man(parts, man_quality, fallback_quality) {
-        adapted_fallback
-    } else {
-        man_output
-    }
 }
 
 fn should_probe_help_subcommand(parts: &[&str], attempts: &[ProbeAttempt]) -> bool {
@@ -1431,9 +1376,15 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     let probe_run = probe_command_help_with_metadata(command);
     let probe_attempts = to_probe_attempt_reports(&probe_run.attempts);
 
-    // Get help output
-    let raw_output = match probe_run.help_output {
-        Some(output) => output,
+    // --- Determine schema from available sources ---
+    let resolved = resolve_probe_sources(
+        command,
+        probe_run.man_eval,
+        probe_run.help_eval,
+    );
+
+    let (mut schema, raw_output, diagnostics, detected_format, parser_warnings) = match resolved {
+        Some(r) => r,
         None => {
             let failure_warning = format!("Could not get help output for '{}'", command);
             let (failure_code, failure_detail) =
@@ -1473,69 +1424,22 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     };
 
     // Extract version from help output if not already set
-    let detected_version = crate::version::extract_version(&raw_output, command);
-
-    // Parse the help output
-    let mut parser = HelpParser::new(command, &raw_output);
-    let mut schema = match parser.parse() {
-        Some(s) => s,
-        None => {
-            let diagnostics = parser.diagnostics().clone();
-            let parser_warnings = parser.warnings().to_vec();
-            let coverage = diagnostics.coverage();
-            return ExtractionRun {
-                result: ExtractionResult {
-                    schema: None,
-                    raw_output,
-                    detected_format: parser.detected_format(),
-                    warnings: parser_warnings.clone(),
-                    success: false,
-                },
-                report: ExtractionReport {
-                    command: command.to_string(),
-                    resolved_executable_path: identity.resolved_executable_path.clone(),
-                    resolved_implementation: identity.resolved_implementation.clone(),
-                    success: false,
-                    accepted_for_suggestions: false,
-                    quality_tier: QualityTier::Failed,
-                    quality_reasons: Vec::new(),
-                    failure_code: Some(FailureCode::ParseFailed),
-                    failure_detail: Some(
-                        "Help text was found but parsing produced no schema".to_string(),
-                    ),
-                    selected_format: parser.detected_format().map(help_format_label),
-                    format_scores: to_format_score_reports(&diagnostics.format_scores),
-                    parsers_used: diagnostics.parsers_used,
-                    confidence: 0.0,
-                    coverage,
-                    relevant_lines: diagnostics.relevant_lines,
-                    recognized_lines: diagnostics.recognized_lines,
-                    unresolved_lines: diagnostics.unresolved_lines,
-                    probe_attempts,
-                    warnings: parser_warnings,
-                    validation_errors: Vec::new(),
-                },
-            };
-        }
-    };
-
-    // Set version if detected and not already present in schema
     if schema.version.is_none() {
-        schema.version = detected_version;
+        schema.version = crate::version::extract_version(&raw_output, command);
     }
 
-    let parser_warnings = parser.warnings().to_vec();
     let mut report_warnings = parser_warnings.clone();
     let actionable_parser_warnings = parser_warnings
         .into_iter()
-        .filter(|warning| !is_candidate_diagnostic_warning(warning));
+        .filter(|w| !is_candidate_diagnostic_warning(w));
     extend_unique_warnings(&mut warnings, actionable_parser_warnings);
 
-    // Recursively probe subcommands
+    // Recursively probe subcommands — seed ancestor hashes from all raw
+    // outputs so that cycle detection covers both man and help text.
     let mut probed_subcommands = HashSet::new();
     let recursive_probe_started = Instant::now();
-    let root_hash = normalize_for_fingerprint(&raw_output);
-    let mut ancestor_hashes = HashSet::from([root_hash]);
+    let mut ancestor_hashes = HashSet::new();
+    ancestor_hashes.insert(normalize_for_fingerprint(&raw_output));
     let root_leaf = command
         .split_whitespace()
         .next()
@@ -1561,7 +1465,6 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
         "Extracted command schema"
     );
 
-    let diagnostics = parser.diagnostics().clone();
     let validation_errors = validate_schema(&schema)
         .into_iter()
         .map(|error| error.to_string())
@@ -1603,7 +1506,7 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
         quality_reasons: Vec::new(),
         failure_code: fc,
         failure_detail: fd,
-        selected_format: parser.detected_format().map(help_format_label),
+        selected_format: detected_format.map(help_format_label),
         format_scores: to_format_score_reports(&diagnostics.format_scores),
         parsers_used: diagnostics.parsers_used.clone(),
         confidence: schema.confidence,
@@ -1620,11 +1523,103 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
         result: ExtractionResult {
             schema: if success { Some(schema) } else { None },
             raw_output,
-            detected_format: parser.detected_format(),
+            detected_format,
             warnings,
             success,
         },
         report,
+    }
+}
+
+/// Resolved probe output: schema, raw text, diagnostics, format, and parser warnings.
+type ResolvedProbe = (
+    CommandSchema,
+    String,
+    ParseDiagnostics,
+    Option<HelpFormat>,
+    Vec<String>,
+);
+
+/// Resolves two probed sources (man + help) into a single schema by merging
+/// when both are available, or falling back to whichever parsed successfully.
+fn resolve_probe_sources(
+    command: &str,
+    man_eval: Option<EvaluatedOutput>,
+    help_eval: Option<EvaluatedOutput>,
+) -> Option<ResolvedProbe> {
+    match (man_eval, help_eval) {
+        (Some(man), Some(help)) => {
+            match (man.schema, help.schema) {
+                (Some(man_s), Some(help_s)) => {
+                    // Help as base, man as overlay → Union: overlay (man)
+                    // descriptions win, giving us man's richer flag docs.
+                    let mut merged = merge_schemas(&help_s, &man_s, MergeStrategy::Union);
+                    merged.source = SchemaSource::Merged;
+                    // Use the larger raw output for fingerprinting / display.
+                    let raw = if man.raw_text.len() >= help.raw_text.len() {
+                        man.raw_text
+                    } else {
+                        help.raw_text
+                    };
+                    let diag = merge_diagnostics(&man.diagnostics, &help.diagnostics);
+                    let format = help.detected_format.or(man.detected_format);
+                    let mut all_warnings = man.warnings;
+                    all_warnings.extend(help.warnings);
+                    debug!(
+                        command = command,
+                        man_entities = man.quality.entities,
+                        help_entities = help.quality.entities,
+                        merged_flags = merged.global_flags.len(),
+                        merged_subcommands = merged.subcommands.len(),
+                        "Merged man + help schemas"
+                    );
+                    Some((merged, raw, diag, format, all_warnings))
+                }
+                (Some(man_s), None) => Some((
+                    man_s,
+                    man.raw_text,
+                    man.diagnostics,
+                    man.detected_format,
+                    man.warnings,
+                )),
+                (None, Some(help_s)) => Some((
+                    help_s,
+                    help.raw_text,
+                    help.diagnostics,
+                    help.detected_format,
+                    help.warnings,
+                )),
+                (None, None) => None,
+            }
+        }
+        (Some(eval), None) | (None, Some(eval)) => eval.schema.map(|s| {
+            (
+                s,
+                eval.raw_text,
+                eval.diagnostics,
+                eval.detected_format,
+                eval.warnings,
+            )
+        }),
+        (None, None) => None,
+    }
+}
+
+/// Merges diagnostics from two parse runs into a combined set.
+fn merge_diagnostics(a: &ParseDiagnostics, b: &ParseDiagnostics) -> ParseDiagnostics {
+    let mut parsers_used = a.parsers_used.clone();
+    for p in &b.parsers_used {
+        if !parsers_used.contains(p) {
+            parsers_used.push(p.clone());
+        }
+    }
+    parsers_used.push("multi-source-merge".to_string());
+    ParseDiagnostics {
+        format_scores: a.format_scores.clone(),
+        parsers_used,
+        relevant_lines: a.relevant_lines + b.relevant_lines,
+        recognized_lines: a.recognized_lines + b.recognized_lines,
+        unresolved_lines: Vec::new(),
     }
 }
 
@@ -2281,51 +2276,6 @@ mod tests {
         ));
     }
 
-    #[test]
-    fn test_man_output_is_sufficient_requires_subcommands_for_root_commands() {
-        let root_sparse = ProbeOutputQuality {
-            entities: 12,
-            confidence: 0.8,
-            coverage: 0.4,
-            has_subcommands: false,
-            bytes: 5000,
-        };
-        assert!(!man_output_is_sufficient(&["git"], root_sparse));
-
-        let root_rich = ProbeOutputQuality {
-            entities: 12,
-            confidence: 0.8,
-            coverage: 0.4,
-            has_subcommands: true,
-            bytes: 5000,
-        };
-        assert!(man_output_is_sufficient(&["git"], root_rich));
-    }
-
-    #[test]
-    fn test_prefer_fallback_help_over_man_when_fallback_has_subcommands() {
-        let man_quality = ProbeOutputQuality {
-            entities: 10,
-            confidence: 0.85,
-            coverage: 0.45,
-            has_subcommands: false,
-            bytes: 7000,
-        };
-        let fallback_quality = ProbeOutputQuality {
-            entities: 9,
-            confidence: 0.8,
-            coverage: 0.4,
-            has_subcommands: true,
-            bytes: 6500,
-        };
-
-        assert!(prefer_fallback_help_over_man(
-            &["git"],
-            man_quality,
-            fallback_quality
-        ));
-    }
-
     // Integration tests - only run if commands are available
     #[test]
     #[ignore] // Run with: cargo test -- --ignored
@@ -2334,10 +2284,10 @@ mod tests {
             return;
         }
 
-        let result = extract_command_schema("git");
-        assert!(result.success);
+        let run = extract_command_schema_with_report_base("git");
+        assert!(run.result.success);
 
-        let schema = result.schema.unwrap();
+        let schema = run.result.schema.unwrap();
         assert!(!schema.subcommands.is_empty());
 
         // Should have common git subcommands

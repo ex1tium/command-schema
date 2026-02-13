@@ -37,6 +37,8 @@ pub enum SchemaSource {
     Bootstrap,
     /// Learned from user command history.
     Learned,
+    /// Schema was produced by merging multiple sources (e.g. man + help).
+    Merged,
 }
 
 /// Value type for flags and arguments.
