@@ -33,6 +33,7 @@ mod diagnostics;
 mod merge;
 mod normalize;
 mod strategies;
+pub(crate) mod util;
 
 use regex::Regex;
 use std::collections::HashSet;

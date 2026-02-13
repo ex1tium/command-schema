@@ -24,10 +24,26 @@ pub fn parse_candidates(lines: &[IndexedLine]) -> RenderedExtraction {
 
     for section in &sections {
         let name = section.name.as_str();
-        if name.contains("OPTION") {
+        if name == "OPTIONS" {
+            extraction.flags.extend(options::parse_options_section(section));
+        } else if (name == "DESCRIPTION" || name == "COMMAND OPTIONS" || name == "GLOBAL OPTIONS")
+            && options::has_option_like_lines(section)
+        {
             extraction
                 .flags
-                .extend(options::parse_options_section(section));
+                .extend(options::parse_options_section_with_metadata(
+                    section,
+                    "man-rendered-description-options",
+                    0.76,
+                ));
+        } else if name.contains("OPTION") && options::has_option_like_lines(section) {
+            extraction
+                .flags
+                .extend(options::parse_options_section_with_metadata(
+                    section,
+                    "man-rendered-description-options",
+                    0.76,
+                ));
         }
         if name.contains("SYNOPSIS") {
             extraction

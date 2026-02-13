@@ -11,6 +11,11 @@ pub enum EscapeType {
     Unknown,
 }
 
+/// Classifies a roff escape sequence into an [`EscapeType`].
+///
+/// Recognizes both standard `\f`-prefixed font escapes (`\fB`, `\fI`, `\fR`,
+/// `\fP`) and their non-standard shorthand forms (`\B`, `\I`, `\R`, `\P`)
+/// which appear in some third-party and legacy man page sources.
 #[allow(dead_code)]
 pub fn classify_escape(seq: &str) -> EscapeType {
     match seq {
@@ -39,11 +44,13 @@ pub fn decode_roff_escapes(input: &str) -> String {
         };
 
         match next {
-            // Font switches and style toggles.
+            // Font switches and style toggles (standard `\f` prefix).
             'f' => {
                 chars.next();
                 let _ = chars.next(); // consume style selector
             }
+            // Non-standard shorthand font escapes (`\B`, `\I`, `\R`, `\P`)
+            // found in some third-party and legacy man page sources.
             'B' | 'I' | 'R' | 'P' => {
                 chars.next();
             }

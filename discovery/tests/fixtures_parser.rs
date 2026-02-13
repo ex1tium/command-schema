@@ -165,6 +165,20 @@ fn test_parse_rendered_man_lowercase_synopsis_args() {
 }
 
 #[test]
+fn test_parse_rendered_man_description_options_fixture_extracts_flags() {
+    let help = fixture("man-description-options-rendered.txt");
+    let mut parser = HelpParser::new("foo", &help);
+    let schema = parser
+        .parse()
+        .expect("rendered man fixture with description options");
+
+    assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+    assert_eq!(schema.source, SchemaSource::ManPage);
+    assert!(schema.find_global_flag("--mode").is_some());
+    assert!(schema.find_global_flag("-q").is_some());
+}
+
+#[test]
 fn test_parse_raw_man_lowercase_synopsis_args() {
     let help = fixture("man-lowercase-source.txt");
     let mut parser = HelpParser::new("lowercmd", &help);

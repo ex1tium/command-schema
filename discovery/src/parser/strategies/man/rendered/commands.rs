@@ -13,6 +13,10 @@ pub fn parse_commands_section(section: &ManSection) -> Vec<SubcommandCandidate> 
     let mut seen = HashSet::new();
 
     for line in &section.lines {
+        // Skip indented continuation lines (wrapped descriptions).
+        if line.text.starts_with(' ') || line.text.starts_with('\t') {
+            continue;
+        }
         let trimmed = line.text.trim();
         if trimmed.is_empty() || trimmed.starts_with('-') {
             continue;

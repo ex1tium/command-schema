@@ -75,3 +75,33 @@ fn should_join_continuation(previous: &str, continuation: &str) -> bool {
 
     (prev_starts_option || prev_has_two_columns) && !continuation_starts_option
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::parser::IndexedLine;
+
+    use super::normalize_rendered_lines;
+
+    #[test]
+    fn test_normalize_drops_running_headers_with_uppercase_section_codes() {
+        let lines = vec![
+            IndexedLine {
+                index: 0,
+                text: "FOO(1M)                     User Commands                    FOO(1M)"
+                    .to_string(),
+            },
+            IndexedLine {
+                index: 1,
+                text: "NAME".to_string(),
+            },
+            IndexedLine {
+                index: 2,
+                text: "foo - sample".to_string(),
+            },
+        ];
+
+        let normalized = normalize_rendered_lines(&lines);
+        assert!(normalized.iter().all(|line| !line.text.contains("FOO(1M)")));
+        assert!(normalized.iter().any(|line| line.text == "NAME"));
+    }
+}

@@ -9,6 +9,14 @@ use crate::parser::ast::{FlagCandidate, SourceSpan};
 use super::sections::ManSection;
 
 pub fn parse_options_section(section: &ManSection) -> Vec<FlagCandidate> {
+    parse_options_section_with_metadata(section, "man-rendered-options", 0.88)
+}
+
+pub fn parse_options_section_with_metadata(
+    section: &ManSection,
+    source: &'static str,
+    confidence: f64,
+) -> Vec<FlagCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
 
@@ -36,13 +44,20 @@ pub fn parse_options_section(section: &ManSection) -> Vec<FlagCandidate> {
             out.push(FlagCandidate::from_schema(
                 flag,
                 SourceSpan::single(line.index),
-                "man-rendered-options",
-                0.88,
+                source,
+                confidence,
             ));
         }
     }
 
     out
+}
+
+pub fn has_option_like_lines(section: &ManSection) -> bool {
+    section
+        .lines
+        .iter()
+        .any(|line| line.text.trim_start().starts_with('-'))
 }
 
 fn split_definition_and_description(line: &str) -> (&str, Option<&str>) {

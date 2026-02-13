@@ -34,6 +34,7 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use tracing::{debug, info};
 
+use super::parser::util::looks_like_man_title_line;
 use super::parser::{FormatScore, HelpParser};
 use super::report::{
     ExtractionReport, FailureCode, FormatScoreReport, ProbeAttemptReport, QualityTier,
@@ -951,29 +952,6 @@ fn is_man_page_output(text: &str) -> bool {
     }
 
     section_headers >= 2 || (title_lines >= 1 && section_headers >= 1)
-}
-
-fn looks_like_man_title_line(line: &str) -> bool {
-    // Typical rendered title line: "GIT-REBASE(1)"
-    if !line.ends_with(')') {
-        return false;
-    }
-    let Some(paren_idx) = line.rfind('(') else {
-        return false;
-    };
-    if paren_idx == 0 {
-        return false;
-    }
-    let name = &line[..paren_idx];
-    let section = &line[paren_idx + 1..line.len() - 1];
-    !name.is_empty()
-        && name
-            .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.' | '+'))
-        && !section.is_empty()
-        && section
-            .chars()
-            .all(|ch| ch.is_ascii_digit() || ch.is_ascii_alphabetic())
 }
 
 fn output_preview(text: &str) -> Option<String> {

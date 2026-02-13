@@ -5,6 +5,7 @@
 
 use command_schema_core::HelpFormat;
 
+use super::util::looks_like_man_title_line;
 use super::{FormatScore, IndexedLine};
 
 /// Scores the given help output lines against known `HelpFormat` variants.
@@ -195,33 +196,7 @@ fn is_roff_macro_line(line: &str) -> bool {
     if first != '.' && first != '\'' {
         return false;
     }
-    let mut chars = trimmed.chars().skip(1);
-    chars.next().is_some_and(|ch| {
-        ch.is_ascii_alphabetic() && chars.next().is_some_and(|c| c.is_ascii_alphabetic())
-    })
-}
-
-fn looks_like_man_title_line(trimmed: &str) -> bool {
-    if trimmed.is_empty() {
-        return false;
-    }
-    if !trimmed.contains('(') || !trimmed.contains(')') {
-        return false;
-    }
-    let left = trimmed.split('(').next().unwrap_or_default().trim();
-    let right = trimmed
-        .split('(')
-        .nth(1)
-        .and_then(|part| part.split(')').next())
-        .unwrap_or_default()
-        .trim();
-    !left.is_empty()
-        && left
-            .chars()
-            .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '-' || ch == '_')
-        && right
-            .chars()
-            .all(|ch| ch.is_ascii_digit() || ch.is_ascii_lowercase())
+    trimmed.chars().nth(1).is_some_and(|ch| ch.is_ascii_alphabetic())
 }
 
 fn looks_like_rendered_man_section_header(line: &str) -> bool {
@@ -266,6 +241,22 @@ mod tests {
             "NAME",
             "SYNOPSIS",
             "OPTIONS",
+        ];
+        let scores = classify_formats(&lines);
+        assert_eq!(
+            scores.first().map(|score| score.format),
+            Some(HelpFormat::Man)
+        );
+    }
+
+    #[test]
+    fn test_classify_man_rendered_prefers_man_with_uppercase_section_codes() {
+        let lines = [
+            "FOO(1M)                     User Commands                     FOO(1M)",
+            "BAR(3P)",
+            "NAME",
+            "SYNOPSIS",
+            "DESCRIPTION",
         ];
         let scores = classify_formats(&lines);
         assert_eq!(

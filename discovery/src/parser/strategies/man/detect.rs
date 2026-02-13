@@ -1,5 +1,7 @@
 //! Man page format detection.
 
+pub use crate::parser::util::looks_like_man_title_line;
+
 /// Normalized format buckets used by the man strategy detector.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ManFormat {
@@ -56,7 +58,7 @@ pub fn detect_roff_variant(lines: &[&str]) -> Option<ManFormat> {
             || line.starts_with(".sh ")
             || line.starts_with(".ss ")
             || line.starts_with(".tp")
-            || line.starts_with(".ip ")
+            || line.starts_with(".ip")
     });
 
     match (has_mdoc, has_man) {
@@ -183,32 +185,6 @@ pub fn looks_like_rendered_section_header(line: &str) -> bool {
     )
 }
 
-/// Returns `true` when `trimmed` matches a rendered man title banner token.
-pub fn looks_like_man_title_line(trimmed: &str) -> bool {
-    if trimmed.is_empty() {
-        return false;
-    }
-
-    // Example: GIT-REBASE(1)                     Git Manual                     GIT-REBASE(1)
-    let first = trimmed.split_whitespace().next().unwrap_or_default();
-    if !first.contains('(') || !first.ends_with(')') {
-        return false;
-    }
-    let Some((name, section_with_paren)) = first.split_once('(') else {
-        return false;
-    };
-    let section = section_with_paren.trim_end_matches(')');
-
-    !name.is_empty()
-        && name
-            .chars()
-            .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '-' || ch == '_')
-        && !section.is_empty()
-        && section
-            .chars()
-            .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit())
-}
-
 fn is_roff_macro_line(line: &str) -> bool {
     let trimmed = line.trim_start();
     let mut chars = trimmed.chars();
@@ -275,6 +251,18 @@ mod tests {
             "  tool [mode]",
             "DESCRIPTION",
             "  Detailed manual-style description text.",
+        ];
+        assert!(is_rendered_man_page(&lines));
+    }
+
+    #[test]
+    fn test_rendered_detection_accepts_uppercase_section_codes() {
+        let lines = [
+            "FOO(1M)                     User Commands                    FOO(1M)",
+            "BAR(3P)",
+            "NAME",
+            "SYNOPSIS",
+            "DESCRIPTION",
         ];
         assert!(is_rendered_man_page(&lines));
     }

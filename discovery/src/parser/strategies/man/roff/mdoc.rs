@@ -31,6 +31,9 @@ pub struct MdocSection {
     pub content: Vec<MdocElement>,
 }
 
+/// Token types produced by the mdoc parser, representing flags, positional
+/// arguments, subcommands, free text, and paragraph boundaries. Each variant
+/// carries a source `line` index for diagnostics and span tracking.
 #[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub enum MdocElement {
