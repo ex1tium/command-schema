@@ -178,14 +178,23 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
         }
 
         // Skip prose lines within SYNOPSIS that don't contain any
-        // synopsis-like tokens (flags, brackets, pipes, ellipsis).
-        // Example: "For more information on these options, you can run..."
+        // synopsis-like tokens (flags, brackets, pipes, ellipsis, or
+        // uppercase placeholder words like FILE / PATHSPEC).
+        // Example skipped: "For more information on these options, you can run..."
         let has_synopsis_marker = trimmed.contains('-')
             || trimmed.contains('[')
             || trimmed.contains('<')
             || trimmed.contains('{')
             || trimmed.contains('|')
-            || trimmed.contains("...");
+            || trimmed.contains("...")
+            || trimmed.split_whitespace().any(|w| {
+                let norm = normalize_synopsis_arg_token(w);
+                norm.len() > 1
+                    && norm.chars().any(|ch| ch.is_ascii_uppercase())
+                    && norm
+                        .chars()
+                        .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+            });
         if !has_synopsis_marker {
             continue;
         }

@@ -598,11 +598,19 @@ fn parse_args_from_synopsis(
         let raw = words[idx];
 
         // Skip flag tokens and their value placeholders.
-        if raw.starts_with('-') {
-            if idx + 1 < words.len() {
+        // Also detect bracketed flags like "[-h]" by checking the
+        // normalized (bracket-stripped) token.
+        let raw_norm = normalize_synopsis_arg_token(raw);
+        if raw.starts_with('-') || raw_norm.starts_with('-') {
+            // Self-contained bracketed flag (e.g. "[-h]") — boolean,
+            // no value to skip.
+            let self_contained = raw.starts_with('[') && raw.ends_with(']');
+
+            if !self_contained && idx + 1 < words.len() {
                 let next = words[idx + 1];
                 let next_norm = normalize_synopsis_arg_token(next);
                 if !next.starts_with('-')
+                    && !next_norm.starts_with('-')
                     && (next.contains('<')
                         || next.contains('>')
                         || next.starts_with('[')
@@ -614,7 +622,8 @@ fn parse_args_from_synopsis(
                         // Bare lowercase word after an unbracketed flag
                         // (e.g. "label" in `--label label`): treat as
                         // flag value when the flag has no inline value.
-                        || (!raw.contains('=')
+                        || (!self_contained
+                            && !raw.contains('=')
                             && !next.contains('[')
                             && !next.contains('<')
                             && !next.contains('{')

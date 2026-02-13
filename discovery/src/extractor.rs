@@ -442,6 +442,13 @@ fn evaluate_help_output(command: &str, output: &str) -> EvaluatedOutput {
     }
 }
 
+/// Computes a composite quality score for ranking probe outputs.
+///
+/// Weights: entities (1x raw count), coverage (4x — high weight because
+/// recognizing more of the output signals a better parse), confidence (2x —
+/// average flag confidence), subcommand bonus (flat +2 to prefer outputs
+/// that reveal subcommands), bytes (up to +1, clamped at 12 KB, to mildly
+/// prefer richer raw output for fingerprinting).
 fn output_quality_score(quality: ProbeOutputQuality) -> f64 {
     let subcommand_bonus = if quality.has_subcommands { 2.0 } else { 0.0 };
     quality.entities as f64
@@ -1647,8 +1654,17 @@ fn merge_diagnostics(a: &ParseDiagnostics, b: &ParseDiagnostics) -> ParseDiagnos
         (b.relevant_lines, b.recognized_lines)
     };
 
+    // Merge format scores from both sources, preferring a's entry when
+    // the same format appears in both.
+    let mut format_scores = a.format_scores.clone();
+    for score in &b.format_scores {
+        if !format_scores.iter().any(|s| s.format == score.format) {
+            format_scores.push(score.clone());
+        }
+    }
+
     ParseDiagnostics {
-        format_scores: a.format_scores.clone(),
+        format_scores,
         parsers_used,
         relevant_lines: relevant,
         recognized_lines: recognized,
