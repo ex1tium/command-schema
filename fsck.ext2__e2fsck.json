@@ -1,14 +1,54 @@
 {
   "schema_version": "1.0.0",
   "command": "fsck.ext2",
-  "description": null,
+  "description": "E2FSCK(8) System Manager's Manual E2FSCK(8)",
   "global_flags": [
     {
       "short": "-B",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Force blocksize when looking for superblock",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "e2fsck  will  search for the superblock at various different block sizes in an attempt to find the appropriate block size. This search can be fooled in some cases.  This option forces e2fsck to only try locating the superblock at  a  particular  blocksize. If the superblock is not found, e2fsck will terminate with a fatal error.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This option causes e2fsck to write completion information to the specified file descriptor so that the progress of  the  file  system check  can be monitored.  This option is typically used by programs which are running e2fsck.  If the file descriptor number is nega‐ tive, then absolute value of the file descriptor will be used, and the progress information will be  suppressed  initially.   It  can later  be enabled by sending the e2fsck process a SIGUSR1 signal.  If the file descriptor specified is 0, e2fsck will print a comple‐ tion bar as it goes about its business.  This requires that e2fsck is running on a video console or terminal.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Optimize directories in file system.  This option causes e2fsck to try to optimize all directories, either by re-indexing them if the file system supports directory indexing,  or by sorting and compressing directories for smaller directories, or for file systems  us‐ ing traditional linear directories.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "e2fsck  extended options.  Extended options are comma separated, and may take an argument using the equals ('=') sign.  The fol‐ lowing options are supported:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Flush the file system device's buffer caches before beginning.  Only really useful for doing e2fsck time trials.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +56,29 @@
     {
       "short": "-L",
       "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  bad  blocks list to be the list of blocks specified by filename.  (This option is the same as the -l option, except the bad blocks list is cleared before the blocks listed in the file are added to the bad blocks list.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print version information and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Set badblocks list",
+      "description": "This  option  does the same thing as the -p option.  It is provided for backwards compatibility only; it is suggested that people use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use alternative superblock",
+      "description": "This option is normally used when the primary superblock has been corrupted.  The location of backup superblocks is dependent on the file system's blocksize, the number of blocks per group, and features such as sparse_super.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +98,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Check for bad blocks and add them to the badblock list",
+      "description": "This  option  causes e2fsck to use badblocks(8) program to do a read-only scan of the device in order to find any bad blocks.  If any bad blocks are found, they are added to the bad block inode to prevent them from being allocated to a file or directory.  If this op‐ tion is specified twice, then the bad block scan will be done using a non-destructive read-write test.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print debugging output (useless unless you are debugging e2fsck).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force checking even if filesystem is marked clean",
+      "description": "Force checking even if the file system seems clean.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +128,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Set location of the external journal",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "When combined with the -c option, any existing bad blocks in the bad blocks list are preserved, and any new bad blocks found by  run‐ ning badblocks(8) will be added to the existing bad blocks list.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Add to badblocks list",
+      "description": "The format of this file is the same as the one  generated  by the badblocks(8) program.  Note that the block numbers are based on the blocksize of the file system.  Hence, bad‐ blocks(8) must be given the blocksize of the file system in order to obtain correct results.  As a result, it  is  much  simpler  and safer to use the -c option to e2fsck, since it will assure that the correct parameters are passed to the badblocks program.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Make no changes to the filesystem",
+      "description": "Open the file system read-only, and assume an answer of `no' to all questions.  Allows e2fsck to be used non-interactively.  This op‐ tion may not be specified at the same time as the -p or -y options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +168,37 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Automatic repair (no questions)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-pacnyrdfkvtDFV",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option does nothing at all; it is provided only for backwards compatibility.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print timing statistics for e2fsck.  If this option is used twice, additional timing statistics are printed on a pass by pass basis.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Be verbose",
+      "description": "Verbose mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Assume \"yes\" to all questions",
+      "description": "Assume an answer of `yes' to all questions; allows e2fsck to be used non-interactively.  This option may not be specified at the same time as the -n or -p options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,15 +228,72 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create an undo file",
+      "description": "file.   This  undo  file  can  be  used  with e2undo(8)  to  restore the old contents of the file system should something go wrong.  If the empty string is passed as the undo_file argument, the undo file will be written to a file named e2fsck-device.e2undo in the directory specified  via  the  E2FSPROGS_UNDO_DIR environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "bad_blocks_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "blocksize",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "external-journal",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fd",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "superblock",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tions",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "undo_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

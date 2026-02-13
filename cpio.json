@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "cpio",
-  "description": "GNU `cpio' copies files to and from archives",
+  "description": "CPIO(1) GNU CPIO CPIO(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--absolute-filenames",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not strip file system prefix components from the file names",
+      "description": "This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--append",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Append to an existing archive.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--block-size",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set the I/O block size to BLOCK-SIZE * 512 bytes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-o",
       "long": "--create",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Create the archive (run in copy-out mode)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Read a list of file names from the standard input and create on the standard output (unless overridden by the  --file  op‐ tion) an archive containing these files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--dereference",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Dereference symbolic links (copy the files that they point to instead of copying the links).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--device-independent",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This is equivalent to --ignore-devno --ignore-dirnlink --renumber-inodes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-D",
       "long": "--directory",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Change to directory DIR",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--dot",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print a \".\" for each file processed",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-i",
       "long": "--extract",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Extract files from an archive (run in copy-in mode)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Read  the archive from standard input (or from the file supplied with the --file option) and extract files from it, or (if the -t option is given) list its contents to the standard output.  If one or more patterns are supplied,  read  or  list  only  files matching these patterns.  The -t option alone implies -i.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-F",
       "long": "--file",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "this  ARCHIVE-FILE  instead  of  standard input (in copy-in mode) or standard output (in copy-out mode).  Optional USER and HOST specify the user and host names in case of a remote archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,17 @@
       "long": "--force-local",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Archive file is local, even if its name contains colons",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--force-lo‐",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +126,9 @@
     {
       "short": "-H",
       "long": "--format",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Use given archive FORMAT",
+      "description": "Valid formats are (the number in parentheses gives maximum size for individual archive member):",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "give this help list",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +148,7 @@
       "long": "--ignore-devno",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't store device numbers",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": "--ignore-dirnlink",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ignore number of links of a directory; always assume 2",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +166,9 @@
     {
       "short": "-C",
       "long": "--io-size",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Set the I/O block size to the given NUMBER of bytes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,17 +178,17 @@
       "long": "--link",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Link files instead of copying them, when possible",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-t",
+      "short": null,
       "long": "--list",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print a table of contents of the input",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +198,7 @@
       "long": "--make-directories",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create leading directories where needed",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +208,7 @@
       "long": "--message",
       "value_type": "String",
       "takes_value": true,
-      "description": "Print STRING when the end of a volume of the backup media is reached",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +218,7 @@
       "long": "--no-absolute-filenames",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create all files relative to the current directory",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,7 @@
       "long": "--no-preserve-owner",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not change the ownership of the files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +238,7 @@
       "long": "--nonmatching",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only copy files that do not match any of the given patterns",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +248,7 @@
       "long": "--null",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Filenames in the list are delimited by null characters instead of newlines",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,9 +256,19 @@
     {
       "short": "-n",
       "long": "--numeric-uid-gid",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "In the verbose table of contents listing, show numeric UID and GID",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--nu‐",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,9 +276,9 @@
     {
       "short": null,
       "long": "--only-verify-crc",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "When reading a CRC format archive, only verify the CRC's of each file in the archive, don't actually extract the files",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +288,7 @@
       "long": "--owner",
       "value_type": "File",
       "takes_value": true,
-      "description": "Set the ownership of all files created to the specified USER and/or GROUP",
+      "description": "copy-in  and  copy-pass mode, set the ownership of all files created to the specified USER and/or GROUP.  In copy-out mode, store the supplied owner information in the archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,9 +296,9 @@
     {
       "short": "-p",
       "long": "--pass-through",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Run in copy-pass mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Read a list of file names from the standard input and copy them to the specified directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +308,7 @@
       "long": "--pattern-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "Read additional patterns specifying filenames to extract or list from FILE",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -305,10 +325,20 @@
     },
     {
       "short": null,
+      "long": "--pre‐",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not print the number of blocks copied",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +348,7 @@
       "long": "--rename",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Interactively rename files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +358,7 @@
       "long": "--renumber-inodes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Renumber inodes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +368,7 @@
       "long": "--reset-access-time",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Reset the access times of files after reading them",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +378,7 @@
       "long": "--rsh-command",
       "value_type": "String",
       "takes_value": true,
-      "description": "Use COMMAND instead of rsh",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +388,7 @@
       "long": "--sparse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Write files with large blocks of zeros as sparse files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +398,7 @@
       "long": "--swap",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Swap both halfwords of words and bytes of halfwords in the data. Equivalent to -sS",
+      "description": "Equivalent to -sS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +408,7 @@
       "long": "--swap-bytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Swap the bytes of each halfword in the files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +418,7 @@
       "long": "--swap-halfwords",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Swap the halfwords of each word (4 bytes) in the files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +428,7 @@
       "long": "--to-stdout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Extract files to standard output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +438,7 @@
       "long": "--unconditional",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Replace all files unconditionally",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +448,7 @@
       "long": "--usage",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "give a short usage message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +458,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Verbosely list the files processed",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -438,7 +468,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print program version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +478,27 @@
       "long": "--warning",
       "value_type": "String",
       "takes_value": true,
-      "description": "Control warning display. Currently FLAG is one of 'none', 'truncate', 'all'. Multiple options accumulate.",
+      "description": "The FLAG is one of none, to disable all warnings, all to  enable  them,  truncate,  to  enable warnings about field truncation, and no-truncate, to disable them.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-0acvABLV",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-0adlmuvLV",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -456,9 +506,9 @@
     {
       "short": "-B",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Set the I/O block size to 5120 bytes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set the I/O block size to 5120 bytes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -466,8 +516,8 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -476,8 +526,18 @@
     {
       "short": "-O",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-bcdfmnrtsuvBSV",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -486,9 +546,9 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use the old portable (ASCII) archive format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use the old portable (ASCII) archive format.  This is the same as -H odc.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -497,14 +557,378 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "destination-directory",
+      "name": "--append",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--dereference",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--dot",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--force-local",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--link",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--list",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--make-directories",
       "value_type": "Directory",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "--no-absolute-filenames",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--no-preserve-owner",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--nonmatching",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--null",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--only-verify-crc",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--preserve-modification-time",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--quiet",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--rename",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--reset-access-time",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--sparse",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--swap",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--swap-bytes",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--swap-halfwords",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--to-stdout",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--unconditional",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--verbose",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-0acvablv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-0adlmuvlv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-bcdfmnrtsuvbsv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-h",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "also",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "archive",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bugs",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bytes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cal",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cpio",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "destination-directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "format",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "gnu",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "help",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "home",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "meric-uid-gid",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "message",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name-list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "pattern",
+      "value_type": "String",
+      "required": false,
+      "multiple": true,
+      "description": null
+    },
+    {
+      "name": "serve-modification-time",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "translation",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "using",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

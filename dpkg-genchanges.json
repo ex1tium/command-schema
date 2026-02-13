@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-genchanges",
-  "description": null,
+  "description": "dpkg-genchanges(1) dpkg suite dpkg-genchanges(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--build",
       "value_type": "String",
       "takes_value": true,
-      "description": "specify the build <type>: full, source, binary, any, all (default is 'full').",
-      "multiple": true,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -18,7 +18,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "binary-only, only arch-indep files.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Equivalent to --build=all.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,39 @@
     {
       "short": "-B",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Equivalent to --build=any.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Cchanges-description",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "binary-only, only arch-specific files.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Dfield",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Fchangelog-format",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "See dpkg-parsechangelog(1) for information about alternative formats.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,19 +86,19 @@
     {
       "short": "-G",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "source and arch-specific build.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Equivalent to --build=source,any (since dpkg 1.17.11).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-O",
+      "short": "-O[filename",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "write to stdout (default) or <filename>.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +106,39 @@
     {
       "short": "-S",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Equivalent to --build=source.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Tsubstvars-file",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "source-only, no binary files.",
+      "description": "substitution  variables in substvars-file; the default is debian/substvars.  No variable substitution is done on any of the fields that are output, except for the contents extracted from each binary package Description field (since dpkg 1.19.0), however  the  special variable  Format  will  override the field of the same name.  This option can be used multiple times to read substitution variables from multiple files (since dpkg 1.15.6).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Ufield",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Vname",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "See deb-substvars(5) for a discussion of output substitution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +148,37 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "binary-only, no source files.",
+      "description": "Equivalent to --build=binary or --build=any,all.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ccontrolfile",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is debian/control.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-emaintainer-address",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "than  using  the  information  from  the source tree's changelog.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ffiles-list-file",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +188,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "source and arch-indep build.",
+      "description": "Equivalent to --build=source,all (since dpkg 1.17.11).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lchangelog-file",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is debian/changelog.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mmaintainer-address",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "maintainer-address  as  the  name  and email address of the maintainer for this package, rather than using the information from the source tree's control file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "quiet - no informational messages on stderr.",
+      "description": "Usually  dpkg-genchanges  will  produce informative messages on standard error, for example about how many of the package's source files are being uploaded.  -q suppresses these messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "source includes orig, always.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +238,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "source is diff and .dsc only.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +248,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "source includes orig, if new upstream (default).",
+      "description": "version  without  epoch  and without Debian revision) differs from the upstream version number of the previous changelog entry.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-uupload-files-dir",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(dpkg-genchanges needs to find these files so that it can  include their sizes and checksums in the .changes file).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-vversion",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,7 +276,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.8,
   "version": null
 }

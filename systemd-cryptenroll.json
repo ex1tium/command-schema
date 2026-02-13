@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-cryptenroll",
-  "description": "Enroll a security token or authentication credential to a LUKS volume.",
+  "description": "SYSTEMD-CRYPTENROLL(1) systemd-cryptenroll SYSTEMD-CRYPTENROLL(1)",
   "global_flags": [
     {
       "short": null,
@@ -16,7 +16,7 @@
     {
       "short": null,
       "long": "--fido2-device",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -58,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--password",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enroll a user-supplied password",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,7 +76,7 @@
     {
       "short": null,
       "long": "--pkcs11-token-uri",
-      "value_type": "Url",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -86,17 +86,7 @@
     {
       "short": null,
       "long": "--recovery-key",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enroll a recovery key",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--tpm2-device",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -105,8 +95,18 @@
     },
     {
       "short": null,
+      "long": "--tpm2-device",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "/dev/tpmrm0). Alternatively the special value \"auto\" may be specified, in order to automatically determine the device node of a currently discovered TPM2 device (of which there must be exactly one). The special value \"list\" may be used to enumerate all suitable TPM2 devices currently discovered.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--tpm2-device-key",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -116,7 +116,7 @@
     {
       "short": null,
       "long": "--tpm2-pcrlock",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -136,7 +136,7 @@
     {
       "short": null,
       "long": "--tpm2-public-key",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -165,16 +165,6 @@
     },
     {
       "short": null,
-      "long": "--tpm2-signature",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--tpm2-with-pin",
       "value_type": "String",
       "takes_value": true,
@@ -186,9 +176,9 @@
     {
       "short": null,
       "long": "--unlock-fido2-device",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "/dev/hidraw1). Alternatively the special value \"auto\" may be specified, in order to automatically determine the device node of a currently plugged in security token (of which there must be exactly one). This automatic discovery is unsupported if",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,7 +186,7 @@
     {
       "short": null,
       "long": "--unlock-key-file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -208,7 +198,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show package version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -225,8 +215,16 @@
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

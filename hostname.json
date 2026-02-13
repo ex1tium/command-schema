@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "hostname",
-  "description": "{yp,nis,}domainname {nisdomain|-F file} set NIS domain name (from file)",
+  "description": "HOSTNAME(1) Linux Programmer's Manual HOSTNAME(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--alias",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "alias names",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-A",
       "long": "--all-fqdns",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "all long host names (FQDNs)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "and translates them to DNS domain names. Addresses that cannot be translated (i.e. because they do not have an appropriate reverse IP en‐ try)  are skipped. Note that different addresses may resolve to the same name, therefore the output may contain duplicate entries. Do not make any assumptions about the order of the output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--all-ip-addresses",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "interfaces.  The  loopback interface  and  IPv6  link-local addresses are omitted. Contrary to option -i, this option does not depend on name resolution. Do not make any assumptions about the order of the output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-b",
       "long": "--boot",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "set default hostname if none available",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--domain",
       "value_type": "String",
       "takes_value": true,
-      "description": "DNS domain name",
+      "description": "Don't use the command domainname to get the DNS domain name because it will show the NIS  domain name and not the DNS domain name. Use dnsdomainname instead. See the warnings in section THE FQDN above, and avoid using this option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-F",
       "long": "--file",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "read host name or NIS domain name from given file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,19 @@
     {
       "short": "-f",
       "long": "--fqdn",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  FQDN  (Fully Qualified Domain Name). A FQDN consists of a short host name and the DNS domain name. Unless you are using bind or NIS for host lookups you can change the FQDN and the DNS domain name (which is part of the FQDN) in the /etc/hosts file.  See the warnings in section THE FQDN above und use hostname --all-fqdns instead wherever possible.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "long host name (FQDN)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,27 @@
       "long": "--ip-address",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "addresses for the host name",
+      "description": "the  network  address(es) of the host name. Note that this works only if the host name can be resolved. Avoid using this op‐ tion; use hostname --all-ip-addresses instead.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--long",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--nis",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,17 @@
       "long": "--short",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "short host name",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,17 +136,46 @@
     {
       "short": "-y",
       "long": "--yp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "NIS/YP domain name",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "hostname",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "nisdomain",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

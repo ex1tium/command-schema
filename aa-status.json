@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "aa-status",
-  "description": "Displays various information about the currently loaded AppArmor policy.",
+  "description": "AA-STATUS(8) AppArmor AA-STATUS(8)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--complaining",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--count",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the number of entries. Implies --quiet",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,17 @@
       "long": "--enabled",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "returns error code if AppArmor not enabled",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enforced",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +48,7 @@
       "long": "--filter.exe",
       "value_type": "String",
       "takes_value": true,
-      "description": "see filters",
+      "description": "against  the  displayed  processes,  so  that  only  processes executable name matching the expression will be displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +56,9 @@
     {
       "short": null,
       "long": "--filter.mode",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "see filters",
+      "description": "specifying a posix regular expression filter that will be applied against the displayed processess and profiles apparmor profile mode, reducing the output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +68,7 @@
       "long": "--filter.pid",
       "value_type": "String",
       "takes_value": true,
-      "description": "see filters",
+      "description": "specifying  a  posix regular expression filter that will be applied against the displayed processes, so that only processes pids matching the expression will be displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +78,7 @@
       "long": "--filter.profiles",
       "value_type": "File",
       "takes_value": true,
-      "description": "see filters",
+      "description": "applied  against  the  displayed  processess  and  profiles  confining profile, reducing the output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,6 +86,16 @@
     {
       "short": null,
       "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--json",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -75,10 +105,10 @@
     },
     {
       "short": null,
-      "long": "--json",
+      "long": "--kill",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "displays multiple data points in machine-readable JSON format",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,17 +118,37 @@
       "long": "--pretty-json",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same data as --json, formatted for human consumption as well",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--quiet",
+      "long": "--process-mixed",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't output error messages",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--profiled",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prompt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +156,19 @@
     {
       "short": null,
       "long": "--show",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "What information to show. {profiles,processes,all}",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--special-unconfined",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,17 +178,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(default) displays data points about loaded policy set",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "this message, or info on the specified option",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,7 +186,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.8,
   "version": null
 }

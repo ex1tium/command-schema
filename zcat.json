@@ -1,24 +1,74 @@
 {
   "schema_version": "1.0.0",
   "command": "zcat",
-  "description": "Uncompress FILEs to standard output.",
+  "description": "GZIP(1) General Commands Manual GZIP(1)",
   "global_flags": [
     {
-      "short": "-f",
-      "long": "--force",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "force; read compressed data even from a terminal",
+      "short": "-a",
+      "long": "--ascii",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "text mode: convert end-of-lines using local conventions. This option is supported only on some non-Unix systems. For MSDOS, CR LF is converted to LF when compressing, and LF is converted to CR LF when decompressing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-d",
+      "long": "--decompress",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-#",
+      "long": "--fast",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "and  -9  or --best indicates the slowest compression method (best compression).  The default compression level is -6 (that is, biased towards high compression at expense of speed).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--force",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "is  read  from or written to a terminal. If the input data is not in a format recognized by gzip, and if the option --stdout is also given, copy the input data without change to the standard output: let zcat behave as cat.  If -f is not given, and when not run‐ ning in the background, gzip prompts to verify whether an existing file should be overwritten.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": "--keep",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": "--license",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +78,27 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list compressed file contents",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--name",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "compressing, always save the original file name, and save the seconds part of the original modification timestamp if the origi‐ nal is a regular file and its timestamp is at least 1 (1970-01-01 00:00:01 UTC) and is less than 2**32 (2106-02-07 06:28:16 UTC,  as‐ suming  leap  seconds  are  not  counted); this is the default. When decompressing, restore from the saved file name and timestamp if present. This option is useful on systems which have a limit on file name length or when the timestamp has been  lost  after  a  file transfer.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--no-name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "to be  truncated.) When decompressing, do not restore the original file name if present (remove only the gzip suffix from the compressed file name) and do not restore the original timestamp if present (copy it from the compressed file). This option is the  default  when decompressing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +108,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suppress all warnings",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +118,27 @@
       "long": "--recursive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "operate recursively on directories",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rsyncable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "were  changed  in the  archive  instead  of the entire archive.  Normally, after a change is made to any file in the archive, the compression algorithm can generate a new version of the archive that does not match the previous version of the archive. In this case, rsync transfers  the entire  new  version of the archive to the remote computer.  With this option, rsync can transfer only the changed files as well as a small amount of metadata that is required to update the archive structure in the area that was changed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--stdout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If there are several input files, the output consists of a  sequence of independently compressed members. To obtain better compression, concatenate all input files before compressing them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +148,7 @@
       "long": "--suffix",
       "value_type": "File",
       "takes_value": true,
-      "description": "use suffix SUF on compressed files",
+      "description": "compressing,  use  suffix .suf instead of .gz.  Any non-empty suffix can be given, but suffixes other than .z and .gz should be avoided to avoid confusion when files are transferred to other systems.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +158,7 @@
       "long": "--synchronous",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "With this option, gzip is less likely to lose data during a system crash, but it can be considerably slower.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +168,7 @@
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "test compressed file integrity",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,25 +178,91 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose mode",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-V",
       "long": "--version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-acdfhklLnNrtvV19",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version information and exit",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-acfhklLnNrtvV",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fhLV",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "gunzip",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "suffix",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "zcat",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

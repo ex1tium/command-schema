@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfslabel",
-  "description": null,
+  "description": "NTFSLABEL(8) System Manager's Manual NTFSLABEL(8)",
   "global_flags": [
     {
       "short": "-f",
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use less caution",
+      "description": "Use this option with caution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,16 +18,6 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--new-half-serial",
-      "value_type": "Bool",
-      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -35,10 +25,20 @@
     },
     {
       "short": null,
-      "long": "--new-serial",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Set a new serial number",
+      "long": "--new-half-serial[",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "64 bit  number,  represented as a sixteen-digit hexadecimal number, used to identify the device during the mounting process. As a conse‐ quence, two devices with the same serial number cannot be mounted at the same time on the same computer.  This is not the volume UUID used by Windows to locate files which have been moved to another volume.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--new-serial[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--no-action",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not write to disk",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Less output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "More output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,17 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display version information",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -87,14 +97,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "label",
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "new-label",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

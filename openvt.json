@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "openvt",
-  "description": "This utility helps you to start a program on a new virtual terminal (VT).",
+  "description": "OPENVT(1) General Commands Manual OPENVT(1)",
   "global_flags": [
     {
       "short": "-c",
       "long": "--console",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "the console device to be used.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--exec",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "execute the command, without forking.",
+      "description": "execute the given command, without forking.  This option is meant for use in /etc/inittab.  If you want to use this feature in another context, be aware that openvt has to be a session leader in order for -e to work.  See setsid(2) or setsid(1)  on  how  to achieve this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-f",
       "long": "--force",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "force opening a VT without checking.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print this usage message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-l",
       "long": "--login",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "make the command a login shell.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-s",
       "long": "--switch",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "switch to the new VT.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--user",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "figure out the owner of the current VT.",
+      "description": "Suitable to be called by init. Shouldn't be used with -c or -l.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be more verbose.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print version number.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,15 +98,30 @@
       "long": "--wait",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "wait for command to complete",
+      "description": "for  command to complete. If -w and -s are used together then openvt will switch back to the controlling terminal when the com‐ mand completes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "vtnumber",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfswipe",
-  "description": null,
+  "description": "NTFSWIPE(8) System Manager's Manual NTFSWIPE(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "method is used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--bytes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  allowed replacement bytes which are drawn randomly to overwrite the unused space. BYTE-LIST is a comma-separated list of values in range 0-255 expressed in octal, decimal or hexadecimal base.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--count",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "is  repeat‐ edly overwritten this number of times by each of the values in the list.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +48,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Use this option with caution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,8 +86,8 @@
     {
       "short": "-m",
       "long": "--mft",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -118,7 +138,7 @@
       "long": "--undel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  space which had been allocated to a file which has been deleted recently and is still undeletable. This option is not compatible with --bytes and the replacement bytes are random ones or taken from a standard list.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -164,29 +184,27 @@
       "requires": []
     },
     {
-      "short": "-b",
+      "short": "-fv",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

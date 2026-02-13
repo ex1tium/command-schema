@@ -1,24 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "mkntfs",
-  "description": null,
+  "description": "MKNTFS(8) System Manager's Manual MKNTFS(8)",
   "global_flags": [
     {
       "short": "-c",
       "long": "--cluster-size",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify the cluster size for the volume",
+      "description": "the  size  of  clusters  in bytes. Valid cluster size values are powers of two, with at least 256, and at most 2097152 bytes (2MB) per cluster. If omitted, mkntfs uses 4096 bytes as the default cluster size.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Very verbose execution",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--enable-compression",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable compression on the volume",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--fast",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Perform a quick format",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force execution despite errors",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--heads",
       "value_type": "Number",
       "takes_value": true,
-      "description": "Specify the number of heads",
+      "description": "the  number  of heads. The maximum is 65535 (0xffff). If omitted, mkntfs attempts to determine the number of heads automati‐ cally and if that fails a default of 0 is used. Note that heads is required for Windows to be able to boot from the created volume.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--label",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set the volume label",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--license",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display licensing information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-z",
       "long": "--mft-zone-multiplier",
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Set the MFT zone multiplier",
+      "description": "the  MFT zone multiplier, which determines the size of the MFT zone to use on the volume. The MFT zone is the area at the begin‐ ning of the volume reserved for the master file table (MFT), which stores the on disk inodes (MFT records).  It  is  noteworthy  that small  files  are  stored  entirely  within  the inode; thus, if you expect to use the volume for storing large numbers of very small files, it is useful to set the zone multiplier to a higher value. Note, that the MFT zone is resized on the fly  as  required  during operation of the NTFS driver but choosing a good value will reduce fragmentation. Valid values are 1, 2, 3 and 4. The values have the following meaning: ┌─────────────────────────────────┐ │ MFT zone     MFT zone size      │ │ multiplier   (% of volume size) │ │     1        12.5% (default)    │ │     2        25.0%              │ │     3        37.5%              │ │     4        50.0%              │ └─────────────────────────────────┘",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--no-action",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not write to disk",
+      "description": "of  the format are carried out except the actual writing to the device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-I",
       "long": "--no-indexing",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Disable indexing on the volume",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,17 +128,7 @@
       "long": "--partition-start",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify the partition start sector",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Q",
-      "long": "--quick",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Perform a quick format",
+      "description": "the partition start sector. The maximum is 4294967295 (2^32-1). If omitted, mkntfs attempts to determine part-start-sect au‐ tomatically and if that fails or the value is oversized, a default of 0 is used. The partition is usable despite a wrong value,  how‐ ever note that a correct part-start-sect is required for Windows to be able to boot from the created volume.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +138,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Quiet execution",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +148,7 @@
       "long": "--sector-size",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify the sector size for the device",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,19 +156,9 @@
     {
       "short": "-S",
       "long": "--sectors-per-track",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Specify the number of sectors per track",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Verbose execution",
+      "description": "of  sec‐ tors-per-track automatically and if that fails a default of 0 is used. Note that sectors-per-track is required for Windows to be able to boot from the created volume.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +168,17 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display version",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": "--with-uuid",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +188,27 @@
       "long": "--zero-time",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Fake the time to be 00:00 UTC, Jan 1, 1970",
+      "description": "This is only really useful for debugging purposes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -207,14 +217,77 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "cluster-size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "heads",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mft-zone-multiplier",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "number-of-sectors",
       "value_type": "Number",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "part-start-sect",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sector-size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sectors-per-track",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tors",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "volume-label",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

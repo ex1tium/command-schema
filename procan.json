@@ -1,24 +1,354 @@
 {
   "schema_version": "1.0.0",
   "command": "procan",
-  "description": "procan by Gerhard Rieger and contributors - send bug reports to socat@dest-unreach.org",
+  "description": "socat(1) socat(1)",
   "global_flags": [
     {
-      "short": "-?",
-      "long": null,
+      "short": null,
+      "long": "--experimental",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print a help text describing command line options",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-c",
+      "short": null,
+      "long": "--statistics",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-4",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use IP version 4 in case the addresses do not implicitly or explicitly specify a version. Since version 1.8.0 the default is no pref‐ erence.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-6",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use IP version 6 in case the addresses do not implicitly or explicitly specify a version.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?[?[?",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print values of compile time C defines",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Logs information about file descriptors before starting the transfer phase.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L<lockfile",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "Logs transfer statistics (bytes and blocks counters for both directions) before terminating socat. See also signal USR1. This feature is experimental and might change in future versions.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S<signals-bitmap",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the set of signals that are caught by socat just for printing an log message. This catching is useful to get the information about the signal into socats log, but prevents core dump or other standard actions. The default set of these signals is SIGHUP,  SIG‐ INT,  SIGQUIT,  SIGILL, SIGABRT, SIGBUS, SIGFPE, SIGSEGV, and SIGTERM; replace this set (0x89de on Linux) with a bitmap (e.g., SIGFPE has value 8 and its bit is 0x0080). Note: Signals SIGHUP, SIGINT, SIGQUIT, SIGUSR1, SIGPIPE, SIGALRM, SIGTERM, and SIGCHLD may be handled specially anyway.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T<timeout",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "inactivity  timeout:  when  socat is already in the transfer loop and nothing has happened for <timeout> [timeval] seconds (no data arrived, no interrupt occurred...) then it terminates.  Useful with protocols like UDP that cannot transfer EOF.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "Uses unidirectional mode in reverse direction. The first address is only used for writing, and the second address is  only  used  for reading.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print version and available feature information to stdout, and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W<lockfile",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b<size",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "At most <size> bytes are transferred per step. Default is 8192 bytes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Without  this option, only fatal, error, and warning messages are printed; applying this option also prints notice messages.  See DI‐ AGNOSTICS for more information.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d0",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "With this option, only fatal and error messages are printed; this restores the behaviour of socat up to version 1.7.4.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "During address option parsing, don’t check if the option is considered useful in the given address environment. Use it if you want to force, e.g., appliance of a socket option to a serial device.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h[h[h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-hh",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "dependend,  so  this  output  is helpful for checking the particular implementation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-hhh",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lf<logfile",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lh",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Adds  hostname  to log messages. Uses the value from environment variable HOSTNAME or the value retrieved with uname() if HOSTNAME is not set.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lm[<facility",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(i.e.  after opening all streams and before starting data transfer, or, with listening sockets with fork option, before the first accept call), it switches logging to syslog.  With optional <facility>, the syslog type can be selected, default is \"daemon\".",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lp<progname",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ls",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Writes messages to stderr (this is the default). Some third party libraries might not obey this option, in particular libwrap appears to only log to syslog.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lu",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Extends the timestamp of error messages to microsecond resolution. Does not work when logging to syslog.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ly[<facility",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "and  $$ (pid), $PROGNAME (see option option -lp), $TIMESTAMP (uses format %Y%m%dT%H%M%S), and MICROS (microseconds of day‐ time). These references have to be protected from shell expansion of course.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "By default, socat terminates when an error occurred to prevent the process from running when some option could not be  applied.  With this option, socat is sloppy with errors and tries to continue. Even with this option, socat will exit on fatals, and will abort con‐ nection attempts when security checks failed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t<timeout",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "can  be  closed  indepen‐ dently. When during the timeout interval the read part gives EOF, socat terminates without awaiting the timeout.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Uses unidirectional mode. The first address is only used for reading, and the second address is only used for writing (example).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Writes the transferred data not only to their target streams, but also to stderr. The output format is text with some conversions for readability, and prefixed with \"> \" or \"< \" indicating flow directions.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Writes the transferred data not only to their target streams, but also to stderr. The output format is hexadecimal, prefixed with  \"> \" or \"< \" indicating flow directions. Can be combined with -v .",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -27,14 +357,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "E",
+      "name": "address",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

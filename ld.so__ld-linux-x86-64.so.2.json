@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ld.so",
-  "description": "You have invoked 'ld.so', the program interpreter for dynamically-linked",
+  "description": "ld.so(8) System Manager's Manual ld.so(8)",
   "global_flags": [
     {
       "short": null,
       "long": "--argv0",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "set argv[0] to STRING before running",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": null,
       "long": "--audit",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "use objects named in LIST as auditors",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The objects in list are delimited by colons.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,8 +26,8 @@
     {
       "short": null,
       "long": "--glibc-hwcaps-mask",
-      "value_type": "Directory",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -36,19 +36,9 @@
     {
       "short": null,
       "long": "--glibc-hwcaps-prepend",
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +48,7 @@
       "long": "--inhibit-cache",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not use /etc/ld.so.cache",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +56,9 @@
     {
       "short": null,
       "long": "--inhibit-rpath",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "ignore RUNPATH and RPATH information in object names in LIST",
+      "description": "This option is ignored when running in secure-execution mode (see  be‐ low).  The objects in list are delimited by colons or spaces.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +68,7 @@
       "long": "--library-path",
       "value_type": "File",
       "takes_value": true,
-      "description": "use given PATH instead of content of the environment variable LD_LIBRARY_PATH",
+      "description": "The names ORIGIN, LIB, and PLATFORM are interpreted as for the LD_LIBRARY_PATH environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +78,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list all dependencies and how they are resolved",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,19 +86,9 @@
     {
       "short": null,
       "long": "--list-diagnostics",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "list diagnostics information",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--list-tunables",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "list all tunables with minimum and maximum values",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "system  diagnostic information in a machine-readable format, such as some internal loader variables, the auxiliary vector (see getauxval(3)), and the environment variables.  On some architectures, the command might print additional information  (like  the  cpu features  used in GNU indirect function selection on x86).  --list-tunables (since glibc 2.33) Print the names and values of all tun‐ ables, along with the minimum and maximum allowed values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +98,7 @@
       "long": "--preload",
       "value_type": "String",
       "takes_value": true,
-      "description": "preload objects named in LIST",
+      "description": "The objects in list are delimited by colons or spaces.  The  objects  are  preloaded  as  ex‐ plained in the description of the LD_PRELOAD environment variable below.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,17 +108,7 @@
       "long": "--verify",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verify that given object really is a dynamically linked object we can handle",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -147,14 +117,245 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "ARGS-FOR-PROGRAM",
+      "name": ".interp",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "and",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "arguments",
       "value_type": "String",
       "required": false,
-      "multiple": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "be",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "by",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "can",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "case",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "command-line",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directly",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dynamic",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dynamically",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "either",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "elf",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "executed",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "in",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "indirectly",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "is",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "linked",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "linker",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "no",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "object",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "of",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "or",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "passed",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "program",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "run",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "running",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "section",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "shared",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "some",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "stored",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "the",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "which",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

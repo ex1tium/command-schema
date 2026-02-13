@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "sysctl",
-  "description": null,
+  "description": "SYSCTL(8) System Administration SYSCTL(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display all variables",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--binary",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print value without new line",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,17 +28,7 @@
       "long": "--deprecated",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "include deprecated parameters to listing",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dry-run",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print the key and values but do not write",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,17 +48,17 @@
       "long": "--ignore",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ignore unknown variables errors",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-p",
-      "long": "--load",
+      "short": "-p[FILE",
+      "long": "--load[",
       "value_type": "File",
       "takes_value": true,
-      "description": "read values from file",
+      "description": "in sysctl settings from the file specified or /etc/sysctl.conf if none given.  Specifying - as filename means reading data from standard input. Using this option will mean arguments to sysctl are files, which are read in the order they are specified.  The  file argument may be specified as regular expression.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +68,7 @@
       "long": "--names",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print variable names without values",
+      "description": "It may be useful with shells that have programmable completion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +76,9 @@
     {
       "short": "-r",
       "long": "--pattern",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The pattern uses extended regular expression syntax.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +88,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not echo variable set",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +96,9 @@
     {
       "short": null,
       "long": "--system",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "read values from all system directories",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +108,7 @@
       "long": "--values",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print only values of the given variable(s)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +118,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +128,7 @@
       "long": "--write",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable writing a value to variable",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +136,9 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "alias of -a",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias of -a",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +146,9 @@
     {
       "short": "-X",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "alias of -a",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias of -a",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "alias of -h",
+      "description": "Alias of -h",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "alias of -p",
+      "description": "Alias of -p",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +176,19 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "does nothing",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Does nothing, exists for BSD compatibility.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,17 +196,32 @@
     {
       "short": "-x",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "does nothing",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Does nothing, exists for BSD compatibility.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "or",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "regexp",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

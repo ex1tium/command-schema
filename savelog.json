@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "savelog",
-  "description": null,
+  "description": "SAVELOG(8) System Manager's Manual SAVELOG(8)",
   "global_flags": [
     {
       "short": "-1",
@@ -14,11 +14,21 @@
       "requires": []
     },
     {
+      "short": "-9",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "force cleanup of cycled logfiles",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,8 +36,8 @@
     {
       "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -36,9 +46,9 @@
     {
       "short": "-J",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "compress with xz instead of gzip",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "The cycle count must be at least 2.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use standard date for rolling",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "compress with bzip2 instead of gzip",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't compress any log files (default: do compress)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "do not rotate empty files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "preserve owner, group, and permissions of logfile",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "be quiet",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use rolldir instead of . to roll files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "touch new logfile into existence",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -162,21 +172,145 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "-1",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-d",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-g",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-j",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cycle",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dateformat",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "group",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mode",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rolldir",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "user",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

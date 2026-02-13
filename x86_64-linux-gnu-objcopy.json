@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "x86_64-linux-gnu-objcopy",
-  "description": "Copies a binary file, possibly transforming it in the process",
+  "description": "OBJCOPY(1) GNU Development Tools OBJCOPY(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--add-gnu-debuglink",
       "value_type": "File",
       "takes_value": true,
-      "description": "Add section .gnu_debuglink linking to <file>",
+      "description": "a .gnu_debuglink section which contains a reference to path-to-file and adds it to the output file.  Note: the file at path-to- file must exist.  Part of the process of adding the .gnu_debuglink section involves embedding a checksum of the contents  of  the  debug info file into the section.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--add-section",
       "value_type": "File",
       "takes_value": true,
-      "description": "Add section <name> found in <file> to output",
+      "description": "The contents of the new section are taken from the file filename.  The size of  the  section  will be the size of the file.  This option only works on file formats which can support sections with arbitrary names. Note - it may be necessary to use the --set-section-flags option to set the attributes of the newly created section.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,49 @@
     {
       "short": null,
       "long": "--add-symbol",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Add a symbol",
+      "description": "This option may be specified multiple times.  If the section is given,  the  symbol will  be  associated with and relative to that section, otherwise it will be an ABS symbol.  Specifying an undefined section will result in a fatal error.  There is no check for the value, it will be taken as specified.  Symbol flags can be specified and not all flags will be meaningful for all object file formats.  By default, the symbol will be global.  The special flag 'before=othersym' will  insert  the new  symbol  in  front of the specified othersym, otherwise the symbol(s) will be added at the end of the symbol table in the order they appear.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-}val",
+      "long": "--adjust-section-vma",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "or change the LMA address of any sections matching sectionpattern. The LMA address is the address where the section will be loaded into memory at program load time. Normally this is the same as the VMA address, which is the address of the section at program run time, but on some systems, especially those where a program is held in ROM, the two can be different. If = is used, the section address is set to val. Otherwise, val is added to or subtracted from the section address. See the comments under --change-addresses, above. If sectionpattern does not match any sections in the input file, a warning will be issued, unless --no-change-warnings is used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--adjust-start",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Not all  object  file  formats  support  setting  the  start address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--adjust-vma",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the VMA and LMA addresses of all sections, as well as the start address, by adding incr.  Some object file formats do not permit section addresses to be changed arbitrarily.  Note that this does not relocate the sections; if  the  program  expects  sections  to  be loaded  at  a  certain  address,  and  this  option is used to change the sections such that they are loaded at a different address, the program may fail.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--adjust-warnings",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "--change-section-address  or  --change-section-lma  or  --change-section-vma  is  used,  and  the section pattern does not match any sections, issue a warning.  This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,29 +76,39 @@
     {
       "short": null,
       "long": "--alt-machine-code",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use the target's <index>'th alternative machine",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-B",
-      "long": "--binary-architecture",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set output arch, when input is arch-less",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": "--byte",
       "value_type": "Number",
       "takes_value": true,
-      "description": "Select byte <num> in every interleaved block",
+      "description": "This  is  useful  in  case  a machine  is  assigned  an official code and the tool-chain adopts the new code, but other applications still depend on the original code being used.  For ELF based architectures if the index alternative does not exist then the value is treated as an absolute number  to  be stored in the e_machine field of the ELF header.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--binary-architecture",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "In this  case  the  output  architecture  can  be  set  to bfdarch.   This  option  will  be  ignored  if  the input file has a known bfdarch.  You can access this binary data inside a program by referencing the special symbols  that  are  created  by  the  conversion  process.   These  symbols  are  called  _binary_objfile_start, _binary_objfile_end and _binary_objfile_size.  e.g. you can transform a picture file into an object file and then access it in your code using these symbols.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--byte",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "byte can  be  in the range from 0 to breadth-1, where breadth is the value given by the --interleave option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--change-addresses",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,22 +118,16 @@
       "long": "--change-leading-char",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force output format's leading character style",
+      "description": "The most common such character is underscore, which  compilers often  add  before  every  symbol.   This  option tells objcopy to change the leading character of every symbol when it converts between object file formats.  If the object file formats use the same leading character, this option has no effect.  Otherwise, it  will  add  a character, or remove a character, or change a character, as appropriate.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--change-section-lma",
-      "value_type": {
-        "Choice": [
-          "=",
-          "+",
-          "-"
-        ]
-      },
-      "takes_value": true,
+      "long": "--change-start",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -91,15 +135,9 @@
     },
     {
       "short": null,
-      "long": "--change-section-vma",
-      "value_type": {
-        "Choice": [
-          "=",
-          "+",
-          "-"
-        ]
-      },
-      "takes_value": true,
+      "long": "--change-warnings",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -110,7 +148,17 @@
       "long": "--compress-debug-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "DWARF  debug  sections  using  zlib with SHF_COMPRESSED from the ELF ABI.  Note - if compression would actually make a section larger, then it is not compressed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compress-debug-sections.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "--compress-debug-sections=zlib-gnu compresses DWARF debug sections using the obsoleted zlib-gnu format.  The debug sections are renamed to begin with .zdebug.  --compress-debug-sections=zstd compresses DWARF debug sections using zstd.  Note - if compression would actually make a section larger, then it is not compressed nor renamed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -120,7 +168,7 @@
       "long": "--debugging",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Convert debugging information, if possible",
+      "description": "debugging  information,  if  possible.   This  is not the default because only certain debugging formats are supported, and the conversion process can be time consuming.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,16 +176,36 @@
     {
       "short": null,
       "long": "--decompress-debug-sections",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Decompress DWARF debug sections using zlib",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "For a .zdebug section, the original name is restored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-U",
+      "short": null,
+      "long": "--decompress-debug-sections.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "--compress-debug-sections=zlib    and    --compress-debug-sections=zlib-gabi    are    equivalent    to",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--disable-deterministic-archives",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This is the inverse of the -D option, above: when copying archive members and writing the archive index, use their actual UID, GID, timestamp, and file mode values.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--discard-all",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -146,21 +214,11 @@
       "requires": []
     },
     {
-      "short": "-x",
-      "long": "--discard-all",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove all non-global symbols",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
+      "short": null,
       "long": "--discard-locals",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove any compiler-generated symbols",
+      "description": "(These usually start with L or ..)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -170,7 +228,7 @@
       "long": "--dump-section",
       "value_type": "File",
       "takes_value": true,
-      "description": "Dump the contents of section <name> into <file>",
+      "description": "been  there  previously. This  option  is  the  inverse  of  --add-section.  This option is similar to the --only-section option except that it does not create a formatted file, it just dumps the contents as raw binary data, without applying any relocations.  The option can be specified more  than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -180,16 +238,6 @@
       "long": "--elf-stt-common",
       "value_type": "String",
       "takes_value": true,
-      "description": "Generate ELF common symbols with STT_COMMON type",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": "--enable-deterministic-archives",
-      "value_type": "Bool",
-      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -197,10 +245,20 @@
     },
     {
       "short": null,
-      "long": "--extract-dwo",
+      "long": "--enable-deterministic-archives",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Copy only DWO sections",
+      "description": "When copying archive members and writing the archive index, use zero for UIDs, GIDs, timestamps, and use consistent file modes for all files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--extract-dwo",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "See the --strip-dwo option for more information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -210,7 +268,7 @@
       "long": "--extract-symbol",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove section contents but keep symbols",
+      "description": "Specifically, the option:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -220,7 +278,7 @@
       "long": "--file-alignment",
       "value_type": "File",
       "takes_value": true,
-      "description": "Set PE file alignment to <num>",
+      "description": "Sections in the file will always begin at file offsets which are multiples of this number.   This  defaults to 512.  [This option is specific to PE targets.]",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,9 +286,9 @@
     {
       "short": null,
       "long": "--gap-fill",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Fill gaps between sections with <val>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This operation applies to the load address (LMA) of the sections.  It is done  by  increasing  the size of the section with the lower address, and filling in the extra space created with val.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,9 +296,9 @@
     {
       "short": null,
       "long": "--globalize-symbol",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Force symbol <name> to be marked as a global",
+      "description": "symbol  symbolname global scoping so that it is visible outside of the file in which it is defined.  This option may be given more than once.  Note: this option cannot be used in conjunction with the -G or --keep-global-symbol options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -250,7 +308,7 @@
       "long": "--globalize-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "filename is simply a flat file, with one  symbol  name  per line.   Line  comments  may  be introduced by the hash character.  This option may be given more than once.  Note: this option cannot be used in conjunction with the -G or --keep-global-symbol options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,19 +316,19 @@
     {
       "short": null,
       "long": "--heap",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set PE reserve/commit heap to <reserve>/ <commit>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -280,7 +338,7 @@
       "long": "--image-base",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set PE image base to <address>",
+      "description": "This is the lowest memory location that will be used when your program or dll  is loaded.  To reduce the need to relocate and improve performance of your dlls, each should have a unique base address and not overlap any other dlls.  The default is 0x400000 for executables, and 0x10000000 for dlls.  [This option is specific to PE targets.]",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -290,7 +348,7 @@
       "long": "--impure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mark the output file as impure",
+      "description": "This option isn't meaningful for all object file formats.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -300,27 +358,17 @@
       "long": "--info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List object formats & architectures supported",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-I",
+      "short": null,
       "long": "--input-target",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Assume input file is in format <bfdname>",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": "--interleave",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "Only copy N out of every <number> bytes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,9 +376,19 @@
     {
       "short": null,
       "long": "--interleave-width",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Set N for --interleave",
+      "description": "The start of the range of bytes to be copied is set by  the  --byte option, and the extent of the range is set with the --interleave option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--interleave[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "copy  a range out of every breadth bytes.  (Header data is not affected).  Select which byte in the range begins the copy with the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -340,17 +398,17 @@
       "long": "--keep-file-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not strip file symbol(s)",
+      "description": "stripping  a  file,  perhaps  with --strip-debug or --strip-unneeded, retain any symbols specifying source file names, which would otherwise get stripped.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-G",
+      "short": null,
       "long": "--keep-global-symbol",
       "value_type": "File",
       "takes_value": true,
-      "description": "Localize all symbols except <name>",
+      "description": "Make all other symbols local to the file, so that they are not visible externally.  This option may be given more than once.  Note: this option cannot be used in conjunction with the --globalize-symbol or --globalize-symbols options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -360,7 +418,7 @@
       "long": "--keep-global-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "filename is simply a flat file, with one symbol name  per line.  Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -370,7 +428,17 @@
       "long": "--keep-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "Do not strip section <name>",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-section-symbils",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "--strip-unneeded,  retain  any  symbols  specifying  section  names,  which  would otherwise get stripped.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -380,17 +448,17 @@
       "long": "--keep-section-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not strip section symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-K",
+      "short": null,
       "long": "--keep-symbol",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Do not strip symbol <name>",
+      "description": "This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -400,7 +468,7 @@
       "long": "--keep-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "--keep-symbol  option to each symbol listed in the file filename.  filename is simply a flat file, with one symbol name per line. Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,19 +476,19 @@
     {
       "short": null,
       "long": "--localize-hidden",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Turn all ELF hidden symbols into locals",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "an  ELF  object,  mark  all symbols that have hidden or internal visibility as local.  This option applies on top of symbol-specific localization options such as -L.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-L",
+      "short": null,
       "long": "--localize-symbol",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Force symbol <name> to be marked as a local",
+      "description": "This option may  be  given more than once.  Note - unique symbols are not converted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -430,7 +498,7 @@
       "long": "--localize-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "--localize-symbol  option  to  each symbol listed in the file filename.  filename is simply a flat file, with one symbol name per line.  Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -440,13 +508,13 @@
       "long": "--long-section-names",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "The default  behaviour,  keep,  is  to preserve  long section names if any are present in the input file.  The enable and disable options forcibly enable or disable the use of long section names in the output object; when disable is in effect, any long section names in the input object will be  truncated.   The enable  option  will  only  emit  long  section  names if any are present in the inputs; this is mostly the same as keep, but it is left undefined whether the enable option might force the creation of an empty string table in the output file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-M",
+      "short": null,
       "long": "--merge-notes",
       "value_type": "Bool",
       "takes_value": false,
@@ -457,10 +525,30 @@
     },
     {
       "short": null,
-      "long": "--no-merge-notes",
+      "long": "--no-adjust-warnings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not attempt to remove redundant notes (default)",
+      "description": "pattern does not match any sections.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-change-warnings",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-merge-notes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,29 +556,29 @@
     {
       "short": null,
       "long": "--only-keep-debug",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strip everything but the debug information",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-j",
-      "long": "--only-section",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Only copy section <name> into the output",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": "--output-target",
       "value_type": "File",
       "takes_value": true,
-      "description": "Create an output file in format <bfdname>",
+      "description": "sections  intact. In ELF files, this preserves all note sections in the output.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--only-section",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This option may be given more than once.  Note that using this option inappropriately may make the output file unusable.  Wildcard characters are accepted in sectionpattern.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-target",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,9 +586,9 @@
     {
       "short": null,
       "long": "--pad-to",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Pad the last section up to address <addr>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is done by increasing the size of the last section.  The extra space is filled in with the value specified by --gap-fill (default zero).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -520,7 +608,7 @@
       "long": "--prefix-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": "Add <prefix> to start of every section name",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -530,17 +618,17 @@
       "long": "--prefix-symbols",
       "value_type": "String",
       "takes_value": true,
-      "description": "Add <prefix> to start of every symbol name",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-p",
+      "short": null,
       "long": "--preserve-dates",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Copy modified/access timestamps to the output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -550,7 +638,7 @@
       "long": "--pure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mark the output file as demand paged",
+      "description": "This option isn't meaningful for all object file formats.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -560,7 +648,7 @@
       "long": "--readonly-text",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Make the output text write protected",
+      "description": "This option isn't meaningful for all object file formats.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -570,7 +658,7 @@
       "long": "--redefine-sym",
       "value_type": "String",
       "takes_value": true,
-      "description": "Redefine symbol name <old> to <new>",
+      "description": "the  name of a symbol old, to new.  This can be useful when one is trying link two things together for which you have no source, and there are name collisions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -580,7 +668,7 @@
       "long": "--redefine-syms",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "filename is simply a flat file, with  one  symbol  pair per line.  Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -590,7 +678,7 @@
       "long": "--remove-leading-char",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove leading character from global symbols",
+      "description": "the  first  character of a global symbol is a special symbol leading character used by the object file format, remove the character. The most common symbol leading character is underscore.  This option will remove a leading underscore from all global symbols.  This can be useful if you want to link together objects of different file formats with different conventions for symbol names.  This is different from --change-leading-char because it always changes the symbol name when appropriate, regardless of  the  object  file  format  of  the output file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,19 +686,19 @@
     {
       "short": null,
       "long": "--remove-relocations",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Remove relocations from section <name>",
+      "description": "non-dynamic  relocations from the output file for any section matching sectionpattern.  This option may be given more than once. Note that using this option inappropriately may make the output file unusable, and attempting to remove  a  dynamic  relocation  section such  as  .rela.plt from an executable or shared library with --remove-relocations=.plt will not work.  Wildcard characters are accepted in sectionpattern.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-R",
+      "short": null,
       "long": "--remove-section",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Remove section <name> from the output",
+      "description": "This option may be given more than once.  Note that using this  option inappropriately  may  make  the  output  file  unusable.   Wildcard characters are accepted in sectionpattern.  Using both the -j and -R options together results in undefined behaviour.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,9 +706,9 @@
     {
       "short": null,
       "long": "--rename-section",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "This has the advantage  over using  a  linker  script to perform the rename in that the output stays as an object file and does not become a linked executable.  This option accepts the same set of flags as the --set-section-flags option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -628,9 +716,9 @@
     {
       "short": null,
       "long": "--reverse-bytes",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Reverse <num> bytes at a time, in output sections with content",
+      "description": "A section length must be evenly divisible by the value given in order for the swap to be able to take place. Reversing takes place before the interleaving is performed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -640,7 +728,7 @@
       "long": "--section-alignment",
       "value_type": "Number",
       "takes_value": true,
-      "description": "Set PE section alignment to <num>",
+      "description": "the  section  alignment  field  in  the PE header.  Sections in memory will always begin at addresses which are a multiple of this number.  Defaults to 0x1000.  [This option is specific to PE targets.]",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -650,7 +738,7 @@
       "long": "--set-section-alignment",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "align specifies the alignment in bytes and must be a power of two, i.e.  1, 2, 4, 8....",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -658,9 +746,9 @@
     {
       "short": null,
       "long": "--set-section-flags",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  flags for any sections matching sectionpattern.  The flags argument is a comma separated string of flag names.  The recognized names are alloc, contents, load, noload, readonly, code, data, rom, exclude, share, debug, and large.  You can set the contents flag for a section which does not have contents, but it is not meaningful to clear the contents flag of a section which does have  contents--just remove  the section instead.  Not all flags are meaningful for all object file formats.  In particular the share flag is only meaningful for COFF format files and not for ELF format files.  The ELF x86-64 specific flag large corresponds to SHF_X86_64_LARGE.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -668,14 +756,9 @@
     {
       "short": null,
       "long": "--set-start",
-      "value_type": {
-        "Choice": [
-          "--change-start",
-          "--adjust-start"
-        ]
-      },
-      "takes_value": true,
-      "description": "Set the start address to <addr> {--change-start|--adjust-start} <incr> Add <incr> to the start address {--change-addresses|--adjust-vma} <incr> Add <incr> to LMA, VMA and start addresses {--change-section-address|--adjust-section-vma} <name>{=|+|-}<val> Change LMA and VMA of section <name> by <val>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  start address (also known as the entry address) of the new file to val.  Not all object file formats support setting the start address.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -685,7 +768,7 @@
       "long": "--srec-forceS3",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Restrict the type of generated Srecords to S3",
+      "description": "Avoid generation of S1/S2 records, creating S3-only record format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -693,9 +776,9 @@
     {
       "short": null,
       "long": "--srec-len",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Restrict the length of generated Srecords",
+      "description": "Set the maximum length of the Srecords being produced to ival.  This length covers both address,  data and crc fields.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -703,29 +786,39 @@
     {
       "short": null,
       "long": "--stack",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set PE reserve/commit stack to <reserve>/ <commit>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-S",
+      "short": null,
       "long": "--strip-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all symbol and relocation information",
+      "description": "Also deletes debug sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-g",
+      "short": null,
       "long": "--strip-debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all debugging symbols & sections",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-debug.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -733,9 +826,9 @@
     {
       "short": null,
       "long": "--strip-dwo",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove all DWO sections",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  contents  of  all  DWARF  .dwo  sections,  leaving the remaining debugging sections and all symbols intact.  This option is intended for use by the compiler as part of the -gsplit-dwarf option, which splits debug information between the .o file and a  separate .dwo  file.  The compiler generates all debug information in the same file, then uses the --extract-dwo option to copy the .dwo sections to the .dwo file, then the --strip-dwo option to remove those sections from the original .o file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -743,19 +836,19 @@
     {
       "short": null,
       "long": "--strip-section-headers",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strip section header from the output",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This option is specific to ELF files.  Implies --strip-all and --merge-notes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-N",
+      "short": null,
       "long": "--strip-symbol",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Do not copy symbol <name>",
+      "description": "This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -765,7 +858,7 @@
       "long": "--strip-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "filename is simply a flat file, with one symbol name per  line. Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -775,7 +868,7 @@
       "long": "--strip-unneeded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all symbols not needed by relocations",
+      "description": "not  needed  for  relocation  processing  in  addition  to  debugging  symbols  and  sections  stripped  by",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -785,7 +878,7 @@
       "long": "--strip-unneeded-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -795,7 +888,7 @@
       "long": "--strip-unneeded-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "--strip-unneeded-symbol  option to each symbol listed in the file filename.  filename is simply a flat file, with one symbol name per line.  Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -803,19 +896,19 @@
     {
       "short": null,
       "long": "--subsystem",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-F",
+      "short": null,
       "long": "--target",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Set both input and output format to <bfdname>",
+      "description": "bfdname  as the object format for both the input and the output file; i.e., simply transfer data from source to destination with no translation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -825,17 +918,17 @@
       "long": "--update-section",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  existing  contents  of  a  section  named sectionname with the contents of file filename.  The size of the section will be adjusted to the size of the file.  The section flags for sectionname will be unchanged.  For ELF format files  the  section  to  segment mapping will also remain unchanged, something which is not possible using --remove-section followed by --add-section.  The option can be specified more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-v",
+      "short": null,
       "long": "--verbose",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "List all object files modified @<file> Read options from <file>",
+      "description": "In the case of archives, objcopy -V lists all members of the archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -845,17 +938,17 @@
       "long": "--verilog-data-width",
       "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "Verilog  output,  this  options controls the number of bytes converted for each output data element.  The input target controls the endianness of the conversion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-V",
+      "short": null,
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this program's version number",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -863,19 +956,19 @@
     {
       "short": null,
       "long": "--weaken",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Force all global symbols to be marked as weak",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This can be useful when building an object which will be linked against other objects using the -R option to the linker.  This option is only effective when using an object file format which supports weak symbols.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-W",
+      "short": null,
       "long": "--weaken-symbol",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Force symbol <name> to be marked as a weak",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -885,17 +978,17 @@
       "long": "--weaken-symbols",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "filename is simply a flat file, with one symbol name per line. Line comments may be introduced by the hash character.  This option may be given more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-w",
+      "short": null,
       "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Permit wildcard in symbol comparison",
+      "description": "The question mark (?), asterisk (*),  backslash  (\\)  and square  brackets  ([])  operators can be used anywhere in the symbol name.  If the first character of the symbol name is the exclamation point (!) then the sense of the switch is reversed for that symbol.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -905,7 +998,237 @@
       "long": "--writable-text",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mark the output text as writable",
+      "description": "This option isn't meaningful for all object file formats.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-K",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-j",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -914,14 +1237,357 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "out-file",
+      "name": "--add-section",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--add-symbol",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--change-leading-char",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--change-section-address",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--change-section-lma",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--change-section-vma",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--change-warnings",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--compress-debug-sections",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--debugging",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--decompress-debug-sections",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--dump-section",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--extract-dwo",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--extract-symbol",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--help",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--impure",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--info",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--keep-file-symbols",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--keep-section-symbols",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--localize-hidden",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--long-section-names",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--merge-notes",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--no-change-warnings",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--no-merge-notes",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--only-keep-debug",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--pure",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--readonly-text",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--redefine-sym",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--remove-leading-char",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--rename-section",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--set-section-alignment",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--set-section-flags",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--srec-forces3",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--strip-dwo",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--strip-section-headers",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--strip-unneeded",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--update-section",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--weaken",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--writable-text",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-g",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-j",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-k",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "outfile",
       "value_type": "File",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

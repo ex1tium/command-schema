@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "fstrim",
-  "description": "Discard unused blocks on a mounted filesystem.",
+  "description": "FSTRIM(8) System Administration FSTRIM(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "trim mounted filesystems",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-n",
       "long": "--dry-run",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "does everything, but trim",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--fstab",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "trim filesystems from /etc/fstab",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-l",
       "long": "--length",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the number of bytes to discard",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,19 +56,19 @@
     {
       "short": "-I",
       "long": "--listed-in",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "trim filesystems listed in specified files",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-m",
+      "short": null,
       "long": "--minimum",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "the minimum extent length to discard",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-o",
       "long": "--offset",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the offset in bytes to start discarding from",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--quiet-unsupported",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "suppress error messages if trim unsupported",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-t",
       "long": "--types",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "limit the set of filesystem types",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print number of discarded bytes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,27 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Aav",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -127,147 +147,63 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "EiB",
+      "name": "-aav",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "length",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "GiB",
+      "name": "minimum-size",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "PiB",
+      "name": "mountpoint",
       "value_type": "String",
-      "required": true,
+      "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "TiB",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "YiB",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "ZiB",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "and",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "be",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "by",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "details",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "followed",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "for",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "is",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "may",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "more",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "num",
-      "value_type": "Number",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "optional",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "see",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "suffixes",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "the",
+      "name": "offset",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

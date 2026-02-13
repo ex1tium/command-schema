@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "tune2fs",
-  "description": null,
+  "description": "TUNE2FS(8) System Manager's Manual TUNE2FS(8)",
   "global_flags": [
     {
       "short": "-C",
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "If set to a greater value than the max-mount-counts parameter set  by  the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-E",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "extended  options  for  the  file system.  Extended options are comma separated, and may take an argument using the equals ('=') sign.  The following extended options are supported:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Change  the  inode  size  used  by the file system.   This requires rewriting the inode table, so it requires that the file system is checked for consistency first using e2fsck(8).  This operation can also take a while and the file system can be  corrupted  and  data lost  if  it is interrupted while in the middle of converting the file system.  Backing up the file system before changing inode size is recommended.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "the  equals  ('=') sign.  The following journal options are supported:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  volume label of the file system.  Ext2 file system labels can be at most 16 characters long; if volume-label is longer than 16 characters, tune2fs will truncate it and print a warning.  For other file systems that support online label manipulation  and  are mounted  tune2fs  will  work  as  well, but it will not attempt to truncate the volume-label at all.  The volume label can be used by mount(8), fsck(8), and /etc/fstab(5) (and possibly others) by specifying LABEL=volume-label instead of a block  special  device  name like /dev/hda5.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,7 +56,7 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -66,9 +66,9 @@
     {
       "short": "-O",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "More than one file system feature can  be  cleared  or set  by separating features with commas.  File System features prefixed with a caret character ('^') will be cleared in the file sys‐ tem's superblock; file system features without a prefix character or prefixed with a plus character ('+') will be added to  the  file system.  For a detailed description of the file system features, please see the man page ext4(5).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-Q",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "'quota'  feature on the superblock and works on the quota files for the given quota type. Quota options could be one or more of the following:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "The time is interpreted using the current (local) timezone.  This can be useful in scripts which use a Logical Volume Manager to make a consistent snapshot of a file system, and then check the  file  system during off hours to make sure it hasn't been corrupted due to hardware problems, etc.  If the file system was clean, then this option can be used to set the last checked time on the original file system.  The format of time-last-checked is the international date for‐ mat,  with an optional time specifier, i.e.  YYYYMMDD[HH[MM[SS]]].   The keyword now is also accepted, in which case the last checked time will be set to the current time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the universally unique identifier (UUID) of the file system to UUID.  The format of the UUID is a series of hex digits separated by hyphens, like this: \"c1b9d5a2-f162-11cf-9ece-0020afc76f16\".  The UUID parameter may also be one of the following:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If max-mount-counts is  the  string  \"random\", tune2fs  will  use  a random value between 20 and 40.  If max-mount-counts is 0 or -1, the number of times the file system is mounted will be disregarded by e2fsck(8) and the kernel.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-e",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "In all cases, a file system error will cause e2fsck(8) to check the file system on the next boot.  error-behavior can be one of the following:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Force  the tune2fs operation to complete even in the face of errors.  This option is useful when removing the has_journal file system feature from a file system which has an external journal (or is corrupted such that it appears to have an external journal), but that external journal is not available.   If the file system appears to require journal replay, the -f flag must  be  specified  twice  to proceed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-g",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The group parameter can be a numerical gid or a group name.  If a group name is given, it is converted to a numerical gid before it is stored in the superblock.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": "-i",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "interval-between-checks[d|m|w] Adjust  the maximal time between two file system checks.  No suffix or d will interpret the number interval-between-checks as days, m as months, and w as weeks.  A value of zero will disable the time-dependent checking.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-j",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add  an ext3 journal to the file system.  If the -J option is not specified, the default journal parameters will be used to create an appropriately sized journal (given the size of the file system) stored within the file system.  Note that you must be using a  kernel which has ext3 support in order to actually make use of the journal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "List the contents of the file system superblock, including the current values of the parameters that can be set via this program.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  percentage  of  the file system which may only be allocated by privileged processes.   Reserving some number of file system blocks for use by privileged processes is done to avoid file system fragmentation, and to allow system daemons, such  as  syslogd(8), to  continue  to  function correctly after non-privileged processes are prevented from writing to the file system.  Normally, the de‐ fault percentage of reserved blocks is 5%.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +186,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Default mount options can be overridden by mount options speci‐ fied either in /etc/fstab(5) or on the command line arguments to mount(8).  Older kernels may not support this feature;  in  particu‐ lar, kernels which predate 2.4.20 will almost certainly ignore the default mount options field in the superblock.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,8 +196,8 @@
     {
       "short": "-r",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -206,9 +206,9 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "user can be a numerical uid or a user name.  If a user name is  given,  it is converted to a numerical uid before it is stored in the superblock.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +216,9 @@
     {
       "short": "-z",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "file.   This  undo  file  can  be  used  with e2undo(8)  to  restore the old contents of the file system should something go wrong.  If the empty string is passed as the undo_file argument, the undo file will be written to a file named tune2fs-device.e2undo in the directory specified via  the  E2FSPROGS_UNDO_DIR environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -227,14 +227,133 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "UUID",
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "errors-behavior",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "extended-options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "group",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "interval-between-checks",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "last-mounted-directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "max-mount-counts",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mount-count",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "nal-options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "new_inode_size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "quota-options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "reserved-blocks-count",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "reserved-blocks-percentage",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "time-last-checked",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "undo_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "user",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "uuid",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "volume-label",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsundelete",
-  "description": null,
+  "description": "NTFSUNDELETE(8) System Manager's Manual NTFSUNDELETE(8)",
   "global_flags": [
     {
       "short": "-b",
       "long": "--byte",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Fill missing parts with this byte",
+      "description": "The default is zeros.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-C",
       "long": "--case",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Case sensitive matching",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "scanning  an NTFS volume, any filename matching (using the --match option) is case-insensitive.  This option makes the matching case-sensitive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--copy",
       "value_type": "File",
       "takes_value": true,
-      "description": "Write a range of MFT records to a file",
+      "description": "The default file is mft which will be created in the  current directory.  This option can be combined with the --output and --destination options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-d",
       "long": "--destination",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Destination directory",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use less caution",
+      "description": "Use this option with caution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-i",
       "long": "--inodes",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Recover these inodes",
+      "description": "the  files with these inode numbers.  RANGE can be a single inode number, several numbers separated by commas \",\" or a range separated by a dash \"-\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-m",
       "long": "--match",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Only work on files with matching names",
+      "description": "The pattern can include the wildcards '?', match exactly one character  or '*',  match zero or more characters.  By default the matching is case-insensitive.  To make the search case sensitive, use the --case option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--optimistic",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Undelete in-use clusters as well",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-o",
       "long": "--output",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Save with this filename",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--parent",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show parent directory",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-p",
       "long": "--percentage",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Minimum percentage recoverable",
+      "description": "Please read the caveats section for more details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Less output",
+      "description": "Naturally, it doesn't make sense to combine this option with --scan.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-s",
       "long": "--scan",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Scan for files (default)",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This is the default action of  ntfsundelete.   This list  can  be  filtered by filename, size, percentage recoverable or last modification time, using the --match, --size, --percent and",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,19 +146,19 @@
     {
       "short": "-S",
       "long": "--size",
-      "value_type": "File",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Match files of this size",
+      "description": "The range may be specified as  two  numbers separated  by  a  '-'.  The sizes may be abbreviated using the suffixes k, m, g, t, for kilobytes, megabytes, gigabytes and terabytes respectively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-t",
+      "short": null,
       "long": "--time",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Last referenced since this time",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--truncate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Truncate 100% recoverable file to exact size.",
+      "description": "ntfsundelete  is confident about the size of a deleted file, then it will restore the file to exactly that size.  The default be‐ haviour is to round up the size to the nearest cluster (which will be a multiple of 512 bytes).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--undelete",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Undelete mode",
+      "description": "You can specify the files to be recovered using by using --match or --inodes options.  This option can be com‐ bined with --output, --destination, and --byte.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "More output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display version information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -207,35 +207,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "NUM",
-      "value_type": "Number",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "PATTERN",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "RANGE",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "SINCE",
+      "name": "device",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

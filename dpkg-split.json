@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-split",
-  "description": null,
+  "description": "dpkg-split(1) dpkg suite dpkg-split(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use <directory> instead of /var/lib/dpkg.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  administrative  directory  to  directory  (since  dpkg  1.21.10).  This is where the statoverride file is stored.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--depotdir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use <directory> instead of /var/lib/dpkg/parts.",
+      "description": "The default is /var/lib/dpkg/parts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,37 +28,37 @@
       "long": "--msdos",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate 8.3 filenames.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-Q",
       "long": "--npquiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Be quiet when -a is not a part.",
+      "description": "doing  automatic  queue-or-reassembly dpkg-split usually prints a message if it is given a part that is not a binary package part. This option suppresses this message, to allow programs such as dpkg to cope with both  split  and  unsplit  packages  without  producing spurious messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-o",
       "long": "--output",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Filename, for -j (default is <package>_<version>_<arch>.deb).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-S",
       "long": "--partsize",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "In KiB, for -s (default is 450).",
+      "description": "The default is 450 KiB.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,39 +66,9 @@
     {
       "short": null,
       "long": "--root",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use <directory> instead of /.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Be quiet when -a is not a part.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "In KiB, for -s (default is 450).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Filename, for -j (default is <package>_<version>_<arch>.deb).",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "and  the  administrative directory to «directory/var/lib/dpkg» if DPKG_ROOT has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,7 +76,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.8,
   "version": null
 }

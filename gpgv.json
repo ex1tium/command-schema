@@ -1,14 +1,44 @@
 {
   "schema_version": "1.0.0",
   "command": "gpgv",
-  "description": "gpgv (GnuPG) 2.4.4",
+  "description": "GPGV(1) GNU Privacy Guard 2.4 GPGV(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--assert-pubkey-algo",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enable-special-filenames",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--homedir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "It is only  recog‐ nized  when  given  on the command line.  It also overrides any home directory stated through the environment variable ‘GNUPGHOME’ or (on Windows systems) by means of the Registry entry HKCU\\Software\\GNU\\GnuPG:HomeDir.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--ignore-time-conflict",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "make timestamp conflicts only a warning",
+      "description": "normally  checks that the timestamps associated with keys and signatures have plausible values. However, sometimes a signature seems to be older than the key due to clock problems. This option turns these checks into warnings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,27 +48,47 @@
       "long": "--keyring",
       "value_type": "File",
       "takes_value": true,
-      "description": "take the keys from the keyring FILE",
+      "description": "If file begins with a tilde and a slash, these are replaced by the HOME directory. If the filename does not contain a slash, it is assumed to be in the home-directory (\"~/.gnupg\" if --homedir is not used).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-o",
+      "short": null,
+      "long": "--log-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use ‘socket://’ to log to socket.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--logger-fd",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--output",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "write output to FILE",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-q",
+      "short": null,
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be somewhat more quiet",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,19 +96,19 @@
     {
       "short": null,
       "long": "--status-fd",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "write status info to this FD",
+      "description": "See the file DETAILS in the documentation for a listing of them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-v",
+      "short": null,
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,17 +116,55 @@
     {
       "short": null,
       "long": "--weak-digest",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "reject signatures made with ALGO",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Signatures made over weak digests algorithms are normally rejected. This option can be supplied  multiple  times  if  multiple algorithms should be considered weak.  MD5 is always considered weak, and does not need to be listed explicitly.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option can be used to get the signed text from a cleartext or binary signature; it also works for detached signatures, but in that case this option is in general not useful.  Note that an  existing  file  will  be overwritten.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Try to be as quiet as possible.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Gives more information during processing. If used twice, the input data is listed in detail.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "2.4.4"
+  "positional": [
+    {
+      "name": "signed_files",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": "2.4"
 }

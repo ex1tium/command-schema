@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "perlthanks",
-  "description": "perlbug version 1.43",
+  "description": "PERLBUG(1) Perl Programmers Reference Guide PERLBUG(1)",
   "global_flags": [
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Don't send copy to administrator.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Don't send copy to administrator when sending report by mail.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "File to output the resulting report to. Defaults to 'perlthanks.rep'.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "File to output the results to.  Defaults to perlbug.rep.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,8 +26,8 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Save or send the report without asking for confirmation.",
       "multiple": false,
       "conflicts_with": [],
@@ -36,9 +36,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Thank-you mode. The target address defaults to 'perl-thanks@perl.org'.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Send a thank-you note instead of a bug report.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Send the report to this address, instead of saving to a file.",
+      "description": "Address to send the report to instead of saving to a file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Body of the report. If not included on the command line, or in a file with -f, you will get a chance to edit the report.",
+      "description": "Body of the report.  If not included on the command line, or in a file with -f, you will get a chance to edit the report.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Address to send copy of report to. Defaults to 'root@localhost'.",
+      "description": "Address to send copy of report to when sending report by mail.  Defaults to the address of the local  perl  administrator  (recorded when perl was built).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Data mode. This prints out your configuration data, without mailing anything. You can use this with -v to get more complete data.",
+      "description": "Data  mode  (the  default  if  you  redirect  or  pipe  output).  This prints out your configuration data, without saving or mailing anything.  You can use this with -v to get more complete data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "File containing the body of the report. Use this to quickly send a prepared report.",
+      "description": "File containing the body of the report.  Use this to quickly send a prepared report.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print this help message.",
+      "description": "Prints a brief summary of the options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,17 +118,23 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Report unsuccessful build on this system to perl porters (use alone or with -v). You must describe what went wrong in the body of the report which you will be asked to edit.",
+      "description": "Report  unsuccessful build on this system.  Forces -C.  Forces and supplies a value for -s, then requires you to edit the report and say what went wrong.  Alternatively, a prepared report may be supplied using -f.  Only prompts for a return  address  if  it  cannot guess  it  (for  use with make). Honors return address specified with -r.  You can use this with -v to get more complete data.  Only makes a report if this system is less than 60 days old.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": []
+      "requires": [
+        "-C",
+        "-s",
+        "-f",
+        "-r",
+        "-v"
+      ]
     },
     {
       "short": "-nokay",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "As -nok except it will report on older systems.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +142,9 @@
     {
       "short": "-ok",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Report successful build on this system to perl porters",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Report successful build on this system to perl porters. Forces -S and -C. Forces and supplies values for -s and -b. Only prompts for a return address if it cannot guess it (for use with make). Honors return address specified with -r.  You can use this  with  -v  to get more complete data.   Only makes a report if this system is less than 60 days old.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +154,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "As -ok except it will report on older systems.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +164,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "File containing a patch or other text attachment. Separate multiple files with commas.",
+      "description": "The names of one or more patch files or other text attachments to be included with the report.  Multiple  files  must  be  separated with commas.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-pu",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +184,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Your return address. The program will ask you to confirm this if you don't give it here.",
+      "description": "Your return address.  The program will ask you to confirm its default if you don't use this option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +194,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Subject to include with the report. You will be prompted if you don't supply one on the command line.",
+      "description": "Subject to include with the report.  You will be prompted if you don't supply one on the command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +204,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Test mode.",
+      "description": "Test mode.  Makes it possible to command perlbug from a pipe or file, for testing purposes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,15 +214,72 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include Verbose configuration data in the report",
+      "description": "Include verbose configuration data in the report.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "1.43"
+  "positional": [
+    {
+      "name": "address",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "adminaddress",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "body",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "editor",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "inputfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "outputfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "returnaddress",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "subject",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": null
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "vpddecode",
-  "description": null,
+  "description": "VPDDECODE(8) System Manager's Manual VPDDECODE(8)",
   "global_flags": [
     {
       "short": "-d",
       "long": "--dev-mem",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Read memory from device FILE (default: /dev/mem)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-u",
       "long": "--dump",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not decode the VPD records",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "not  decode  the  VPD records, dump their contents as hexadecimal instead.  Note that this is still a text output, no binary data will be thrown upon you. ASCII equivalent is displayed when possible. This option is mainly useful for debugging.  Mutually exclusive with --string.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help text and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-s",
       "long": "--string",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Only display the value of the given VPD string",
+      "description": "display  the  value of the VPD string identified by KEYWORD.  It must be a keyword from the following list: bios-build-id, box- serial-number, motherboard-serial-number, machine-type-model, bios-release-date.  Each keyword corresponds to an offset and a  length within  the  VPD record.  Not all strings may be defined on all VPD-enabled systems.  If KEYWORD is not provided or not valid, a list of all valid keywords is printed and vpddecode exits with an error.  This option cannot be used more than once.   Mutually  exclusive with --dump.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the version and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,7 +56,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.8,
   "version": null
 }

@@ -1,34 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "m4",
-  "description": "Process macros in FILEs. If no FILE or if FILE is `-', standard input",
+  "description": "M4(1) User Commands M4(1)",
   "global_flags": [
     {
       "short": "-l",
       "long": "--arglength",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "say current input line number",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-d",
-      "long": "--debug",
+      "long": "--debug[",
       "value_type": "String",
       "takes_value": true,
-      "description": "set debug level (no FLAGS implies `aeq')",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--debugfile",
-      "value_type": "File",
+      "long": "--debugfile[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "redirect debug and trace output to FILE (default stderr, discard if empty string)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--define",
       "value_type": "String",
       "takes_value": true,
-      "description": "define NAME as having VALUE, or empty",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--fatal-warnings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "once: warnings become errors, twice: stop execution at first error",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-F",
       "long": "--freeze-state",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "produce a frozen state on FILE at end",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-g",
       "long": "--gnu",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "override -G to re-enable GNU extensions",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--hashsize",
       "value_type": "String",
       "takes_value": true,
-      "description": "set symbol lookup hash table size [509]",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-I",
       "long": "--include",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "append DIRECTORY to include path",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--interactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "unbuffer output, ignore interrupts",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-L",
       "long": "--nesting-limit",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "change nesting limit, 0 for unlimited [0]",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--prefix-builtins",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force a `m4_' prefix to all builtins",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suppress some warnings for builtins",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": "-R",
       "long": "--reload-state",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "reload a frozen state from FILE at start",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-s",
       "long": "--synclines",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate `#line NUM \"FILE\"' lines",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--trace",
       "value_type": "String",
       "takes_value": true,
-      "description": "trace for all macro calls, not only traceon'ed",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": "-G",
       "long": "--traditional",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "suppress all GNU extensions",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--undefine",
       "value_type": "String",
       "takes_value": true,
-      "description": "undefine NAME",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,19 +198,15 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--warn-macro-sequence",
-      "value_type": {
-        "Choice": [
-          "[^"
-        ]
-      },
+      "long": "--warn-macro-sequence[",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -218,81 +214,11 @@
       "requires": []
     },
     {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "shorthand for all of the above flags",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show actual arguments",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show before collect, after collect and after call",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show expansion",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "say current input file name",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show results of path searches",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "quote values as necessary, with a or e flag",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "add a unique macro call id, useful with c flag",
+      "short": "-W",
+      "long": "--word-regexp",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -300,7 +226,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.8,
   "version": null
 }

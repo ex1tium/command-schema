@@ -1,14 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "zipinfo",
-  "description": "ZipInfo 3.00 of 20 April 2009, by Greg Roelofs and the Info-ZIP group.",
+  "description": "ZIPINFO(1) General Commands Manual ZIPINFO(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--w-------",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1.0 mac   17357 bx i8:2  4-May-92 04:02 unzip.macr",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": "-1",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "filenames ONLY, one per line",
+      "description": "list filenames only, one per line.  This option excludes all others; headers, trailers and zipfile comments are never printed.  It is intended for use in Unix shell scripts.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-12smlvhMtTz",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,17 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "just filenames but allow -h/-t/-z",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "be case-insensitive",
+      "description": "list filenames only, one per line, but allow headers (-h), trailers (-t) and zipfile comments (-z), as well.  This option may be use‐ ful in cases where the stored filenames are particularly long.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "specify a character encoding for UNIX and other archives",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +56,9 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "page output through built-in \"more\"",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "pipe  all  output through an internal pager similar to the Unix more(1) command.  At the end of a screenful of output, zipinfo pauses with a ``--More--'' prompt; the next screenful may be viewed by pressing the Enter (Return) key or the space  bar.   zipinfo  can  be terminated  by pressing the ``q'' key and, on some systems, the Enter/Return key.  Unlike Unix more(1), there is no forward-searching or editing capability.  Also, zipinfo doesn't notice if long lines wrap at the edge of  the  screen,  effectively  resulting  in  the printing  of  two or more lines and the likelihood that some text will scroll off the top of the screen before being viewed.  On some systems the number of available lines on the screen is not detected, in which case zipinfo assumes the height is 24 lines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "specify a character encoding for DOS, Windows and OS/2 archives",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,29 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print file times in sortable decimal format",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "print the file dates and times in a sortable decimal format (yymmdd.hhmmss).  The default date format is a more standard, human-read‐ able version with abbreviated month names (see examples below).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "[UNICODE_SUPPORT only] modify or disable UTF-8 handling.  When UNICODE_SUPPORT is available, the option -U forces unzip to escape all non-ASCII  characters from UTF-8 coded filenames as ``#Uxxxx''.  This option is mainly provided for debugging purpose when the fairly new UTF-8 support is suspected to mangle up extracted filenames.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print header line",
+      "description": "list header line.  The archive name, actual size (in bytes) and total number of files is printed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "long Unix \"ls -l\" format",
+      "description": "list zipfile info in long Unix ``ls -l'' format.  As with -m except that the compressed size (in bytes) is  printed  instead  of  the compression ratio.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +128,47 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "medium Unix \"ls -l\" format",
+      "description": "list  zipfile  info  in medium Unix ``ls -l'' format.  Identical to the -s output, except that the compression factor, expressed as a percentage, is also listed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r--ahs",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "1.1 fat    4096 b- i4:2 14-Jul-91 12:58 EA DATA. SF",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-rw-a--",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1.0 hpf    5358 Tl i4:3  4-Dec-91 11:33 longfilename.hpfs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-rw-rws---",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1.9 unx    2802 t- defX 11-Aug-91 13:48 perms.2660",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list zipfile info in short Unix ``ls -l'' format.  This is the default behavior; see below.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +178,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print totals for listed files or for all",
+      "description": "list totals for files listed or for all files.  The number of files listed, their uncompressed and compressed total sizes , and their overall compression factor is printed; or, if only the totals line is being printed, the values for the  entire  archive  are  given. The  compressed  total  size  does not include the 12 additional header bytes of each encrypted entry. Note that the total compressed (data) size will never match the actual zipfile size, since the latter includes all of the internal zipfile headers  in  addition  to the compressed data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose, multi-page format",
+      "description": "list zipfile information in verbose, multi-page format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +198,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exclude filenames that follow from listing",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print zipfile comment",
+      "description": "include the archive comment (if any) in the listing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -147,21 +217,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "list",
+      "name": "-12smlvhmttz",
       "value_type": "String",
       "required": false,
-      "multiple": true,
+      "multiple": false,
       "description": null
     },
     {
-      "name": "xlist",
+      "name": "-x",
       "value_type": "String",
-      "required": true,
-      "multiple": true,
+      "required": false,
+      "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "3.00"
+  "version": null
 }

@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "qrencode",
-  "description": "qrencode version 4.1.1",
+  "description": "QRENCODE(1) General Commands Manual QRENCODE(1)",
   "global_flags": [
+    {
+      "short": "-8",
+      "long": "--8bit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--background",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "foreground/background color in hexadecimal notation.  6-digit (RGB) or 8-digit (RGBA) form are supported.  Color output sup‐ port available only in PNG, EPS and SVG.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,6 +28,16 @@
       "long": "--casesensitive",
       "value_type": "Bool",
       "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--dpi",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -38,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display the help message. -h displays only the help of short options.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,8 +76,8 @@
     {
       "short": null,
       "long": "--inline",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -68,7 +88,27 @@
       "long": "--kanji",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "assume that the input text contains kanji (shift-jis).",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--level",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--margin",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +116,29 @@
     {
       "short": "-M",
       "long": "--micro",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "encode in a Micro QR Code.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--output",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "structured  symbols  are written to FILENAME-01.png, FILENAME-02.png, ... (suffix is removed from FILENAME, if specified)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--read-from",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -94,11 +154,21 @@
       "requires": []
     },
     {
+      "short": "-s",
+      "long": "--size",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--strict-version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "program  exits  with  the code of 1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -124,26 +194,19 @@
       "requires": []
     },
     {
+      "short": "-v",
+      "long": "--symversion",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--type",
-      "value_type": {
-        "Choice": [
-          "PNG",
-          "PNG32",
-          "EPS",
-          "SVG",
-          "XPM",
-          "ANSI",
-          "ANSI256",
-          "ASCII",
-          "ASCIIi",
-          "UTF8",
-          "UTF8i",
-          "ANSIUTF8",
-          "ANSIUTF8i",
-          "ANSI256UTF8"
-        ]
-      },
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -171,94 +234,10 @@
       "requires": []
     },
     {
-      "short": "-8",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "encode entire data in 8-bit mode. -k, -c and -i will be ignored.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
-      "value_type": {
-        "Choice": [
-          "LMQH"
-        ]
-      },
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-m",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-t",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -268,21 +247,28 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "FILENAME",
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
       "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "STRING",
+      "name": "string",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "4.1.1"
+  "version": null
 }

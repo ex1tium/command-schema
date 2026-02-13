@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "mkfs.fat",
-  "description": "Create FAT filesystem in TARGET, which can be a block device or file. Use only",
+  "description": "MKFS.FAT(8) System Manager's Manual MKFS.FAT(8)",
   "global_flags": [
     {
       "short": null,
       "long": "--codepage",
       "value_type": "String",
       "takes_value": true,
-      "description": "use DOS codepage N to encode label (default: 850)",
+      "description": "By default codepage 850 is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show this help message and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,19 +26,19 @@
     {
       "short": null,
       "long": "--invariant",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use constants for randomly generated or time based values",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "constants for normally randomly generated or time based data such as volume ID and creation time.  Multiple runs of mkfs.fat on the same device create identical results with this option.  Its main purpose is testing mkfs.fat.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--mbr",
+      "long": "--mbr[",
       "value_type": "String",
       "takes_value": true,
-      "description": "Fill (fake) MBR table with one partition which spans whole disk",
+      "description": "It is needed only for non-removable disks used on Microsoft Windows systems and only when formatting whole unpartitioned disk.  Location of the  disk  signature and partition table overlaps with the end of the first FAT sector (boot code location), therefore there is no addi‐ tional space usage.  Default is auto mode in which mkfs.fat put MBR table only for non-removable disks when  formatting  whole  unparti‐ tioned disk.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--offset",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  filesystem  at a specific sector into the device file.  This is useful for creating a filesystem in a partitioned disk image without having to set up a loop device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": null,
       "long": "--variant",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Select variant TYPE of filesystem (standard or Atari)",
+      "description": "Acceptable values are standard and atari (in any combination of upper/lower case).  See above  un‐ der DESCRIPTION for the differences.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Toggle Atari variant of the filesystem",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Select  using the Atari variation of the FAT filesystem if that isn't active already, otherwise select standard FAT filesystem.  This is selected by default if mkfs.fat is run on 68k Atari Linux.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Create file TARGET then create filesystem in it",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Create  the  file given as DEVICE on the command line, and write the to-be-created filesystem to it.  This can be used to create the new filesystem in a file instead of on a real device, and to avoid using dd in advance to create a file of appropriate size.  With this  op‐ tion,  the  BLOCK-COUNT  must  be given, because otherwise the intended size of the filesystem wouldn't be known.  The file created is a sparse file, which actually only contains the meta-data areas (boot sector, FATs, and root  directory).   The  data  portions  won't  be stored  on  the  disk, but the file nevertheless will have the correct size.  The resulting file can be copied later to a floppy disk or other device, or mounted through a loop device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-D",
       "long": null,
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Write BIOS drive number NUMBER to boot sector",
+      "description": "For hard disks and removable medias it is usually 0x80–0xFF (0x80 is first hard disk C:, 0x81 is second hard disk D:, ...), for floppy devices or partitions to be used for floppy emulation it is  0x00–0x7F (0x00 is first floppy A:, 0x01 is second floppy B:).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Select FAT size SIZE (12, 16 or 32)",
+      "description": "the  type of file allocation tables used (12, 16 or 32 bit).  If nothing is specified, mkfs.fat will automatically select be‐ tween 12, 16 and 32 bit, whatever fits better for the filesystem size.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignore and disable safety checks",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Ignore  and  disable  safety checks.  By default mkfs.fat refuses to create a filesystem on a device with partitions or virtual mapping. mkfs.fat will complain and tell you that it refuses to work.  This is different when using MO disks.  One doesn't always need partitions on MO disks.  The filesystem can go directly to the whole disk.  Under other OSes this is known as the superfloppy format.  This  switch will force mkfs.fat to work properly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Set media type in boot sector to TYPE",
+      "description": "the media type to be stored in the FAT boot sector.  This value is usually 0xF8 for hard disks and is 0xF0 or a value from 0xF9 to 0xFF for floppies or partitions to be used for floppy emulation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": "Set minimal number of reserved sectors to COUNT",
+      "description": "With FAT32 format at least 2 reserved sectors are needed, the default is 32.   Otherwise the  default  is  1  (only  the  boot sector).  Note that this is minimal number and it may be increased by mkfs.fat due to alignment of structures.  See also mkfs.fat option -a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Select a sector size of SIZE (a power of two, at least 512)",
+      "description": "Must be a power of 2 and greater than or equal to 512,  i.e.  512,  1024,  2048,  4096, 8192, 16384, or 32768.  Values larger than 4096 are not conforming to the FAT file system specification and may not work everywhere.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Disable alignment of data structures",
+      "description": "Normally, for any filesystem except very small ones, mkfs.fat will align all the data structures to cluster size, to make sure  that  as long  as the partition is properly aligned, so will all the data structures in the filesystem.  This option disables alignment; this may provide a handful of additional clusters of storage at the expense of a significant performance degradation on  RAIDs,  flash  media  or large-sector hard disks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-b",
       "long": null,
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Select SECTOR as location of the FAT32 backup boot sector",
+      "description": "Default depends on number of reserved sectors, but usually is sector  6.   If there  is  a free space available after the backup boot sector then backup of the FAT32 info sector is put after the backup boot sector, usually at sector 7.  The backup must be within the range of reserved sectors.  Value 0 completely disables creating of backup boot  and info FAT32 sectors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Check device for bad blocks before creating the filesystem",
+      "description": "Check the device for bad blocks before creating the filesystem.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": "-f",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Create COUNT file allocation tables",
+      "description": "The default is 2.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +186,9 @@
     {
       "short": "-g",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Select disk geometry: heads/sectors_per_track",
+      "description": "Both numbers are stored into the FAT boot sector. Number SECTORS-PER-TRACK is used also for aligning the total count of FAT sectors.  By default disk geometry is read from DEVICE itself. If it is not available then LBA-Assist Translation and translation table from the SD Card Part 2 File System Specification based on  to‐ tal number of disk sectors is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +196,9 @@
     {
       "short": "-h",
       "long": null,
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Write hidden sectors NUMBER to boot sector",
+      "description": "the  number  of  so-called hidden sectors, as stored in the FAT boot sector: this number represents the beginning sector of the partition containing the file system.  Normally this is an offset (in sectors) relative to the start of the disk, although for MBR logi‐ cal volumes contained in an extended partition of type 0x05 (a non-LBA extended partition), a quirk in the MS-DOS implementation of  FAT requires it to be relative to the partition's immediate containing Extended Boot Record.  Boot code and other software handling FAT vol‐ umes may also rely on this field being set up correctly; most modern FAT implementations will ignore it.  By default, if the DEVICE is a partition  block  device, mkfs.fat uses the partition offset relative to disk start.  Otherwise, mkfs.fat assumes zero.  Use this option to override this behaviour.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +206,9 @@
     {
       "short": "-i",
       "long": null,
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Set volume ID to VOLID (a 32 bit hexadecimal number)",
+      "description": "The default is  a number which depends on the filesystem creation time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +216,9 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Read bad blocks list from FILENAME",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Replace default error message in boot block with contents of FILENAME",
+      "description": "the message the user receives on attempts to boot this filesystem without having properly installed an operating system.  The mes‐ sage file must not exceed 418 bytes once line feeds have been converted to carriage return-line feed combinations, and  tabs  have  been expanded.  If the filename is a hyphen (-), the text is taken from standard input.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,9 +236,9 @@
     {
       "short": "-n",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Set volume name to LABEL (up to 11 characters long)",
+      "description": "the  volume name (label) of the filesystem.  The volume name can be up to 11 characters long.  Supplying an empty string, a string consisting only of white space or the string \"NO NAME\" as VOLUME-NAME has the same effect as not giving the -n option.  The  default  is no label.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": null,
       "value_type": "Directory",
       "takes_value": true,
-      "description": "Make room for at least COUNT entries in the root directory",
+      "description": "the  minimal  number of entries available in the root directory.  The default is 112 or 224 for floppies and 512 for hard disks. Note that this is minimal number and it may be increased by mkfs.fat due to alignment of structures.  See also mkfs.fat option -a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,9 +256,9 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Set number of sectors per cluster to COUNT",
+      "description": "Must be a power of 2, i.e. 1, 2, 4, 8, ... 128.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Verbose execution",
+      "description": "Verbose execution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -277,21 +277,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "BLOCKS",
-      "value_type": "String",
+      "name": "block-count",
+      "value_type": "Number",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "TARGET",
+      "name": "device",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

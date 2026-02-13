@@ -1,24 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-lipo-18",
-  "description": "OVERVIEW: llvm-lipo",
+  "description": "LLVM-LIPO(1) LLVM LLVM-LIPO(1)",
   "global_flags": [
-    {
-      "short": "-arch",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-archs",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the arch_types present in the input file",
+      "description": "a single input file and display the architectures present in the file. Each architecture is separated by a single whitespace. Unknown architectures are displayed as unknown(CPUtype,CPUsubtype).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,31 +18,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create a universal binary output file from the input files. Requires -output option",
+      "description": "Output a universal binary combining the input files.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "-out"
-      ]
+      "requires": []
     },
     {
-      "short": "-extract",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Create a universal output file containing only the specified arch_type from the fat input file. Requires -output option",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": [
-        "-out"
-      ]
-    },
-    {
-      "short": "-fat64",
+      "short": "-help",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use 64 bits Universal Mach-O format",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -62,17 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display descriptions of each input file including filename and arch_types. Groups universal binaries together followed by thin files",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-output",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Create output file with specified name",
+      "description": "Take at least one input file and display the descriptions of each file. The descriptions include the filename and architecture types",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -80,9 +46,9 @@
     {
       "short": "-replace",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The replace flag is followed by an architec‐ ture type, and a thin input file. Output a universal binary with the specified architecture slice in the universal binary input re‐ placed with the contents of the thin input file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -90,9 +56,9 @@
     {
       "short": "-segalign",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The segalign flag is followed by an architecture type, and an align‐ ment. The alignment is a hexadecimal number that is a power of 2. Output a file in which the slice with the specified architecture has the specified alignment.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -100,29 +66,411 @@
     {
       "short": "-thin",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Create a thin output file of specified arch_type from the fat input file. Requires -output option",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Take a single universal binary input file and the thin flag followed by an architecture type. Require the output flag to be speci‐ fied, and output a thin binary of the specified architecture.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "-out"
-      ]
+      "requires": []
     },
     {
       "short": "-version",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the version and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "subcommands": [
+    {
+      "name": "AUTHOR",
+      "description": "OVERVIEW: llvm-lipo",
+      "flags": [
+        {
+          "short": "-arch",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-archs",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display the arch_types present in the input file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-create",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Create a universal binary output file from the input files. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-extract",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create a universal output file containing only the specified arch_type from the fat input file. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-fat64",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use 64 bits Universal Mach-O format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-info",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display descriptions of each input file including filename and arch_types. Groups universal binaries together followed by thin files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-output",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create output file with specified name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-replace",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-segalign",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-thin",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create a thin output file of specified arch_type from the fat input file. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-version",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the version and exit.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "BUGS",
+      "description": "OVERVIEW: llvm-lipo",
+      "flags": [
+        {
+          "short": "-arch",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-archs",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display the arch_types present in the input file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-create",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Create a universal binary output file from the input files. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-extract",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create a universal output file containing only the specified arch_type from the fat input file. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-fat64",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use 64 bits Universal Mach-O format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-info",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display descriptions of each input file including filename and arch_types. Groups universal binaries together followed by thin files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-output",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create output file with specified name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-replace",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-segalign",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-thin",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create a thin output file of specified arch_type from the fat input file. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-version",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the version and exit.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "COPYRIGHT",
+      "description": "OVERVIEW: llvm-lipo",
+      "flags": [
+        {
+          "short": "-arch",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-archs",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display the arch_types present in the input file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-create",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Create a universal binary output file from the input files. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-extract",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create a universal output file containing only the specified arch_type from the fat input file. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-fat64",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Use 64 bits Universal Mach-O format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-info",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display descriptions of each input file including filename and arch_types. Groups universal binaries together followed by thin files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-output",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create output file with specified name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-replace",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-segalign",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-thin",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create a thin output file of specified arch_type from the fat input file. Requires -output option",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": [
+            "-out"
+          ]
+        },
+        {
+          "short": "-version",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the version and exit.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "filenames",
+      "value_type": "File",
+      "required": false,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

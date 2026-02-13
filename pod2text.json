@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "pod2text",
-  "description": "pod2text -h",
+  "description": "POD2TEXT(1) Perl Programmers Reference Guide POD2TEXT(1)",
   "global_flags": [
     {
       "short": "-a",
@@ -16,9 +16,9 @@
     {
       "short": null,
       "long": "--code",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Include any non-POD text from the input file in the output as well.  Useful for viewing code documented with POD blocks with the POD rendered and the code left intact.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,19 @@
     {
       "short": "-c",
       "long": "--color",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Using this option requires that Term::ANSIColor be installed on your system.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--encoding",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "encoding must be an encoding recognized by the Encode module (see Encode::Supported).   If the  output contains characters that cannot be represented in this encoding, that is an error that will be reported as configured by the \"errors\" option.  If error handling is other than \"die\", the unrepresentable character will be replaced  with  the  Encode  substitution character (normally \"?\").",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--errors",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "\"die\" says to throw an exception on any POD formatting error.  \"stderr\" says to report errors  on standard  error,  but  not to throw an exception.  \"pod\" says to include a POD ERRORS section in the resulting documentation summarizing the errors.  \"none\" ignores POD errors entirely, as much as possible.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,8 +58,8 @@
       "long": "--guesswork",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "description": "to  make writing  Perl  documentation  easier  and  require  less  explicit  markup.  These rules may not always be appropriate, particularly for documentation that isn't about Perl.  This option allows turning all or some of it off.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -64,11 +74,31 @@
       "requires": []
     },
     {
+      "short": "-i",
+      "long": "--indent",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Set  the  number of spaces to indent regular text, and the default indentation for \"=over\" blocks.  Defaults to 4 spaces if this option isn't given.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--left-margin",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Defaults to 0.  This is the margin for all text, including headings, not the  amount  by which regular text is indented; for the latter, see -i option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-l",
       "long": "--loose",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Normally, no blank line is printed after \"=head1\", although one  is  still  printed after  \"=head2\",  because  this  is  the expected formatting for manual pages; if you're formatting arbitrary text documents, using this option is recommended.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +106,9 @@
     {
       "short": null,
       "long": "--nourls",
-      "value_type": "String",
+      "value_type": "Url",
       "takes_value": true,
-      "description": null,
+      "description": "Normally,  L<>  formatting  codes  with a URL but anchor text are formatted to show both the anchor text and the URL.  In other words:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,17 @@
       "long": "--overstrike",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Format  the  output with overstrike printing.  Bold text is rendered as character, backspace, character.  Italics and file names are rendered as underscore, backspace, character.  Many pagers, such as less, know how to convert this to bold or underlined text.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quotes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If quotes is a single character, it is used as both the left and right quote.  Otherwise, it is split in half, and the first half of the string is used as the left quote and the second is used as  the  right quote.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +138,7 @@
       "long": "--sentence",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Assume  each sentence ends with two spaces and try to preserve that spacing.  Without this option, all consecutive whitespace in non-verbatim paragraphs is compressed into a single space.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +148,7 @@
       "long": "--stderr",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "If --stderr is given and no --errors  flag  is  present, errors  are  sent to standard error, but pod2text does not abort.  This is equivalent to \"--errors=stderr\" and is supported for backward compatibility.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +158,7 @@
       "long": "--termcap",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "for  the  terminal  from  termcap,  and  use  that information  in  formatting  the output.  Output will be wrapped at two columns less than the width of your terminal device.  Using this option requires that your system have a termcap file somewhere where Term::Cap can  find  it  and  requires  that  your  system  support termios.  With this option, the output of pod2text will contain terminal control sequences for your current terminal type.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +166,9 @@
     {
       "short": "-u",
       "long": "--utf8",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is equivalent to \"--encoding=UTF-8\" and is supported for backward compatibility.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,43 +178,13 @@
       "long": "--width",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Defaults to 76, unless -t is given, in which case it's two columns less than the width of your terminal device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-e",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-m",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
+      "short": "-aclostu",
       "long": null,
       "value_type": "String",
       "takes_value": true,
@@ -186,6 +196,76 @@
   ],
   "subcommands": [],
   "positional": [
+    {
+      "name": "--code",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--nourls",
+      "value_type": "Url",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--stderr",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-aclostu",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "encoding",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "indent",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "input",
       "value_type": "String",
@@ -199,9 +279,23 @@
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "quotes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "width",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

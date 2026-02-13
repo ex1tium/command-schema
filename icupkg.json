@@ -1,21 +1,21 @@
 {
   "schema_version": "1.0.0",
   "command": "icupkg",
-  "description": "Read the input ICU .dat package file, modify it according to the options,",
+  "description": "ICUPKG(8) ICU 74.2 Manual ICUPKG(8)",
   "global_flags": [
     {
-      "short": null,
-      "long": "--ignore-deps",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not fail if not all resource dependencies are met. Use this option if the missing resources come from another source. In the .dat package, the Table of Contents (ToC) contains an entry for each item of the form prefix/tree/itemname . The prefix normally matches the package basename, and icupkg checks that, but this is not necessary when ICU need not find and load the package by filename. ICU package names end with the platform type letter, and thus differ between platform types. This is not required for user data packages.",
+      "short": "-a",
+      "long": "--add",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "items from the list to the package. The list can be a single filename with a .txt file extension containing a list of item file‐ names, or an ICU .dat package filename.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--type",
+      "short": "-C",
+      "long": "--comment",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -24,40 +24,10 @@
       "requires": []
     },
     {
-      "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "include a comment string",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "add items to the package",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "long": "--copyright",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -65,17 +35,27 @@
     },
     {
       "short": "-d",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "directory for the --extract items",
+      "long": "--destdir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "The default destination directory is the current directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-e",
-      "long": null,
+      "short": "-x",
+      "long": "--extract",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "items from the list from the package. The list can be a single filename with a .txt file extension containing a list of item filenames, or an ICU .dat package filename.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -84,20 +64,10 @@
       "requires": []
     },
     {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print this message and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-l",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "long": "--list",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -105,49 +75,79 @@
     },
     {
       "short": "-m",
-      "long": null,
+      "long": "--matchmode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set the matching mode for item names with wildcards noslash: the '*' wildcard does not match the '/' tree separator",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "path/filename for the --list output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "remove items from the package",
+      "long": "--remove",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "of  item filenames, or an ICU .dat package filename.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "directory for the --add items",
+      "long": "--sourcedir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "The default source directory is the current directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-t",
-      "long": null,
+      "short": "-tl",
+      "long": "--type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The output type defaults to the input type.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--writepkg",
       "value_type": "Bool",
       "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-tb",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-te",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -156,19 +156,9 @@
     {
       "short": "-w",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "write the output package even if no items are removed or added (e.g., for only swapping the data)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "extract items from the package The list can be a single item's filename, or a .txt filename with a list of item filenames, or an ICU .dat package filename.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -177,14 +167,77 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "b",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "comment",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "destination",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "e",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "infilename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "l",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mode",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "outfilename",
       "value_type": "File",
-      "required": false,
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "source",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": null
+  "version": "74.2"
 }

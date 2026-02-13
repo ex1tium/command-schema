@@ -1,13 +1,23 @@
 {
   "schema_version": "1.0.0",
   "command": "ssh-keyscan",
-  "description": null,
+  "description": "SSH-KEYSCAN(1) General Commands Manual SSH-KEYSCAN(1)",
   "global_flags": [
     {
       "short": "-4",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "Force ssh-keyscan to use IPv4 addresses only.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-46cDHv",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -18,7 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Force ssh-keyscan to use IPv6 addresses only.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Print keys found as SSHFP DNS records.  The default is to print keys in a format usable as a ssh(1) known_hosts file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +46,9 @@
     {
       "short": "-H",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Hash all hostnames and addresses in the output.  Hashed names may be used normally by ssh(1) and sshd(8), but  they  do  not  reveal identifying information should the file's contents be disclosed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "At present, only a single option is supported:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "If timeout seconds have elapsed since a connection was initiated to a host  or  since  the last  time  anything was read from that host, the connection is closed and the host in question considered unavailable.  The default is 5 seconds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Request certificates from target hosts instead of plain keys.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "hosts  or  “addrlist namelist” pairs from file, one per line.  If ‘-’ is supplied instead of a filename, ssh-keyscan will read from the standard input.  Names read from a file must start with an address, hostname or CIDR network  range  to  be  scanned.   Ad‐ dresses  and hostnames may optionally be followed by comma-separated name or address aliases that will be copied to the output.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,8 +96,8 @@
     {
       "short": "-p",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -96,9 +106,9 @@
     {
       "short": "-t",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The  possible  values  are  “dsa”,  “ecdsa”,  “ed25519”,  “ecdsa-sk”, “ed25519-sk”,  or  “rsa”.  Multiple values may be specified by separating them with commas.  The default is to fetch “rsa”, “ecdsa”, “ed25519”, “ecdsa-sk”, and “ed25519-sk” keys.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Verbose mode: print debugging messages about progress.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -117,14 +127,84 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "-46cdhv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "addrlist",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "host",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "namelist",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "port",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "timeout",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "type",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

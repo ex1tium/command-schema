@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "modprobe",
-  "description": null,
+  "description": "MODPROBE(8) modprobe MODPROBE(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Consider every non-argument to be a module name to be inserted or removed (-r)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--config",
       "value_type": "File",
       "takes_value": true,
-      "description": "Use FILE instead of default search paths",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-d",
       "long": "--dirname",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Use DIR as filesystem root for /lib/modules",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-n",
       "long": "--dry-run",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not execute operations, just print out",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--dump-modversions",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Same as --show-modversions",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--first-time",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Fail if module already inserted or removed",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force module insertion or removal. implies --force-modversions and",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": null,
       "long": "--force-modversion",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignore module's version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -94,21 +94,11 @@
       "requires": []
     },
     {
-      "short": "-h",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show this help",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-i",
       "long": "--ignore-install",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignore install commands",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +106,9 @@
     {
       "short": "-q",
       "long": "--quiet",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "disable messages",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,29 +116,9 @@
     {
       "short": "-r",
       "long": "--remove",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove modules instead of inserting",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--remove-dependencies",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Deprecated: use --remove-holders",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--remove-holders",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Also remove module holders (use together with -r)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +128,7 @@
       "long": "--resolve-alias",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only lookup and print alias and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,49 +136,29 @@
     {
       "short": "-S",
       "long": "--set-version",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use VERSION instead of `uname -r`",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-depends",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Install commands which apply are shown prefixed by \"install\". It does not run any of the install commands. Note that modinfo(8) can be used to extract dependencies of a module from the module itself, but knows nothing of aliases or install commands.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-c",
-      "long": "--show-config",
+      "long": "--showconfig",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print out known configuration and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": "--show-depends",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Only print module dependencies and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--show-exports",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Only print module exported symbol versions and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--show-modversions",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Dump module symbol version and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +166,9 @@
     {
       "short": "-s",
       "long": "--syslog",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print to syslog, not stderr",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +176,9 @@
     {
       "short": "-b",
       "long": "--use-blacklist",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Apply blacklist to resolved alias.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,9 +186,9 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "enables more messages",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,9 +196,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,9 +206,9 @@
     {
       "short": "-w",
       "long": "--wait",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "When removing a module, wait up to MSEC for module's refcount to become 0 so it can be removed (use together with -r)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -267,14 +217,98 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "--dump-modversions",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "config-file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "module",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "modulename",
       "value_type": "String",
       "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "parameters",
+      "value_type": "String",
+      "required": true,
       "multiple": true,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

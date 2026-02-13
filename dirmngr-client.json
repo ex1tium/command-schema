@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dirmngr-client",
-  "description": "dirmngr-client (GnuPG) 2.4.4",
+  "description": "DIRMNGR-CLIENT(1) GNU Privacy Guard 2.4 DIRMNGR-CLIENT(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--cache-cert",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "add a certificate to the cache",
+      "description": "This is mainly useful for debugging.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,19 @@
     {
       "short": null,
       "long": "--force-default-responder",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "checking using the OCSP protocol, force the use of the default OCSP responder.  That is not to use the Reponder as given by the certificate.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force the use of the default OCSP responder",
+      "description": "Note that you cannot abbreviate this command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,19 +36,19 @@
     {
       "short": null,
       "long": "--load-crl",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "load a CRL into the dirmngr",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "With the option --url URLs are expected in place  of  filenames and they are loaded directly from the given location.  All CRLs will be validated and then loaded into dirmngr's cache.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-l",
+      "short": null,
       "long": "--local",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "lookup only locally stored certificates",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--lookup",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "lookup a certificate",
+      "description": "the  remaining  arguments  and  run  a lookup command on each of them.  The results are Base-64 encoded outputs (without header lines).  This may be used to retrieve certificates from a server. However the output format is not very well suited if more than  one certificate is returned.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +66,9 @@
     {
       "short": null,
       "long": "--ocsp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use OCSP instead of CRLs",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": null,
       "long": "--pem",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "expect certificates in PEM format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Assume that the given certificate is in PEM (armored) format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--ping",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "check whether a dirmngr is running",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be somewhat more quiet",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,17 +108,17 @@
       "long": "--squid-mode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "special mode for use by Squid",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-u",
+      "short": null,
       "long": "--url",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "expect an URL for --lookup",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,17 +128,57 @@
       "long": "--validate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "validate a certificate",
+      "description": "This is mainly useful for debugging.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "You can increase the verbosity by giving several verbose commands to dirmngr, such  as ‘-vv’.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Note that you cannot abbreviate this command.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Let the lookup command only search the local cache.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Modify the lookup and load-crl commands to take an URL.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": "--verbose",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,7 +186,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.8,
-  "version": "2.4.4"
+  "version": "2.4"
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "gencmn",
-  "description": "Read the list file (default: standard input) and create a common data",
+  "description": "GENCMN(8) ICU 74.2 Manual GENCMN(8)",
   "global_flags": [
     {
       "short": "-C",
       "long": "--comment",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "include a comment string",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-c",
       "long": "--copyright",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "include the ICU copyright notice",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-d",
       "long": "--destdir",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "destination directory",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "The default destination directory is specified by the environment variable ICU_DATA.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,17 @@
       "long": "--entrypoint",
       "value_type": "String",
       "takes_value": true,
-      "description": "override the c entrypoint name (default: \"<name>_<type>\")",
+      "description": "The default entry point name is  made of the data (set by the -n, --name option) followed by an underscore and the type of the data (set by the -t, --type option).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +56,9 @@
     {
       "short": "-n",
       "long": "--name",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output filename, without .type extension (default: icudt74l)",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "the data name to name instead of the default. This name is also used as the base name of the output. The default name is made of the icudt prefix, followed by a two-digit version number corresponding to the current version of the ICU release, and a single letter indicating the endianness of the data (the letter b indicated big endian data, and the letter l indicates little endian ones).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +66,9 @@
     {
       "short": "-S",
       "long": "--source",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "write a .c source file with the table of contents",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": "-t",
       "long": "--type",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "type of the destination file (default: \" dat \")",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,27 +86,70 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "verbose output",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": "-?",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "this usage text",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": null
+  "positional": [
+    {
+      "name": "comment",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "destination",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fileext",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "listfilename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "maxsize",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": "74.2"
 }

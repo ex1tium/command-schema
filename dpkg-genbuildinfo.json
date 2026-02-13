@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-genbuildinfo",
-  "description": null,
+  "description": "dpkg-genbuildinfo(1) dpkg suite dpkg-genbuildinfo(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "change the administrative directory.",
+      "description": "The default location is /var/lib/dpkg.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--always-include-kernel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "always include Build-Kernel-Version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--always-include-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "always include Build-Path.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,8 +38,8 @@
       "long": "--build",
       "value_type": "String",
       "takes_value": true,
-      "description": "specify the build <type>: full, source, binary, any, all (default is 'full').",
-      "multiple": true,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -48,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,17 +58,77 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-O",
+      "short": "-Fchangelog-format",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "write to stdout (or <buildinfo-file>).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "See dpkg-parsechangelog(1) for information about alternative formats.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O[filename",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "specified)  rather  than  to  dir/source-name_binary-version_arch.buildinfo (where dir is .. by default or upload-files-dir if -u was used).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ccontrolfile",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is debian/control.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ffiles-list-file",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lchangelog-file",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is debian/changelog.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "dpkg-genbuildinfo might produce informative messages on standard error.  -q suppresses these messages.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-uupload-files-dir",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "for  the  files  to  be  uploaded  in upload-files-dir rather than ..  (dpkg-genbuildinfo needs to find these files so that it can include their sizes and checksums in the .buildinfo file).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,7 +136,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.8,
   "version": null
 }

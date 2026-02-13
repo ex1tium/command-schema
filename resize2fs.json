@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "resize2fs",
-  "description": "resize2fs 1.47.0 (5-Feb-2023)",
+  "description": "RESIZE2FS(8) System Manager's Manual RESIZE2FS(8)",
   "global_flags": [
     {
       "short": "-F",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Flush the file system device's buffer caches before beginning.  Only really useful for doing resize2fs time trials.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Shrink the file system to minimize its size as much as possible, given the files stored in the file system.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-P",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Print an estimate of the number of file system blocks in the file system if it is shrunk using resize2fs's -M option and then exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "This  option allows the user to explicitly specify a RAID stride setting to be used by resize2fs instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Turns on the 64bit feature, resizes the group descriptors as necessary, and moves other metadata out of the way.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,15 +56,25 @@
     {
       "short": "-d",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "debug-flags should be computed by  adding the numbers of the desired features from the following list: 2    - Debug block relocations 4    - Debug inode relocations 8    - Debug moving the inode table 16   - Print timing information 32   - Debug minimum file system size (-M) calculation",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Forces resize2fs to proceed with the file system resize operation, overriding some safety checks which resize2fs normally enforces.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fFpPMbs",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -78,7 +88,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print  out percentage completion bars for each resize2fs phase during an offline (non-trivial) resize operation, so that the user can keep track of what the program is doing.  (For very fast resize operations, no progress bars may be displayed.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Turns off the 64bit feature and frees blocks that are no longer in use.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,17 +106,53 @@
     {
       "short": "-z",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "overwriting  a  file  system  block,  write  the  old contents of the block to an undo file.  This undo file can be used with e2undo(8) to restore the old contents of the file system should something go wrong.  If the empty string is passed as  the  undo_file argument, the undo file will be written to a file named resize2fs-device.e2undo in the directory specified via the E2FSPROGS_UNDO_DIR environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "1.47.0"
+  "positional": [
+    {
+      "name": "debug-flags",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "raid-stride",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "undo_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": null
 }

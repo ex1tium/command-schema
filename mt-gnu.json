@@ -1,24 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "mt-gnu",
-  "description": "control magnetic tape drive operation",
+  "description": "MT(1) GNU CPIO MT(1)",
   "global_flags": [
     {
       "short": "-f",
       "long": "--file",
       "value_type": "File",
       "takes_value": true,
-      "description": "use device as the file name of the tape drive to operate on",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-?",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "give this help list",
+      "description": "To use a tape drive on another machine, use a filename that starts with `HOSTNAME:'.  The hostname can be preceded by a username and an `@' to access the remote tape drive as that user, if you have permis‐ sion to do so (typically an entry in that user's `~/.rhosts' file).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,17 +18,7 @@
       "long": "--rsh-command",
       "value_type": "String",
       "takes_value": true,
-      "description": "use remote COMMAND instead of rsh",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--usage",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "give a short usage message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +26,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print program version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -57,14 +37,49 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "--version",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "count",
       "value_type": "Number",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "operation",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.9,
+  "source": "ManPage",
+  "confidence": 0.75,
   "version": null
 }

@@ -1,24 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "x86_64-linux-gnu-gp-collect-app",
-  "description": "Collect performance data on the target program. In addition to Program",
+  "description": "GP-COLLECT-APP.1(1) User Commands GP-COLLECT-APP.1(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print usage information and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable (on) or disable (off) verbose mode; the default is \"off\".",
+      "description": "This option enables it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the version number and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "add up to 10 comment labels to the experiment; comments appear in the notes section of the header.",
+      "description": "up to 10 comment strings to the experiment.  These comments appear in the notes section of the header and can be retrieved with the gprofng display text command using the -header option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,15 +46,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": {
-        "Choice": [
-          "off",
-          "on",
-          "=<regex>"
-        ]
-      },
+      "value_type": "File",
       "takes_value": true,
-      "description": "control to follow descendant processes; disable (off), enable (on), or collect data on all descendant processes whose name matches the specified regular expression; the default is \"-F on\".",
+      "description": "To disable/enable this feature, use off/on.  Use =regex to record data on those processes whose executable name matches the regular expression.  Only the basename of the executable is used, not the full path.  If spaces or characters interpreted by the shell are used, enclose the regex in single quotes.  The default is -F on.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -62,9 +56,9 @@
     {
       "short": "-H",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "disable (off), or enable (on) heap tracing; the default is \"-H off\".",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default is -H off.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -74,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "specify arguments to the JVM.",
+      "description": "The jvm-option(s) list must be enclosed in quotation marks if it contains  more than one option.  The items in the list need to be separated by spaces or tabs.  Each item is passed as a separate option to the JVM.  Note that this option implies -j on.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -82,9 +76,9 @@
     {
       "short": "-O",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the same as -o, but unlike the -o option, silently overwrite an existing experiment directory with the same name.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -92,15 +86,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": {
-        "Choice": [
-          "off",
-          "on",
-          "<seconds>"
-        ]
-      },
+      "value_type": "String",
       "takes_value": true,
-      "description": "disable (off) or enable (on) periodic sampling of process-wide resource utilization; by default sampling occurs every second; use the <seconds> option to change this; the default is \"-S on\".",
+      "description": "By default, sampling occurs  every  second.   Use the <seconds> option to change this.  The default is -S on.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -110,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "specify archiving of binaries and other files; in addition to disable this feature (off), or enable archiving off all loadobjects and sources (on), the other options support a more refined selection. All of these options enable archiving, but the keyword controls what exactly is selected: all load objects (ldobjects), all source files (src), the loadobjects asscoiated with a program counter (usedldobjects), or the source files associated with a program counter (usedsrc); the default is \"-a ldobjects\".",
+      "description": "In addition to disable this feature (off), or enable archiving off all  loadobjects  and sources (on), the other options support a more refined selection.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,10 +106,10 @@
     {
       "short": "-h",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "enable hardware event counter profiling and select the counter(s); to see the supported counters on this system use the -h option without other arguments.",
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "To see the supported counters on this  system,  use  the  -h option without other arguments.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -130,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disable (off), or enable (on) I/O tracing; the default is \"-i off\".",
+      "description": "The default is -i off.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,9 +126,9 @@
     {
       "short": "-j",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "The allowed values for this option are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,9 +136,9 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "specify a signal that will trigger a sample of process-wide resource utilization.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "a signal that will trigger a sample of process-wide resource utilization.  When the named <signal> is delivered to the process, a sample is recorded.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -160,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dry run; display several run-time settings, but do not run the target, or collect performance data.",
+      "description": "This  is  used  for  a  dry  run.   Several  run-time  settings are displayed, but the target is not executed and no performance data is collected.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,9 +156,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "specify the name for (and path to) the experiment directory; the the default path is the current directory.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The name has to end with .er and may contain an absolute path (e.g. /tmp/experiment.er). An existing experiment with the same name will not be overwritten.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,17 +166,9 @@
     {
       "short": "-p",
       "long": null,
-      "value_type": {
-        "Choice": [
-          "off",
-          "on",
-          "lo",
-          "hi",
-          "<value>"
-        ]
-      },
-      "takes_value": true,
-      "description": "disable (off) or enable (on) clock-profiling using a default sampling granularity, or enable clock-profiling implicitly by setting the sampling granularity (lo, hi, or a specific value in ms); by default clock profiling is enabled.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(off)  or enable (on) clock profiling using a default sampling granularity, or enable clock profiling implicitly by setting the sampling granularity (lo[w], hi[gh], or a specific value in ms).  By default, clock profiling is enabled (-p on).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +178,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "enable synchronization wait tracing; <option> is used to define the specifics",
+      "description": "synchronization wait tracing, where <option> is used to define the specifics of the tracing (on, off, <threshold>, or all).  The API is selected through the setting for <API>: n selects native/Pthreads, j selects Java, and nj selects both.  The default is -s off.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +186,9 @@
     {
       "short": "-t",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "specify the duration over which to record data; the default unit is seconds (s), but can be set to minutes (m).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The duration can be a single number, optionally followed by either m to specify minutes, or s to specify seconds, which is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +196,9 @@
     {
       "short": "-y",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "specify delayed initialization and a pause/resume signal; by default the target starts in paused mode; if the optional r keyword is provided, start in resumed mode.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recording  of  data  with  the  signal  named  <signal>, referred to as the pause-resume signal.  Whenever the given signal is delivered to the process, switch between paused (no data is recorded) and resumed (data is recorded) states.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -227,21 +207,28 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "TARGET",
+      "name": "app",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "TARGET_ARGUMENTS",
+      "name": "collect",
       "value_type": "String",
-      "required": false,
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "target",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

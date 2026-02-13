@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "xargs",
-  "description": "Run COMMAND with arguments INITIAL-ARGS and more arguments read from input.",
+  "description": "XARGS(1) General Commands Manual XARGS(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--arg-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "read arguments from FILE, not standard input",
+      "description": "items  from file instead of standard input.  If you use this option, stdin remains unchanged when commands are run.  Otherwise, stdin is redirected from /dev/null.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,19 +16,19 @@
     {
       "short": "-d",
       "long": "--delimiter",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "items in input stream are separated by CHARACTER, not by whitespace; disables quote and backslash processing and logical EOF processing",
+      "description": "The specified delimiter may be a single character, a C-style character escape such as \\n, or an octal or hexadecimal escape code.  Octal and hexadecimal escape codes are understood as  for  the  printf  command. Multibyte  characters are not supported.  When processing the input, quotes and backslash are not special; every character in the in‐ put is taken literally.  The -d option disables any end-of-file string, which is treated like any other argument.  You can  use  this option  when  the input consists of simply newline-separated items, although it is almost always better to design your program to use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-e",
-      "long": "--eof",
+      "short": "-e[eof-str",
+      "long": "--eof[",
       "value_type": "File",
       "takes_value": true,
-      "description": "equivalent to -E END if END is specified; otherwise, there is no end-of-file string",
+      "description": "option  is a synonym for the -E option.  Use -E instead, because it is POSIX compliant while this option is not.  If eof-str is omitted, there is no end of file string.  If neither -E nor -e is used, no end of file string is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--exit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exit if the size (see -s) is exceeded",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--interactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prompt before running commands",
+      "description": "the user about whether to run each command line and read a line from the terminal.  Only run the command line if the response starts with `y' or `Y'.  Implies -t.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--max-args",
       "value_type": "String",
       "takes_value": true,
-      "description": "use at most MAX-ARGS arguments per command line",
+      "description": "at  most max-args arguments per command line.  Fewer than max-args arguments will be used if the size (see the -s option) is ex‐ ceeded, unless the -x option is given, in which case xargs will exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,17 +78,17 @@
       "long": "--max-chars",
       "value_type": "String",
       "takes_value": true,
-      "description": "limit length of command line to MAX-CHARS",
+      "description": "ends of  the  argument  strings.   The largest allowed value is system-dependent, and is calculated as the argument length limit for exec, less the size of your environment, less 2048 bytes of headroom.  If this value is more than 128KiB, 128Kib is  used  as  the  default value; otherwise, the default value is the maximum.  1KiB is 1024 bytes.  xargs automatically adapts to tighter constraints.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-L",
-      "long": "--max-lines",
+      "short": "-l[max-lines",
+      "long": "--max-lines[",
       "value_type": "String",
       "takes_value": true,
-      "description": "use at most MAX-LINES non-blank input lines per command line",
+      "description": "Unlike -L, the max-lines argument is optional.  If max-lines is not specified, it defaults to  one.   The",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-P",
       "long": "--max-procs",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "run at most MAX-PROCS processes at a time",
+      "description": "If max-procs is 0, xargs will run as many  processes  as  possible  at  a time.   Use  the  -n option or the -L option with -P; otherwise chances are that only one exec will be done.  While xargs is running, you can send its process a SIGUSR1 signal to increase the number of commands to run simultaneously, or a SIGUSR2 to decrease the num‐ ber.  You cannot increase it above an implementation-defined limit (which is shown with --show-limits).  You cannot decrease it below 1.  xargs never terminates its commands; when asked to decrease, it merely waits for more than one existing command to terminate  be‐ fore starting another.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-r",
       "long": "--no-run-if-empty",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "if there are no arguments, then do not run COMMAND; if this option is not given, COMMAND will be run at least once",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the standard input does not contain any nonblanks, do not run the command.  Normally, the command is run once even if there is no input.  This option is a GNU extension.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-0",
       "long": "--null",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "items are separated by a null, not whitespace; disables quote and backslash processing and logical EOF processing",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "items are terminated by a null character instead of by whitespace, and the quotes and backslash are not special (every charac‐ ter is taken literally).  Disables the end of file string, which is treated like any other argument.  Useful when input  items  might contain white space, quote marks, or backslashes.  The GNU find -print0 option produces input suitable for this mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--open-tty",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Reopen stdin as /dev/tty in the child process before executing the command; useful to run an interactive application.",
+      "description": "This is useful if you want xargs to run  an  interactive application.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,17 +138,17 @@
       "long": "--process-slot-var",
       "value_type": "String",
       "takes_value": true,
-      "description": "set environment variable VAR in child processes",
+      "description": "Values are  reused  once  child  processes  exit. This can be used in a rudimentary load distribution scheme, for example.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-i",
-      "long": "--replace",
+      "short": "-i[replace-str",
+      "long": "--replace[",
       "value_type": "String",
       "takes_value": true,
-      "description": "replace R in INITIAL-ARGS with names read from standard input, split at newlines; if R is unspecified, assume {}",
+      "description": "If the replace-str argument is missing, the  effect  is  the same as -I{}.  This option is deprecated; use -I instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--show-limits",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show limits on command-line length",
+      "description": "the limits on the command-line length which are imposed by the operating system, xargs' choice of buffer size and the -s op‐ tion.  Pipe the input from /dev/null (and perhaps specify --no-run-if-empty) if you don't want xargs to do anything.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print commands before executing them",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +186,9 @@
     {
       "short": "-E",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "set logical EOF string; if END occurs as a line of input, the rest of the input is ignored (ignored if -0 or -d was specified)",
+      "description": "If the end of file string occurs as a line of input, the rest of the input  is  ignored.   If neither -E nor -e is used, no end of file string is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,17 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "same as --replace=R",
+      "description": "Also, unquoted blanks do not termi‐ nate input items; instead the separator is the newline character.  Implies -x and -L 1.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "at  most  max-lines nonblank input lines per command line.  Trailing blanks cause an input line to be logically continued on the next input line.  Implies -x.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,17 +216,25 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "similar to -L but defaults to at most one non- blank input line if MAX-LINES is not specified",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "initial-arguments",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

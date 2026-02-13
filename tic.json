@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "tic",
-  "description": null,
+  "description": "tic(1) User commands tic(1)",
   "global_flags": [
     {
       "short": "-0",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "format translation output all capabilities on one line",
+      "description": "restricts the output to a single line",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-01acCDfgGIKLNqrstTUVWx",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "format translation output one capability per line",
+      "description": "restricts the output to a single column",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "translate entries to termcap source form",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force source translation to termcap format.  Note: this differs from the -C option of infocmp(1) in that it does not merely translate capability names, but also translates terminfo strings to termcap format.  Capabilities that are not translatable are left in the en‐ try under their terminfo names but commented out with two preceding dots.  The actual format used incorporates some improvements  for escaped characters from terminfo format.  For a stricter BSD-compatible translation, add the -K option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +46,9 @@
     {
       "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print list of tic's database locations (first must be writable)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "tells tic to print the database locations that it knows about, and exit.  The first location shown is the one to which it would write compiled terminal descriptions.  If tic is not able to find a writable database location according to the rules summarized above,  it will print a diagnostic and exit with an error rather than printing a list of database locations.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +56,9 @@
     {
       "short": "-G",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "format %{number} to %'char'",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display constant literals in decimal form rather than their character equivalents.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +66,9 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "translate entries to terminfo source form",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force source translation to terminfo format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": "-K",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "translate entries to termcap source form with BSD syntax",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Suppress some longstanding ncurses extensions to termcap format, e.g., \"\\s\" for space.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,9 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "translate entries to full terminfo source form",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force source translation to terminfo format using the long C variable names listed in <term.h>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,19 +96,49 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "disable smart defaults for source translation",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Disable smart defaults.  Normally, when translating from termcap to terminfo, the compiler makes a number of  assumptions  about  the defaults  of  string  capabilities  reset1_string, carriage_return, cursor_left, cursor_down, scroll_forward, tab, newline, key_back‐ space, key_left, and key_down, then attempts to use obsolete termcap capabilities to deduce correct values.  It  also  normally  sup‐ presses  output  of  obsolete termcap capabilities such as bs.  This option forces a more literal translation that also preserves the obsolete capabilities.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-Q",
+      "short": "-Q[n",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "dump compiled description",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Qn",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Rather than show source in terminfo (text) format, print the compiled (binary) format in hexadecimal or base64 form, depending on the option's value:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Rsubset",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This option is for use with archaic versions of terminfo like those on  SVr1,  Ultrix,  or  HP-UX that  do  not support the full set of SVR4/XSI Curses terminfo; and outright broken ports like AIX 3.x that have their own extensions incompatible with SVr4/XSI.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +146,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "remove size-restrictions on compiled description",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "eliminates  size-restrictions on the generated text.  This is mainly useful for testing and analysis, since the compiled descriptions are limited (e.g., 1023 for termcap, 4096 for terminfo).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +156,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "suppress post-processing of entries",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "tells tic to not post-process the data after parsing the source file.  Normally, it infers data which is commonly missing in older ter‐ minfo data, or in termcaps.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +166,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "reports the version of ncurses which was used in this program, and exits.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +178,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "wrap long strings according to -w[n] option",
+      "description": "By itself, the -w option will not force long strings to be wrapped.  Use the -W option to do this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "retain commented-out capabilities (sets -x also)",
+      "description": "tells tic to retain commented-out capabilities rather than discarding them.  Capabilities are commented by prefixing them with a  pe‐ riod.   This sets the -x option, because it treats the commented-out entries as user-defined names.  If the source is termcap, accept the 2-character names required by version 6.  Otherwise these are ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +196,19 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "check only, validate input without compiling or translating",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "tells tic to only check file for errors, including syntax problems and bad use-links.  If you specify -C (-I) with this  option,  the code  will  print  warnings  about  entries which, after use resolution, are more than 1023 (4096) bytes long.  Due to a fixed buffer length in older termcap libraries, as well as buggy checking for the buffer length (and a documented limit in  terminfo),  these  en‐ tries may cause core dumps with other implementations.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "writes  and translations to the comma-separated list of terminal types.  If any name or alias of a terminal matches one of the names in the list, the entry will be written or translated as normal.  Otherwise no output will be  generated  for  it.   The  option value  is  interpreted as a file containing the list if it contains a '/'.  (Note: depending on how tic was compiled, this option may require -I or -C.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "format complex strings for readability",
+      "description": "Display complex terminfo strings which contain if/then/else/endif expressions indented for readability.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +228,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "format %'char' to %{number}",
+      "description": "Display constant character literals in quoted form rather than their decimal equivalents.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-odir",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Write compiled entries to given database location.  Overrides the TERMINFO environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +258,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "brief listing, removes headers",
+      "description": "Suppress comments and blank lines when showing translated source.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +266,9 @@
     {
       "short": "-r",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "force resolution of all use entries in source translation",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Force entry resolution (so there are no remaining tc capabilities) even when doing translation to termcap format.  This may be needed if you are preparing a termcap file for a termcap library (such as GNU termcap through version 1.3 or  BSD  termcap  through  4.3BSD) that does not handle multiple tc capabilities per entry.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +278,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print summary statistics",
+      "description": "Summarize the compile by showing the database location into which entries are written, and the number of entries which are compiled.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,27 +288,47 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suppress commented-out capabilities",
+      "description": "tells tic to discard commented-out capabilities.  Normally when translating from terminfo to termcap, untranslatable capabilities are commented-out.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-v",
+      "short": "-v[n",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "set verbosity level",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-w",
+      "short": "-vn",
       "long": null,
-      "value_type": "String",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "specifies that (verbose) output be written to standard error trace information showing tic's progress.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w[n",
+      "long": null,
+      "value_type": "File",
       "takes_value": true,
-      "description": "set format width for translation output",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-wn",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "specifies the width of the output.  The parameter is optional.  If it is omitted, it defaults to 60.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,15 +338,65 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "treat unknown capabilities as user-defined",
+      "description": "Treat unknown capabilities as user-defined (see user_caps(5)).  That is, if you supply a capability name which tic does not  recognize, it  will infer its type (Boolean, number or string) from the syntax and make an extended table entry for that.  User-defined capability strings whose name begins with “k” are treated as function keys.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "-01accdfggiklnqrsttuvwx",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dir",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "subset",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "terminal-type-list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

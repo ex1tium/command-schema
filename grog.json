@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "grog",
-  "description": "Read each roff(7) input FILE and attempt to infer an appropriate",
+  "description": "grog(1) General Commands Manual grog(1)",
   "global_flags": [
     {
       "short": "-h",
@@ -14,11 +14,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-P-y",
       "long": "--ligatures",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "These are supported only by the pdf output device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,14 +28,44 @@
       "long": "--run",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "writes the inferred command to the standard error stream and then executes it.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "For UTF-8 input, -k is a good choice.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mdoc",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "-mdoc-old,  -me, -mm, -mom, and -ms (macro packages).  The inferred groff command including these options and any file parameters is written to the standard output stream.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-v",
-      "long": "--version",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -47,6 +77,20 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "--ligatures",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--run",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "groff-option",
       "value_type": "String",
       "required": false,
@@ -54,7 +98,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

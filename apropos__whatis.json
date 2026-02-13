@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "apropos",
-  "description": null,
+  "description": "APROPOS(1) Manual pager utils APROPOS(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--and",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "require all keywords to match",
+      "description": "The default is to display items that match any keyword.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--config-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "use this user configuration file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "emit debugging messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-e",
       "long": "--exact",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "search each keyword for exact match",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "give this help list",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-L",
       "long": "--locale",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "define the locale for this search",
+      "description": "will  normally determine your current locale by a call to the C function setlocale(3) which interrogates various environment variables, possibly including $LC_MESSAGES and $LANG.  To temporarily override the determined value, use this option to supply a  lo‐ cale  string  directly to apropos.  Note that it will not take effect until the search for pages actually begins.  Output such as the help message will always be displayed in the initially determined locale.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-l",
       "long": "--long",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not trim output to terminal width",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "not  trim  output  to  the  terminal  width.  Normally, output will be truncated to the terminal width to avoid ugly results from poorly-written NAME sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--manpath",
       "value_type": "File",
       "takes_value": true,
-      "description": "set search path for manual pages to PATH",
+      "description": "an  alternate  set  of colon-delimited manual page hierarchies to search.  By default, apropos uses the $MANPATH environment variable, unless it is empty or unset, in which case it will determine an appropriate manpath based on your $PATH  environment  vari‐ able.  This option overrides the contents of $MANPATH.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-r",
       "long": "--regex",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "interpret each keyword as a regex",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "each keyword as a regular expression.  This is the default behaviour.  Each keyword will be matched against the page names and the descriptions independently.  It can match any part of either.  The match is not limited to word boundaries.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--sections",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "list is a colon- or comma-separated list of sections.  If an entry in list is a  simple  sec‐ tion, for example \"3\", then the displayed list of descriptions will include pages in sections \"3\", \"3perl\", \"3x\", and so on; while if an  entry  in list has an extension, for example \"3perl\", then the list will only include pages in that exact part of the manual sec‐ tion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--systems",
       "value_type": "String",
       "takes_value": true,
-      "description": "use manual pages from other systems",
+      "description": "option.   To  search NewOS's manual page descriptions, use the option -m NewOS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--usage",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "give a short usage message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print verbose warning messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print program version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,19 @@
     {
       "short": "-w",
       "long": "--wildcard",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Each keyword will be matched against the page  names  and  the descriptions independently.  If --exact is also used, a match will only be found if an expanded keyword matches an entire description or page name.  Otherwise the keyword is also allowed to match on word boundaries in the description.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dalv?V",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the keyword(s) contain wildcards",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -157,14 +167,56 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "KEYWORD",
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "keyword",
       "value_type": "String",
       "required": true,
-      "multiple": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "locale",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

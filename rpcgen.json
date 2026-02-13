@@ -1,34 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "rpcgen",
-  "description": null,
+  "description": "rpcgen(1) General Commands Manual rpcgen(1)",
   "global_flags": [
-    {
-      "short": null,
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "give this help list",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print program version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-5",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "SysVr4 compatibility mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This  generates  code  for  the SysVr4 style of rpc. It is used by the Transport Independent RPC that is in Svr4 systems.  By default rpcgen generates code for SunOS4.1 stype of rpc.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,17 +18,17 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "ANSI C mode",
+      "description": "Generate code in ANSI C. This option also generates code that could be compiled with the C++ compiler.  This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-Dname",
+      "short": "-Dname[",
       "long": null,
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "define a symbol (same as #define)",
+      "description": "Equivalent to the #define directive in the source.  If no value is given, value is defined as 1.  This  option may be specified more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +36,9 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate code for inetd support in server (for SunOS 4.1)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Generate a service that can be started from inetd.  The default is to generate a static service that handles transports selected with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,19 +46,9 @@
     {
       "short": "-K",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "server exits after K seconds of inactivity",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "server errors will be printed to syslog",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "That interval  can  be  changed using  the  -K  flag.  To create a server that exits immediately upon servicing a request, -K 0 can be used.  To create a server that never exits, the appropriate argument is -K -1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +56,9 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate MT-safe code",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Generate multithread-safe stubs for passing arguments and results between rpcgen-generated code and user written code.   This  option is useful for users who want to use threads in their code.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +66,9 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "supports multiple arguments and call-by-value",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use the newstyle of rpcgen. This allows procedures to have multiple arguments.  It also uses the  style  of  parameter  passing  that closely resembles C. So, when passing an argument to a remote procedure you do not have to pass a pointer to the argument but the ar‐ gument  itself.  This behaviour is different from the oldstyle of rpcgen generated code. The newstyle is not the default case because of backward compatibility.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate sample client code that uses remote procedures",
+      "description": "Generate sample code to show the use of remote procedure and how to bind to the server before calling the client side stubs generated by rpcgen.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate makefile template",
+      "description": "Generate a sample Makefile which can be used for compiling the application.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate sample server code that defines remote procedures",
+      "description": "Generate skeleton code for the remote procedures on the server side. You would need to fill in the actual code for the remote  proce‐ dures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,19 +106,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate code to support RPC dispatch tables",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Y",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "directory name to find C preprocessor (cpp)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Generate the code to support RPC dispatch tables.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate all files, including samples",
+      "description": "Generate all the files including sample code for client and server side.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "backward compatibility mode (generates code for SunOS 4.1)",
+      "description": "This generates code for the SunOS4.1 style of rpc. It is for backward compatibility.  This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +136,9 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate XDR routines",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Compile into XDR routines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,19 +146,19 @@
     {
       "short": "-h",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate header file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Compile  into  C  data-definitions (a header file).  -T option can be used in conjunction to produce a header file which supports RPC dispatch tables.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-i",
+      "short": "-k",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "size at which to start generating inline code",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Generate code in K&R C.  The default is ANSI C.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate client side stubs",
+      "description": "Compile into client-side stubs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +178,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate server side stubs",
+      "description": "Compile  into  server-side  stubs,  but  do not generate a “main” routine.  This option is useful for doing callback-routines and for users who need to write their own “main” routine to do initialization.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate server code that supports named netid",
+      "description": "into  server-side stubs for the transport specified by netid.  There should be an entry for netid in the netconfig database. This option may be specified more than once, so as to compile a server that serves multiple transports.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +198,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "name of the output file",
+      "description": "If none is specified, standard output is used (-c, -h, -l, -m, -n, -s, -Sc, -Sm,  -Ss,  and  -t modes only).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +208,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "generate server code that supports named nettype",
+      "description": "into  server-side  stubs for all the transports belonging to the class nettype.  The supported classes are netpath, visible, circuit_n, circuit_v, datagram_n, datagram_v, tcp, and udp [see rpc(3N) for the meanings associated with these classes].  This option may be specified more than once.  Note: the transports are chosen at run time and not at compile time.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s.",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Using -I allows starting a service by either method.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,25 +226,636 @@
     {
       "short": "-t",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "generate RPC dispatch table",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Compile into RPC dispatch table.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "generate",
+      "description": "sample code which would illustrate how to use the remote procedures on the client side. This code would be created in",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "give this help list",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print program version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-5",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "SysVr4 compatibility mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "ANSI C mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Dname",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "define a symbol (same as #define)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate code for inetd support in server (for SunOS 4.1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "server exits after K seconds of inactivity",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "server errors will be printed to syslog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate MT-safe code",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "supports multiple arguments and call-by-value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Sc",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate sample client code that uses remote procedures",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Sm",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate makefile template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Ss",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate sample server code that defines remote procedures",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate code to support RPC dispatch tables",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Y",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory name to find C preprocessor (cpp)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate all files, including samples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "backward compatibility mode (generates code for SunOS 4.1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate XDR routines",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate header file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "size at which to start generating inline code",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate client side stubs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate server side stubs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate server code that supports named netid",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name of the output file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate server code that supports named nettype",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate RPC dispatch table",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "infile",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "stubs",
+      "description": "in proto_clnt.c. With the -T option, it will also generate the RPC dispatch table in proto_tbl.i. With the -Sc option, it will also",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "give this help list",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print program version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-5",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "SysVr4 compatibility mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "ANSI C mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Dname",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "define a symbol (same as #define)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate code for inetd support in server (for SunOS 4.1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "server exits after K seconds of inactivity",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "server errors will be printed to syslog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate MT-safe code",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "supports multiple arguments and call-by-value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Sc",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate sample client code that uses remote procedures",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Sm",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate makefile template",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Ss",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate sample server code that defines remote procedures",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate code to support RPC dispatch tables",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Y",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory name to find C preprocessor (cpp)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate all files, including samples",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "backward compatibility mode (generates code for SunOS 4.1)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate XDR routines",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate header file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "size at which to start generating inline code",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate client side stubs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate server side stubs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate server code that supports named netid",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "name of the output file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate server code that supports named nettype",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "generate RPC dispatch table",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "infile",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-k",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "infile",
       "value_type": "File",
-      "required": false,
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "netid",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "nettype",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "outfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "secs",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

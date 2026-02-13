@@ -1,18 +1,8 @@
 {
   "schema_version": "1.0.0",
   "command": "xsetroot",
-  "description": null,
+  "description": "XSETROOT(1) General Commands Manual XSETROOT(1)",
   "global_flags": [
-    {
-      "short": "-background",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set background color",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-bg",
       "long": null,
@@ -26,9 +16,9 @@
     {
       "short": "-bitmap",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Use the bitmap specified in the file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "You can make your own  bitmap  files  (little  pictures)  using  the bitmap(1) program.  The entire background will be made up of repeated \"tiles\" of the bitmap.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +26,19 @@
     {
       "short": "-cursor",
       "long": null,
-      "value_type": "File",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Cursor and mask files are bitmaps (little pictures), and can be made with the bitmap(1) program.  You probably want the mask file to be all black until you get used to the way masks work.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-cursor_name",
+      "long": null,
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "lets  you change the pointer cursor to one of the standard cursors from the cursor font.  Refer to appendix B of the X protocol for the names (except that the XC_ prefix is elided for this option).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Reset unspecified attributes",
+      "description": "(Restores the background to the familiar gray mesh and the cursor to the  hollow x shape.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Specifies the server to connect to",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,17 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-foreground",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set foreground color",
+      "description": "Foreground and background colors are meaningful only in combination with -cursor, -bitmap, or",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,53 +88,13 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Make the entire background grey",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-help",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print this help",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-mod",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use a plaid-like grid pattern on screen",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-name",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set the name of the root window",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-reverse",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Swap foreground and background colors",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-rv",
+      "short": "-grey",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -154,11 +104,61 @@
       "requires": []
     },
     {
+      "short": "-help",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print a usage message and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mod",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "is  used  if  you want a plaid-like grid pattern on your screen.  x and y are integers ranging from 1 to 16.  Try the different combinations.  Zero and negative numbers are taken as 1.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mod.",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-name",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "There is no default value.  Usually a name is assigned to a window so that the window manager can use a text representation when the window is iconified.  This option is unused since you can't iconify the background.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-rv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Normally the foreground color is black and the background color is white.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-solid",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set the background of the root window",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option is only useful on color servers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print a version message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,17 +176,179 @@
     {
       "short": "-xcf",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Load a pointer cursor from an Xcursor file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "-bg",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-bitmap",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-cursor",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-cursor_name",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-d",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-def",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-display",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-fg",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-help",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-name",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-rv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-version",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-xcf",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "color",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cursorfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cursorfontname",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "display",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "maskfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "string",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "x",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "y",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

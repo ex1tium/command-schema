@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "fsck.msdos",
-  "description": "Check FAT filesystem on DEVICE for errors.",
+  "description": "FSCK.FAT(8) System Manager's Manual FSCK.FAT(8)",
   "global_flags": [
     {
       "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print this message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": null,
       "long": "--variant",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "handle variant TYPE of the filesystem",
+      "description": "Acceptable values are standard and atari (in any combination of upper/lower case).  See above  un‐ der DESCRIPTION for the differences.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "toggle Atari variant of the FAT filesystem",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Select using the Atari variation of the FAT filesystem if that isn't active already, otherwise select standard FAT filesystem.  This  is selected by default if mkfs.fat is run on 68k Atari Linux.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "specify FAT table NUM used for filesystem access",
+      "description": "By default value 0 is assumed and then the first uncorrupted FAT table is chosen.   Uncor‐ rupted means that FAT table has valid first cluster.  If default value 0 is used and all FAT tables are corrupted then fsck.fat gives up and  does  not  try  to  repair  FAT  filesystem.  If non-zero NUM value is specified then fsck.fat uses FAT table NUM for repairing FAT filesystem.  If FAT table NUM has corrupted first cluster then fsck.fat will repair it.  In any case, if FAT filesystem has more FAT ta‐ bles then repaired content of chosen FAT table is copied to other FAT tables.  To repair corrupted first cluster it is required to  call fsck.fat with non-zero NUM value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "disallow spaces in the middle of short file names",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Consider short (8.3) file names with spaces in the middle to be invalid, like previous versions of this program did.   While  such  file names  are  not  forbidden  by the FAT specification, and were never treated as errors by Microsoft file system checking tools, many DOS programs are unable to handle files with such names.  Using this option can make them accessible to these programs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "allow only uppercase characters in volume and boot label",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Consider lowercase volume and boot label as invalid and allow only uppercase characters.  Such labels are forbidden by the FAT  specifi‐ cation, but they are widely used by Linux tools.  Moreover MS-DOS and Windows systems do not have problems to read them.  Therefore vol‐ ume and boot labels with lowercase characters are by default permitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "perform a verification pass",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Perform a verification pass.  The filesystem check is repeated after the first run.  The second pass should never report any fixable er‐ rors.   It  may  take considerably longer than the first pass, because the first pass may have generated long list of modifications that have to be scanned for each disk read.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "automatically repair the filesystem",
+      "description": "Automatically repair the filesystem.  No user intervention is necessary.  Whenever there is more than one method to solve a problem, the least destructive approach is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "make read-only boot sector check",
+      "description": "Make read-only boot sector check.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use DOS codepage N to decode short file names (default: 850)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "By default codepage 850 is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,8 +108,8 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "drop file with name PATH (can be given multiple times)",
-      "multiple": true,
+      "description": "the  specified  file.  If more than one file with that name exist, the first one is deleted.  This option can be given more than once.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -118,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "salvage unused chains to files",
+      "description": "Salvage unused cluster chains to files.  By default, unused clusters are added to the free disk space except in auto mode (-a).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list path names",
+      "description": "List path names of files being processed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "no-op, check non-interactively without changing",
+      "description": "No-operation mode: non-interactively check for errors, but don't write anything to the filesystem.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same as -a, for compat with other *fsck",
+      "description": "Same as -a, for compatibility with other *fsck.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "interactively repair the filesystem (default)",
+      "description": "Interactively  repair  the  filesystem.   The user is asked for advice whenever there is more than one approach to fix an inconsistency. This is the default mode and the option is only retained for backwards compatibility.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "test for bad clusters",
+      "description": "Mark unreadable clusters as bad.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,8 +178,8 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "try to undelete (non-directory) file that was named PATH (can be given multiple times)",
-      "multiple": true,
+      "description": "to  undelete  the  specified  file.  fsck.fat tries to allocate a chain of contiguous unallocated clusters beginning with the start cluster of the undeleted file.  This option can be given more than once.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -188,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose mode",
+      "description": "Verbose mode.  Generates slightly more output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "write changes to disk immediately",
+      "description": "Write changes to disk immediately.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same as -a, for compat with other *fsck",
+      "description": "Same as -a (automatically repair filesystem) for compatibility with other fsck tools.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -217,14 +217,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "DEVICE",
+      "name": "device",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

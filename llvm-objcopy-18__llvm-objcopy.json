@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-objcopy-18",
-  "description": "OVERVIEW: llvm-objcopy tool",
+  "description": "LLVM-OBJCOPY(1) LLVM LLVM-OBJCOPY(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--add-gnu-debuglink",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -16,7 +16,7 @@
     {
       "short": null,
       "long": "--add-section",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -26,19 +26,9 @@
     {
       "short": null,
       "long": "--add-symbol",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--adjust-start",
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --change-start",
+      "description": "a  new  symbol called <name> to the output symbol table, in the section named <section>, with value <value>. If <section> is not specified, the symbol is added as an absolute symbol. The <flags> affect the symbol properties. Accepted values are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,13 +38,13 @@
       "long": "--allow-broken-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allow the tool to remove sections even if it would leave invalid section references. The appropriate sh_link fields will be set to zero.",
+      "description": "be  set  to zero.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-B",
       "long": "--binary-architecture",
       "value_type": "String",
       "takes_value": true,
@@ -66,10 +56,10 @@
     {
       "short": null,
       "long": "--change-start",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Add <incr> to the start address. Can be specified multiple times, all values will be applied cumulatively",
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -78,7 +68,7 @@
       "long": "--compress-debug-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "DWARF  debug sections in the output, using the specified format.  Supported formats are zlib and zstd. Use zlib if <format> is omitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,39 +76,39 @@
     {
       "short": null,
       "long": "--decompress-debug-sections",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-U",
       "long": "--disable-deterministic-archives",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-x",
       "long": "--discard-all",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove all local symbols except file and section symbols. Also remove all debug sections",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "file and section symbols in ELF objects will not be discarded. Additionally, remove all debug sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-X",
       "long": "--discard-locals",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove compiler-generated local symbols, (e.g. symbols starting with .L)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,16 +118,16 @@
       "long": "--dump-section",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  contents of section <section> into the file <file>. Can be specified multiple times to dump multiple sections to different files.  <file> is unrelated to the input and output files provided to llvm-objcopy and as such the normal copying and editing  opera‐ tions will still be performed. No operations are performed on the sections prior to dumping them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-D",
       "long": "--enable-deterministic-archives",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -146,9 +136,9 @@
     {
       "short": null,
       "long": "--extract-dwo",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove all sections that are not DWARF .dwo sections from file",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,8 +156,8 @@
     {
       "short": null,
       "long": "--extract-partition",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -176,9 +166,9 @@
     {
       "short": null,
       "long": "--gap-fill",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Fill the gaps between sections with <value> instead of zero. <value> must be an unsigned 8-bit integer. This option is only supported for ELF input and binary output",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +176,9 @@
     {
       "short": null,
       "long": "--globalize-symbol",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Can be specified multiple times to mark multiple symbols.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,19 +186,29 @@
     {
       "short": null,
       "long": "--globalize-symbols",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  file,  each line  represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified mul‐ tiple times to read names from multiple files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-I",
       "long": "--input-target",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Format of the input file",
+      "description": "will attempt to determine the format automatically.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,17 +218,17 @@
       "long": "--keep-file-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not remove file symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-G",
       "long": "--keep-global-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "all  symbols local in the output, except for symbols with the name <symbol>. Can be specified multiple times to ignore multiple symbols.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,9 +236,9 @@
     {
       "short": null,
       "long": "--keep-global-symbols",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "line  represents  a  single symbol,  with  leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,19 +246,19 @@
     {
       "short": null,
       "long": "--keep-section",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Keep <section>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-K",
       "long": "--keep-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Do not remove symbol <symbol>",
+      "description": "keep  multiple  sym‐ bols.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,9 +266,9 @@
     {
       "short": null,
       "long": "--keep-symbols",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "removing symbols from the output do not remove symbols named in the file <filename>. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to  read  names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--keep-undefined",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not remove undefined symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,17 +288,17 @@
       "long": "--localize-hidden",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mark all symbols that have hidden or internal visibility as local",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-L",
       "long": "--localize-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "any  defined non-common symbol named <symbol> as a local symbol in the output. Can be specified multiple times to mark multiple symbols as local.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,9 +306,9 @@
     {
       "short": null,
       "long": "--localize-symbols",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  output.  In  the file,  each  line  represents  a  single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,8 +316,8 @@
     {
       "short": null,
       "long": "--new-symbol-visibility",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -328,27 +328,27 @@
       "long": "--only-keep-debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Produce a debug file as the output that only preserves contents of sections useful for debugging purposes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-j",
       "long": "--only-section",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Remove all but <section>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Can be specified multiple times to keep multiple sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-O",
       "long": "--output-target",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "for‐ mat  is  assumed  to be the same as the value specified for --input-target or the input file's format if that option is also unspeci‐ fied.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -356,9 +356,9 @@
     {
       "short": null,
       "long": "--pad-to",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Pad the output up to the load address <address>, using a value of zero or the value specified by the --gap-fill option. This option is only supported for ELF input and binary output",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -366,8 +366,8 @@
     {
       "short": null,
       "long": "--prefix-alloc-sections",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -376,19 +376,19 @@
     {
       "short": null,
       "long": "--prefix-symbols",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--preserve-dates",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Preserve access and modification timestamps",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,16 +398,6 @@
       "long": "--redefine-sym",
       "value_type": "String",
       "takes_value": true,
-      "description": "Change the name of a symbol old to new",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--redefine-syms",
-      "value_type": "File",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -415,16 +405,26 @@
     },
     {
       "short": null,
-      "long": "--regex",
+      "long": "--redefine-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Permit regular expressions in name comparison",
+      "description": "rename,  with the old name and new name separated by whitespace. Leading and trailing whitespace is ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
+      "long": "--regex",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
       "long": "--remove-section",
       "value_type": "String",
       "takes_value": true,
@@ -438,8 +438,8 @@
       "long": "--rename-section",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "description": "for  a  list  of supported flags. Can be specified multiple times to rename multiple sections.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -458,8 +458,8 @@
       "long": "--set-section-flags",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "description": "section  properties  in the output of section <section> based on the specified <flag> values. Can be specified multiple times to update multiple sections.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -475,33 +475,30 @@
     },
     {
       "short": null,
-      "long": "--set-start",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set the start address to <addr>. Overrides any previous --change-start or --adjust-start values",
-      "multiple": false,
-      "conflicts_with": [
-        "--change-start",
-        "--adjust-start"
-      ],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--split-dwo",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Equivalent to extract-dwo on the input file to <dwo-file>, then strip-dwo on the input file",
+      "long": "--set-start-addr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--strip-all",
+      "long": "--split-dwo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove non-allocated sections outside segments. .gnu.warning* and .ARM.attribute sections are not removed",
+      "description": "to  running  llvm-objcopy  with  --extract-dwo  and  <dwo-file>  as  the  output file and no other options, and then with",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--strip-all",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "ELF  objects,  remove  from the output all symbols and non-alloc sections not within segments, except for .gnu.warning, .ARM.at‐ tribute sections and the section name table.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -509,19 +506,19 @@
     {
       "short": null,
       "long": "--strip-all-gnu",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Compatible with GNU's --strip-all",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-g",
       "long": "--strip-debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all debug sections",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -531,7 +528,7 @@
       "long": "--strip-dwo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all DWARF .dwo sections from file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -541,7 +538,7 @@
       "long": "--strip-non-alloc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all non-allocated sections outside segments",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -551,17 +548,17 @@
       "long": "--strip-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all section headers and all sections not in segments",
+      "description": "an object without section headers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-N",
       "long": "--strip-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Strip <symbol>",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -569,9 +566,9 @@
     {
       "short": null,
       "long": "--strip-symbols",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "line  represents  a  single  symbol name,  with  leading  and  trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -581,7 +578,7 @@
       "long": "--strip-unneeded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove all symbols not needed by relocations",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -589,8 +586,8 @@
     {
       "short": null,
       "long": "--strip-unneeded-symbol",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -599,9 +596,9 @@
     {
       "short": null,
       "long": "--strip-unneeded-symbols",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "In the file, each line represents a single symbol name, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -617,19 +614,9 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-F",
       "long": "--target",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Format of the input and output file",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--update-section",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -638,10 +625,20 @@
     },
     {
       "short": null,
+      "long": "--update-section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "segment,  the  new contents cannot be larger than the existing section.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print the version and exit.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -651,17 +648,17 @@
       "long": "--weaken",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mark all global symbols as weak",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-W",
       "long": "--weaken-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Mark <symbol> as weak",
+      "description": "any  global  symbol  named <symbol> as a weak symbol in the output. Can be specified multiple times to mark multiple symbols as weak.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -669,223 +666,19 @@
     {
       "short": null,
       "long": "--weaken-symbols",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allow wildcard syntax for symbol-related flags. Incompatible with --regex. Allows using '*' to match any number of characters, '?' to match any single character, '' to escape special characters, and '[]' to define character classes. Wildcards beginning with '!' will prevent a match, for example \"-N '*' -N '!x'\" will strip all symbols except for \"x\".",
-      "multiple": false,
-      "conflicts_with": [
-        "-rel",
-        "--regex",
-        "-N"
-      ],
-      "requires": []
-    },
-    {
-      "short": "-B",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --binary-architecture",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --enable-deterministic-archives",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --target",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-G",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --keep-global-symbol",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --input-target",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-K",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --keep-symbol",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --localize-symbol",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --strip-symbol",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --output-target",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --remove-section",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --strip-all",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --disable-deterministic-archives",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-W",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --weaken-symbol",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --discard-locals",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-g",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --strip-debug",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-j",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --only-section",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --preserve-dates",
+      "description": "line represents  a  single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-w",
-      "long": null,
+      "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --wildcard",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --discard-all",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -894,6 +687,13 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "input",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "output",
       "value_type": "String",
       "required": false,
@@ -901,7 +701,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

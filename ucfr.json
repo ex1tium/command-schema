@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "ucfr",
-  "description": "Debian GNU/Linux ucfr Revision 3.00.",
+  "description": "UCFR(1) Debian GNU/Linux manual UCFR(1)",
   "global_flags": [
+    {
+      "short": "-d",
+      "long": "--debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": "-f",
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This  allows  a package  to  hijack a configuration file from another package, or to purge the association between the file and some other package in the registry.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--purge",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "all vestiges of the association between the named package and the configuration file from the registry. The association must already exist; if the configuration file is associated with some other package, an error happens, unless the option --force  is  also given.  In  that case, the any associations for the configuration file are removed from the registry, whether or not the package name matches. This action is idempotent, asking for an association to be purged multiple times does not result in an error, since attempt‐ ing to remove an non-existent association is silently ignored unless the --verbose option is used (in which case it just issues a di‐ agnostic).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--state-dir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Used mostly for testing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -62,21 +72,33 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "[n] Set the Debug level to N",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "configuration",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "package",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

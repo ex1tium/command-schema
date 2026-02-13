@@ -1,76 +1,38 @@
 {
   "schema_version": "1.0.0",
   "command": "h2ph",
-  "description": "running under Perl version 5.38.2.",
+  "description": "H2PH(1) Perl Programmers Reference Guide H2PH(1)",
   "global_flags": [
     {
-      "short": "-F",
+      "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Include the code from the .h file as a comment in the .ph file.  This is primarily used for debugging h2ph.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-I",
+      "short": "-Q",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "'Quiet' mode; don't print out the names of the files being converted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-N",
+      "short": "-a",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Run automagically; convert headerfiles, as well as any .h files which they include.  This  option  will  search  for  .h  files  in  all directories which your C compiler ordinarily uses.  -a and -r are mutually exclusive.",
       "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
+      "conflicts_with": [
+        "-r"
+      ],
       "requires": []
     },
     {
@@ -82,19 +44,117 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If an error is encountered during conversion, output file will be removed and a warning emitted instead of  terminating  the  conversion immediately.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Put  'hints'  in  the  .ph  files which will help in locating problems with h2ph.  In those cases when you require a .ph file containing syntax errors, instead of the cryptic",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Symbolic links will be replicated in the destination directory.  If -l is not specified, then links are skipped over.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Run  recursively;  if  any  of  headerfiles  are directories, then run h2ph on all files in those directories (and their subdirectories, etc.).  -r and -a are mutually exclusive.",
+      "multiple": false,
+      "conflicts_with": [
+        "-a"
+      ],
+      "requires": []
     }
   ],
   "subcommands": [],
   "positional": [
     {
-      "name": "PROGRAM_ARG1",
+      "name": "-d",
       "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-h",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "destination",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "headerfiles",
+      "value_type": "File",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "1.13"
+  "version": null
 }

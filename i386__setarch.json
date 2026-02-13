@@ -1,13 +1,43 @@
 {
   "schema_version": "1.0.0",
   "command": "i386",
-  "description": "Change the reported architecture and set personality flags.",
+  "description": "SETARCH(8) System Administration SETARCH(8)",
   "global_flags": [
+    {
+      "short": "-B",
+      "long": "--32bit",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-3",
+      "long": "--3gb",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--4gb",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": "-L",
       "long": "--addr-compat-layout",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -18,7 +48,7 @@
       "long": "--addr-no-randomize",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disables randomization of the virtual address space",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +56,9 @@
     {
       "short": "-F",
       "long": "--fdpic-funcptrs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "makes function pointers point to descriptors",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +68,17 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--list",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +88,7 @@
       "long": "--mmap-page-zero",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "turns on MMAP_PAGE_ZERO",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +96,9 @@
     {
       "short": "-X",
       "long": "--read-implies-exec",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "turns on READ_IMPLIES_EXEC",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +108,17 @@
       "long": "--short-inode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "turns on SHORT_INODE",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +128,7 @@
       "long": "--sticky-timeouts",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "turns on STICKY_TIMEOUTS",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +138,7 @@
       "long": "--uname-2.6",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "turns on UNAME26",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +148,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "say what options are being switched on",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +158,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,27 +168,7 @@
       "long": "--whole-seconds",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "turns on WHOLE_SECONDS",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-3",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "limits the used address space to a maximum of 3 GB",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-B",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "turns on ADDR_LIMIT_32BIT",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -147,6 +177,20 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "arch",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "argument",
+      "value_type": "String",
+      "required": false,
+      "multiple": true,
+      "description": null
+    },
+    {
       "name": "program",
       "value_type": "String",
       "required": false,
@@ -154,7 +198,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

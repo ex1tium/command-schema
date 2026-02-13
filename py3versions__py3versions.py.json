@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "py3versions",
-  "description": null,
+  "description": "PY3VERSIONS() PY3VERSIONS()",
   "global_flags": [
     {
       "short": "-d",
       "long": "--default",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the default python3 version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-h",
       "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show this help message and exit",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--installed",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the installed supported python3 versions",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--max-supported",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the maximum supported python3 version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--min-supported",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the minimum supported python3 version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--requested",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the python3 versions requested by a build; the argument is either the name of a control file or the value of the X-Python3-Version attribute",
+      "description": "the  value of the X-Python3-Version field in the source section of a control file and shows all matching python3 versions. The parameter is interpreted as a version string, if it is not the name of a file. If the X-Python3-Version field  is  missing,  it  will fall  back to list the supported Python3 versions after checking debian/control. Versions less than 3 are ignored. The keyword all is ignored because it covers all Python2 versions.  The former keyword current is not supported at all in Python3.  Uses the  same  sort order as the -s, --supported option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--supported",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the supported python3 versions",
+      "description": "List is lowest version to highest  version  with  the  default  version  last  (e.g.  python3.4 python3.6 python3.5 if python3.4, 3.5, and 3.6 are supported, but python3.5 is the default python3).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,17 +76,32 @@
     {
       "short": "-v",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print just the version number(s)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "-h",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

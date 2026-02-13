@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsls",
-  "description": null,
+  "description": "NTFSLS(8) System Manager's Manual NTFSLS(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display all files",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "If this option is not specified file names in the POSIX namespace will not be displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-F",
       "long": "--classify",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display classification",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-x",
       "long": "--dos",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use short (DOS 8.3) names",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-f",
       "long": "--force",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use less caution",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "For example necessary to run on an NTFS partition stored in a normal file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-i",
       "long": "--inode",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display inode numbers",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "This is the MFT reference number in NTFS terminology.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--long",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display long info",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-p",
       "long": "--path",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Directory whose contents to list",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Less output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--recursive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Recursively list subdirectories",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display system files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "More output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,15 +128,33 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display version information",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

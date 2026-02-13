@@ -1,74 +1,54 @@
 {
   "schema_version": "1.0.0",
   "command": "ldconfig",
-  "description": "Configure Dynamic Linker Run Time Bindings.",
+  "description": "ldconfig(8) System Manager's Manual ldconfig(8)",
   "global_flags": [
     {
-      "short": "-c",
+      "short": null,
       "long": "--format",
       "value_type": "String",
       "takes_value": true,
-      "description": "Format to use: new (default), old, or compat",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-?",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Give this help list",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": "--ignore-aux-cache",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignore auxiliary cache file",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": "--print-cache",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print cache",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--usage",
+      "long": "--ignore-aux-cache",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Give a short usage message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-v",
+      "short": null,
+      "long": "--print-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate verbose messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-V",
+      "short": null,
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print program version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +56,9 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Use CACHE as cache file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +66,19 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Don't build cache",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Don't rebuild the cache.  Unless -X is also specified, links are still updated.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print program version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +86,19 @@
     {
       "short": "-X",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Don't update links.  Unless -N is also specified, the cache is still rebuilt.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't update symbolic links",
+      "description": "glibc 2.2) Use cache format fmt, which is one of old, new, or compat.  Since glibc 2.32, the default is new.  Before that, it was compat.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,19 @@
     {
       "short": "-f",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Use CONF as configuration file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(Since glibc 2.7) Ignore auxiliary cache file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Manually link individual libraries.",
+      "description": "(Since glibc 2.2) Interpret each operand as a library name and configure its links.  Intended for use only by experts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only process directories specified on the command line. Don't build cache.",
+      "description": "Process only the directories specified on  the  command  line;  don't  process  the  trusted  directories,  nor  those  specified  in /etc/ld.so.conf.  Implies -N.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-nNvVX",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the lists of directories and candidate libraries stored in the current cache.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,17 +166,98 @@
     {
       "short": "-r",
       "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "Change to and use ROOT as root directory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Verbose  mode.  Print current version number, the name of each directory as it is scanned, and any links that are created.  Overrides quiet mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-nnvvx",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cache",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "conf",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "library",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "root",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

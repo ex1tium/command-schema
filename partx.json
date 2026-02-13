@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "partx",
-  "description": "Tell the kernel about the presence and numbering of partitions.",
+  "description": "PARTX(8) System Administration PARTX(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--add",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "add specified partitions or all of them",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--bytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print SIZE in bytes rather than in human readable format",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-d",
       "long": "--delete",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "delete specified partitions or all of them",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,17 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--list",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--list-types",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list supported partition types and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--noheadings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't print headings for --show",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--nr",
       "value_type": "String",
       "takes_value": true,
-      "description": "specify the range of partitions (e.g. --nr 2:4)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,9 @@
     {
       "short": "-o",
       "long": "--output",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "define which output columns to use",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--output-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output all columns",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +106,9 @@
     {
       "short": "-P",
       "long": "--pairs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use key=\"value\" output format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +116,9 @@
     {
       "short": "-r",
       "long": "--raw",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use raw output format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +126,9 @@
     {
       "short": "-S",
       "long": "--sector-size",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "overwrite sector size",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +136,9 @@
     {
       "short": "-s",
       "long": "--show",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "list partitions",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +148,7 @@
       "long": "--type",
       "value_type": "String",
       "takes_value": true,
-      "description": "specify the partition type",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +156,9 @@
     {
       "short": "-u",
       "long": "--update",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "update specified partitions or all of them",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose mode",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +178,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,6 +186,20 @@
   ],
   "subcommands": [],
   "positional": [
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "disk",
       "value_type": "String",
@@ -189,9 +213,16 @@
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "type",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

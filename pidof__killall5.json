@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "pidof",
-  "description": null,
+  "description": "PIDOF(8) Linux System Administrator's Manual PIDOF(8)",
   "global_flags": [
     {
       "short": "-c",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Return PIDs with the same root directory",
+      "description": "Only return process PIDs that are running with the same root directory.  This option is ignored for non-root users, as they  will  be unable to check the current root directory of processes they do not own.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,17 +18,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Use the provided character as output separator",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display this help text",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +26,9 @@
     {
       "short": "-n",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Avoid using stat system function on network shares",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Avoid  stat(2)  system function call on all binaries which are located on network based file systems like NFS.  Instead of using this option the variable PIDOF_NETFS may be set and exported.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +36,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Omit results with a given PID",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "pidof  to  omit processes with that process id. The special pid %PPID can be used to name the parent process of the pidof pro‐ gram, in other words the calling shell or shell script.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +46,9 @@
     {
       "short": "-q",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Quiet mode. Do not display output",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Do not display matched PIDs to standard out. Simply exit with a status of true or false to indicate whether a matching PID was found.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only return one PID",
+      "description": "Single shot - this instructs the program to only return one pid.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Return PIDs of shells running scripts with a matching name",
+      "description": "Scripts too - this causes the program to also return process id's of shells running the named scripts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,15 +78,79 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List zombie and I/O waiting processes. May cause pidof to hang.",
+      "description": "Try to detect processes which are stuck in zombie (Z) status. Usually these processes are skipped as trying to  deal  with  them  can cause  pidof or related tools to hang. Note: In the past pidof would ignore processes in the uninterruptable state (D), unless the -z flag was specified. This is no longer the case. The pidof program will find and report processes in the D state whether -z is  speci‐ fied or not.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-d",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-x",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-z",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "program",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sep",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,11 +1,31 @@
 {
   "schema_version": "1.0.0",
   "command": "killall",
-  "description": null,
+  "description": "KILLALL(1) User Commands KILLALL(1)",
   "global_flags": [
     {
       "short": "-Z",
       "long": "--context",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "given  extended  regular  expression  pattern. Must precede other arguments on the command line.  Command names are optional.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--exact",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "an  exact match for very long names.  If a command name is longer than 15 characters, the full name may be unavailable (i.e. it is swapped out).  In this case, killall will kill everything that matches within the first 15 characters.  With -e,  such  entries are skipped.  killall prints a message for each skipped entry if -v is specified in addition to -e.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": "--ignore-case",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -14,31 +34,11 @@
       "requires": []
     },
     {
-      "short": "-e",
-      "long": "--exact",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "require exact match for very long names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": "--ignore-case",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "case insensitive process name match",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-i",
       "long": "--interactive",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "ask for confirmation before killing",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-l",
       "long": "--list",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "list all known signal names",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--ns",
       "value_type": "String",
       "takes_value": true,
-      "description": "match processes that belong to the same namespaces as PID",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-o",
       "long": "--older-than",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "kill processes older than TIME",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "only  processes  that are older (started before) the time specified.  The time is specified as a float then a unit.  The units are s,m,h,d,w,M,y for seconds, minutes, hours, days, weeks, months and years respectively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-g",
       "long": "--process-group",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "kill process group instead of process",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The kill signal is only sent once per group, even if multiple processes belong‐ ing to the same process group were found.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-q",
       "long": "--quiet",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "don't print complaints",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-r",
       "long": "--regexp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "interpret NAME as an extended regular expression",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--signal",
       "value_type": "String",
       "takes_value": true,
-      "description": "send this signal instead of SIGTERM",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--user",
       "value_type": "String",
       "takes_value": true,
-      "description": "kill only process(es) running as USER",
+      "description": "Command names are optional.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "report if the signal was successfully sent",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display version information",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": "-w",
       "long": "--wait",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "wait for processes to die",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "killall checks once per second if any of the killed processes still exist and only returns  if none are left.  Note that killall may wait forever if the signal was ignored, had no effect, or if the process stays in zombie state.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,19 @@
     {
       "short": "-y",
       "long": "--younger-than",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "kill processes younger than TIME",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "only  processes that are younger (started after) the time specified.  The time is specified as a float then a unit.  The units are s,m,h,d,w,M,y for seconds, minutes, hours, days, weeks, Months and years respectively.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-SIGNAL",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -167,14 +177,140 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "NAME",
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-g",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-y",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-z",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
       "value_type": "String",
       "required": true,
-      "multiple": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "pattern",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "pid",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "signal",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "time",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "user",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-buildflags",
-  "description": null,
+  "description": "dpkg-buildflags(1) dpkg suite dpkg-buildflags(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--dump",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output all compilation flags with their values.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "to standard output all compilation flags and their values. It prints one flag per line separated from its value by an equal sign (“flag=value”). This is the default action.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--export",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "If the format value is not given, sh is assumed. Only compilation flags starting with an upper case character are included, others are assumed to not be",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": null,
       "long": "--get",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "output the requested flag to stdout.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Exits with 0 if the flag is known otherwise exits with 1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output a list of the flags supported by the current vendor.",
+      "description": "See the \"SUPPORTED FLAGS\" section for more information about them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,19 @@
     {
       "short": null,
       "long": "--origin",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the origin of the value that is returned by --get. Exits with 0 if the flag is known otherwise exits with 1. The origin can be",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--param",
       "value_type": "String",
       "takes_value": true,
-      "description": "output the origin of the flag to stdout: value is one of vendor, system, user, env.",
+      "description": "FCFLAGS. This adds safety checks against stack overwrites. This renders many potential code injection attacks into aborting situations. In the best case this turns code injection vulnerabilities into denial of service or into non-issues (depending on the application).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--query",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "like --status, but in deb822 format.",
+      "description": "compiler (since dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,9 @@
     {
       "short": null,
       "long": "--query-features",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the features enabled for a given area (since dpkg 1.16.2). If the feature is handled (even if only on some architectures) as a builtin default by the compiler, then a Builtin field is printed (since dpkg 1.21.14). See the \"FEATURE AREAS\" section for more details about the currently recognized areas. Exits with 0 if the area is known otherwise exits with 1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--status",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output a synopsis with all parameters affecting the program behavior, the resulting flags and their origin.",
+      "description": "any information that can be useful to explain the behavior of dpkg-buildflags (since dpkg 1.16.5): relevant environment variables, current vendor, state of all feature flags. Also print the resulting compiler flags with their origin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,15 +108,172 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O0",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Werror",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Wl",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fPIC",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fPIE",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ffreestanding",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "ENVIRONMENT",
+      "description": "No manual entry for dpkg-buildflags-ENVIRONMENT",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "FILES",
+      "description": "No manual entry for dpkg-buildflags-FILES",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

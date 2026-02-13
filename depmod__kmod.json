@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "depmod",
-  "description": "If no arguments (except options) are given, \"depmod -a\" is assumed",
+  "description": "DEPMOD(8) depmod DEPMOD(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Probe all modules",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--basedir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "Use an image of a module tree.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-C",
       "long": "--config",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Read configuration from PATH",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-e",
       "long": "--errsyms",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Report not supplied symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-F",
       "long": "--filesyms",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Use the file instead of the current kernel symbols.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-o",
       "long": "--outdir",
-      "value_type": "File",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "Output directory for generated files.",
+      "description": "outdir serves as a root to that location, similar to how basedir is used. Also this setting takes precedence and if used together with basedir it will result in the input being that directory, but the output being the one set by outdir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-A",
       "long": "--quick",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Only does the work if there's a new module",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,19 +86,9 @@
     {
       "short": "-n",
       "long": "--show",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Write the dependency file on stdout only",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": "--symbol-prefix",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Architecture symbol prefix",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +96,9 @@
     {
       "short": "-E",
       "long": "--symvers",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Use Module.symvers file to check symbol versions.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +106,9 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable verbose mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,17 +118,37 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show version",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r).",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-w",
-      "long": "--warn",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Warn on duplicates",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -147,14 +157,119 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "forced_version",
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "basedir",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": false,
+      "multiple": true,
+      "description": null
+    },
+    {
+      "name": "module.symvers",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "outdir",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "prefix",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "system.map",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "version",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "gpg-connect-agent",
-  "description": "gpg-connect-agent (GnuPG) 2.4.4",
+  "description": "GPG-CONNECT-AGENT(1) GNU Privacy Guard 2.4 GPG-CONNECT-AGENT(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--agent-program",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  agent  program  to  be  started if none is running.  The default value is determined by running gpgconf with the option",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--chuid",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  current  user to uid which may either be a number or a name.  This can be used from the root account to run gpg-connect- agent for another user.  If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is  unset.   To  override  the latter the option --homedir can be used.  This option has only an effect when used on the command line.  This option has currently no effect at all on Windows.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--decode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "decode received data lines",
+      "description": "That is to remove percent escapes but make sure that a new line always starts with a D and a space.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,17 +38,27 @@
       "long": "--dirmngr",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "connect to the dirmngr",
+      "description": "If a dirmngr is not running, start it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-E",
+      "short": null,
+      "long": "--dirmngr-program",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This has only an effect if used  together with the option --dirmngr.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--exec",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run the Assuan server given on the command line",
+      "description": "the  rest  of  the  command  line as a program and it's arguments and execute it as an Assuan server. Here is how you would run gpgsm: gpg-connect-agent --exec gpgsm --server Note that you may not use options on the command line in this case.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +66,19 @@
     {
       "short": null,
       "long": "--hex",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print data lines in a hex format and the ASCII representation of non-control characters.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--homedir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print data out hex encoded",
+      "description": "It is only  recog‐ nized  when  given  on the command line.  It also overrides any home directory stated through the environment variable ‘GNUPGHOME’ or (on Windows systems) by means of the Registry entry HKCU\\Software\\GNU\\GnuPG:HomeDir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +88,37 @@
       "long": "--keyboxd",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "connect to the keyboxd",
+      "description": "If a keyboxd is not running, start it.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keyboxd-program",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the keybox daemon program to be started if none is running.  This has only an effect if used together with the option --key‐ boxd.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--list-dirs.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Note that the pipe symbol (|) is used for a regression test suite hack and may thus not be used in the file name.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-autostart",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +126,9 @@
     {
       "short": null,
       "long": "--no-ext-connect",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not use extended connect mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "using  -S or --exec, gpg-connect-agent connects to the Assuan server in extended mode to allow descriptor passing.  This option makes it use the old mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,67 +138,137 @@
       "long": "--no-history",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not use the command history file",
+      "description": "directory.   This option inhibits the use of that file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-q",
+      "short": null,
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "quiet",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--raw-socket",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not run any special initializations or environment checks.   This may be used to directly connect to any Assuan style socket server.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--run",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Note, that commands given on the command line are executed after this file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--subst",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unbuffered",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This this sometimes useful for scripting.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-S",
-      "long": "--raw-socket",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "connect to Assuan socket NAME",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-r",
-      "long": "--run",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "run commands from FILE on startup",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-s",
-      "long": "--subst",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run /subst on startup",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-T",
-      "long": "--tcp-socket",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "connect to Assuan server at ADDR",
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": "--verbose",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,7 +276,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.8,
-  "version": "2.4.4"
+  "version": "2.4"
 }

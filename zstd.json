@@ -1,24 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "zstd",
-  "description": "*** Zstandard CLI (64-bit) v1.5.5, by Yann Collet ***",
+  "description": "ZSTD(1) User Commands ZSTD(1)",
   "global_flags": [
     {
-      "short": null,
-      "long": "--adapt",
+      "short": "-#",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Dynamically adapt compression level to I/O conditions.",
+      "description": "Use # compression level during training (optional). Will generate statistics more tuned for selected compression level, resulting  in a small compression ratio improvement for this level.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--auto-threads",
-      "value_type": "String",
-      "takes_value": true,
+      "short": "-9.",
+      "long": "--best",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": "--compress",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This  is the default operation mode when no operation mode option is specified and no other operation mode is implied from the command name (for example, unzstd implies --decompress).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +38,7 @@
       "long": "--decompress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Perform decompression.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,89 +46,19 @@
     {
       "short": null,
       "long": "--dictID",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Force dictionary ID to #. [Default: Random]",
+      "description": "zstd will  create a 4-bytes random number ID. It´s possible to provide an explicit number ID instead. It´s up to the dictionary manager to not assign twice the same ID to 2 different dictionaries. Note that short numbers have an advantage: an ID < 256  will  only  need  1 byte in the compressed frame header, and an ID < 65536 will only need 2 bytes. This compares favorably to 4 bytes default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--exclude-compressed",
+      "short": "-l",
+      "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only compress files that are not already compressed.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fast",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use to very fast compression levels. [Default: 1]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--filelist",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Read a list of files to operate on from LIST.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": "--force",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Disable input and output checks. Allows overwriting existing files, receiving input from the console, printing output to STDOUT, and operating on links, block devices, etc. Unrecognized formats will be passed-through through as-is.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--format",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Compress files to the `.zst` format. [Default]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-H",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display full help and exit.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-k",
-      "long": "--keep",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Preserve INPUT file(s). [Default]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--long",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Enable long distance matching with window log #. [Default: 27]",
+      "description": "available. This command´s output can be augmented with the -v modifier.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,87 +68,27 @@
       "long": "--maxdict",
       "value_type": "String",
       "takes_value": true,
-      "description": "Limit dictionary to specified size #. [Default: 112640]",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--mmap-dict",
-      "value_type": "File",
+      "short": "-M#",
+      "long": "--memory",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "Memory-map dictionary file rather than mallocing and loading all at once --format=gzip Compress files to the `.gz` format.",
+      "description": "be  useful  in situations where the training set size is not well controlled and could be potentially very large. Since speed of the training process is directly correlated to the size of the training sample set, a smaller sample set leads to faster training.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--no-dictID",
+      "short": "-n",
+      "long": "--no-name",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't write `dictID` into the header (dictionary compression only). --[no-]compress-literals Force (un)compressed literals. --[no-]row-match-finder Explicitly enable/disable the fast, row-based matchfinder for the 'greedy', 'lazy', and 'lazy2' strategies.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--output-dir-flat",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Store processed files in DIR.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--output-dir-mirror",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Store processed files in DIR, respecting original directory structure. --[no-]asyncio Use asynchronous IO. [Default: Enabled]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--patch-from",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use REF as the reference point for Zstandard's diff engine.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--priority",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set process priority to real-time.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": "--quiet",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Suppress warnings; pass twice to suppress errors.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--rm",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove INPUT file(s) after successful (de)compression.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,77 +98,17 @@
       "long": "--rsyncable",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Compress using a rsync-friendly method (`-B` sets block size).",
+      "description": "with  many parallel worker threads. This feature does not work with --single-thread. You probably don´t want to use it with long range mode, since it will decrease the effectiveness of the synchronization points, but your mileage may vary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--single-thread",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Share a single thread for I/O and compression (slightly different than `-T1`).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--size-hint",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Optimize compression parameters for streaming input of approximately size #.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": "--stdout",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Write to STDOUT (even if it is a console) and keep the INPUT file(s).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--stream-size",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specify size of streaming input from STDIN.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--target-compressed-block-size",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-t",
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Test compressed file integrity.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--trace",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Log tracing information to LOG.",
+      "description": "decompressed  data  is  dis‐ carded and checksummed for errors. No files are created or removed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -296,109 +116,59 @@
     {
       "short": null,
       "long": "--train",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Create a dictionary from a training set of files.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "FILES  as  a  training  set to create a dictionary. The training set should contain a lot of small files (> 100). See DICTIONARY BUILDER below for a description of this operation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--train-cover",
+      "long": "--train-cover[",
       "value_type": "String",
       "takes_value": true,
+      "description": "parameters for the default dictionary builder algorithm named cover. If d is not specified, then it tries d = 6 and d = 8. If k is not specified, then it tries steps values in the range [50, 2000]. If steps is not specified, then the default value  of  40  is used.  If  split  is  not specified or split <= 0, then the default value of 100 is used. Requires that d <= k. If shrink flag is not used, then the default value for shrinkDict of 0 is used. If shrink is not specified, then the default value for shrinkDictMaxRegres‐ sion of 1 is used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B#",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Split input files into blocks of size # (default: no split)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T0",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--train-fastcover",
-      "value_type": "String",
+      "short": "-b#",
+      "long": null,
+      "value_type": "File",
       "takes_value": true,
+      "description": "Benchmark file(s) using compression level #. See BENCHMARK below for a description of this operation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dcf",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--train-legacy",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use the legacy algorithm with selectivity #. [Default: 9]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--ultra",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable levels beyond 19, up to 22; requires more memory.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable verbose output; pass multiple times to increase verbosity.",
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display the program version and exit.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use DICT as the dictionary for compression or decompression.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Output one benchmark result per input file. [Default: Consolidated result]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display short usage and exit.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print information about Zstandard-compressed files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -406,19 +176,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Write output to a single file, OUTPUT.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Operate recursively on directories.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -427,21 +187,35 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "INPUT",
+      "name": "equivalent",
       "value_type": "String",
-      "required": false,
-      "multiple": true,
+      "required": true,
+      "multiple": false,
       "description": null
     },
     {
-      "name": "OUTPUT",
+      "name": "is",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "zstd",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "1.5.5"
+  "version": null
 }

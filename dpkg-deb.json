@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-deb",
-  "description": null,
+  "description": "dpkg-deb(1) dpkg suite dpkg-deb(1)",
   "global_flags": [
     {
       "short": null,
-      "long": "--ctrl-tarfile",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Output control tarfile.",
+      "long": "--[no-]uniform-compression",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1.17.6). Otherwise  only  the  data.tar  member will use those parameters.  The only supported compression types allowed to be uniformly used are none, gzip, xz and zstd.  The --no-uniform-compression option disables uniform compression (since dpkg 1.19.0).  Uniform compression  is the default (since dpkg 1.19.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--deb-format",
       "value_type": "String",
       "takes_value": true,
-      "description": "Select archive format. Allowed values: 0.939000, 2.0 (default).",
+      "description": "Allowed values are 2.0 for the new format, and 0.939000 for  the old one (default is 2.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,27 +28,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable debugging output.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fsys-tarfile",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Output filesystem tarfile.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-?",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show this help message.",
+      "description": "This is not very interesting.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +38,7 @@
       "long": "--nocheck",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Suppress control file check (build bad packages).",
+      "description": "You can build any archive  you  want,  no  matter  how broken, this way.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +48,7 @@
       "long": "--root-owner-group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Forces the owner and groups to root.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +58,7 @@
       "long": "--showformat",
       "value_type": "String",
       "takes_value": true,
-      "description": "Use alternative format for --show.",
+      "description": "option  is  used  to  specify  the  format of the output --show will produce.  The format is a string that will be output for each package listed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +68,7 @@
       "long": "--threads-max",
       "value_type": "String",
       "takes_value": true,
-      "description": "Use at most <threads> with compressor. --[no-]uniform-compression Use the compression params on all members.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,115 +78,54 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable verbose output.",
+      "description": "This currently only affects --extract making it behave like --vextract.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--version",
+      "short": "-Scompress-strategy",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show the version.",
+      "description": "Allowed  values  are none (since dpkg 1.16.4), filtered, huffman, rle and fixed for gzip (since dpkg 1.17.0) and extreme for xz.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-I",
+      "short": "-Zcompress-type",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Show info to stdout.",
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "which  compression  type  to  use  when  building a package.  Allowed values are gzip, xz (since dpkg 1.15.6), zstd (since dpkg 1.21.18) and none (default is zstd).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-W",
+      "short": "-zcompress-level",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Show information on package(s)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Extract & list files.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "Build an archive.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "List contents.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Show field(s) to stdout.",
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Extract files.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "gzip,  6  for  xz,  19  for zstd).   The accepted values are compressor specific.  For gzip, from 0-9 with 0 being mapped to compressor none.  For xz from 0-9.  For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.  Before dpkg 1.16.2 level 0 was equivalent to compressor none for all compressors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "problems",
+      "description": "dpkg-deb will also check the permissions of the maintainer scripts and other files found in the DEBIAN control information directory.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

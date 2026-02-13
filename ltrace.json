@@ -1,25 +1,15 @@
 {
   "schema_version": "1.0.0",
   "command": "ltrace",
-  "description": "Trace library calls of a given program.",
+  "description": "LTRACE(1) User Commands LTRACE(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--align",
       "value_type": "String",
       "takes_value": true,
-      "description": "align return values in a secific column.",
+      "description": null,
       "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": "--config",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "load alternate configuration file (may be repeated).",
-      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -28,7 +18,7 @@
       "long": "--debug",
       "value_type": "String",
       "takes_value": true,
-      "description": "enable debugging (see -Dh or --debug=help).",
+      "description": "debugging  output  of ltrace itself.  mask is a number with internal meaning that's not really well defined at all.  mask of 77 shows all debug messages, which is what you usually need.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +28,7 @@
       "long": "--demangle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "decode low-level symbol names into user-level names.",
+      "description": "Besides removing any initial underscore prefix used by  the  system, this makes C++ function names readable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +48,7 @@
       "long": "--indent",
       "value_type": "String",
       "takes_value": true,
-      "description": "indent output by NR spaces for each call level nesting.",
+      "description": "trace output by nr spaces for each level of call nesting. Using this option makes the program flow visualization easy to fol‐ low.  This indents uselessly also functions that never return, such as service functions for throwing exceptions in the C++ runtime.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +58,7 @@
       "long": "--library",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Multiple library patters can be specified  with several instances of this option.  Syntax of library_pattern is described in section FILTER EXPRESSIONS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +66,9 @@
     {
       "short": "-b",
       "long": "--no-signals",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "don't print signals.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +88,17 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": "--where",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "support  was  enabled  at  compile time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,17 @@
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": "maximum number of array elements to print.",
+      "description": "This also limits number of recursive structure expansions.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Use  this option  to  load  the given file or files instead of those two default files.  See ltrace.conf(5) for details on the syntax of ltrace configuration files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +126,9 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do NOT display library calls.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "When no -e option is given, don't assume the default action of @MAIN.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +136,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "trace system calls as well as library calls.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display system calls as well as library calls",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +146,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show the time spent inside each call.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show  the  time  spent inside each call. This records the time difference between the beginning and the end of each call.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "count time and calls, and report a summary on exit.",
+      "description": "Count time and calls for each library call and report a summary on program exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "modify which library calls to trace.",
+      "description": "The format of the filter expression is described in the section FILTER EXPRESSIONS.  If more than one -e option appears on the command line, the library calls that match any of them are traced.  If no -e is given, @MAIN is assumed as a default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +178,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "trace children (fork() and clone()).",
+      "description": "Trace child processes as they are created by currently traced processes as a result of the fork(2) or clone(2) system calls.  The new process is attached immediately.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print instruction pointer at time of library call.",
+      "description": "Print the instruction pointer at the time of the library call.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +198,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "attach to the process with the process ID pid.",
+      "description": "This option can be used together with passing a command to execute. It is possible to attach to several processes by passing more than one option -p.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print relative timestamps.",
+      "description": "Print a relative timestamp with each line of the trace.  This records the time difference between the beginning of successive lines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +216,9 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "specify the maximum string size to print.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print absolute timestamps.",
+      "description": "Prefix each line of the trace with the time of day.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-tt",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If given twice, the time printed will include the microseconds.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ttt",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If given thrice, the time printed will include the microseconds and the leading portion will be printed  as  the  number  of  seconds since the epoch.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +256,9 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "run command with the userid, groupid of username.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "command  with the userid, groupid and supplementary groups of username.  This option is only useful when running as root and en‐ ables the correct execution of setuid and/or setgid binaries.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,15 +268,142 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "modify which static functions to trace.",
+      "description": "The format of the filter expression is described in the  section  FILTER  EXPRESSIONS.   If  more  than one -x option appears on the command line, the symbols that match any of them are traced.  No entry points are traced if no -x is given.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-x",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "column",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filter",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mask",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "maxelts",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "nr",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "pid",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "strsize",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "username",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

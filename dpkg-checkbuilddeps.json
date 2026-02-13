@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-checkbuilddeps",
-  "description": null,
+  "description": "dpkg-checkbuilddeps(1) dpkg suite dpkg-checkbuilddeps(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "The default location is /var/lib/dpkg.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,49 +36,43 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "ignore Build-Depends-Arch and Build-Conflicts-Arch.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Ignore  Build-Depends-Arch  and  Build-Conflicts-Arch  lines  (since  dpkg 1.16.4).  Use when only arch-indep packages will be built, or combine with -B when only a source package is to be built.",
       "multiple": false,
       "conflicts_with": [
-        "-Dep",
-        "-Arc",
-        "-Con"
+        "-B"
       ],
       "requires": []
     },
     {
       "short": "-B",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "ignore Build-Depends-Indep and Build-Conflicts-Indep.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Ignore Build-Depends-Indep and Build-Conflicts-Indep lines.  Use when only arch-dep packages will be built, or combine with -A when only a source package is to be built.",
       "multiple": false,
       "conflicts_with": [
-        "-Dep",
-        "-Ind",
-        "-Con"
+        "-A"
       ],
       "requires": []
     },
     {
       "short": "-I",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "ignore built-in build dependencies and conflicts.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Ignore built-in build depends and conflicts (since dpkg 1.18.2).  These are  implicit  dependencies  that  are  usually  required  on  a specific distribution, the so called Build-Essential package set.",
       "multiple": false,
-      "conflicts_with": [
-        "-in"
-      ],
+      "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-P",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "assume given build profiles (comma-separated list)",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "The argument is a comma-separated list of profile names.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +82,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "assume given host architecture",
+      "description": "build  dependencies/conflicts  assuming  that  the  package  described  in  the  control  file  is to be built for the given host architecture instead of the architecture of the current system (since dpkg 1.16.2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +92,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use given string for build conflicts instead of retrieving them from control file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +102,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use given string as build dependencies instead of retrieving them from control file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -124,7 +118,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

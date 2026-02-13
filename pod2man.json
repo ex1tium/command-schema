@@ -1,14 +1,44 @@
 {
   "schema_version": "1.0.0",
   "command": "pod2man",
-  "description": null,
+  "description": "POD2MAN(1) Perl Programmers Reference Guide POD2MAN(1)",
   "global_flags": [
+    {
+      "short": "-c",
+      "long": "--center",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Sets the centered page header for the \".TH\" macro to string.  The default is \"User Contributed Perl Documentation\", but also see",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--date",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "By default, the first  of  POD_MAN_DATE,  SOURCE_DATE_EPOCH,  the modification  date  of the input file, or the current date (if input comes from \"STDIN\") will be used, and the date will be in UTC.  See \"CLASS METHODS\" in Pod::Man for more details.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--encoding",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "encoding must be an encoding recognized by the Encode module (see Encode::Supported).  The default on non-EBCDIC systems is UTF-8.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--errors",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "\"die\" says to throw an exception on any POD formatting error.  \"stderr\" says to report errors  on standard  error,  but  not to throw an exception.  \"pod\" says to include a POD ERRORS section in the resulting documentation summarizing the errors.  \"none\" ignores POD errors entirely, as much as possible.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +48,7 @@
       "long": "--fixed",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Defaults to \"CW\".  Some systems may want \"CR\" instead.  Only matters  for troff output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +58,7 @@
       "long": "--fixedbold",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Defaults to \"CB\".  Only matters for troff output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +68,7 @@
       "long": "--fixedbolditalic",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Pod::Man doesn't assume you have this, and defaults to \"CB\".  Some systems (such as Solaris) have this font available as \"CX\".  Only matters for troff output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +78,7 @@
       "long": "--fixeditalic",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Defaults to \"CI\".  Only matters for troff output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,8 +88,8 @@
       "long": "--guesswork",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "description": "By  default,  pod2man applies some default formatting rules based on guesswork and regular expressions that are intended to make writing Perl documentation easier and require less explicit markup.  These  rules  may  not  always  be  appropriate,  particularly  for documentation that isn't about Perl.  This option allows turning all or some of it off.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -76,9 +106,9 @@
     {
       "short": null,
       "long": "--language",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "given  language.   The  value  of  this  setting  must  be  a  language abbreviation for which groff provides supplemental configuration, such as \"ja\" (for Japanese) or \"zh\" (for Chinese).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,7 @@
       "long": "--lax",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "No  longer  used.   pod2man  used to check its input for validity as a manual page, but this should now be done by podchecker(1) instead.  Accepted for backward compatibility; this option no longer does anything.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -104,11 +134,21 @@
       "requires": []
     },
     {
+      "short": "-n",
+      "long": "--name",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Without this option, the manual name is set to the uppercased  base name  of  the  file being converted unless the manual section is 3, in which case the path is parsed to see if it is a Perl module path. If it is, a path like \".../lib/Pod/Man.pm\" is converted into a name like \"Pod::Man\".  This option, if  given,  overrides  any  automatic determination of the name.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--nourls",
-      "value_type": "String",
+      "value_type": "Url",
       "takes_value": true,
-      "description": null,
+      "description": "Normally,  L<>  formatting  codes  with a URL but anchor text are formatted to show both the anchor text and the URL.  In other words:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -124,11 +164,41 @@
       "requires": []
     },
     {
+      "short": "-q",
+      "long": "--quotes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If quotes is a single character, it is used as both the left and right quote.   Otherwise,  it is split in half, and the first half of the string is used as the left quote and the second is used as the right quote.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--release",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "By default, this is set to the version of Perl you  run  pod2man  under. Setting this to the empty string will cause some *roff implementations to use the system default value.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--rquote",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "--lquote sets the left quote mark  and  --rquote  sets  the  right  quote  mark. Either may also be set to the special value \"none\", in which case no quote mark is added on that side of C<> text (but the font is still changed for troff output).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--section",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Set  the  section  for  the  \".TH\" macro.  The standard section numbering convention is to use 1 for user commands, 2 for system calls, 3 for functions, 4 for devices, 5 for file formats, 6 for games,  7  for  miscellaneous  information,  and  8  for  administrator commands.   There  is  a  lot  of  variation  here,  however;  some  systems  (like Solaris) use 4 for file formats, 5 for miscellaneous information, and 7 for devices.  Still others use 1m instead of 8, or some mix of  both.   About  the  only  section  numbers  that  are reliably consistent are 1, 2, and 3.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +208,7 @@
       "long": "--stderr",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "By  default,  pod2man  dies if any errors are detected in the POD input.  If --stderr is given and no --errors flag is present, errors are sent to standard error, but pod2man does not abort.  This is equivalent to \"--errors=stderr\" and is  supported  for  backward compatibility.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +218,7 @@
       "long": "--utf8",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This  option used to tell pod2man to produce UTF-8 output.  Since this is now the default as of version 5.00, it is ignored and does nothing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -162,80 +232,45 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
   "positional": [
+    {
+      "name": "--nourls",
+      "value_type": "Url",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--official",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--stderr",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--utf8",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--verbose",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "input",
       "value_type": "String",
@@ -251,7 +286,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

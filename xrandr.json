@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "xrandr",
-  "description": null,
+  "description": "XRANDR(1) General Commands Manual XRANDR(1)",
   "global_flags": [
     {
       "short": null,
@@ -16,8 +16,8 @@
     {
       "short": null,
       "long": "--addmode",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -46,9 +46,9 @@
     {
       "short": null,
       "long": "--brightness",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "value.  Useful  for  overly  bright  or overly  dim  outputs.  However, this is a software only modification, if your hardware has support to actually change the brightness, you will probably prefer to use xbacklight.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": null,
       "long": "--crtc",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  specified  crtc  (either as an index in the list of CRTCs or XID).  In normal usage, this option is not required as xrandr tries to make sensible choices about which crtc to use with each output. When that fails for some reason, this  option  can  override the normal selection.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,8 +76,8 @@
     {
       "short": null,
       "long": "--delmode",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -86,15 +86,15 @@
     {
       "short": null,
       "long": "--delmonitor",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-d",
       "long": "--display",
       "value_type": "String",
       "takes_value": true,
@@ -106,8 +106,8 @@
     {
       "short": null,
       "long": "--dpi",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -126,9 +126,9 @@
     {
       "short": null,
       "long": "--fb",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  screen to the specified size. All configured monitors must fit within this size. When this option is not provided, xrandr computes the smallest screen size that will hold the set of configured outputs; this option provides a way  to  override  that behaviour.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--fbmm",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "monitors  with different DPIs, the value has no physical meaning, but it may be used by some legacy clients which do not support RandR version 1.2 to compute a reference font scaling. Normally, xrandr resets the reported physical size values to keep the DPI con‐ stant.  This overrides that computation. Default DPI value is 96.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--filter",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Can be either 'bilinear' or 'nearest'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": null,
       "long": "--gamma",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If green and blue are not specified,  the  red  value  will be used for all three components.  Note that you cannot get two different values for cloned outputs (i.e.: which share the same crtc) and that switching an output to another crtc doesn't change the crtc gamma corrections at all.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": null,
       "long": "--left-of",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "one of these options to position the output relative to the position of another output. This allows convenient tiling of outputs within the screen.  The position is always computed relative to the new position of the other output, so  it  is  not  valid  to  say",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,10 +226,10 @@
     {
       "short": null,
       "long": "--newmode",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option does the former. The mode is specified  using the  ModeLine  syntax for xorg.conf: clock hdisp hsyncstart hsyncend htotal vdisp vsyncstart vsyncend vtotal flags. flags can be zero or more of +HSync, -HSync, +VSync, -VSync, Interlace, DoubleScan, CSync, +CSync, -CSync. Several tools permit to  compute  the  usual modeline from a height, width, and refresh rate, for instance you can use cvt.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -238,7 +238,7 @@
       "long": "--nograb",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the modifications without grabbing the screen. It avoids to block other applications during the update but it might also cause some applications that detect screen resize to receive old values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,6 +258,16 @@
       "long": "--off",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "Disables the output.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--orientation",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -266,8 +276,8 @@
     {
       "short": null,
       "long": "--output",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -278,7 +288,7 @@
       "long": "--panning",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "As soon as panning is enabled, the CRTC position can change with every pointer  move.   The first  four parameters specify the total panning area, the next four the pointer tracking area (which defaults to the same area). The last four parameters specify the border and default to 0. A width or height set to zero disables panning on the according  axis.  You typically have to set the screen size with --fb simultaneously.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -286,9 +296,9 @@
     {
       "short": null,
       "long": "--pos",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the output within the screen using pixel coordinates. In case reflection or rotation is applied, the translation is applied after the effects.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,9 +316,9 @@
     {
       "short": null,
       "long": "--primary",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "It will be sorted first in Xinerama and RANDR geometry requests.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -325,10 +335,40 @@
     },
     {
       "short": null,
-      "long": "--rate",
+      "long": "--q1",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Forces the usage of the RandR version 1.1 protocol, even if a higher version is available.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--q12",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Forces the usage of the RandR version 1.2 protocol, even if the display does not report it as supported or a higher version is avail‐ able.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--query",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Please note that the gamma and brightness information are only approximations of the complete color profile stored in the server. When used along with options that reconfigure the system, progress will be reported while executing the configuration changes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the one with the nearest refresh rate.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -356,8 +396,8 @@
     {
       "short": null,
       "long": "--rmmode",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -386,6 +426,16 @@
     {
       "short": null,
       "long": "--scale",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If the y value is omitted, the x value will  be  used  for  both  dimensions.   Values larger  than  1  lead  to a compressed screen (screen dimension bigger than the dimension of the output mode), and values less than 1 lead to a zoom in on the output.  This option is actually a shortcut version of the --transform option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--scale-",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -396,9 +446,9 @@
     {
       "short": null,
       "long": "--scale-from",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option is actually a shortcut  ver‐ sion of the --transform option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -416,9 +466,9 @@
     {
       "short": null,
       "long": "--set",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an  output property. Integer properties may be specified as a valid (see --prop) comma-separated list of decimal or hexadecimal (with a leading 0x) values.  Atom properties may be set to any of the valid atoms (see --prop).  String properties may be set to  any value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -426,24 +476,19 @@
     {
       "short": null,
       "long": "--setmonitor",
-      "value_type": {
-        "Choice": [
-          "auto",
-          "<w>/<mmw>x<h>/<mmh>+<x>+<y>"
-        ]
-      },
-      "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The output list is either the keyword  none  or  a comma-separated  list  of  outputs.   The geometry is either the keyword auto, in which case the monitor will automatically track the geometry of the associated outputs, or a manual specification in the form w/mmwxh/mmh+x+y where w, h, x, y are in pixels and mmw, mmh are the physical dimensions of the monitor.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--setprovideroffloadsink",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "provider  as  a render offload device for sink.  This is only possible if provider and sink have the Source Offload and Sink Of‐ fload capabilities, respectively.  If sink is 0x0, then provider is disconnected from its current render offload sink.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -451,6 +496,16 @@
     {
       "short": null,
       "long": "--setprovideroutputsource",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is only possible if source and provider have the Source  Output and Sink Output capabilities, respectively.  If source is 0x0, then provider is disconnected from its current output source.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--size",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -461,39 +516,19 @@
     {
       "short": null,
       "long": "--transform",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "a transformation matrix to apply on the output.  A bilinear filter is selected automatically unless the --filter parameter is also specified.  The mathematical form corresponds to: a b c d e f g h i The transformation is based on homogeneous coordinates. The matrix multiplied by the coordinate vector of a pixel of the output gives the transformed coordinate vector of a pixel in the graphic buffer.  More precisely, the vector (x y) of the output pixel is extended to 3 values (x y w), with 1 as the w coordinate and multiplied against the matrix. The final device coordinates of the pixel are then calculated with the so-called homogenic division by the transformed w coordinate.  In other words, the device coordinates (x' y')  of the transformed pixel are: x' = (ax + by + c) / w'   and y' = (dx + ey + f) / w'   , with  w' = (gx + hy + i)  . Typically,  a  and  e corresponds to the scaling on the X and Y axes, c and f corresponds to the translation on those axes, and g, h, and i are respectively 0, 0 and 1. The matrix can also be used to express more complex transformations such as  keystone  correction, or rotation.  For a rotation of an angle T, this formula can be used: cos T  -sin T   0 sin T   cos T   0 0       0      1 As  a  special argument, instead of passing a matrix, one can pass the string none, in which case the default values are used (a unit matrix without filter).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--version",
       "value_type": "String",
       "takes_value": true,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or --query",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -509,31 +544,11 @@
       "requires": []
     },
     {
-      "short": "-s",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or --version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-x",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(reflect in x)",
+      "description": "Reflect across the X axis.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -543,15 +558,569 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(reflect in y)",
+      "description": "Reflect across the Y axis.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "--above",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--addmode",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--auto",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--below",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--brightness",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--crtc",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--current",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--delmode",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--delmonitor",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--display",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--dpi",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--dryrun",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--fb",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--fbmm",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--gamma",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--help",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--left-of",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--listactivemonitors",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--listmonitors",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--listproviders",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--mode",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--newmode",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--noprimary",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--off",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--output",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--panning",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--pos",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--preferred",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--primary",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--prop",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--q1",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--q12",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--rate",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--reflect",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--right-of",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--rmmode",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--rotate",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--same-as",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--scale",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--scale-",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--screen",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--set",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--setmonitor",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--setprovideroffloadsink",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--setprovideroutputsource",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--transform",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--verbose",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-x",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-y",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "brightness",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "crtc",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "display",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dpi",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "from",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "from-output",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "geometry",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mode",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "orientation",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "output",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "outputs",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "property",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "provider",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rate",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "reflection",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sink",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "snum",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "source",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tion",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "value",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "widthxheight",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "wxh",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "xxy",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

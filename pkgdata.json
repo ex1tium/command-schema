@@ -1,273 +1,212 @@
 {
   "schema_version": "1.0.0",
   "command": "pkgdata",
-  "description": "Produce packaged ICU data from the given list(s) of files.",
+  "description": "PKGDATA(1) ICU 74.2 Manual PKGDATA(1)",
   "global_flags": [
     {
-      "short": "-?",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "This usage text",
+      "short": "-O",
+      "long": "--bldopt",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Such  options  in‐ clude, but are not limited to, setting variables used by make(1) during the build of the packaged file. Note: If icu-config is avail‐ able, then this option is not needed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use a custom comment (instead of the copyright)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Force rebuilding of all data",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Install the data (specify target)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Library name to build (if different than package name)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": null,
-      "value_type": "Directory",
+      "long": "--comment",
+      "value_type": "String",
       "takes_value": true,
-      "description": "The directory where the ICU is located (e.g. <ICUROOT> which contains the bin directory)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify temporary dir (default: output dir)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify the DLL machine architecture for LINK.exe (Windows build only)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignored. Enable DYNAMICBASE on the DLL. This is now the default. (Windows build only)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use the standard ICU copyright",
+      "long": "--copyright",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-d",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify the destination directory for files",
+      "long": "--destdir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "The default destination directory is the current directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-e",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a custom entrypoint name (default: short name)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Add package to all file names if not present",
+      "long": "--entrypoint",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default entry point name  is  the name set by the -n, --name option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-h",
-      "long": null,
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This usage text",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": "--install",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-m",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify the mode of building (see below; default: common)",
+      "long": "--mode",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the packaging mode to be used by pkgdata.  The different modes and their meaning are explained in the DESCRIPTION section above. The valid mode names are common (or archive), dll (or library), and files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Quiet mode. (e.g. Do not output a readme file for static libraries)",
+      "short": "-p",
+      "long": "--name",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  packaged file name to name.  This name is also used as the default entry point name after having been turned into a valid C identifier.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": "--rebuild",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a version when packaging in dll or static mode",
+      "long": "--revision",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "versioning  of the shared library produced in dll, or library, mode. The version number has the format major.minor.patchlevel and all parts except for major are optional. If only major is supplied then the version is assumed to be major.0 for versioning  pur‐ poses.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a custom source directory",
+      "long": "--sourcedir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "The default source directory is the current directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Build for Universal Windows Platform (Windows build only)",
+      "short": "-T",
+      "long": "--tempdir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "the directory used to generate temporary files to directory.  The default temporary directory is the same as the destination di‐ rectory as set by the -d, --destdir option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Make the output verbose",
+      "long": "--verbose",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-w",
+      "short": "-?",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Build the data without assembly code",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-z",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Build PDS dataset (zOS build only)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [
-    {
-      "name": "common",
-      "description": "/ archive Generates one common data file, <package>.dat",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "dll",
-      "description": "/ library Generates one shared library, <package>.so",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "files",
-      "description": "Uses raw data files (no effect). Installation copies all files to the target location.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "static",
-      "description": "/ static Generates one statically linked library, lib<package>.a",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    }
-  ],
+  "subcommands": [],
   "positional": [
     {
-      "name": "packageFile",
-      "value_type": "File",
-      "required": false,
+      "name": "comment",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "destination",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mode",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "source",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "version",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 1.0,
-  "version": null
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": "74.2"
 }

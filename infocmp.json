@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "infocmp",
-  "description": null,
+  "description": "infocmp(1) User commands infocmp(1)",
   "global_flags": [
     {
       "short": "-0",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print single-row",
+      "description": "causes the fields to be printed on one line, without wrapping.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,103 +18,13 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print single-column",
+      "description": "causes the fields to be printed out one to a line.  Otherwise, the fields will be printed several to a line to a maximum  width  of  60 characters.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use termcap-names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print database locations",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-E",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "format output as C tables",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "compare terminfo-files",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-G",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "format %{number} to %'char'",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use terminfo-names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-K",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use termcap-names and BSD syntax",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use long names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "dump compiled description",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
+      "short": "-1cCdDeEFgGiIKlLnpqrtTuUVWx",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -124,11 +34,141 @@
       "requires": []
     },
     {
+      "short": "-A",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use termcap capability codes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "tells infocmp to print the database locations that it knows about, and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump the capabilities of the given terminal as tables, needed in the C initializer for a TERMTYPE structure  (the  terminal  capability structure  in  the  <term.h>).  This option is useful for preparing versions of the curses library hardwired for a given terminal type. The tables are all declared static, and are named according to the type and the name of the corresponding terminal entry.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "compare terminfo files.  This assumes that two following arguments are filenames.  The files are searched for pairwise matches  between entries,  with  two  entries considered to match if any of their names do.  The report printed to standard output lists entries with no matches in the other file, and entries with more than one match.  For entries with exactly one match it includes a  difference  report. Normally,  to  reduce  the  volume of the report, use references are not resolved before looking for differences, but resolution can be forced by also specifying -r.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display constant literals in decimal form rather than their character equivalents.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use terminfo capability codes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-K",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "with -C, improve BSD compatibility",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "use “long” capability names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "than  show source in terminfo (text) format, print the compiled (binary) format in hexadecimal or base64 form, depending on the option's value:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Rsubset",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "output to a given subset.  This option is for use with archaic versions of terminfo like those on SVr1, Ultrix, or HP-UX that do not support the full set of SVR4/XSI Curses terminfo; and variants such as AIX that have  their  own  extensions  incompatible  with SVr4/XSI.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "eliminate size limits (test)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "eliminates size-restrictions on the generated text.  This is mainly useful for testing and analysis, since  the  compiled  descriptions are limited (e.g., 1023 for termcap, 4096 for terminfo).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +176,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not post-process entries",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "tells infocmp to not post-process the data after parsing the source file.  This feature helps when comparing the actual contents of two source files, since it excludes the inferences that infocmp makes to fill in missing data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +186,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "reports the version of ncurses which was used in this program, and exits.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +198,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "wrap long strings per -w[n]",
+      "description": "By itself, the -w option will not force long strings to be wrapped.  Use the -W option to do this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with -F, list commented-out caps",
+      "description": "tells  infocmp  to  retain commented-out capabilities rather than discarding them.  Capabilities are commented by prefixing them with a period.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list common capabilities",
+      "description": "produces  a  list  of  each capability that is common between two or more entries.  Missing capabilities are ignored.  Each item in the list shows “=” after the capability name, followed by the capability value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list different capabilities",
+      "description": "produces a list of each capability that is different between two entries.  Each item in the list shows “:” after the  capability  name, followed by the capability values, separated by a comma.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +236,9 @@
     {
       "short": "-e",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "format output for C initializer",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump  the  capabilities  of  the  given  terminal as a C initializer for a TERMTYPE structure (the terminal capability structure in the <term.h>).  This option is useful for preparing versions of the curses library hardwired for a given terminal type.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +248,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with -1, format complex strings",
+      "description": "Display complex terminfo strings which contain if/then/else/endif expressions indented for readability.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +258,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "format %'char' to %{number}",
+      "description": "Display constant character literals in quoted form rather than their decimal equivalents.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +268,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "analyze initialization/reset",
+      "description": "Analyze the initialization (is1, is2, is3), and reset (rs1, rs2, rs3), strings in the entry, as well as those used  for  starting/stop‐ ping cursor-positioning mode (smcup, rmcup) as well as starting/stopping keymap mode (smkx, rmkx).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +278,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output terminfo names",
+      "description": "Set output format to terminfo.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +288,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list capabilities in neither",
+      "description": "produces a list of each capability that is in none of the given entries.  Each item in the list shows “!” before the capability name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +298,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ignore padding specifiers",
+      "description": "Ignore padding specifications when comparing strings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +308,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "brief listing, removes headers",
+      "description": "This makes the output a little shorter:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +318,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with -C, output in termcap form",
+      "description": "with -C, include nonstandard capabilities",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,17 +338,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suppress commented-out capabilities",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "produce source with 'use='",
+      "description": "tells  tic  to discard commented-out capabilities.  Normally when translating from terminfo to termcap, untranslatable capabilities are commented-out.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +348,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(verbose)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +358,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(width)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +368,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "unknown capabilities are user-defined",
+      "description": "print information for user-defined capabilities (see user_caps(5).  These are extensions to the terminfo repertoire which can be loaded using the -x option of tic.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -347,14 +377,105 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "termname",
+      "name": "-1ccddeefggiikllnpqrttuuvwx",
       "value_type": "String",
       "required": false,
-      "multiple": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "c",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "n",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "subset",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "terminal-type",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "width",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,10 +1,20 @@
 {
   "schema_version": "1.0.0",
   "command": "lsof",
-  "description": "lsof: illegal option character: -",
+  "description": "LSOF(8) System Manager's Manual LSOF(8)",
   "global_flags": [
     {
       "short": "-?",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "These  two  equivalent options select a usage (help) output list.  Lsof displays a shortened form of this output when it detects an error in the options supplied to it, after it has displayed messages explaining each error.  (Escape  the  `?'  character  as  your shell requires.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?abChlnNOPQRtUvVX",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -14,11 +24,41 @@
       "requires": []
     },
     {
-      "short": "-E",
+      "short": "-A",
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "+E display endpoint info and files +f|-f +filesystem or -file names +|-f[gG] flaGs",
+      "description": "is  available  on  systems configured for AFS whose AFS kernel code is implemented via dynamic modules.  It allows the lsof user to specify A as an alternate name list file where the kernel addresses of the dynamic modules might be found.  See the lsof  FAQ  (The FAQ section gives its location.)  for more information about dynamic modules, their symbols, and how they affect lsof.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "disables the reporting of any path name components from the kernel's name cache.  See the KERNEL NAME CACHE section for more infor‐ mation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "directs lsof's use of the device cache file.  The use of this option is sometimes restricted.  See the DEVICE  CACHE  FILE  section and the sections that follow it for more information on this option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +66,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "portMap registration (-)",
+      "description": "specifies a character list, f, that selects the fields to be output for processing by another program, and the character that  ter‐ minates  each  output  field.  Each field to be output is specified with a single character in f.  The field terminator defaults to NL, but may be changed to NUL (000).  See the OUTPUT FOR OTHER PROGRAMS section for a description of the field identification char‐ acters and the field output process.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +78,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "selects the listing of tasks (threads) of processes, on dialects where task (thread) reporting is supported.   (If  help  output  - i.e., the output of the -h or -?  options - shows this option, then task (thread) reporting is supported by the dialect.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +86,9 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "selects the listing of NFS files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +96,9 @@
     {
       "short": "-O",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "directs  lsof  to  bypass  the strategy it uses to avoid being blocked by some kernel operations - i.e., doing them in forked child processes.  See the BLOCKS AND TIMEOUTS and AVOIDING KERNEL BLOCKS sections for more information  on  kernel  operations  that  may block lsof.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +106,9 @@
     {
       "short": "-P",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "inhibits the conversion of port numbers to port names for network files.  Inhibiting the conversion may  make  lsof  run  a  little faster.  It is also useful when port name lookup is not working properly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +116,9 @@
     {
       "short": "-Q",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "ignore  failed  search  terms. When lsof is told to search for users of a file, or for users of a device, or for a specific PID, or for certain protocols in use by that PID, and so on, lsof will return an error if any of the search results are empty. The  -Q  op‐ tion  will  change  this behavior so that lsof will instead return a successful exit code (0) even if any of the search results are empty. In addition, missing search terms will not be reported to stderr.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +126,9 @@
     {
       "short": "-R",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "directs lsof to list the Parent Process IDentification number in the PPID column.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +138,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "specifies an optional time-out seconds value for kernel functions - lstat(2), readlink(2), and stat(2) - that might otherwise dead‐ lock.  The minimum for t is two; the default, fifteen; when no value is specified, the default is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,39 +146,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "+|-w Warnings (+)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "controls the reporting of some TCP/TPI information, also reported by netstat(1), following the network addresses.  In normal output the  information appears in parentheses, each item except TCP or TPI state name identified by a keyword, followed by `=', separated from others by a single space:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "context [Z] -- end option scan",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +166,9 @@
     {
       "short": "-a",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "causes list selection options to be ANDed, as described above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +178,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "causes lsof to avoid kernel functions that might block - lstat(2), readlink(2), and stat(2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +188,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "cmd c ^c /c/[bix] +c w COMMAND width (9) +d s dir s files",
+      "description": "selects  the  listing  of files for processes executing the command that begins with the characters of c.  Multiple commands may be specified, using multiple -c options.  They are joined in a single ORed set before participating in AND option selection.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,13 +198,33 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "select by FD set +D D dir D tree *SLOW?* +|-e s exempt s *RISKY*",
+      "description": "specifies a list of file descriptors (FDs) to exclude from or include in the output listing.  The file descriptors are specified in the comma-separated set s - e.g., ``cwd,1,3'', ``^6,^2''.  (There should be no spaces in the set.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "excludes  or  selects  the listing of files for the processes whose optional process group IDentification (PGID) numbers are in the comma-separated set s - e.g., ``123'' or ``123,^456''.  (There should be no spaces in the set.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Thus, for example, ``+M -i'' may be stated as ``+Mi'' and the group means the same as the separate options.  Be careful of prefix grouping when one or more options in the group does take on separate  meanings  under  different  prefixes  - e.g., +|-M; ``-iM'' is not the same request as ``-i +M''.  When in doubt, use separate options with appropriate prefixes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i6",
       "long": null,
       "value_type": "String",
       "takes_value": true,
@@ -204,11 +234,41 @@
       "requires": []
     },
     {
-      "short": "-i",
+      "short": "-i@aaa.bbb",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "have  network connections to either host aaa.bbb OR ccc.ddd.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-iTCP",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-iUDP",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "select by IPv[46] address: [46][proto][@host|addr][:svc_list|port_list] +|-r [t[m<fmt>]] repeat every t seconds (15); + until no files, - forever. An optional suffix to t is m<fmt>; m must separate t from <fmt> and <fmt> is an strftime(3) format for the marker line.",
+      "description": "specifies a kernel name list file, k, in place of /vmunix, /mach, etc.  -k is not available under AIX on the IBM RISC/System 6000.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +276,9 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "inhibits the conversion of user ID numbers to login names.  It is also useful when login  name  lookup  is  working  improperly  or slowly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,13 +288,23 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "inhibits the conversion of network numbers to host names for network files.  Inhibiting conversion may make lsof run faster.  It is also useful when host name lookup is not working properly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-o",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "directs lsof to display file offset at all times.  It causes the SIZE/OFF output column title to be changed to  OFFSET.   Note:  on some  UNIX  dialects  lsof can't obtain accurate or consistent file offset information from its kernel data sources, sometimes just for particular kinds of files (e.g., socket files.)  Consult the lsof FAQ (The FAQ section gives its location.)  for more  informa‐ tion.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-oo10",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -248,7 +318,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exclude(^)|select PIDs",
+      "description": "excludes or selects the listing of files for the  processes  whose  optional  process  IDentification  (PID)  numbers  are  in  the comma-separated set s - e.g., ``123'' or ``123,^456''.  (There should be no spaces in the set.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,17 +328,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exclude(^)|select protocol (p = TCP|UDP) states by name(s).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "It causes the SIZE/OFF output column title to be changed to SIZE.  If  the file does not have a size, nothing is displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,18 +336,8 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "exclude(^)|select login|UID set s",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -296,9 +346,19 @@
     {
       "short": "-x",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "select named files or files on named file systems",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -307,9 +367,30 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "D",
+      "name": "a",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "c",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cfggn",
       "value_type": "String",
       "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "d",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     },
@@ -335,6 +416,13 @@
       "description": null
     },
     {
+      "name": "k",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "l",
       "value_type": "String",
       "required": false,
@@ -344,7 +432,7 @@
     {
       "name": "m",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
@@ -365,7 +453,7 @@
     {
       "name": "s",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
@@ -375,9 +463,16 @@
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "z",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "4.95.0"
+  "version": null
 }

@@ -1,44 +1,64 @@
 {
   "schema_version": "1.0.0",
   "command": "x86_64-linux-gnu-objdump",
-  "description": "Display information from object <file(s)>.",
+  "description": "OBJDUMP(1) GNU Development Tools OBJDUMP(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--[no-]show-raw-insn",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--adjust-vma",
       "value_type": "String",
       "takes_value": true,
-      "description": "Add OFFSET to all displayed section addresses",
+      "description": "This is useful if the section addresses do not  correspond  to the  symbol  table,  which  can happen when putting sections at particular addresses when using a format which can not represent section addresses, such as a.out.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-x",
+      "short": null,
       "long": "--all-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of all headers",
+      "description": "Using -x is equivalent to  specifying  all of -a -f -h -p -r -t.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-m",
+      "short": null,
       "long": "--architecture",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Specify the target architecture as MACHINE",
+      "description": "the  architecture  to  use  when  disassembling  object files.  This can be useful when disassembling object files which do not describe architecture information, such as S-records.  You can list the available architectures with the -i option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-a",
+      "short": null,
+      "long": "--archive-header",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "any  of  the  objfile  files  are  archives,  display  the  archive  header information (in a format similar to ls -l).  Besides the information you could list with ar tv, objdump -a shows the object file format of each archive member.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--archive-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display archive header information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +68,7 @@
       "long": "--ctf",
       "value_type": "String",
       "takes_value": true,
-      "description": "Display CTF info from SECTION, (default `.ctf')",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,47 +78,57 @@
       "long": "--ctf-parent",
       "value_type": "String",
       "takes_value": true,
-      "description": "Use CTF archive member NAME as the CTF parent",
+      "description": "from  one dictionary  containing  unambiguous  types.  This member is by default named .ctf, like the section containing it, but it is possible to change this name using the \"ctf_link_set_memb_name_changer\" function at link time.  When looking at CTF archives that have been  created by  a  linker  that uses the name changer to rename the parent archive member, --ctf-parent can be used to specify the name used for the parent.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ctf[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  contents  of  the  specified CTF section.  CTF sections themselves contain many subsections, all of which are displayed in order.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debugging",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "debugging information.  This attempts to parse STABS debugging format information stored in the file and print it out using a C like syntax.  If no STABS debugging was found this option falls back on the -W option to print any DWARF information in the file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-g",
-      "long": "--debugging",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display debug information in object file",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
       "long": "--debugging-tags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display debug information using ctags style",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-Z",
+      "short": null,
       "long": "--decompress",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Decompress section(s) before displaying their contents",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-C",
-      "long": "--demangle",
       "value_type": "String",
       "takes_value": true,
-      "description": "Decode mangled/processed symbol names STYLE can be \"none\", \"auto\", \"gnu-v3\", \"java\", \"gnat\", \"dlang\", \"rust\"",
+      "description": "-Z  option is meant to be used in conunction with the -s option.  It instructs objdump to decompress any compressed sections before displaying their contents.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--demangle[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Besides removing any initial underscore prepended by the  system,  this makes  C++  function  names readable.  Different compilers have different mangling styles. The optional demangling style argument can be used to choose an appropriate demangling style for your compiler.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,29 +136,39 @@
     {
       "short": null,
       "long": "--disassemble",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Display assembler contents from <sym>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-D",
+      "short": null,
       "long": "--disassemble-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display assembler contents of all sections",
+      "description": "-d,  but  disassemble  the contents of all non-empty non-bss sections, not just those expected to contain instructions.  -j may be used to select specific sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-z",
+      "short": null,
       "long": "--disassemble-zeroes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not skip blocks of zeroes when disassembling",
+      "description": "This option directs the disassembler to disassemble those blocks, just like any other data.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disassemble[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,23 +178,23 @@
       "long": "--disassembler-color",
       "value_type": "String",
       "takes_value": true,
-      "description": "Disable disassembler color output. (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-M",
-      "long": "--disassembler-options",
-      "value_type": "String",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-W",
+      "short": null,
+      "long": "--disassembler-options",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "target  specific  information  to  the disassembler.  Only supported on some targets.  If it is necessary to specify more than one disassembler option then multiple -M options can be used or can be placed together into a comma separated list.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--dwarf",
       "value_type": "String",
       "takes_value": true,
@@ -168,7 +208,7 @@
       "long": "--dwarf-check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Make additional dwarf consistency checks.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +216,9 @@
     {
       "short": null,
       "long": "--dwarf-depth",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Do not display DIEs at depth N or greater",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,57 +228,67 @@
       "long": "--dwarf-start",
       "value_type": "String",
       "takes_value": true,
-      "description": "Display DIEs starting at offset N",
+      "description": "This is only useful with --debug-dump=info.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-R",
-      "long": "--dynamic-reloc",
+      "short": null,
+      "long": "--dwarf[",
       "value_type": "File",
       "takes_value": true,
-      "description": "Display the dynamic relocation entries in the file @<file> Read options from <file>",
+      "description": "the  contents  of  the  DWARF  debug  sections  in  the file, if any are present.  Compressed debug sections are automatically decompressed (temporarily) before they are displayed.  If one or more of the optional letters or words  follows  the  switch  then  only those type(s) of data will be dumped.  The letters and words refer to the following information:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-T",
-      "long": "--dynamic-syms",
+      "short": null,
+      "long": "--dynamic-reloc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of the dynamic symbol table",
+      "description": "the  dynamic  relocation  entries  of  the  file.   This  is only meaningful for dynamic objects, such as certain types of shared libraries.  As for -r, if used with -d or -D, the relocations are printed interspersed with the disassembly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-EB",
-      "long": "--endian",
+      "short": null,
+      "long": "--dynamic-syms",
       "value_type": "String",
       "takes_value": true,
-      "description": "Assume big endian format when disassembling",
+      "description": "This is only meaningful for dynamic  objects,  such  as  certain  types  of  shared libraries.  This is similar to the information provided by the nm program when given the -D (--dynamic) option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-f",
+      "short": null,
+      "long": "--endian",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  endianness of the object files.  This only affects disassembly.  This can be useful when disassembling a file format which does not describe endianness information, such as S-records.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--file-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of the overall file header",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-F",
+      "short": null,
       "long": "--file-offsets",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include file offsets when displaying information",
+      "description": "that  is  about  to  be dumped.   If  zeroes are being skipped, then when disassembly resumes, tell the user how many zeroes were skipped and the file offset of the location from where the disassembly resumes.  When dumping sections, display the file offset of the location  from  where  the  dump starts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,57 +298,47 @@
       "long": "--file-start-context",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include context from start of file (with -S)",
+      "description": "that  when  displaying interlisted source code/disassembly (assumes -S) from a file that has not yet been displayed, extend the context to the start of the file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-s",
+      "short": "-j",
       "long": "--full-contents",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display the full contents of all sections requested",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-H",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display this information",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": "--include",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Add DIR to search list for source files",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": "--info",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "List object formats and architectures supported",
+      "description": "By default all non-empty non-bss sections are displayed.  By default any compressed section will be displayed in its compressed form.  In order to see the contents in  a decompressed form add the -Z option to the command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--inlines",
+      "long": "--headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print all inlines for source line (with -l)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--info",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,17 +348,17 @@
       "long": "--insn-width",
       "value_type": "String",
       "takes_value": true,
-      "description": "Display WIDTH bytes on a single line for -d",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-l",
+      "short": null,
       "long": "--line-numbers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include line numbers and filenames in output",
+      "description": "object  code  or  relocs shown.  Only useful with -d, -D, or -r.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +368,7 @@
       "long": "--no-addresses",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not print address alongside disassembly",
+      "description": "In  combination  with  --no-show-raw-insn this may be useful for comparing compiler output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,17 +378,37 @@
       "long": "--no-recurse-limit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Disable a limit on recursion whilst demangling",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
+      "long": "--no-recursion-limit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Since the name mangling formats  allow  for an  infinite  level of recursion it is possible to create strings whose decoding will exhaust the amount of stack space available on the host machine, triggering a memory fault.  The limit tries to prevent this from happening by restricting  recursion  to  2048  levels  of nesting.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-show-raw-insn",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is the default when --prefix-addresses is used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S.",
       "long": "--prefix",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Add PREFIX to absolute paths for -S",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +418,7 @@
       "long": "--prefix-addresses",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print complete address alongside disassembly --[no-]show-raw-insn Display hex alongside symbolic disassembly",
+      "description": "This is the older disassembly format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -366,39 +426,39 @@
     {
       "short": null,
       "long": "--prefix-strip",
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "Strip initial directory names for -S",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": "--private",
       "value_type": "String",
       "takes_value": true,
       "description": null,
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": "--private-headers",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display object format specific file header contents",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-L",
-      "long": "--process-links",
+      "short": null,
+      "long": "--private",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The argument options is a comma separated list that depends on the format (the lists of options is displayed with the help).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--private-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of non-debug sections in separate debuginfo files. (Implies -WK)",
+      "description": "The exact information printed depends upon the object file  format.   For some object file formats, no additional information is printed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--process-links",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  contents  of  non-debug  sections  found  in  separate  debuginfo  files  that  are  linked to the main file.  This option automatically implies the -WK option, and only sections requested by other command line options will be displayed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,27 +468,47 @@
       "long": "--recurse-limit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable a limit on recursion whilst demangling (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-r",
+      "short": null,
+      "long": "--recursion-limit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--reloc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the relocation entries in the file",
+      "description": "If used with -d or -D, the relocations are printed interspersed with the disassembly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-j",
+      "short": null,
       "long": "--section",
       "value_type": "String",
       "takes_value": true,
-      "description": "Only display information for section NAME",
+      "description": "This option may be specified multiple times.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--section-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -438,7 +518,17 @@
       "long": "--sframe",
       "value_type": "String",
       "takes_value": true,
-      "description": "Display SFrame info from SECTION, (default '.sframe')",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sframe[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,27 +538,37 @@
       "long": "--show-all-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When disassembling, display all symbols at a given address",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": "--source",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Intermix source code with disassembly",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--source-comment",
+      "long": "--show-raw-insn",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "disassembling  instructions,  print  the  instruction  in  hex  as  well  as  in  symbolic  form.  This is the default except when",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--source",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Implies -d.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--source-comment[",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "the  -S option, but all source code lines are displayed with a prefix of txt.  Typically txt will be a comment string which can be used to distinguish the assembler code from the source code.  If txt is not provided then a default string of \"# \" (hash followed  by  a space), will be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,17 +578,17 @@
       "long": "--special-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include special symbols in symbol dumps",
+      "description": "displaying  symbols include those which the target considers to be special in some way and which would not normally be of interest to the user.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-G",
+      "short": null,
       "long": "--stabs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display (in raw form) any STABS info in the file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Display the contents of the .stab and .stab.index and .stab.excl sections from  an ELF  file.   This  is only useful on systems (such as Solaris 2.0) in which \".stab\" debugging symbol-table entries are carried in an ELF section.  In most other file formats, debugging symbol-table entries are interleaved with linkage symbols, and are visible in the --syms output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +598,7 @@
       "long": "--start-address",
       "value_type": "String",
       "takes_value": true,
-      "description": "Only process data whose address is >= ADDR",
+      "description": "This affects the output of the -d, -r and -s options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,27 +608,27 @@
       "long": "--stop-address",
       "value_type": "String",
       "takes_value": true,
-      "description": "Only process data whose address is < ADDR",
+      "description": "This affects the output of the -d, -r and -s options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-t",
+      "short": null,
       "long": "--syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of the symbol table(s)",
+      "description": "This is similar to the information provided by the nm program, although the display  format is  different.  The format of the output depends upon the format of the file being dumped, but there are two main types.  One looks like this:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-b",
+      "short": null,
       "long": "--target",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify the target object format as BFDNAME",
+      "description": "This option  may  not  be  necessary;  objdump  can  automatically recognize many formats.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,37 +638,167 @@
       "long": "--unicode",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display this program's version number",
+      "description": "The default (--unicode=default)  is  to  give  them  no  special treatment.   The  --unicode=locale  option  displays the sequence in the current locale, which may or may not support them.  The options",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--visualize-jumps",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use colors in the ASCII art",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-w",
+      "short": null,
+      "long": "--visualize-jumps[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The optional  =color  argument adds color to the output using simple terminal colors.  Alternatively the =extended-color argument will add color using 8bit colors, but these might not work on all terminals.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--wide",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Format output for more than 80 columns",
+      "description": "Also do not truncate symbol names when they are displayed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-EB",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-EL",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -576,9 +806,109 @@
     {
       "short": "-U",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-WK",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Controls the display of UTF-8 unicode characters",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-WN",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W[lLiaprmfFsoORtUuTgAckK",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W[lLiaprmfFsoORtUuTgAck]",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -588,152 +918,227 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the contents of the section headers",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-wD",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-wE",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [
+  "subcommands": [],
+  "positional": [
     {
-      "name": "addr16",
-      "description": "Assume 16bit address size",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "--file-start-context",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "addr32",
-      "description": "Assume 32bit address size",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "--no-addresses",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "addr64",
-      "description": "Assume 64bit address size",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "--prefix-addresses",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "amd64",
-      "description": "Display instruction in AMD64 ISA",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "--show-all-symbols",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "att",
-      "description": "Display instruction in AT&T syntax",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "--special-syms",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "att-mnemonic",
-      "description": "(AT&T syntax only) Display instruction with AT&T mnemonic",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "data16",
-      "description": "Assume 16bit data size",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "-j",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "data32",
-      "description": "Assume 32bit data size",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "header",
-      "description": "Display the file header",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "i386",
-      "description": "Disassemble in 32bit mode",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "i8086",
-      "description": "Disassemble in 16bit mode",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "little",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "intel",
-      "description": "Display instruction in Intel syntax",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "method",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     },
     {
-      "name": "intel-mnemonic",
-      "description": "(AT&T syntax only) Display instruction with Intel mnemonic",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "intel64",
-      "description": "Display instruction in Intel64 ISA",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "sections",
-      "description": "Display the section headers",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "suffix",
-      "description": "Always display instruction suffix in AT&T syntax",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "x86-64",
-      "description": "Disassemble in 64bit mode",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "objfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": true,
+      "description": null
     }
   ],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 1.0,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

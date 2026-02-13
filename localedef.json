@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "localedef",
-  "description": "Compile locale specification",
+  "description": "localedef(1) General Commands Manual localedef(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--add-to-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Add locales named by parameters to archive",
+      "description": "The directories should have been created by previous runs of localedef, using --no-archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--alias-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "locale.alias file to consult when making archive",
+      "description": "There is no default aliases file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--big-endian",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate big-endian output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--charmap",
       "value_type": "File",
       "takes_value": true,
-      "description": "Symbolic character names defined in FILE",
+      "description": "the file that defines the character set that is used by the input file.  If charmapfile contains a slash character ('/'), it is interpreted as the name of the character map.  Otherwise, the file is sought in the current directory and  the  default  directory for character maps.  If the environment variable I18NPATH is set, $I18NPATH/charmaps/ and $I18NPATH/ are also searched after the cur‐ rent directory.  The default directory for character maps is printed by localedef --help.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,27 +48,37 @@
       "long": "--delete-from-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove locales named by parameters from archive",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--force",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-c",
-      "long": "--force",
+      "long": "--force.",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create output even if warning messages were issued",
+      "description": "Write the output files even if warnings were generated about the input file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-?",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Give this help list",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--inputfile",
       "value_type": "File",
       "takes_value": true,
-      "description": "Source definitions are found in FILE",
+      "description": "The file is sought in the current directory and the default directory for locale def‐ inition files.  If the environment variable I18NPATH is set, $I18NPATH/locales/ and $I18NPATH are also searched after the current di‐ rectory.  The default directory for locale definition files is printed by localedef --help.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--list-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List content of archive",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +108,7 @@
       "long": "--little-endian",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate little-endian output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": "--no-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't add new data to archive",
+      "description": "This is helpful to prevent system locale archive updates from  overwriting custom locales created with localedef.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": "--no-hard-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not create hard links between installed locales",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--no-warnings",
       "value_type": "String",
       "takes_value": true,
-      "description": "Comma-separated list of warnings to disable; supported warnings are: ascii, intcurrsym",
+      "description": "Supported warnings are ascii and intcurrsym.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +146,9 @@
     {
       "short": null,
       "long": "--posix",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strictly conform to POSIX",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Implies --verbose.  This option currently has no other effect.  POSIX conformance is assumed if the envi‐ ronment variable POSIXLY_CORRECT is set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": "--prefix",
       "value_type": "File",
       "takes_value": true,
-      "description": "Optional output file prefix",
+      "description": "the  prefix  to  be  prepended  to  the full archive pathname.  By default, the prefix is empty.  Setting the prefix to foo, the archive would be placed in foo/usr/lib/locale/locale-archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Suppress warnings and information messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +178,7 @@
       "long": "--repertoire-map",
       "value_type": "File",
       "takes_value": true,
-      "description": "FILE contains mapping from symbolic names to UCS4 values",
+      "description": "If repertoirefile contains a slash character ('/'), it is  interpreted as the pathname of the repertoire map.  Otherwise, the file is sought in the current directory and the default direc‐ tory for repertoire maps.  If the environment variable I18NPATH is set, $I18NPATH/repertoiremaps/ and $I18NPATH are also searched af‐ ter the current directory.  The default directory for repertoire maps is printed by localedef --help.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +188,7 @@
       "long": "--replace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Replace existing archive content",
+      "description": "Without this option, if the locale is in the archive file already, an error occurs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,27 +198,27 @@
       "long": "--usage",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Give a short usage message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-v",
+      "short": null,
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print more messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-V",
+      "short": null,
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print program version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,37 @@
       "long": "--warnings",
       "value_type": "String",
       "takes_value": true,
-      "description": "Comma-separated list of warnings to enable; supported warnings are: ascii, intcurrsym",
+      "description": "Supported warnings are ascii and intcurrsym.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print a usage summary and exit.  Also prints the default paths used by localedef.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Print the version number, license, and disclaimer of warranty for localedef.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Generate extra warnings about errors that are normally ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -227,14 +267,28 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "NAME",
+      "name": "compiledpath",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "localename",
       "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "outputpath",
+      "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

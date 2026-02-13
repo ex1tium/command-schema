@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "gpg-agent",
-  "description": "gpg-agent (GnuPG) 2.4.4",
+  "description": "GPG-AGENT(1) GNU Privacy Guard 2.4 GPG-AGENT(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--allow-emacs-pinentry",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "allow passphrase to be prompted through Emacs",
+      "description": "Pinentry  to allow features to divert the passphrase entry to a running Emacs instance.  How this is exactly handled depends on the version of the used Pinentry.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allow-loopback-pinentry",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Allow is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,17 @@
       "long": "--allow-preset-passphrase",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "allow presetting passphrase",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--auto-expand-secmem",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The optional value n is a non-negative integer with a  suggested  size in  bytes  of each additionally allocated secure memory area.  The value is rounded up to the next 32 KiB; usual C style prefixes are allowed.  For an heavy loaded gpg-agent with many concurrent connection this option avoids sign or decrypt errors due to out  of  se‐ cure memory error returns.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +48,7 @@
       "long": "--batch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "never use the PIN-entry",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,19 +56,29 @@
     {
       "short": null,
       "long": "--check-passphrase-pattern",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "check new passphrases against pattern in FILE",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-c",
-      "long": "--csh",
+      "short": null,
+      "long": "--check-sym-passphrase-pattern",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "csh-style command output",
+      "description": "When entering a new passphrase matching one of these pattern a warning  will be displayed.  If file does not contain any slashes and does not start with \"~/\" it is searched in the system configuration directory (‘/etc/gnupg’).  The default is not to use any pattern file.  The second version of this option is only used when creating a new sym‐ metric key to allow the use of different patterns for such passphrases.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--csh",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Format the info output in daemon mode for use with the standard Bourne shell or the C-shell respectively.  The default is to guess it based on the environment variable SHELL which is correct in almost all cases.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +86,69 @@
     {
       "short": null,
       "long": "--daemon",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run in daemon mode (background)",
+      "description": "All flags are or-ed and flags may be given in C syntax (e.g. 0x0042) or as a comma separated list  of  flag  names. To  get  a  list of all supported flags the single word \"help\" can be used. This option is only useful for debugging and the behavior may change at any time without notice.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-all",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-level",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-pinentry",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "option  enables  extra  debug information pertaining to the Pinentry.  As of now it is only useful when used along with --debug 1024.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-quick-random",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "option  inhibits the use of the very secure random quality level (Libgcrypt’s GCRY_VERY_STRONG_RANDOM) and degrades all request down to standard random quality.  It is only used for testing and should not be used for any production quality keys.  This option is only effective when given on the command line.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-wait",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This gives time to  attach a debugger.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +158,7 @@
       "long": "--default-cache-ttl",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "expire cached PINs after N seconds",
+      "description": "the  time  a  cache  entry is valid to n seconds.  The default is 600 seconds.  Each time a cache entry is accessed, the entry's timer is reset.  To set an entry's maximum lifetime, use max-cache-ttl.  Note that a cached passphrase may not be evicted immediately from memory if no client requests a cache operation.  This is due to an internal housekeeping function which is only  run  every  few seconds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +166,29 @@
     {
       "short": null,
       "long": "--default-cache-ttl-ssh",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  time  a  cache entry used for SSH keys is valid to n seconds.  The default is 1800 seconds.  Each time a cache entry is ac‐ cessed, the entry's timer is reset.  To set an entry's maximum lifetime, use max-cache-ttl-ssh.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disable-check-own-socket",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "expire SSH keys after N seconds",
+      "description": "This usually means a second instance of gpg-agent has  taken  over the socket and gpg-agent will then terminate itself.  This option may be used to disable this self-test for debugging purposes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disable-extended-key-format",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The extended key format is used for years now and has been  supported  since  2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +198,27 @@
       "long": "--disable-scdaemon",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not use the SCdaemon",
+      "description": "not  make  use of the scdaemon tool.  This option has the effect of disabling the ability to do smartcard operations.  Note, that enabling this option at runtime does not kill an already forked scdaemon.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enable-extended-key-format",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +228,17 @@
       "long": "--enable-passphrase-history",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not allow the reuse of old passphrases",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enable-putty-support",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +248,17 @@
       "long": "--enable-ssh-support",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable ssh support",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enable-win32-openssh-support",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +268,7 @@
       "long": "--enforce-passphrase-constraints",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not allow bypassing the passphrase policy",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +276,19 @@
     {
       "short": null,
       "long": "--extra-socket",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "accept some commands via NAME",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "extra  socket  is  created by default, you may use this option to change the name of the socket.  To disable the creation of the socket use ``none'' or ``/dev/null'' for name.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--faked-system-time",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "option  is only useful for testing; it sets the system time back or forth to epoch which is the number of seconds elapsed since the year 1970.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +298,17 @@
       "long": "--grab",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "let PIN-Entry grab keyboard and mouse",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--homedir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the name of the home directory to dir. If this option is not used, the home directory defaults to ‘~/.gnupg’.  It is only recog‐ nized when given on the command line.  It also overrides any home directory stated through the environment  variable  ‘GNUPGHOME’  or (on Windows systems) by means of the Registry entry HKCU\\Software\\GNU\\GnuPG:HomeDir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +318,7 @@
       "long": "--ignore-cache-for-signing",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not use the PIN cache when signing",
+      "description": "Note that there is also a  per-session  option to control this behavior but this command line option takes precedence.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +326,9 @@
     {
       "short": null,
       "long": "--keep-display",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "ignore requests to change the X display",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This is useful to lock the pinentry to pop up at the tty or display you started the agent.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +338,37 @@
       "long": "--keep-tty",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ignore requests to change the TTY",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lc-ctype",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lc-messages",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--listen-backlog",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is 64.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +376,9 @@
     {
       "short": null,
       "long": "--log-file",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "write server mode logs to FILE",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "all  logging  output to file.  This is very helpful in seeing what the agent actually does. Use ‘socket://’ to log to socket. If neither a log file nor a log file descriptor has been set on a Windows platform, the  Registry  entry  HKCU\\Software\\GNU\\GnuPG:De‐ faultLogFile, if set, is used to specify the logging output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +388,7 @@
       "long": "--max-cache-ttl",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set maximum PIN cache lifetime to N seconds",
+      "description": "After this time a cache entry will be expired even if it has been accessed recently or has been set using gpg-preset-passphrase.  The default is 2 hours (7200 seconds).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +396,9 @@
     {
       "short": null,
       "long": "--max-cache-ttl-ssh",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "set maximum SSH key lifetime to N seconds",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "After this time a cache entry will be expired even if it has been accessed recently or has been set using gpg-preset-passphrase.  The default is 2 hours (7200 seconds).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +408,7 @@
       "long": "--max-passphrase-days",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "expire the passphrase after N days",
+      "description": "the  user  to  change the passphrase if n days have passed since the last change.  With --enforce-passphrase-constraints set the user may not bypass this check.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +418,7 @@
       "long": "--min-passphrase-len",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set minimal required length for new passphrases to N",
+      "description": "When entering a new passphrase shorter than this value a warning  will  be  displayed.   De‐ faults to 8.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,19 +428,17 @@
       "long": "--min-passphrase-nonalpha",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "require at least N non-alpha characters for a new passphrase",
+      "description": "the minimal number of digits or special characters required in a passphrase.  When entering a new passphrase with less than this number of digits or special characters a warning will be displayed.  Defaults to 1.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "-alp"
-      ]
+      "requires": []
     },
     {
       "short": null,
       "long": "--no-allow-external-cache",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disallow the use of an external password cache",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -250,7 +448,7 @@
       "long": "--no-allow-loopback-pinentry",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disallow caller to override the pinentry",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -260,7 +458,17 @@
       "long": "--no-allow-mark-trusted",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disallow clients to mark keys as \"trusted\"",
+      "description": "not  allow clients to mark keys as trusted, i.e. put them into the ‘trustlist.txt’ file.  This makes it harder for users to inad‐ vertently accept Root-CA keys.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-allow-mark-trusted].",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -270,7 +478,37 @@
       "long": "--no-detach",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not detach from the console",
+      "description": "This is mainly useful for debugging.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-grab",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option should be used on X-Servers to avoid X-sniffing attacks.  Any  use  of the option --grab overrides an used option --no-grab.  The default is --no-grab.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-use-standard-socket",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-user-trustlist",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This  implies  the  [option",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,9 +516,29 @@
     {
       "short": null,
       "long": "--options",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "read options from FILE",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default configuration file is named ‘gpg- agent.conf’ and expected in the ‘.gnupg’ directory directly below the home directory of the user.  This option is ignored if used  in an options file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--pinentry-formatted-passphrase",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--pinentry-invisible-char",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "char must be one character UTF-8 string.  A Pinentry may or may not honor this request.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,9 +546,9 @@
     {
       "short": null,
       "long": "--pinentry-program",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "use PGM as the PIN-Entry program",
+      "description": "The default is installation dependent.  With the default configuration the name  of  the  de‐ fault pinentry is ‘pinentry’; if that file does not exist but a ‘pinentry-basic’ exist the latter is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -300,17 +558,47 @@
       "long": "--pinentry-timeout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set the Pinentry timeout to N seconds",
+      "description": "The default value of 0 does not  ask  the  pinentry  to timeout, however a Pinentry may use its own default timeout value in this case.  A Pinentry may or may not honor this request.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-q",
+      "short": null,
+      "long": "--pinentry-touch-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "default  the filename of the socket gpg-agent is listening for requests is passed to Pinentry, so that it can touch that file be‐ fore exiting (it does this only in curses mode).  This option changes the file passed to Pinentry  to  filename.   The  special  name /dev/null may be used to completely disable this feature.  Note that Pinentry will not create that file, it will only change the mod‐ ification and access time.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be somewhat more quiet",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--s2k-calibration",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "The given value is capped at 60 seconds; a value of 0 resets to the compiled-in default.  This option is re-read on a SIGHUP (or gpgconf --reload gpg-agent) and the S2K count is then re-calibrated.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--s2k-count",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  iteration  count  used to protect the passphrase.  This option can be used to override the auto-calibration done by de‐ fault.  The auto-calibration computes a count which requires by default 100ms to mangle a given passphrase.  See also  --s2k-calibra‐ tion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,9 +606,9 @@
     {
       "short": null,
       "long": "--scdaemon-program",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "use PGM as the SCdaemon program",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is installation dependent and can be shown with the gpgconf command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -330,17 +618,17 @@
       "long": "--server",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run in server mode (foreground)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-s",
+      "short": null,
       "long": "--sh",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "sh-style command output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,37 +636,183 @@
     {
       "short": null,
       "long": "--ssh-fingerprint-digest",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "use ALGO to show ssh fingerprints",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--tpm2daemon-program",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "use PGM as the tpm2daemon program",
+      "long": "--steal-socket",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "can  be used  to  override  this  check:  the  new gpg-agent process will try to take over the communication sockets from the already running process and start anyway.  This option should in general not be used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sys-trustlist-name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  default  name for the global trustlist from \"trustlist.txt\" to file.  If file does not contain any slashes and does not start with \"~/\" it is searched in the system configuration directory (‘/etc/gnupg’).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ttyname",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ttytype",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--use-standard-socket",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--use-standard-socket-p",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "These options have no more effect.  The command gpg-agent --use-standard-socket- p will thus always return success.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "You can increase the verbosity by giving several verbose commands to  gpg-agent,  such as ‘-vv’.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--xauthority",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": "--verbose",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "2.4.4"
+  "subcommands": [
+    {
+      "name": "are",
+      "description": "identified in the environment variable LISTEN_FDNAMES (see sd_listen_fds(3) on some Linux distributions for more information on this convention).",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "negative",
+      "description": "The negative values are capped at -999 with -999 being lower ranked than -1. These values can be used to prefer on-disk keys over keys taken from active cards.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "--homedir",
+      "value_type": "Directory",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--options",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "command_line",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dir",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
+  "version": "2.4"
 }

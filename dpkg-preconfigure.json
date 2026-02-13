@@ -1,21 +1,31 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-preconfigure",
-  "description": "debconf: DbDriver \"passwords\" warning: could not open /var/cache/debconf/passwords.dat: Permission denied",
+  "description": "DPKG-PRECONFIGURE(8) Debconf DPKG-PRECONFIGURE(8)",
   "global_flags": [
     {
       "short": null,
       "long": "--apt",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Apt mode.",
+      "description": "on  all  packages  before  they  are  installed.   To  do  this,  add  something  like  this  to /etc/apt/apt.conf:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-f",
+      "short": "-ftype",
       "long": "--frontend",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -24,11 +34,11 @@
       "requires": []
     },
     {
-      "short": "-p",
+      "short": "-pvalue",
       "long": "--priority",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  lowest  priority of questions you are interested in. Any questions with a priority below the selected priority will be ignored and their default answers will be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--terse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable terse mode.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -47,14 +57,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "debs",
+      "name": "package.deb",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

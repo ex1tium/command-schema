@@ -1,34 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "pygmentize",
-  "description": "Highlight an input file and write the result to an output file.",
+  "description": "PYGMENTIZE(1) General Commands Manual PYGMENTIZE(1)",
   "global_flags": [
-    {
-      "short": "-h",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print this help.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--json",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Output as JSON. This can be only used in conjunction with -L.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Like -N, but print out a lexer name based solely on a given content from standard input.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Like -N, but guess a lexer based on content read from standard input.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +16,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This option can be given multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +28,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Print detailed help for the object <name> of type <type>, where <type> is one of \"lexer\", \"formatter\" or \"filter\".",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,10 +36,10 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -68,7 +48,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Guess and print out a lexer name based solely on the given filename. Does not take input or highlight anything. If no specific lexer can be determined, \"text\" is printed.",
+      "description": "and  print  out  a  lexer name based solely on the given filename.  Does not take input or highlight anything.  If no specific lexer can be found, \"text\" is printed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,8 +58,8 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": true,
+      "description": "Which  op‐ tions are valid for which lexers and formatters can be found in the documentation.  This option can be given multiple times.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -88,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "option adds lexer and formatter options like the -O option, but you can only give one option per -P. That way, the option value may contain commas and equals signs, which it can't with -O.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +78,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "The meaning of the argument given by -a <arg>  is  for‐ matter dependent and can be found in the documentation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +86,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print the package version.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show version of the Pygments package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +98,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Formatter-specific additional argument for the -S (print style sheet) mode.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +106,9 @@
     {
       "short": "-f",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Specify the formatter to use. (Query names with -L.) If not given, the formatter is guessed from the output filename, and defaults to the terminal formatter if the output is to the terminal or an unknown file extension.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the formatter name. If not given, it will be guessed from the extension of the output file name. If no output file is given, the terminal formatter will be used by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +118,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Guess the lexer from the file contents, or pass through as plain text if nothing can be guessed.",
+      "description": "Attempt to guess the lexer from the file contents, or pass through as plain text if this fails (this option  works  for  highlighting standard input).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show help screen.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +136,9 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Specify the lexer to use. (Query names with -L.) If not given and -g is not present, the lexer is guessed from the filename.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the lexer name. If not given, the lexer is guessed from the extension of the input file name (this obviously doesn't work if the input is stdin).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,39 +146,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Where to read the input. Defaults to standard input.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Process lines one at a time until EOF, rather than waiting to process the entire file. This only works for stdin, only for lexers with no line-spanning constructs, and is intended for",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print a detailed traceback on unhandled exceptions, which is useful for debugging and bug reports.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Allow custom lexers and formatters to be loaded from a .py file relative to the current working directory. For example, `-l ./customlexer.py -x`. By default, this option expects a file with a class named CustomLexer or CustomFormatter; you can also specify your own class name with a colon (`-l ./lexer.py:MyLexer`). Users should be very careful not to use this option with untrusted files, because it will import and run them.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -197,70 +157,105 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "FILENAME",
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
       "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "FORMATTER",
+      "name": "formatter",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "INPUTFILE",
+      "name": "infile",
       "value_type": "File",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "LEXER",
+      "name": "lexer",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "NAME",
+      "name": "name",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "OUTPUTFILE",
+      "name": "outfile",
       "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "STYLE",
+      "name": "style",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "TYPE",
+      "name": "type",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "WHAT",
+      "name": "which",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

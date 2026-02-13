@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "uconv",
-  "description": null,
+  "description": "UCONV(1) ICU 74.2 Manual UCONV(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--add-signature",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "add a U+FEFF Unicode signature character (BOM)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--add-signa‐",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +26,9 @@
     {
       "short": "-b",
       "long": "--block-size",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "read size bytes blocks (default: 4096)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": null,
       "long": "--callback",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use callback on both encodings",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "callback to handle both characters that cannot be transcoded from the original encoding and characters that cannot be transcoded to the destination encoding. See section CALLBACKS for details on valid callbacks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--canon",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print list in cnvrtrs.txt(5) format",
+      "description": "used  with  -l, --list or --default-code, the list of encodings is produced in a format compatible with convrtrs.txt(5).  If used with -L, --list-transliterators, print only one transliterator name per line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--default-code",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list only the default encoding",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--fallback",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use fallback mapping",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": null,
       "long": "--from-callback",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use callback on original encoding",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "details  on  valid callbacks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,19 @@
     {
       "short": "-f",
       "long": "--from-code",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set the original encoding",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,19 +106,9 @@
     {
       "short": "-l",
       "long": "--list",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "list all available encodings",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--list-code",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "list only the given encoding",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": "--list-transliterators",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list all available transliterators",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": "--no-fallback",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not use fallback mapping",
+      "description": "This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +136,9 @@
     {
       "short": "-o",
       "long": "--output",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "write output to file",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +148,7 @@
       "long": "--remove-signature",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "remove a U+FEFF Unicode signature character (BOM)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +156,9 @@
     {
       "short": "-s",
       "long": "--silent",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "suppress messages",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +166,9 @@
     {
       "short": null,
       "long": "--to-callback",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use callback on destination encoding",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "callback  to handle characters that cannot be transcoded to the destination encoding. See section CALLBACKS for details on valid callbacks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +176,9 @@
     {
       "short": "-t",
       "long": "--to-code",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "set the destination encoding",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +186,9 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display progress information",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +196,19 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print the program version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "omit invalid characters from the output",
+      "description": "Omit invalid characters from the output.  Same as --to-callback skip.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ignore invalid sequences in the input",
+      "description": "Ignore invalid sequences in the input.  Same as --from-callback skip.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,15 +238,517 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run everything through transliteration",
+      "description": "the  transcoding  to  the destination encoding.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
-  "version": null
+  "subcommands": [
+    {
+      "name": "above",
+      "description": "characters, where hhhh is the hexadecimal value of one of the UTF-16 code units representing the character. Charac‐ ters from planes 1 and above are written as a pair of UTF-16 surrogate code units.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-signature",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a U+FEFF Unicode signature character (BOM)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--block-size",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "read size bytes blocks (default: 4096)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--callback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use callback on both encodings",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--canon",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print list in cnvrtrs.txt(5) format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--default-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list only the default encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use fallback mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--from-callback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use callback on original encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--from-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the original encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list all available encodings",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list only the given encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": "--list-transliterators",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list all available transliterators",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not use fallback mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write output to file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-signature",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove a U+FEFF Unicode signature character (BOM)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--silent",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--to-callback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use callback on destination encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--to-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the destination encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display progress information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print the program version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "omit invalid characters from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "ignore invalid sequences in the input",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "run everything through transliteration",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "escape-java",
+      "description": "Replace the missing characters with a string of the format \\uhhhh for plane 0 characters, and \\uhhhh\\uhhhh for planes 1 and",
+      "flags": [
+        {
+          "short": null,
+          "long": "--add-signature",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add a U+FEFF Unicode signature character (BOM)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--block-size",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "read size bytes blocks (default: 4096)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--callback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use callback on both encodings",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--canon",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print list in cnvrtrs.txt(5) format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--default-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list only the default encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use fallback mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--from-callback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use callback on original encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--from-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the original encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list all available encodings",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list only the given encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": "--list-transliterators",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "list all available transliterators",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not use fallback mapping",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write output to file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-signature",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove a U+FEFF Unicode signature character (BOM)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--silent",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--to-callback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use callback on destination encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--to-code",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the destination encoding",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display progress information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print the program version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "omit invalid characters from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "ignore invalid sequences in the input",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "run everything through transliteration",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "callback",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "code",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "encoding",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "transliteration",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ture",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
+  "version": "74.2"
 }

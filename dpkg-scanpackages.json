@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-scanpackages",
-  "description": null,
+  "description": "dpkg-scanpackages(1) dpkg suite dpkg-scanpackages(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--arch",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "architecture to scan for.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-e",
       "long": "--extra-override",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "file  to  find  supplementary  overrides  (the  file  can  be  compressed  since dpkg 1.15.5).  See deb-extra-override(5) for more information on its format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-h",
       "long": "--hash",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "only generate hashes for the specified list.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1.17.14).   The  default  is  to  generate  all  currently supported hashes.  Supported values: md5, sha1, sha256.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-M",
       "long": "--medium",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "add X-Medium field for dselect media access method",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an  X-Medium  field containing the value id-string (since dpkg 1.15.5).  This field is required if you want to generate Packages.cd files for use by the media access method of dselect.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--multiversion",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "allow multiple versions of a single package.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-t",
       "long": "--type",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "scan for <type> packages (default is 'deb').",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
   "positional": [
     {
       "name": "binary-path",
-      "value_type": "Directory",
+      "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
@@ -101,14 +101,21 @@
       "description": null
     },
     {
+      "name": "packages",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "path-prefix",
-      "value_type": "Directory",
+      "value_type": "File",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

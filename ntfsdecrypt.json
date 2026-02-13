@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsdecrypt",
-  "description": null,
+  "description": "NTFSDECRYPT(8) System Manager's Manual NTFSDECRYPT(8)",
   "global_flags": [
     {
       "short": "-e",
       "long": "--encrypt",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "an  existing  encrypted file and get the new contents from the standard input. The full public and private key file has to be designated, as the symmetric key is kept unchanged, so the private key is needed to extract it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Use this option with caution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,19 +36,19 @@
     {
       "short": "-i",
       "long": "--inode",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display this inode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-k",
-      "long": "--keyfile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "long": "--keyfile-name",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This file obviously contains the keys of  one  of  the users  allowed  to  decrypt  or  update  the file. It has to be extracted from Windows in PKCS#12 format (its usual suffix is .p12 or .pfx), and it is protected by a passphrase which has to be typed in for the keys to be extracted. This can be the  key  file  of  any user allowed to read the file, including the one of the recovery manager.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -85,8 +85,23 @@
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "key.pfx",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,24 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "numactl",
-  "description": null,
+  "description": "NUMACTL(8) Linux Administrator's Manual NUMACTL(8)",
   "global_flags": [
     {
-      "short": null,
+      "short": "-a",
       "long": "--all",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-b",
       "long": "--balancing",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Linux  kernel NUMA balancing for the process if it is supported by kernel.  This should only be used with --membind, -m only, otherwise ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -34,11 +34,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-N",
       "long": "--cpunodebind",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Note that nodes may consist of multiple CPUs.  nodes may be specified as noted above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,8 +46,8 @@
     {
       "short": null,
       "long": "--dump",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -56,8 +56,8 @@
     {
       "short": null,
       "long": "--dump-nodes",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -68,13 +68,13 @@
       "long": "--file",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "above  (  --interleave,  --localalloc,  --preferred,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-H",
       "long": "--hardware",
       "value_type": "String",
       "takes_value": true,
@@ -88,17 +88,17 @@
       "long": "--huge",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Only valid before --shmid or --shm",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-i",
       "long": "--interleave",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "When memory cannot be allocated on the  current interleave target fall back to other nodes.  Multiple nodes may be specified on --interleave, --membind and --cpunodebind.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,29 @@
     {
       "short": null,
       "long": "--length",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "remaining  length  Required when  a  shared  memory  segment is created and specifies the length of the new segment then. Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--localalloc",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--membind",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allocation will fail when there is not enough memory available on these nodes.  nodes may be speci‐ fied as noted above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,39 +136,39 @@
     {
       "short": null,
       "long": "--offset",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-C",
       "long": "--physcpubind",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "execute  process  on  cpus.  This accepts cpu numbers as shown in the processor fields of /proc/cpuinfo, or relative cpus as in relative to the current cpuset.  You may specify \"all\", which means all cpus in the current cpuset.  Physical cpus may  be  specified as  N,N,N or  N-N or N,N-N or  N-N,N-N and so forth.  Relative cpus may be specified as +N,N,N or  +N-N or +N,N-N and so forth. The + indicates that the cpu numbers are relative to the process' set of allowed cpus in its current cpuset.  A !N-N notation indicates the inverse of N-N, in other words all cpus except N-N.  If used with + notation, specify !+N-N.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--preferred",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "This option takes only a  sin‐ gle node number.  Relative notation may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-P",
       "long": "--preferred-many",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "This option takes a  mask  of preferred nodes where the closest node to local is considered most preferred.  Relative notation may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,8 +176,8 @@
     {
       "short": null,
       "long": "--shm",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -176,15 +196,15 @@
     {
       "short": null,
       "long": "--shmmode",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-s",
       "long": "--show",
       "value_type": "String",
       "takes_value": true,
@@ -196,9 +216,9 @@
     {
       "short": null,
       "long": "--strict",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an error when a page in the policied area in the shared memory segment already was faulted in with a conflicting policy. Default is to silently ignore this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,8 +226,8 @@
     {
       "short": null,
       "long": "--touch",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -222,210 +242,24 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-H",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-M",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
   "positional": [
+    {
+      "name": "--cpu-compress",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "arguments",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "cpus",
       "value_type": "String",
@@ -442,6 +276,13 @@
     },
     {
       "name": "length",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "memory",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -469,6 +310,13 @@
       "description": null
     },
     {
+      "name": "policy",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "shmkeyfile",
       "value_type": "File",
       "required": true,
@@ -490,7 +338,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

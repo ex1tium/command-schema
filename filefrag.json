@@ -1,10 +1,20 @@
 {
   "schema_version": "1.0.0",
   "command": "filefrag",
-  "description": null,
+  "description": "FILEFRAG(8) System Manager's Manual FILEFRAG(8)",
   "global_flags": [
     {
       "short": "-B",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force the use of the older FIBMAP ioctl instead of the FIEMAP ioctl for testing purposes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-BeEkPsvVxX",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -16,9 +26,29 @@
     {
       "short": "-E",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Display the contents of ext4's extent status cache.  This feature is not supported on all kernels, and is only supported on ext4 file systems.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Pre-load the ext4 extent status cache for the file.  This is not supported on all kernels, and is only supported on  ext4  file  sys‐ tems.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Print version number of program and library.  If given twice, also print the FIEMAP flags that are understood by the current version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +56,19 @@
     {
       "short": "-X",
       "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Display extent block numbers in hexadecimal format.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-bblocksize",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "For compatibility with ear‐ lier  versions  of filefrag, if blocksize is unspecified it defaults to 1024 bytes.  Since blocksize is an optional argument, it must be added without any space after -b.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print output in extent format, even for block-mapped files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Use 1024-byte blocksize for output (identical to '-b1024').",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Sync the file before requesting the mapping.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Be verbose when checking for file fragmentation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,15 +118,23 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display mapping of extended attributes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "files",
+      "value_type": "File",
+      "required": true,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

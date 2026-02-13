@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "ssh-import-id",
-  "description": "Authorize SSH public keys from trusted online identities.",
+  "description": "ssh-import-id(1) ssh-import ssh-import-id(1)",
   "global_flags": [
     {
       "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message and exit",
+      "description": "usage",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--output",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "write output to file 'F' (default ~/.ssh/authorized_keys, use \"-\" for standard out)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,27 +28,17 @@
       "long": "--remove",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove a key from authorized keys file",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "description": "remove keys from authorized keys file 'F'",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-u",
-      "long": null,
+      "long": "--useragent",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "append U to the user agent string PROTO:USER_ID       Protocol can be 'lp' for Launchpad.net, or 'gh' for Github.com",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -47,14 +47,28 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "USERID",
+      "name": "user_id_1",
       "value_type": "String",
       "required": true,
       "multiple": false,
-      "description": "User IDs to import"
+      "description": null
+    },
+    {
+      "name": "user_id_2",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "user_id_n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "h2xs",
-  "description": "version: 1.23",
+  "description": "H2XS(1) Perl Programmers Reference Guide H2XS(1)",
   "global_flags": [
     {
       "short": "-x",
       "long": "--autogen-xsubs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Autogenerate XSUBs using C::Scan.",
+      "description": "The package \"C::Scan\" should be  installed.  If  this option  is  specified,  the  name  of  the header file may look like \"NAME1,NAME2\". In this case NAME1 is used instead of the specified string, but XSUBs are emitted only for the declarations included from file NAME2.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--beta-version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use beta $VERSION of 0.00_01 (ignored if -v).",
+      "description": "Causes version number to be \"0.00_01\" unless -v is specified.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-b",
       "long": "--compat-version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a perl version to be backwards compatible with.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "default for versions before 5.6.2. \"Test::More\" will be added to PREREQ_PM in the generated \"Makefile.PL\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-s",
       "long": "--const-subs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Create subroutines for specified macros.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "a  perl  subroutine  for the specified macros rather than autoload with the constant() subroutine.  These macros are assumed to have a return type of char *, e.g., -s sec_rgy_wildcard_name,sec_rgy_wildcard_sid.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-F",
       "long": "--cpp-flags",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Additional flags for C preprocessor/compile.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "flags  to  specify to C preprocessor when scanning header for function declarations.  Writes these options in the generated Makefile.PL too.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--debugging",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Turn on debugging messages.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-t",
       "long": "--default-type",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Default type for autoloaded constants (default is IV).",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default is IV (signed  integer).   Currently  all  macros found  during  the  header  scanning process will be assumed to have this type.  Future versions of \"h2xs\" may gain the ability to make educated guesses.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force creation of the extension even if the C header does not exist.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-M",
       "long": "--func-mask",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Mask to select C functions/macros (default is select all).",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--gen-accessors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate get/set accessors for struct and union members (used with -x).",
+      "description": "rather  than  the  complete structure, to facilitate chained calls.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--gen-tied-var",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate tied variables for access to declared variables.",
+      "description": "same  name  magically  tied  to  the  C variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,17 @@
       "long": "--global",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include code for safely storing static data in the .xs file.",
+      "description": "Extensions that do no make use of static data can ignore this option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +136,9 @@
     {
       "short": "-n",
       "long": "--name",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a name to use for the extension (recommended).",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +146,9 @@
     {
       "short": "-X",
       "long": "--omit-XS",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Omit the XS portion (implies both -c and -f).",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "\"-c\" and \"-f\" are implicitly enabled.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": "--omit-autoload",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Omit all autoloading facilities (implies -c).",
+      "description": "This is the same as -c but also removes the \"use AutoLoader\" statement from the .pm file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +166,9 @@
     {
       "short": "-C",
       "long": "--omit-changes",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Omit creating the Changes file, add HISTORY heading to stub POD.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,8 +176,8 @@
     {
       "short": "-k",
       "long": "--omit-const-func",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -178,7 +188,7 @@
       "long": "--omit-constant",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Omit the constant() function and specialised AUTOLOAD from the XS file.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +196,9 @@
     {
       "short": "-e",
       "long": "--omit-enums",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Omit constants from enums in the constant() function. If a pattern is given, only the matching enums are ignored.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "those  constants  that are defined in an enum whose name matches regular expression.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +206,9 @@
     {
       "short": "-P",
       "long": "--omit-pod",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Omit the stub POD section.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +216,9 @@
     {
       "short": "-o",
       "long": "--opaque-re",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Regular expression for \"opaque\" types.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "\"opaque\"  data  type for the C types matched by the regular expression, even if these types are \"typedef\"-equivalent to types from typemaps.  Should not be used without -x.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,7 @@
       "long": "--overwrite-ok",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allow overwriting of a pre-existing extension directory.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +236,9 @@
     {
       "short": "-p",
       "long": "--remove-prefix",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a prefix which should be removed from the Perl function names.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,8 +246,8 @@
     {
       "short": null,
       "long": "--skip-autoloader",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -248,7 +258,7 @@
       "long": "--skip-exporter",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not export symbols.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +268,7 @@
       "long": "--skip-ppport",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not use portability layer.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,9 +276,9 @@
     {
       "short": null,
       "long": "--skip-strict",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Do not use the pragma C<strict>.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,19 +286,9 @@
     {
       "short": null,
       "long": "--skip-warnings",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Do not use the pragma C<warnings>.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--use-new-tests",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use Test::More in backward compatible modules.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,17 +298,7 @@
       "long": "--use-old-tests",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use the module Test rather than Test::More.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--use-xsloader",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use XSLoader in backward compatible modules (ignored when used with -X).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,27 +306,42 @@
     {
       "short": "-v",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify a version number for this extension.",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "a  version number for this extension.  This version number is added to the templates.  The default is 0.01, or 0.00_01 if \"-B\" is specified.  The version specified should be numeric.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": "-?",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "1.23"
+  "positional": [
+    {
+      "name": "extra_libraries",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "headerfile",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": null
 }

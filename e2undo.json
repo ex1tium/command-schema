@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "e2undo",
-  "description": null,
+  "description": "E2UNDO(8) System Manager's Manual E2UNDO(8)",
   "global_flags": [
     {
       "short": "-f",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Normally, e2undo will check the file system superblock to make sure the undo log matches with the file system on the device.  If they do not match, e2undo will refuse to apply the undo log as a safety mechanism.  The -f option disables this safety mechanism.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display a usage message.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Dry-run; do not actually write blocks back to the file system.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,8 +36,8 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Report which block we're currently replaying.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-z",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "file.   This  undo  file  can  be  used  with e2undo(8)  to  restore the old contents of the file system should something go wrong.  If the empty string is passed as the undo_file argument, the undo file will be written to a file named e2undo-device.e2undo in the directory specified  via  the  E2FSPROGS_UNDO_DIR environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -67,21 +67,35 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "filesystem",
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "offset",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "undo_file",
       "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "transaction",
+      "name": "undo_log",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

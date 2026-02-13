@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-parsechangelog",
-  "description": null,
+  "description": "dpkg-parsechangelog(1) dpkg suite dpkg-parsechangelog(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "include all changes.",
+      "description": "Note: Other options have no effect when this is in use.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-c",
       "long": "--count",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "include <number> entries from the top (or tail if <number> is lower than 0).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-l",
       "long": "--file",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  changelog  file  to  read  information  from.  A ‘-’ can be used to specify reading from standard input.  The default is debian/changelog.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": null,
       "long": "--format",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  output  format.   Currently  supported values are dpkg and rfc822.  dpkg is the classic output format (from before this option existed) and the default.  It consists of one stanza in Debian  control  format  (see  deb-control(5)).   If  more  than  one  entry  is requested, then most fields are taken from the first entry (usually the most recent entry), except otherwise stated:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-f",
       "long": "--from",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "include all changes equal or later than <version>.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-o",
       "long": "--offset",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "change starting point for --count, counted from the top (or tail if <number> is lower than 0).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--reverse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "include all changes in reverse order.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-S",
       "long": "--show-field",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The field name is not printed, only its value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-s",
       "long": "--since",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "include all changes later than <version>.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-t",
       "long": "--to",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "include all changes up to or equal than <version>.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-u",
       "long": "--until",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "include all changes earlier than <version>.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,17 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "force changelog format.",
+      "description": "By default the format is read from a special line near the bottom of the  changelog  or  failing that defaults to the debian standard format.  See also \"CHANGELOG FORMATS\".",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "option  without  effect  (since dpkg 1.18.8).  Setting the perl environment variables PERL5LIB or PERLLIB has a similar effect when looking for the parser perl modules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +156,9 @@
     {
       "short": "-n",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "ditto.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +166,9 @@
     {
       "short": "-v",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "ditto.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,7 +176,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.8,
   "version": null
 }

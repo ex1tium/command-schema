@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "swapon",
-  "description": "Enable devices and files for paging and swapping.",
+  "description": "SWAPON(8) System Administration SWAPON(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable all swaps from /etc/fstab",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,14 +18,24 @@
       "long": "--bytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display swap size in bytes in --show output",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--discard",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-d",
-      "long": "--discard",
+      "long": "--discard[",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -38,7 +48,7 @@
       "long": "--fixpgsz",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "reinitialize the swap space if necessary",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +56,9 @@
     {
       "short": "-T",
       "long": "--fstab",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "alternative file to /etc/fstab",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--ifexists",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "silently skip devices that do not exist",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--noheadings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't print table heading (with --show)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +96,19 @@
     {
       "short": "-o",
       "long": "--options",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "comma-separated list of swap options",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +118,7 @@
       "long": "--priority",
       "value_type": "String",
       "takes_value": true,
-      "description": "specify the priority of the swap device",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,17 +128,17 @@
       "long": "--raw",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use the raw output format (with --show)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--show",
+      "long": "--show[",
       "value_type": "String",
       "takes_value": true,
-      "description": "display summary in definable table",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +146,9 @@
     {
       "short": "-s",
       "long": "--summary",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display summary about used swap devices (DEPRECATED)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +158,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose mode",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +168,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +178,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "synonym for LABEL=<label>",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +186,19 @@
     {
       "short": "-U",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-va",
+      "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "synonym for UUID=<uuid> LABEL=<label> specifies device by swap area label UUID=<uuid> specifies device by swap area UUID PARTLABEL=<label> specifies device by partition label PARTUUID=<uuid> specifies device by partition UUID <device> name of device to be used <file> name of file to be used",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -177,14 +207,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "spec",
+      "name": "-va",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "specialfile",
+      "value_type": "File",
+      "required": false,
+      "multiple": true,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "xclip",
-  "description": "Access an X server selection for reading or writing.",
+  "description": "XCLIP(1) General Commands Manual XCLIP(1)",
   "global_flags": [
     {
       "short": "-d",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "X display to connect to (eg localhost:0\")",
+      "description": "the text piped to standard in back to standard out unmodified",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "usage information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": "-i",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "read text into X selection from standard input or files (default)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "number of selection requests to wait for before exiting",
+      "description": "of X selection requests (pastes into X applications) to wait for before exiting, with a value of 0 (default) causing xclip to wait for an unlimited number of requests until another application (possibly another invocation of xclip) takes ownership of the  se‐ lection",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't treat text as utf-8, use old unicode",
+      "description": "in legacy (i.e. non UTF-8) mode for backwards compatibility (Use this option only when really necessary, as the old behavior was broken)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prints the selection to standard out (generally for piping to a file or program)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,17 +78,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run in foreground, show what's happening",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-rmlastnl",
+      "short": "-r",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "remove the last newline character if present",
+      "description": "are not affected. If the selection does not end with a newline character, this option has no effect. This option is useful for copying one-line output of programs like pwd to the clipboard to paste it again into the command  prompt  without  executing  the line immediately due to the newline character pwd appends.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +96,9 @@
     {
       "short": "-selection",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "selection to access (\"primary\", \"secondary\", \"clipboard\" or \"buffer-cut\")",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "for XA_CLIPBOARD",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,17 +108,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "errors only, run in background (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-target",
+      "short": "-t",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "a  particular  data format using the given target atom.  With -o the special target atom name \"TARGETS\" can be used to get a list of valid target atoms for this selection.  For more information about target atoms refer to ICCCM section 2.6.2",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use the given target atom",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "running commentary",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "version information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,7 +156,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.8,
   "version": null
 }

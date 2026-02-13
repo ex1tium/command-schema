@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "resolvectl",
-  "description": "Send control commands to the network name resolution manager, or",
+  "description": "RESOLVECTL(1) resolvectl RESOLVECTL(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--are-updates-enabled",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--cache",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow response from cache (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,7 @@
       "long": "--class",
       "value_type": "String",
       "takes_value": true,
-      "description": "Query RR with DNS class",
+      "description": "A, AAAA, MX, ...) and class (e.g.  IN, ANY, ...) to look up. If these options are used a DNS resource record set matching the specified class and type is requested. The class defaults to IN if only a type is specified. The special value \"help\" may be used to list known values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,29 @@
     {
       "short": null,
       "long": "--cname",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Follow CNAME redirects (default: yes)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disable-updates",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--enable-updates",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +68,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +78,7 @@
       "long": "--interface",
       "value_type": "String",
       "takes_value": true,
-      "description": "Look on interface",
+      "description": "\"en0\"). Note that this option has no effect if system-wide DNS configuration (as configured in /etc/resolv.conf or /etc/systemd/resolved.conf) in place of per-link configuration is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +88,7 @@
       "long": "--json",
       "value_type": "String",
       "takes_value": true,
-      "description": "Output as JSON",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +98,7 @@
       "long": "--legend",
       "value_type": "String",
       "takes_value": true,
-      "description": "Print headers and additional info (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +108,7 @@
       "long": "--network",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow response from network (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,7 @@
       "long": "--no-pager",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not pipe output into a pager",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +128,7 @@
       "long": "--protocol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Look via protocol",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +138,7 @@
       "long": "--raw[",
       "value_type": "String",
       "takes_value": true,
-      "description": "Dump the answer as binary data",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +148,17 @@
       "long": "--search",
       "value_type": "String",
       "takes_value": true,
-      "description": "Use search domains for single-label names (default: yes)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--service",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +168,7 @@
       "long": "--service-address",
       "value_type": "String",
       "takes_value": true,
-      "description": "Resolve address for services (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +178,7 @@
       "long": "--service-txt",
       "value_type": "String",
       "takes_value": true,
-      "description": "Resolve TXT records for services (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +188,7 @@
       "long": "--stale-data",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow response from cache with stale data (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +198,7 @@
       "long": "--synthesize",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow synthetic response (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +208,7 @@
       "long": "--trust-anchor",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow response from local trust anchor (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +218,7 @@
       "long": "--type",
       "value_type": "String",
       "takes_value": true,
-      "description": "Query RR with DNS type",
+      "description": "A, AAAA, MX, ...) and class (e.g.  IN, ANY, ...) to look up. If these options are used a DNS resource record set matching the specified class and type is requested. The class defaults to IN if only a type is specified. The special value \"help\" may be used to list known values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +228,7 @@
       "long": "--validate",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow DNSSEC validation (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +238,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show package version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +248,7 @@
       "long": "--zone",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +258,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Resolve IPv4 addresses",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +268,47 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Resolve IPv6 addresses",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +318,27 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Query RR with DNS class",
+      "description": "A, AAAA, MX, ...) and class (e.g.  IN, ANY, ...) to look up. If these options are used a DNS resource record set matching the specified class and type is requested. The class defaults to IN if only a type is specified. The special value \"help\" may be used to list known values.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +348,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +358,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Look on interface",
+      "description": "\"en0\"). Note that this option has no effect if system-wide DNS configuration (as configured in /etc/resolv.conf or /etc/systemd/resolved.conf) in place of per-link configuration is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,9 +366,29 @@
     {
       "short": "-j",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Same as --json=pretty on tty, --json=short otherwise",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +398,17 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Look via protocol",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +418,37 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Query RR with DNS type",
+      "description": "A, AAAA, MX, ...) and class (e.g.  IN, ANY, ...) to look up. If these options are used a DNS resource record set matching the specified class and type is requested. The class defaults to IN if only a type is specified. The special value \"help\" may be used to list known values.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "— i.e. ensures that DNS traffic is preferably routed to the DNS servers on this interface, unless there are other, more specific domains configured on other interfaces.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -296,72 +456,8 @@
   ],
   "subcommands": [
     {
-      "name": "default-route",
-      "description": "Get/set per-interface default route flag",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "dns",
-      "description": "Get/set per-interface DNS server address",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "dnsovertls",
-      "description": "Get/set per-interface DNS-over-TLS mode",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "dnssec",
-      "description": "Get/set per-interface DNSSEC mode",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "domain",
-      "description": "Get/set per-interface search domain",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "flush-caches",
-      "description": "Flush all local DNS caches",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "llmnr",
-      "description": "Get/set per-interface LLMNR mode",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "log-level",
-      "description": "Get/set logging threshold for systemd-resolved",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "mdns",
-      "description": "Get/set per-interface MulticastDNS mode",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -369,23 +465,7 @@
     },
     {
       "name": "monitor",
-      "description": "Monitor DNS queries",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "nta",
-      "description": "Get/set per-interface DNSSEC NTA",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "query",
-      "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -393,7 +473,7 @@
     },
     {
       "name": "reset-server-features",
-      "description": "Forget learnt DNS server feature levels",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -401,15 +481,7 @@
     },
     {
       "name": "reset-statistics",
-      "description": "Reset resolver statistics",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "revert",
-      "description": "Revert per-interface configuration",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -417,7 +489,7 @@
     },
     {
       "name": "show-cache",
-      "description": "Show cache contents",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -425,7 +497,7 @@
     },
     {
       "name": "show-server-state",
-      "description": "Show servers state",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -433,31 +505,23 @@
     },
     {
       "name": "statistics",
-      "description": "Show resolver statistics",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "status",
-      "description": "Show link and server status",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "tlsa",
-      "description": "Query TLS public key",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     }
   ],
-  "positional": [],
-  "source": "HelpCommand",
+  "positional": [
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": false,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
   "confidence": 1.0,
   "version": null
 }

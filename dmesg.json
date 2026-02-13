@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dmesg",
-  "description": "Display or control the kernel ring buffer.",
+  "description": "DMESG(1) User Commands DMESG(1)",
   "global_flags": [
     {
       "short": "-s",
       "long": "--buffer-size",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "buffer size to query the kernel ring buffer",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,17 +18,17 @@
       "long": "--clear",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "clear the kernel ring buffer",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-L",
-      "long": "--color",
+      "long": "--color[",
       "value_type": "String",
       "takes_value": true,
-      "description": "colorize messages (auto, always or never) colors are enabled by default",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,8 +36,8 @@
     {
       "short": "-n",
       "long": "--console-level",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -48,7 +48,7 @@
       "long": "--console-off",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disable printing messages to console",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--console-on",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable printing messages to console",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--ctime",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show human-readable timestamp (may be inaccurate!)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--decode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "decode facility and level to readable string",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-f",
       "long": "--facility",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "restrict output to defined facilities",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-F",
       "long": "--file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "use the file instead of the kernel log buffer",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--follow",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "wait for new messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--follow-new",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "wait and print only new messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--force-prefix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force timestamp output on each line of multi-line messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--human",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "human readable output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-J",
       "long": "--json",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use JSON output format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--kernel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display kernel messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": "-l",
       "long": "--level",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "restrict output to defined levels",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,17 @@
       "long": "--noescape",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't escape unprintable character",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--noescape).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +206,9 @@
     {
       "short": "-P",
       "long": "--nopager",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not pipe output into a pager",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +218,7 @@
       "long": "--notime",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't show any timestamp with messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,7 @@
       "long": "--raw",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the raw message buffer",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +238,7 @@
       "long": "--read-clear",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "read and clear all messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,9 +246,9 @@
     {
       "short": "-e",
       "long": "--reltime",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show local time and time delta in readable format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +258,7 @@
       "long": "--show-delta",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show time delta between printed messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,9 +266,9 @@
     {
       "short": null,
       "long": "--since",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "display the lines since the specified time",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +278,7 @@
       "long": "--syslog",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force to use syslog(2) rather than /dev/kmsg",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,9 +286,9 @@
     {
       "short": null,
       "long": "--time-format",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "show timestamp using the given format: [delta|reltime|ctime|notime|iso]",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -286,9 +296,9 @@
     {
       "short": null,
       "long": "--until",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "display the lines until the specified time",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +308,7 @@
       "long": "--userspace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display userspace messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,15 +318,23 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "level",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

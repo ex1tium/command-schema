@@ -1,25 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "ln",
-  "description": "In the 1st form, create a link to TARGET with the name LINK_NAME.",
+  "description": "LN(1) User Commands LN(1)",
   "global_flags": [
     {
       "short": null,
-      "long": "--backup",
-      "value_type": {
-        "Choice": [
-          "none",
-          "off",
-          "numbered",
-          "t",
-          "existing",
-          "nil",
-          "simple",
-          "never"
-        ]
-      },
+      "long": "--backup[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "make a backup of each existing destination file",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--directory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -29,7 +28,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "remove existing destination files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -39,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -49,7 +48,7 @@
       "long": "--interactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prompt whether to remove destinations",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -59,7 +58,7 @@
       "long": "--logical",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dereference TARGETs that are symbolic links",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -67,9 +66,9 @@
     {
       "short": "-n",
       "long": "--no-dereference",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "treat LINK_NAME as a normal file if it is a symbolic link to a directory",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -77,9 +76,9 @@
     {
       "short": "-T",
       "long": "--no-target-directory",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "treat LINK_NAME as a normal file always",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -89,7 +88,7 @@
       "long": "--physical",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "make hard links directly to symbolic links",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -99,7 +98,7 @@
       "long": "--relative",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with -s, create links relative to link location",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -109,7 +108,7 @@
       "long": "--suffix",
       "value_type": "String",
       "takes_value": true,
-      "description": "override the usual backup suffix",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -119,7 +118,7 @@
       "long": "--symbolic",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "make symbolic links instead of hard links",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -129,7 +128,7 @@
       "long": "--target-directory",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "specify the DIRECTORY in which to create the links",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -139,7 +138,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print name of each linked file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -149,7 +148,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -163,43 +162,40 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "allow the superuser to attempt to hard link directories (note: will probably fail due to system restrictions, even for the superuser)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
   "positional": [
     {
-      "name": "DIRECTORY",
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
       "value_type": "Directory",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "LINK_NAME",
+      "name": "link_name",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "TARGET",
+      "name": "target",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

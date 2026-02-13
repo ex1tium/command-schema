@@ -1,34 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "ld.lld",
-  "description": "OVERVIEW: lld",
+  "description": "LD.LLD(1) General Commands Manual LD.LLD(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "---be8",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Write a Big Endian ELF File using BE8 format(AArch32 only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "---relax-gp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--Bdynamic",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Link against shared libraries (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--Bno-symbolic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Don't bind default visibility defined symbols locally for -shared (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--Bshareable",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --shared",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,46 +36,6 @@
     {
       "short": null,
       "long": "--Bstatic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not link against shared libraries",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--Bsymbolic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Bind default visibility defined symbols locally for -shared",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--Bsymbolic-functions",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Bind default visibility defined function symbols locally for -shared",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--Bsymbolic-non-weak",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Bind default visibility defined STB_GLOBAL symbols locally for -shared",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--Bsymbolic-non-weak-functions",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -86,9 +46,9 @@
     {
       "short": null,
       "long": "--EB",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Select the big-endian format in OUTPUT_FORMAT",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Select the big-endian format in the OUTPUT_FORMAT command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,19 +56,19 @@
     {
       "short": null,
       "long": "--EL",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Select the little-endian format in OUTPUT_FORMAT",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Select the little-endian format in the OUTPUT_FORMAT command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-M",
       "long": "--Map",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Print a link map to the specified file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +78,7 @@
       "long": "--Tbss",
       "value_type": "String",
       "takes_value": true,
-      "description": "Same as --section-start with .bss as the sectionname",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +88,7 @@
       "long": "--Tdata",
       "value_type": "String",
       "takes_value": true,
-      "description": "Same as --section-start with .data as the sectionname",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +98,7 @@
       "long": "--Ttext",
       "value_type": "String",
       "takes_value": true,
-      "description": "Same as --section-start with .text as the sectionname",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,6 +106,16 @@
     {
       "short": null,
       "long": "--allow-multiple-definition",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The first definition will be used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allow-multiple-definition.",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -158,43 +128,7 @@
       "long": "--allow-shlib-undefined",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--android-memtag-heap",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Instruct the dynamic loader to enable MTE protection for the heap",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--android-memtag-mode",
-      "value_type": {
-        "Choice": [
-          "async",
-          "sync",
-          "none"
-        ]
-      },
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--android-memtag-stack",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Instruct the dynamic loader to prepare for MTE stack instrumentation",
+      "description": "This option is enabled by default when linking a shared library.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -204,7 +138,7 @@
       "long": "--apply-dynamic-relocs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Apply link-time values for dynamic relocations",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -212,9 +146,9 @@
     {
       "short": null,
       "long": "--as-needed",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Only set DT_NEEDED for shared libraries if used",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -224,17 +158,7 @@
       "long": "--auxiliary",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set DT_AUXILIARY field to the specified name",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--be8",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "write a Big Endian ELF file using BE8 format (AArch32 only)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -244,17 +168,7 @@
       "long": "--build-id",
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --build-id=fast",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--call-graph-ordering-file",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "description": "a  build  ID  note.   value may be one of fast, md5, sha1, tree, uuid, 0xhex-string, and none.  tree is an alias for sha1. Build-IDs of type fast, md5, sha1, and tree are calculated from the object contents.  fast is not intended to  be  cryptographically secure.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -271,30 +185,10 @@
     },
     {
       "short": null,
-      "long": "--check-sections",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Check section addresses for overlaps (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--cmse-implib",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Make the output library to be a CMSE secure code import library",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--color-diagnostics",
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --color-diagnostics=always",
+      "description": "value may be one of always, auto, and never.  auto enables color if and only if output is to a terminal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -304,7 +198,7 @@
       "long": "--compress-debug-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "value may be",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -314,7 +208,7 @@
       "long": "--cref",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Output cross reference table. If -Map is specified, print to the map file",
+      "description": "Output cross reference table. If -Map is specified, print to the map file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -324,7 +218,7 @@
       "long": "--defsym",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "a  symbol  alias.   expression  may  be  another  symbol  or a linker script expression.  For example, ‘--defsym=foo=bar’ or ‘--defsym=foo=bar+0x100’.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -334,27 +228,7 @@
       "long": "--demangle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Demangle symbol names (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dependency-file",
-      "value_type": "File",
-      "takes_value": true,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dependent-libraries",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Process dependent library specifiers from input files (default)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -364,27 +238,27 @@
       "long": "--disable-new-dtags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Disable new dynamic tags",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-x",
       "long": "--discard-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Delete all local symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-X",
       "long": "--discard-locals",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Delete temporary local symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -394,27 +268,7 @@
       "long": "--discard-none",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Keep all symbols in the symbol table",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dn",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --Bstatic",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dy",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --Bdynamic",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -424,7 +278,7 @@
       "long": "--dynamic-linker",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "This is recorded in an ELF segment of type PT_INTERP.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -432,9 +286,9 @@
     {
       "short": null,
       "long": "--dynamic-list",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Similar to --export-dynamic-symbol-list. When creating a shared object, this additionally implies -Bsymbolic but does not set DF_SYMBOLIC",
+      "description": "When creating a shared object, implies -Bsymbolic but does not set DF_SYMBOLIC",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -442,19 +296,19 @@
     {
       "short": null,
       "long": "--eh-frame-hdr",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Request creation of .eh_frame_hdr section and PT_GNU_EH_FRAME segment header",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-q",
       "long": "--emit-relocs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate relocations in output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -464,17 +318,7 @@
       "long": "--enable-new-dtags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable new dynamic tags (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--end-group",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignored for compatibility with GNU unless you pass --warn-backrefs",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -484,7 +328,7 @@
       "long": "--end-lib",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "End a grouping of objects that should be treated as if they were together in an archive",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -494,16 +338,6 @@
       "long": "--entry",
       "value_type": "String",
       "takes_value": true,
-      "description": "Name of entry point symbol",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--error-handling-script",
-      "value_type": "String",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -511,10 +345,20 @@
     },
     {
       "short": null,
-      "long": "--error-limit",
-      "value_type": "Number",
+      "long": "--error-handing-script",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Maximum number of errors to emit before stopping (0 = no limit)",
+      "description": "script  is  ex‐ pected  to  return  0 on success. Any other value is considered a generic error.  tag may be missing-lib followed by the name of the missing library.  undefined-symbol followed by the name of the undefined symbol.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--error-limit",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "A value of zero indicates that there is no limit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -534,7 +378,7 @@
       "long": "--exclude-libs",
       "value_type": "String",
       "takes_value": true,
-      "description": "Exclude static libraries from automatic export",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -544,17 +388,17 @@
       "long": "--execute-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mark executable sections unreadable",
+      "description": "This option is currently only supported on AArch64.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-E",
       "long": "--export-dynamic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Put symbols in the dynamic symbol table",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -564,7 +408,7 @@
       "long": "--export-dynamic-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "(shared object)  References  to  matched  non-local STV_DEFAULT  symbols  shouldn't be bound to definitions within the shared object even if they would otherwise be due to -Bsymbolic ,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -572,9 +416,9 @@
     {
       "short": null,
       "long": "--export-dynamic-symbol-list",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Apply --export-dynamic-symbol on each pattern.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -582,9 +426,9 @@
     {
       "short": null,
       "long": "--fat-lto-objects",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use the .llvm.lto section, which contains LLVM bitcode, in fat LTO object files to perform LTO.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -594,17 +438,17 @@
       "long": "--fatal-warnings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Treat warnings as errors",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-F",
       "long": "--filter",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set DT_FILTER field to the specified name",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -614,47 +458,17 @@
       "long": "--fini",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify a finalizer function",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fix-cortex-a53-843419",
-      "value_type": "Bool",
-      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--fix-cortex-a8",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Apply fixes for ARM Cortex-A8 erratum 657417",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-b",
       "long": "--format",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fortran-common",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Search archive members for definitions to override COMMON symbols (default)",
+      "description": "input-format may be one of binary, elf, and default.  default is a  synonym for elf.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -664,7 +478,7 @@
       "long": "--gc-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable garbage collection of unused sections",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -674,17 +488,7 @@
       "long": "--gdb-index",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate .gdb_index section",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--gnu-unique",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable STB_GNU_UNIQUE symbol binding (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -694,7 +498,7 @@
       "long": "--hash-style",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify hash style (sysv, gnu or both)",
+      "description": "value may be sysv, gnu, or both.  both is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -704,7 +508,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print option help",
+      "description": "Print a help message.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -714,7 +518,7 @@
       "long": "--icf",
       "value_type": "String",
       "takes_value": true,
-      "description": "Enable identical code folding",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -724,7 +528,7 @@
       "long": "--ignore-data-address-equality",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "address  equality of data. C/C++ requires each data to have a unique address.  This option allows lld to do unsafe optimiza‐ tion that breaks the requirement: create copies of read-only data or merge two or more read-only data that happen to have  the  same value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -734,7 +538,7 @@
       "long": "--ignore-function-address-equality",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "address  equality  of functions.  This option allows non-PIC calls to a function with non-default visibility in a shared ob‐ ject.  The function may have different addresses within the executable and within the shared object.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -744,17 +548,7 @@
       "long": "--image-base",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set the base address",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--in-implib",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Read an existing CMSE secure code import library and preserve entry function addresses in the resulting new CMSE secure code import library (optional when creating a CMSE secure image)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -764,17 +558,7 @@
       "long": "--init",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify an initializer function",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--just-symbols",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Just link symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -782,36 +566,26 @@
     {
       "short": null,
       "long": "--keep-unique",
-      "value_type": "Url",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Do not fold this symbol during ICF",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-l",
       "long": "--library",
       "value_type": "String",
       "takes_value": true,
-      "description": "Search for library <libname>",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-L",
       "long": "--library-path",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Add <dir> to the library search path",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--load-pass-plugin",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -821,10 +595,10 @@
     },
     {
       "short": null,
-      "long": "--lto",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set LTO backend",
+      "long": "--lto-Oopt-level",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -832,69 +606,9 @@
     {
       "short": null,
       "long": "--lto-aa-pipeline",
-      "value_type": "Url",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-basic-block-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-cs-profile-file",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-cs-profile-generate",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-debug-pass-manager",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-emit-asm",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Emit assembly code",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-known-safe-vtables",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "description": "Used in conjunction with --lto-newpm-passes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -902,7 +616,7 @@
     {
       "short": null,
       "long": "--lto-newpm-passes",
-      "value_type": "Url",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -912,106 +626,16 @@
     {
       "short": null,
       "long": "--lto-partitions",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-pgo-warn-mismatch",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-sample-profile",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-unique-basic-block-section-names",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-validate-all-vtables-have-type-infos",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lto-whole-program-visibility",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--merge-exidx-entries",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable merging .ARM.exidx entries (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--mllvm",
       "value_type": "String",
       "takes_value": true,
-      "description": "Additional arguments to forward to LLVM's option processing",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--mmap-output-file",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Mmap the output file for writing (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-n",
       "long": "--nmagic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not page align sections, link against static libraries.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-allow-multiple-definition",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -1024,17 +648,7 @@
       "long": "--no-allow-shlib-undefined",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-apply-dynamic-relocs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "This option is enabled by default when linking an executable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1042,19 +656,9 @@
     {
       "short": null,
       "long": "--no-as-needed",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Always set DT_NEEDED for shared libraries (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-check-sections",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not check section addresses for overlaps",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1062,9 +666,9 @@
     {
       "short": null,
       "long": "--no-color-diagnostics",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --color-diagnostics=never",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1072,16 +676,6 @@
     {
       "short": null,
       "long": "--no-demangle",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not demangle symbol names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-dependent-libraries",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -1094,37 +688,7 @@
       "long": "--no-dynamic-linker",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Inhibit output of .interp section",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-eh-frame-hdr",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not create .eh_frame_hdr section",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-execute-only",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Mark executable sections readable (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-export-dynamic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not put symbols in the dynamic symbol table (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1134,17 +698,7 @@
       "long": "--no-fat-lto-objects",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Ignore the .llvm.lto section in relocatable object files (default).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-fatal-warnings",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not treat warnings as errors (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1152,9 +706,9 @@
     {
       "short": null,
       "long": "--no-fortran-common",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not search archive members for definitions to override COMMON symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1164,17 +718,7 @@
       "long": "--no-gc-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Disable garbage collection of unused sections (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-gdb-index",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not generate .gdb_index section (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1182,48 +726,8 @@
     {
       "short": null,
       "long": "--no-gnu-unique",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Disable STB_GNU_UNIQUE symbol binding",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-lto-pgo-warn-mismatch",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-lto-unique-basic-block-section-names",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-lto-validate-all-vtables-have-type-infos",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-lto-whole-program-visibility",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1241,20 +745,10 @@
     },
     {
       "short": null,
-      "long": "--no-mmap-output-file",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not mmap the output file for writing",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--no-nmagic",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Page align sections (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1264,27 +758,7 @@
       "long": "--no-omagic",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not set the text data sections to be writable, page align sections (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-optimize-bb-jumps",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not remove any direct jumps at the end to the next basic block (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-pcrel-optimize",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "(PowerPC64) Disable PC-relative optimizations",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1292,36 +766,6 @@
     {
       "short": null,
       "long": "--no-pie",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not create a position independent executable (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-power10-stubs",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --power10-stubs=no",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-print-gc-sections",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not list removed unused sections (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-print-icf-sections",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -1332,19 +776,9 @@
     {
       "short": null,
       "long": "--no-relax",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Disable target-specific relaxations",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-relax-gp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Disable global pointer relaxation (default)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1354,46 +788,6 @@
       "long": "--no-rosegment",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not put read-only non-executable sections in their own segment",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-toc-optimize",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "(PowerPC64) Disable TOC related optimizations",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-undefined",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Report unresolved symbols even if the linker is creating a shared library",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-undefined-version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Report version scripts that refer undefined symbols",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-use-android-relr-tags",
-      "value_type": "Bool",
-      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1401,27 +795,7 @@
     },
     {
       "short": null,
-      "long": "--no-warn-backrefs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not warn about backward symbol references to extract archive members (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-warn-common",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Do not warn about duplicate common symbols (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-warn-ifunc-textrel",
+      "long": "--no-undefined",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -1440,11 +814,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-w",
       "long": "--no-warnings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Suppress warnings and cancel --fatal-warnings",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1454,7 +828,7 @@
       "long": "--no-whole-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not force load of all members in a static library (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1464,7 +838,7 @@
       "long": "--noinhibit-exec",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Retain the executable output file whenever it is still usable",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1474,7 +848,7 @@
       "long": "--nostdlib",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only search directories specified on the command line",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1484,34 +858,14 @@
       "long": "--oformat",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify the binary format for the output object file",
+      "description": "The only supported format is binary, which produces output with no ELF header.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-N",
       "long": "--omagic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Set the text and data sections to be readable and writable, do not page align sections, link against static libraries",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--opt-remarks-filename",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--opt-remarks-format",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -1521,8 +875,8 @@
     },
     {
       "short": null,
-      "long": "--opt-remarks-hotness-threshold",
-      "value_type": "File",
+      "long": "--opt-remarks-filename",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -1532,8 +886,8 @@
     {
       "short": null,
       "long": "--opt-remarks-passes",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1551,40 +905,10 @@
     },
     {
       "short": null,
-      "long": "--optimize-bb-jumps",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Remove direct jumps at the end to the next basic block",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--orphan-handling",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--out-implib",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Output the CMSE secure code import library to <file> (required when creating a CMSE secure image)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--output",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for -o",
+      "description": "An orphan section is one not specifically mentioned in a linker script.  mode may be:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1594,37 +918,7 @@
       "long": "--pack-dyn-relocs",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--package-metadata",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--pcrel-optimize",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "(PowerPC64) Enable PC-relative optimizations (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--pic-executable",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --pie",
+      "description": "format may be:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1634,7 +928,7 @@
       "long": "--pic-veneer",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Always generate position independent thunks (veneers)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1644,27 +938,7 @@
       "long": "--pie",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create a position independent executable",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--plugin",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Ignored for compatibility with GNU linkers",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--plugin-opt",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specify an LLVM option for compatibility with LLVMgold.so",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1674,7 +948,7 @@
       "long": "--pop-state",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Restore the states saved by --push-state",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1684,7 +958,7 @@
       "long": "--power10-stubs",
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --power10-stubs=auto",
+      "description": "mode may be:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1692,9 +966,9 @@
     {
       "short": null,
       "long": "--print-archive-stats",
-      "value_type": "File",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "Print the numbers of members and fetched members for each archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1704,7 +978,7 @@
       "long": "--print-gc-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List removed unused sections",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1714,7 +988,7 @@
       "long": "--print-icf-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List identical folded sections",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1724,26 +998,6 @@
       "long": "--print-map",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print a link map to the standard output",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--print-memory-usage",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Report target memory usage",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--print-symbol-order",
-      "value_type": "File",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1754,37 +1008,17 @@
       "long": "--push-state",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Save the current state of --as-needed, -static and --whole-archive",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--relax",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable target-specific relaxations if supported (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--relax-gp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Enable global pointer relaxation",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-r",
       "long": "--relocatable",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Create relocatable object file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1804,7 +1038,7 @@
       "long": "--remap-inputs-file",
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Each line in the remap file is of the format from-glob=to-file or a  comment  starting with #.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1814,7 +1048,7 @@
       "long": "--reproduce",
       "value_type": "File",
       "takes_value": true,
-      "description": "Write tar file containing inputs and command to reproduce link",
+      "description": "a  tar  file to path, containing all the input files needed to reproduce the link, a text file called response.txt containing the command line options and a text file called version.txt containing the output of ld.lld --version.  The  archive  when  unpacked can be used to re-run the linker with the same options and input files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1822,7 +1056,7 @@
     {
       "short": null,
       "long": "--retain-symbols-file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -1830,21 +1064,11 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--rosegment",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Put read-only non-executable sections in their own segment (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-R",
       "long": "--rpath",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Add a DT_RUNPATH to the output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1854,27 +1078,17 @@
       "long": "--rsp-quoting",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "The supported values are windows and posix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--save-temps",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Save select intermediate LTO compilation results",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-T",
       "long": "--script",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Read linker script",
+      "description": "linker  script  from file.  If multiple linker scripts are given, they are processed as if they were concatenated in the order they appeared on the command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1894,7 +1108,7 @@
       "long": "--shared",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Build a shared object",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1904,6 +1118,16 @@
       "long": "--shuffle-sections",
       "value_type": "String",
       "takes_value": true,
+      "description": "If -1, reverse the section order.  If  0, use a random seed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--soname",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1911,10 +1135,10 @@
     },
     {
       "short": null,
-      "long": "--soname",
+      "long": "--sort-common",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set DT_SONAME",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1924,27 +1148,7 @@
       "long": "--sort-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specifies sections sorting rule when linkerscript is used",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--split-stack-adjust-size",
-      "value_type": "String",
-      "takes_value": true,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--start-group",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Ignored for compatibility with GNU unless you pass --warn-backrefs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1954,37 +1158,27 @@
       "long": "--start-lib",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Start a grouping of objects that should be treated as if they were together in an archive",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--static",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --Bstatic",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
+      "short": "-s",
       "long": "--strip-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Strip all symbols. Implies --strip-debug",
+      "description": "Implies --strip-debug.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-S",
       "long": "--strip-debug",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strip debugging information",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1992,7 +1186,7 @@
     {
       "short": null,
       "long": "--symbol-ordering-file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -2004,7 +1198,7 @@
       "long": "--sysroot",
       "value_type": "String",
       "takes_value": true,
-      "description": "Set the system root",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2014,7 +1208,7 @@
       "long": "--target1-abs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Interpret R_ARM_TARGET1 as R_ARM_ABS32 (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2024,7 +1218,7 @@
       "long": "--target1-rel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Interpret R_ARM_TARGET1 as R_ARM_REL32",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2034,7 +1228,7 @@
       "long": "--target2",
       "value_type": "String",
       "takes_value": true,
-      "description": "Interpret R_ARM_TARGET2 as <type>, where <type> is one of rel, abs, or got-rel",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2042,7 +1236,7 @@
     {
       "short": null,
       "long": "--thinlto-cache-dir",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -2062,16 +1256,6 @@
     {
       "short": null,
       "long": "--thinlto-jobs",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "Number of ThinLTO jobs. Default to --threads=",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--thinlto-single-module",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -2082,9 +1266,9 @@
     {
       "short": null,
       "long": "--threads",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Number of threads. '1' disables multi-threading. By default all available hardware threads are used",
+      "description": "all (default) means all of concurrent threads supported.  1 disables multi-threading.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2092,17 +1276,17 @@
     {
       "short": null,
       "long": "--time-trace",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Record time trace to <file>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--time-trace-granularity",
-      "value_type": "File",
+      "long": "--time-trace-file",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -2111,10 +1295,10 @@
     },
     {
       "short": null,
-      "long": "--toc-optimize",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "(PowerPC64) Enable TOC related optimizations (default)",
+      "long": "--time-trace-granularity",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2124,27 +1308,27 @@
       "long": "--trace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the names of the input files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-y",
       "long": "--trace-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Trace references to symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-u",
       "long": "--undefined",
-      "value_type": "Url",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Force undefined symbol during linking",
+      "description": "symbol  is  not  defined after symbol resolution, and there's a static library that contains an object file defining the symbol, load the member to include the object file in the output file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2152,9 +1336,9 @@
     {
       "short": null,
       "long": "--undefined-glob",
-      "value_type": "Url",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "In a glob pattern, * matches zero or more characters, ?  matches  any single  character,  and [...] matches the characters within brackets.  All symbols that match a given pattern are handled as if they were given as arguments of --undefined.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2164,7 +1348,7 @@
       "long": "--undefined-version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allow unused version in version script (disabled by default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2174,7 +1358,7 @@
       "long": "--unique",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Creates a separate output section for every orphan input section",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2192,8 +1376,8 @@
     {
       "short": null,
       "long": "--use-android-relr-tags",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -2204,7 +1388,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Verbose mode",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2214,7 +1398,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the version number and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2231,20 +1415,10 @@
     },
     {
       "short": null,
-      "long": "--vs-diagnostics",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Format diagnostics for Visual Studio compatibility",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--warn-backrefs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Warn about backward symbol references to extract archive members",
+      "description": "This can be used to ensure linker invocation remains  com‐ patible with traditional Unix-like linkers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2252,7 +1426,7 @@
     {
       "short": null,
       "long": "--warn-backrefs-exclude",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -2264,7 +1438,7 @@
       "long": "--warn-common",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Warn about duplicate common symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2274,17 +1448,7 @@
       "long": "--warn-ifunc-textrel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Warn about using ifunc symbols with text relocations",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--warn-symbol-ordering",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Warn about problems with the symbol ordering file (default)",
+      "description": "about  using ifunc symbols in conjunction with text relocations.  Older versions of glibc library (2.28 and earlier) has a bug that causes the segment that includes ifunc symbols to be marked as not executable when they are relocated.  As a  result,  although the  program compiles and links successfully, it gives segmentation fault when the instruction pointer reaches an ifunc symbol.  Use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2304,7 +1468,7 @@
       "long": "--whole-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force load of all members in a static library",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2312,9 +1476,9 @@
     {
       "short": null,
       "long": "--why-extract",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Print to a file about why archive members are extracted",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2322,169 +1486,79 @@
     {
       "short": null,
       "long": "--wrap",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Redirect symbol references to __wrap_symbol and __real_symbol references to symbol",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-E",
+      "short": "-Bno-symbolic",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --export-dynamic",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-F",
+      "short": "-Bsymbolic",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --filter",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-L",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Add <dir> to the library search path",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-M",
+      "short": "-Bsymbolic-functions",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --print-map",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-N",
+      "short": "-Bsymbolic-non-weak",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Bsymbolic-non-weak-functions",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O1",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --omagic",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-O",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Optimize output file size",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Alias for --rpath",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
+      "short": "-Ovalue",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --strip-debug",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --script",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for -v",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --discard-locals",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --format",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --entry",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --auxiliary",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --soname",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Search for library <libname>",
+      "description": "value may be:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2492,19 +1566,9 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Set target emulation",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --nmagic",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2512,59 +1576,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Path to file to write output",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --emit-relocs",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --relocatable",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --strip-all",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --trace",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --undefined",
+      "description": "If not specified, a.out is used as a default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2572,39 +1586,19 @@
     {
       "short": "-v",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display the version number",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-w",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --no-warnings",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --discard-all",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-y",
-      "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Alias for --trace-symbol",
+      "description": "Display the version number and proceed with linking if object files are specified.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-warn-ifunc-textrel",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an older  glibc  version.  Otherwise, there is no need to use it, as the default value does not give a warning.  This flag has been in‐ troduced in late 2018, has no counter part in ld and gold linkers, and may be removed in the future.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2612,17 +1606,25 @@
     {
       "short": "-z",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Linker option extensions",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "objfile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

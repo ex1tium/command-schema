@@ -1,11 +1,41 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-pdbutil-18",
-  "description": "OVERVIEW: LLVM PDB Dumper",
+  "description": "LLVM-PDBUTIL(1) LLVM LLVM-PDBUTIL(1)",
   "global_flags": [
     {
-      "short": null,
-      "long": "--help",
+      "short": "-all",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Implies all other options in this category.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-block-range",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-byte-range",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-chunks",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -14,8 +44,18 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--help-list",
+      "short": "-class-definitions",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-class-order",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -24,11 +64,661 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--version",
+      "short": "-class-recurse-depth",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default is 0, which is no limit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-classes",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-color-output",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "By default, color if used if outputting to a terminal.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-compilands",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dependents",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "record with the specified index.  For example, if type index 0x4000 is a function whose return type has index 0x3000, and you specify -dependents=0x4000, then this would dump both records (as well as any other dependents in the tree).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ec",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump the edit and continue map substream of the DBI stream.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-enums",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-exclude-compilands",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "dumping  compilands,  compiland source-file contributions, or per-compiland symbols, this option instructs llvm-pdbutil to omit any compilands that match the specified regular expression.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-exclude-symbols",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  speci‐ fied regular expression.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-exclude-types",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-externals",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-files",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fpm",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump the MSF free page map.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-global-extras",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-globals",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-id",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-id-data",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-id-extras",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-id-index",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ids",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump CodeView type records from IPI stream.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-il",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump inlinee line information (DEBUG_S_INLINEELINES CodeView subsection)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-include-compilands",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-include-symbols",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "dumping global, public, or per-compiland symbols, limit the initial search to only those symbols that match the specified regu‐ lar expression.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-include-types",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump line information (DEBUG_S_LINES CodeView subsection)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lines",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-load-address",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "absolute address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-min-class-padding",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-min-class-padding-imm",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-min-type-size",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mod",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "By default, options in this category will dump bytes from all mod‐ ules.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-modi",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-module-syms",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-modules",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-name-map",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-no-compiler-generated",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-no-enum-definitions",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-no-system-libs",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-pdb",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-public-extras",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-publics",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sc",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump section contributions substream of the DBI stream.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-section-contribs",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-section-headers",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-section-map",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sm",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump the section map from the DBI stream.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-split-chunks",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-stream-blocks",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-stream-data",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Format is SN[:Start][@Size].  For example,  -stream-data=7:3@12  dumps  12  bytes  from stream 7, starting at offset 3 in the stream.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-streams",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-string-table",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-summary",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sym-data",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sym-types",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-symbol-order",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-symbols",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-syms",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump the symbol record substream from each module.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-type",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-type-data",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-type-extras",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-type-index",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-type-server",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-typedefs",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-types",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-xme",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump cross module exports (DEBUG_S_CROSSSCOPEEXPORTS CodeView subsection)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-xmi",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump cross module imports (DEBUG_S_CROSSSCOPEIMPORTS CodeView subsection)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,1134 +726,8 @@
   ],
   "subcommands": [
     {
-      "name": "bytes",
-      "description": "Dump raw bytes from the PDB file",
-      "flags": [
-        {
-          "short": null,
-          "long": "--block-range",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--byte-range",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--chunks",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--ec",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--files",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--fpm",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help-list",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--id",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--mod",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--modi",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--name-map",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--sc",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--sm",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--split-chunks",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stream-data",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--syms",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type-server",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "PDB",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "input",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "llvm-pdbutil-18",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "diadump",
-      "description": "Dump debug information using a DIA-like API",
-      "flags": [
-        {
-          "short": null,
-          "long": "--arrays",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--compilands",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--enums",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--funcsigs",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help-list",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--hierarchy",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--native",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--no-ids",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--pointers",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--recurse",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--typedefs",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--udts",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--vtshapes",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "PDB",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "input",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "llvm-pdbutil-18",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "dump",
-      "description": "Dump MSF and CodeView debug info",
-      "flags": [
-        {
-          "short": null,
-          "long": "--all",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--children-recurse-depth",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--dependents",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--dont-resolve-forward-refs",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--files",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--fpo",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--global-extras",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--global-name",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--globals",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--gsi-records",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help-list",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--id-data",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--id-extras",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--id-index",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--id-stats",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--ids",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--il",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--jmc",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--modi",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--modules",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--named-streams",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--parent-recurse-depth",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--public-extras",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--publics",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--section-contribs",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--section-headers",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--section-map",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--show-children",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--show-parents",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stream-blocks",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--streams",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--string-table",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--string-table-details",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--summary",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--sym-data",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--sym-stats",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--symbol-offset",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--symbols",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type-data",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type-extras",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type-index",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type-ref-stats",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--type-stats",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--types",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--udt-stats",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--xme",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--xmi",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "PDB",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "input",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "llvm-pdbutil-18",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "explain",
-      "description": "Explain the meaning of a file offset",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help-list",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--input-type",
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--offset",
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "PDB",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "input",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "llvm-pdbutil-18",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "export",
-      "description": "Write binary data from a stream to a file",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help-list",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--name",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--out",
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stream",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "PDB",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "input",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "llvm-pdbutil-18",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "merge",
-      "description": "Merge multiple PDBs into a single PDB pdb2yaml - Generate a detailed YAML description of a PDB File",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--help-list",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--pdb",
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "PDB",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "input",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "llvm-pdbutil-18",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "pretty",
-      "description": "Dump semantic information about types and symbols yaml2pdb - Generate a PDB file from a YAML description",
+      "description": "OVERVIEW: LLVM PDB Dumper",
       "flags": [
         {
           "short": null,
@@ -1584,7 +1148,7 @@
     }
   ],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

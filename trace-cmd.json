@@ -1,8 +1,19 @@
 {
   "schema_version": "1.0.0",
   "command": "trace-cmd",
-  "description": "trace-cmd version 3.2.0 (not-a-git-repo)",
-  "global_flags": [],
+  "description": "TRACE-CMD(1) libtracefs Manual TRACE-CMD(1)",
+  "global_flags": [
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
   "subcommands": [
     {
       "name": "agent",
@@ -10,9 +21,9 @@
       "flags": [
         {
           "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -21,8 +32,8 @@
         {
           "short": "-D",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -31,9 +42,9 @@
         {
           "short": "-N",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Only use if the client is totally trusted. ***",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -41,9 +52,9 @@
         {
           "short": "-P",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "cid is the context ID (see vsock(7)) of the client (e.g., guest VM) it will allow to connect.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -59,38 +70,85 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "agent",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "attach",
-      "description": "Attach a host and guest trace.dat file",
+      "description": "attach a host trace.dat file to a guest trace.dat file",
       "flags": [
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
         {
           "short": "-s",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "offset,scale,fraction[,timestamp] conversion to sync guest timestamp host_file The trace.dat file from the host guest_file The trace.dat file from the guest vcpu_pid list of process ids from the host that represent the vCPUs of the guest",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "attach",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "guest-pid",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "guest-trace-file",
+          "value_type": "File",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "host-trace-file",
+          "value_type": "File",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "check-events",
-      "description": "parse trace event formats",
+      "description": "parse format strings for all trace events and return",
       "flags": [
         {
           "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -99,27 +157,35 @@
         {
           "short": "-N",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "check-events",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "clear",
-      "description": "clear the trace buffers",
+      "description": "clear the content of the Ftrace ring buffers.",
       "flags": [
         {
           "short": "-B",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -136,13 +202,21 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "clear",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "convert",
-      "description": "convert trace file to different version",
+      "description": "convert trace files",
       "flags": [
         {
           "short": null,
@@ -157,6 +231,16 @@
         {
           "short": null,
           "long": "--file-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -185,7 +269,22 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "convert",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "output-file",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
@@ -216,8 +315,8 @@
         {
           "short": null,
           "long": "--cmd-lines",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -274,7 +373,7 @@
           "requires": []
         },
         {
-          "short": "-h",
+          "short": null,
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
@@ -314,8 +413,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--summary",
+          "short": "-v",
+          "long": "--validate",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -325,19 +424,9 @@
         },
         {
           "short": null,
-          "long": "--systems",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -352,9 +441,150 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "dump",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
         },
         {
-          "short": "-v",
+          "name": "input-file",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "extract",
+      "description": "extract the data from the kernel buffer and create a trace.dat",
+      "flags": [
+        {
+          "short": null,
+          "long": "--date",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "extract",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "hist",
+      "description": "show a histogram of the events.",
+      "flags": [
+        {
+          "short": "-P",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
@@ -366,14 +596,7 @@
       ],
       "positional": [
         {
-          "name": "CPU",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "PID",
+          "name": "hist",
           "value_type": "String",
           "required": true,
           "multiple": false,
@@ -384,14 +607,14 @@
       "aliases": []
     },
     {
-      "name": "extract",
-      "description": "extract a trace from the kernel",
+      "name": "list",
+      "description": "list the available plugins or events that can be recorded.",
       "flags": [
         {
-          "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
+          "short": "-F",
+          "long": "--full",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -399,6 +622,56 @@
         },
         {
           "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
@@ -408,7 +681,47 @@
           "requires": []
         },
         {
-          "short": "-a",
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
@@ -438,179 +751,11 @@
           "requires": []
         }
       ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "hist",
-      "description": "show a histogram of the trace.dat information",
-      "flags": [
-        {
-          "short": "-P",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": null,
-          "value_type": "File",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "list",
-      "description": "list the available events, plugins or options",
-      "flags": [
-        {
-          "short": null,
-          "long": "--full",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-B",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-C",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-F",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-O",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-P",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-R",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-e",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-o",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
       "positional": [
         {
-          "name": "regex",
+          "name": "list",
           "value_type": "String",
-          "required": false,
+          "required": true,
           "multiple": false,
           "description": null
         }
@@ -620,13 +765,13 @@
     },
     {
       "name": "listen",
-      "description": "listen on a network socket for trace clients",
+      "description": "open up a port to listen for remote tracing connections.",
       "flags": [
         {
           "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -635,8 +780,8 @@
         {
           "short": "-D",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -645,8 +790,8 @@
         {
           "short": "-V",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -693,7 +838,22 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "listen",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "port",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
@@ -728,18 +888,8 @@
     },
     {
       "name": "record",
-      "description": "record a trace into a trace.dat file",
+      "description": "record a live trace and write a trace.dat file to the local disk or to the network.",
       "flags": [
-        {
-          "short": null,
-          "long": "--by-comm",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
         {
           "short": null,
           "long": "--cmdlines-size",
@@ -753,6 +903,16 @@
         {
           "short": null,
           "long": "--compression",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--date",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -783,8 +943,8 @@
         {
           "short": null,
           "long": "--max-graph-depth",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -801,10 +961,10 @@
           "requires": []
         },
         {
-          "short": null,
+          "short": "-A",
           "long": "--name",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -831,37 +991,37 @@
           "requires": []
         },
         {
-          "short": null,
+          "short": "-P",
           "long": "--proc-map",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": null,
+          "short": "-p",
           "long": "--profile",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": null,
-          "long": "--proxy",
-          "value_type": "Bool",
-          "takes_value": false,
+          "short": "-G",
+          "long": "--profile.",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": null,
+          "short": "-q",
           "long": "--quiet",
           "value_type": "Bool",
           "takes_value": false,
@@ -872,7 +1032,7 @@
         },
         {
           "short": null,
-          "long": "--temp",
+          "long": "--stderr",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -882,20 +1042,30 @@
         },
         {
           "short": null,
-          "long": "--tsc2nsec",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "kernel's perf interface",
+          "long": "--temp",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "--temp can be used to tell trace-cmd where those temp files should be created.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--tsync-interval",
+          "long": "--ts-offset",
           "value_type": "Bool",
           "takes_value": false,
-          "description": "If a negative number is specified, timestamps synchronization is disabled If 0 is specified, no loop is performed - timestamps offset is calculated only twice, at the beginnig and at the end of the trace",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": "--tsc2nsec",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -906,25 +1076,25 @@
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
-          "multiple": true,
+          "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-B",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "short": null,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-C",
+          "short": "-B",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -933,8 +1103,8 @@
         {
           "short": "-D",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -943,18 +1113,8 @@
         {
           "short": "-F",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-G",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -963,8 +1123,8 @@
         {
           "short": "-M",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -973,8 +1133,8 @@
         {
           "short": "-N",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -983,18 +1143,8 @@
         {
           "short": "-O",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-P",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1003,18 +1153,8 @@
         {
           "short": "-R",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-S",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1023,8 +1163,8 @@
         {
           "short": "-T",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1032,6 +1172,16 @@
         },
         {
           "short": "-V",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
@@ -1043,8 +1193,8 @@
         {
           "short": "-b",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1053,8 +1203,8 @@
         {
           "short": "-c",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1083,8 +1233,8 @@
         {
           "short": "-f",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1161,26 +1311,6 @@
           "requires": []
         },
         {
-          "short": "-p",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-r",
           "long": null,
           "value_type": "Bool",
@@ -1203,8 +1333,8 @@
         {
           "short": "-t",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1223,16 +1353,9 @@
       ],
       "positional": [
         {
-          "name": "CPU",
+          "name": "record",
           "value_type": "String",
           "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "default",
-          "value_type": "String",
-          "required": false,
           "multiple": false,
           "description": null
         }
@@ -1242,13 +1365,13 @@
     },
     {
       "name": "reset",
-      "description": "disable all kernel tracing and clear the trace buffers",
+      "description": "disables all tracing and gives back the system performance. (clears all data from the kernel buffers)",
       "flags": [
         {
           "short": "-B",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1277,8 +1400,8 @@
         {
           "short": "-d",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1287,21 +1410,29 @@
         {
           "short": "-t",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "reset",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "restart",
-      "description": "restart the kernel trace data recording",
+      "description": "restart tracing from a previous stop (only effects recording)",
       "flags": [
         {
           "short": "-B",
@@ -1340,7 +1471,7 @@
     },
     {
       "name": "restore",
-      "description": "restore a crashed record",
+      "description": "restore the data files of a crashed run of trace-cmd record",
       "flags": [
         {
           "short": "-c",
@@ -1363,11 +1494,31 @@
           "requires": []
         },
         {
+          "short": "-k",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "-k will override the file to read the kallsyms from. This can be useful if the trace.dat file to create is from another machine. Just copy the /proc/kallsyms file locally, and use -k to point to that file.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-o",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "-t will use that location instead. This can be useful if the trace.dat file to create is from another machine. Just tar -cvf events.tar debugfs/tracing and copy and untar that file locally, and use that directory instead.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1377,7 +1528,14 @@
         {
           "name": "cpu-file",
           "value_type": "File",
-          "required": false,
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "restore",
+          "value_type": "String",
+          "required": true,
           "multiple": false,
           "description": null
         }
@@ -1387,7 +1545,7 @@
     },
     {
       "name": "set",
-      "description": "set a ftrace configuration parameter",
+      "description": "set a ftrace configuration parameter.",
       "flags": [
         {
           "short": null,
@@ -1422,8 +1580,8 @@
         {
           "short": null,
           "long": "--max-graph-depth",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1440,8 +1598,18 @@
           "requires": []
         },
         {
-          "short": null,
+          "short": "-q",
           "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stderr",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -1455,15 +1623,15 @@
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
-          "multiple": true,
+          "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
+          "long": "--verbose[",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1472,8 +1640,18 @@
         {
           "short": "-B",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B:",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1482,8 +1660,8 @@
         {
           "short": "-C",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1492,8 +1670,8 @@
         {
           "short": "-D",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1502,8 +1680,8 @@
         {
           "short": "-M",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1512,8 +1690,8 @@
         {
           "short": "-O",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1522,8 +1700,8 @@
         {
           "short": "-P",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1532,8 +1710,8 @@
         {
           "short": "-R",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1542,8 +1720,8 @@
         {
           "short": "-T",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1552,8 +1730,8 @@
         {
           "short": "-b",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1562,8 +1740,8 @@
         {
           "short": "-c",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1590,10 +1768,20 @@
           "requires": []
         },
         {
-          "short": "-f",
+          "short": "-e:",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1652,18 +1840,8 @@
         {
           "short": "-p",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-q",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1682,7 +1860,7 @@
       ],
       "positional": [
         {
-          "name": "CPU",
+          "name": "set",
           "value_type": "String",
           "required": true,
           "multiple": false,
@@ -1751,8 +1929,28 @@
     },
     {
       "name": "show",
-      "description": "show the contents of the kernel tracing buffer",
+      "description": "display the contents of one of the Ftrace Linux kernel tracing files",
       "flags": [
+        {
+          "short": null,
+          "long": "--buffer_size",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--buffer_total_size",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
         {
           "short": null,
           "long": "--cpumask",
@@ -1764,10 +1962,80 @@
           "requires": []
         },
         {
-          "short": "-B",
-          "long": null,
+          "short": null,
+          "long": "--current_tracer",
           "value_type": "Bool",
           "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ftrace_filter",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ftrace_notrace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ftrace_pid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--graph_function",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--graph_notrace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tracing_on",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1814,68 +2082,9 @@
           "requires": []
         }
       ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "snapshot",
-      "description": "take snapshot of running trace",
-      "flags": [
-        {
-          "short": "-B",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-r",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
       "positional": [
         {
-          "name": "CPU",
+          "name": "show",
           "value_type": "String",
           "required": true,
           "multiple": false,
@@ -1887,14 +2096,24 @@
     },
     {
       "name": "split",
-      "description": "parse a trace.dat file into smaller file(s)",
+      "description": "splits a trace.dat file into smaller files.",
       "flags": [
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
         {
           "short": "-c",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "per cpu, that is -p 2 will be 2 pages for each CPU if option is specified, it will split the file up starting at start, and ending at end start - decimal start time in seconds (ex: 75678.923853) if left out, will start at beginning of file end - decimal end time in seconds",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1904,7 +2123,17 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "split file up by n events",
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1914,7 +2143,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "split file up by n milliseconds",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1934,7 +2163,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "split file up by n pages",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1944,7 +2173,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "repeat from start to end",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1954,7 +2183,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "split file up by n seconds",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1964,7 +2193,7 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
-          "description": "split file up by n microseconds",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1972,28 +2201,21 @@
       ],
       "positional": [
         {
-          "name": "CPU",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "end",
+          "name": "end-time",
           "value_type": "String",
           "required": false,
           "multiple": false,
           "description": null
         },
         {
-          "name": "file.2",
-          "value_type": "File",
+          "name": "split",
+          "value_type": "String",
           "required": true,
           "multiple": false,
           "description": null
         },
         {
-          "name": "start",
+          "name": "start-time",
           "value_type": "String",
           "required": false,
           "multiple": false,
@@ -2005,60 +2227,27 @@
     },
     {
       "name": "stack",
-      "description": "output, enable or disable kernel stack tracing",
-      "flags": [
+      "description": "run and display the stack tracer",
+      "flags": [],
+      "positional": [
         {
-          "short": null,
-          "long": "--reset",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "reset the maximum stack found",
+          "name": "stack",
+          "value_type": "String",
+          "required": true,
           "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--start",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "enable the stack tracer",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stop",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "disable the stack tracer",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
+          "description": null
         }
       ],
-      "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "start",
-      "description": "start tracing without recording into a file",
+      "description": "start the tracing without recording to a trace.dat file.",
       "flags": [
         {
           "short": null,
-          "long": "--verbose",
+          "long": "--fork",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -2067,14 +2256,32 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "start",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "stat",
-      "description": "show the status of the running tracing (ftrace) system",
+      "description": "show tracing (ftrace) status of the running system",
       "flags": [
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
         {
           "short": "-o",
           "long": null,
@@ -2088,27 +2295,35 @@
         {
           "short": "-t",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "stat",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "stop",
-      "description": "stop the kernel from recording trace data",
+      "description": "stop tracing (only disables recording, overhead of tracer is still in effect)",
       "flags": [
         {
           "short": "-B",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2127,34 +2342,39 @@
         {
           "short": "-t",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "stop",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "stream",
       "description": "Start tracing and read the output directly",
-      "flags": [
+      "flags": [],
+      "positional": [
         {
-          "short": null,
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
+          "name": "stream",
+          "value_type": "String",
+          "required": true,
           "multiple": false,
-          "conflicts_with": [],
-          "requires": []
+          "description": null
         }
       ],
-      "positional": [],
       "subcommands": [],
       "aliases": []
     }
@@ -2162,5 +2382,5 @@
   "positional": [],
   "source": "ManPage",
   "confidence": 0.85,
-  "version": "3.2.0"
+  "version": null
 }

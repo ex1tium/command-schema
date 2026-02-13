@@ -1,24 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "nsenter",
-  "description": "Run a program with namespaces of other processes.",
+  "description": "NSENTER(1) User Commands NSENTER(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "enter all namespaces",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-C",
-      "long": "--cgroup",
-      "value_type": "File",
+      "long": "--cgroup[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter cgroup namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--env",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "inherit environment variables from target process",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-Z",
       "long": "--follow-context",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "set SELinux context according to --target PID",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,37 +48,37 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-i",
-      "long": "--ipc",
-      "value_type": "File",
+      "long": "--ipc[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter System V IPC namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-m",
-      "long": "--mount",
-      "value_type": "File",
+      "long": "--mount[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter mount namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-n",
-      "long": "--net",
-      "value_type": "File",
+      "long": "--net[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter network namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,17 +88,17 @@
       "long": "--no-fork",
       "value_type": "String",
       "takes_value": true,
-      "description": "do not fork before exec'ing <program>",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-p",
-      "long": "--pid",
-      "value_type": "File",
+      "long": "--pid[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter pid namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,8 +106,8 @@
     {
       "short": null,
       "long": "--preserve-credentials",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -115,10 +115,10 @@
     },
     {
       "short": "-r",
-      "long": "--root",
-      "value_type": "Directory",
+      "long": "--root[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "set the root directory",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--setgid",
       "value_type": "String",
       "takes_value": true,
-      "description": "set gid in entered namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--setuid",
       "value_type": "String",
       "takes_value": true,
-      "description": "set uid in entered namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,37 +148,37 @@
       "long": "--target",
       "value_type": "String",
       "takes_value": true,
-      "description": "target process to get namespaces from",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-T",
-      "long": "--time",
-      "value_type": "File",
+      "long": "--time[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter time namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-U",
-      "long": "--user",
-      "value_type": "File",
+      "long": "--user[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter user namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-u",
-      "long": "--uts",
-      "value_type": "File",
+      "long": "--uts[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "enter UTS namespace (hostname etc)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,27 +188,37 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-w",
-      "long": "--wd",
-      "value_type": "Directory",
+      "long": "--wd[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "set the working directory",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--wdns",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-W",
-      "long": "--wdns",
-      "value_type": "Directory",
+      "long": "--wdns[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "set the working directory in namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -217,6 +227,13 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "arguments",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "program",
       "value_type": "String",
       "required": false,
@@ -224,7 +241,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

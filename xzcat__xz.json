@@ -1,14 +1,84 @@
 {
   "schema_version": "1.0.0",
   "command": "xzcat",
-  "description": "Compress or decompress FILEs in the .xz format.",
+  "description": "XZ(1) XZ Utils XZ(1)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--arm64[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arm[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--armthumb[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--best",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "are  somewhat  misleading  aliases for -0 and -9, respectively.  These are provided only for backwards compatibility with LZMA Utils.  Avoid using these options.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--block-list",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--block-size",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The blocks  are  compressed  independently  from each  other,  which helps with multi-threading and makes limited random-access decompression possible.  This option is typically used to override the default block size in multi-threaded mode, but this option can be used in single-threaded mode too.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": "--check",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "The check is calculated from the uncompressed data and stored in the .xz file.  This option has  an effect only when compressing into the .xz format; the .lzma format doesn't support integrity checks.  The integrity check (if any) is verified when the .xz file is decompressed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": "-z",
       "long": "--compress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force compression",
+      "description": "This is the default operation mode when no operation mode option is specified and no other operation mode is implied from the command name (for example, unxz implies --decompress).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +86,29 @@
     {
       "short": "-d",
       "long": "--decompress",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--decompress.",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force decompression",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delta[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The Delta filter can be only used as a non-last filter in the filter chain.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +118,47 @@
       "long": "--extreme",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "try to improve compression ratio by using more CPU time; does not affect decompressor memory requirements",
+      "description": "Decompressor memory usage is not affected, but compressor memory usage increases a little at preset levels -0 ... -3.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fast",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--files0[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--files[",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  filenames  to process from file; if file is omitted, filenames are read from standard input.  Filenames must be terminated with the newline character.  A dash (-) is taken as a regular filename; it doesn't mean standard input.  If filenames are given  also as command line arguments, they are processed before the filenames read from file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--flush-timeout",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "compressing,  if more than timeout milliseconds (a positive integer) has passed since the previous flush and reading more input would block, all the pending input data is flushed from the encoder and made available in the output stream.  This can be  useful  if xz  is used to compress data that is streamed over a network.  Small timeout values make the data available at the receiving end with a small delay, but large timeout values give better compression ratio.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +168,17 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force overwrite of output file and (de)compress links",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": "--format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +188,37 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this short help and exit",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ia64[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-check",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "verify the integrity check of the compressed data when decompressing.  The CRC32 values in the .xz headers will still be veri‐ fied normally.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--info-memory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +228,7 @@
       "long": "--keep",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "keep (don't delete) input files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +238,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list information about .xz files",
+      "description": "No uncompressed output is produced, and no files are created or removed.   In  list  mode, the program cannot read the compressed data from standard input or from other unseekable sources.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +248,107 @@
       "long": "--long-help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display the long help (lists also the advanced options)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lzma1[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lzma2[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "These filters can be used only as the last filter in the chain.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": "--memlimit",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--memlimit-compress",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If this option is specified multiple times, the last one takes effect.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--memlimit-decompress",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "a  memory usage limit for decompression.  This also affects the --list mode.  If the operation is not possible without exceeding the limit, xz will display an error and decompressing the file will fail.  See --memlimit-compress=limit for possible ways to specify the limit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--memlimit-mt-decompress",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This can only affect the number of  threads;  this  will  never  make  xz refuse  to decompress a file.  If limit is too low to allow any multi-threading, the limit is ignored and xz will continue in single- threaded mode.  Note that if also --memlimit-decompress is used, it will always apply  to  both  single-threaded  and  multi-threaded modes, and so the effective limit for multi-threading will never be higher than the limit set with --memlimit-decompress.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-adjust",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "That is,  this prevents xz from switching the encoder from multi-threaded mode to single-threaded mode and from reducing the LZMA2 dictio‐ nary size.  Even when this option is used the number of threads may be reduced to meet the memory usage limit as  that  won't  affect the compressed output.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-sparse",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "creation  of sparse files.  By default, if decompressing into a regular file, xz tries to make the file sparse if the decom‐ pressed data contains long sequences of binary zeros.  It also works when writing to standard output as long as  standard  output  is connected to a regular file and certain additional conditions are met to make it safe.  Creating sparse files may save disk space and speed up the decompression by reducing the amount of disk I/O.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": "--no-warn",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option doesn't  affect  the  verbosity  level, thus both --quiet and --no-warn have to be used to not display warnings and to not alter the exit status.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--powerpc[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +358,37 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suppress warnings; specify twice to suppress errors too",
+      "description": "Specify this twice to suppress errors too.  This option has no effect on the exit status.   That  is, even if a warning was suppressed, the exit status to indicate a warning is still used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--robot",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "messages  in  a  machine-parsable  format.  This is intended to ease writing frontends that want to use xz instead of liblzma, which may be the case with various scripts.  The output with this option enabled is meant to be stable across xz releases.   See  the section ROBOT MODE for details.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--single-stream",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Normally such trailing garbage makes xz display an error.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sparc[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "These filters can be used only as a non-last filter in the filter chain.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +398,27 @@
       "long": "--stdout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "write to standard output and don't delete input files",
+      "description": "This implies --keep.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stdout.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--suffix",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "compressing,  use  .suf  as  the suffix for the target file instead of .xz or .lzma.  If not writing to standard output and the source file already has the suffix .suf, a warning is displayed and the file is skipped.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +428,7 @@
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "test compressed file integrity",
+      "description": "This option is equivalent to --decompress --stdout except that the decompressed data is dis‐ carded instead of being written to standard output.  No files are created or removed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +436,9 @@
     {
       "short": "-T",
       "long": "--threads",
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "use at most NUM threads; the default is 1; set to 0 to use as many threads as there are processor cores",
+      "description": "the number of worker threads to use.  Setting threads to a special value 0 makes xz use up to as many threads as the proces‐ sor(s) on the system support.  The actual number of threads can be fewer than threads if the input file is not big enough for thread‐ ing with the given settings or if using more threads would exceed the memory usage limit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +448,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be verbose; specify twice for even more verbose",
+      "description": "verbose.   If  standard  error is connected to a terminal, xz will display a progress indicator.  Specifying --verbose twice will give even more verbose output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +458,17 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display the version number and exit",
+      "description": "To get machine-parsable output, specify --robot before --ver‐ sion.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--x86[",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,15 +478,398 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "compression preset; default is 6; take compressor *and* decompressor memory usage into account before using 7-9!",
+      "description": "a  compression  preset  level.  The default is -6.  If multiple preset levels are specified, the last one takes effect.  If a custom filter chain was already specified, setting a compression preset level clears the custom filter chain.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-0e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "256 KiB       8        4 MiB    1 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-1",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1 MiB       1        9 MiB    2 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-1e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "1 MiB       8       13 MiB    2 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-2",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "2 MiB       2       17 MiB    3 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-2e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "2 MiB       8       25 MiB    3 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-3",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "4 MiB       3       32 MiB    5 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-3e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "4 MiB       7       48 MiB    5 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-4",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "-6  is  the  default, which  is  usually  a  good choice for distributing files that need to be decompressible even on systems with only 16 MiB RAM. (-5e or -6e may be worth considering too.  See --extreme.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-4e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "4 MiB       8       48 MiB    5 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-5",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "8 MiB       5       94 MiB    9 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-5e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "8 MiB       7       94 MiB    9 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-6",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "8 MiB       6       94 MiB    9 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-6e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "8 MiB       8       94 MiB    9 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-7",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "These are  useful  only  when  compressing files bigger than 8 MiB, 16 MiB, and 32 MiB, respectively.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-7e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "16 MiB       8      186 MiB   17 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-8",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "32 MiB       6      370 MiB   33 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-8e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "32 MiB       8      370 MiB   33 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-9",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "64 MiB       6      674 MiB   65 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-9e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "64 MiB       8      674 MiB   65 MiB",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dc",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "aliases",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "always",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "and",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "appropriate",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "arguments",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "decompress",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "equivalent",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "files",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "is",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "it",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "names",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "need",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "of",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "or",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "recommended",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "scripts",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "that",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "the",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "unxz",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "use",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "with",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "writing",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "xz",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "xzcat.",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,18 +1,56 @@
 {
   "schema_version": "1.0.0",
   "command": "gendict",
-  "description": "Read in a word list and write out a string trie dictionary",
+  "description": "GENDICT(1) ICU 74.2 Manual GENDICT(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--bytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output a BytesTrie (mutually exclusive with -u!)",
+      "description": null,
       "multiple": false,
-      "conflicts_with": [
-        "-u"
-      ],
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--copyright",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": "--icudatadir",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "For example, the file pnames.icu must be located when ICU's data is not built as a  shared  library.  The default ICU data directory is specified by the environment variable ICU_DATA.  Most configurations of ICU do not require this argument.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icu‐",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
       "requires": []
     },
     {
@@ -20,7 +58,7 @@
       "long": "--transform",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the kind of transform to use (eg --transform offset-40A3, which specifies an offset transform with constant 0x40A3)",
+      "description": "Currently supported transforms are: offset-<hex-number>, which speci‐ fies an offset to subtract from all input characters.  It should be noted that the offset transform also  maps  U+200D  to  0xFF  and U+200C  to  0xFE,  in  order  to offer compatibility to languages that require these characters.  A transform must be specified for a bytes trie, and when applied to the non-value characters in the input-file must produce output between 0x00 and 0xFF.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -30,77 +68,74 @@
       "long": "--uchars",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output a UCharsTrie (mutually exclusive with -b!)",
-      "multiple": false,
-      "conflicts_with": [
-        "-b"
-      ],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show a version message",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "include a copyright notice",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "this usage text",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "directory for locating any needed intermediate data files, followed by path, defaults to",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not display warnings and progress",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
+      "long": "--verbose",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "turn on verbose output",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": null
+  "positional": [
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "input-file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "output-file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "transform",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": "74.2"
 }

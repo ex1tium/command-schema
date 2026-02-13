@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "run-parts",
-  "description": null,
+  "description": "RUN-PARTS(8) System Manager's Manual RUN-PARTS(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--arg",
       "value_type": "String",
       "takes_value": true,
-      "description": "pass ARGUMENT to scripts, use once for each argument.",
+      "description": "Use --arg once for each argument you want passed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print script names while checking them.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print names of all valid files (can not be used with",
+      "description": "This option cannot be used with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": null,
       "long": "--lsbsysinit",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "validate filenames based on LSB sysinit specs.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--new-session",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run each script in a separate process session",
+      "description": "If you use this option, killing run-parts will not kill the currently running script, it will run until completion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": null,
       "long": "--regex",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "See the EXAMPLES section for an example.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--report",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print script names if they produce output.",
+      "description": "The script's name is printed to whichever of  stdout or stderr the script first produces output on.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,17 +98,7 @@
       "long": "--reverse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "reverse execution order of scripts.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--stdin",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "multiplex stdin to scripts being run, using temporary file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +108,17 @@
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print script names which would run, but don't run them.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--test.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--umask",
       "value_type": "String",
       "takes_value": true,
-      "description": "sets umask to UMASK (octal), default is 022.",
+      "description": "umask should be specified in octal.  By default the umask is set to 022.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print script names before running them.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -157,14 +157,84 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "DIRECTORY",
+      "name": "--debug",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--exit-on-error",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--help",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--list",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--lsbsysinit",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--report",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--reverse",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--test",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--verbose",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--version",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
       "value_type": "Directory",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

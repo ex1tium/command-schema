@@ -1,13 +1,23 @@
 {
   "schema_version": "1.0.0",
   "command": "netcat",
-  "description": null,
+  "description": "NC(1) General Commands Manual NC(1)",
   "global_flags": [
     {
       "short": "-4",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "Use IPv4 addresses only.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-46bCDdFhklNnrStUuvZz",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -18,7 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Use IPv6 addresses only.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Send  CRLF  as  line-ending.  Each line feed (LF) character from the input data is translated into CR+LF before being written to the socket.  Line feed characters that are already preceded with a carriage return (CR) are not translated.  Received data  is  not  af‐ fected.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +46,9 @@
     {
       "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Enable debugging on the socket.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,11 +56,14 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Pass  the first connected socket using sendmsg(2) to stdout and exit.  This is useful in conjunction with -X to have nc perform con‐ nection setup with a proxy but then leave the rest of the connection  to  another  program  (e.g.  ssh(1)  using  the  ssh_config(5) ProxyUseFdpass option).  Cannot be used with -U.",
       "multiple": false,
-      "conflicts_with": [],
+      "conflicts_with": [
+        "-X",
+        "-U"
+      ],
       "requires": []
     },
     {
@@ -68,7 +81,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Set the TTL / hop limit of outgoing packets.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +89,9 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "shutdown(2) the network socket after EOF on the input.  Some servers require this to finish their work.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +111,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "If no username  is  specified  then  authentication will not be attempted.  Proxy authentication is only supported for HTTP CONNECT proxies at present.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +119,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Enable the RFC 2385 TCP MD5 signature option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +129,9 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "keyword  may  be  one  of  critical,  inetcontrol,  lowcost,  lowdelay,  netcontrol, throughput, reliability, or one of the DiffServ Code Points: ef, af11 ... af43, cs0 ... cs7; or a number in either hex or decimal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +139,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use Unix-domain sockets.  Cannot be used together with -F or -x.  On Linux, if the name starts with an at symbol (`@') it is read as an abstract namespace socket: the leading `@' is replaced with a NUL byte before binding or connecting.  For details, see unix(7).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +171,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Supported protocols are 4 (SOCKS  v.4),  5  (SOCKS  v.5)  and  connect  (HTTPS proxy).  If the protocol is not specified, SOCKS version 5 is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +179,19 @@
     {
       "short": "-Z",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "DCCP mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Allow broadcast.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +201,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not attempt to read from stdin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +211,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print out the nc help text and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +219,9 @@
     {
       "short": "-i",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Also causes a delay time between connections to multiple ports.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,19 +229,22 @@
     {
       "short": "-k",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "When  a  connection is completed, listen for another one.  Requires -l.  When used together with the -u option, the server socket is not connected and it can receive UDP datagrams from multiple hosts.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": []
+      "requires": [
+        "-l",
+        "-u"
+      ]
     },
     {
       "short": "-l",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Listen for an incoming connection rather than initiating a connection to a remote host.  The destination and port to listen  on  can be  specified either as non-optional arguments, or with options -s and -p respectively.  Cannot be used together with -x or -z.  Ad‐ ditionally, any timeouts specified with the -w option are ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +264,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not perform domain name resolution.  If a name cannot be resolved without DNS, an error will be reported.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,8 +272,8 @@
     {
       "short": "-p",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -256,9 +282,9 @@
     {
       "short": "-q",
       "long": null,
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "EOF on stdin, wait the specified number of seconds and then quit. If seconds is negative, wait forever (default).  Specifying a non-negative seconds implies -N.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +294,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Choose source and/or destination ports randomly instead of sequentially within a range or in the order that the system assigns them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,9 +302,9 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "For Unix-domain  datagram  sock‐ ets,  specifies  the  local temporary socket file to create and use so that datagrams can be received.  Cannot be used together with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -286,9 +312,9 @@
     {
       "short": "-t",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Send RFC 854 DON'T and WON'T responses to RFC 854 DO and WILL requests.  This makes it possible to use nc to script telnet sessions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -296,9 +322,9 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use  UDP  instead  of  TCP.   Cannot  be  used together with -x.  For Unix-domain sockets, use a datagram socket instead of a stream socket.  If a Unix-domain socket is used, a temporary receiving socket is created in /tmp unless the -s flag is given.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +334,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Produce more verbose output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,9 +342,9 @@
     {
       "short": "-w",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The -w flag has no effect on the -l option, i.e. nc will listen forever for a connection, with or without the -w flag.  The default is no timeout.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -326,8 +352,18 @@
     {
       "short": "-x",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "to destination using a proxy at proxy_address and port.  If port is not specified, the well-known port for the proxy proto‐ col is used (1080 for SOCKS, 3128 for HTTPS).  An IPv6 address can be specified unambiguously by enclosing proxy_address  in  square brackets.  A proxy cannot be used with any of the options -lsuU.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x.",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -338,7 +374,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Only scan for listening daemons, without sending any data to them.  Cannot be used together with -l.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -347,9 +383,114 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "-46bcddfhklnnrstuuvzz",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-x",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "destination",
       "value_type": "String",
       "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "interval",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "keyword",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "length",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "minttl",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     },
@@ -359,9 +500,72 @@
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "proxy_protocol",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "proxy_username",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "recvlimit",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rtable",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "seconds",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "source_port",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sourceaddr",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "timeout",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ttl",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

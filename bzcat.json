@@ -1,24 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "bzcat",
-  "description": "bzip2, a block-sorting file compressor. Version 1.0.8, 13-Jul-2019.",
+  "description": "bzip2(1) General Commands Manual bzip2(1)",
   "global_flags": [
-    {
-      "short": null,
-      "long": "--best",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "alias for -9",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-z",
       "long": "--compress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force compression",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,17 +18,17 @@
       "long": "--decompress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "force decompression",
+      "description": "bzip2, bunzip2 and bzcat are really the same program, and the decision about what actions to take  is  done  on the basis of which name is used.  This flag overrides that mechanism, and forces bzip2 to decompress.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-1",
       "long": "--fast",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "alias for -1",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "900 k when compressing.  Has no effect when decompressing.  See MEMORY MANAGEMENT below.  The",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +38,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "overwrite existing output files",
+      "description": "Normally, bzip2 will not overwrite existing output files.  Also forces bzip2 to break hard links to files, which it otherwise wouldn't do.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print this message",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +58,7 @@
       "long": "--keep",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "keep (don't delete) input files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +66,9 @@
     {
       "short": "-L",
       "long": "--license",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display software version & license",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +78,17 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suppress noncritical error messages",
+      "description": "Messages pertaining to I/O errors and other critical events will not be suppressed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--repetitive-fast",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "They provided some coarse control over the behaviour of the sorting algorithm in earlier versions, which was sometimes useful.  0.9.5 and above have an improved algorithm which renders these flags irrelevant.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--small",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use less memory (at most 2500k)",
+      "description": "memory usage, for compression, decompression and testing.  Files are decompressed and tested using a modified algorithm which only requires 2.5 bytes per block byte.  This means any file can be decompressed in 2300 k of memory, albeit at about half the normal speed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--stdout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output to standard out",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "test compressed file integrity",
+      "description": "integrity of the specified file(s), but don't decompress them.  This really performs a trial decompression and throws away the result.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,37 +126,160 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "be verbose (a 2nd -v gives more)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Further -v's increase the verbosity level, spewing out  lots  of information which is primarily of interest for diagnostic purposes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-V",
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display software version & license",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-1",
+      "short": "-2",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set block size to 100k .. 900k",
+      "description": "2000k       900k         600k      877703",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-3",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "2800k      1300k         850k      860338",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-4",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "3600k      1700k        1100k      846899",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-5",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "4400k      2100k        1350k      845160",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-6",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "5200k      2500k        1600k      838626",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-7",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "6100k      2900k        1850k      834096",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-8",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "6800k      3300k        2100k      828642",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-9",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-cdfkqstvzVL123456789",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fkvsVL",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "bunzip2",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bzcat",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bzip2",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bzip2recover",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filenames",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": "1.0.8"
 }

@@ -1,24 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "arp",
-  "description": null,
+  "description": "ARP(8) Linux System Administrator's Manual ARP(8)",
   "global_flags": [
-    {
-      "short": "-d",
-      "long": "--delete",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "delete a specified entry",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-i",
       "long": "--device",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "specify network interface (e.g. eth0)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "perma‐ nent  or  temp ARP entry this interface will be associated with the entry; if this option is not used, the kernel will guess based on the routing table. For pub entries the specified interface is the interface on which ARP requests will be answered. NOTE: This has to be different from the interface to which the IP datagrams will be routed.  NOTE: As of kernel 2.2.0 it is no longer possible to set an ARP entry for an entire subnet. Linux instead does automagic proxy arp when a route exists and it  is  forwarding. See  arp(7)  for  details. Also the dontpub option which is available for delete and set operations cannot be used with 2.4 and newer kernels.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +16,19 @@
     {
       "short": "-f",
       "long": "--file",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "read new entries from file or from /etc/ethers",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This can be used if ARP entries for a lot  of hosts  have to be set up.  The name of the data file is very often /etc/ethers, but this is not official. If no filename is specified /etc/ethers is used as default.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--hw-type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "setting  or  reading  the ARP cache, this optional parameter tells arp which class of entries it should check for.  The default value of this parameter is ether (i.e. hardware code 0x01 for IEEE 802.3 10Mbps Ethernet).  Other values might include network  tech‐ nologies such as ARCnet (arcnet) , PROnet (pronet) , AX.25 (ax25) and NET/ROM (netrom).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,17 +38,7 @@
       "long": "--numeric",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't resolve names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": "--set",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "set a new ARP entry",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +48,7 @@
       "long": "--use-device",
       "value_type": "String",
       "takes_value": true,
-      "description": "read <hwaddr> from given device",
+      "description": "of  a hw_addr, the given argument is the name of an interface.  arp will use the MAC address of that interface for the table entry. This is usually the best option to set up a proxy ARP entry to yourself.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,19 +56,19 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "be verbose",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-A",
+      "short": "-Ds",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "specify protocol family",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +76,29 @@
     {
       "short": "-a",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display (all) hosts in alternative (BSD) style",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use alternate BSD style output format (with no fixed columns).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ae",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +108,37 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display (all) hosts in default (Linux) style",
+      "description": "Use default Linux style output format (with fixed columns).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-vn",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-vnD",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -107,7 +147,42 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "HW",
+      "name": "-ae",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-h",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-vn",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-vnd",
       "value_type": "String",
       "required": false,
       "multiple": false,
@@ -121,13 +196,6 @@
       "description": null
     },
     {
-      "name": "host",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "hostname",
       "value_type": "String",
       "required": false,
@@ -135,7 +203,7 @@
       "description": null
     },
     {
-      "name": "hwaddr",
+      "name": "hw_addr",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -143,6 +211,13 @@
     },
     {
       "name": "if",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ifname",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -175,9 +250,16 @@
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "type",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

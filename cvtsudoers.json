@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "cvtsudoers",
-  "description": "cvtsudoers - convert between sudoers file formats",
+  "description": "CVTSUDOERS(1) General Commands Manual CVTSUDOERS(1)",
   "global_flags": [
     {
       "short": "-b",
       "long": "--base",
       "value_type": "String",
       "takes_value": true,
-      "description": "the base DN for sudo LDAP queries",
+      "description": "base   DN   (distinguished  name)  that  will  be  used  when  performing  LDAP  queries.   Typically  this  is  of  the  form “ou=SUDOers,dc=my-domain,dc=com” for the domain my-domain.com.  If this option is not specified, the value of the SUDOERS_BASE envi‐ ronment variable will be used instead.  Only necessary when converting to LDIF format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--config",
       "value_type": "File",
       "takes_value": true,
-      "description": "the path to the configuration file",
+      "description": "Defaults to /etc/cvtsudoers.conf.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--defaults",
       "value_type": "String",
       "takes_value": true,
-      "description": "only convert Defaults of the specified types",
+      "description": "One or more Defaults types may be specified, separated by a comma (‘,’).  The supported types are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,19 @@
     {
       "short": "-e",
       "long": "--expand-aliases",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "expand aliases when converting",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Aliases are preserved by default when the output format is JSON or sudoers.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": "--group-file",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "and groups in the filter. Only users and groups in the filter that exist on the local system will match, and a user's groups will automatically be added to the filter. If the -M is not specified, users and groups in the filter do not need to exist on the local system, but all groups used for matching must be explicitly listed in the filter.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display help message and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +66,9 @@
     {
       "short": "-I",
       "long": "--increment",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "amount to increase each sudoOrder by",
+      "description": "Defaults to an increment of 1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,17 @@
       "long": "--input-format",
       "value_type": "String",
       "takes_value": true,
-      "description": "set input format: LDIF or sudoers",
+      "description": "The following formats are supported:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--logfile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "conversion  warnings  to  log_file instead of to the standard error.  This is particularly useful when merging multiple sudoers files, which can generate a large number of warnings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,17 +98,7 @@
       "long": "--match",
       "value_type": "String",
       "takes_value": true,
-      "description": "only convert entries that match the filter",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-M",
-      "long": "--match-local",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "match filter uses passwd and group databases",
+      "description": "A filter expression is made up of one or more key = value pairs, separated by  a comma  (‘,’).  The key may be “cmnd” (or “cmd”), “host”, “group”, or “user”.  For example, user = operator or host = www.  An upper- case Cmnd_Alias, Host_alias, or User_Alias may be specified as the “cmnd”, “host”, or “user”.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +106,9 @@
     {
       "short": "-O",
       "long": "--order-start",
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "starting point for first sudoOrder",
+      "description": "Sub‐ sequent sudoRole object use a sudoOrder value generated by adding an increment, see the -I option for details.  Defaults to a start‐ ing point of 1.  A starting point of 0 will disable the generation of sudoOrder attributes in the resulting LDIF file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": "--output",
       "value_type": "File",
       "takes_value": true,
-      "description": "write converted sudoers to output_file",
+      "description": "the  converted  output to output_file.  If no output_file is specified, or if it is ‘-’, the converted sudoers policy will be written to the standard output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": "--output-format",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "The following formats are supported:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--padding",
       "value_type": "Number",
       "takes_value": true,
-      "description": "base padding for sudoOrder increment",
+      "description": "For example, if order_start is 1027, padding is 3, and increment is 1, the value of sudoOrder  for the first entry will be 1027000, followed by 1027001, 1027002, etc.  If the number of sudoRole entries is larger than the padding would allow, cvtsudoers will exit with an error.  By default, no padding is performed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +148,7 @@
       "long": "--prune-matches",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prune non-matching users, groups and hosts",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": "--suppress",
       "value_type": "String",
       "takes_value": true,
-      "description": "suppress output of certain sections",
+      "description": "One or more section names may be specified, separated by  a  comma (‘,’).  The supported section name are: defaults, aliases and privileges (which may be shortened to privs).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,23 +168,372 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version information and exit",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ehMpV",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "FILES",
+      "description": "cvtsudoers - convert between sudoers file formats",
+      "flags": [
+        {
+          "short": "-b",
+          "long": "--base",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "the base DN for sudo LDAP queries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--config",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "the path to the configuration file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--defaults",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "only convert Defaults of the specified types",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--expand-aliases",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "expand aliases when converting",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": "--increment",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "amount to increase each sudoOrder by",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--input-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "set input format: LDIF or sudoers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "only convert entries that match the filter",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--match-local",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "match filter uses passwd and group databases",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--order-start",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "starting point for first sudoOrder",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "write converted sudoers to output_file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--output-format",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": "--padding",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "base padding for sudoOrder increment",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--prune-matches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "prune non-matching users, groups and hosts",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--suppress",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "suppress output of certain sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version information and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "input_file",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-d",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-ehmpv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "conf_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "deftypes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dn",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filter",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "increment",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "input_file",
       "value_type": "File",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "input_format",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "log_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "output_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "output_format",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "padding",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sections",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "start_point",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.9,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

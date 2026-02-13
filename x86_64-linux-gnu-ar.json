@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "x86_64-linux-gnu-ar",
-  "description": null,
+  "description": "AR(1) GNU Development Tools AR(1)",
   "global_flags": [
     {
       "short": null,
-      "long": "--output",
-      "value_type": "Directory",
-      "takes_value": true,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "--output option can be used to specify a path to a directory into which archive members should be extracted.  If this option is not specified then the current directory will be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +26,9 @@
     {
       "short": null,
       "long": "--plugin",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "optional  command-line  switch  --plugin  name  causes  ar to load the plugin called name which adds support for more file formats, including object files with link-time optimization information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,8 +36,8 @@
     {
       "short": null,
       "long": "--record-libdeps",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -36,9 +46,9 @@
     {
       "short": null,
       "long": "--target",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "different  from  your system's default format.  See",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,6 +58,36 @@
       "long": "--thin",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "If it already exists and is a regular archive, the existing members must be present  in  the same directory as archive.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X32_64",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The behaviour produced by this option is the default for  GNU ar.  ar does not support any of the other -X options; in particular, it does not support -X32 which is the default for AIX ar.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-]p[mod",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -56,31 +96,825 @@
   ],
   "subcommands": [
     {
-      "name": "d",
-      "description": "delete file(s) from the archive",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "name": "l",
+      "description": "Specify dependencies of this library. The dependencies must immediately follow this option character, must use the same syntax as the",
+      "flags": [
+        {
+          "short": null,
+          "long": "--output",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--plugin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--record-libdeps",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "emulation",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "member-name",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "mri-script",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "name",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "x86_64-linux-gnu-ar",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "d",
+          "description": "delete file(s) from the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "p",
+          "description": "print file(s) found in the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "s",
+          "description": "act as ranlib",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
-      "name": "p",
-      "description": "print file(s) found in the archive",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "name": "linker",
+      "description": "command line, and must be specified within a single argument. I.e., if multiple items are needed, they must be quoted to form a",
+      "flags": [
+        {
+          "short": null,
+          "long": "--output",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--plugin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--record-libdeps",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "emulation",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "member-name",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "mri-script",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "name",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "x86_64-linux-gnu-ar",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "d",
+          "description": "delete file(s) from the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "p",
+          "description": "print file(s) found in the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "s",
+          "description": "act as ranlib",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
-      "name": "s",
-      "description": "act as ranlib",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "name": "newer",
+      "description": "than existing members of the same names, use this modifier. The u modifier is allowed only for the operation r (replace). In particular, the combination qu is not allowed, since checking the timestamps would lose any speed advantage from the operation q.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--output",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--plugin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--record-libdeps",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "emulation",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "member-name",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "mri-script",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "name",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "x86_64-linux-gnu-ar",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "d",
+          "description": "delete file(s) from the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "p",
+          "description": "print file(s) found in the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "s",
+          "description": "act as ranlib",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "only",
+      "description": "the member name is shown, but if the modifier O is specified, then the corresponding offset of the member is also displayed. Finally, in order to see the modes (permissions), timestamp, owner, group, and size the v modifier should be included.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--output",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--plugin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--record-libdeps",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "emulation",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "member-name",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "mri-script",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "name",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "x86_64-linux-gnu-ar",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "d",
+          "description": "delete file(s) from the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "p",
+          "description": "print file(s) found in the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "s",
+          "description": "act as ranlib",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "t",
+      "description": "Display a table listing the contents of archive, or those of the files listed in member... that are present in the archive. Normally",
+      "flags": [
+        {
+          "short": null,
+          "long": "--output",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--plugin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--record-libdeps",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "emulation",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "member-name",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "mri-script",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "name",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "x86_64-linux-gnu-ar",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "d",
+          "description": "delete file(s) from the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "p",
+          "description": "print file(s) found in the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "s",
+          "description": "act as ranlib",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "u",
+      "description": "Normally, ar r... inserts all files listed into the archive. If you would like to insert only those of the files you list that are",
+      "flags": [
+        {
+          "short": null,
+          "long": "--output",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--plugin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--record-libdeps",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thin",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "emulation",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "member-name",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "mri-script",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "name",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "x86_64-linux-gnu-ar",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "d",
+          "description": "delete file(s) from the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "p",
+          "description": "print file(s) found in the archive",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "s",
+          "description": "act as ranlib",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     }
   ],
   "positional": [
+    {
+      "name": "--output",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--plugin",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--record-libdeps",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--target",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--thin",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-x32_64",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "archive",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bfdname",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "count",
       "value_type": "Number",
@@ -89,24 +923,24 @@
       "description": null
     },
     {
-      "name": "emulation",
-      "value_type": "String",
-      "required": false,
+      "name": "dirname",
+      "value_type": "Directory",
+      "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "member-name",
+      "name": "libdeps",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "mri-script",
+      "name": "member",
       "value_type": "String",
       "required": false,
-      "multiple": false,
+      "multiple": true,
       "description": null
     },
     {
@@ -115,9 +949,16 @@
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "relpos",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 1.0,
   "version": null
 }

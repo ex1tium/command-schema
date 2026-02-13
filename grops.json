@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0.0",
   "command": "grops",
-  "description": "Translate the output of troff(1) into PostScript. See the grops(1)",
+  "description": "grops(1) General Commands Manual grops(1)",
   "global_flags": [
     {
-      "short": null,
+      "short": "-v",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
@@ -14,7 +14,7 @@
       "requires": []
     },
     {
-      "short": "-v",
+      "short": null,
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
@@ -26,9 +26,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "directory  dir/devname to the search path for font and device description and PostScript prologue files; name is the name of the device, usually ps.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the  directory  dir for files named in \\X'ps: file' and \\X'ps: import' escape sequences.  -I may be specified more than once; each dir is searched in the given order.  To search the current working directory before others, add “-I .” at the desired place;  it is otherwise searched last.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the file prologue, sought in the groff font search path, as the PostScript prologue, overriding the default (see section “Files” below) and the environment variable GROPS_PROLOGUE.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-b",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Work  around  problems  with spoolers, previewers, and older printers.  Normally, grops produces output at PostScript LanguageLevel 2 that conforms to version 3.0 of the Document Structuring Conventions.  Some software and devices can't handle  such  a  data  stream. The  value of n determines what grops does to make its output acceptable to such consumers.  If n is 0, grops employs no workarounds, which is the default; it can be changed by modifying the broken directive in grops's DESC file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,8 +66,18 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output n copies of each page.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -78,6 +88,16 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "Generate PostScript code to guess the page length.  The guess is correct only if the imageable area is  vertically  centered  on  the page.  This option allows you to generate documents that can be printed on both U.S. letter and A4 paper formats without change.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-glm",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -88,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Use landscape orientation rather than portrait.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Turn on manual feed for the document.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +126,9 @@
     {
       "short": "-p",
       "long": null,
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": null,
+      "description": "fmt can be any argument accepted by the papersize directive; see groff_font(5).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,17 +136,116 @@
     {
       "short": "-w",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Draw rules (lines) with a thickness of n thousandths of an em.  The default thickness is 40 (0.04 em).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-glm",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "brokenness-flags",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "font-directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "inclusion-directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "num-copies",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "paper-format",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "prologue-file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rule-thickness",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

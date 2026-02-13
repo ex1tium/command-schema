@@ -1,24 +1,64 @@
 {
   "schema_version": "1.0.0",
   "command": "rview",
-  "description": "VIM - Vi IMproved 9.1 (2024 Jan 02, compiled Sep 05 2025 19:44:46)",
+  "description": "VIM(1) General Commands Manual VIM(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--clean",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "'nocompatible', Vim defaults, no plugins, no viminfo",
+      "description": "Do not use any personal configuration (vimrc, plugins, etc.).  Useful to see if a problem reproduces with a clean Vim setup.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--cmd",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "will be executed after the first file has been read. {command} is interpreted as an Ex command. If the {command} contains spaces it must be enclosed in double quotes (this depends on the shell that is used). Example: vim \"+set si\" main.c Note: You can use up to 10 \"+\" or \"-c\" commands.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--cmd",
-      "value_type": "File",
+      "long": "--echo-wid",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Execute <command> before loading any vimrc file",
+      "description": "GTK GUI only: Echo the Window ID on stdout.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Give a help message and exit, just like \"-h\".",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--literal",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Take file name arguments literally, do not expand wildcards.  This has no effect on Unix where the shell expands wildcards.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--nofork",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Foreground.  For the GUI version, Vim will not fork and detach from the shell it was started in.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,27 +68,107 @@
       "long": "--noplugin",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't load plugin scripts",
+      "description": "Skip loading plugins.  Implied by -u NONE.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--not-a-term",
+      "long": "--remote",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Skip warning for input/output not being a terminal",
+      "description": "Connect to a Vim server and make it edit the files given in the rest of the arguments.  If no server is found a warning is given and the files are edited in the current Vim.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--ttyfail",
+      "long": "--remote-expr",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Exit if input or output is not a terminal",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remote-send",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remote-silent",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remote-wait",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--remote-wait-silent",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--serverlist",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--servername",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Used for the current Vim, unless used with a --remote argument, then it's the name of the server to connect to.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--socketid",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--startuptime",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +178,17 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print version information and exit",
+      "description": "Print version information and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "If  Vim  has been compiled with ARABIC support for editing right-to-left oriented files and Arabic keyboard mapping, this option starts Vim in Arabic mode, i.e. 'arabic' is set.  Otherwise an error message is given and Vim aborts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +196,19 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Compatible with Vi: 'compatible'",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Compatible.  Set the 'compatible' option.  This will make Vim behave mostly like Vi, even though a .vimrc file exists.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Debugging.  Go to debugging mode when executing the first command from a script.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +216,29 @@
     {
       "short": "-E",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Improved Ex mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Start Vim in improved Ex mode, just like the executable was called \"exim\".",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "If  Vim  has  been  compiled with FKMAP support for editing right-to-left oriented files and Farsi keyboard mapping, this option starts Vim in Farsi mode, i.e. 'fkmap' and 'rightleft' are set.  Otherwise an error message is given and Vim aborts.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "If  Vim  has been compiled with RIGHTLEFT support for editing right-to-left oriented files and Hebrew keyboard mapping, this op‐ tion starts Vim in Hebrew mode, i.e. 'hkmap' and 'rightleft' are set.  Otherwise an error message is given and Vim aborts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +246,9 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Same as -r",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Same as -r.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +256,9 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Modifications in text not allowed",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Modifications  not  allowed.   The 'modifiable' and 'write' options will be unset, so that changes are not allowed and files can not be written.  Note that these options can be set to enable making modifications.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,19 +266,19 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Not fully Vi compatible: 'nocompatible'",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "No-compatible mode.  Resets the 'compatible' option.  This will make Vim behave a bit  better,  but  less  Vi  compatible,  even though a .vimrc file does not exist.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-O",
+      "short": "-O[N",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Like -o but split vertically + Start at end of file +<lnum> Start at line <lnum>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Open N windows side by side.  When N is omitted, open one window for each file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +286,9 @@
     {
       "short": "-R",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Readonly mode (like \"view\")",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Read-only mode.  The 'readonly' option will be set.  You can still edit the buffer, but  will  be  prevented  from  accidentally overwriting  a file.  If you do want to overwrite a file, add an exclamation mark to the Ex command, as in \":w!\".  The -R option also implies the -n option (see above).  The 'readonly' option can be reset with \":set noro\".  See \":help 'readonly'\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +298,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Source file <session> after loading the first file",
+      "description": "{file} will be sourced after the first file has been read.  This is equivalent to -c \"source {file}\".  {file} cannot start  with '-'.  If {file} is omitted \"Session.vim\" is used (only works when -S is the last argument).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,19 +306,29 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Set terminal type to <terminal>",
+      "description": "Vim  the  name  of  the terminal you are using.  Only required when the automatic way doesn't work.  Should be a terminal known to Vim (builtin) or defined in the termcap or terminfo file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-V",
+      "short": "-U",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Be verbose [level N] [log messages to fname]",
+      "description": "All the other GUI initializations are skipped.  It can  also  be used to skip all GUI initializations by giving the name \"NONE\".  See \":help gui-init\" within vim for more details.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V[N",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Verbose.   Give messages about which files are sourced and for reading and writing a viminfo file.  The optional number N is the value for 'verbose'.  Default is 10.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +336,19 @@
     {
       "short": "-W",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Write all typed commands to file <scriptout>",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Don't connect to the X server.  Shortens startup time in a terminal, but the window title and clipboard will not be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +356,9 @@
     {
       "short": "-Z",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Restricted mode (like \"rvim\")",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Restricted mode.  Works like the executable starts with \"r\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,17 +368,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Binary mode",
+      "description": "Binary mode.  A few options will be set that makes it possible to edit a binary or executable file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-c",
+      "short": "-d",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Execute <command> after loading the first file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Start in diff mode.  There should between two to eight file name arguments.  Vim will open all the files  and  show  differences between them.  Works like vimdiff(1).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +388,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Ex mode (like \"ex\")",
+      "description": "Start Vim in Ex mode, just like the executable was called \"ex\".",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Foreground.   For  the  GUI  version,  Vim  will not fork and detach from the shell it was started in.  On the Amiga, Vim is not restarted to open a new window.  This option should be used when Vim is executed by a program that will wait for the  edit  ses‐ sion to finish (e.g. mail).  On the Amiga the \":sh\" and \":!\" commands will not work.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If Vim has been compiled with GUI support, this option enables the GUI.  If no GUI support was compiled in, an error message  is given and Vim aborts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +418,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "or --help Print Help (this message) and exit",
+      "description": "Give a bit of help about the command line arguments and options.  After this Vim exits.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This can  also  be used to skip the use of the .viminfo file, by giving the name \"NONE\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +438,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Lisp mode",
+      "description": "Lisp mode.  Sets the 'lisp' and 'showmatch' options on.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +448,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Modifications (writing files) not allowed",
+      "description": "Modifying files is disabled.  Resets the 'write' option.  You can still modify the buffer, but writing a file is not possible.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,27 +458,47 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "No swap file, use memory only",
+      "description": "No  swap  file will be used.  Recovery after a crash will be impossible.  Handy if you want to edit a file on a very slow medium (e.g. floppy).  Can also be done with \":set uc=0\".  Can be undone with \":set uc=200\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-o",
+      "short": "-nb",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Open N windows (default: one for each file)",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Become an editor server for NetBeans.  See the docs for details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-p",
+      "short": "-o[N",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Open N tab pages (default: one for each file)",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Open N windows stacked.  When N is omitted, open one window for each file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p[N",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Open N tab pages.  When N is omitted, open one tab page for each file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The file [errorfile] is read and the first error is displayed.  If [errorfile] is omitted, the filename is obtained from the 'errorfile' option (defaults to \"AztecC.Err\" for the Amiga, \"errors.err\" on other systems).  Further errors can be jumped to with the \":cn\" command.  See \":help quickfix\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +508,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "List swap files and exit",
+      "description": "List swap files, with information about using them for recovery.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -286,9 +516,19 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Read Normal mode commands from file <scriptin>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Silent mode.  Only when started as \"Ex\" or when the \"-e\" option was given before the \"-s\" option.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The file to edit and the initial cursor position depends on a \"tag\", a sort of goto label.  {tag} is looked up in the tags file, the  associated  file  becomes  the current file and the associated command is executed.  Mostly this is used for C programs, in which case {tag} could be a function name.  The effect is that the file containing that function becomes the  current  file  and the cursor is positioned on the start of the function.  See \":help tag-commands\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -296,9 +536,9 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use <vimrc> instead of any .vimrc",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use the commands in the file {vimrc} for initializations.  All the other initializations are skipped.  Use this to edit  a  spe‐ cial  kind  of  files.   It  can also be used to skip all initializations by giving the name \"NONE\".  See \":help initialization\" within vim for more details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +548,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Vi mode (like \"vi\")",
+      "description": "Start Vim in Vi mode, just like the executable was called \"vi\".  This only has effect when the executable is called \"ex\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,9 +556,19 @@
     {
       "short": "-w",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Append all typed commands to file <scriptout>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is useful if you want to create a script file to be used with \"vim -s\" or \":source!\".  If the {scriptout} file exists, characters are appended.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use encryption when writing files.  Will prompt for a crypt key.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,15 +578,72 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Easy mode (like \"evim\", modeless)",
+      "description": "Start Vim in easy mode, just like the executable was called \"evim\" or \"eview\".  Makes Vim behave like a click-and-type editor.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "9.1"
+  "positional": [
+    {
+      "name": "errorfile",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "eview",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "evim",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "gview",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rgview",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rgvim",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rview",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tag",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
+  "version": null
 }

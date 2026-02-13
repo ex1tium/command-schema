@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "ckbcomp",
-  "description": null,
+  "description": "CKBCOMP(1) Console-setup User's Manual CKBCOMP(1)",
   "global_flags": [
     {
       "short": "-?",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print this message",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Idir",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Look in the top-level directory dir for files included by the keymap description.  This option may be used multiple times.  If a file can not be found in any of the specified directories, it will be searched also in some other standard locations,  such  as  /etc/con‐ sole-setup/ckb, /usr/share/X11/xkb and /etc/X11/xkb",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,17 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Backspace is BS (^h) or DEL (^?)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-ccharmap",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specifies the encoding to use for compose sequences",
+      "description": "the behaviour of the <BackSpace> and <Delete> keys. Value bs specifies VT100-conformant behaviour: <BackSpace> will gener‐ ate ^H (ASCII BS) and <Delete> will generate ^?  (ASCII DEL).  Value del specifies VT220-conformant behavior: <BackSpace> will gener‐ ate ^?  (ASCII DEL) and <Delete> will generate a special function sequence.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-charmap",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specifies the encoding to use",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "encoding to use for the output keymap.  There should be an character mapping table defining this encoding in /usr/share/console‐ trans.  Definitions of the following charmaps  are  provided:  ARMSCII-8,  CP1251,  CP1255,  CP1256,  GEORGIAN-ACADEMY,  GEORGIAN-PS, IBM1133,  ISIRI-3342,  ISO-8859-1,  ISO-8859-2,  ISO-8859-3,  ISO-8859-4, ISO-8859-5, ISO-8859-6, ISO-8859-7, ISO-8859-8, ISO-8859-9, ISO-8859-10, ISO-8859-11, ISO-8859-13, ISO-8859-14, ISO-8859-15, ISO-8859-16, KOI8-R, KOI8-U, TIS-620 and VISCII.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate compact keymap",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Generate keymap for FreeBSD",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Specifies keycodes component name",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-layout",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specifies layout used to choose component names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-model",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specifies model used to choose component names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-option",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Adds an option used to choose component names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-rules",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Name of rules file to use",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Specifies symbols component name",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": "-v",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Sets verbosity (1..10). Higher values yield more messages",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The argument level must be a number from 1 to 10.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-variant",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Specifies layout variant used to choose component names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -147,21 +147,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "layout",
+      "name": "xkblayout",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "variant",
+      "name": "xkbvariant",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

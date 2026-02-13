@@ -1,24 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "x86_64-linux-gnu-gp-archive",
-  "description": "Archive the associated application binaries and source files in a gprofng",
+  "description": "GP-ARCHIVE.1(1) User Commands GP-ARCHIVE.1(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print usage information and exit.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "enable (on) or disable (off) verbose mode; the default is \"off\".",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +18,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print the version number and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +26,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "force writing or rewriting of the archive; ignored with the -n or -m options, or if this is a subexperiment.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Force writing, or rewriting of .archive files.  All archived files will be removed and recreated, except if the -n or -m option is used, or if the experiment is a subexperiment.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "specify archiving of binaries and other files; in addition to disable this feature (off), or enable archiving off all loadobjects and sources (on), the other options support a more refined selection. All of these options enable archiving, but the keyword controls what exactly is selected: all load objects (ldobjects), all source files (src), the loadobjects asscoiated with a program counter (usedldobjects), or the source files associated with a program counter (usedsrc); the default is \"-a ldobjects\".",
+      "description": "archiving  of  binaries and other files.  In addition to disable this feature (off), or enable archiving of all loadobjects and sources (on), the other choices support a more refined selection.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +46,9 @@
     {
       "short": "-d",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "specifies the location of a common archive; this is a directory that contains archived files.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "path is the absolute path to a common archive, which is a directory that contains archived files.  If the directory does not exist, then it will be created.  Files are saved in the common archive directory, and a symbolic link is created in the experiment archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +56,9 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "archive only those source, object, and debug info files whose full path name matches the given POSIX compliant regular expression.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "archive the named experiment only, not any of its descendants.",
+      "description": "Archive the named experiment only, not any of its descendants.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +78,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not write any warnings to stderr; messages are archived and can be retrieved later.",
+      "description": "Do not write any warnings to stderr.  Warnings are incorporated into the .archive file in the experiment directory.  They are  shown  in the output of the gprofng display text command.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "option  specifies the location of a common archive.  The value is the relative path to a common archive, which is a directory that contains archived files.  If the directory does not exist, then it will be created.  Files are saved in the  common  archive  directory, and a symbolic link is created in the experiment archive.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The allowed values for selection are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -97,14 +107,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "EXPERIMENT",
+      "name": "archive",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "experiment",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

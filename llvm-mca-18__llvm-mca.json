@@ -1,11 +1,21 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-mca-18",
-  "description": "OVERVIEW: llvm machine code performance analyzer.",
+  "description": "LLVM-MCA(1) LLVM LLVM-MCA(1)",
   "global_flags": [
     {
-      "short": null,
-      "long": "--all-stats",
+      "short": "-all-stats",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "all  hardware  statistics.  This enables extra statistics related to the dispatch logic, the hardware schedulers, the register file(s), and the retire control unit. This option is disabled by default.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-all-views",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -14,58 +24,68 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--all-views",
+      "short": "-bottleneck-analysis",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "information  about bottlenecks that affect the throughput. This analysis can be expensive, and it is disabled by default. Bot‐ tlenecks are highlighted in the summary view. Bottleneck analysis is currently not supported for processors with an in-order backend.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--bottleneck-analysis",
+      "short": "-disable-cb",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "target  specific  implementation.  The generic classes never detect any custom hazards or make any post processing modifications to instructions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--disable-cb",
+      "short": "-disable-im",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "usage of the generic InstrumentManager rather than using the target specific implementation. The generic class creates Instru‐ ments that provide no extra information, and InstrumentManager never overrides the default schedule class for a given instruction.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--disable-im",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dispatch",
+      "short": "-dispatch",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "a  different dispatch width for the processor. The dispatch width defaults to field 'IssueWidth' in the processor scheduling model.  If width is zero, then the default dispatch width is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--dispatch-stats",
+      "short": "-dispatch-stats",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "well  as  static/dynamic  dispatch stall events. This view is disabled by default.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-help",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print a summary of command line options.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-instruction-info",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -74,68 +94,48 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--help",
+      "short": "-instruction-tables",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "from  the  re‐ source pressure view because it doesn't require that the code is simulated. It instead prints the theoretical uniform distribution of resource pressure for every instruction in sequence.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--help-list",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "short": "-iterations",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "to  a  default  value (i.e. 100).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--instruction-info",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "short": "-json",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print the requested views in valid JSON format. The instructions and the processor resources are printed as members  of  special  top level  JSON  objects.   The individual views refer to them by index. However, not all views are currently supported. For example, the report from the bottleneck analysis is not printed out in JSON. All the default views are currently supported.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--instruction-tables",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--iterations",
+      "short": "-lqueue",
+      "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "the  size  of the load queue in the load/store unit emulated by the tool.  By default, the tool assumes an unbound number of entries in the load queue.  A value of zero for this flag is ignored, and the default load queue size is used instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
-      "long": "--json",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--lqueue",
+      "short": "-march",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -144,8 +144,18 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--march",
+      "short": "-mcpu",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "By default, the cpu name is autodetected from the host.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mtriple",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -154,180 +164,10 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--mattr",
+      "short": "-noalias",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--mcpu",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--mtriple",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--noalias",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--output-asm-variant",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--print-imm-hex",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--register-file-size",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--register-file-stats",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--resource-pressure",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--retire-stats",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--scheduler-stats",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--show-barriers",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--show-encoding",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--squeue",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--timeline",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--timeline-max-cycles",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--timeline-max-iterations",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -336,9 +176,139 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-output-asm-variant",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "On x86, possible values are [0, 1]. A value of 0 (vic.  1) for this flag enables the AT&T (vic. Intel) assembly format for the code printed out by the tool in the analysis report.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-print-imm-hex",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-register-file-size",
+      "long": null,
+      "value_type": "String",
       "takes_value": true,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-register-file-stats",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-resource-pressure",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-retire-stats",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-scheduler-stats",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-show-barriers",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-show-encoding",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-squeue",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "unbound  number  of entries in the store queue. A value of zero for this flag is ignored, and the default store queue size is used instead.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-timeline",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-timeline-max-cycles",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-timeline-max-iterations",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "the  number  of iterations to print in the timeline view. By default, the timeline view prints information for up to 10 itera‐ tions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -349,12 +319,12 @@
     {
       "name": "input",
       "value_type": "String",
-      "required": true,
+      "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

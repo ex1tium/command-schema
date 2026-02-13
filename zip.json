@@ -1,34 +1,949 @@
 {
   "schema_version": "1.0.0",
   "command": "zip",
-  "description": "Copyright (c) 1990-2008 Info-ZIP - Type 'zip \"-L\"' for software license.",
+  "description": "ZIP(1) General Commands Manual ZIP(1)",
   "global_flags": [
     {
-      "short": "-0",
+      "short": "-!",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "store only",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-1",
+      "short": "-#",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "compress faster",
+      "description": "the fastest  compression speed (less compression) and -9 indicates the slowest compression speed (optimal compression, ignores the suffix list). The default compression level is -6.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-9",
+      "short": "-$",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "compress better",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--DOS-names",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "mark the entry as made under MSDOS (even though it was not); for compatibility with PKUNZIP under MSDOS which cannot handle cer‐ tain names such as those with two dots.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Q-flag",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "0: Don't add headers for any file bit  1: Add headers for all files bit  2: Don't wait for interactive key press on exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--VMS-dot-versions",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Default is to use only the most recent version of a specified file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--VMS-portable",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "(Files are  truncated at EOF.)   When a -V archive is unpacked on a non-VMS system,  some file types (notably Stream_LF text files  and  pure binary files  like fixed-512) should be extracted intact.  Indexed files and file types with embedded record sizes (notably variable-length record types) will probably be seen as corrupt elsewhere.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--VMS-specific",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Save VMS file attributes, and  all allocated blocks in a file,  including  any  data beyond EOF.  Useful for moving ill-formed files  among  VMS systems.   When a -VV archive is unpacked on a non-VMS system, almost all files will appear corrupt.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--VMS-versions",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Default is to use only the most  re‐ cent version of a specified file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--absolute-path",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--adjust-sfx",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "A self-extracting executable archive is created by prepending the SFX stub to an existing archive. The -A option tells zip to adjust the entry offsets stored in the archive to take into account this \"preamble\" data.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--archive-clear",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Once archive is created (and tested if -T is used, which is recommended), clear the archive bits of files processed.  WARN‐ ING: Once the bits are cleared they are cleared.  You may want to use the -sf show files option to store the list of files  processed in case the archive operation must be repeated.  Also consider using the -MM must match option.  Be sure to check out -DF as a possi‐ bly better way to do incremental backups.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--archive-comment",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The comment is ended by a line containing just a period, or  an  end  of file condition (^D on Unix, ^Z on MSDOS, OS/2, and VMS).  The comment can be taken from a file:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--archive-set",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Only include files that have the archive bit set.  Directories are not stored when -AS is used, though by default the paths of entries, including directories, are stored as usual and can be used by most unzips to recreate directories.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ascii",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--before-date",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "not  operate on files modified after or at the specified date, where mm is the month (00-12), dd is the day of the month (01-31), and yyyy is the year.  The ISO 8601 date format yyyy-mm-dd is also accepted.  For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--binary",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compression-method",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  default  compression method.  Currently the main methods supported by zip are store and deflate.  Compression method can be set to:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--copy-entries",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Requires the --out option to specify a different output file than the input archive.  Copy mode  is  the  reverse of -d delete.  When delete is being used with --out, the selected entries are deleted from the archive and all other entries are copied to the new archive, while copy mode selects the files to include in the new archive.  Unlike -u update,  in‐ put patterns on the command line are matched against archive entries only and not the file system files.  For instance,",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-d",
+        "-u"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--datafork",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Include  only data-fork of files zipped into the archive.  Good for exporting files to foreign operating-systems.  Resource- forks will be ignored at all.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delete",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--difference-archive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "For this to work, the  input  file list and current directory must be the same as during the original zip operation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display-bytes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display-counts",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display-dots",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "dots  while  each  entry  is zipped (except on ports that have their own progress indicator).  See -ds below for setting dot size.  The default is a dot every 10 MB of input file processed.  The -v option also displays dots (previously at a much higher  rate than this but now -v also defaults to 10 MB) and this rate is also controlled by -ds.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display-globaldots",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The command",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display-usize",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--display-volume",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dot-size",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "See -dd to enable displaying dots.   Setting  this  option  implies  -dd. Size is in the format nm where n is a number and m is a multiplier.  Currently m can be k (KB), m (MB), g (GB), or t (TB), so if n is 100 and m is k, size would be 100k which is 100 KB.  The default is 10 MB.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--encrypt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "not  be echoed;  if  standard error is not a tty, zip will exit with an error).  The password prompt is repeated to save the user from typing errors.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--entry-comments",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "File operations (adding, updating) are done first, and the user is then prompted for a one-line comment for each file.  Enter the comment followed by return, or just return for no comment.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fifo",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Normally  zip  skips reading any FIFOs (named pipes) encountered, as zip can hang if the FIFO is not being fed.  This option tells zip to read the contents of any FIFO it finds.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--filesync",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Normally when an archive  is  updated,  new  files  are  added  and changed  files are updated but files that no longer exist on the OS are not deleted from the archive.  This option enables a new mode that checks entries in the archive against the file system.  If the file time and file size of the entry matches that of the OS file, the entry is copied from the old archive instead of being read from the file system and compressed.  If the OS file has changed,  the entry  is read and compressed as usual.  If the entry in the archive does not match a file on the OS, the entry is deleted.  Enabling this option should create archives that are the same as new archives, but since existing entries are copied  instead  of  compressed, updating  an  existing  archive  with  -FS  can  be  much faster than creating a new archive.  Also consider using -u for updating an archive.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fix",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fixfix",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "the zip archive. The -F option can be used if some portions of the archive are missing, but requires a reasonably intact central directory.  The input archive is scanned as usual, but zip will ignore some problems.  The resulting archive should be valid, but any inconsistent entries will be left out.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-F"
+      ]
+    },
+    {
+      "short": "-u",
+      "long": "--freshen",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--from-crlf",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This option should not be used on binary files.  This option can be used on  MS‐ DOS if the zip file is intended for unzip under Unix.  If the file is converted and the file is later determined to be binary a warn‐ ing  is  issued  and the file is probably corrupted.  In this release if -ll detects binary in the first buffer read from a file, zip now issues a warning and skips line end conversion on the file.  This check seems to catch all binary files tested, but the  original check  remains  and  if a converted file is later determined to be binary that warning is still issued.  A new algorithm is now being used for binary detection that should allow line end conversion of text files in UTF-8 and similar encodings.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--from-date",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "not operate on files modified prior to the specified date, where mm is the month (00-12), dd is the day of the month (01-31), and yyyy is the year.  The ISO 8601 date format yyyy-mm-dd is also accepted.  For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--grow",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "fails,  zip  attempts  to  restore  the archive  to  its original state. If the restoration fails, the archive might become corrupted. This option is ignored when there's no existing archive or when at least one archive member must be updated or deleted.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option is only available on systems where the case of files is ignored. On systems with case-insensitive file systems, case is normally ignored when matching files on the file system but is not ignored for",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--junk-paths",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--junk-sfx",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--latest-time",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "found  among  the  entries  in  the  zip archive.  This can be used without any other operations, if desired.  For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--license",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-append",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Default is to overwrite.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-info",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "information  messages,  such  as  file names being zipped, in the log.  The default is to only include the command line, any warnings and errors, and the final status.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--logfile-path",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "By default any existing file at that location is overwritten, but the -la option will result in an existing file being opened and the new log information appended to any existing information.  Only warnings and errors are written to the log unless the -li option is also given, then all information messages are also written to the log.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--longnames",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--longoption",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--longoption[-][",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--more-help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--move",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "making  the  specified  zip archive.  If a directory becomes empty after removal of the files, the directory is also removed. No deletions are done until zip has created the archive without error.  This is useful for conserving disk space, but is potentially dangerous so it  is  recommended  to use it in combination with -T to test the archive before removing all input files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--must-match",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "input patterns must match at least one file and all input files found must be readable.  Normally when an input pattern does not match a file the \"name not matched\" warning is issued and when an input file has been found but later is missing or  not  readable  a missing  or  not readable warning is issued.  In either case zip continues creating the archive, with missing or unreadable new files being skipped and files already in the archive remaining unchanged.  After the archive is created, if any files were not readable zip returns the OPEN error code (18 on most systems) instead of the normal success return (0 on most systems).  With -MM set,  zip  exits as  soon  as  an  input pattern is not matched (whenever the \"name not matched\" warning would be issued) or when an input file is not readable.  In either case zip exits with an OPEN error and no archive is created.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--names-stdin",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-dir-entries",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "Directory entries are created by default so that their attributes  can  be saved in the zip archive.  The environment variable ZIPOPT can be used to change the default options. For example under Unix with sh:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-extra",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The zip format uses extra fields to include  additional  information for each entry.  Some extra fields are specific to particular systems while others are applicable to all systems.  Normally when zip reads entries from an existing archive, it reads the extra fields it knows, strips the rest, and adds the extra fields applicable to that system.  With -X, zip strips all old fields and only includes the Unicode and Zip64 extra  fields (currently these two extra fields cannot be disabled).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-image",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "RISC  OS] Don't scan through Image files.  When used, zip will not consider Image files (eg. DOS partitions or Spark archives when SparkFS is loaded) as directories but will store them as single files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-wild",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "not  perform  internal wildcard processing (shell processing of wildcards is still done by the shell unless the arguments are es‐ caped).  Useful if a list of paths is being read and no wildcard substitution is desired.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--notes",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  archive  changes as usual, but instead of updating the existing archive, output the new archive to output-file.  Useful for updating an archive without changing the existing archive and the input archive must be a different file than the output archive.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--password",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "password to encrypt zipfile entries (if any).  THIS IS INSECURE!  Many multi-user operating systems provide ways for any user to see the current command line of any other user; even on stand-alone systems there is always the threat of over-the-shoulder  peeking. Storing  the plaintext password as part of a command line in an automated script is even worse.  Whenever possible, use the non-echo‐ ing, interactive prompt to enter passwords.  (And where security is truly important, use strong encryption such as Pretty  Good  Pri‐ vacy instead of the relatively weak standard encryption provided by zipfile utilities.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--paths",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is the default.  The -j option junks the paths and just stores the names of the files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preserve-case",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Preserve case all on VMS.  Negating this option (-C-) downcases.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preserve-case-2",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Preserve case ODS2 on VMS.  Negating this option (-C2-) downcases.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preserve-case-5",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Preserve case ODS5 on VMS.  Negating this option (-C5-) downcases.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(Useful, for example, in shell scripts and background tasks).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--recurse-paths",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--recurse-patterns",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--regex",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Before zip 3.0, regular expression list matching was enabled by default on Windows platforms.  Because of confusion  result‐ ing  from  the need to escape \"[\" and \"]\" in names, it is now off by default for Windows so \"[\" and \"]\" are just normal characters in names.  This option enables [] matching again.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-command",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The new command parser permutes the arguments, putting all options and any values associated with them before any non-option arguments.  This allows an option to appear anywhere in the command line as long as any values that go with the option go with it.  This option displays the command line as zip sees it, including  any  arguments  from the  environment  such as from the ZIPOPT variable.  Where allowed, options later in the command line can override options earlier in the command line.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-files",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "For instance, if creating a new archive, this will list the files that would be added.  If the option is negated, -sf-, output only to an open log file.  Screen display is not recommended for large lists.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sf",
+      "long": "--show-just-unicode",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-options",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "As this command reads the option table, it should in‐ clude all options.  Each line includes the short option (if defined), the long option (if defined), the format of any value that goes with the option, if the option can be negated, and a small description.  The value format can be no value, required  value,  optional value,  single  character value, number value, or a list of values.  The output of this option is not intended to show how to use any option but only show what options are available.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--split-bell",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--split-pause",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This creates split archives as -s does, but stream writing is used so each split can be closed as soon as it is written and zip will pause between each split to allow changing split destination or media.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--split-size",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "A split archive is an archive that could be split over many files.   As  the archive  is created, if the size of the archive reaches the specified split size, that split is closed and the next split opened.  In general all splits but the last will be the split size and the last will be whatever is left.  If the entire archive is smaller  than the split size a single-file archive is created.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--split-verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--suffixes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Such files are simply stored (0%  compression)  in  the  output  zip file,  so  that  zip doesn't waste its time trying to compress them.  The suffixes are separated by either colons or semicolons.  For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--symlinks",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "UNIX  and VMS (V8.3 and later), store symbolic links as such in the zip archive, instead of compressing and storing the file re‐ ferred to by the link.  This can avoid multiple copies of files being included in the archive as zip recurses the directory trees and accesses files directly and by links.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--system-hidden",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--temp-path",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": "--test",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--to-crlf",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "binary  files.   This option can be used on Unix if the zip file is intended for PKUNZIP under MSDOS. If the input files already contain CR LF, this option adds an extra CR. This is to ensure that unzip -a on Unix will get back an exact copy of the original file, to undo the effect of zip",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unicode",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "what zip should do with Unicode file names.  zip 3.0, in addition to the standard file path, now includes the UTF-8 trans‐ lation of the path if the entry path is not entirely 7-bit ASCII.  When an entry is missing the Unicode path, zip reverts back to the standard file path.  The problem with using the standard path is this path is in the local character set of the zip that created  the entry, which may contain characters that are not valid in the character set being used by the unzip.  When zip is reading an archive, if an entry also has a Unicode path, zip now defaults to using the Unicode path to recreate the standard path using the current local character set.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-tqq",
+      "long": "--unzip-command",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "On Unix, to use a copy of unzip in  the  cur‐ rent directory instead of the standard system unzip, could use:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--update",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(update) an existing entry in the zip archive only if it has been modified more recently than the version already in the zip archive.  For example:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--use-privileges",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--volume-label",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If you want to include only the volume label or to force a specific drive, use the drive name as first file name, as in:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--wild-stop-dirs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Normally zip handles paths as strings and given the paths",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +953,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "read names from stdin",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +961,109 @@
     {
       "short": "-A",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-AC",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-AS",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Bn",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "[TANDEM] set Edit/Enscribe formatting options with n defined as bit  0: Don't add delimiter (Edit/Enscribe) bit  1: Use LF rather than CR/LF as delimiter (Edit/Enscribe) bit  2: Space fill record to maximum record length (Enscribe) bit  3: Trim trailing space (Enscribe) bit  8: Force 30K (Expand) large read for unstructured files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C2",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "adjust self-extracting exe",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C5",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-DF",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +1071,49 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "fix zipfile (-FF try harder) -D do not add directory entries",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-FF",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-FI",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-FS",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +1121,89 @@
     {
       "short": "-J",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-MM",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Qn",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "junk zipfile prefix (unzipsfx)",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-RE",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +1211,59 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "test zipfile integrity",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-TT",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-UN",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-VV",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +1271,49 @@
     {
       "short": "-X",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "eXclude eXtra file attributes",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-aABcdDeEfFghjklLmoqrRSTuvVwXyz!@$",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +1323,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "add one-line comments",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +1333,87 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "delete entries in zipfile",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-db",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dc",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dd",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-df",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dg",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ds",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-du",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +1423,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "encrypt",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +1433,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "freshen: only changed files",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +1463,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show more help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +1473,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "include only the following names",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ic",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +1493,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "junk (don't record) directory names",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-jj",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,19 +1521,59 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "convert LF to CR LF (-ll CR LF to LF)",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-m",
+      "short": "-l.",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "move into zipfile (delete OS files)",
+      "description": "See -ll for how binary files are handled.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-la",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lf",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-li",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ll",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +1583,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't compress these suffixes",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-nw",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +1603,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "make zipfile as old as latest entry",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +1623,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "quiet operation",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,17 +1633,127 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "recurse into directories",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-u",
+      "short": "-sU",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "update: only changed or new files",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s[-][s[-]...][value][",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s[-][value][",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sb",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sc",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-so",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sp",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-su",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-tt",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ttmmddyyyy",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +1763,37 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose operation/print version info",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ws",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ww",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +1803,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exclude the following names",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-xi",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +1823,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "store symbolic links as the link instead of the referenced file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,15 +1833,583 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "add zipfile comment",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
-  "version": "3.0"
+  "subcommands": [
+    {
+      "name": "updates",
+      "description": "the splits as the archive is being created, requiring all splits to remain writable, but creates split archives that are",
+      "flags": [
+        {
+          "short": "-0",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "store only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-1",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "compress faster",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-9",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "compress better",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-@",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "read names from stdin",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-A",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "adjust self-extracting exe",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "fix zipfile (-FF try harder) -D do not add directory entries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-J",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "junk zipfile prefix (unzipsfx)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "test zipfile integrity",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "eXclude eXtra file attributes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add one-line comments",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "delete entries in zipfile",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "encrypt",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "freshen: only changed files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h2",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show more help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "include only the following names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "junk (don't record) directory names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "convert LF to CR LF (-ll CR LF to LF)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "move into zipfile (delete OS files)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't compress these suffixes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "make zipfile as old as latest entry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "quiet operation",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "recurse into directories",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "update: only changed or new files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "verbose operation/print version info",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "exclude the following names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "store symbolic links as the link instead of the referenced file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add zipfile comment",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "--longoption",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-tt",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-xi",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "all",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "and",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "arguments",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "been",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "changed",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "consistently.",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "date",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "depend",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "handle",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "has",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "in",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "inconsistencies",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "line",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "lines",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "long",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "longer",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "man",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "may",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "more",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "no",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "old",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "on",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "page",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "processing",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "see",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "separate",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "some",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "suffixes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "support",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "that",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "work.",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "zip",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "zipfile",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
+  "version": null
 }

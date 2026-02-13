@@ -1,28 +1,8 @@
 {
   "schema_version": "1.0.0",
   "command": "znew",
-  "description": "Recompress files from .Z (compress) format to .gz (gzip) format.",
+  "description": "ZNEW(1) General Commands Manual ZNEW(1)",
   "global_flags": [
-    {
-      "short": null,
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display this help and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output version information and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-9",
       "long": null,
@@ -36,8 +16,8 @@
     {
       "short": "-K",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "Keep a .Z file when it is smaller than the .gz file; implies -t.",
       "multiple": false,
       "conflicts_with": [],
@@ -46,8 +26,8 @@
     {
       "short": "-P",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Use pipes for the conversion to reduce disk space usage.",
       "multiple": false,
       "conflicts_with": [],
@@ -58,7 +38,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force recompression even if a .gz file already exists.",
+      "description": "Force recompression from .Z to .gz format even if a .gz file already exists.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ftv9PK",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Test the new files before deleting originals.",
+      "description": "Tests the new files before deleting originals.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,15 +68,23 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Verbose; display name and statistics for each file compressed.",
+      "description": "Verbose. Display the name and percentage reduction for each file compressed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "name.z",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

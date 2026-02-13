@@ -1,51 +1,71 @@
 {
   "schema_version": "1.0.0",
   "command": "strings",
-  "description": null,
+  "description": "STRINGS(1) GNU Development Tools STRINGS(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--bytes",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "displayable characters. (The default is 4).",
+      "description": "If not specified a default minimum length of 4  is used.   The distinction between displayable and non-displayable characters depends upon the setting of the -e and -U options.  Sequences are always terminated at control characters such as new-line and carriage-return, but not the tab character.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-d",
+      "short": null,
       "long": "--data",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Only scan the data sections in the file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This may reduce the amount of garbage in the output, but it also exposes the strings program to any security flaws that may be present in the BFD library used to scan and load sections.  Strings can be configured  so  that  this  option is the default behaviour.  In such cases the -a option can be used to avoid using the BFD library and instead just print all of the strings found in the file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-e",
+      "short": null,
       "long": "--encoding",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Possible values for encoding are: s =  single-7-bit-byte  characters (default),  S  =  single-8-bit-byte  characters,  b  =  16-bit  bigendian,  l  =  16-bit  littleendian, B = 32-bit bigendian, L = 32-bit littleendian.  Useful for finding wide character strings. (l and b apply to, for example, Unicode UTF-16/UCS-2 encodings).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-w",
+      "short": null,
       "long": "--include-all-whitespace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The -w option changes this so that all whitespace characters are considered to be part of a string.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-separator",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "used  as  the  output  record separator.  Useful with --include-all-whitespace where strings may contain new-lines internally.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-file-name",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -54,41 +74,21 @@
       "requires": []
     },
     {
-      "short": "-s",
-      "long": "--output-separator",
+      "short": null,
+      "long": "--radix",
       "value_type": "File",
       "takes_value": true,
-      "description": "Read options from <file>",
+      "description": "the  offset within the file before each string.  The single character argument specifies the radix of the offset---o for octal, x for hexadecimal, or d for decimal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-f",
-      "long": "--print-file-name",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print the name of the file before each string",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": "--radix",
+      "short": null,
+      "long": "--target",
       "value_type": "String",
       "takes_value": true,
-      "description": "Print the location of the string in base 8, 10 or 16",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": "--target",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Specify the binary file format",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,6 +96,26 @@
     {
       "short": null,
       "long": "--unicode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default (--unicode=default)  is  to  give  them  no  special treatment,  and  instead  rely  upon  the  setting  of  the  --encoding  option.   The other values for this option automatically enable",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -106,9 +126,19 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify how to treat UTF-8 encoded unicode characters",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +146,59 @@
     {
       "short": "-a",
       "long": null,
-      "value_type": "File",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-afovV",
+      "long": null,
+      "value_type": "String",
       "takes_value": true,
-      "description": "Scan the entire file, not just the data section [default]",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-min-len",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +206,9 @@
     {
       "short": "-n",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "Locate & print any sequence of at least <number>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +216,29 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "An alias for --radix=o",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Like -t o.  Some other versions of strings have -o act like -t d instead.  Since we can not be compatible  with  both  ways,  we  simply chose one.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,15 +248,166 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the program's version number",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "--all",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--help",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--include-all-whitespace",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--output-separator",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--print-file-name",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--version",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-afovv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-min-len",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bfdname",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "encoding",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "method",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "min-len",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "radix",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sep_string",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

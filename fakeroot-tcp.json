@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "fakeroot-tcp",
-  "description": "fakeroot, create a fake root environment.",
+  "description": "fakeroot(1) Debian manual fakeroot(1)",
   "global_flags": [
     {
       "short": null,
@@ -34,17 +34,17 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-l",
       "long": "--lib",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-u",
       "long": "--unknown-is-real",
       "value_type": "Bool",
       "takes_value": false,
@@ -66,19 +66,9 @@
     {
       "short": "-b",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Specify  fd base (TCP mode only). fd is the minimum file descriptor number to use for TCP connections; this may be important to avoid conflicts with the file descriptors used by the programs being run under fakeroot.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display help.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,19 +86,9 @@
     {
       "short": "-i",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Note that this does not implicitly save the file,  use  -s  as well for that behaviour. Using the same file for both -i and -s in a single fakeroot invocation is safe.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,19 +96,9 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  fakeroot  environment to save-file on exit. This file can be used to restore the environment later using -i. However, this file will leak and fakeroot will behave in odd ways unless you leave the files touched inside the fakeroot alone when outside the en‐ vironment. Still, this can be useful. For example, it can be used with rsync(1) to back up and restore whole directory trees complete with user, group and device information without needing to be root. See /usr/share/doc/fakeroot/README.saving for more details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,15 +108,90 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "subcommands": [
+    {
+      "name": "brw-r--r--",
+      "description": "1 root root 3, 1 Jul 2 22:58 hda3 # chown joost:root hda3 # ls -ld hda3",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "drwxr-xr-x",
+      "description": "20 root root 1024 Jun 17 21:50 / # chown joost:users / # chmod a+w / # ls -ld /",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "drwxrwxrwx",
+      "description": "20 joost users 1024 Jun 17 21:50 / # exit $ ls -ld /",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "--faked",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "faked-binary",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "library",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "load-file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "save-file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

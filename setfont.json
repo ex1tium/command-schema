@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "setfont",
-  "description": null,
+  "description": "SETFONT(8) System Manager's Manual SETFONT(8)",
   "global_flags": [
     {
       "short": "-C",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Indicate console device to be used.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +26,9 @@
     {
       "short": "-O",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "<filename> Write current font and unicode map to <filename>",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,8 +36,8 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Print version and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -38,7 +48,37 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Double size of font horizontally and vertically.",
+      "description": "Doubles  the size of the font, by replicating all of its pixels vertically and horizontally.  This is suitable for high pixel density (e.g. \"4k\") displays on which the standard fonts are too small to be easily legible.  Due to kernel  limitations,  this  is  suitable only for 16x16 or smaller fonts.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Force-load  unicode map: Setfont`issues the system call to load the unicode map even if the specified map is empty.  This may be use‐ ful in unusual cases.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Override font height.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-hH",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +86,9 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Load console screen map.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +96,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "<filename> Write current font to <filename>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +106,9 @@
     {
       "short": "-om",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Write current consolemap to <filename>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +116,9 @@
     {
       "short": "-ou",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Write current unicodemap to <filename>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +126,9 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Load font unicode map.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -107,21 +147,126 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "newfont..",
+      "name": "-c",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "write-options",
+      "name": "-f",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "-hh",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-n",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-om",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-ou",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cmap",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cmap.orig",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "console",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "font.new",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "font.orig",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "umap",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "umap.orig",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

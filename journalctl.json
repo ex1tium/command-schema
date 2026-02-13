@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "journalctl",
-  "description": "Query the journal.",
+  "description": "JOURNALCTL(1) journalctl JOURNALCTL(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--after-cursor",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries after the specified cursor",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,17 +18,17 @@
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show all fields, including long and unprintable",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-b",
-      "long": "--boot",
+      "long": "--boot[",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show current boot or the specified boot",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,6 +36,16 @@
     {
       "short": null,
       "long": "--case-sensitive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--case-sensitive[",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -48,7 +58,7 @@
       "long": "--catalog",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Add message explanations where available",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--cursor",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries starting at the specified cursor",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": null,
       "long": "--cursor-file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Show entries after cursor in FILE and update FILE",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,19 +86,9 @@
     {
       "short": "-D",
       "long": "--directory",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Show journal files from directory",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--disk-usage",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show total disk usage of all journal files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,19 +96,9 @@
     {
       "short": "-k",
       "long": "--dmesg",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show kernel message log from the current boot",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dump-catalog",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show entries in the message catalog",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,27 +108,7 @@
       "long": "--facility",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries with the specified facilities",
-      "multiple": true,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": "--field",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "List all values that a specified field takes",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
-      "long": "--fields",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "List all field names currently used",
+      "description": "--facility=help may be used to display a list of known facility names and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,19 +116,9 @@
     {
       "short": null,
       "long": "--file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Show journal file",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--flush",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Flush all journal data from /run into /var",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +128,7 @@
       "long": "--follow",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Follow the journal",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +136,9 @@
     {
       "short": null,
       "long": "--force",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Override of the FSS key pair with --setup-keys",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,27 +148,7 @@
       "long": "--grep",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries with MESSAGE matching PATTERN",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--header",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show journal header information",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": "--help",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show this help text",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +158,7 @@
       "long": "--identifier",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries with the specified syslog identifier",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +166,9 @@
     {
       "short": null,
       "long": "--image",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Operate on disk image as filesystem root",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +178,7 @@
       "long": "--image-policy",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify disk image dissection policy",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +188,7 @@
       "long": "--interval",
       "value_type": "String",
       "takes_value": true,
-      "description": "Time interval for changing the FSS sealing key",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,27 +198,7 @@
       "long": "--lines",
       "value_type": "String",
       "takes_value": true,
-      "description": "Number of journal entries to show",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--list-boots",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show terse information about recorded boots",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--list-catalog",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show all message IDs in the catalog",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +208,7 @@
       "long": "--machine",
       "value_type": "String",
       "takes_value": true,
-      "description": "Operate on local container",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +218,7 @@
       "long": "--merge",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show entries from all available journals",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,17 +228,17 @@
       "long": "--namespace",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show journal data from specified journal namespace",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-l",
       "long": "--no-full",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Ellipsize fields",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +248,7 @@
       "long": "--no-hostname",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Suppress output of hostname field",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +258,7 @@
       "long": "--no-pager",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not pipe output into a pager",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -346,19 +266,19 @@
     {
       "short": null,
       "long": "--no-tail",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show all lines, even in follow mode",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-o",
+      "short": null,
       "long": "--output",
       "value_type": "String",
       "takes_value": true,
-      "description": "Change journal output mode (short, short-precise, short-iso, short-iso-precise, short-full, short-monotonic, short-unix, verbose, export, json, json-pretty, json-sse, json-seq, cat, with-unit)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +288,7 @@
       "long": "--output-fields",
       "value_type": "String",
       "takes_value": true,
-      "description": "Select fields to print in verbose/export/json modes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +298,7 @@
       "long": "--pager-end",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Immediately jump to the end in the pager",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +308,7 @@
       "long": "--priority",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries with the specified priority",
+      "description": "\"emerg\" (0), \"alert\" (1), \"crit\" (2), \"err\" (3), \"warning\" (4), \"notice\" (5), \"info\" (6), \"debug\" (7). If a single log level is specified, all messages with this log level or a lower (hence more important) log level are shown. If a range is specified, all messages within the range are shown, including both the start and the end value of the range. This will add \"PRIORITY=\" matches for the specified priorities.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,17 +318,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not show info messages and privilege warning",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--relinquish-var",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Stop logging to disk, log to temporary file system",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +328,7 @@
       "long": "--reverse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show the newest entries first",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,27 +338,7 @@
       "long": "--root",
       "value_type": "File",
       "takes_value": true,
-      "description": "Operate on an alternate filesystem root",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--rotate",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Request immediate rotation of the journal files",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--setup-keys",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Generate a new FSS key pair",
+      "description": "--update-catalog will create ROOT/var/lib/systemd/catalog/database, and journal files under ROOT/run/journal/ or ROOT/var/log/journal/ will be displayed).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +348,7 @@
       "long": "--show-cursor",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the cursor after all the entries",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,27 +358,7 @@
       "long": "--since",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show entries not older than the specified date",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--smart-relinquish-var",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Similar, but NOP if log directory is on root mount",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--sync",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Synchronize unwritten journal messages to disk",
+      "description": "\"now\" refers to the current time. Finally, relative times may be specified, prefixed with \"-\" or \"+\", referring to times before or after the current time, respectively. For complete time and date specification, see systemd.time(7). Note that",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +368,7 @@
       "long": "--system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show the system journal",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +378,7 @@
       "long": "--truncate-newline",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Truncate entries by first newline character",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,37 +388,7 @@
       "long": "--unit",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show logs from the specified unit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": "--until",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Show entries not newer than the specified date",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--update-catalog",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Update the message catalog database",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--user",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show the user journal for the current user",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -558,7 +398,7 @@
       "long": "--user-unit",
       "value_type": "String",
       "takes_value": true,
-      "description": "Show logs from the specified user unit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,47 +408,7 @@
       "long": "--utc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Express time in Coordinated Universal Time (UTC)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--vacuum-files",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Leave only the specified number of journal files",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--vacuum-size",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Reduce disk usage below specified size",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--vacuum-time",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Remove journal files older than specified time",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--verify",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Verify journal file consistency",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,25 +418,2587 @@
       "long": "--verify-key",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify FSS verification key",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show package version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "subcommands": [
+    {
+      "name": "alert",
+      "description": "Query the journal.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--after-cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries after the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all fields, including long and unprintable",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--boot",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show current boot or the specified boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--case-sensitive",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Add message explanations where available",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries starting at the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cursor-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show entries after cursor in FILE and update FILE",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--directory",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal files from directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--disk-usage",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show total disk usage of all journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--dmesg",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show kernel message log from the current boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dump-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries in the message catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--facility",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified facilities",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--field",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "List all values that a specified field takes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--fields",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all field names currently used",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--flush",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Flush all journal data from /run into /var",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Follow the journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Override of the FSS key pair with --setup-keys",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": "--grep",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with MESSAGE matching PATTERN",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--header",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show journal header information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help text",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--identifier",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified syslog identifier",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on disk image as filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image-policy",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify disk image dissection policy",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--interval",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Time interval for changing the FSS sealing key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--lines",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Number of journal entries to show",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-boots",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show terse information about recorded boots",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all message IDs in the catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--machine",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries from all available journals",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--namespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show journal data from specified journal namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-full",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ellipsize fields",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output of hostname field",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-tail",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all lines, even in follow mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Change journal output mode (short, short-precise, short-iso, short-iso-precise, short-full, short-monotonic, short-unix, verbose, export, json, json-pretty, json-sse, json-seq, cat, with-unit)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--output-fields",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Select fields to print in verbose/export/json modes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--pager-end",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Immediately jump to the end in the pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--priority",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified priority",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show info messages and privilege warning",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Stop logging to disk, log to temporary file system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--reverse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the newest entries first",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on an alternate filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rotate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Request immediate rotation of the journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--setup-keys",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generate a new FSS key pair",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-cursor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the cursor after all the entries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not older than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--smart-relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Similar, but NOP if log directory is on root mount",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sync",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Synchronize unwritten journal messages to disk",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the system journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--truncate-newline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Truncate entries by first newline character",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": "--until",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not newer than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--update-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Update the message catalog database",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the user journal for the current user",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user-unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified user unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--utc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Express time in Coordinated Universal Time (UTC)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-files",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Leave only the specified number of journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-size",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Reduce disk usage below specified size",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-time",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Remove journal files older than specified time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Verify journal file consistency",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify FSS verification key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "crit",
+        "debug",
+        "err",
+        "info",
+        "notice",
+        "warning"
+      ]
+    },
+    {
+      "name": "files",
+      "description": "Query the journal.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--after-cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries after the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all fields, including long and unprintable",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--boot",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show current boot or the specified boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--case-sensitive",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Add message explanations where available",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries starting at the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cursor-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show entries after cursor in FILE and update FILE",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--directory",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal files from directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--disk-usage",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show total disk usage of all journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--dmesg",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show kernel message log from the current boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dump-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries in the message catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--facility",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified facilities",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--field",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "List all values that a specified field takes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--fields",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all field names currently used",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--flush",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Flush all journal data from /run into /var",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Follow the journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Override of the FSS key pair with --setup-keys",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": "--grep",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with MESSAGE matching PATTERN",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--header",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show journal header information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help text",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--identifier",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified syslog identifier",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on disk image as filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image-policy",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify disk image dissection policy",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--interval",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Time interval for changing the FSS sealing key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--lines",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Number of journal entries to show",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-boots",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show terse information about recorded boots",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all message IDs in the catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--machine",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries from all available journals",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--namespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show journal data from specified journal namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-full",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ellipsize fields",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output of hostname field",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-tail",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all lines, even in follow mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Change journal output mode (short, short-precise, short-iso, short-iso-precise, short-full, short-monotonic, short-unix, verbose, export, json, json-pretty, json-sse, json-seq, cat, with-unit)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--output-fields",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Select fields to print in verbose/export/json modes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--pager-end",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Immediately jump to the end in the pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--priority",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified priority",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show info messages and privilege warning",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Stop logging to disk, log to temporary file system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--reverse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the newest entries first",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on an alternate filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rotate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Request immediate rotation of the journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--setup-keys",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generate a new FSS key pair",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-cursor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the cursor after all the entries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not older than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--smart-relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Similar, but NOP if log directory is on root mount",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sync",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Synchronize unwritten journal messages to disk",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the system journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--truncate-newline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Truncate entries by first newline character",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": "--until",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not newer than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--update-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Update the message catalog database",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the user journal for the current user",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user-unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified user unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--utc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Express time in Coordinated Universal Time (UTC)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-files",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Leave only the specified number of journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-size",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Reduce disk usage below specified size",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-time",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Remove journal files older than specified time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Verify journal file consistency",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify FSS verification key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "new",
+      "description": "Query the journal.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--after-cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries after the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all fields, including long and unprintable",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--boot",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show current boot or the specified boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--case-sensitive",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Add message explanations where available",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries starting at the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cursor-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show entries after cursor in FILE and update FILE",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--directory",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal files from directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--disk-usage",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show total disk usage of all journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--dmesg",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show kernel message log from the current boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dump-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries in the message catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--facility",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified facilities",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--field",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "List all values that a specified field takes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--fields",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all field names currently used",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--flush",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Flush all journal data from /run into /var",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Follow the journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Override of the FSS key pair with --setup-keys",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": "--grep",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with MESSAGE matching PATTERN",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--header",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show journal header information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help text",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--identifier",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified syslog identifier",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on disk image as filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image-policy",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify disk image dissection policy",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--interval",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Time interval for changing the FSS sealing key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--lines",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Number of journal entries to show",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-boots",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show terse information about recorded boots",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all message IDs in the catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--machine",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries from all available journals",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--namespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show journal data from specified journal namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-full",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ellipsize fields",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output of hostname field",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-tail",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all lines, even in follow mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Change journal output mode (short, short-precise, short-iso, short-iso-precise, short-full, short-monotonic, short-unix, verbose, export, json, json-pretty, json-sse, json-seq, cat, with-unit)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--output-fields",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Select fields to print in verbose/export/json modes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--pager-end",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Immediately jump to the end in the pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--priority",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified priority",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show info messages and privilege warning",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Stop logging to disk, log to temporary file system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--reverse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the newest entries first",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on an alternate filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rotate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Request immediate rotation of the journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--setup-keys",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generate a new FSS key pair",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-cursor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the cursor after all the entries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not older than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--smart-relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Similar, but NOP if log directory is on root mount",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sync",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Synchronize unwritten journal messages to disk",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the system journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--truncate-newline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Truncate entries by first newline character",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": "--until",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not newer than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--update-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Update the message catalog database",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the user journal for the current user",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user-unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified user unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--utc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Express time in Coordinated Universal Time (UTC)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-files",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Leave only the specified number of journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-size",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Reduce disk usage below specified size",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-time",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Remove journal files older than specified time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Verify journal file consistency",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify FSS verification key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "the",
+      "description": "Query the journal.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--after-cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries after the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all fields, including long and unprintable",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--boot",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show current boot or the specified boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--case-sensitive",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Add message explanations where available",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cursor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries starting at the specified cursor",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cursor-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show entries after cursor in FILE and update FILE",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--directory",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal files from directory",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--disk-usage",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show total disk usage of all journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--dmesg",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show kernel message log from the current boot",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dump-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries in the message catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--facility",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified facilities",
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--field",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "List all values that a specified field takes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--fields",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all field names currently used",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Show journal file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--flush",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Flush all journal data from /run into /var",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Follow the journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Override of the FSS key pair with --setup-keys",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": "--grep",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with MESSAGE matching PATTERN",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--header",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show journal header information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help text",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--identifier",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified syslog identifier",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on disk image as filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--image-policy",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify disk image dissection policy",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--interval",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Time interval for changing the FSS sealing key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--lines",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Number of journal entries to show",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-boots",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show terse information about recorded boots",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--list-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all message IDs in the catalog",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--machine",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": "--merge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show entries from all available journals",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--namespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show journal data from specified journal namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-full",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ellipsize fields",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output of hostname field",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-tail",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all lines, even in follow mode",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--output",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Change journal output mode (short, short-precise, short-iso, short-iso-precise, short-full, short-monotonic, short-unix, verbose, export, json, json-pretty, json-sse, json-seq, cat, with-unit)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--output-fields",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Select fields to print in verbose/export/json modes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--pager-end",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Immediately jump to the end in the pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--priority",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries with the specified priority",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show info messages and privilege warning",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Stop logging to disk, log to temporary file system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--reverse",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the newest entries first",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on an alternate filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rotate",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Request immediate rotation of the journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--setup-keys",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generate a new FSS key pair",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-cursor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the cursor after all the entries",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--since",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not older than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--smart-relinquish-var",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Similar, but NOP if log directory is on root mount",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sync",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Synchronize unwritten journal messages to disk",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the system journal",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--truncate-newline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Truncate entries by first newline character",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": "--until",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show entries not newer than the specified date",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--update-catalog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Update the message catalog database",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the user journal for the current user",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--user-unit",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show logs from the specified user unit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--utc",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Express time in Coordinated Universal Time (UTC)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-files",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Leave only the specified number of journal files",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-size",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Reduce disk usage below specified size",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vacuum-time",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Remove journal files older than specified time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Verify journal file consistency",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Specify FSS verification key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "matches",
+      "value_type": "String",
+      "required": false,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

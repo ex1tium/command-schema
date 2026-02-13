@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "rtcwake",
-  "description": "Enter a system sleep state until a specified wakeup time.",
+  "description": "RTCWAKE(8) System Administration RTCWAKE(8)",
   "global_flags": [
     {
       "short": "-A",
       "long": "--adjfile",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "specifies the path to the adjust file the default is /etc/adjtime",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-a",
       "long": "--auto",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "reads the clock mode from adjust file (default)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--date",
       "value_type": "String",
       "takes_value": true,
-      "description": "date time of timestamp to wake",
+      "description": "│                                            │ │ YYYYMMDDhhmmss      │                                            │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ YYYY-MM-DD hh:mm:ss │                                            │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ YYYY-MM-DD hh:mm    │ (seconds will be set to 00)                │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ YYYY-MM-DD          │ (time will be set to 00:00:00)             │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ hh:mm:ss            │ (date will be set to today)                │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ hh:mm               │ (date will be set to today, seconds to 00) │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ tomorrow            │ (time is set to 00:00:00)                  │ ├─────────────────────┼────────────────────────────────────────────┤ │                     │                                            │ │ +5min               │                                            │ └─────────────────────┴────────────────────────────────────────────┘",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--device",
       "value_type": "String",
       "takes_value": true,
-      "description": "select rtc device (rtc0|rtc1|...)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--dry-run",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "does everything, but suspend",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--list-modes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list available modes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-l",
       "long": "--local",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "RTC uses local timezone",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--mode",
       "value_type": "String",
       "takes_value": true,
-      "description": "standby|mem|... sleep mode",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-s",
       "long": "--seconds",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "seconds to sleep",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-t",
       "long": "--time",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "time to wake",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--utc",
       "value_type": "String",
       "takes_value": true,
-      "description": "RTC uses UTC",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose messages",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,15 +138,58 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "-d",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "standby_mode",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "time_t",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

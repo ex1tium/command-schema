@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "lshw",
-  "description": "Hardware Lister (lshw) -",
+  "description": "LSHW(1) LSHW(1)",
   "global_flags": [
     {
       "short": "-C",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "same as '-class CLASS'",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Launch the X11 GUI (if available).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,19 +26,9 @@
     {
       "short": "-businfo",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output bus information",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "same as '-class CLASS'",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "only show a certain class of hardware",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,19 @@
     {
       "short": "-disable",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "memory Serial  Presence  Detect),  memory (for memory-size guessing heuristics), cpuinfo (for kernel-reported CPU detection), cpuid (for CPU detection), pci (for PCI/AGP access), isapnp (for ISA PnP extensions), pcmcia (for PCMCIA/PCCARD), ide (for IDE/ATAPI), usb (for  USB devices),scsi (for SCSI) or network (for network interfaces detection).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dump",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disable a test (like pci, isapnp, cpuid, etc. )",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable a test (like pci, isapnp, cpuid, etc. )",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-en‐",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-help",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Displays the available command line options and quits.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +96,9 @@
     {
       "short": "-html",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output hardware tree as HTML",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Outputs the device tree as an HTML page.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +106,9 @@
     {
       "short": "-json",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output hardware tree as a JSON object",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Outputs the device tree as a JSON object (JavaScript Object Notation).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exclude volatile attributes (timestamps) from output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +126,9 @@
     {
       "short": "-numeric",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output numeric IDs (for PCI, USB, etc.)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't display status",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "sanitize output (remove sensitive information like serial numbers, etc.)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output hardware paths",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "print program version ()",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,17 +176,46 @@
     {
       "short": "-xml",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output hardware tree as XML",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Outputs the device tree as an XML tree.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "able",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "class",
+      "value_type": "String",
+      "required": true,
+      "multiple": true,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "test",
+      "value_type": "String",
+      "required": true,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

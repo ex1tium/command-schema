@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "pico",
-  "description": "To place the cursor on a specific line of a file, put the line number with",
+  "description": "NANO(1) General Commands Manual NANO(1)",
   "global_flags": [
     {
       "short": "-y",
@@ -28,7 +28,7 @@
       "long": "--autoindent",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "if  the previous line is the beginning of a paragraph).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -44,11 +44,21 @@
       "requires": []
     },
     {
+      "short": "-C",
+      "long": "--backupdir",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "en‐ abled (-B).  The uniquely numbered files are stored in the specified directory.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-D",
       "long": "--boldtext",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  interface, use bold instead of reverse video.  This will be overridden by setting the options titlecolor, statuscolor, key‐ color, functioncolor, numbercolor, and/or selectedcolor in your nanorc file.  See nanorc(5).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": "-b",
       "long": "--breaklonglines",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "(This option is the opposite of -w (--nowrap)  --  the  last  one given takes effect.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,9 @@
     {
       "short": "-c",
       "long": "--constantshow",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Note that this overrides option -U (--quickblank).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--cutfromcursor",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the 'Cut Text' command (normally ^K) cut from the current cursor position to the end of the line, instead of cutting the entire line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -99,6 +109,26 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--fill",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "the target width for justifying and automatic hard-wrapping at this number of columns.  If the value is 0 or less, wrapping will occur at the width of the screen minus number columns, allowing the wrap point to vary along with the width  of  the  screen  if  the screen is resized.  The default value is -8.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-J",
+      "long": "--guidestripe",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "(The color of the stripe can be  changed  with  set stripecolor in your nanorc file.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +168,7 @@
       "long": "--indicator",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "It shows the position of the viewport in the buffer and how much  of the buffer is covered by the viewport.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +188,7 @@
       "long": "--linenumbers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "(Any line with an anchor additionally gets a mark in the margin.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -174,11 +204,31 @@
       "requires": []
     },
     {
+      "short": "-!",
+      "long": "--magic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-_",
+      "long": "--minibar",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "In this \"minibar\" the filename is shown on the left, followed by an asterisk if the buffer has been modified.  On the right are displayed  the current line and column number, the code of the character under the cursor (in Unicode format: U+xxxx), the same flags as are shown by --stateflags, and a percentage that expresses how far the cursor is into the file (linewise).  When a file is  loaded or saved, and also when switching between buffers, the number of lines in the buffer is displayed after the filename.  This number is cleared  upon the next keystroke, or replaced with an [i/n] counter when multiple buffers are open.  The line plus column numbers and the character code are displayed only when --constantshow is used, and can be toggled on and off with M-C.  The state flags are  dis‐ played only when --stateflags is used.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-m",
       "long": "--mouse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "When enabled, mouse clicks can be used to place the cursor, set the mark (with a double click), and execute shortcuts.  The mouse will work in the X Window System, and on the console when gpm is running.  Text  can still be selected through dragging by holding down the Shift key.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +268,7 @@
       "long": "--nonewlines",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "(This can cause you to save non-POSIX text files.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +278,7 @@
       "long": "--noread",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This allows nano to write to named pipes: it will start with a blank buffer, and  will  write to the pipe when the user saves the \"file\".  This way nano can be used as an editor in combination with for instance gpg without having to write sensitive data to disk first.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +288,17 @@
       "long": "--nowrap",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "not  automatically hard-wrap the current line when it becomes overlong.  This is the default.  (This option is the opposite of -b (--breaklonglines) -- the last one given takes effect.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--operatingdir",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This makes nano set up something similar to a chroot.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,8 +316,8 @@
     {
       "short": "-p",
       "long": "--preserve",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -268,7 +328,17 @@
       "long": "--quickblank",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Note that option -c (--constantshow) overrides this.  When option --minibar or --zero is in effect, --quickblank makes a message disappear after 0.8 seconds instead of after  the  default  1.5 seconds.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": "--quotestr",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default value is \"^([ \\t]*([!#%:;>|}]|//))+\".  (Note that \\t stands  for  an actual Tab.)  This makes it possible to rejustify blocks of quoted text when composing email, and to rewrap blocks of line comments when writing source code.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,8 +346,18 @@
     {
       "short": "-K",
       "long": "--rawsequences",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "escape sequences directly, instead of asking ncurses to translate them.  (If you need this option to get some keys to work properly, it means that the terminfo terminal description that is used does not fully match the actual  behavior  of  your  terminal. This can happen when you ssh into a BSD machine, for example.)  Using this option disables nano's mouse support.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--rcfile",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -288,7 +368,7 @@
       "long": "--rebinddelete",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "You should only use this option when on your system either Backspace acts like Delete or Delete acts like Backspace.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +378,7 @@
       "long": "--restricted",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This means: don't read or write  history  files; don't  allow  suspending;  don't allow spell checking; don't allow a file to be appended to, prepended to, or saved under a different name if it already has one; and don't make backup files.  Restricted mode can also be activated by invoking nano with any name begin‐ ning with 'r' (e.g. \"rnano\").",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +398,7 @@
       "long": "--showcursor",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  cursor  visible in the file browser (putting it on the highlighted item) and in the help viewer.  Useful for braille users and people with poor vision.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +408,7 @@
       "long": "--smarthome",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "When Home is pressed anywhere but at the very beginning of non-whitespace characters on a line, the  cur‐ sor  will jump to that beginning (either forwards or backwards).  If the cursor is already at that position, it will jump to the true beginning of the line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +418,47 @@
       "long": "--softwrap",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "(You can make this soft-wrapping occur at whitespace instead of rudely at the screen's edge, by using also --atblanks.)  (The old short option, -$, is deprecated.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--speller",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "this  command  to  perform  spell  checking  and  correcting,  instead of using the built-in corrector that calls hunspell(1) or spell(1).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-%",
+      "long": "--stateflags",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "hard-wrap‐ ping (breaking long lines), R when recording a macro, and S when soft-wrapping.  When the buffer is modified, a star (*) is shown af‐ ter the filename in the center of the title bar.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Y",
+      "long": "--syntax",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--tabsize",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "The value of number must be greater than 0.  The default value is 8.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -346,8 +466,8 @@
     {
       "short": "-E",
       "long": "--tabstospaces",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -368,7 +488,7 @@
       "long": "--unix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This overrides nano's default behavior of saving a file in the format that it had.  (This op‐ tion has no effect when you also use --noconvert.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +508,7 @@
       "long": "--view",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This mode allows the user to open also  other  files  for  viewing,  unless",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -399,6 +519,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": "--wordchars",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "which  other  characters (besides the normal alphanumeric ones) should be considered as part of a word.  When using this op‐ tion, you probably want to omit -W (--wordbounds).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -416,109 +546,9 @@
     {
       "short": "-0",
       "long": "--zero",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-C",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-J",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Q",
-      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Y",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "description": "all elements of the interface (title bar, status bar, and help lines) and use all rows of the terminal for showing the contents of the buffer.  The status bar appears only when there is a significant message, and disappears after 1.5 seconds or  upon  the  next keystroke.  With M-Z the title bar plus status bar can be toggled.  With M-X the help lines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -526,7 +556,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.8,
   "version": null
 }

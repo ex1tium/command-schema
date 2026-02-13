@@ -1,13 +1,33 @@
 {
   "schema_version": "1.0.0",
   "command": "ip6tables-apply",
-  "description": "The script will try to apply a new rulesfile (as output by iptables-save,",
+  "description": "IPTABLES-APPLY(8) iptables 1.8.10 IPTABLES-APPLY(8)",
   "global_flags": [
+    {
+      "short": "-c",
+      "long": "--command",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--timeout",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -24,30 +44,20 @@
       "requires": []
     },
     {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-w",
+      "long": "--write",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  savefile  where  successfully  applied  rules   will   be   written   to   (default   if   empty   string   is   given: /etc/network/iptables.up.rules).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-hV",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -57,14 +67,49 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "-hv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-w",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "runcmd",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "savefile",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "timeout",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "1.1"
+  "version": "1.8.10"
 }

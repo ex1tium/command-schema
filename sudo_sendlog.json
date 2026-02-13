@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "sudo_sendlog",
-  "description": "sudo_sendlog - send sudo I/O log to remote server",
+  "description": "SUDO_SENDLOG(8) System Manager's Manual SUDO_SENDLOG(8)",
   "global_flags": [
     {
       "short": "-A",
-      "long": "--accept",
+      "long": "--accept-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "only send an accept event (no I/O)",
+      "description": "This can be used to test the logging of accept events without  any associated I/O.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-b",
       "long": "--ca-bundle",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "certificate bundle file to verify server's cert against",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "path  to a certificate authority bundle file, in PEM format, to use instead of the system's default certificate authority data‐ base when authenticating the log server.  The default is to use the system's default certificate authority database.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-c",
       "long": "--cert",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "certificate file for TLS handshake",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This setting is required when the connection to the remote log  server  is secured with TLS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display help message and exit",
+      "description": "Display a short help message to the standard output and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,19 +46,19 @@
     {
       "short": "-h",
       "long": "--host",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "host to send logs to",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-i",
-      "long": "--iolog",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "remote ID of I/O log to be resumed",
+      "long": "--iolog-id",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  specified  iolog-id when restarting a log transfer.  The iolog-id is reported by the server when it creates the remote I/O log.  This option may only be used in conjunction with the -r option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-k",
       "long": "--key",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "private key file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This setting is required when the connection to the remote log  server  is secured with TLS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-n",
       "long": "--no-verify",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not verify server certificate",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "specified,  the  server's certificate will not be verified during the TLS handshake.  By default, sudo_sendlog verifies that the server's certificate is valid and that it contains either the server's host name or its IP address.  This setting is only  supported when the connection to the remote log server is secured with TLS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-p",
       "long": "--port",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "port to use when connecting to host",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-R",
       "long": "--reject",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "reject the command with the given reason",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "a  reject  event for the command using the specified reject-reason, even though it was actually accepted locally.  This can be used to test the logging of reject events; no I/O will be sent.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-r",
       "long": "--restart",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "restart previous I/O log transfer",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "an  interrupted  connection to the log server.  The specified restart-point is used to tell the server the point in time at which to continue the log.  The restart-point is specified in the form “seconds,nanoseconds” and is usually the  last  commit  point received from the server.  The -i option must also be specified when restarting a transfer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-s",
       "long": "--stop-after",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "stop transfer after reaching this time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This can be used for testing purposes to send a  par‐ tial  I/O log to the server.  Partial logs can be restarted using the -r option.  The stop-point is an elapsed time specified in the form “seconds,nanoseconds”.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": "-t",
       "long": "--test",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "test audit server by sending selected I/O log n times in parallel",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "This option is  useful  for performance testing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,15 +138,316 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version information and exit",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-AnV",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "subcommands": [
+    {
+      "name": "chantability",
+      "description": "and fitness for a particular purpose are disclaimed. See the LICENSE.md file distributed with sudo or https://www.sudo.ws/about/license/ for complete details.",
+      "flags": [
+        {
+          "short": "-A",
+          "long": "--accept",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "only send an accept event (no I/O)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--ca-bundle",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "certificate bundle file to verify server's cert against",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cert",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "certificate file for TLS handshake",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--host",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "host to send logs to",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--iolog",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remote ID of I/O log to be resumed",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--key",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "private key file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--no-verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not verify server certificate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--port",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "port to use when connecting to host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--reject",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "reject the command with the given reason",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--restart",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "restart previous I/O log transfer",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--stop-after",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "stop transfer after reaching this time",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--test",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "test audit server by sending selected I/O log n times in parallel",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version information and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "-anv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-h",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-k",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ca_bundle",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cert_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "host",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "iolog-id",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "key_file",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "number",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "port",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "reject-reason",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "restart-point",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "stop-point",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

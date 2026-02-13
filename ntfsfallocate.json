@@ -1,84 +1,94 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsfallocate",
-  "description": "ntfsfallocate v2022.10.3 (libntfs-3g)",
+  "description": "NTFSFALLOCATE(8) System Manager's Manual NTFSFALLOCATE(8)",
   "global_flags": [
     {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display version information",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-f",
-      "long": null,
+      "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force execution despite errors",
+      "description": "Use this option with caution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-h",
-      "long": null,
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-l",
-      "long": null,
+      "long": "--length",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "is  a mandatory option to specify the number of bytes to preallocate.  It will be rounded up to a multiple of the cluster size. A suffix of K, M, G, T, P or E may be appended to mean a multiplicative factor of a power of 1000. Similarly a suffix of Ki, Mi,  Gi, Ti, Pi or Ei may be appended to mean a multiplicative factor of a power of 1024.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--no-action",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allocate length bytes",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-n",
-      "long": null,
+      "long": "--no-size-change",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not change the apparent size of file",
+      "description": "not  change the apparent size of the file. The space allocated beyond the apparent size is not zeroed, but subsequent writing be‐ yond the apparent end of file will force zeroing the inner allocated space as it cannot be considered as a hole any  more,  and  this may take significant time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-o",
-      "long": null,
+      "long": "--offset",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  offset in the file where preallocation starts. By default, the preallocation is counted from the beginning of the file. Space already allocated in the area defined by offset and length is preserved.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Start allocating at offset",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": null,
+      "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Verbose execution",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-vv",
-      "long": null,
+      "short": "-V",
+      "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Very verbose execution",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -99,9 +109,23 @@
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "length",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "2022.10.3"
+  "version": null
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "mimetype",
-  "description": "TODO: this method now just returns one match for each method (globs,",
+  "description": "MIMETYPE(1p) User Contributed Perl Documentation MIMETYPE(1p)",
   "global_flags": [
     {
       "short": "-a",
@@ -26,10 +26,10 @@
     {
       "short": null,
       "long": "--database",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -84,11 +84,21 @@
       "requires": []
     },
     {
+      "short": "-l",
+      "long": "--language",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-M",
       "long": "--magic-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "some  reason you don't trust the name or the extension a file has.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,6 +108,16 @@
       "long": "--mimetype",
       "value_type": "Bool",
       "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--namefile",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -124,11 +144,21 @@
       "requires": []
     },
     {
+      "short": "-F",
+      "long": "--separator",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--stdin",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "type  of content from STDIN, less powerful then normal file checking because it only uses magic typing. This will happen also if the STDIN filehandle is a pipe.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -152,41 +182,19 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "files",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

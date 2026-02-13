@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-libtool-darwin-18",
-  "description": "OVERVIEW: llvm-libtool-darwin",
+  "description": "LLVM-LIBTOOL-DARWIN(1) LLVM LLVM-LIBTOOL-DARWIN(1)",
   "global_flags": [
     {
       "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use zero for timestamps and UIDs/GIDs (Default)",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use zero for timestamps and UIDs/GIDs. This is set by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "File",
       "takes_value": true,
-      "description": "L<dir> adds <dir> to the list of directories in which to search for libraries",
+      "description": "they  are specified with -L and before the default search path. The default search path includes directories /lib, /usr/lib and /usr/local/lib.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Use actual timestamps and UIDs/GIDs",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use actual timestamps and UIDs/GIDs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,19 @@
     {
       "short": "-V",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display the version of this program and perform any operation specified.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-arch_only",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the version number and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,19 +56,19 @@
     {
       "short": "-filelist",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "line  is  assumed  to be part of the filename. If the directory name, dirname, is also specified then it is prepended to each file name in the <listfile>.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-help",
+      "short": "-h",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,19 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "l<x> searches for the library libx.a in the library search path. If the string 'x' ends with '.o', then the library 'x' is searched for without prepending 'lib' or appending '.a'",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "is  searched  for without  prepending  'lib' or appending '.a'. If the library is found, it is added to the list of input files. Otherwise, an error is raised.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-no_warning_for_no_symbols",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +96,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Specify output filename",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Produce a statically linked library from the input files",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +118,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the version of this program",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-warnings_as_errors",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -107,6 +137,13 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "files",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "input",
       "value_type": "String",
       "required": true,
@@ -114,7 +151,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

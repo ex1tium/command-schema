@@ -1,13 +1,23 @@
 {
   "schema_version": "1.0.0",
   "command": "ssh-agent",
-  "description": null,
+  "description": "SSH-AGENT(1) General Commands Manual SSH-AGENT(1)",
   "global_flags": [
     {
       "short": "-D",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Foreground mode.  When this option is specified, ssh-agent will not fork.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Dd",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -18,7 +28,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Valid  options  are:  “md5”  and  “sha256”.   The  default  is “sha256”.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +38,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Currently two options are supported: allow-remote-pkcs11 and no-restrict-websafe.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "used with  the  -S  or  -s  options  to  ssh-add(1).   Libraries  that  do  not  match the pattern list will be refused.  See PATTERNS in ssh_config(5) for a description of pattern-list syntax.  The default list is “usr/lib*/*,/usr/local/lib*/*”.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +56,9 @@
     {
       "short": "-a",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is $TMPDIR/ssh-XXXXXXXXXX/agent.<ppid>.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Generate C-shell commands on stdout.  This is the default if SHELL looks like it's a csh style of shell.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Debug mode.  When this option is specified, ssh-agent will not fork and will write debug information to standard error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,9 @@
     {
       "short": "-k",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Kill the current agent (given by the SSH_AGENT_PID environment variable).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +96,9 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Generate Bourne shell commands on stdout.  This is the default if SHELL does not look like it's a csh style of shell.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,17 +106,95 @@
     {
       "short": "-t",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The lifetime may be specified in  seconds  or  in  a time  format  specified in sshd_config(5).  A lifetime specified for an identity with ssh-add(1) overrides this value.  Without this option the default maximum lifetime is forever.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.65,
+  "positional": [
+    {
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-dd",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "allowed_providers",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bind_address",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fingerprint_hash",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "life",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

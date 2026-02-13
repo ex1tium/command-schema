@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "mtr",
-  "description": null,
+  "description": "MTR(8) System Administration MTR(8)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--address",
       "value_type": "String",
       "takes_value": true,
-      "description": "bind the outgoing socket to ADDRESS",
+      "description": "NOTE  that this option doesn't apply to DNS requests (which could be and could not be what you want).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--aslookup",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display AS number",
+      "description": "Equivalent to --ipinfo 0.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-B",
       "long": "--bitpattern",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "set bit pattern to use in payload",
+      "description": "Should be within range 0 - 255.  If NUM is greater than 255, a random pattern is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--csv",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output comma separated values",
+      "description": "(Note: The separator is actually a semi-colon ';'.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--curses",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use curses terminal interface",
+      "description": "In case the list of hops exceeds the  height of your terminal, you can use the + and - keys to scroll up and down half a page.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--displaymode",
       "value_type": "String",
       "takes_value": true,
-      "description": "select initial display mode",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--filename",
       "value_type": "File",
       "takes_value": true,
-      "description": "read hostname(s) from a file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-f",
       "long": "--first-ttl",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "set what TTL to start",
+      "description": "Defaults to 1.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-G",
       "long": "--gracetime",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "number of seconds to wait for responses",
+      "description": "value  is  five seconds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--gtk",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use GTK+ xwindow interface",
+      "description": "this option to force mtr to use the GTK+ based X11 window interface (if available).  GTK+ must have been available on the system when mtr was built for this to work.  See the GTK+ web page at http://www.gtk.org/ for more information about GTK+.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--interface",
       "value_type": "String",
       "takes_value": true,
-      "description": "use named network interface",
+      "description": "the network interface with a specific name for sending network probes.  This can be useful when you have multiple network inter‐ faces with routes to your destination, for example both wired Ethernet and WiFi, and wish to test a particular interface.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--interval",
       "value_type": "String",
       "takes_value": true,
-      "description": "ICMP echo request interval",
+      "description": "The default value for this  parameter  is  one second.  The root user may choose values between zero and one.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--ipinfo",
       "value_type": "Number",
       "takes_value": true,
-      "description": "select IP information in output",
+      "description": "Valid values for n are: 0   Display AS number (equivalent to -z) 1   Display IP prefix 2   Display country code of the origin AS 3   Display RIR (ripencc, arin, ...) 4   Display the allocation date of the IP prefix",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": "-j",
       "long": "--json",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output json",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This format is better suited for automated processing of the  measurement results.  Jansson library must have been available on the system when mtr was built for this to work.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-L",
       "long": "--localport",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "source port number for UDP",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--mark",
       "value_type": "String",
       "takes_value": true,
-      "description": "mark each sent packet",
+      "description": "MARK is 32 unsigned in‐ teger.  See socket(7) for full description of this socket option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +176,9 @@
     {
       "short": "-m",
       "long": "--max-ttl",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "maximum number of hops",
+      "description": "Default is 30.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,9 +186,9 @@
     {
       "short": "-U",
       "long": "--max-unknown",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "maximum unknown host",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +196,9 @@
     {
       "short": "-e",
       "long": "--mpls",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display information from ICMP extensions",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +206,9 @@
     {
       "short": "-n",
       "long": "--no-dns",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not resolve host names",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--order",
       "value_type": "String",
       "takes_value": true,
-      "description": "select output fields",
+      "description": "You may use one or more space characters to separate fields. Available fields: ┌───┬─────────────────────┐ │ L │ Loss ratio          │ ├───┼─────────────────────┤ │ D │ Dropped packets     │ ├───┼─────────────────────┤ │ R │ Received packets    │ ├───┼─────────────────────┤ │ S │ Sent Packets        │ ├───┼─────────────────────┤ │ N │ Newest RTT(ms)      │ ├───┼─────────────────────┤ │ B │ Min/Best RTT(ms)    │ ├───┼─────────────────────┤ │ A │ Average RTT(ms)     │ ├───┼─────────────────────┤ │ W │ Max/Worst RTT(ms)   │ ├───┼─────────────────────┤ │ V │ Standard Deviation  │ ├───┼─────────────────────┤ │ G │ Geometric Mean      │ ├───┼─────────────────────┤ │ J │ Current Jitter      │ ├───┼─────────────────────┤ │ M │ Jitter Mean/Avg.    │ ├───┼─────────────────────┤ │ X │ Worst Jitter        │ ├───┼─────────────────────┤ │ I │ Interarrival Jitter │ └───┴─────────────────────┘",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +226,9 @@
     {
       "short": "-P",
       "long": "--port",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "target port number for TCP, SCTP, or UDP",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--psize",
       "value_type": "String",
       "takes_value": true,
-      "description": "set the packet size used for probing",
+      "description": "It is in bytes, inclusive IP and ICMP headers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--raw",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output raw format",
+      "description": "This format is better suited for archival of the measurement results.  It could be parsed to be presented into any of the other display methods.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--report",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output using report mode",
+      "description": "When in this mode, mtr will run for the number of cycles specified by the -c option, and then print statistics and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--report-cycles",
       "value_type": "Number",
       "takes_value": true,
-      "description": "set the number of pings sent",
+      "description": "this option to set the number of pings sent to determine both the machines on the network and the reliability of those machines. Each cycle lasts one second.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,17 @@
       "long": "--report-wide",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output wide report",
+      "description": "When in this mode, mtr will not cut hostnames in the report.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--sctp",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -286,9 +296,9 @@
     {
       "short": "-b",
       "long": "--show-ips",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "show IP numbers and host names",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "this  option  to  tell mtr to display both the host names and numeric IP numbers.  In split mode this adds an extra field to the output.  In report mode, there is usually too little space to add the IPs, and they will be truncated.  Use the wide report (-w) mode to see the IPs in report mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +308,7 @@
       "long": "--split",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "split output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,9 +316,9 @@
     {
       "short": "-T",
       "long": "--tcp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use TCP instead of ICMP echo",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PACKETSIZE is ignored, since SYN packets can not contain data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,9 +326,9 @@
     {
       "short": "-Z",
       "long": "--timeout",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "seconds to keep probe sockets open",
+      "description": "number  of  seconds to keep probe sockets open before giving up on the connection.  Using large values for this, especially com‐ bined with a short interval, will use up a lot of file descriptors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -326,9 +336,9 @@
     {
       "short": "-Q",
       "long": "--tos",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "type of service field in IP header",
+      "description": "Should be within range 0 - 255.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -336,9 +346,9 @@
     {
       "short": "-u",
       "long": "--udp",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use UDP instead of ICMP echo",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +358,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +368,7 @@
       "long": "--xml",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output xml",
+      "description": "this  option to tell mtr to use the xml output format.  This format is better suited for automated processing of the measurement results.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +378,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use IPv4 only",
+      "description": "Use IPv4 only.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -376,17 +386,382 @@
     {
       "short": "-6",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use IPv6 only",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use IPv6 only.  (IPV4 may be used for DNS lookups.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "--aslookup",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--csv",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--curses",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--displaymode",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--gtk",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--json",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--mpls",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--no-dns",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--raw",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--report",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--report-wide",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--sctp",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--show-ips",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--split",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--tcp",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--udp",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--xml",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-b",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-c",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-f",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-g",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-l",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-o",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-p",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-q",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-s",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-u",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-y",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-z",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "address",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "bitpattern",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "count",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fields",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "first-ttl",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "graceperiod",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "hostname",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "interval",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ipinfo",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "localport",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mark",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "max-ttl",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "max-unknown",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mode",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "packetsize",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "port",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "timeout",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tos",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "reset",
-  "description": null,
+  "description": "tset(1) User commands tset(1)",
   "global_flags": [
     {
       "short": "-I",
       "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Do not send the terminal or tab initialization strings to the terminal.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-IQVcqrsw",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "no initialization strings",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +26,9 @@
     {
       "short": "-Q",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not output control key settings",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Do not display any values for the erase, interrupt and line kill characters.  Normally tset displays the values for control  characters which differ from the system's default values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print curses-version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "reports the version of ncurses which was used in this program, and exits.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set control characters",
+      "description": "Set control characters and modes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "erase character",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "interrupt character",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "kill character",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "map identifier to type",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display term only, do no changes",
+      "description": "The  terminal  type  is  displayed to the standard output, and the terminal is not initialized in any way.  The option “-” by itself is equivalent but archaic.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display term on stderr",
+      "description": "Print the terminal type to the standard error output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +116,9 @@
     {
       "short": "-s",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "output TERM set command",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print the sequence of shell commands to initialize the environment variable TERM to the standard output; see  subsection  “Setting  the Environment”.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set window-size",
+      "description": "Resize  the window to match the size deduced via setupterm(3NCURSES).  Normally this has no effect, unless setupterm is not able to de‐ tect the window size.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -127,14 +137,63 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "terminal",
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-i",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-iqvcqrsw",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-k",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ch",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mapping",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "terminal-type",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "fsck",
-  "description": "Check and repair a Linux filesystem.",
+  "description": "FSCK(8) System Administration FSCK(8)",
   "global_flags": [
     {
       "short": "-?",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "check all filesystems",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "display progress bar; file descriptor is for GUIs",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not check mounted filesystems",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not execute, just show what would be done",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-P",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "check filesystems in parallel, including root",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,21 +76,19 @@
     {
       "short": "-R",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "skip root filesystem; useful only with '-A'",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "-A"
-      ]
+      "requires": []
     },
     {
       "short": "-T",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "do not show the title on startup",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,9 +96,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "explain what is being done",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,9 +106,19 @@
     {
       "short": "-l",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "lock the device to guarantee exclusive access",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-lsAVRTMNP",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,9 +126,9 @@
     {
       "short": "-r",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "report statistics for each device checked; file descriptor is for GUIs",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -130,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "serialize the checking operations",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,9 +146,9 @@
     {
       "short": "-t",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "specify filesystem types to be checked; <type> is allowed to be a comma-separated list",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -149,21 +157,63 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "filesystem",
-      "value_type": "File",
+      "name": "-c",
+      "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "fs-options",
+      "name": "-lsavrtmnp",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "-r",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fd",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filesystem",
+      "value_type": "File",
+      "required": false,
+      "multiple": true,
+      "description": null
+    },
+    {
+      "name": "fs-specific-options",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fstype",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

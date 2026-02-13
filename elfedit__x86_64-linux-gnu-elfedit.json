@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "elfedit",
-  "description": "Update the ELF header of ELF files",
+  "description": "ELFEDIT(1) GNU Development Tools ELFEDIT(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--disable-x86-feature",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The supported features are the same as --enable-x86-feature.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,19 +16,19 @@
     {
       "short": null,
       "long": "--enable-x86-feature",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The supported features are, ibt, shstk, lam_u48 and lam_u57.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": null,
       "long": "--input-abiversion",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Set input ABIVERSION",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "version must be between 0 and 255.  If --input-abiversion  isn't  specified,  it will match any ELF ABIVERSIONs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": null,
       "long": "--input-mach",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If --input-mach isn't specified, it will match any ELF machine types.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": null,
       "long": "--input-osabi",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If --input-osabi isn't specified, it will match any ELF OSABIs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": null,
       "long": "--input-type",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "If --input-type isn't specified, it will match any ELF file types.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": null,
       "long": "--output-abiversion",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "version must be between 0 and 255.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--output-mach",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The supported ELF machine types are the same as --input-mach.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,6 +106,26 @@
     {
       "short": null,
       "long": "--output-type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The supported ELF types are the same as --input-type.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -115,18 +135,26 @@
     },
     {
       "short": "-v",
-      "long": "--version",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the version number of elfedit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "elffile",
+      "value_type": "File",
+      "required": true,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

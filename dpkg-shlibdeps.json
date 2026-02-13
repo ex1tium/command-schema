@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-shlibdeps",
-  "description": null,
+  "description": "dpkg-shlibdeps(1) dpkg suite dpkg-shlibdeps(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "change the administrative directory.",
+      "description": "The default location is /var/lib/dpkg.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--ignore-missing-info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't fail if dependency information can't be found.",
+      "description": "Usage of this option is discouraged, all libraries should provide dependency information (either with shlibs files, or with symbols files) even if they are not yet used by other packages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,17 +48,117 @@
       "long": "--warnings",
       "value_type": "String",
       "takes_value": true,
-      "description": "define set of active warnings (see manual page).",
+      "description": "Bit 0  (value=1)  enables the  warning  “symbol  sym  used  by  binary found in none of the libraries”, bit 1 (value=2) enables the warning “package could avoid a useless dependency” and bit 2 (value=4) enables the warning “binary should not be linked against library”.  The default value is 3:  the first two warnings are active by default, the last one is not.  Set value to 7 if you want all warnings to be active.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-O",
+      "short": "-Ipackage-build-dir",
       "long": null,
-      "value_type": "File",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "package-build-dir  when  looking  for  shlibs,  symbols,  and shared library files (since dpkg 1.18.5).  You can use this option multiple times.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Llocal-shlibs-file",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O[filename",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "added  to  the substitution variables file (debian/substvars by default).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Spackage-build-dir",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "into  package-build-dir  first  when trying to find a library (since dpkg 1.14.15).  This is useful when the source package builds multiple flavors of the same library and you want to ensure that you get the dependency from a given binary package.  You can  use  this option multiple times: directories will be tried in the same order before directories of other binary packages.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Tsubstvars-file",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ddependency-field",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "dependencies to be added to the control file dependency field dependency-field.  (The dependencies for this field are placed in the variable shlibs:dependency-field.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "String",
       "takes_value": true,
-      "description": "write variable settings to stdout (or <file>).",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-eexecutable",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option can be used multiple times.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ldirectory",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "directory  to  the  list  of  directories  to search for private shared libraries (since dpkg 1.17.0).  This option can be used multiple times.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-pvarname-prefix",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "substitution  variables  with  varname-prefix:  instead  of shlibs:.  Likewise, any existing substitution variables starting with varname-prefix: (rather than shlibs:) are removed from the substitution variables file.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ttype",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "shared  library  dependency information tagged for the given package type.  If no tagged information is available, falls back to untagged information.  The default package type is deb.  Shared library dependency information is tagged for a given type  by  prefixing it with the name of the type, a colon, and whitespace.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,15 +168,40 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable verbose mode (can be used multiple times).",
-      "multiple": true,
+      "description": "Enable verbose mode (since dpkg 1.14.8).  Numerous messages are displayed to explain what dpkg-shlibdeps does.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-xpackage",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  package from the generated dependencies (since dpkg 1.14.8).  This is useful to avoid self-dependencies for packages which provide ELF binaries (executables or library plugins) using a library contained in the same package.  This option can be  used  multiple times to exclude several packages.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "-e",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "executable",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

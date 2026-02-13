@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "command": "nping",
-  "description": "Nping 0.7.94SVN ( https://nmap.org/nping )",
+  "description": "NPING(1) Nping Reference Guide NPING(1)",
   "global_flags": [
     {
       "short": "-6",
       "long": "--IPv6",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": Use IP version 6.",
       "multiple": false,
       "conflicts_with": [],
@@ -38,7 +38,7 @@
       "long": "--arp-sender-ip",
       "value_type": "String",
       "takes_value": true,
-      "description": "<addr> : Set sender IP address.",
+      "description": "<addr>          : Set sender IP address.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--arp-target-ip",
       "value_type": "String",
       "takes_value": true,
-      "description": "<addr> : Set target IP address.",
+      "description": "<addr>          : Set target IP address. IPv4 OPTIONS:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,8 +76,8 @@
     {
       "short": null,
       "long": "--arp-type",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Type: ARP, ARP-reply, RARP, RARP-reply.",
       "multiple": false,
       "conflicts_with": [],
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--badsum",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": ": Use a random invalid checksum.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Use a random invalid checksum. UDP PROBE MODE:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--bpf-filter",
       "value_type": "String",
       "takes_value": true,
-      "description": ": Specify custom BPF filter.",
+      "description": ": Specify custom BPF filter. OUTPUT:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,8 +116,8 @@
     {
       "short": "-c",
       "long": "--count",
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Stop after <n> rounds.",
       "multiple": false,
       "conflicts_with": [],
@@ -126,8 +126,8 @@
     {
       "short": null,
       "long": "--data",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Include a custom payload.",
       "multiple": false,
       "conflicts_with": [],
@@ -138,7 +138,7 @@
       "long": "--data-length",
       "value_type": "String",
       "takes_value": true,
-      "description": ": Include len random bytes as payload.",
+      "description": ": Include len random bytes as payload. ECHO CLIENT/SERVER:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,8 +166,8 @@
     {
       "short": null,
       "long": "--delay",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Adjust delay between probes.",
       "multiple": false,
       "conflicts_with": [],
@@ -176,11 +176,7 @@
     {
       "short": null,
       "long": "--dest-ip",
-      "value_type": {
-        "Choice": [
-          "target specification"
-        ]
-      },
+      "value_type": "String",
       "takes_value": true,
       "description": ": Set destination IP address (used as an alternative to {target specification} ).",
       "multiple": false,
@@ -200,8 +196,8 @@
     {
       "short": "-p",
       "long": "--dest-port",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set destination port(s).",
       "multiple": false,
       "conflicts_with": [],
@@ -220,8 +216,8 @@
     {
       "short": null,
       "long": "--echo-client",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Run Nping in client mode.",
       "multiple": false,
       "conflicts_with": [],
@@ -230,8 +226,8 @@
     {
       "short": null,
       "long": "--echo-port",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Use custom <port> to listen or connect.",
       "multiple": false,
       "conflicts_with": [],
@@ -240,8 +236,8 @@
     {
       "short": null,
       "long": "--echo-server",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Run Nping in server mode.",
       "multiple": false,
       "conflicts_with": [],
@@ -252,7 +248,7 @@
       "long": "--ether-type",
       "value_type": "String",
       "takes_value": true,
-      "description": ": Set EtherType value.",
+      "description": ": Set EtherType value. PAYLOAD OPTIONS:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -282,7 +278,7 @@
       "long": "--flow",
       "value_type": "String",
       "takes_value": true,
-      "description": ": Set flow label.",
+      "description": ": Set flow label. ETHERNET OPTIONS:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -320,8 +316,8 @@
     {
       "short": null,
       "long": "--icmp",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": ICMP probe mode.",
       "multiple": false,
       "conflicts_with": [],
@@ -330,8 +326,8 @@
     {
       "short": null,
       "long": "--icmp-advert-entry",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Add router advertisement entry.",
       "multiple": false,
       "conflicts_with": [],
@@ -340,8 +336,8 @@
     {
       "short": null,
       "long": "--icmp-advert-lifetime",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set router advertisement lifetime.",
       "multiple": false,
       "conflicts_with": [],
@@ -360,8 +356,8 @@
     {
       "short": null,
       "long": "--icmp-id",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set identifier.",
       "multiple": false,
       "conflicts_with": [],
@@ -370,9 +366,9 @@
     {
       "short": null,
       "long": "--icmp-orig-time",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "<timestamp> : Set originate timestamp.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "<timestamp>    : Set originate timestamp.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -380,8 +376,8 @@
     {
       "short": null,
       "long": "--icmp-param-pointer",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set parameter problem pointer.",
       "multiple": false,
       "conflicts_with": [],
@@ -390,9 +386,9 @@
     {
       "short": null,
       "long": "--icmp-recv-time",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "<timestamp> : Set receive timestamp.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "<timestamp>    : Set receive timestamp.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -400,8 +396,8 @@
     {
       "short": null,
       "long": "--icmp-redirect-addr",
-      "value_type": "Directory",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set redirect address.",
       "multiple": false,
       "conflicts_with": [],
@@ -410,8 +406,8 @@
     {
       "short": null,
       "long": "--icmp-seq",
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set sequence number.",
       "multiple": false,
       "conflicts_with": [],
@@ -422,7 +418,7 @@
       "long": "--icmp-trans-time",
       "value_type": "String",
       "takes_value": true,
-      "description": ": Set transmit timestamp.",
+      "description": ": Set transmit timestamp. ARP/RARP PROBE MODE:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -440,9 +436,9 @@
     {
       "short": null,
       "long": "--id",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "<id> : Set identification field (16 bits).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "<id>                       : Set identification field (16 bits).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -450,8 +446,8 @@
     {
       "short": "-e",
       "long": "--interface",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Use supplied network interface.",
       "multiple": false,
       "conflicts_with": [],
@@ -463,7 +459,7 @@
       "value_type": "String",
       "takes_value": true,
       "description": null,
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -482,7 +478,7 @@
       "long": "--mtu",
       "value_type": "String",
       "takes_value": true,
-      "description": ": Set MTU. Packets get fragmented if MTU is small enough.",
+      "description": ": Set MTU. Packets get fragmented if MTU is small enough. IPv6 OPTIONS:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -540,9 +536,9 @@
     {
       "short": null,
       "long": "--rate",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "<rate> : Send num packets per second.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "<rate>                   : Send num packets per second. MISC:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -550,9 +546,9 @@
     {
       "short": null,
       "long": "--safe-payloads",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": ": Erase application data in echoed packets.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Erase application data in echoed packets. TIMING AND PERFORMANCE: Options which take <time> are in seconds, or append 'ms' (milliseconds), 's' (seconds), 'm' (minutes), or 'h' (hours) to the value (e.g. 30m, 0.25h).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -570,8 +566,8 @@
     {
       "short": null,
       "long": "--send-ip",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": Send packets using raw IP sockets.",
       "multiple": false,
       "conflicts_with": [],
@@ -580,8 +576,8 @@
     {
       "short": null,
       "long": "--seq",
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set sequence number.",
       "multiple": false,
       "conflicts_with": [],
@@ -590,8 +586,8 @@
     {
       "short": "-S",
       "long": "--source-ip",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": Set source IP address.",
       "multiple": false,
       "conflicts_with": [],
@@ -610,9 +606,9 @@
     {
       "short": "-g",
       "long": "--source-port",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": ": Try to use a custom source port.",
+      "description": ": Try to use a custom source port. TCP PROBE MODE:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -620,8 +616,8 @@
     {
       "short": null,
       "long": "--tcp",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": TCP probe mode.",
       "multiple": false,
       "conflicts_with": [],
@@ -630,8 +626,8 @@
     {
       "short": null,
       "long": "--tcp-connect",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": Unprivileged TCP connect probe mode.",
       "multiple": false,
       "conflicts_with": [],
@@ -640,8 +636,8 @@
     {
       "short": null,
       "long": "--tos",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set type of service field (8bits).",
       "multiple": false,
       "conflicts_with": [],
@@ -650,9 +646,9 @@
     {
       "short": null,
       "long": "--tr",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": ": Traceroute mode (can only be used with TCP/UDP/ICMP modes).",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Traceroute mode (can only be used with TCP/UDP/ICMP modes). TCP CONNECT MODE:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -660,8 +656,8 @@
     {
       "short": null,
       "long": "--traffic-class",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set traffic class.",
       "multiple": false,
       "conflicts_with": [],
@@ -670,8 +666,8 @@
     {
       "short": null,
       "long": "--ttl",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set time to live [0-255].",
       "multiple": false,
       "conflicts_with": [],
@@ -680,8 +676,8 @@
     {
       "short": null,
       "long": "--udp",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": ": UDP probe mode.",
       "multiple": false,
       "conflicts_with": [],
@@ -710,8 +706,8 @@
     {
       "short": null,
       "long": "--win",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set window size.",
       "multiple": false,
       "conflicts_with": [],
@@ -720,8 +716,18 @@
     {
       "short": "-d",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Increment debugging level by one.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d[level",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set debugging level. E.g: -d3",
       "multiple": false,
       "conflicts_with": [],
@@ -730,8 +736,18 @@
     {
       "short": "-q",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Decrease verbosity level by one.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q[N",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Decrease verbosity level N times",
       "multiple": false,
       "conflicts_with": [],
@@ -740,8 +756,18 @@
     {
       "short": "-v",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Increment verbosity level by one.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v[level",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": ": Set verbosity level. E.g: -v4",
       "multiple": false,
       "conflicts_with": [],
@@ -751,14 +777,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "Probe",
+      "name": "targets",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
-  "version": "0.7.94"
+  "version": null
 }

@@ -1,24 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-install-name-tool-18",
-  "description": "OVERVIEW: llvm-install-name-tool tool",
+  "description": "LLVM-INSTALL-NAME-TOOL(1) LLVM LLVM-INSTALL-NAME-TOOL(1)",
   "global_flags": [
     {
-      "short": null,
-      "long": "--version",
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the version and exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-V",
+      "long": "--version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-add_rpath",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --version",
+      "description": "add  multiple  rpaths.  Throws  an  error  if <rpath> is already listed in the binary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,29 @@
     {
       "short": "-change",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an  install  name <old_install_name> to <new_install_name> in the specified binary. Can be specified multiple times to change multiple dependent shared library install names. Option is ignored if <old_install_name> is not listed in the specified binary.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-delete_all_rpaths",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-delete_rpath",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "an  error if <rpath> is not listed in the binary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +68,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Change dynamic shared library id",
+      "description": "shared  library's  identification name under LC_ID_DYLIB to <name> in the specified binary. If specified multiple times, only the last -id option is selected. Option is ignored if the specified Mach-O binary is not a dynamic shared library.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,17 +76,25 @@
     {
       "short": "-rpath",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Change rpath path name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "rpaths. Throws an error if <old_rpath> is not listed in the binary or <new_rpath> is already listed in the binary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "input",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

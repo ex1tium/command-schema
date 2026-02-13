@@ -1,54 +1,124 @@
 {
   "schema_version": "1.0.0",
   "command": "route",
-  "description": null,
+  "description": "ROUTE(8) Linux System Administrator's Manual ROUTE(8)",
   "global_flags": [
     {
-      "short": "-C",
-      "long": "--cache",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display routing cache instead of FIB",
+      "short": "-A",
+      "long": "--help",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "as  an alias for -A inet",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-e",
-      "long": "--extend",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display other/more information",
+      "short": null,
+      "long": "--version",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "operate on the kernel's routing cache.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-CFvnNee",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-F",
-      "long": "--fib",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "operate on the kernel's FIB (Forwarding Information Base) routing table.  This is the default.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display Forwarding Information Base (default)",
+      "description": "use netstat(8)-format for displaying the routing table.  -ee will generate a very long line with all parameters from the routing  ta‐ ble.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-host",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the target is a host.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-n",
-      "long": "--numeric",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't resolve names",
+      "description": "show  numerical  addresses  instead of trying to determine symbolic host names. This is useful if you are trying to determine why the route to your nameserver has vanished.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-net",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the target is a network.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": "--verbose",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be verbose",
+      "description": "select verbose operation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -57,21 +127,196 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "AF",
+      "name": "--help",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "AF.",
+      "name": "--version",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-a",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-cfvnnee",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-h",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-v",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "add",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "del",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dev",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dyn",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "family",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "gw",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "i",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "if",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "instate",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "irtt",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "m",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "metric",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mod",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mss",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "n",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "netmask",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "nm",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "reject",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "target",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "w",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "window",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

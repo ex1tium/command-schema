@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-reconfigure",
-  "description": null,
+  "description": "DPKG-RECONFIGURE(8) Debconf DPKG-RECONFIGURE(8)",
   "global_flags": [
     {
       "short": null,
       "long": "--default-priority",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use default priority instead of low.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,14 +18,24 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force reconfiguration of broken packages.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-f",
+      "short": "-ftype",
       "long": "--frontend",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -38,17 +48,17 @@
       "long": "--no-reload",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not reload templates. (Use with caution.)",
+      "description": "dpkg-reconfigure from reloading templates. Use with caution; this will prevent dpkg-reconfigure from repairing broken templates databases.  However, it may be useful in constrained environments where rewriting the templates database is expensive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-p",
+      "short": "-pvalue",
       "long": "--priority",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the minimum priority of question that will be displayed.  dpkg-reconfigure normally shows low priority questions no matter what your default priority is. See debconf(7) for a list.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--terse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable terse mode.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,15 +78,23 @@
       "long": "--unseen-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "have not yet been seen will be asked.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "positional": [
+    {
+      "name": "packages",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "command": "pgrep",
-  "description": null,
+  "description": "PGREP(1) User Commands PGREP(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--cgroup",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "match by cgroup v2 names",
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -18,7 +18,7 @@
       "long": "--count",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "count of matching processes",
+      "description": "When count does not match anything, e.g. returns zero, the com‐ mand  will  return  non-zero value. Note that for pkill and pidwait, the count is the number of matching processes, not the processes that were successfully signaled or waited for.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,17 @@
       "long": "--delimiter",
       "value_type": "String",
       "takes_value": true,
-      "description": "specify output delimiter",
+      "description": "(pgrep only.)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--echo",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "(pkill only.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,8 +48,8 @@
       "long": "--euid",
       "value_type": "String",
       "takes_value": true,
-      "description": "match by effective IDs",
-      "multiple": true,
+      "description": "Either the numerical or symbolical value may be used.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -48,7 +58,7 @@
       "long": "--exact",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "match exactly with the command name",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--full",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use full process name to match",
+      "description": "When -f is set, the full command line is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,8 +78,8 @@
       "long": "--group",
       "value_type": "String",
       "takes_value": true,
-      "description": "match real group IDs",
-      "multiple": true,
+      "description": "Either the numerical or symbolical value may be used.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -78,7 +88,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--ignore-ancestors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exclude our ancestors from results",
+      "description": "For example, this can be useful when elevating with sudo or similar tools.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +108,7 @@
       "long": "--ignore-case",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "match case insensitively",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": "--inverse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "negates the matching",
+      "description": "This option is usually used in pgrep's or pidwait's context.  In pkill's context the short option is  disabled to avoid accidental usage of the option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": "--lightweight",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list all TID",
+      "description": "In pkill's context this option is disabled.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--list-full",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list PID and full command line",
+      "description": "(pgrep only.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +148,7 @@
       "long": "--list-name",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list PID and process name",
+      "description": "(pgrep only.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +158,7 @@
       "long": "--logpidfile",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "fail if PID file is not locked",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": "--newest",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "select most recently started",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +176,9 @@
     {
       "short": null,
       "long": "--ns",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "match the processes that belong to the same namespace as <pid>",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,19 +186,19 @@
     {
       "short": null,
       "long": "--nslist",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "list which namespaces will be considered for the --ns option. Available namespaces: ipc, mnt, net, pid, user, uts",
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-O",
       "long": "--older",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "select where older than seconds",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +208,7 @@
       "long": "--oldest",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "select least recently started",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,27 +218,47 @@
       "long": "--parent",
       "value_type": "String",
       "takes_value": true,
-      "description": "match only child processes of the given parent",
-      "multiple": true,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-g",
       "long": "--pgroup",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "match listed process group IDs",
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Process group 0 is translated into pgrep's, pkill's, or pidwait's own  process group.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-F",
       "long": "--pidfile",
-      "value_type": "File",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This option is more useful for pkill or pidwait than pgrep.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--queue",
+      "value_type": "String",
       "takes_value": true,
-      "description": "read PIDs from file",
+      "description": "has  installed  a  handler  for  this signal using the SA_SIGINFO flag to sigaction(2), then it can obtain this data via the si_value field of the siginfo_t structure.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--require-handler",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,9 +266,9 @@
     {
       "short": "-r",
       "long": "--runstates",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "match runstates [D,S,Z,...]",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,17 +278,17 @@
       "long": "--session",
       "value_type": "String",
       "takes_value": true,
-      "description": "match session IDs",
-      "multiple": true,
+      "description": "match processes whose process session ID is listed.  Session ID 0 is translated into pgrep's, pkill's, or pidwait's own session ID.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--signal",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "signal to send (either number or name)",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Either the numeric or the symbolic signal name can be used. In pgrep or  pidwait mode only the long option can be used and has no effect unless used in conjunction with --require-handler to filter to processes with a userspace signal handler present for a particular signal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,10 +296,10 @@
     {
       "short": "-t",
       "long": "--terminal",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "match by controlling terminal",
-      "multiple": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The terminal name should be specified without the \"/dev/\" prefix.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -278,8 +308,8 @@
       "long": "--uid",
       "value_type": "String",
       "takes_value": true,
-      "description": "match by real IDs",
-      "multiple": true,
+      "description": "Either the numerical or symbolical value may be used.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -288,7 +318,17 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-signal",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -304,7 +344,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

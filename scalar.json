@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "command": "scalar",
-  "description": "reconfigure",
+  "description": "SCALAR(1) Git Manual SCALAR(1)",
   "global_flags": [
     {
-      "short": "-C",
-      "long": null,
-      "value_type": "Directory",
+      "short": null,
+      "long": "--[no-]src",
+      "value_type": "Url",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -14,8 +14,38 @@
       "requires": []
     },
     {
-      "short": "-c",
-      "long": null,
+      "short": null,
+      "long": "--all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--branch",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--full-clone",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--single-branch",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -26,81 +56,41 @@
   ],
   "subcommands": [
     {
-      "name": "clone",
+      "name": "Clone",
       "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "Diagnose",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "GIT",
+      "description": "reconfigure",
       "flags": [
         {
-          "short": "-b",
+          "short": "-C",
           "long": null,
           "value_type": "Directory",
           "takes_value": true,
-          "description": "when cloning, create full working directory --[no-]single-branch only download metadata for the branch that will be checked out --[no-]src create repository within 'src' directory",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "enlistment",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
         },
         {
-          "name": "main-branch",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "diagnose",
-      "description": null,
-      "flags": [],
-      "positional": [
-        {
-          "name": "enlistment",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "help",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "list",
-      "description": "fatal: `scalar list` does not take arguments",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "reconfigure",
-      "description": null,
-      "flags": [
-        {
-          "short": "-a",
+          "short": "-c",
           "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "reconfigure all registered enlistments",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -108,47 +98,8 @@
       ],
       "positional": [
         {
-          "name": "enlistment",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "register",
-      "description": null,
-      "flags": [],
-      "positional": [
-        {
-          "name": "enlistment",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "run",
-      "description": "commit-graph",
-      "flags": [],
-      "positional": [
-        {
-          "name": "enlistment",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "task",
-          "value_type": "String",
+          "name": "directory",
+          "value_type": "Directory",
           "required": true,
           "multiple": false,
           "description": null
@@ -156,7 +107,7 @@
       ],
       "subcommands": [
         {
-          "name": "commit-graph",
+          "name": "clone",
           "description": null,
           "flags": [],
           "positional": [],
@@ -164,7 +115,7 @@
           "aliases": []
         },
         {
-          "name": "config",
+          "name": "diagnose",
           "description": null,
           "flags": [],
           "positional": [],
@@ -172,7 +123,7 @@
           "aliases": []
         },
         {
-          "name": "fetch",
+          "name": "help",
           "description": null,
           "flags": [],
           "positional": [],
@@ -180,7 +131,7 @@
           "aliases": []
         },
         {
-          "name": "loose-objects",
+          "name": "list",
           "description": null,
           "flags": [],
           "positional": [],
@@ -188,7 +139,39 @@
           "aliases": []
         },
         {
-          "name": "pack-files",
+          "name": "reconfigure",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "register",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "run",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "unregister",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "version",
           "description": null,
           "flags": [],
           "positional": [],
@@ -199,23 +182,39 @@
       "aliases": []
     },
     {
-      "name": "unregister",
+      "name": "List",
       "description": null,
       "flags": [],
-      "positional": [
-        {
-          "name": "enlistment",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        }
-      ],
+      "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "version",
+      "name": "Reconfigure",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "Register",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "Run",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "Unregister",
       "description": null,
       "flags": [],
       "positional": [],
@@ -225,14 +224,140 @@
   ],
   "positional": [
     {
-      "name": "directory",
-      "value_type": "Directory",
+      "name": "--branch",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--full-clone",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "--single-branch",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "all",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "clone",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "commit-graph",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "config",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "delete",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "diagnose",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "enlistment",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "fetch",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "loose-objects",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "main-branch",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "pack-files",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "reconfigure",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "register",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "run",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "unregister",
+      "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.95,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

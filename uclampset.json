@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "uclampset",
-  "description": "Show or change the utilization clamping attributes.",
+  "description": "UCLAMPSET(1) User Commands UCLAMPSET(1)",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all-tasks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "operate on all the tasks (threads) for a given pid",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--pid",
       "value_type": "String",
       "takes_value": true,
-      "description": "operate on existing given pid",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-R",
       "long": "--reset-on-fork",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "set reset-on-fork flag",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "operate on system",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display status information",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "util_max value to set",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,25 +86,168 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "util_min value to set",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "-p",
+      "description": "Show or change the utilization clamping attributes.",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all-tasks",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "operate on all the tasks (threads) for a given pid",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pid",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "operate on existing given pid",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--reset-on-fork",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set reset-on-fork flag",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "operate on system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display status information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "util_max value to set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "util_min value to set",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "pid",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
+    {
+      "name": "-m",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "_command",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "argument",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "pid",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "uclamp_max",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "uclamp_min",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.9,
+  "source": "ManPage",
+  "confidence": 1.0,
   "version": null
 }

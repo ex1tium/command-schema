@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-scansources",
-  "description": null,
+  "description": "dpkg-scansources(1) dpkg suite dpkg-scansources(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "turn debugging on.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,19 +16,19 @@
     {
       "short": "-e",
       "long": "--extra-override",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "file to find supplementary overrides (since dpkg 1.15.4; the file can be compressed since dpkg 1.15.5).  See deb-extra-override(5) for more information on its format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-?",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show this help message.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--no-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "don't sort by package before outputting.",
+      "description": "Normally they are sorted by source package name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-s",
       "long": "--source-override",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is the name of the override  file  you specified with .src appended.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show the version.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -67,7 +67,7 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "binary-path",
+      "name": "binary-dir",
       "value_type": "Directory",
       "required": true,
       "multiple": false,
@@ -82,13 +82,20 @@
     },
     {
       "name": "path-prefix",
-      "value_type": "Directory",
+      "value_type": "File",
       "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sources",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.85,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

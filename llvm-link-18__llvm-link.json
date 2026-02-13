@@ -1,18 +1,8 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-link-18",
-  "description": "OVERVIEW: llvm linker",
+  "description": "LLVM-LINK(1) LLVM LLVM-LINK(1)",
   "global_flags": [
-    {
-      "short": null,
-      "long": "--color",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": null,
       "long": "--disable-debug-info-type-map",
@@ -45,7 +35,7 @@
     },
     {
       "short": null,
-      "long": "--help-list",
+      "long": "--ignore-non-bitcode",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -56,9 +46,9 @@
     {
       "short": null,
       "long": "--import",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "be  specified  multiple times to import multiple functions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,7 +76,27 @@
     {
       "short": null,
       "long": "--override",
-      "value_type": "File",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "file  that  is passed  in.  This  flag  can  be  specified multiple times to have multiple files act as overrides. If a symbol is declared more than twice, the definition from the file declared last takes precedence.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preserve-bc-uselistorder",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--preserve-ll-uselistorder",
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -96,9 +106,9 @@
     {
       "short": null,
       "long": "--summary-index",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the  path to a file containing the module summary index with the results of an earlier ThinLTO link. This option is required when --import is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -114,11 +124,21 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--version",
+      "short": "-S",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Write output in LLVM intermediate language (instead of bitcode).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "If specified, llvm-link prints a human-readable version of the output bitcode file to standard error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Enable binary output on terminals.  Normally, llvm-link will refuse to write raw bitcode output if the output stream is  a  terminal. With this option, llvm-link will write raw bitcode regardless of the output device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +156,9 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If filename is \"-\", then llvm-link will write its output to standard output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Verbose  mode.   Print  information about what llvm-link is doing.  This typically includes a message for each bitcode file linked in and for each library found.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -157,14 +177,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "input",
-      "value_type": "String",
+      "name": "filename",
+      "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

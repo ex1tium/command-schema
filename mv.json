@@ -1,25 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "mv",
-  "description": "Rename SOURCE to DEST, or move SOURCE(s) to DIRECTORY.",
+  "description": "MV(1) User Commands MV(1)",
   "global_flags": [
     {
       "short": null,
-      "long": "--backup",
-      "value_type": {
-        "Choice": [
-          "none",
-          "off",
-          "numbered",
-          "t",
-          "existing",
-          "nil",
-          "simple",
-          "never"
-        ]
-      },
+      "long": "--backup[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "make a backup of each existing destination file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -29,7 +18,7 @@
       "long": "--context",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "set SELinux security context of destination file to default type",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -39,7 +28,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "explain how a file is copied. Implies -v",
+      "description": "Implies -v",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -49,7 +38,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not prompt before overwriting",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -59,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "display this help and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -69,7 +58,7 @@
       "long": "--interactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prompt before overwrite",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -79,7 +68,7 @@
       "long": "--no-clobber",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not overwrite an existing file",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -89,7 +78,7 @@
       "long": "--no-copy",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not copy if renaming fails",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -97,9 +86,9 @@
     {
       "short": "-T",
       "long": "--no-target-directory",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "treat DEST as a normal file",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -107,9 +96,9 @@
     {
       "short": null,
       "long": "--strip-trailing-slashes",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "remove any trailing slashes from each SOURCE argument",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -119,7 +108,7 @@
       "long": "--suffix",
       "value_type": "String",
       "takes_value": true,
-      "description": "override the usual backup suffix",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -129,17 +118,17 @@
       "long": "--target-directory",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "move all SOURCE arguments into DIRECTORY",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--update",
-      "value_type": "File",
+      "long": "--update[",
+      "value_type": "String",
       "takes_value": true,
-      "description": "control which existing files are updated; UPDATE={all,none,older(default)}. See below",
+      "description": "See below",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -149,7 +138,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "explain what is being done",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -159,7 +148,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output version information and exit",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -177,8 +166,8 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "equivalent to --update[=older]",
       "multiple": false,
       "conflicts_with": [],
@@ -188,28 +177,35 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "DEST",
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dest",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "DIRECTORY",
+      "name": "directory",
       "value_type": "Directory",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "SOURCE",
+      "name": "source",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-nm-18",
-  "description": "OVERVIEW: LLVM symbol table dumper",
+  "description": "LLVM-NM(1) LLVM LLVM-NM(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--add-dyldinfo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Add symbols from the dyldinfo not already in the symbol table",
+      "description": "This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,96 +16,6 @@
     {
       "short": null,
       "long": "--add-inlinedinfo",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--arch",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "architecture(s) from a Mach-O file to dump",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--debug-syms",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show all symbols, even debugger only",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--defined-only",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show only defined symbols",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--demangle",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Demangle C++ symbol names",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dyldinfo-only",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show only symbols from the dyldinfo",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dynamic",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display dynamic symbols instead of normal symbols",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--export-symbols",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Export symbol list for all inputs",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--extern-only",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show only external symbols",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--format",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -115,20 +25,110 @@
     },
     {
       "short": null,
-      "long": "--help",
+      "long": "--arch",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": "--debug-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display this help",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": "--defined-only",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": "--demangle",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
+      "long": "--dyldinfo-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": "--dynamic",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": "--extern-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default is bsd.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
       "long": "--line-numbers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use debugging information to print symbols' filenames and line numbers",
+      "description": "debugging  information to print the filenames and line numbers where symbols are defined. Undefined symbols have the location of their first relocation printed instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--no-demangle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't demangle symbol names",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--no-dyldinfo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't add any symbols from the dyldinfo",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": null,
       "long": "--no-llvm-bc",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Disable LLVM bitcode reader",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -174,41 +174,41 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--no-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show symbols in order encountered",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-W",
       "long": "--no-weak",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show only non-weak symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-n",
       "long": "--numeric-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Sort symbols by address",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-P",
       "long": "--portability",
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --format=posix",
+      "description": "Alias for --format=posix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,13 +218,13 @@
       "long": "--print-armap",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the archive map",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-A",
       "long": "--print-file-name",
       "value_type": "Bool",
       "takes_value": false,
@@ -234,11 +234,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-S",
       "long": "--print-size",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show symbol size as well as address",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,27 +248,27 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Suppress 'no symbols' diagnostic",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-t",
       "long": "--radix",
       "value_type": "String",
       "takes_value": true,
-      "description": "Radix (o/d/x) for printing symbol Values",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-r",
       "long": "--reverse-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Sort in reverse order",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--size-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Sort symbols by size",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,37 +288,27 @@
       "long": "--special-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not filter special symbols from the output",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-u",
       "long": "--undefined-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show only undefined symbols",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display the version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-A",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --print-file-name",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,77 +318,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Alias for --format=bsd",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --demangle",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --dynamic",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --format=posix",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --print-size",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --defined-only",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-W",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --no-weak",
+      "description": "Use BSD output format. Alias for --format=bsd.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,47 +328,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Specifies the type of ELF, XCOFF, or IR object file to examine. The value must be one of: 32, 64, 32_64, any (default)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --debug-syms",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --format",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-g",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --extern-only",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --help",
+      "description": "Specify the type of XCOFF object file, ELF object file, or IR object file input from command line or from archive files that  llvm-nm should examine. The mode must be one of the following:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -456,19 +336,9 @@
     {
       "short": "-j",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --format=just-symbols",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --line-numbers",
+      "description": "Print just the symbol names. Alias for --format=just-symbols`.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -476,49 +346,9 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --format=darwin",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alias for --numeric-sort",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --print-file-name",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --no-sort",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --reverse-sort",
+      "description": "Use Darwin format. Alias for --format=darwin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,37 +358,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Dump only symbols from this segment and section name",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Alias for --radix",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --undefined-only",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Alias for --numeric-sort",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +368,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print symbol entry in hex",
+      "description": "Print symbol entry in hex.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -577,14 +377,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "input",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
+      "name": "filenames",
+      "value_type": "File",
+      "required": false,
+      "multiple": true,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 0.9,
   "version": null
 }

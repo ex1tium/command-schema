@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "tput",
-  "description": null,
+  "description": "tput(1) User commands tput(1)",
   "global_flags": [
     {
       "short": "-S",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "read commands from standard input",
+      "description": "retrieves  more than one capability per invocation of tput.  The capabilities must be passed to tput from the standard input stream instead of from the command line (see section “EXAMPLES” below).  Only one cap-code is allowed per line.  The -S option changes the meanings of the 0 and 1 exit statuses (see section “EXIT STATUS” below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "use this instead of $TERM",
+      "description": "indicates the terminal's type.  Normally this option is unnecessary, because a default is taken from the TERM environment variable. If specified, the environment variables LINES and COLUMNS are also ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,19 +26,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "print curses-version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "verbose, show warnings",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "reports the version of ncurses associated with tput, and exits with a successful status.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,48 +38,79 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not try to clear scrollback",
+      "description": "prevents “tput clear” from attempting to clear the scrollback buffer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [
+  "subcommands": [],
+  "positional": [
     {
-      "name": "capname",
-      "description": "unlike clear/init/reset, print value for capability \"capname\"",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "name": "-t",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "-x",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cap-code",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     },
     {
       "name": "clear",
-      "description": "clear the screen",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     },
     {
       "name": "init",
-      "description": "initialize the terminal",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "longname",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "parameter",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     },
     {
       "name": "reset",
-      "description": "reinitialize the terminal",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "terminal-type",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
     }
   ],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.95,
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }

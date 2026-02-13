@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-escape",
-  "description": "Escape strings for usage in systemd unit names.",
+  "description": "SYSTEMD-ESCAPE(1) systemd-escape SYSTEMD-ESCAPE(1)",
   "global_flags": [
     {
       "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show this help",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--instance",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "With --unescape, show just the instance part",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,19 @@
     {
       "short": "-m",
       "long": "--mangle",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mangle.",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Mangle strings",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When escaping/unescaping assume the string is a path",
+      "description": "components are removed, and for absolute paths, leading \"..\"  components are removed). After the simplification, the path must not contain \"..\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--suffix",
       "value_type": "String",
       "takes_value": true,
-      "description": "Unit suffix to append to escaped strings",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--template",
       "value_type": "String",
       "takes_value": true,
-      "description": "Insert strings as instance into template",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +76,9 @@
     {
       "short": "-u",
       "long": "--unescape",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Unescape strings",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,15 +88,23 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show package version",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "string",
+      "value_type": "String",
+      "required": false,
+      "multiple": true,
+      "description": null
+    }
+  ],
+  "source": "ManPage",
+  "confidence": 0.9,
   "version": null
 }
