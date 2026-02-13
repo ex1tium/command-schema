@@ -25,7 +25,9 @@
 //! ```
 
 use std::collections::HashSet;
+use std::collections::hash_map::DefaultHasher;
 use std::fs;
+use std::hash::{Hash, Hasher};
 use std::io::ErrorKind;
 use std::io::Read;
 use std::path::{Path, PathBuf};
@@ -1532,10 +1534,20 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     // Recursively probe subcommands
     let mut probed_subcommands = HashSet::new();
     let recursive_probe_started = Instant::now();
+    let root_hash = normalize_for_fingerprint(&raw_output);
+    let mut ancestor_hashes = HashSet::from([root_hash]);
+    let root_leaf = command
+        .split_whitespace()
+        .next()
+        .unwrap_or(command)
+        .to_ascii_lowercase();
+    let mut ancestor_names = vec![root_leaf];
     probe_subcommands_recursive(
         command,
         &mut schema.subcommands,
         &mut probed_subcommands,
+        &mut ancestor_hashes,
+        &mut ancestor_names,
         1,
         recursive_probe_started,
         &mut warnings,
@@ -1616,11 +1628,33 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     }
 }
 
+/// Normalizes help text for content fingerprinting, collapsing trivial
+/// formatting differences (whitespace, case) that should not distinguish
+/// two help outputs.
+fn normalize_for_fingerprint(text: &str) -> u64 {
+    let mut hasher = DefaultHasher::new();
+    for line in text.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let normalized: String = trimmed
+            .split_whitespace()
+            .collect::<Vec<_>>()
+            .join(" ")
+            .to_ascii_lowercase();
+        normalized.hash(&mut hasher);
+    }
+    hasher.finish()
+}
+
 /// Recursively probes subcommands to get their schemas.
 fn probe_subcommands_recursive(
     base_command: &str,
     subcommands: &mut [SubcommandSchema],
     probed: &mut HashSet<String>,
+    ancestor_hashes: &mut HashSet<u64>,
+    ancestor_names: &mut Vec<String>,
     depth: usize,
     started_at: Instant,
     warnings: &mut Vec<String>,
@@ -1702,6 +1736,17 @@ fn probe_subcommands_recursive(
 
         // Get help for this subcommand
         if let Some(help_output) = probe_command_help(&full_command) {
+            // Content fingerprint: skip if output matches any ancestor's help
+            // text, indicating a parent echo or shared man page.
+            let output_hash = normalize_for_fingerprint(&help_output);
+            if ancestor_hashes.contains(&output_hash) {
+                debug!(
+                    command = %full_command,
+                    "Skipping subcommand probe: help output matches an ancestor (content fingerprint)"
+                );
+                continue;
+            }
+
             let mut parser = HelpParser::new(&full_command, &help_output);
             if let Some(sub_schema) = parser.parse() {
                 // Some CLIs (notably apt-family) print parent-level help for
@@ -1719,30 +1764,41 @@ fn probe_subcommands_recursive(
                 // recursive subcommand probes often start with generic banners.
                 subcmd.description = subcmd.description.take().or(sub_schema.description);
 
-                // Add nested subcommands
+                // Prune nested subcommands whose names collide with any
+                // ancestor in the command path (prevents transitive cycles).
                 let mut nested_subcommands = sub_schema.subcommands;
-                if nested_subcommands
-                    .iter()
-                    .any(|nested| nested.name == subcmd.name)
-                {
+                let subcmd_name_lower = subcmd.name.to_ascii_lowercase();
+                let before_count = nested_subcommands.len();
+                nested_subcommands.retain(|nested| {
+                    let nl = nested.name.to_ascii_lowercase();
+                    nl != subcmd_name_lower
+                        && !ancestor_names.iter().any(|a| a == &nl)
+                });
+                let pruned = before_count - nested_subcommands.len();
+                if pruned > 0 {
                     warnings.push(format!(
-                        "Skipping nested subcommands for '{}' due to detected self-cycle",
-                        full_command
+                        "Pruned {pruned} nested subcommand(s) from '{full_command}' \
+                         that matched ancestor names"
                     ));
-                    nested_subcommands.clear();
                 }
                 subcmd.subcommands = nested_subcommands;
 
                 // Recurse into nested subcommands
                 if !subcmd.subcommands.is_empty() {
+                    ancestor_hashes.insert(output_hash);
+                    ancestor_names.push(subcmd_name_lower);
                     probe_subcommands_recursive(
                         &full_command,
                         &mut subcmd.subcommands,
                         probed,
+                        ancestor_hashes,
+                        ancestor_names,
                         depth + 1,
                         started_at,
                         warnings,
                     );
+                    ancestor_names.pop();
+                    ancestor_hashes.remove(&output_hash);
                 }
             }
             let actionable = parser
@@ -2310,5 +2366,61 @@ mod tests {
 
         let help_text = help.unwrap();
         assert!(help_text.contains("-m") || help_text.contains("--message"));
+    }
+
+    #[test]
+    fn test_normalize_for_fingerprint_ignores_whitespace_differences() {
+        let text_a = "Usage: apt-get [options] command\n\n  install - Install packages\n  remove - Remove packages\n";
+        let text_b = "Usage:  apt-get  [options]  command\n\n  install  -  Install packages\n  remove  -  Remove packages\n";
+        assert_eq!(
+            normalize_for_fingerprint(text_a),
+            normalize_for_fingerprint(text_b)
+        );
+    }
+
+    #[test]
+    fn test_normalize_for_fingerprint_ignores_case_differences() {
+        let text_a = "Usage: APT-GET [OPTIONS] COMMAND\n  INSTALL - Install packages\n";
+        let text_b = "usage: apt-get [options] command\n  install - install packages\n";
+        assert_eq!(
+            normalize_for_fingerprint(text_a),
+            normalize_for_fingerprint(text_b)
+        );
+    }
+
+    #[test]
+    fn test_normalize_for_fingerprint_different_content_produces_different_hash() {
+        let text_a = "Usage: apt-get [options] install pkg\n\nOptions:\n  -y  assume yes\n";
+        let text_b = "Usage: apt-get [options] remove pkg\n\nOptions:\n  -y  assume yes\n";
+        assert_ne!(
+            normalize_for_fingerprint(text_a),
+            normalize_for_fingerprint(text_b)
+        );
+    }
+
+    #[test]
+    fn test_ancestor_name_pruning_removes_cycle_candidates() {
+        let ancestor_names = vec!["apt-get".to_string()];
+        let subcmd_name_lower = "autoclean";
+
+        let nested = vec![
+            SubcommandSchema::new("autoremove"),
+            SubcommandSchema::new("autoclean"),
+            SubcommandSchema::new("apt-get"),
+            SubcommandSchema::new("install"),
+        ];
+
+        let pruned: Vec<SubcommandSchema> = nested
+            .into_iter()
+            .filter(|n| {
+                let nl = n.name.to_ascii_lowercase();
+                nl != subcmd_name_lower
+                    && !ancestor_names.iter().any(|a| a == &nl)
+            })
+            .collect();
+
+        assert_eq!(pruned.len(), 2);
+        assert_eq!(pruned[0].name, "autoremove");
+        assert_eq!(pruned[1].name, "install");
     }
 }
