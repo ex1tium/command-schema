@@ -374,7 +374,12 @@ impl HelpParser {
                 }
             }
         }
-        if (!prefer_man || arg_candidates.is_empty()) && !sections.arguments.is_empty() {
+        // For detected man pages, the SYNOPSIS extraction is authoritative
+        // for positional args.  The help-text ARGUMENTS section parser was
+        // designed for CLI `--help` output, not rendered man prose, and would
+        // misinterpret justified text (double-space word gaps) as two-column
+        // argument definitions, polluting the schema with random prose words.
+        if !man_bundle_detected && !sections.arguments.is_empty() {
             let refs: Vec<&str> = sections
                 .arguments
                 .iter()
@@ -513,7 +518,10 @@ impl HelpParser {
             }
         }
 
-        if arg_candidates.is_empty() {
+        // Same reasoning as above: for detected man pages, don't fall back
+        // to the usage-line positional scanner—it would pick up usage-like
+        // patterns from DESCRIPTION/INVOCATION prose and produce garbage.
+        if arg_candidates.is_empty() && !man_bundle_detected {
             parsers_used.push(format!("strategy-executed:{}", usage_strategy.name()));
             let usage_args = usage_strategy.collect_args(self, &indexed_lines);
             let (_, usage_arg_recognized) =
