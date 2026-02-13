@@ -125,6 +125,9 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
             if !looks_like_arg_token(&token) {
                 continue;
             }
+            if is_placeholder_command_token(&token.to_ascii_lowercase()) {
+                continue;
+            }
             if all_subcommands.contains(&token.to_ascii_lowercase()) {
                 continue;
             }

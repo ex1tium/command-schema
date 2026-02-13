@@ -269,10 +269,12 @@ impl HelpParser {
         } else {
             strategies::man::CandidateBundle::default()
         };
-        let man_detected = man_bundle.format.is_some();
+        let man_bundle_detected = man_bundle.format.is_some();
         let man_has_entities = man_bundle.has_entities();
-        let man_primary_extracted = man_detected && man_has_entities;
-        if self.detected_format == Some(HelpFormat::Man) || (man_has_entities && man_detected) {
+        let man_primary_extracted = man_bundle_detected && man_has_entities;
+        if self.detected_format == Some(HelpFormat::Man)
+            || (man_has_entities && man_bundle_detected)
+        {
             schema.source = SchemaSource::ManPage;
         }
         if let Some(format) = man_bundle.format {

@@ -132,6 +132,36 @@ mod tests {
     }
 
     #[test]
+    fn test_is_valid_flag_schema_accepts_well_formed_flags() {
+        assert!(is_valid_flag_schema(&FlagSchema::boolean(
+            Some("-v"),
+            Some("--verbose")
+        )));
+    }
+
+    #[test]
+    fn test_is_valid_flag_schema_rejects_short_with_double_dash() {
+        // Short flag should not use "--" prefix
+        assert!(!is_valid_flag_schema(&FlagSchema::boolean(
+            Some("--v"),
+            None
+        )));
+    }
+
+    #[test]
+    fn test_is_valid_flag_schema_boundary_long_name() {
+        // "--ab" (length 4) is valid, "--" (length 2) is not
+        assert!(is_valid_flag_schema(&FlagSchema::boolean(
+            None,
+            Some("--ab")
+        )));
+        assert!(!is_valid_flag_schema(&FlagSchema::boolean(
+            None,
+            Some("--")
+        )));
+    }
+
+    #[test]
     fn test_merge_flag_candidates_drops_invalid_long_names() {
         let candidates = vec![FlagCandidate {
             short: None,

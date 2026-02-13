@@ -31,6 +31,11 @@ impl RoffLexer {
                 continue;
             }
 
+            if is_roff_comment(trimmed) {
+                tokens.push(Token::Newline { line: line_idx });
+                continue;
+            }
+
             if let Some((name, args)) = parse_macro_line(trimmed) {
                 tokens.push(Token::Macro {
                     name,
@@ -47,6 +52,17 @@ impl RoffLexer {
 
         Ok(tokens)
     }
+}
+
+/// Returns `true` when the line is a roff comment (`.\"` or `'\"` control sequence).
+fn is_roff_comment(line: &str) -> bool {
+    let trimmed = line.trim_start();
+    if trimmed.len() < 2 {
+        return false;
+    }
+    let first = trimmed.as_bytes()[0];
+    let second = trimmed.as_bytes()[1];
+    (first == b'.' || first == b'\'') && second == b'"'
 }
 
 fn parse_macro_line(line: &str) -> Option<(String, Vec<String>)> {

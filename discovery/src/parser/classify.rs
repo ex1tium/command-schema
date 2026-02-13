@@ -5,6 +5,7 @@
 
 use command_schema_core::HelpFormat;
 
+use super::strategies::man::rendered::sections::normalize_section_name;
 use super::util::looks_like_man_title_line;
 use super::{FormatScore, IndexedLine};
 
@@ -200,24 +201,7 @@ fn is_roff_macro_line(line: &str) -> bool {
 }
 
 fn looks_like_rendered_man_section_header(line: &str) -> bool {
-    let trimmed = line.trim().trim_end_matches(':');
-    if trimmed.is_empty() || trimmed.len() > 40 {
-        return false;
-    }
-    let upper = trimmed.to_ascii_uppercase();
-    matches!(
-        upper.as_str(),
-        "NAME"
-            | "SYNOPSIS"
-            | "DESCRIPTION"
-            | "OPTIONS"
-            | "COMMANDS"
-            | "SUBCOMMANDS"
-            | "COMMAND OPTIONS"
-            | "GLOBAL OPTIONS"
-            | "ARGUMENTS"
-            | "EXAMPLES"
-    )
+    normalize_section_name(line.trim()).is_some()
 }
 
 #[cfg(test)]

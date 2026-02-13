@@ -107,11 +107,16 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
             continue;
         }
 
-        let (name, inline_value) = part
-            .split_once('=')
-            .map(|(head, _)| (head, true))
-            .unwrap_or((part.as_str(), false));
+        let (name, inline_value) = if let Some((head, _)) = part.split_once('=') {
+            (head, true)
+        } else if let Some(pos) = part.find(|ch: char| ch == '<' || ch == '[') {
+            (&part[..pos], true)
+        } else {
+            (part.as_str(), false)
+        };
         has_inline_value |= inline_value;
+
+        let name = name.trim_end_matches(|ch: char| ch == ']' || ch == '>');
 
         if name.starts_with("--") {
             if first_long.is_none() {

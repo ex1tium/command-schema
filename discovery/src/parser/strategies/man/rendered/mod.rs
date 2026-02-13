@@ -56,7 +56,7 @@ pub fn parse_candidates(lines: &[IndexedLine]) -> RenderedExtraction {
                 .subcommands
                 .extend(synopsis::parse_synopsis_subcommands(section));
         }
-        if name.contains("COMMAND") {
+        if name.contains("COMMAND") && !name.contains("OPTION") {
             extraction
                 .subcommands
                 .extend(commands::parse_commands_section(section));

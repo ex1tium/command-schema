@@ -572,6 +572,10 @@ fn looks_like_command_name(value: &str) -> bool {
         && value
             .chars()
             .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
+        && value
+            .chars()
+            .next()
+            .is_some_and(|ch| ch.is_ascii_alphabetic())
 }
 
 fn infer_value_type(text: &str) -> ValueType {

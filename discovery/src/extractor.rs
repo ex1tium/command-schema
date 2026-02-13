@@ -1660,6 +1660,12 @@ fn probe_subcommands_recursive(
     warnings: &mut Vec<String>,
 ) {
     if depth > MAX_RECURSIVE_PROBE_DEPTH {
+        debug!(
+            command = base_command,
+            depth = depth,
+            max_depth = MAX_RECURSIVE_PROBE_DEPTH,
+            "Reached maximum recursive probe depth; skipping deeper discovery"
+        );
         return;
     }
     if started_at.elapsed() >= Duration::from_secs(MAX_RECURSIVE_PROBE_WALL_TIME_SECS) {
