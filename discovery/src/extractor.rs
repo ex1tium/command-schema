@@ -1572,7 +1572,10 @@ fn resolve_probe_sources(
                         help.raw_text
                     };
                     let diag = merge_diagnostics(&man.diagnostics, &help.diagnostics);
-                    let format = help.detected_format.or(man.detected_format);
+                    let format = help
+                        .detected_format
+                        .filter(|f| !matches!(f, HelpFormat::Unknown))
+                        .or(man.detected_format);
                     let mut all_warnings = man.warnings;
                     all_warnings.extend(help.warnings);
                     debug!(
