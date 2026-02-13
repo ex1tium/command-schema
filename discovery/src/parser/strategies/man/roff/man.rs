@@ -297,9 +297,14 @@ pub fn extract_flags_from_man(doc: &ManDocument) -> Vec<FlagCandidate> {
 /// Extracts positional argument candidates from `SYNOPSIS` content.
 ///
 /// Synopsis text is tokenized heuristically and deduplicated by lowercase name.
+/// Leading command tokens (derived from `.TH` title or the first synopsis word)
+/// are stripped so multi-word commands like `git rebase` don't leak as args.
 pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
+
+    // Build a set of command tokens to skip (e.g. {"git", "rebase"}).
+    let command_tokens = derive_command_tokens(doc);
 
     for section in &doc.sections {
         let upper = section.name.to_ascii_uppercase();
@@ -317,7 +322,9 @@ pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
                     line,
                 } => {
                     let combined = format!("{tag} {description}");
-                    for arg in parse_args_from_synopsis(&combined, line, &mut seen) {
+                    for arg in
+                        parse_args_from_synopsis(&combined, line, &mut seen, &command_tokens)
+                    {
                         out.push(arg);
                     }
                     continue;
@@ -325,13 +332,71 @@ pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
                 _ => continue,
             };
 
-            for arg in parse_args_from_synopsis(text, &line, &mut seen) {
+            for arg in parse_args_from_synopsis(text, &line, &mut seen, &command_tokens) {
                 out.push(arg);
             }
         }
     }
 
     out
+}
+
+/// Derives the set of command-name tokens to skip from synopsis text.
+///
+/// Uses the `.TH` title (lowercased) plus leading unbracketed tokens from the
+/// first synopsis text element. For `git-rebase`, this yields `{"git-rebase",
+/// "git", "rebase"}`.
+fn derive_command_tokens(doc: &ManDocument) -> HashSet<String> {
+    let mut tokens = HashSet::new();
+
+    // From .TH title
+    if let Some(ref title) = doc.title {
+        let lower = title.to_ascii_lowercase();
+        // Split hyphenated titles: "git-rebase" → {"git-rebase", "git", "rebase"}
+        tokens.insert(lower.clone());
+        for part in lower.split('-') {
+            if !part.is_empty() {
+                tokens.insert(part.to_string());
+            }
+        }
+    }
+
+    // From first synopsis text element: take leading unbracketed words
+    for section in &doc.sections {
+        if !section.name.to_ascii_uppercase().contains("SYNOPSIS") {
+            continue;
+        }
+        for element in &section.content {
+            let text = match element {
+                ManElement::Text { value, .. } => value.as_str(),
+                ManElement::IndentedParagraph { text, .. } => text.as_str(),
+                ManElement::TaggedParagraph { tag, .. } => tag.as_str(),
+                _ => continue,
+            };
+            for word in text.split_whitespace() {
+                if word.starts_with('-')
+                    || word.contains('[')
+                    || word.contains('<')
+                    || word.contains('{')
+                    || word.contains('(')
+                {
+                    break;
+                }
+                let lower = word.to_ascii_lowercase();
+                tokens.insert(lower.clone());
+                for part in lower.split('-') {
+                    if !part.is_empty() {
+                        tokens.insert(part.to_string());
+                    }
+                }
+            }
+            if !tokens.is_empty() {
+                return tokens;
+            }
+        }
+    }
+
+    tokens
 }
 
 /// Extracts subcommand candidates from `COMMANDS`-like sections.
@@ -438,13 +503,27 @@ fn parse_flag_defs(definition: &str, description: &str) -> Vec<FlagSchema> {
     parts.retain(|part| part.starts_with('-'));
 
     let value_hint = definition.contains('=')
-        || definition
-            .split_whitespace()
-            .any(|token| token.chars().all(|ch| ch.is_ascii_uppercase()) && token.len() > 1)
+        || definition.split_whitespace().any(|token| {
+            let normalized = token.trim_matches(|ch: char| {
+                matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
+            });
+            !normalized.is_empty()
+                && normalized
+                    .chars()
+                    .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+                && normalized.len() > 1
+        })
         || description.contains("=")
-        || description
-            .split_whitespace()
-            .any(|token| token.chars().all(|ch| ch.is_ascii_uppercase()) && token.len() > 1);
+        || description.split_whitespace().any(|token| {
+            let normalized = token.trim_matches(|ch: char| {
+                matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
+            });
+            !normalized.is_empty()
+                && normalized
+                    .chars()
+                    .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+                && normalized.len() > 1
+        });
 
     let mut first_short: Option<String> = None;
     let mut first_long: Option<String> = None;
@@ -490,11 +569,35 @@ fn parse_args_from_synopsis(
     text: &str,
     line: &usize,
     seen: &mut HashSet<String>,
+    command_tokens: &HashSet<String>,
 ) -> Vec<ArgCandidate> {
     let mut out = Vec::new();
+    let words: Vec<&str> = text.split_whitespace().collect();
+    let mut idx = 0;
 
-    for (idx, raw) in text.split_whitespace().enumerate() {
+    while idx < words.len() {
+        let raw = words[idx];
+
+        // Skip flag tokens and their value placeholders.
         if raw.starts_with('-') {
+            // If the next token looks like a value placeholder for this flag,
+            // skip it too.
+            if idx + 1 < words.len() {
+                let next = words[idx + 1];
+                let next_norm = normalize_synopsis_arg_token(next);
+                if !next.starts_with('-')
+                    && (next.contains('<')
+                        || next.contains('>')
+                        || (!next_norm.is_empty()
+                            && next_norm
+                                .chars()
+                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')))
+                {
+                    idx += 2;
+                    continue;
+                }
+            }
+            idx += 1;
             continue;
         }
 
@@ -502,30 +605,34 @@ fn parse_args_from_synopsis(
         let multiple = raw.contains("...");
         let token = normalize_synopsis_arg_token(raw);
         if token.is_empty() {
+            idx += 1;
             continue;
         }
 
-        // Synopsis lines are usually "<command> [args...]"; avoid treating the
-        // command token itself as a positional arg when unbracketed.
-        if idx == 0 && !bracketed {
+        let token_lower = token.to_ascii_lowercase();
+
+        // Skip command name tokens at any position.
+        if command_tokens.contains(&token_lower) && !bracketed {
+            idx += 1;
             continue;
         }
 
         let required = !raw.contains('[');
         if !looks_like_synopsis_arg_token(&token) {
+            idx += 1;
             continue;
         }
 
-        let name = token.to_ascii_lowercase();
-        if !seen.insert(name.clone()) {
+        if !seen.insert(token_lower.clone()) {
+            idx += 1;
             continue;
         }
 
         let value_type = infer_value_type(&token);
         let mut schema = if required {
-            ArgSchema::required(&name, value_type)
+            ArgSchema::required(&token_lower, value_type)
         } else {
-            ArgSchema::optional(&name, value_type)
+            ArgSchema::optional(&token_lower, value_type)
         };
         schema.multiple = multiple;
         out.push(ArgCandidate::from_schema(
@@ -534,6 +641,7 @@ fn parse_args_from_synopsis(
             "man-roff-man-synopsis",
             0.92,
         ));
+        idx += 1;
     }
 
     out

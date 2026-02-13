@@ -40,10 +40,9 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
 
             let aliases = split_flag_aliases(token);
             for alias in aliases {
-                let (raw_name, inline_value) = alias
-                    .split_once('=')
-                    .map(|(head, _)| (head, true))
-                    .unwrap_or((alias.as_str(), false));
+                // Strip inline value placeholders: --output[=FILE] → --output,
+                // -o<FILE> → -o, --config=PATH → --config.
+                let (raw_name, inline_value) = strip_inline_value(&alias);
 
                 let name = normalize_flag_name(raw_name);
                 if !is_valid_flag_name(&name) {
@@ -458,6 +457,24 @@ fn split_flag_aliases(token: &str) -> Vec<String> {
             }
         })
         .collect()
+}
+
+/// Strips inline value placeholders from a flag alias, returning the clean
+/// name and whether a value was indicated.
+///
+/// Handles patterns like `--output=FILE`, `--output[=FILE]`, `-o<FILE>`,
+/// `--config(=PATH)`.
+fn strip_inline_value(alias: &str) -> (&str, bool) {
+    // Check for `=` split first: --output=FILE → ("--output", true)
+    if let Some((head, _)) = alias.split_once('=') {
+        let clean = head.trim_end_matches(|ch: char| matches!(ch, '[' | '('));
+        return (clean, true);
+    }
+    // Check for `<...>` or `[...]` immediately after the flag name
+    if let Some(pos) = alias.find(|ch: char| ch == '<' || ch == '[') {
+        return (&alias[..pos], true);
+    }
+    (alias, false)
 }
 
 /// Strips trailing punctuation from a flag name that leaks through from man

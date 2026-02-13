@@ -107,6 +107,10 @@ pub fn merge_flag_candidates(
 }
 
 fn is_valid_flag_schema(flag: &FlagSchema) -> bool {
+    // At least one name must be present.
+    if flag.short.is_none() && flag.long.is_none() {
+        return false;
+    }
     let short_ok = flag.short.as_deref().is_none_or(|short| {
         short.starts_with('-')
             && !short.starts_with("--")
@@ -164,7 +168,11 @@ mod tests {
 
     #[test]
     fn test_is_valid_flag_schema_boundary_long_name() {
-        // "--ab" (length 4) is valid, "--" (length 2) is not
+        // "--a" (length 3) is the minimum valid long name
+        assert!(is_valid_flag_schema(&FlagSchema::boolean(
+            None,
+            Some("--a")
+        )));
         assert!(is_valid_flag_schema(&FlagSchema::boolean(
             None,
             Some("--ab")
@@ -173,6 +181,11 @@ mod tests {
             None,
             Some("--")
         )));
+    }
+
+    #[test]
+    fn test_is_valid_flag_schema_rejects_no_names() {
+        assert!(!is_valid_flag_schema(&FlagSchema::boolean(None, None)));
     }
 
     #[test]

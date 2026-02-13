@@ -46,8 +46,29 @@ pub fn decode_roff_escapes(input: &str) -> String {
         match next {
             // Font switches and style toggles (standard `\f` prefix).
             'f' => {
-                chars.next();
-                let _ = chars.next(); // consume style selector
+                chars.next(); // consume 'f'
+                // Consume selector: \f[name] (bracketed), \f(XY (two-char), or \fX (single-char)
+                match chars.peek().copied() {
+                    Some('[') => {
+                        chars.next();
+                        while let Some(&ch) = chars.peek() {
+                            chars.next();
+                            if ch == ']' {
+                                break;
+                            }
+                        }
+                    }
+                    Some('(') => {
+                        // \f(XY: two-character font name (no closing paren)
+                        chars.next(); // consume '('
+                        let _ = chars.next(); // first char
+                        let _ = chars.next(); // second char
+                    }
+                    Some(_) => {
+                        let _ = chars.next(); // consume single style selector
+                    }
+                    None => {}
+                }
             }
             // Non-standard shorthand font escapes (`\B`, `\I`, `\R`, `\P`)
             // found in some third-party and legacy man page sources.
@@ -92,6 +113,19 @@ mod tests {
         assert_eq!(
             decode_roff_escapes("path\\ with\\ space"),
             "path with space"
+        );
+    }
+
+    #[test]
+    fn test_decode_roff_escapes_bracketed_font_selectors() {
+        // \f[BI] — bracketed font name
+        assert_eq!(decode_roff_escapes("\\f[BI]foo\\fP"), "foo");
+        // \f(CR — two-character font name (no closing paren)
+        assert_eq!(decode_roff_escapes("\\f(CRbar\\fR"), "bar");
+        // \f[B] and \f[R] — single-char names in brackets
+        assert_eq!(
+            decode_roff_escapes("\\f[B]--verbose\\f[R]"),
+            "--verbose"
         );
     }
 }

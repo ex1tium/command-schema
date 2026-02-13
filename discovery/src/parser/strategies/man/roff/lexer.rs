@@ -54,15 +54,26 @@ impl RoffLexer {
     }
 }
 
-/// Returns `true` when the line is a roff comment (`.\"` or `'\"` control sequence).
+/// Returns `true` when the line is a roff comment.
+///
+/// Recognizes the canonical form (`.\"` / `'\"`) where a backslash precedes the
+/// quote, as well as the legacy shorthand (`."` / `'"`) accepted by groff.
 fn is_roff_comment(line: &str) -> bool {
     let trimmed = line.trim_start();
-    if trimmed.len() < 2 {
+    let bytes = trimmed.as_bytes();
+    if bytes.len() < 2 {
         return false;
     }
-    let first = trimmed.as_bytes()[0];
-    let second = trimmed.as_bytes()[1];
-    (first == b'.' || first == b'\'') && second == b'"'
+    let first = bytes[0];
+    if first != b'.' && first != b'\'' {
+        return false;
+    }
+    // Canonical form: .\" or '\"
+    if bytes.len() >= 3 && bytes[1] == b'\\' && bytes[2] == b'"' {
+        return true;
+    }
+    // Legacy shorthand: ." or '"
+    bytes[1] == b'"'
 }
 
 fn parse_macro_line(line: &str) -> Option<(String, Vec<String>)> {
@@ -160,5 +171,27 @@ mod tests {
         let tokens = RoffLexer::tokenize(&lines).expect("tokenize");
         assert!(matches!(tokens[0], Token::Macro { .. }));
         assert!(matches!(tokens[2], Token::Text { .. }));
+    }
+
+    #[test]
+    fn test_is_roff_comment_canonical_and_legacy() {
+        // Canonical: .\" (dot, backslash, quote)
+        assert!(is_roff_comment(".\\\" this is a comment"));
+        assert!(is_roff_comment("'\\\" also a comment"));
+        // Legacy shorthand: ." (dot, quote)
+        assert!(is_roff_comment(".\" legacy comment"));
+        assert!(is_roff_comment("'\" also legacy"));
+        // Not comments
+        assert!(!is_roff_comment(".SH NAME"));
+        assert!(!is_roff_comment("plain text"));
+        assert!(!is_roff_comment("."));
+    }
+
+    #[test]
+    fn test_tokenize_skips_comment_lines() {
+        let lines = [".TH TEST 1", ".\\\" this is a comment", ".SH NAME"];
+        let tokens = RoffLexer::tokenize(&lines).expect("tokenize");
+        // Comment should become a Newline, not a Macro or Text
+        assert!(matches!(tokens[1], Token::Newline { .. }));
     }
 }

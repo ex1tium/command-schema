@@ -85,16 +85,24 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
 
     let has_value_hint = definition.contains('=')
         || definition.split_whitespace().any(|token| {
-            token
-                .chars()
-                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+            let normalized = token.trim_matches(|ch: char| {
+                matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
+            });
+            !normalized.is_empty()
+                && normalized
+                    .chars()
+                    .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
         })
         || description.is_some_and(|desc| {
             desc.split_whitespace().any(|token| {
-                token
-                    .chars()
-                    .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
-                    && token.len() > 1
+                let normalized = token.trim_matches(|ch: char| {
+                    matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';')
+                });
+                !normalized.is_empty()
+                    && normalized
+                        .chars()
+                        .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+                    && normalized.len() > 1
             })
         });
 
@@ -212,5 +220,19 @@ mod tests {
         assert_eq!(flags[0].long.as_deref(), Some("--output"));
         assert!(flags[0].takes_value);
         assert_eq!(flags[0].value_type, ValueType::File);
+    }
+
+    #[test]
+    fn test_parse_flag_definition_detects_bracketed_value_placeholders() {
+        // Bracketed <FILE> should be recognized as a value hint
+        let flags = parse_flag_definition("--config <FILE>", Some("Config file"));
+        assert_eq!(flags.len(), 1);
+        assert!(flags[0].takes_value);
+        assert_eq!(flags[0].value_type, ValueType::File);
+
+        // Bracketed [FILE] should also be recognized
+        let flags = parse_flag_definition("--config [FILE]", Some("Config file"));
+        assert_eq!(flags.len(), 1);
+        assert!(flags[0].takes_value);
     }
 }
