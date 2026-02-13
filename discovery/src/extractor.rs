@@ -1,8 +1,8 @@
 //! Command schema extraction via help probing.
 //!
 //! Automatically extracts command schemas by running `--help` commands
-//! and recursively probing subcommands up to `MAX_PROBE_DEPTH` (3) levels
-//! deep. The extractor tries multiple help flags (`--help`, `-h`, `-?`) and
+//! and recursively probing subcommands with cycle detection and a bounded
+//! probe budget. The extractor tries multiple help flags (`--help`, `-h`, `-?`) and
 //! conditionally tries `help` when probe output explicitly suggests it.
 //!
 //! # Quality policy
@@ -39,8 +39,10 @@ use super::report::{
 };
 use command_schema_core::{ExtractionResult, HelpFormat, SubcommandSchema, validate_schema};
 
-/// Maximum depth for recursive subcommand probing.
-const MAX_PROBE_DEPTH: usize = 3;
+/// Maximum number of unique command invocations to probe recursively.
+///
+/// Depth is intentionally unbounded; this budget is the safety guard.
+const MAX_RECURSIVE_PROBE_BUDGET: usize = 4096;
 
 /// Timeout for help commands (milliseconds).
 const HELP_TIMEOUT_MS: u64 = 5000;
@@ -1339,10 +1341,6 @@ fn probe_subcommands_recursive(
     depth: usize,
     warnings: &mut Vec<String>,
 ) {
-    if depth > MAX_PROBE_DEPTH {
-        return;
-    }
-
     let sibling_names = subcommands
         .iter()
         .map(|subcmd| subcmd.name.to_ascii_lowercase())
@@ -1354,6 +1352,16 @@ fn probe_subcommands_recursive(
         // Skip if already probed (avoid cycles)
         if probed.contains(&full_command) {
             continue;
+        }
+        if probed.len() >= MAX_RECURSIVE_PROBE_BUDGET {
+            extend_unique_warnings(
+                warnings,
+                std::iter::once(format!(
+                    "Reached recursive probe budget ({MAX_RECURSIVE_PROBE_BUDGET}) while probing '{}'; skipping deeper discovery",
+                    base_command
+                )),
+            );
+            break;
         }
         probed.insert(full_command.clone());
 

@@ -2168,6 +2168,7 @@ impl HelpParser {
                 | "exit-nopipe"
                 | "once"
                 | "pages"
+                | "and"
                 | "or"
                 | "while"
                 | "gnu"
@@ -3821,6 +3822,15 @@ work on the current change (see also: git help everyday)
    add       Add file contents to the index
 "#;
 
+    const GIT_REBASE_HELP_WITH_WRAPPED_PROSE: &str = r#"
+usage: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+   or: git rebase --continue | --abort | --skip | --edit-todo
+
+    --[no-]keep-base      use the merge-base of upstream
+                          and  branch as the current base
+    --abort               abort and check out the original branch
+"#;
+
     const SYSTEMCTL_STYLE_HELP: &str = r#"
 systemctl [OPTIONS...] COMMAND ...
 
@@ -4449,6 +4459,14 @@ Commands:
         assert!(schema.find_subcommand("run").is_some());
         assert!(schema.find_subcommand("session").is_some());
         assert!(schema.find_subcommand("opencode").is_none());
+    }
+
+    #[test]
+    fn test_parse_subcommands_skips_prose_connector_tokens() {
+        let mut parser = HelpParser::new("git rebase", GIT_REBASE_HELP_WITH_WRAPPED_PROSE);
+        let schema = parser.parse().unwrap();
+
+        assert!(schema.find_subcommand("and").is_none());
     }
 
     #[test]
