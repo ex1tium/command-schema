@@ -47,12 +47,12 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
 
                 let name = normalize_flag_name(raw_name);
 
-                // Detect packed short-flag clusters like -abc (single dash,
-                // body longer than 2 alphanumeric chars) and expand into
-                // individual short flags, all boolean.
+                // Detect packed short-flag clusters like -abc or -cw
+                // (single dash, body of 2+ alphanumeric chars) and expand
+                // into individual short flags, all boolean.
                 if !name.starts_with("--") && name.starts_with('-') {
                     let body = &name[1..];
-                    if body.len() > 2
+                    if body.len() >= 2
                         && body.chars().all(|ch| ch.is_ascii_alphanumeric())
                     {
                         for ch in body.chars() {
@@ -161,6 +161,19 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
     for line in &section.lines {
         let trimmed = line.text.trim();
         if trimmed.is_empty() {
+            continue;
+        }
+
+        // Skip prose lines within SYNOPSIS that don't contain any
+        // synopsis-like tokens (flags, brackets, pipes, ellipsis).
+        // Example: "For more information on these options, you can run..."
+        let has_synopsis_marker = trimmed.contains('-')
+            || trimmed.contains('[')
+            || trimmed.contains('<')
+            || trimmed.contains('{')
+            || trimmed.contains('|')
+            || trimmed.contains("...");
+        if !has_synopsis_marker {
             continue;
         }
 
@@ -322,6 +335,14 @@ pub fn parse_synopsis_subcommands(section: &ManSection) -> Vec<SubcommandCandida
 }
 
 fn looks_like_arg_token(token: &str) -> bool {
+    // Must be more than 1 character (rejects bare "a", "c").
+    if token.len() <= 1 {
+        return false;
+    }
+    // Reject pure version numbers: only digits and dots (e.g. "5.004").
+    if token.chars().all(|ch| ch.is_ascii_digit() || ch == '.') {
+        return false;
+    }
     token
         .chars()
         .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.'))

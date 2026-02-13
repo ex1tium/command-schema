@@ -684,6 +684,14 @@ fn normalize_synopsis_arg_token(raw: &str) -> String {
 }
 
 fn looks_like_synopsis_arg_token(token: &str) -> bool {
+    // Must be more than 1 character (rejects bare "a", "c").
+    if token.len() <= 1 {
+        return false;
+    }
+    // Reject pure version numbers: only digits and dots (e.g. "5.004").
+    if token.chars().all(|ch| ch.is_ascii_digit() || ch == '.') {
+        return false;
+    }
     !token.is_empty()
         && token
             .chars()

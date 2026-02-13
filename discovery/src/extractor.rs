@@ -1624,11 +1624,31 @@ fn merge_diagnostics(a: &ParseDiagnostics, b: &ParseDiagnostics) -> ParseDiagnos
         }
     }
     parsers_used.push("multi-source-merge".to_string());
+
+    // Use the source with better coverage to avoid dilution from
+    // large but mostly-unparseable inputs (e.g. a 400-line man page
+    // where only SYNOPSIS/OPTIONS are recognized).
+    let a_coverage = if a.relevant_lines > 0 {
+        a.recognized_lines as f64 / a.relevant_lines as f64
+    } else {
+        0.0
+    };
+    let b_coverage = if b.relevant_lines > 0 {
+        b.recognized_lines as f64 / b.relevant_lines as f64
+    } else {
+        0.0
+    };
+    let (relevant, recognized) = if a_coverage >= b_coverage {
+        (a.relevant_lines, a.recognized_lines)
+    } else {
+        (b.relevant_lines, b.recognized_lines)
+    };
+
     ParseDiagnostics {
         format_scores: a.format_scores.clone(),
         parsers_used,
-        relevant_lines: a.relevant_lines + b.relevant_lines,
-        recognized_lines: a.recognized_lines + b.recognized_lines,
+        relevant_lines: relevant,
+        recognized_lines: recognized,
         unresolved_lines: Vec::new(),
     }
 }

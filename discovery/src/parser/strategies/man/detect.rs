@@ -70,6 +70,15 @@ pub fn detect_roff_variant(lines: &[&str]) -> Option<ManFormat> {
                 Some(ManFormat::Mdoc)
             } else if lower.iter().any(|line| line.starts_with(".th ")) {
                 Some(ManFormat::Man)
+            } else if lower.iter().any(|line| {
+                line.starts_with(".fl ")
+                    || line.starts_with(".ar ")
+                    || line.starts_with(".op ")
+                    || line.starts_with(".ic ")
+            }) {
+                // No title macro found, but mdoc-only macros are present —
+                // this is an mdoc page.
+                Some(ManFormat::Mdoc)
             } else {
                 Some(ManFormat::Man)
             }
@@ -253,6 +262,14 @@ mod tests {
             "  Detailed manual-style description text.",
         ];
         assert!(is_rendered_man_page(&lines));
+    }
+
+    #[test]
+    fn test_detect_mdoc_without_dt_when_mdoc_only_macros_present() {
+        // .Sh is shared between mdoc and man, but .Fl/.Ar are mdoc-only.
+        // Without a .Dt title macro, the detector should still pick Mdoc.
+        let lines = [".Sh NAME", ".Sh SYNOPSIS", ".Fl v", ".Ar file"];
+        assert_eq!(detect_roff_variant(&lines), Some(ManFormat::Mdoc));
     }
 
     #[test]

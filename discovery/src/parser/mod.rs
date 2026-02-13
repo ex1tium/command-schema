@@ -2824,6 +2824,15 @@ impl HelpParser {
         if trimmed.ends_with('.') {
             return false;
         }
+
+        // Flag definition rows start with a bare flag and have a multi-space
+        // gap before description text (e.g. "-c     check syntax only").
+        // These are NOT synopsis continuations — they're the flag listing body.
+        // Synopsis continuations use compact single-space layout (e.g. "[-a] [-b]").
+        if Self::looks_like_flag_row_start(trimmed) && trimmed.contains("  ") {
+            return false;
+        }
+
         if trimmed.contains('[')
             || trimmed.contains("--")
             || Self::looks_like_flag_row_start(trimmed)
