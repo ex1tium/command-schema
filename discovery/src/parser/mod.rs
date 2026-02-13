@@ -1056,6 +1056,21 @@ impl HelpParser {
     }
 
     fn parse_argument_tokens(value: &str) -> Vec<ArgSchema> {
+        Self::parse_argument_tokens_inner(value, true)
+    }
+
+    /// Parses positional argument tokens from a whitespace-separated string.
+    ///
+    /// When `strict` is `true`, tokens must carry placeholder syntax (`<`, `[`,
+    /// `{`, `...`) or be ALL_CAPS to be accepted.  This prevents prose words
+    /// from leaking through when parsing free-form help text (e.g. an
+    /// "Arguments:" section).
+    ///
+    /// When `strict` is `false`, the structural gate is skipped — the caller is
+    /// expected to have already pre-filtered the tokens (e.g.
+    /// `parse_usage_positionals` checks for placeholder markers, uppercase, or
+    /// lowercase-with-index patterns before calling this).
+    fn parse_argument_tokens_inner(value: &str, strict: bool) -> Vec<ArgSchema> {
         let mut args = Vec::new();
 
         for raw in value.split_whitespace() {
@@ -1079,6 +1094,27 @@ impl HelpParser {
             if cleaned.starts_with('-') {
                 continue;
             }
+
+            // Structural gate: in strict mode the original token must carry
+            // placeholder syntax (brackets, angles, braces, ellipsis) or the
+            // cleaned name must be ALL_CAPS.  This prevents prose words
+            // ("the", "and", "for") from leaking in as positional arg names.
+            if strict {
+                let has_placeholder = token.contains('<')
+                    || token.contains('[')
+                    || token.contains('{')
+                    || token.contains("...");
+                let is_upper = cleaned.len() > 1
+                    && cleaned.chars().any(|ch| ch.is_ascii_alphabetic())
+                    && cleaned
+                        .chars()
+                        .filter(|ch| ch.is_ascii_alphabetic())
+                        .all(|ch| ch.is_ascii_uppercase());
+                if !has_placeholder && !is_upper {
+                    continue;
+                }
+            }
+
             if Self::is_placeholder_keyword(cleaned) {
                 continue;
             }
@@ -1153,7 +1189,10 @@ impl HelpParser {
                 continue;
             }
 
-            for mut arg in Self::parse_argument_tokens(token) {
+            // Non-strict: the caller already pre-filtered tokens via
+            // has_placeholder_markers / looks_upper_placeholder /
+            // looks_lower_with_index checks above.
+            for mut arg in Self::parse_argument_tokens_inner(token, false) {
                 let lower = arg.name.to_ascii_lowercase();
                 if has_subcommands && matches!(lower.as_str(), "command" | "subcommand" | "cmd") {
                     continue;

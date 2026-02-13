@@ -593,8 +593,6 @@ fn parse_args_from_synopsis(
 
         // Skip flag tokens and their value placeholders.
         if raw.starts_with('-') {
-            // If the next token looks like a value placeholder for this flag,
-            // skip it too.
             if idx + 1 < words.len() {
                 let next = words[idx + 1];
                 let next_norm = normalize_synopsis_arg_token(next);
@@ -606,7 +604,18 @@ fn parse_args_from_synopsis(
                         || (!next_norm.is_empty()
                             && next_norm
                                 .chars()
-                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')))
+                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-'))
+                        // Bare lowercase word after an unbracketed flag
+                        // (e.g. "label" in `--label label`): treat as
+                        // flag value when the flag has no inline value.
+                        || (!raw.contains('=')
+                            && !next.contains('[')
+                            && !next.contains('<')
+                            && !next.contains('{')
+                            && !next_norm.is_empty()
+                            && next_norm
+                                .chars()
+                                .all(|ch| ch.is_ascii_alphanumeric() || ch == '_' || ch == '-')))
                 {
                     idx += 2;
                     continue;

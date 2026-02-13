@@ -171,18 +171,34 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
 
             // Track flag tokens and skip their value placeholder.
             if raw.starts_with('-') || normalize_synopsis_arg_token(raw).starts_with('-') {
-                // If the next token looks like a value placeholder for this
-                // flag (e.g. `--depth <n>`), skip it too.
-                if idx + 1 < words.len() {
+                // Determine whether this flag is self-contained in brackets
+                // (e.g. `[--verbose]`) — if so, it's boolean and the next
+                // word is NOT a flag value.
+                let self_contained = raw.starts_with('[') && raw.ends_with(']');
+
+                if !self_contained && idx + 1 < words.len() {
                     let next = words[idx + 1];
                     let next_norm = normalize_synopsis_arg_token(next);
                     if !next.starts_with('-')
                         && !next_norm.starts_with('-')
+                        // Structured value placeholder: <n>, FILE, etc.
                         && (next.contains('<')
                             || next.contains('>')
                             || next_norm
                                 .chars()
-                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-'))
+                                .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+                            // Bare lowercase word after an unbracketed flag
+                            // (e.g. "label" in `--label label`): treat as
+                            // flag value when the flag is not self-contained.
+                            || (!raw.starts_with('[')
+                                && !raw.contains('=')
+                                && !next.contains('[')
+                                && !next.contains('<')
+                                && !next.contains('{')
+                                && !next_norm.is_empty()
+                                && next_norm
+                                    .chars()
+                                    .all(|ch| ch.is_ascii_alphanumeric() || ch == '_' || ch == '-')))
                     {
                         idx += 2;
                         continue;
@@ -357,15 +373,40 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
     for segment in cleaned.split('|') {
         // Scan past the root command name and any flag-like or non-command
         // tokens to find the first subcommand candidate in this segment.
+        let mut prev_was_flag = false;
         for raw in segment.split_whitespace() {
             let token = normalize_synopsis_arg_token(raw);
             if token.is_empty() {
                 continue;
             }
             let token_lower = token.to_ascii_lowercase();
-            if token_lower == root_lower
-                || token.starts_with('-')
-                || raw.contains('<') || raw.contains('>')
+            if token_lower == root_lower {
+                prev_was_flag = false;
+                continue;
+            }
+            if token.starts_with('-') {
+                // If the flag already contains its value (=, <) or is
+                // self-contained in brackets ([...]), don't expect a
+                // bare value word to follow.
+                prev_was_flag =
+                    !raw.contains('=') && !raw.contains('<') && !raw.ends_with(']');
+                continue;
+            }
+            // Skip bare words immediately after a flag — they are flag
+            // value arguments (e.g. "label" in "--label label"), not
+            // subcommands.
+            if prev_was_flag
+                && !raw.contains('<')
+                && !raw.contains('[')
+                && !raw.contains('{')
+            {
+                prev_was_flag = false;
+                continue;
+            }
+            prev_was_flag = false;
+
+            if raw.contains('<')
+                || raw.contains('>')
                 || !looks_like_command_name(&token)
                 || is_placeholder_command_token(&token_lower)
             {
