@@ -7,7 +7,6 @@ pub enum EscapeType {
     Italic,
     Roman,
     Revert,
-    Previous,
     Unknown,
 }
 
@@ -22,8 +21,7 @@ pub fn classify_escape(seq: &str) -> EscapeType {
         "\\B" | "\\fB" => EscapeType::Bold,
         "\\I" | "\\fI" => EscapeType::Italic,
         "\\R" | "\\fR" => EscapeType::Roman,
-        "\\P" => EscapeType::Previous,
-        "\\fP" => EscapeType::Revert,
+        "\\P" | "\\fP" => EscapeType::Revert,
         _ => EscapeType::Unknown,
     }
 }
@@ -91,6 +89,12 @@ pub fn decode_roff_escapes(input: &str) -> String {
             }
             '&' => {
                 chars.next();
+            }
+            // Special character escapes: \(XX (two-char name like \(em, \(en).
+            '(' => {
+                chars.next(); // consume '('
+                let _ = chars.next(); // first char of name
+                let _ = chars.next(); // second char of name
             }
             // Keep unknown escape payload as plain text when possible.
             other => {

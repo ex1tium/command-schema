@@ -2,9 +2,10 @@
 
 use std::collections::HashSet;
 
-use command_schema_core::{ArgSchema, FlagSchema, SubcommandSchema, ValueType};
+use command_schema_core::{ArgSchema, FlagSchema, SubcommandSchema};
 
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
+use crate::parser::strategies::man::infer_value_type;
 
 use super::lexer::Token;
 
@@ -427,8 +428,20 @@ pub fn extract_subcommands_from_man(doc: &ManDocument) -> Vec<SubcommandCandidat
                 _ => continue,
             };
 
-            let token = candidate.split_whitespace().next().unwrap_or_default();
-            if !looks_like_command_name(token) || !seen.insert(token.to_ascii_lowercase()) {
+            // Split on commas first to handle aliases like "clone, cl",
+            // then trim whitespace/punctuation and pick the first valid name.
+            let token = candidate
+                .split(',')
+                .map(|s| s.trim())
+                .map(|s| {
+                    s.split_whitespace()
+                        .next()
+                        .unwrap_or_default()
+                        .trim_end_matches(|ch: char| ch.is_ascii_punctuation() && ch != '-' && ch != '_')
+                })
+                .find(|t| looks_like_command_name(t))
+                .unwrap_or_default();
+            if token.is_empty() || !seen.insert(token.to_ascii_lowercase()) {
                 continue;
             }
 
@@ -588,6 +601,8 @@ fn parse_args_from_synopsis(
                 if !next.starts_with('-')
                     && (next.contains('<')
                         || next.contains('>')
+                        || next.starts_with('[')
+                        || next.ends_with(']')
                         || (!next_norm.is_empty()
                             && next_norm
                                 .chars()
@@ -684,21 +699,6 @@ fn looks_like_command_name(value: &str) -> bool {
             .chars()
             .next()
             .is_some_and(|ch| ch.is_ascii_alphabetic())
-}
-
-fn infer_value_type(text: &str) -> ValueType {
-    let lower = text.to_ascii_lowercase();
-    if lower.contains("file") || lower.contains("path") {
-        ValueType::File
-    } else if lower.contains("dir") {
-        ValueType::Directory
-    } else if lower.contains("url") {
-        ValueType::Url
-    } else if lower.contains("count") || lower.contains("number") {
-        ValueType::Number
-    } else {
-        ValueType::String
-    }
 }
 
 #[cfg(test)]

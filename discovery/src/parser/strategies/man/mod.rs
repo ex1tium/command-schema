@@ -6,9 +6,28 @@ pub mod roff;
 
 use std::cell::RefCell;
 
+use command_schema_core::ValueType;
+
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
 use crate::parser::strategies::ParserStrategy;
 use crate::parser::{HelpParser, IndexedLine};
+
+/// Infers a [`ValueType`] from a token or description string by checking for
+/// common keywords (file/path, dir, url, num/count/number).
+pub fn infer_value_type(text: &str) -> ValueType {
+    let lower = text.to_ascii_lowercase();
+    if lower.contains("file") || lower.contains("path") {
+        ValueType::File
+    } else if lower.contains("dir") {
+        ValueType::Directory
+    } else if lower.contains("url") {
+        ValueType::Url
+    } else if lower.contains("num") || lower.contains("count") || lower.contains("number") {
+        ValueType::Number
+    } else {
+        ValueType::String
+    }
+}
 
 /// Combined extraction output produced by [`ManStrategy`].
 ///
@@ -135,13 +154,16 @@ impl ManStrategy {
             .collect::<Vec<_>>();
 
         let detected = detect::detect_roff_variant(&refs);
+        let mut roff_failed = false;
 
         if let Some(format @ (detect::ManFormat::Mdoc | detect::ManFormat::Man)) = detected {
             let tokens = match roff::lexer::RoffLexer::tokenize(&refs) {
                 Ok(tokens) => tokens,
                 Err(_) => Vec::new(),
             };
-            if !tokens.is_empty() {
+            if tokens.is_empty() {
+                roff_failed = true;
+            } else {
                 let parsed = roff::parse_candidates(format, &tokens);
                 let bundle = CandidateBundle {
                     flags: parsed.flags,
@@ -152,10 +174,14 @@ impl ManStrategy {
                 if bundle.has_entities() {
                     return bundle;
                 }
+                roff_failed = true;
             }
         }
 
-        if detected == Some(detect::ManFormat::Rendered) || detect::is_rendered_man_page(&refs) {
+        if roff_failed
+            || detected == Some(detect::ManFormat::Rendered)
+            || detect::is_rendered_man_page(&refs)
+        {
             let parsed = rendered::parse_candidates(lines);
             return CandidateBundle {
                 flags: parsed.flags,

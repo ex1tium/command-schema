@@ -5,6 +5,7 @@ use std::collections::HashSet;
 use command_schema_core::{ArgSchema, FlagSchema, SubcommandSchema, ValueType};
 
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
+use crate::parser::strategies::man::infer_value_type;
 
 use super::lexer::Token;
 
@@ -417,21 +418,6 @@ fn normalize_arg_name(raw: &str) -> String {
     raw.trim()
         .trim_matches(|ch: char| matches!(ch, '<' | '>' | '[' | ']' | '{' | '}' | '"' | '\''))
         .to_ascii_lowercase()
-}
-
-fn infer_value_type(name: &str) -> ValueType {
-    let lower = name.to_ascii_lowercase();
-    if lower.contains("file") || lower.contains("path") {
-        ValueType::File
-    } else if lower.contains("dir") {
-        ValueType::Directory
-    } else if lower.contains("url") {
-        ValueType::Url
-    } else if lower.contains("num") || lower.contains("count") {
-        ValueType::Number
-    } else {
-        ValueType::String
-    }
 }
 
 fn next_text_description(elements: &[MdocElement], start: usize) -> Option<String> {

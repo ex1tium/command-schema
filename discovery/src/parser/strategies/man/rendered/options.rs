@@ -2,9 +2,10 @@
 
 use std::collections::HashSet;
 
-use command_schema_core::{FlagSchema, ValueType};
+use command_schema_core::FlagSchema;
 
 use crate::parser::ast::{FlagCandidate, SourceSpan};
+use crate::parser::strategies::man::infer_value_type;
 
 use super::sections::ManSection;
 
@@ -177,24 +178,10 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
     vec![schema]
 }
 
-fn infer_value_type(description: &str) -> ValueType {
-    let lower = description.to_ascii_lowercase();
-    if lower.contains("file") || lower.contains("path") {
-        ValueType::File
-    } else if lower.contains("dir") {
-        ValueType::Directory
-    } else if lower.contains("url") {
-        ValueType::Url
-    } else if lower.contains("count") || lower.contains("number") {
-        ValueType::Number
-    } else {
-        ValueType::String
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use command_schema_core::ValueType;
 
     #[test]
     fn test_parse_flag_definition_single_dash_multi_char_is_short() {

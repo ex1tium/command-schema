@@ -5,6 +5,7 @@ use std::collections::HashSet;
 use command_schema_core::{ArgSchema, FlagSchema, SubcommandSchema, ValueType};
 
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
+use crate::parser::strategies::man::infer_value_type;
 
 use super::sections::ManSection;
 
@@ -45,6 +46,37 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
                 let (raw_name, inline_value) = strip_inline_value(&alias);
 
                 let name = normalize_flag_name(raw_name);
+
+                // Detect packed short-flag clusters like -abc (single dash,
+                // body longer than 2 alphanumeric chars) and expand into
+                // individual short flags, all boolean.
+                if !name.starts_with("--") && name.starts_with('-') {
+                    let body = &name[1..];
+                    if body.len() > 2
+                        && body.chars().all(|ch| ch.is_ascii_alphanumeric())
+                    {
+                        for ch in body.chars() {
+                            let short_name = format!("-{ch}");
+                            if !is_valid_flag_name(&short_name) {
+                                continue;
+                            }
+                            let schema =
+                                FlagSchema::boolean(Some(&short_name), None);
+                            let key =
+                                schema.short.clone().unwrap_or_default();
+                            if !key.is_empty() && seen.insert(key) {
+                                out.push(FlagCandidate::from_schema(
+                                    schema,
+                                    SourceSpan::single(line.index),
+                                    "man-rendered-synopsis-flags",
+                                    0.70,
+                                ));
+                            }
+                        }
+                        continue;
+                    }
+                }
+
                 if !is_valid_flag_name(&name) {
                     continue;
                 }
@@ -428,21 +460,6 @@ fn join_synopsis_text(section: &ManSection) -> String {
         .join(" ")
 }
 
-fn infer_value_type(token: &str) -> ValueType {
-    let lower = token.to_ascii_lowercase();
-    if lower.contains("file") || lower.contains("path") {
-        ValueType::File
-    } else if lower.contains("dir") {
-        ValueType::Directory
-    } else if lower.contains("url") {
-        ValueType::Url
-    } else if lower.contains("num") || lower.contains("count") {
-        ValueType::Number
-    } else {
-        ValueType::String
-    }
-}
-
 fn split_flag_aliases(token: &str) -> Vec<String> {
     token
         .split(|ch: char| ch == '|' || ch == ',')
@@ -487,7 +504,7 @@ fn normalize_flag_name(raw: &str) -> String {
 
 /// Returns `true` when a flag name looks structurally valid.
 ///
-/// Rejects garbage like `-)x`, `-S[<keyid`, `-m/-c/-C/-F).`, `-98`, and
+/// Rejects garbage like `-)x`, `-S[<keyid`, `-m/-c/-C/-F).`, and
 /// other malformed short-flag artifacts from man-page notation.
 fn is_valid_flag_name(name: &str) -> bool {
     if name.is_empty() {
@@ -495,8 +512,8 @@ fn is_valid_flag_name(name: &str) -> bool {
     }
     if name.starts_with("--") {
         // Long flag: body must start with a letter (rejects "---" and
-        // ASCII art like "---o---O---P---Q"), only alphanumeric/hyphen
-        // characters allowed.
+        // ASCII art like "---o---O---P---Q"), only alphanumeric/hyphen/dot
+        // characters allowed (dot for names like --tls-min-v1.2).
         let body = &name[2..];
         !body.is_empty()
             && body
@@ -505,13 +522,16 @@ fn is_valid_flag_name(name: &str) -> bool {
                 .is_some_and(|ch| ch.is_ascii_alphabetic())
             && body
                 .chars()
-                .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
+                .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_' || ch == '.')
     } else if name.starts_with('-') {
-        // Short flag: `-` followed by 1-2 alphanumeric chars.
+        // Short flag: `-` followed by 1-2 alphanumeric or symbolic chars
+        // (e.g. -?, -@).
         let body = &name[1..];
         !body.is_empty()
             && body.len() <= 2
-            && body.chars().all(|ch| ch.is_ascii_alphanumeric())
+            && body
+                .chars()
+                .all(|ch| ch.is_ascii_alphanumeric() || ch.is_ascii_punctuation())
     } else {
         false
     }
@@ -684,5 +704,37 @@ mod tests {
         );
         // pkg IS a legitimate positional arg
         assert!(arg_names.contains("pkg"), "pkg should be a positional arg");
+    }
+
+    #[test]
+    fn test_parse_synopsis_flags_expands_packed_short_cluster() {
+        let section = ManSection {
+            name: "SYNOPSIS".to_string(),
+            start_line: 0,
+            end_line: 0,
+            lines: vec![IndexedLine {
+                index: 0,
+                text: "tool [-abc]".to_string(),
+            }],
+        };
+
+        let flags = parse_synopsis_flags(&section);
+        assert!(
+            flags.iter().any(|flag| flag.short.as_deref() == Some("-a")),
+            "missing -a"
+        );
+        assert!(
+            flags.iter().any(|flag| flag.short.as_deref() == Some("-b")),
+            "missing -b"
+        );
+        assert!(
+            flags.iter().any(|flag| flag.short.as_deref() == Some("-c")),
+            "missing -c"
+        );
+        // All expanded flags should be boolean (no takes_value).
+        assert!(
+            flags.iter().all(|flag| !flag.takes_value),
+            "cluster-expanded flags should be boolean"
+        );
     }
 }

@@ -1376,6 +1376,17 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     let probe_run = probe_command_help_with_metadata(command);
     let probe_attempts = to_probe_attempt_reports(&probe_run.attempts);
 
+    // Collect content fingerprints from ALL raw sources before consuming them.
+    // This ensures ancestor_hashes covers both man page and help output so
+    // that subcommand probes that echo parent help text are detected.
+    let mut source_fingerprints = Vec::with_capacity(2);
+    if let Some(ref man) = probe_run.man_eval {
+        source_fingerprints.push(normalize_for_fingerprint(&man.raw_text));
+    }
+    if let Some(ref help) = probe_run.help_eval {
+        source_fingerprints.push(normalize_for_fingerprint(&help.raw_text));
+    }
+
     // --- Determine schema from available sources ---
     let resolved = resolve_probe_sources(
         command,
@@ -1438,8 +1449,7 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     // outputs so that cycle detection covers both man and help text.
     let mut probed_subcommands = HashSet::new();
     let recursive_probe_started = Instant::now();
-    let mut ancestor_hashes = HashSet::new();
-    ancestor_hashes.insert(normalize_for_fingerprint(&raw_output));
+    let mut ancestor_hashes: HashSet<u64> = source_fingerprints.into_iter().collect();
     let root_leaf = command
         .split_whitespace()
         .next()
@@ -1828,14 +1838,19 @@ fn is_parent_help_echo_for_subcommand(
         .map(|sub| sub.name.to_ascii_lowercase())
         .collect::<HashSet<_>>();
 
-    // The echoed parent help usually includes the currently probed subcommand
-    // plus many of its siblings.
-    if !parsed_names.contains(&subcommand_name.to_ascii_lowercase()) {
-        return false;
+    let sibling_overlap = parsed_names.intersection(sibling_names).count();
+
+    // The subcommand name may be present in the parsed output or absent
+    // (the parser often filters it out as a command-name component). Both
+    // cases indicate a parent echo when there's high sibling overlap.
+    let contains_self = parsed_names.contains(&subcommand_name.to_ascii_lowercase());
+    if contains_self && sibling_overlap >= 3 {
+        return true;
     }
 
-    let sibling_overlap = parsed_names.intersection(sibling_names).count();
-    sibling_overlap >= 3
+    // Even without self, if ≥50% of siblings (min 3) appear as parsed
+    // sub-subcommands, this is almost certainly a parent help echo.
+    sibling_names.len() >= 4 && sibling_overlap >= sibling_names.len() / 2
 }
 
 /// Determines if a subcommand should be skipped during probing.
