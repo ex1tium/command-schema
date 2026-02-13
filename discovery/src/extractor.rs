@@ -1,9 +1,10 @@
 //! Command schema extraction via help probing.
 //!
-//! Automatically extracts command schemas by running `--help` commands
-//! and recursively probing subcommands up to `MAX_PROBE_DEPTH` (3) levels
-//! deep. The extractor tries multiple help flags (`--help`, `-h`, `-?`) and
-//! conditionally tries `help` when probe output explicitly suggests it.
+//! Automatically extracts command schemas by probing man pages first, then
+//! running `--help` commands and recursively probing subcommands with cycle
+//! detection, a bounded depth, and a bounded probe budget. The extractor
+//! tries multiple help flags (`--help`, `-h`, `-?`) and conditionally tries
+//! `help` when probe output explicitly suggests it.
 //!
 //! # Quality policy
 //!
@@ -24,7 +25,9 @@
 //! ```
 
 use std::collections::HashSet;
+use std::collections::hash_map::DefaultHasher;
 use std::fs;
+use std::hash::{Hash, Hasher};
 use std::io::ErrorKind;
 use std::io::Read;
 use std::path::{Path, PathBuf};
@@ -33,14 +36,27 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use tracing::{debug, info};
 
-use super::parser::{FormatScore, HelpParser};
+use super::parser::util::looks_like_man_title_line;
+use super::parser::{FormatScore, HelpParser, ParseDiagnostics};
 use super::report::{
     ExtractionReport, FailureCode, FormatScoreReport, ProbeAttemptReport, QualityTier,
 };
-use command_schema_core::{ExtractionResult, HelpFormat, SubcommandSchema, validate_schema};
+use command_schema_core::{
+    CommandSchema, ExtractionResult, HelpFormat, MergeStrategy, SchemaSource, SubcommandSchema,
+    merge_schemas, validate_schema,
+};
 
 /// Maximum depth for recursive subcommand probing.
-const MAX_PROBE_DEPTH: usize = 3;
+const MAX_RECURSIVE_PROBE_DEPTH: usize = 6;
+
+/// Maximum number of unique command invocations to probe recursively.
+const MAX_RECURSIVE_PROBE_BUDGET: usize = 256;
+
+/// Maximum number of direct child probes attempted per command node.
+const MAX_RECURSIVE_PROBES_PER_PARENT: usize = 48;
+
+/// Maximum wall-clock time spent in recursive subcommand probing per command.
+const MAX_RECURSIVE_PROBE_WALL_TIME_SECS: u64 = 20;
 
 /// Timeout for help commands (milliseconds).
 const HELP_TIMEOUT_MS: u64 = 5000;
@@ -149,8 +165,31 @@ impl ProbeAttempt {
 
 #[derive(Debug, Clone)]
 struct ProbeRun {
-    help_output: Option<String>,
+    /// Pre-parsed man page evaluation (if a man page was found).
+    man_eval: Option<EvaluatedOutput>,
+    /// Pre-parsed help output evaluation (if --help succeeded).
+    help_eval: Option<EvaluatedOutput>,
     attempts: Vec<ProbeAttempt>,
+}
+
+#[derive(Debug, Clone, Copy, Default)]
+struct ProbeOutputQuality {
+    entities: usize,
+    confidence: f64,
+    coverage: f64,
+    has_subcommands: bool,
+    bytes: usize,
+}
+
+/// Bundles quality metrics with the parsed schema to avoid double-parsing.
+#[derive(Debug, Clone)]
+struct EvaluatedOutput {
+    raw_text: String,
+    quality: ProbeOutputQuality,
+    schema: Option<CommandSchema>,
+    diagnostics: ParseDiagnostics,
+    warnings: Vec<String>,
+    detected_format: Option<HelpFormat>,
 }
 
 #[derive(Debug)]
@@ -204,8 +243,24 @@ struct CommandIdentity {
 }
 
 /// Probes a command's help output and returns the raw text.
+///
+/// When both man and help sources are available, prefers the source whose
+/// parse produced a schema. Falls back to the other source.
 pub fn probe_command_help(command: &str) -> Option<String> {
-    probe_command_help_with_metadata(command).help_output
+    let run = probe_command_help_with_metadata(command);
+    // Prefer help output when it parsed successfully; fall back to man.
+    run.help_eval
+        .as_ref()
+        .filter(|e| e.schema.is_some())
+        .map(|e| e.raw_text.clone())
+        .or_else(|| {
+            run.man_eval
+                .as_ref()
+                .filter(|e| e.schema.is_some())
+                .map(|e| e.raw_text.clone())
+        })
+        .or_else(|| run.help_eval.map(|e| e.raw_text))
+        .or_else(|| run.man_eval.map(|e| e.raw_text))
 }
 
 fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
@@ -213,7 +268,8 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
     let parts: Vec<&str> = command.split_whitespace().collect();
     if parts.is_empty() {
         return ProbeRun {
-            help_output: None,
+            man_eval: None,
+            help_eval: None,
             attempts: Vec::new(),
         };
     }
@@ -223,6 +279,40 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
     let mut env_overrides = default_probe_env();
     env_overrides.extend(command_specific_probe_env(base_command.as_str()));
 
+    // --- Phase 1: Probe man pages ---
+    let mut best_man_eval: Option<EvaluatedOutput> = None;
+
+    for man_page in man_probe_pages(&parts) {
+        let cmd_parts = vec!["man".to_string(), man_page.clone()];
+        let label = format!("man:{man_page}");
+
+        debug!(command = ?cmd_parts, "Probing man page");
+        let outcome = try_direct_probe(&cmd_parts, &label, &env_overrides);
+        if outcome.spawn_not_found {
+            // If `man` itself is unavailable there is no value in trying
+            // additional man pages for this command chain.
+            break;
+        }
+        attempts.push(outcome.attempt);
+        if let Some(help_text) = outcome.accepted_output {
+            let adapted = adapt_help_output_for_command(command, help_text);
+            let eval = evaluate_help_output(command, adapted.as_str());
+            if best_man_eval
+                .as_ref()
+                .map(|current| {
+                    output_quality_score(eval.quality) > output_quality_score(current.quality)
+                })
+                .unwrap_or(true)
+            {
+                best_man_eval = Some(eval);
+            }
+        }
+    }
+
+    // --- Phase 2: Probe help output (--help, -h, etc.) ---
+    let mut best_help_eval: Option<EvaluatedOutput> = None;
+
+    // Try command-specific help suffixes first (e.g. "ps --help all").
     for suffix in command_specific_probe_suffixes(base_command.as_str()) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
         cmd_parts.extend(suffix.iter().map(|part| (*part).to_string()));
@@ -235,53 +325,55 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         }
         attempts.push(outcome.attempt);
         if let Some(help_text) = outcome.accepted_output {
-            return ProbeRun {
-                help_output: Some(adapt_help_output_for_command(command, help_text)),
-                attempts,
-            };
+            let adapted = adapt_help_output_for_command(command, help_text);
+            best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
+            break;
         }
     }
 
-    for help_flag in HELP_FLAGS {
-        let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
-        cmd_parts.push((*help_flag).to_string());
+    // Try standard help flags if no command-specific help was found.
+    if best_help_eval.is_none() {
+        for help_flag in HELP_FLAGS {
+            let mut cmd_parts: Vec<String> =
+                parts.iter().map(|part| (*part).to_string()).collect();
+            cmd_parts.push((*help_flag).to_string());
 
-        debug!(command = ?cmd_parts, "Probing help");
-        let outcome = try_direct_probe(&cmd_parts, help_flag, &env_overrides);
-        if outcome.spawn_not_found {
-            // Shell builtin fallback (e.g. `cd`) for commands that don't exist
-            // as standalone executables.
-            debug!(
-                command = ?cmd_parts,
-                "Direct spawn failed, trying shell fallback probe"
-            );
-            let shell_probe = probe_shell_help(&parts, help_flag, &env_overrides);
-            attempts.push(shell_probe.attempt);
-            if let Some(help_text) = shell_probe.accepted_output {
-                return ProbeRun {
-                    help_output: Some(adapt_help_output_for_command(command, help_text)),
-                    attempts,
-                };
+            debug!(command = ?cmd_parts, "Probing help");
+            let outcome = try_direct_probe(&cmd_parts, help_flag, &env_overrides);
+            if outcome.spawn_not_found {
+                // Shell builtin fallback (e.g. `cd`) for commands that don't exist
+                // as standalone executables.
+                debug!(
+                    command = ?cmd_parts,
+                    "Direct spawn failed, trying shell fallback probe"
+                );
+                let shell_probe = probe_shell_help(&parts, help_flag, &env_overrides);
+                attempts.push(shell_probe.attempt);
+                if let Some(help_text) = shell_probe.accepted_output {
+                    let adapted = adapt_help_output_for_command(command, help_text);
+                    best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
+                    break;
+                }
+                continue;
             }
-            continue;
-        }
 
-        attempts.push(outcome.attempt);
-        if let Some(help_text) = outcome.accepted_output {
-            debug!(
-                command = command,
-                help_flag = help_flag,
-                length = help_text.len(),
-                "Got help output"
-            );
-            return ProbeRun {
-                help_output: Some(adapt_help_output_for_command(command, help_text)),
-                attempts,
-            };
+            attempts.push(outcome.attempt);
+            if let Some(help_text) = outcome.accepted_output {
+                debug!(
+                    command = command,
+                    help_flag = help_flag,
+                    length = help_text.len(),
+                    "Got help output"
+                );
+                let adapted = adapt_help_output_for_command(command, help_text);
+                best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
+                break;
+            }
         }
     }
 
-    if should_probe_help_subcommand(&parts, &attempts) {
+    // Try "help" subcommand if standard flags failed.
+    if best_help_eval.is_none() && should_probe_help_subcommand(&parts, &attempts) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
         if parts.len() > 1 {
             // For "git remote", try "git help remote".
@@ -296,26 +388,74 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
             let shell_probe = probe_shell_help(&parts, "help", &env_overrides);
             attempts.push(shell_probe.attempt);
             if let Some(help_text) = shell_probe.accepted_output {
-                return ProbeRun {
-                    help_output: Some(adapt_help_output_for_command(command, help_text)),
-                    attempts,
-                };
+                let adapted = adapt_help_output_for_command(command, help_text);
+                best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
             }
         } else {
             attempts.push(outcome.attempt);
             if let Some(help_text) = outcome.accepted_output {
-                return ProbeRun {
-                    help_output: Some(adapt_help_output_for_command(command, help_text)),
-                    attempts,
-                };
+                let adapted = adapt_help_output_for_command(command, help_text);
+                best_help_eval = Some(evaluate_help_output(command, adapted.as_str()));
             }
         }
     }
 
     ProbeRun {
-        help_output: None,
+        man_eval: best_man_eval,
+        help_eval: best_help_eval,
         attempts,
     }
+}
+
+fn evaluate_help_output(command: &str, output: &str) -> EvaluatedOutput {
+    let mut parser = HelpParser::new(command, output);
+    let schema = parser.parse();
+    let coverage = parser.diagnostics().coverage();
+    let diagnostics = parser.diagnostics().clone();
+    let warnings = parser.warnings().to_vec();
+    let detected_format = parser.detected_format();
+
+    let quality = match &schema {
+        Some(s) => ProbeOutputQuality {
+            entities: s.global_flags.len() + s.subcommands.len() + s.positional.len(),
+            confidence: s.confidence,
+            coverage,
+            has_subcommands: !s.subcommands.is_empty(),
+            bytes: output.len(),
+        },
+        None => ProbeOutputQuality {
+            entities: 0,
+            confidence: 0.0,
+            coverage,
+            has_subcommands: false,
+            bytes: output.len(),
+        },
+    };
+
+    EvaluatedOutput {
+        raw_text: output.to_string(),
+        quality,
+        schema,
+        diagnostics,
+        warnings,
+        detected_format,
+    }
+}
+
+/// Computes a composite quality score for ranking probe outputs.
+///
+/// Weights: entities (1x raw count), coverage (4x — high weight because
+/// recognizing more of the output signals a better parse), confidence (2x —
+/// average flag confidence), subcommand bonus (flat +2 to prefer outputs
+/// that reveal subcommands), bytes (up to +1, clamped at 12 KB, to mildly
+/// prefer richer raw output for fingerprinting).
+fn output_quality_score(quality: ProbeOutputQuality) -> f64 {
+    let subcommand_bonus = if quality.has_subcommands { 2.0 } else { 0.0 };
+    quality.entities as f64
+        + quality.coverage * 4.0
+        + quality.confidence * 2.0
+        + subcommand_bonus
+        + ((quality.bytes.min(12_000) as f64) / 12_000.0)
 }
 
 fn should_probe_help_subcommand(parts: &[&str], attempts: &[ProbeAttempt]) -> bool {
@@ -355,6 +495,49 @@ fn command_specific_probe_suffixes(base_command: &str) -> Vec<Vec<&'static str>>
         ],
         _ => Vec::new(),
     }
+}
+
+fn man_probe_pages(parts: &[&str]) -> Vec<String> {
+    if parts.is_empty() {
+        return Vec::new();
+    }
+
+    if !parts.iter().all(|part| is_plausible_man_token(part)) {
+        return Vec::new();
+    }
+
+    let mut pages = Vec::new();
+    let mut seen = HashSet::new();
+    if parts.len() == 1 {
+        push_unique_man_page(&mut pages, &mut seen, parts[0].to_string());
+        return pages;
+    }
+
+    // For nested commands (e.g. `git remote add`) try the most specific page
+    // first and then progressively less specific parent pages.
+    for depth in (2..=parts.len()).rev() {
+        let suffix = parts[1..depth].join("-");
+        push_unique_man_page(&mut pages, &mut seen, format!("{}-{suffix}", parts[0]));
+    }
+
+    pages
+}
+
+fn push_unique_man_page(pages: &mut Vec<String>, seen: &mut HashSet<String>, page: String) {
+    let trimmed = page.trim();
+    if trimmed.is_empty() {
+        return;
+    }
+    if seen.insert(trimmed.to_string()) {
+        pages.push(trimmed.to_string());
+    }
+}
+
+fn is_plausible_man_token(token: &str) -> bool {
+    !token.is_empty()
+        && token
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '+' | '.' | '_' | '-'))
 }
 
 fn command_specific_probe_env(base_command: &str) -> Vec<(&'static str, &'static str)> {
@@ -574,8 +757,27 @@ struct ShellProbeResult {
 
 /// Returns `true` if `s` contains shell metacharacters that could allow injection.
 fn contains_shell_metacharacters(s: &str) -> bool {
-    s.chars()
-        .any(|ch| matches!(ch, '|' | ';' | '&' | '$' | '`' | '(' | ')' | '{' | '}' | '<' | '>' | '!' | '\'' | '"' | '\\' | '\n' | '\r'))
+    s.chars().any(|ch| {
+        matches!(
+            ch,
+            '|' | ';'
+                | '&'
+                | '$'
+                | '`'
+                | '('
+                | ')'
+                | '{'
+                | '}'
+                | '<'
+                | '>'
+                | '!'
+                | '\''
+                | '"'
+                | '\\'
+                | '\n'
+                | '\r'
+        )
+    })
 }
 
 fn probe_shell_help(
@@ -820,6 +1022,10 @@ fn is_help_output(text: &str) -> bool {
         return true;
     }
 
+    if is_man_page_output(trimmed) {
+        return true;
+    }
+
     // Should contain help-like keywords
     let help_indicators = [
         "usage",
@@ -831,6 +1037,37 @@ fn is_help_output(text: &str) -> bool {
     ];
 
     help_indicators.iter().any(|&ind| text_lower.contains(ind))
+}
+
+fn is_man_page_output(text: &str) -> bool {
+    let mut title_lines = 0usize;
+    let mut section_headers = 0usize;
+
+    for line in text.lines().take(120) {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        if looks_like_man_title_line(trimmed) {
+            title_lines += 1;
+        }
+        if matches!(
+            trimmed,
+            "NAME"
+                | "SYNOPSIS"
+                | "DESCRIPTION"
+                | "OPTIONS"
+                | "COMMANDS"
+                | "EXAMPLES"
+                | "SEE ALSO"
+                | "FILES"
+                | "ENVIRONMENT"
+        ) {
+            section_headers += 1;
+        }
+    }
+
+    section_headers >= 2 || (title_lines >= 1 && section_headers >= 1)
 }
 
 fn output_preview(text: &str) -> Option<String> {
@@ -1146,9 +1383,26 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     let probe_run = probe_command_help_with_metadata(command);
     let probe_attempts = to_probe_attempt_reports(&probe_run.attempts);
 
-    // Get help output
-    let raw_output = match probe_run.help_output {
-        Some(output) => output,
+    // Collect content fingerprints from ALL raw sources before consuming them.
+    // This ensures ancestor_hashes covers both man page and help output so
+    // that subcommand probes that echo parent help text are detected.
+    let mut source_fingerprints = Vec::with_capacity(2);
+    if let Some(ref man) = probe_run.man_eval {
+        source_fingerprints.push(normalize_for_fingerprint(&man.raw_text));
+    }
+    if let Some(ref help) = probe_run.help_eval {
+        source_fingerprints.push(normalize_for_fingerprint(&help.raw_text));
+    }
+
+    // --- Determine schema from available sources ---
+    let resolved = resolve_probe_sources(
+        command,
+        probe_run.man_eval,
+        probe_run.help_eval,
+    );
+
+    let (mut schema, raw_output, diagnostics, detected_format, parser_warnings) = match resolved {
+        Some(r) => r,
         None => {
             let failure_warning = format!("Could not get help output for '{}'", command);
             let (failure_code, failure_detail) =
@@ -1188,71 +1442,35 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     };
 
     // Extract version from help output if not already set
-    let detected_version = crate::version::extract_version(&raw_output, command);
-
-    // Parse the help output
-    let mut parser = HelpParser::new(command, &raw_output);
-    let mut schema = match parser.parse() {
-        Some(s) => s,
-        None => {
-            let diagnostics = parser.diagnostics().clone();
-            let parser_warnings = parser.warnings().to_vec();
-            let coverage = diagnostics.coverage();
-            return ExtractionRun {
-                result: ExtractionResult {
-                    schema: None,
-                    raw_output,
-                    detected_format: parser.detected_format(),
-                    warnings: parser_warnings.clone(),
-                    success: false,
-                },
-                report: ExtractionReport {
-                    command: command.to_string(),
-                    resolved_executable_path: identity.resolved_executable_path.clone(),
-                    resolved_implementation: identity.resolved_implementation.clone(),
-                    success: false,
-                    accepted_for_suggestions: false,
-                    quality_tier: QualityTier::Failed,
-                    quality_reasons: Vec::new(),
-                    failure_code: Some(FailureCode::ParseFailed),
-                    failure_detail: Some(
-                        "Help text was found but parsing produced no schema".to_string(),
-                    ),
-                    selected_format: parser.detected_format().map(help_format_label),
-                    format_scores: to_format_score_reports(&diagnostics.format_scores),
-                    parsers_used: diagnostics.parsers_used,
-                    confidence: 0.0,
-                    coverage,
-                    relevant_lines: diagnostics.relevant_lines,
-                    recognized_lines: diagnostics.recognized_lines,
-                    unresolved_lines: diagnostics.unresolved_lines,
-                    probe_attempts,
-                    warnings: parser_warnings,
-                    validation_errors: Vec::new(),
-                },
-            };
-        }
-    };
-
-    // Set version if detected and not already present in schema
     if schema.version.is_none() {
-        schema.version = detected_version;
+        schema.version = crate::version::extract_version(&raw_output, command);
     }
 
-    let parser_warnings = parser.warnings().to_vec();
     let mut report_warnings = parser_warnings.clone();
     let actionable_parser_warnings = parser_warnings
         .into_iter()
-        .filter(|warning| !is_candidate_diagnostic_warning(warning));
+        .filter(|w| !is_candidate_diagnostic_warning(w));
     extend_unique_warnings(&mut warnings, actionable_parser_warnings);
 
-    // Recursively probe subcommands
+    // Recursively probe subcommands — seed ancestor hashes from all raw
+    // outputs so that cycle detection covers both man and help text.
     let mut probed_subcommands = HashSet::new();
+    let recursive_probe_started = Instant::now();
+    let mut ancestor_hashes: HashSet<u64> = source_fingerprints.into_iter().collect();
+    let root_leaf = command
+        .split_whitespace()
+        .next()
+        .unwrap_or(command)
+        .to_ascii_lowercase();
+    let mut ancestor_names = vec![root_leaf];
     probe_subcommands_recursive(
         command,
         &mut schema.subcommands,
         &mut probed_subcommands,
+        &mut ancestor_hashes,
+        &mut ancestor_names,
         1,
+        recursive_probe_started,
         &mut warnings,
     );
 
@@ -1264,7 +1482,6 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
         "Extracted command schema"
     );
 
-    let diagnostics = parser.diagnostics().clone();
     let validation_errors = validate_schema(&schema)
         .into_iter()
         .map(|error| error.to_string())
@@ -1306,7 +1523,7 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
         quality_reasons: Vec::new(),
         failure_code: fc,
         failure_detail: fd,
-        selected_format: parser.detected_format().map(help_format_label),
+        selected_format: detected_format.map(help_format_label),
         format_scores: to_format_score_reports(&diagnostics.format_scores),
         parsers_used: diagnostics.parsers_used.clone(),
         confidence: schema.confidence,
@@ -1323,7 +1540,7 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
         result: ExtractionResult {
             schema: if success { Some(schema) } else { None },
             raw_output,
-            detected_format: parser.detected_format(),
+            detected_format,
             warnings,
             success,
         },
@@ -1331,15 +1548,178 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
     }
 }
 
+/// Resolved probe output: schema, raw text, diagnostics, format, and parser warnings.
+type ResolvedProbe = (
+    CommandSchema,
+    String,
+    ParseDiagnostics,
+    Option<HelpFormat>,
+    Vec<String>,
+);
+
+/// Resolves two probed sources (man + help) into a single schema by merging
+/// when both are available, or falling back to whichever parsed successfully.
+fn resolve_probe_sources(
+    command: &str,
+    man_eval: Option<EvaluatedOutput>,
+    help_eval: Option<EvaluatedOutput>,
+) -> Option<ResolvedProbe> {
+    match (man_eval, help_eval) {
+        (Some(man), Some(help)) => {
+            match (man.schema, help.schema) {
+                (Some(man_s), Some(help_s)) => {
+                    // Help as base, man as overlay → Union: overlay (man)
+                    // descriptions win, giving us man's richer flag docs.
+                    let mut merged = merge_schemas(&help_s, &man_s, MergeStrategy::Union);
+                    merged.source = SchemaSource::Merged;
+                    // Use the larger raw output for fingerprinting / display.
+                    let raw = if man.raw_text.len() >= help.raw_text.len() {
+                        man.raw_text
+                    } else {
+                        help.raw_text
+                    };
+                    let diag = merge_diagnostics(&man.diagnostics, &help.diagnostics);
+                    let format = help
+                        .detected_format
+                        .filter(|f| !matches!(f, HelpFormat::Unknown))
+                        .or(man.detected_format);
+                    let mut all_warnings = man.warnings;
+                    all_warnings.extend(help.warnings);
+                    debug!(
+                        command = command,
+                        man_entities = man.quality.entities,
+                        help_entities = help.quality.entities,
+                        merged_flags = merged.global_flags.len(),
+                        merged_subcommands = merged.subcommands.len(),
+                        "Merged man + help schemas"
+                    );
+                    Some((merged, raw, diag, format, all_warnings))
+                }
+                (Some(man_s), None) => Some((
+                    man_s,
+                    man.raw_text,
+                    man.diagnostics,
+                    man.detected_format,
+                    man.warnings,
+                )),
+                (None, Some(help_s)) => Some((
+                    help_s,
+                    help.raw_text,
+                    help.diagnostics,
+                    help.detected_format,
+                    help.warnings,
+                )),
+                (None, None) => None,
+            }
+        }
+        (Some(eval), None) | (None, Some(eval)) => eval.schema.map(|s| {
+            (
+                s,
+                eval.raw_text,
+                eval.diagnostics,
+                eval.detected_format,
+                eval.warnings,
+            )
+        }),
+        (None, None) => None,
+    }
+}
+
+/// Merges diagnostics from two parse runs into a combined set.
+fn merge_diagnostics(a: &ParseDiagnostics, b: &ParseDiagnostics) -> ParseDiagnostics {
+    let mut parsers_used = a.parsers_used.clone();
+    for p in &b.parsers_used {
+        if !parsers_used.contains(p) {
+            parsers_used.push(p.clone());
+        }
+    }
+    parsers_used.push("multi-source-merge".to_string());
+
+    // Use the source with better coverage to avoid dilution from
+    // large but mostly-unparseable inputs (e.g. a 400-line man page
+    // where only SYNOPSIS/OPTIONS are recognized).
+    let a_coverage = if a.relevant_lines > 0 {
+        a.recognized_lines as f64 / a.relevant_lines as f64
+    } else {
+        0.0
+    };
+    let b_coverage = if b.relevant_lines > 0 {
+        b.recognized_lines as f64 / b.relevant_lines as f64
+    } else {
+        0.0
+    };
+    let (relevant, recognized) = if a_coverage >= b_coverage {
+        (a.relevant_lines, a.recognized_lines)
+    } else {
+        (b.relevant_lines, b.recognized_lines)
+    };
+
+    // Merge format scores from both sources, preferring a's entry when
+    // the same format appears in both.
+    let mut format_scores = a.format_scores.clone();
+    for score in &b.format_scores {
+        if !format_scores.iter().any(|s| s.format == score.format) {
+            format_scores.push(score.clone());
+        }
+    }
+
+    ParseDiagnostics {
+        format_scores,
+        parsers_used,
+        relevant_lines: relevant,
+        recognized_lines: recognized,
+        unresolved_lines: Vec::new(),
+    }
+}
+
+/// Normalizes help text for content fingerprinting, collapsing trivial
+/// formatting differences (whitespace, case) that should not distinguish
+/// two help outputs.
+fn normalize_for_fingerprint(text: &str) -> u64 {
+    let mut hasher = DefaultHasher::new();
+    for line in text.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let normalized: String = trimmed
+            .split_whitespace()
+            .collect::<Vec<_>>()
+            .join(" ")
+            .to_ascii_lowercase();
+        normalized.hash(&mut hasher);
+    }
+    hasher.finish()
+}
+
 /// Recursively probes subcommands to get their schemas.
 fn probe_subcommands_recursive(
     base_command: &str,
     subcommands: &mut [SubcommandSchema],
     probed: &mut HashSet<String>,
+    ancestor_hashes: &mut HashSet<u64>,
+    ancestor_names: &mut Vec<String>,
     depth: usize,
+    started_at: Instant,
     warnings: &mut Vec<String>,
 ) {
-    if depth > MAX_PROBE_DEPTH {
+    if depth > MAX_RECURSIVE_PROBE_DEPTH {
+        debug!(
+            command = base_command,
+            depth = depth,
+            max_depth = MAX_RECURSIVE_PROBE_DEPTH,
+            "Reached maximum recursive probe depth; skipping deeper discovery"
+        );
+        return;
+    }
+    if started_at.elapsed() >= Duration::from_secs(MAX_RECURSIVE_PROBE_WALL_TIME_SECS) {
+        extend_unique_warnings(
+            warnings,
+            std::iter::once(format!(
+                "Reached recursive probe time budget ({}s); skipping deeper discovery",
+                MAX_RECURSIVE_PROBE_WALL_TIME_SECS
+            )),
+        );
         return;
     }
 
@@ -1347,13 +1727,35 @@ fn probe_subcommands_recursive(
         .iter()
         .map(|subcmd| subcmd.name.to_ascii_lowercase())
         .collect::<HashSet<_>>();
+    let mut probed_children = 0usize;
 
     for subcmd in subcommands.iter_mut() {
+        if started_at.elapsed() >= Duration::from_secs(MAX_RECURSIVE_PROBE_WALL_TIME_SECS) {
+            extend_unique_warnings(
+                warnings,
+                std::iter::once(format!(
+                    "Reached recursive probe time budget ({}s); skipping deeper discovery",
+                    MAX_RECURSIVE_PROBE_WALL_TIME_SECS
+                )),
+            );
+            break;
+        }
+
         let full_command = format!("{} {}", base_command, subcmd.name);
 
         // Skip if already probed (avoid cycles)
         if probed.contains(&full_command) {
             continue;
+        }
+        if probed.len() >= MAX_RECURSIVE_PROBE_BUDGET {
+            extend_unique_warnings(
+                warnings,
+                std::iter::once(format!(
+                    "Reached recursive probe budget ({MAX_RECURSIVE_PROBE_BUDGET}) while probing '{}'; skipping deeper discovery",
+                    base_command
+                )),
+            );
+            break;
         }
         probed.insert(full_command.clone());
 
@@ -1364,6 +1766,17 @@ fn probe_subcommands_recursive(
         if should_skip_known_cycle_prone_probe(base_command, subcmd) {
             continue;
         }
+        if probed_children >= MAX_RECURSIVE_PROBES_PER_PARENT {
+            extend_unique_warnings(
+                warnings,
+                std::iter::once(format!(
+                    "Reached per-command recursive probe limit ({MAX_RECURSIVE_PROBES_PER_PARENT}) for '{}'; skipping remaining siblings",
+                    base_command
+                )),
+            );
+            break;
+        }
+        probed_children += 1;
 
         debug!(
             command = %full_command,
@@ -1373,6 +1786,17 @@ fn probe_subcommands_recursive(
 
         // Get help for this subcommand
         if let Some(help_output) = probe_command_help(&full_command) {
+            // Content fingerprint: skip if output matches any ancestor's help
+            // text, indicating a parent echo or shared man page.
+            let output_hash = normalize_for_fingerprint(&help_output);
+            if ancestor_hashes.contains(&output_hash) {
+                debug!(
+                    command = %full_command,
+                    "Skipping subcommand probe: help output matches an ancestor (content fingerprint)"
+                );
+                continue;
+            }
+
             let mut parser = HelpParser::new(&full_command, &help_output);
             if let Some(sub_schema) = parser.parse() {
                 // Some CLIs (notably apt-family) print parent-level help for
@@ -1390,29 +1814,41 @@ fn probe_subcommands_recursive(
                 // recursive subcommand probes often start with generic banners.
                 subcmd.description = subcmd.description.take().or(sub_schema.description);
 
-                // Add nested subcommands
+                // Prune nested subcommands whose names collide with any
+                // ancestor in the command path (prevents transitive cycles).
                 let mut nested_subcommands = sub_schema.subcommands;
-                if nested_subcommands
-                    .iter()
-                    .any(|nested| nested.name == subcmd.name)
-                {
+                let subcmd_name_lower = subcmd.name.to_ascii_lowercase();
+                let before_count = nested_subcommands.len();
+                nested_subcommands.retain(|nested| {
+                    let nl = nested.name.to_ascii_lowercase();
+                    nl != subcmd_name_lower
+                        && !ancestor_names.iter().any(|a| a == &nl)
+                });
+                let pruned = before_count - nested_subcommands.len();
+                if pruned > 0 {
                     warnings.push(format!(
-                        "Skipping nested subcommands for '{}' due to detected self-cycle",
-                        full_command
+                        "Pruned {pruned} nested subcommand(s) from '{full_command}' \
+                         that matched ancestor names"
                     ));
-                    nested_subcommands.clear();
                 }
                 subcmd.subcommands = nested_subcommands;
 
                 // Recurse into nested subcommands
                 if !subcmd.subcommands.is_empty() {
+                    ancestor_hashes.insert(output_hash);
+                    ancestor_names.push(subcmd_name_lower);
                     probe_subcommands_recursive(
                         &full_command,
                         &mut subcmd.subcommands,
                         probed,
+                        ancestor_hashes,
+                        ancestor_names,
                         depth + 1,
+                        started_at,
                         warnings,
                     );
+                    ancestor_names.pop();
+                    ancestor_hashes.remove(&output_hash);
                 }
             }
             let actionable = parser
@@ -1441,14 +1877,19 @@ fn is_parent_help_echo_for_subcommand(
         .map(|sub| sub.name.to_ascii_lowercase())
         .collect::<HashSet<_>>();
 
-    // The echoed parent help usually includes the currently probed subcommand
-    // plus many of its siblings.
-    if !parsed_names.contains(&subcommand_name.to_ascii_lowercase()) {
-        return false;
+    let sibling_overlap = parsed_names.intersection(sibling_names).count();
+
+    // The subcommand name may be present in the parsed output or absent
+    // (the parser often filters it out as a command-name component). Both
+    // cases indicate a parent echo when there's high sibling overlap.
+    let contains_self = parsed_names.contains(&subcommand_name.to_ascii_lowercase());
+    if contains_self && sibling_overlap >= 3 {
+        return true;
     }
 
-    let sibling_overlap = parsed_names.intersection(sibling_names).count();
-    sibling_overlap >= 3
+    // Even without self, if ≥50% of siblings (min 3) appear as parsed
+    // sub-subcommands, this is almost certainly a parent help echo.
+    sibling_names.len() >= 4 && sibling_overlap >= sibling_names.len() / 2
 }
 
 /// Determines if a subcommand should be skipped during probing.
@@ -1531,6 +1972,7 @@ pub fn help_format_label(format: HelpFormat) -> String {
         HelpFormat::Docopt => "docopt",
         HelpFormat::Gnu => "gnu",
         HelpFormat::Bsd => "bsd",
+        HelpFormat::Man => "man",
         HelpFormat::Unknown => "unknown",
     }
     .to_string()
@@ -1661,6 +2103,15 @@ mod tests {
                 .iter()
                 .any(|suffix| suffix == &vec!["--help", "all"])
         );
+    }
+
+    #[test]
+    fn test_man_probe_pages_prefers_specific_chain() {
+        let pages = man_probe_pages(&["git", "remote", "add"]);
+        assert_eq!(pages, vec!["git-remote-add", "git-remote"]);
+
+        let single = man_probe_pages(&["stat"]);
+        assert_eq!(single, vec!["stat"]);
     }
 
     #[test]
@@ -1824,10 +2275,15 @@ mod tests {
     fn test_extract_report_contains_probe_attempt_metadata_on_probe_failure() {
         let run = extract_command_schema_with_report("__wrashpty_missing_command__");
         assert!(!run.result.success);
-        assert_eq!(run.report.probe_attempts.len(), HELP_FLAGS.len());
+        assert!(run.report.probe_attempts.len() >= HELP_FLAGS.len());
+        assert!(
+            run.report
+                .probe_attempts
+                .first()
+                .is_some_and(|attempt| attempt.help_flag.starts_with("man:"))
+        );
 
-        for (index, attempt) in run.report.probe_attempts.iter().enumerate() {
-            assert_eq!(attempt.help_flag, HELP_FLAGS[index]);
+        for attempt in &run.report.probe_attempts {
             assert!(attempt.error.is_some() || attempt.timed_out || attempt.exit_code.is_some());
         }
     }
@@ -1882,10 +2338,10 @@ mod tests {
             return;
         }
 
-        let result = extract_command_schema("git");
-        assert!(result.success);
+        let run = extract_command_schema_with_report_base("git");
+        assert!(run.result.success);
 
-        let schema = result.schema.unwrap();
+        let schema = run.result.schema.unwrap();
         assert!(!schema.subcommands.is_empty());
 
         // Should have common git subcommands
@@ -1920,5 +2376,61 @@ mod tests {
 
         let help_text = help.unwrap();
         assert!(help_text.contains("-m") || help_text.contains("--message"));
+    }
+
+    #[test]
+    fn test_normalize_for_fingerprint_ignores_whitespace_differences() {
+        let text_a = "Usage: apt-get [options] command\n\n  install - Install packages\n  remove - Remove packages\n";
+        let text_b = "Usage:  apt-get  [options]  command\n\n  install  -  Install packages\n  remove  -  Remove packages\n";
+        assert_eq!(
+            normalize_for_fingerprint(text_a),
+            normalize_for_fingerprint(text_b)
+        );
+    }
+
+    #[test]
+    fn test_normalize_for_fingerprint_ignores_case_differences() {
+        let text_a = "Usage: APT-GET [OPTIONS] COMMAND\n  INSTALL - Install packages\n";
+        let text_b = "usage: apt-get [options] command\n  install - install packages\n";
+        assert_eq!(
+            normalize_for_fingerprint(text_a),
+            normalize_for_fingerprint(text_b)
+        );
+    }
+
+    #[test]
+    fn test_normalize_for_fingerprint_different_content_produces_different_hash() {
+        let text_a = "Usage: apt-get [options] install pkg\n\nOptions:\n  -y  assume yes\n";
+        let text_b = "Usage: apt-get [options] remove pkg\n\nOptions:\n  -y  assume yes\n";
+        assert_ne!(
+            normalize_for_fingerprint(text_a),
+            normalize_for_fingerprint(text_b)
+        );
+    }
+
+    #[test]
+    fn test_ancestor_name_pruning_removes_cycle_candidates() {
+        let ancestor_names = vec!["apt-get".to_string()];
+        let subcmd_name_lower = "autoclean";
+
+        let nested = vec![
+            SubcommandSchema::new("autoremove"),
+            SubcommandSchema::new("autoclean"),
+            SubcommandSchema::new("apt-get"),
+            SubcommandSchema::new("install"),
+        ];
+
+        let pruned: Vec<SubcommandSchema> = nested
+            .into_iter()
+            .filter(|n| {
+                let nl = n.name.to_ascii_lowercase();
+                nl != subcmd_name_lower
+                    && !ancestor_names.iter().any(|a| a == &nl)
+            })
+            .collect();
+
+        assert_eq!(pruned.len(), 2);
+        assert_eq!(pruned[0].name, "autoremove");
+        assert_eq!(pruned[1].name, "install");
     }
 }

@@ -19,9 +19,13 @@ impl SourceSpan {
 
     pub const fn unknown() -> Self {
         Self {
-            line_start: 0,
-            line_end: 0,
+            line_start: usize::MAX,
+            line_end: usize::MAX,
         }
+    }
+
+    pub const fn is_unknown(&self) -> bool {
+        self.line_start == usize::MAX && self.line_end == usize::MAX
     }
 }
 

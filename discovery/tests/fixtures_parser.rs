@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use command_schema_core::HelpFormat;
+use command_schema_core::{HelpFormat, SchemaSource};
 use command_schema_discovery::parser::HelpParser;
 
 #[test]
@@ -126,6 +126,73 @@ fn test_parse_coreutils_and_complex_fixtures() {
 }
 
 #[test]
+fn test_parse_rendered_man_fixture_prefers_man_strategy() {
+    let help = fixture("git-rebase-man-rendered.txt");
+    let mut parser = HelpParser::new("git rebase", &help);
+    let schema = parser.parse().expect("rendered man fixture should parse");
+
+    assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+    assert_eq!(schema.source, SchemaSource::ManPage);
+    assert!(schema.find_global_flag("--continue").is_some());
+    assert!(schema.find_global_flag("--abort").is_some());
+    assert!(schema.find_subcommand("continue").is_some());
+}
+
+#[test]
+fn test_parse_raw_man_macro_fixture_prefers_man_strategy() {
+    let help = fixture("git-rebase-man-source.txt");
+    let mut parser = HelpParser::new("git rebase", &help);
+    let schema = parser.parse().expect("raw man fixture should parse");
+
+    assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+    assert_eq!(schema.source, SchemaSource::ManPage);
+    assert!(schema.find_global_flag("--continue").is_some());
+    assert!(schema.find_global_flag("--abort").is_some());
+}
+
+#[test]
+fn test_parse_rendered_man_lowercase_synopsis_args() {
+    let help = fixture("man-lowercase-rendered.txt");
+    let mut parser = HelpParser::new("lowercmd", &help);
+    let schema = parser.parse().expect("rendered lowercase man fixture");
+
+    assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+    assert_eq!(schema.source, SchemaSource::ManPage);
+    assert!(has_arg(&schema, "source", true, false));
+    assert!(has_arg(&schema, "dest", false, false));
+    assert!(has_arg(&schema, "config_file", true, false));
+    assert!(has_arg(&schema, "extra", false, true));
+}
+
+#[test]
+fn test_parse_rendered_man_description_options_fixture_extracts_flags() {
+    let help = fixture("man-description-options-rendered.txt");
+    let mut parser = HelpParser::new("foo", &help);
+    let schema = parser
+        .parse()
+        .expect("rendered man fixture with description options");
+
+    assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+    assert_eq!(schema.source, SchemaSource::ManPage);
+    assert!(schema.find_global_flag("--mode").is_some());
+    assert!(schema.find_global_flag("-q").is_some());
+}
+
+#[test]
+fn test_parse_raw_man_lowercase_synopsis_args() {
+    let help = fixture("man-lowercase-source.txt");
+    let mut parser = HelpParser::new("lowercmd", &help);
+    let schema = parser.parse().expect("raw lowercase man fixture");
+
+    assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+    assert_eq!(schema.source, SchemaSource::ManPage);
+    assert!(has_arg(&schema, "source", false, false));
+    assert!(has_arg(&schema, "dest", true, false));
+    assert!(has_arg(&schema, "config_file", true, false));
+    assert!(has_arg(&schema, "extra", false, true));
+}
+
+#[test]
 fn test_no_placeholder_subcommands() {
     let fixtures = [
         ("git", "git-help.txt"),
@@ -226,4 +293,16 @@ fn looks_like_env_var(text: &str) -> bool {
         && key
             .chars()
             .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '_')
+}
+
+fn has_arg(
+    schema: &command_schema_core::CommandSchema,
+    name: &str,
+    required: bool,
+    multiple: bool,
+) -> bool {
+    schema
+        .positional
+        .iter()
+        .any(|arg| arg.name == name && arg.required == required && arg.multiple == multiple)
 }

@@ -1,6 +1,7 @@
 //! Pluggable parser strategies for different help-output structures.
 
 pub mod gnu;
+pub mod man;
 pub mod npm;
 pub mod section;
 pub mod usage;
@@ -26,11 +27,17 @@ pub trait ParserStrategy {
 
 /// Returns strategy names in priority order based on format classification scores.
 ///
-/// "section" always runs first (highest confidence from explicit section headers),
-/// "npm" is added when the top format is Cobra-style, then "gnu" and "usage"
-/// provide fallback coverage for unstructured output.
-pub fn ranked_strategy_names(format_scores: &[FormatScore]) -> Vec<&'static str> {
-    let mut names = vec!["section"]; // always run explicit sections first
+/// "man" is included first only when `man_detected` is `true` (the classifier
+/// scored `HelpFormat::Man` highest, or roff/rendered detection succeeded).
+/// "section" follows for explicit headers, "npm" is added when the top format
+/// is Cobra-style, then "gnu" and "usage" provide fallback coverage.
+pub fn ranked_strategy_names(format_scores: &[FormatScore], man_detected: bool) -> Vec<&'static str> {
+    let mut names = Vec::new();
+
+    if man_detected {
+        names.push("man");
+    }
+    names.push("section");
 
     if format_scores
         .first()
@@ -57,6 +64,7 @@ impl FormatScoreExt for FormatScore {
             command_schema_core::HelpFormat::Docopt => "docopt",
             command_schema_core::HelpFormat::Gnu => "gnu",
             command_schema_core::HelpFormat::Bsd => "bsd",
+            command_schema_core::HelpFormat::Man => "man",
             command_schema_core::HelpFormat::Unknown => "unknown",
         }
     }

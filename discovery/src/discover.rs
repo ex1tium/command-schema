@@ -103,7 +103,7 @@ pub struct DiscoverConfig {
     pub quality_policy: ExtractionQualityPolicy,
     /// Only include commands that are installed on the system.
     pub installed_only: bool,
-    /// Number of parallel extraction jobs (`None` = use all CPUs).
+    /// Number of parallel extraction jobs (`None` = adaptive default).
     pub jobs: Option<usize>,
     /// Directory for caching extraction results. `None` disables caching.
     pub cache_dir: Option<PathBuf>,
@@ -238,29 +238,25 @@ pub fn discover_and_extract(config: &DiscoverConfig, version: &str) -> DiscoverO
         (command.to_string(), run)
     };
 
-    // Collect extraction results in parallel (default: all CPUs via rayon
-    // global pool; explicit --jobs uses a scoped pool with that many threads).
+    // Collect extraction results in parallel with an adaptive default that
+    // avoids oversubscribing process-spawn heavy workloads.
     let results: Vec<(String, crate::extractor::ExtractionRun)> = {
         use rayon::prelude::*;
+        let jobs = config
+            .jobs
+            .filter(|jobs| *jobs > 0)
+            .unwrap_or_else(|| default_parallel_jobs(commands.len()));
+        let pool = rayon::ThreadPoolBuilder::new()
+            .num_threads(jobs)
+            .build()
+            .expect("failed to build rayon thread pool");
 
-        if let Some(jobs) = config.jobs {
-            let pool = rayon::ThreadPoolBuilder::new()
-                .num_threads(jobs)
-                .build()
-                .expect("failed to build rayon thread pool");
-
-            pool.install(|| {
-                commands
-                    .par_iter()
-                    .map(|command| extract_one(command))
-                    .collect()
-            })
-        } else {
+        pool.install(|| {
             commands
                 .par_iter()
                 .map(|command| extract_one(command))
                 .collect()
-        }
+        })
     };
 
     // Sort by command name for deterministic output.
@@ -303,6 +299,14 @@ pub fn discover_and_extract(config: &DiscoverConfig, version: &str) -> DiscoverO
         warnings,
         reports,
     }
+}
+
+fn default_parallel_jobs(command_count: usize) -> usize {
+    let cpu_count = std::thread::available_parallelism()
+        .map(|parallelism| parallelism.get())
+        .unwrap_or(4);
+    let adaptive_cap = if command_count >= 500 { 8 } else { 12 };
+    cpu_count.min(adaptive_cap).max(1).min(command_count.max(1))
 }
 
 /// Summarizes failure code distribution from extraction reports.
@@ -590,6 +594,20 @@ mod tests {
         assert!(!is_scan_path_probe_candidate("sensible-browser"));
         assert!(is_scan_path_probe_candidate("awk"));
         assert!(is_scan_path_probe_candidate("cargo"));
+    }
+
+    #[test]
+    fn test_default_parallel_jobs_is_non_zero_and_bounded_by_workload() {
+        assert_eq!(default_parallel_jobs(0), 1);
+        assert!(default_parallel_jobs(1) >= 1);
+        assert!(default_parallel_jobs(1) <= 1);
+        assert!(default_parallel_jobs(2000) <= 8);
+    }
+
+    #[test]
+    fn test_default_parallel_jobs_uses_tighter_cap_for_large_workloads() {
+        assert!(default_parallel_jobs(500) <= 8);
+        assert!(default_parallel_jobs(2000) <= 8);
     }
 
     fn unique_tmp_dir() -> PathBuf {

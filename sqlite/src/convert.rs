@@ -76,6 +76,7 @@ pub(crate) fn source_to_string(source: &SchemaSource) -> &'static str {
         SchemaSource::ManPage => "ManPage",
         SchemaSource::Bootstrap => "Bootstrap",
         SchemaSource::Learned => "Learned",
+        SchemaSource::Merged => "Merged",
     }
 }
 
@@ -86,6 +87,7 @@ pub(crate) fn string_to_source(s: &str) -> Result<SchemaSource> {
         "ManPage" => Ok(SchemaSource::ManPage),
         "Bootstrap" => Ok(SchemaSource::Bootstrap),
         "Learned" => Ok(SchemaSource::Learned),
+        "Merged" => Ok(SchemaSource::Merged),
         other => Err(SqliteError::ConversionError(format!(
             "unknown schema source: {other}"
         ))),
@@ -722,6 +724,7 @@ mod tests {
             SchemaSource::ManPage,
             SchemaSource::Bootstrap,
             SchemaSource::Learned,
+            SchemaSource::Merged,
         ];
 
         for source in sources {

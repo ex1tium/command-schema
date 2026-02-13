@@ -10,6 +10,7 @@
 //! - **GNU standard** — `-s, --long-flag` with indented descriptions
 //! - **NPM-style** — command listings with brief descriptions
 //! - **BSD-style** — compact flag descriptions
+//! - **Man pages** — raw roff (`mdoc`/`man`) and rendered manual output
 //! - **Generic section-based** — fallback two-column parsing
 //!
 //! # Architecture
@@ -32,13 +33,14 @@ mod diagnostics;
 mod merge;
 mod normalize;
 mod strategies;
+pub(crate) mod util;
 
+use crate::parser::strategies::ParserStrategy;
 use regex::Regex;
 use std::collections::HashSet;
 use std::sync::LazyLock;
 use tracing::debug;
 
-use crate::parser::strategies::ParserStrategy;
 use command_schema_core::{
     ArgSchema, CommandSchema, FlagSchema, HelpFormat, SchemaSource, SubcommandSchema, ValueType,
 };
@@ -240,22 +242,15 @@ impl HelpParser {
         recognized_indices.extend(sections.header_indices.iter().copied());
         let keybinding_document = Self::looks_like_keybinding_document(&indexed_lines);
         let section_strategy = strategies::section::SectionStrategy;
+        let man_strategy = strategies::man::ManStrategy::new();
         let npm_strategy = strategies::npm::NpmStrategy;
         let gnu_strategy = strategies::gnu::GnuStrategy;
         let usage_strategy = strategies::usage::UsageStrategy;
-        let strategy_objects: [&dyn strategies::ParserStrategy; 4] = [
-            &section_strategy,
-            &npm_strategy,
-            &gnu_strategy,
-            &usage_strategy,
-        ];
-        let strategy_plan = strategies::ranked_strategy_names(&format_scores);
+        let man_detected = self.detected_format == Some(HelpFormat::Man)
+            || strategies::man::detect::detect_roff_variant(&line_refs).is_some();
+        let strategy_plan = strategies::ranked_strategy_names(&format_scores, man_detected);
         parsers_used.push(format!("strategy-plan:{}", strategy_plan.join("+")));
-        parsers_used.extend(
-            strategy_objects
-                .iter()
-                .map(|strategy| format!("strategy-registered:{}", strategy.name())),
-        );
+        let run_man_strategy = strategy_plan.contains(&"man");
 
         // Capture usage rows as recognized structural context, even when we do
         // not derive additional schema entities from them.
@@ -265,8 +260,44 @@ impl HelpParser {
             parsers_used.push("usage-lines".to_string());
         }
 
+        let man_bundle = if run_man_strategy {
+            parsers_used.push(format!("strategy-executed:{}", man_strategy.name()));
+            man_strategy.collect_all(self, &indexed_lines)
+        } else {
+            strategies::man::CandidateBundle::default()
+        };
+        let man_bundle_detected = man_bundle.format.is_some();
+        let man_has_entities = man_bundle.has_entities();
+        let man_primary_extracted = man_bundle_detected && man_has_entities;
+        if self.detected_format == Some(HelpFormat::Man) || man_bundle_detected {
+            schema.source = SchemaSource::ManPage;
+        }
+        if let Some(format) = man_bundle.format {
+            let label = match format {
+                strategies::man::detect::ManFormat::Mdoc => "mdoc",
+                strategies::man::detect::ManFormat::Man => "man",
+                strategies::man::detect::ManFormat::Rendered => "rendered",
+            };
+            parsers_used.push(format!("man-detected:{label}"));
+        }
+        if man_has_entities {
+            recognized_indices.extend(man_bundle.recognized_indices());
+            parsers_used.push("man-primary".to_string());
+            flag_candidates.extend(man_bundle.flags);
+            subcommand_candidates.extend(man_bundle.subcommands);
+            arg_candidates.extend(man_bundle.args);
+        }
+        let prefer_man = !flag_candidates.is_empty()
+            || !subcommand_candidates.is_empty()
+            || !arg_candidates.is_empty();
+        let allow_permissive_subcommand_fallbacks = !man_primary_extracted;
+        if !allow_permissive_subcommand_fallbacks && subcommand_candidates.is_empty() {
+            parsers_used.push("subcommand-fallbacks-skipped:man-primary".to_string());
+        }
+        parsers_used.push(format!("strategy-executed:{}", section_strategy.name()));
+
         // Extract subcommands from explicit command sections.
-        if !sections.subcommands.is_empty() {
+        if (!prefer_man || subcommand_candidates.is_empty()) && !sections.subcommands.is_empty() {
             let refs: Vec<&str> = sections
                 .subcommands
                 .iter()
@@ -293,7 +324,7 @@ impl HelpParser {
         }
 
         // Extract flags/options from explicit sections.
-        if !sections.flags.is_empty() {
+        if (!prefer_man || flag_candidates.is_empty()) && !sections.flags.is_empty() {
             let refs: Vec<&str> = sections
                 .flags
                 .iter()
@@ -318,7 +349,7 @@ impl HelpParser {
                 }
             }
         }
-        if !sections.options.is_empty() {
+        if (!prefer_man || flag_candidates.is_empty()) && !sections.options.is_empty() {
             let refs: Vec<&str> = sections
                 .options
                 .iter()
@@ -343,7 +374,12 @@ impl HelpParser {
                 }
             }
         }
-        if !sections.arguments.is_empty() {
+        // For detected man pages, the SYNOPSIS extraction is authoritative
+        // for positional args.  The help-text ARGUMENTS section parser was
+        // designed for CLI `--help` output, not rendered man prose, and would
+        // misinterpret justified text (double-space word gaps) as two-column
+        // argument definitions, polluting the schema with random prose words.
+        if !man_bundle_detected && !sections.arguments.is_empty() {
             let refs: Vec<&str> = sections
                 .arguments
                 .iter()
@@ -372,7 +408,8 @@ impl HelpParser {
         // Stage 2: format-aware and well-known structural fallbacks.
 
         // npm-style command lists (All commands:)
-        if subcommand_candidates.is_empty() {
+        if subcommand_candidates.is_empty() && allow_permissive_subcommand_fallbacks {
+            parsers_used.push(format!("strategy-executed:{}", npm_strategy.name()));
             let npm_subcommands = npm_strategy.collect_subcommands(self, &indexed_lines);
             if !npm_subcommands.is_empty() {
                 let (_, npm_recognized) = self.parse_npm_style_commands(&indexed_lines);
@@ -385,7 +422,10 @@ impl HelpParser {
         // Dense command-grid sections (e.g. OpenSSL "Standard commands"),
         // where each row contains multiple command tokens and no per-row
         // descriptions.
-        if subcommand_candidates.is_empty() && !keybinding_document {
+        if subcommand_candidates.is_empty()
+            && allow_permissive_subcommand_fallbacks
+            && !keybinding_document
+        {
             let (grid_subcommands, grid_recognized, primary_grid_section) =
                 self.parse_dense_command_grid_subcommands(&indexed_lines);
             if !grid_subcommands.is_empty() {
@@ -407,6 +447,7 @@ impl HelpParser {
         // identified (or were empty). This is still structural and should happen
         // before more permissive fallbacks.
         if subcommand_candidates.is_empty()
+            && allow_permissive_subcommand_fallbacks
             && !keybinding_document
             && sections.subcommands.is_empty()
             && sections.arguments.is_empty()
@@ -432,18 +473,20 @@ impl HelpParser {
         // Stty-style named settings and similar rows are structural command
         // tokens, but often appear in mixed sections that the block parser does
         // not fully capture.
-        let (named_settings, named_settings_recognized) =
-            self.parse_named_setting_rows(&indexed_lines);
-        if !named_settings.is_empty() {
-            recognized_indices.extend(named_settings_recognized);
-            parsers_used.push("named-setting-rows".to_string());
-            for subcommand in named_settings {
-                subcommand_candidates.push(ast::SubcommandCandidate::from_schema(
-                    subcommand,
-                    ast::SourceSpan::unknown(),
-                    "named-setting-rows",
-                    0.72,
-                ));
+        if subcommand_candidates.is_empty() && allow_permissive_subcommand_fallbacks {
+            let (named_settings, named_settings_recognized) =
+                self.parse_named_setting_rows(&indexed_lines);
+            if !named_settings.is_empty() {
+                recognized_indices.extend(named_settings_recognized);
+                parsers_used.push("named-setting-rows".to_string());
+                for subcommand in named_settings {
+                    subcommand_candidates.push(ast::SubcommandCandidate::from_schema(
+                        subcommand,
+                        ast::SourceSpan::unknown(),
+                        "named-setting-rows",
+                        0.72,
+                    ));
+                }
             }
         }
 
@@ -451,17 +494,21 @@ impl HelpParser {
 
         // GNU and many custom CLIs list additional flags outside explicit
         // "Flags/Options" sections, so always run this as a top-up pass.
-        let fallback_flags = gnu_strategy.collect_flags(self, &indexed_lines);
-        let (_, fallback_recognized) = self.parse_sectionless_flags(&indexed_lines);
-        if !fallback_flags.is_empty() {
-            recognized_indices.extend(fallback_recognized);
-            parsers_used.push("gnu-sectionless-flags".to_string());
-            flag_candidates.extend(fallback_flags);
+        if !prefer_man || flag_candidates.is_empty() {
+            parsers_used.push(format!("strategy-executed:{}", gnu_strategy.name()));
+            let fallback_flags = gnu_strategy.collect_flags(self, &indexed_lines);
+            let (_, fallback_recognized) = self.parse_sectionless_flags(&indexed_lines);
+            if !fallback_flags.is_empty() {
+                recognized_indices.extend(fallback_recognized);
+                parsers_used.push("gnu-sectionless-flags".to_string());
+                flag_candidates.extend(fallback_flags);
+            }
         }
 
         // Compact usage fallback, e.g. tmux:
         // usage: tmux [-2CDlNuVv] [-c shell-command] ...
         if flag_candidates.is_empty() {
+            parsers_used.push(format!("strategy-executed:{}", usage_strategy.name()));
             let usage_flags = usage_strategy.collect_flags(self, &indexed_lines);
             let (_, usage_recognized) = self.parse_usage_compact_flags(&indexed_lines);
             if !usage_flags.is_empty() {
@@ -471,7 +518,11 @@ impl HelpParser {
             }
         }
 
-        if arg_candidates.is_empty() {
+        // Same reasoning as above: for detected man pages, don't fall back
+        // to the usage-line positional scanner—it would pick up usage-like
+        // patterns from DESCRIPTION/INVOCATION prose and produce garbage.
+        if arg_candidates.is_empty() && !man_bundle_detected {
+            parsers_used.push(format!("strategy-executed:{}", usage_strategy.name()));
             let usage_args = usage_strategy.collect_args(self, &indexed_lines);
             let (_, usage_arg_recognized) =
                 self.parse_usage_positionals(&indexed_lines, !subcommand_candidates.is_empty());
@@ -494,12 +545,21 @@ impl HelpParser {
             !drop
         });
         arg_candidates.retain(|candidate| {
-            let drop = classify::is_placeholder_token(candidate.name.as_str());
+            let drop = classify::is_placeholder_token(candidate.name.as_str())
+                || classify::is_prose_word(candidate.name.as_str())
+                || classify::is_brand_or_status_word(candidate.name.as_str());
             if drop {
                 false_positive_filter_hits += 1;
             }
             !drop
         });
+
+        // Safety net: real commands almost never have > 15 positional args.
+        // An excessive count signals the parser ingested prose or description
+        // text rather than actual positional argument definitions.
+        if arg_candidates.len() > 15 {
+            arg_candidates.clear();
+        }
 
         let flag_result =
             merge::merge_flag_candidates(flag_candidates, merge::HIGH_CONFIDENCE_THRESHOLD);
@@ -513,6 +573,15 @@ impl HelpParser {
         schema.global_flags = flag_result.accepted;
         schema.subcommands = subcommand_result.accepted;
         schema.positional = arg_result.accepted;
+        let command_leaf = self
+            .command
+            .split_whitespace()
+            .last()
+            .unwrap_or(self.command.as_str())
+            .to_ascii_lowercase();
+        schema
+            .subcommands
+            .retain(|sub| sub.name.to_ascii_lowercase() != command_leaf);
 
         constraints::apply_flag_relationships(&mut schema.global_flags);
         for error in constraints::validate_subcommand_hierarchy(&self.command, &schema.subcommands)
@@ -614,6 +683,10 @@ impl HelpParser {
                 || trimmed.starts_with('[')
                 || trimmed.starts_with('<')
             {
+                continue;
+            }
+            // Skip man page title/header lines like "GIT(1) Git Manual GIT(1)"
+            if util::looks_like_man_title_line(trimmed) {
                 continue;
             }
             if Self::split_two_columns(trimmed).is_some_and(|(left, _)| {
@@ -977,7 +1050,11 @@ impl HelpParser {
                     (trimmed, None)
                 };
 
-            for mut arg in Self::parse_argument_tokens(left) {
+            // When a two-column description is present, the left column is
+            // clearly an argument name — relax strict mode so lowercase
+            // tokens like "file" or "path" are accepted.
+            let strict = description.is_none();
+            for mut arg in Self::parse_argument_tokens_inner(left, strict) {
                 if arg.description.is_none() {
                     arg.description = description.clone();
                 }
@@ -996,7 +1073,18 @@ impl HelpParser {
         positional
     }
 
-    fn parse_argument_tokens(value: &str) -> Vec<ArgSchema> {
+    /// Parses positional argument tokens from a whitespace-separated string.
+    ///
+    /// When `strict` is `true`, tokens must carry placeholder syntax (`<`, `[`,
+    /// `{`, `...`) or be ALL_CAPS to be accepted.  This prevents prose words
+    /// from leaking through when parsing free-form help text (e.g. an
+    /// "Arguments:" section).
+    ///
+    /// When `strict` is `false`, the structural gate is skipped — the caller is
+    /// expected to have already pre-filtered the tokens (e.g.
+    /// `parse_usage_positionals` checks for placeholder markers, uppercase, or
+    /// lowercase-with-index patterns before calling this).
+    fn parse_argument_tokens_inner(value: &str, strict: bool) -> Vec<ArgSchema> {
         let mut args = Vec::new();
 
         for raw in value.split_whitespace() {
@@ -1020,6 +1108,27 @@ impl HelpParser {
             if cleaned.starts_with('-') {
                 continue;
             }
+
+            // Structural gate: in strict mode the original token must carry
+            // placeholder syntax (brackets, angles, braces, ellipsis) or the
+            // cleaned name must be ALL_CAPS.  This prevents prose words
+            // ("the", "and", "for") from leaking in as positional arg names.
+            if strict {
+                let has_placeholder = token.contains('<')
+                    || token.contains('[')
+                    || token.contains('{')
+                    || token.contains("...");
+                let is_upper = cleaned.len() > 1
+                    && cleaned.chars().any(|ch| ch.is_ascii_alphabetic())
+                    && cleaned
+                        .chars()
+                        .filter(|ch| ch.is_ascii_alphabetic())
+                        .all(|ch| ch.is_ascii_uppercase());
+                if !has_placeholder && !is_upper {
+                    continue;
+                }
+            }
+
             if Self::is_placeholder_keyword(cleaned) {
                 continue;
             }
@@ -1064,6 +1173,15 @@ impl HelpParser {
             if token.eq_ignore_ascii_case(&self.command) {
                 continue;
             }
+            // Also skip individual components of the command name (e.g. for
+            // "git add" → skip both "git" and "add").
+            if self
+                .command
+                .split_whitespace()
+                .any(|part| token.eq_ignore_ascii_case(part))
+            {
+                continue;
+            }
             if token.contains("::=") {
                 continue;
             }
@@ -1085,9 +1203,12 @@ impl HelpParser {
                 continue;
             }
 
-            for mut arg in Self::parse_argument_tokens(token) {
+            // Non-strict: the caller already pre-filtered tokens via
+            // has_placeholder_markers / looks_upper_placeholder /
+            // looks_lower_with_index checks above.
+            for mut arg in Self::parse_argument_tokens_inner(token, false) {
                 let lower = arg.name.to_ascii_lowercase();
-                if has_subcommands && matches!(lower.as_str(), "command" | "subcommand" | "cmd") {
+                if has_subcommands && matches!(lower.as_str(), "command" | "subcommand" | "cmd" | "object") {
                     continue;
                 }
                 if matches!(
@@ -1096,8 +1217,18 @@ impl HelpParser {
                 ) {
                     continue;
                 }
-                // Avoid parsing grammar rows from network/route tools.
-                if usage_lower.contains(":=") && arg.name.chars().all(|ch| ch.is_ascii_uppercase())
+                // Avoid treating BNF meta-variables as positional args.
+                // In usage lines with grammar notation (`:=` definitions or
+                // `{ ... | ... }` alternatives), bare ALL-CAPS tokens are
+                // structural grammar variables (OBJECT, NETNS), not args.
+                let has_bnf_grammar = usage_lower.contains(":=")
+                    || (usage_lower.contains('{') && usage_lower.contains('|'));
+                if has_bnf_grammar
+                    && !has_placeholder_markers
+                    && arg.name.len() > 1
+                    && arg.name
+                        .chars()
+                        .all(|ch| ch.is_ascii_uppercase() || ch == '_')
                 {
                     continue;
                 }
@@ -2146,34 +2277,23 @@ impl HelpParser {
                 .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '-')
     }
 
+    /// Tokens that look like commands but are actually flag values or settings.
+    const NON_COMMAND_VALUE_TOKENS: &[&str] = &[
+        "none", "off", "on", "true", "false", "yes", "no",
+        "numbered", "existing", "simple", "never", "nil", "all",
+        "auto", "always", "default", "older", "warn", "warn-nopipe",
+        "exit", "exit-nopipe", "once", "pages", "and", "or", "while",
+        "gnu", "report", "full",
+        // Common git flag values that look like subcommands
+        "inherit", "amend", "reword", "fixup", "squash", "direct",
+        "shallow", "immediate", "local", "recursive", "verbose",
+        "quiet", "silent", "interactive", "manual", "normal",
+        "short", "long", "porcelain", "columns", "plain", "dense", "sparse",
+    ];
+
     fn looks_like_non_command_value_token(token: &str) -> bool {
         let lower = token.trim().to_ascii_lowercase();
-        matches!(
-            lower.as_str(),
-            "none"
-                | "off"
-                | "numbered"
-                | "existing"
-                | "simple"
-                | "never"
-                | "nil"
-                | "all"
-                | "auto"
-                | "always"
-                | "default"
-                | "older"
-                | "warn"
-                | "warn-nopipe"
-                | "exit"
-                | "exit-nopipe"
-                | "once"
-                | "pages"
-                | "or"
-                | "while"
-                | "gnu"
-                | "report"
-                | "full"
-        )
+        Self::NON_COMMAND_VALUE_TOKENS.contains(&lower.as_str())
     }
 
     #[allow(dead_code)]
@@ -2197,6 +2317,14 @@ impl HelpParser {
             },
             FormatScore {
                 format: HelpFormat::Docopt,
+                score: 0.0,
+            },
+            FormatScore {
+                format: HelpFormat::Bsd,
+                score: 0.0,
+            },
+            FormatScore {
+                format: HelpFormat::Man,
                 score: 0.0,
             },
             FormatScore {
@@ -2270,7 +2398,7 @@ impl HelpParser {
                         0.0
                     }
                 }
-                HelpFormat::Unknown | HelpFormat::Bsd => 0.0,
+                HelpFormat::Unknown | HelpFormat::Bsd | HelpFormat::Man => 0.0,
             };
         }
 
@@ -2651,7 +2779,47 @@ impl HelpParser {
         if trimmed.starts_with('-') {
             return false;
         }
-        if !(trimmed.contains("--") || trimmed.contains(" -")) {
+        // BNF grammar definition lines (e.g. "OPTIONS := { -V[ersion] | ... }")
+        // define notation structure, not usage patterns.
+        if trimmed.contains(":=") {
+            return false;
+        }
+        // Require an actual flag pattern: `--` (long flag) or ` -X` where X
+        // is alphanumeric/`[` (short flag).  A bare ` - ` (space-dash-space)
+        // is a title separator (e.g. "IP - COMMAND SYNTAX"), not a flag.
+        let has_long_flag = trimmed.contains("--");
+        let has_short_flag = {
+            let bytes = trimmed.as_bytes();
+            let len = bytes.len();
+            (0..len.saturating_sub(2)).any(|i| {
+                bytes[i] == b' '
+                    && bytes[i + 1] == b'-'
+                    && (bytes[i + 2].is_ascii_alphanumeric() || bytes[i + 2] == b'[')
+            })
+        };
+        // Positional-only synopsis lines: contain angle brackets (<FILE>),
+        // leading square brackets ([ARG]), or all-caps placeholder tokens.
+        // The all-caps word heuristic is gated behind a lowercase-first-word
+        // check so that man-page section headers ("SEE ALSO", "EXIT STATUS")
+        // are not mistaken for synopsis lines—section headers are all-caps
+        // while real synopsis lines start with a lowercase command name.
+        let first_char_lower = trimmed
+            .chars()
+            .next()
+            .is_some_and(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '/' || ch == '.');
+        let has_positional = trimmed.contains('<')
+            || (first_char_lower && trimmed.contains('['))
+            || (first_char_lower
+                && trimmed.split_whitespace().skip(1).any(|w| {
+                    let norm = w.trim_matches(|ch: char| {
+                        matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';' | '.')
+                    });
+                    norm.len() > 1
+                        && norm
+                            .chars()
+                            .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+                }));
+        if !has_long_flag && !has_short_flag && !has_positional {
             return false;
         }
 
@@ -2679,6 +2847,15 @@ impl HelpParser {
         if trimmed.ends_with('.') {
             return false;
         }
+
+        // Flag definition rows start with a bare flag and have a multi-space
+        // gap before description text (e.g. "-c     check syntax only").
+        // These are NOT synopsis continuations — they're the flag listing body.
+        // Synopsis continuations use compact single-space layout (e.g. "[-a] [-b]").
+        if Self::looks_like_flag_row_start(trimmed) && trimmed.contains("  ") {
+            return false;
+        }
+
         if trimmed.contains('[')
             || trimmed.contains("--")
             || Self::looks_like_flag_row_start(trimmed)
@@ -2686,15 +2863,40 @@ impl HelpParser {
             return true;
         }
 
+        // Bare words (no brackets, flags, or structural markers) are only
+        // valid continuations when they look like synopsis placeholders:
+        // ALL_UPPER (FILE, INPUT), alpha+digit (arg1, file2), or have
+        // angle brackets / ellipsis.  Pure lowercase words like "accept",
+        // "array", "concern" are description prose, not usage continuations.
         let words = trimmed.split_whitespace().collect::<Vec<_>>();
         if words.is_empty() || words.len() > 2 {
             return false;
         }
 
-        words.iter().all(|word| {
+        // Every word must be structurally valid AND at least one must
+        // look like a synopsis token (not plain prose).
+        let all_valid = words.iter().all(|word| {
             word.chars().all(|ch| {
-                ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '<' | '>' | '[' | ']')
+                ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '<' | '>' | '[' | ']' | '|')
             })
+        });
+        if !all_valid {
+            return false;
+        }
+
+        words.iter().any(|word| {
+            // Contains angle brackets or ellipsis
+            word.contains('<') || word.contains('>') || word.contains("...")
+            // Pipe separator (alternatives like "FILE|DIR")
+            || word.contains('|')
+            // ALL_UPPER placeholder (FILE, INPUT_PATH)
+            || (word.len() > 1
+                && word.chars().any(|ch| ch.is_ascii_alphabetic())
+                && word.chars().all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || matches!(ch, '_' | '-' | '.')))
+            // Mixed alpha+digit (arg1, file2)
+            || (word.chars().any(|ch| ch.is_ascii_alphabetic())
+                && word.chars().any(|ch| ch.is_ascii_digit())
+                && word.chars().all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.')))
         })
     }
 
@@ -3821,6 +4023,34 @@ work on the current change (see also: git help everyday)
    add       Add file contents to the index
 "#;
 
+    const GIT_REBASE_HELP_WITH_WRAPPED_PROSE: &str = r#"
+usage: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+   or: git rebase --continue | --abort | --skip | --edit-todo
+
+    --[no-]keep-base      use the merge-base of upstream
+                          and  branch as the current base
+    --abort               abort and check out the original branch
+"#;
+
+    const MAN_PROSE_SUBCOMMAND_FALSE_POSITIVE_HELP: &str = r#"
+GREP(1)                     User Commands                    GREP(1)
+
+NAME
+  grep - print lines that match patterns
+
+SYNOPSIS
+  grep [OPTION]... PATTERNS [FILE]...
+
+DESCRIPTION
+  Character classes and bracket expressions.
+  they are [:alnum:], [:alpha:], [:blank:], [:cntrl:], [:digit:].
+  character set encoding, this is the same as [0-9A-Za-z].
+
+OPTIONS
+  -i, --ignore-case    ignore case distinctions in patterns and input data
+  -n, --line-number    print line number with output lines
+"#;
+
     const SYSTEMCTL_STYLE_HELP: &str = r#"
 systemctl [OPTIONS...] COMMAND ...
 
@@ -4449,6 +4679,39 @@ Commands:
         assert!(schema.find_subcommand("run").is_some());
         assert!(schema.find_subcommand("session").is_some());
         assert!(schema.find_subcommand("opencode").is_none());
+    }
+
+    #[test]
+    fn test_parse_subcommands_skips_prose_connector_tokens() {
+        let mut parser = HelpParser::new("git rebase", GIT_REBASE_HELP_WITH_WRAPPED_PROSE);
+        let schema = parser.parse().unwrap();
+
+        assert!(schema.find_subcommand("and").is_none());
+    }
+
+    #[test]
+    fn test_man_primary_skips_permissive_subcommand_fallbacks() {
+        let mut parser = HelpParser::new("grep", MAN_PROSE_SUBCOMMAND_FALSE_POSITIVE_HELP);
+        let schema = parser.parse().unwrap();
+
+        assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+        assert!(schema.find_global_flag("--ignore-case").is_some());
+        assert!(schema.find_subcommand("they").is_none());
+        assert!(schema.find_subcommand("character").is_none());
+
+        let diagnostics = parser.diagnostics();
+        assert!(
+            diagnostics
+                .parsers_used
+                .iter()
+                .any(|entry| entry == "subcommand-fallbacks-skipped:man-primary")
+        );
+        assert!(
+            !diagnostics
+                .parsers_used
+                .iter()
+                .any(|entry| entry == "generic-two-column-subcommands")
+        );
     }
 
     #[test]

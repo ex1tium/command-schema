@@ -37,6 +37,8 @@ pub enum SchemaSource {
     Bootstrap,
     /// Learned from user command history.
     Learned,
+    /// Schema was produced by merging multiple sources (e.g. man + help).
+    Merged,
 }
 
 /// Value type for flags and arguments.
@@ -571,6 +573,8 @@ pub enum HelpFormat {
     Gnu,
     /// BSD style
     Bsd,
+    /// Man page style (raw roff or rendered manual output)
+    Man,
     /// Unknown/custom format
     Unknown,
 }
