@@ -571,6 +571,8 @@ pub enum HelpFormat {
     Gnu,
     /// BSD style
     Bsd,
+    /// Man page style (raw roff or rendered manual output)
+    Man,
     /// Unknown/custom format
     Unknown,
 }

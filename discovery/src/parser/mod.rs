@@ -10,6 +10,7 @@
 //! - **GNU standard** — `-s, --long-flag` with indented descriptions
 //! - **NPM-style** — command listings with brief descriptions
 //! - **BSD-style** — compact flag descriptions
+//! - **Man pages** — raw roff (`mdoc`/`man`) and rendered manual output
 //! - **Generic section-based** — fallback two-column parsing
 //!
 //! # Architecture
@@ -223,6 +224,9 @@ impl HelpParser {
         debug!(format = ?self.detected_format, scores = ?format_scores.iter().map(|s| (s.format, s.score)).collect::<Vec<_>>(), "Detected help format");
 
         let mut schema = CommandSchema::new(&self.command, SchemaSource::HelpCommand);
+        if self.detected_format == Some(HelpFormat::Man) {
+            schema.source = SchemaSource::ManPage;
+        }
         let mut flag_candidates = Vec::new();
         let mut subcommand_candidates = Vec::new();
         let mut arg_candidates = Vec::new();
@@ -240,11 +244,13 @@ impl HelpParser {
         recognized_indices.extend(sections.header_indices.iter().copied());
         let keybinding_document = Self::looks_like_keybinding_document(&indexed_lines);
         let section_strategy = strategies::section::SectionStrategy;
+        let man_strategy = strategies::man::ManStrategy;
         let npm_strategy = strategies::npm::NpmStrategy;
         let gnu_strategy = strategies::gnu::GnuStrategy;
         let usage_strategy = strategies::usage::UsageStrategy;
-        let strategy_objects: [&dyn strategies::ParserStrategy; 4] = [
+        let strategy_objects: [&dyn strategies::ParserStrategy; 5] = [
             &section_strategy,
+            &man_strategy,
             &npm_strategy,
             &gnu_strategy,
             &usage_strategy,
@@ -265,8 +271,28 @@ impl HelpParser {
             parsers_used.push("usage-lines".to_string());
         }
 
+        let man_bundle = man_strategy.collect_all(self, &indexed_lines);
+        if let Some(format) = man_bundle.format {
+            let label = match format {
+                strategies::man::detect::ManFormat::Mdoc => "mdoc",
+                strategies::man::detect::ManFormat::Man => "man",
+                strategies::man::detect::ManFormat::Rendered => "rendered",
+            };
+            parsers_used.push(format!("man-detected:{label}"));
+        }
+        if man_bundle.has_entities() {
+            recognized_indices.extend(man_bundle.recognized_indices());
+            parsers_used.push("man-primary".to_string());
+            flag_candidates.extend(man_bundle.flags);
+            subcommand_candidates.extend(man_bundle.subcommands);
+            arg_candidates.extend(man_bundle.args);
+        }
+        let prefer_man = !flag_candidates.is_empty()
+            || !subcommand_candidates.is_empty()
+            || !arg_candidates.is_empty();
+
         // Extract subcommands from explicit command sections.
-        if !sections.subcommands.is_empty() {
+        if (!prefer_man || subcommand_candidates.is_empty()) && !sections.subcommands.is_empty() {
             let refs: Vec<&str> = sections
                 .subcommands
                 .iter()
@@ -293,7 +319,7 @@ impl HelpParser {
         }
 
         // Extract flags/options from explicit sections.
-        if !sections.flags.is_empty() {
+        if (!prefer_man || flag_candidates.is_empty()) && !sections.flags.is_empty() {
             let refs: Vec<&str> = sections
                 .flags
                 .iter()
@@ -318,7 +344,7 @@ impl HelpParser {
                 }
             }
         }
-        if !sections.options.is_empty() {
+        if (!prefer_man || flag_candidates.is_empty()) && !sections.options.is_empty() {
             let refs: Vec<&str> = sections
                 .options
                 .iter()
@@ -343,7 +369,7 @@ impl HelpParser {
                 }
             }
         }
-        if !sections.arguments.is_empty() {
+        if (!prefer_man || arg_candidates.is_empty()) && !sections.arguments.is_empty() {
             let refs: Vec<&str> = sections
                 .arguments
                 .iter()
@@ -432,18 +458,20 @@ impl HelpParser {
         // Stty-style named settings and similar rows are structural command
         // tokens, but often appear in mixed sections that the block parser does
         // not fully capture.
-        let (named_settings, named_settings_recognized) =
-            self.parse_named_setting_rows(&indexed_lines);
-        if !named_settings.is_empty() {
-            recognized_indices.extend(named_settings_recognized);
-            parsers_used.push("named-setting-rows".to_string());
-            for subcommand in named_settings {
-                subcommand_candidates.push(ast::SubcommandCandidate::from_schema(
-                    subcommand,
-                    ast::SourceSpan::unknown(),
-                    "named-setting-rows",
-                    0.72,
-                ));
+        if subcommand_candidates.is_empty() {
+            let (named_settings, named_settings_recognized) =
+                self.parse_named_setting_rows(&indexed_lines);
+            if !named_settings.is_empty() {
+                recognized_indices.extend(named_settings_recognized);
+                parsers_used.push("named-setting-rows".to_string());
+                for subcommand in named_settings {
+                    subcommand_candidates.push(ast::SubcommandCandidate::from_schema(
+                        subcommand,
+                        ast::SourceSpan::unknown(),
+                        "named-setting-rows",
+                        0.72,
+                    ));
+                }
             }
         }
 
@@ -451,12 +479,14 @@ impl HelpParser {
 
         // GNU and many custom CLIs list additional flags outside explicit
         // "Flags/Options" sections, so always run this as a top-up pass.
-        let fallback_flags = gnu_strategy.collect_flags(self, &indexed_lines);
-        let (_, fallback_recognized) = self.parse_sectionless_flags(&indexed_lines);
-        if !fallback_flags.is_empty() {
-            recognized_indices.extend(fallback_recognized);
-            parsers_used.push("gnu-sectionless-flags".to_string());
-            flag_candidates.extend(fallback_flags);
+        if !prefer_man || flag_candidates.is_empty() {
+            let fallback_flags = gnu_strategy.collect_flags(self, &indexed_lines);
+            let (_, fallback_recognized) = self.parse_sectionless_flags(&indexed_lines);
+            if !fallback_flags.is_empty() {
+                recognized_indices.extend(fallback_recognized);
+                parsers_used.push("gnu-sectionless-flags".to_string());
+                flag_candidates.extend(fallback_flags);
+            }
         }
 
         // Compact usage fallback, e.g. tmux:
@@ -2201,6 +2231,14 @@ impl HelpParser {
                 score: 0.0,
             },
             FormatScore {
+                format: HelpFormat::Bsd,
+                score: 0.0,
+            },
+            FormatScore {
+                format: HelpFormat::Man,
+                score: 0.0,
+            },
+            FormatScore {
                 format: HelpFormat::Unknown,
                 score: 0.05,
             },
@@ -2271,7 +2309,7 @@ impl HelpParser {
                         0.0
                     }
                 }
-                HelpFormat::Unknown | HelpFormat::Bsd => 0.0,
+                HelpFormat::Unknown | HelpFormat::Bsd | HelpFormat::Man => 0.0,
             };
         }
 

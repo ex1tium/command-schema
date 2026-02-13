@@ -1,6 +1,7 @@
 //! Pluggable parser strategies for different help-output structures.
 
 pub mod gnu;
+pub mod man;
 pub mod npm;
 pub mod section;
 pub mod usage;
@@ -30,7 +31,16 @@ pub trait ParserStrategy {
 /// "npm" is added when the top format is Cobra-style, then "gnu" and "usage"
 /// provide fallback coverage for unstructured output.
 pub fn ranked_strategy_names(format_scores: &[FormatScore]) -> Vec<&'static str> {
-    let mut names = vec!["section"]; // always run explicit sections first
+    let mut names = Vec::new();
+
+    if format_scores
+        .first()
+        .is_some_and(|score| score.format_label() == "man")
+    {
+        names.push("man");
+    }
+
+    names.push("section"); // always run explicit sections first
 
     if format_scores
         .first()
@@ -57,6 +67,7 @@ impl FormatScoreExt for FormatScore {
             command_schema_core::HelpFormat::Docopt => "docopt",
             command_schema_core::HelpFormat::Gnu => "gnu",
             command_schema_core::HelpFormat::Bsd => "bsd",
+            command_schema_core::HelpFormat::Man => "man",
             command_schema_core::HelpFormat::Unknown => "unknown",
         }
     }

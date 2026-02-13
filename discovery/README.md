@@ -17,7 +17,14 @@ This crate provides a library for parsing help text from CLI commands and extrac
 - Clap (Rust) / Cobra (Go) / Argparse (Python) style
 - NPM-style subcommand listings
 - BSD-style flags
+- Man pages:
+  - Raw roff source (`mdoc` and legacy `man` macros)
+  - Rendered manual output (e.g. `GIT-REBASE(1)` with `NAME`/`SYNOPSIS`/`OPTIONS` sections)
 - Generic section-based help
+
+When man-page structure is detected, man parsing is used as the primary extraction source.
+If man extraction yields insufficient entities, parser fallbacks continue with other strategies.
+Raw roff extraction is treated as high-confidence due to explicit macro structure.
 
 ## Quick Example
 

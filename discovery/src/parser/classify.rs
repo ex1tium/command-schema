@@ -36,6 +36,10 @@ pub fn classify_formats(lines: &[&str]) -> Vec<FormatScore> {
             score: 0.0,
         },
         FormatScore {
+            format: HelpFormat::Man,
+            score: 0.0,
+        },
+        FormatScore {
             format: HelpFormat::Unknown,
             score: 0.05,
         },
@@ -113,6 +117,7 @@ pub fn classify_formats(lines: &[&str]) -> Vec<FormatScore> {
                     0.0
                 }
             }
+            HelpFormat::Man => score_man_format(lines),
             HelpFormat::Unknown => 0.0,
         };
     }
@@ -123,6 +128,151 @@ pub fn classify_formats(lines: &[&str]) -> Vec<FormatScore> {
             .unwrap_or(std::cmp::Ordering::Equal)
     });
     scores
+}
+
+fn score_man_format(lines: &[&str]) -> f64 {
+    let raw_macro_count = lines
+        .iter()
+        .take(20)
+        .filter(|line| is_roff_macro_line(line))
+        .count();
+
+    let lower = lines
+        .iter()
+        .map(|line| line.to_ascii_lowercase())
+        .collect::<Vec<_>>();
+
+    let has_mdoc_markers = lower.iter().any(|line| {
+        line.starts_with(".dt ") || line.starts_with(".dd ") || line.starts_with(".sh ")
+    });
+    let has_man_markers = lower.iter().any(|line| {
+        line.starts_with(".th ") || line.starts_with(".sh ") || line.starts_with(".tp")
+    });
+
+    let mut score: f64 = 0.0;
+    if raw_macro_count >= 3 {
+        score = 0.95;
+    } else if raw_macro_count >= 2 {
+        score = 0.90;
+    }
+
+    if score > 0.0 {
+        if has_mdoc_markers {
+            score += 0.05;
+        }
+        if has_man_markers {
+            score += 0.05;
+        }
+        return score.clamp(0.0, 1.0);
+    }
+
+    let rendered_header_hits = lines
+        .iter()
+        .take(12)
+        .filter(|line| {
+            let trimmed = line.trim();
+            looks_like_man_title_line(trimmed)
+        })
+        .count();
+
+    let section_hits = lines
+        .iter()
+        .filter(|line| looks_like_rendered_man_section_header(line))
+        .count();
+
+    if rendered_header_hits > 0 {
+        score += 0.80;
+    }
+    score += (section_hits.min(4) as f64) * 0.10;
+    score.clamp(0.0, 1.0)
+}
+
+fn is_roff_macro_line(line: &str) -> bool {
+    let trimmed = line.trim_start();
+    let Some(first) = trimmed.chars().next() else {
+        return false;
+    };
+    if first != '.' && first != '\'' {
+        return false;
+    }
+    let mut chars = trimmed.chars().skip(1);
+    chars.next().is_some_and(|ch| {
+        ch.is_ascii_alphabetic() && chars.next().is_some_and(|c| c.is_ascii_alphabetic())
+    })
+}
+
+fn looks_like_man_title_line(trimmed: &str) -> bool {
+    if trimmed.is_empty() {
+        return false;
+    }
+    if !trimmed.contains('(') || !trimmed.contains(')') {
+        return false;
+    }
+    let left = trimmed.split('(').next().unwrap_or_default().trim();
+    let right = trimmed
+        .split('(')
+        .nth(1)
+        .and_then(|part| part.split(')').next())
+        .unwrap_or_default()
+        .trim();
+    !left.is_empty()
+        && left
+            .chars()
+            .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '-' || ch == '_')
+        && right
+            .chars()
+            .all(|ch| ch.is_ascii_digit() || ch.is_ascii_lowercase())
+}
+
+fn looks_like_rendered_man_section_header(line: &str) -> bool {
+    let trimmed = line.trim().trim_end_matches(':');
+    if trimmed.is_empty() || trimmed.len() > 40 {
+        return false;
+    }
+    let upper = trimmed.to_ascii_uppercase();
+    matches!(
+        upper.as_str(),
+        "NAME"
+            | "SYNOPSIS"
+            | "DESCRIPTION"
+            | "OPTIONS"
+            | "COMMANDS"
+            | "SUBCOMMANDS"
+            | "COMMAND OPTIONS"
+            | "GLOBAL OPTIONS"
+            | "ARGUMENTS"
+            | "EXAMPLES"
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_classify_man_raw_roff_prefers_man() {
+        let lines = [".TH GIT-REBASE 1", ".SH NAME", ".TP", ".B --continue"];
+        let scores = classify_formats(&lines);
+        assert_eq!(
+            scores.first().map(|score| score.format),
+            Some(HelpFormat::Man)
+        );
+    }
+
+    #[test]
+    fn test_classify_man_rendered_prefers_man() {
+        let lines = [
+            "GIT-REBASE(1)                     Git Manual                     GIT-REBASE(1)",
+            "NAME",
+            "SYNOPSIS",
+            "OPTIONS",
+        ];
+        let scores = classify_formats(&lines);
+        assert_eq!(
+            scores.first().map(|score| score.format),
+            Some(HelpFormat::Man)
+        );
+    }
 }
 
 /// Returns `true` if `text` matches a common placeholder token (e.g. COMMAND, FILE, ARG).

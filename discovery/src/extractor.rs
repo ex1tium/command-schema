@@ -1,9 +1,10 @@
 //! Command schema extraction via help probing.
 //!
-//! Automatically extracts command schemas by running `--help` commands
-//! and recursively probing subcommands with cycle detection and a bounded
-//! probe budget. The extractor tries multiple help flags (`--help`, `-h`, `-?`) and
-//! conditionally tries `help` when probe output explicitly suggests it.
+//! Automatically extracts command schemas by probing man pages first, then
+//! running `--help` commands and recursively probing subcommands with cycle
+//! detection and a bounded probe budget. The extractor tries multiple help
+//! flags (`--help`, `-h`, `-?`) and conditionally tries `help` when probe
+//! output explicitly suggests it.
 //!
 //! # Quality policy
 //!
@@ -225,6 +226,26 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
     let mut env_overrides = default_probe_env();
     env_overrides.extend(command_specific_probe_env(base_command.as_str()));
 
+    for man_page in man_probe_pages(&parts) {
+        let cmd_parts = vec!["man".to_string(), man_page.clone()];
+        let label = format!("man:{man_page}");
+
+        debug!(command = ?cmd_parts, "Probing man page");
+        let outcome = try_direct_probe(&cmd_parts, &label, &env_overrides);
+        if outcome.spawn_not_found {
+            // If `man` itself is unavailable there is no value in trying
+            // additional man pages for this command chain.
+            break;
+        }
+        attempts.push(outcome.attempt);
+        if let Some(help_text) = outcome.accepted_output {
+            return ProbeRun {
+                help_output: Some(adapt_help_output_for_command(command, help_text)),
+                attempts,
+            };
+        }
+    }
+
     for suffix in command_specific_probe_suffixes(base_command.as_str()) {
         let mut cmd_parts: Vec<String> = parts.iter().map(|part| (*part).to_string()).collect();
         cmd_parts.extend(suffix.iter().map(|part| (*part).to_string()));
@@ -357,6 +378,49 @@ fn command_specific_probe_suffixes(base_command: &str) -> Vec<Vec<&'static str>>
         ],
         _ => Vec::new(),
     }
+}
+
+fn man_probe_pages(parts: &[&str]) -> Vec<String> {
+    if parts.is_empty() {
+        return Vec::new();
+    }
+
+    if !parts.iter().all(|part| is_plausible_man_token(part)) {
+        return Vec::new();
+    }
+
+    let mut pages = Vec::new();
+    let mut seen = HashSet::new();
+    if parts.len() == 1 {
+        push_unique_man_page(&mut pages, &mut seen, parts[0].to_string());
+        return pages;
+    }
+
+    // For nested commands (e.g. `git remote add`) try the most specific page
+    // first and then progressively less specific parent pages.
+    for depth in (2..=parts.len()).rev() {
+        let suffix = parts[1..depth].join("-");
+        push_unique_man_page(&mut pages, &mut seen, format!("{}-{suffix}", parts[0]));
+    }
+
+    pages
+}
+
+fn push_unique_man_page(pages: &mut Vec<String>, seen: &mut HashSet<String>, page: String) {
+    let trimmed = page.trim();
+    if trimmed.is_empty() {
+        return;
+    }
+    if seen.insert(trimmed.to_string()) {
+        pages.push(trimmed.to_string());
+    }
+}
+
+fn is_plausible_man_token(token: &str) -> bool {
+    !token.is_empty()
+        && token
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '+' | '.' | '_' | '-'))
 }
 
 fn command_specific_probe_env(base_command: &str) -> Vec<(&'static str, &'static str)> {
@@ -576,8 +640,27 @@ struct ShellProbeResult {
 
 /// Returns `true` if `s` contains shell metacharacters that could allow injection.
 fn contains_shell_metacharacters(s: &str) -> bool {
-    s.chars()
-        .any(|ch| matches!(ch, '|' | ';' | '&' | '$' | '`' | '(' | ')' | '{' | '}' | '<' | '>' | '!' | '\'' | '"' | '\\' | '\n' | '\r'))
+    s.chars().any(|ch| {
+        matches!(
+            ch,
+            '|' | ';'
+                | '&'
+                | '$'
+                | '`'
+                | '('
+                | ')'
+                | '{'
+                | '}'
+                | '<'
+                | '>'
+                | '!'
+                | '\''
+                | '"'
+                | '\\'
+                | '\n'
+                | '\r'
+        )
+    })
 }
 
 fn probe_shell_help(
@@ -822,6 +905,10 @@ fn is_help_output(text: &str) -> bool {
         return true;
     }
 
+    if is_man_page_output(trimmed) {
+        return true;
+    }
+
     // Should contain help-like keywords
     let help_indicators = [
         "usage",
@@ -833,6 +920,60 @@ fn is_help_output(text: &str) -> bool {
     ];
 
     help_indicators.iter().any(|&ind| text_lower.contains(ind))
+}
+
+fn is_man_page_output(text: &str) -> bool {
+    let mut title_lines = 0usize;
+    let mut section_headers = 0usize;
+
+    for line in text.lines().take(120) {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        if looks_like_man_title_line(trimmed) {
+            title_lines += 1;
+        }
+        if matches!(
+            trimmed,
+            "NAME"
+                | "SYNOPSIS"
+                | "DESCRIPTION"
+                | "OPTIONS"
+                | "COMMANDS"
+                | "EXAMPLES"
+                | "SEE ALSO"
+                | "FILES"
+                | "ENVIRONMENT"
+        ) {
+            section_headers += 1;
+        }
+    }
+
+    section_headers >= 2 || (title_lines >= 1 && section_headers >= 1)
+}
+
+fn looks_like_man_title_line(line: &str) -> bool {
+    // Typical rendered title line: "GIT-REBASE(1)"
+    if !line.ends_with(')') {
+        return false;
+    }
+    let Some(paren_idx) = line.rfind('(') else {
+        return false;
+    };
+    if paren_idx == 0 {
+        return false;
+    }
+    let name = &line[..paren_idx];
+    let section = &line[paren_idx + 1..line.len() - 1];
+    !name.is_empty()
+        && name
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.' | '+'))
+        && !section.is_empty()
+        && section
+            .chars()
+            .all(|ch| ch.is_ascii_digit() || ch.is_ascii_alphabetic())
 }
 
 fn output_preview(text: &str) -> Option<String> {
@@ -1539,6 +1680,7 @@ pub fn help_format_label(format: HelpFormat) -> String {
         HelpFormat::Docopt => "docopt",
         HelpFormat::Gnu => "gnu",
         HelpFormat::Bsd => "bsd",
+        HelpFormat::Man => "man",
         HelpFormat::Unknown => "unknown",
     }
     .to_string()
@@ -1669,6 +1811,15 @@ mod tests {
                 .iter()
                 .any(|suffix| suffix == &vec!["--help", "all"])
         );
+    }
+
+    #[test]
+    fn test_man_probe_pages_prefers_specific_chain() {
+        let pages = man_probe_pages(&["git", "remote", "add"]);
+        assert_eq!(pages, vec!["git-remote-add", "git-remote"]);
+
+        let single = man_probe_pages(&["stat"]);
+        assert_eq!(single, vec!["stat"]);
     }
 
     #[test]
@@ -1832,10 +1983,15 @@ mod tests {
     fn test_extract_report_contains_probe_attempt_metadata_on_probe_failure() {
         let run = extract_command_schema_with_report("__wrashpty_missing_command__");
         assert!(!run.result.success);
-        assert_eq!(run.report.probe_attempts.len(), HELP_FLAGS.len());
+        assert!(run.report.probe_attempts.len() >= HELP_FLAGS.len());
+        assert!(
+            run.report
+                .probe_attempts
+                .first()
+                .is_some_and(|attempt| attempt.help_flag.starts_with("man:"))
+        );
 
-        for (index, attempt) in run.report.probe_attempts.iter().enumerate() {
-            assert_eq!(attempt.help_flag, HELP_FLAGS[index]);
+        for attempt in &run.report.probe_attempts {
             assert!(attempt.error.is_some() || attempt.timed_out || attempt.exit_code.is_some());
         }
     }

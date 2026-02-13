@@ -15,6 +15,9 @@ CONFIG ?= ci-config.yaml
 MANIFEST ?= /tmp/command-schema-manifest.json
 SCHEMA_DIR ?= schemas/database
 SCHEMA_BRANCH ?= schemas
+SCHEMA_REMOTE ?= origin
+SCHEMA_COMMIT_MSG ?= Update command schemas
+SCHEMA_PUSH ?= 1
 BUNDLE ?= /tmp/command-schemas-bundle.json
 DB ?= /tmp/command-schemas.db
 PREFIX ?= cs_
@@ -199,6 +202,49 @@ fetch-schemas: ## Fetch pre-extracted schemas from the schemas branch into SCHEM
 	@mkdir -p "$(SCHEMA_DIR)"
 	@git archive origin/$(SCHEMA_BRANCH) | tar -x -C "$(SCHEMA_DIR)/"
 	@echo "Fetched $$(ls "$(SCHEMA_DIR)"/*.json 2>/dev/null | wc -l) schema files."
+
+.PHONY: publish-schemas
+publish-schemas: ## Sync SCHEMA_DIR *.json into SCHEMA_BRANCH (create/update/delete), then commit and optionally push
+	@set -eu; \
+	src_dir="$(SCHEMA_DIR)"; \
+	remote="$(SCHEMA_REMOTE)"; \
+	branch="$(SCHEMA_BRANCH)"; \
+	if [ ! -d "$$src_dir" ]; then \
+		echo "SCHEMA_DIR does not exist: $$src_dir"; \
+		exit 1; \
+	fi; \
+	worktree_dir="$$(mktemp -d /tmp/command-schema-publish-XXXXXX)"; \
+	cleanup() { \
+		git worktree remove --force "$$worktree_dir" >/dev/null 2>&1 || true; \
+		rm -rf "$$worktree_dir"; \
+	}; \
+	trap cleanup EXIT INT TERM; \
+	echo "Preparing branch '$$branch' from remote '$$remote' in $$worktree_dir"; \
+	git fetch "$$remote" "$$branch" >/dev/null 2>&1 || true; \
+	if git ls-remote --exit-code --heads "$$remote" "$$branch" >/dev/null 2>&1; then \
+		git worktree add -B "$$branch" "$$worktree_dir" "$$remote/$$branch" >/dev/null; \
+	else \
+		echo "Remote branch '$$remote/$$branch' not found. Creating orphan branch '$$branch'."; \
+		git worktree add --detach "$$worktree_dir" HEAD >/dev/null; \
+		git -C "$$worktree_dir" checkout --orphan "$$branch" >/dev/null; \
+		git -C "$$worktree_dir" rm -rf . >/dev/null 2>&1 || true; \
+	fi; \
+	find "$$worktree_dir" -maxdepth 1 -type f -name '*.json' ! -name 'manifest.json' -delete; \
+	find "$$src_dir" -maxdepth 1 -type f -name '*.json' ! -name 'manifest.json' -exec cp -f {} "$$worktree_dir"/ \;; \
+	count="$$(find "$$worktree_dir" -maxdepth 1 -type f -name '*.json' ! -name 'manifest.json' | wc -l)"; \
+	echo "Staged $$count schema file(s) in branch workspace."; \
+	git -C "$$worktree_dir" add -A; \
+	if git -C "$$worktree_dir" diff --cached --quiet; then \
+		echo "No schema changes detected; nothing to commit."; \
+		exit 0; \
+	fi; \
+	git -C "$$worktree_dir" commit -m "$(SCHEMA_COMMIT_MSG)"; \
+	if [ "$(SCHEMA_PUSH)" = "1" ] || [ "$(SCHEMA_PUSH)" = "true" ] || [ "$(SCHEMA_PUSH)" = "yes" ]; then \
+		git -C "$$worktree_dir" push "$$remote" "$$branch"; \
+		echo "Pushed to $$remote/$$branch"; \
+	else \
+		echo "SCHEMA_PUSH=$(SCHEMA_PUSH); commit created locally in worktree, push skipped."; \
+	fi
 
 .PHONY: clean-schemas
 clean-schemas: ## Remove locally fetched schemas
