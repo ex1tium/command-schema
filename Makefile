@@ -24,6 +24,7 @@ PREFIX ?= cs_
 REPORT_OUTPUT ?= /tmp/command-schema-extraction-report.json
 LIST_GLOB ?= schemas/command-lists/*.csv
 FORCE ?= 0
+JOBS ?= 8
 
 .PHONY: help
 help: ## Show available make targets
@@ -76,24 +77,24 @@ clippy: ## Run clippy on workspace (deny warnings)
 .PHONY: extract-allowlist
 extract-allowlist: ## Extract installed allowlist commands to OUTPUT
 	mkdir -p "$(OUTPUT)"
-	$(CLI) extract --allowlist --installed-only --output "$(OUTPUT)" --no-cache
+	$(CLI) extract --allowlist --installed-only --jobs "$(JOBS)" --output "$(OUTPUT)" --no-cache
 
 .PHONY: extract-commands
 extract-commands: ## Extract COMMANDS CSV to TARGET_OUTPUT
 	mkdir -p "$(TARGET_OUTPUT)"
-	$(CLI) extract --commands "$(COMMANDS)" --installed-only --output "$(TARGET_OUTPUT)" --no-cache
+	$(CLI) extract --commands "$(COMMANDS)" --installed-only --jobs "$(JOBS)" --output "$(TARGET_OUTPUT)" --no-cache
 
 .PHONY: extract-scan
 extract-scan: ## Extract by scanning PATH into OUTPUT
 	mkdir -p "$(OUTPUT)"
-	$(CLI) extract --scan-path --installed-only --output "$(OUTPUT)" --no-cache
+	$(CLI) extract --scan-path --installed-only --jobs "$(JOBS)" --output "$(OUTPUT)" --no-cache
 
 .PHONY: extract-repo-allowlist
 extract-repo-allowlist: ## Non-destructive: extract allowlist and merge results into SCHEMA_DIR
 	mkdir -p "$(SCHEMA_DIR)"
 	@stage_dir="$$(mktemp -d /tmp/command-schema-stage-XXXXXX)"; \
 	echo "Staging extraction in $$stage_dir"; \
-	$(CLI) extract --allowlist --installed-only --output "$$stage_dir" --no-cache; \
+	$(CLI) extract --allowlist --installed-only --jobs "$(JOBS)" --output "$$stage_dir" --no-cache; \
 	find "$$stage_dir" -maxdepth 1 -type f -name '*.json' ! -name 'extraction-report.json' -exec cp -f {} "$(SCHEMA_DIR)/" \;; \
 	cp -f "$$stage_dir/extraction-report.json" "$(REPORT_OUTPUT)"; \
 	echo "Merged extracted schemas into $(SCHEMA_DIR) without deleting existing files."; \
@@ -105,7 +106,7 @@ extract-repo-commands: ## Non-destructive: extract COMMANDS and merge results in
 	mkdir -p "$(SCHEMA_DIR)"
 	@stage_dir="$$(mktemp -d /tmp/command-schema-stage-XXXXXX)"; \
 	echo "Staging extraction in $$stage_dir"; \
-	$(CLI) extract --commands "$(COMMANDS)" --installed-only --output "$$stage_dir" --no-cache; \
+	$(CLI) extract --commands "$(COMMANDS)" --installed-only --jobs "$(JOBS)" --output "$$stage_dir" --no-cache; \
 	find "$$stage_dir" -maxdepth 1 -type f -name '*.json' ! -name 'extraction-report.json' -exec cp -f {} "$(SCHEMA_DIR)/" \;; \
 	cp -f "$$stage_dir/extraction-report.json" "$(REPORT_OUTPUT)"; \
 	echo "Merged extracted schemas into $(SCHEMA_DIR) without deleting existing files."; \
@@ -126,10 +127,10 @@ extract-repo-system: ## Scan PATH + LIST_GLOB CSV lists, extract installed comma
 	if [ -s "$$list_tmp" ]; then \
 		commands_csv="$$(paste -sd, "$$list_tmp")"; \
 		echo "List-source commands: $$(wc -l < "$$list_tmp")"; \
-		$(CLI) extract --scan-path --commands "$$commands_csv" --installed-only --output "$$stage_dir" --no-cache; \
+		$(CLI) extract --scan-path --commands "$$commands_csv" --installed-only --jobs "$(JOBS)" --output "$$stage_dir" --no-cache; \
 	else \
 		echo "No valid commands found in list files; running scan-path only."; \
-		$(CLI) extract --scan-path --installed-only --output "$$stage_dir" --no-cache; \
+		$(CLI) extract --scan-path --installed-only --jobs "$(JOBS)" --output "$$stage_dir" --no-cache; \
 	fi; \
 	if [ ! -f "$$stage_dir/extraction-report.json" ]; then \
 		echo "Extraction failed: missing extraction-report.json in $$stage_dir"; \

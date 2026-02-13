@@ -2,9 +2,9 @@
 //!
 //! Automatically extracts command schemas by probing man pages first, then
 //! running `--help` commands and recursively probing subcommands with cycle
-//! detection and a bounded probe budget. The extractor tries multiple help
-//! flags (`--help`, `-h`, `-?`) and conditionally tries `help` when probe
-//! output explicitly suggests it.
+//! detection, a bounded depth, and a bounded probe budget. The extractor
+//! tries multiple help flags (`--help`, `-h`, `-?`) and conditionally tries
+//! `help` when probe output explicitly suggests it.
 //!
 //! # Quality policy
 //!
@@ -41,10 +41,17 @@ use super::report::{
 };
 use command_schema_core::{ExtractionResult, HelpFormat, SubcommandSchema, validate_schema};
 
+/// Maximum depth for recursive subcommand probing.
+const MAX_RECURSIVE_PROBE_DEPTH: usize = 6;
+
 /// Maximum number of unique command invocations to probe recursively.
-///
-/// Depth is intentionally unbounded; this budget is the safety guard.
-const MAX_RECURSIVE_PROBE_BUDGET: usize = 4096;
+const MAX_RECURSIVE_PROBE_BUDGET: usize = 256;
+
+/// Maximum number of direct child probes attempted per command node.
+const MAX_RECURSIVE_PROBES_PER_PARENT: usize = 48;
+
+/// Maximum wall-clock time spent in recursive subcommand probing per command.
+const MAX_RECURSIVE_PROBE_WALL_TIME_SECS: u64 = 20;
 
 /// Timeout for help commands (milliseconds).
 const HELP_TIMEOUT_MS: u64 = 5000;
@@ -1369,11 +1376,13 @@ fn extract_command_schema_with_report_base(command: &str) -> ExtractionRun {
 
     // Recursively probe subcommands
     let mut probed_subcommands = HashSet::new();
+    let recursive_probe_started = Instant::now();
     probe_subcommands_recursive(
         command,
         &mut schema.subcommands,
         &mut probed_subcommands,
         1,
+        recursive_probe_started,
         &mut warnings,
     );
 
@@ -1458,14 +1467,41 @@ fn probe_subcommands_recursive(
     subcommands: &mut [SubcommandSchema],
     probed: &mut HashSet<String>,
     depth: usize,
+    started_at: Instant,
     warnings: &mut Vec<String>,
 ) {
+    if depth > MAX_RECURSIVE_PROBE_DEPTH {
+        return;
+    }
+    if started_at.elapsed() >= Duration::from_secs(MAX_RECURSIVE_PROBE_WALL_TIME_SECS) {
+        extend_unique_warnings(
+            warnings,
+            std::iter::once(format!(
+                "Reached recursive probe time budget ({}s); skipping deeper discovery",
+                MAX_RECURSIVE_PROBE_WALL_TIME_SECS
+            )),
+        );
+        return;
+    }
+
     let sibling_names = subcommands
         .iter()
         .map(|subcmd| subcmd.name.to_ascii_lowercase())
         .collect::<HashSet<_>>();
+    let mut probed_children = 0usize;
 
     for subcmd in subcommands.iter_mut() {
+        if started_at.elapsed() >= Duration::from_secs(MAX_RECURSIVE_PROBE_WALL_TIME_SECS) {
+            extend_unique_warnings(
+                warnings,
+                std::iter::once(format!(
+                    "Reached recursive probe time budget ({}s); skipping deeper discovery",
+                    MAX_RECURSIVE_PROBE_WALL_TIME_SECS
+                )),
+            );
+            break;
+        }
+
         let full_command = format!("{} {}", base_command, subcmd.name);
 
         // Skip if already probed (avoid cycles)
@@ -1491,6 +1527,17 @@ fn probe_subcommands_recursive(
         if should_skip_known_cycle_prone_probe(base_command, subcmd) {
             continue;
         }
+        if probed_children >= MAX_RECURSIVE_PROBES_PER_PARENT {
+            extend_unique_warnings(
+                warnings,
+                std::iter::once(format!(
+                    "Reached per-command recursive probe limit ({MAX_RECURSIVE_PROBES_PER_PARENT}) for '{}'; skipping remaining siblings",
+                    base_command
+                )),
+            );
+            break;
+        }
+        probed_children += 1;
 
         debug!(
             command = %full_command,
@@ -1538,6 +1585,7 @@ fn probe_subcommands_recursive(
                         &mut subcmd.subcommands,
                         probed,
                         depth + 1,
+                        started_at,
                         warnings,
                     );
                 }

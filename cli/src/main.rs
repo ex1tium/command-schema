@@ -89,7 +89,7 @@ struct ExtractArgs {
     /// Only extract schemas for commands installed on the system.
     #[arg(long)]
     installed_only: bool,
-    /// Number of parallel extraction jobs (default: number of CPUs).
+    /// Number of parallel extraction jobs (default: adaptive, capped by workload).
     #[arg(long)]
     jobs: Option<usize>,
     /// Directory for caching extraction results.
