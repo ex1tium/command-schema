@@ -2782,17 +2782,26 @@ impl HelpParser {
         };
         // Positional-only synopsis lines: contain angle brackets (<FILE>),
         // leading square brackets ([ARG]), or all-caps placeholder tokens.
+        // The all-caps word heuristic is gated behind a lowercase-first-word
+        // check so that man-page section headers ("SEE ALSO", "EXIT STATUS")
+        // are not mistaken for synopsis lines—section headers are all-caps
+        // while real synopsis lines start with a lowercase command name.
+        let first_char_lower = trimmed
+            .chars()
+            .next()
+            .is_some_and(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '/' || ch == '.');
         let has_positional = trimmed.contains('<')
-            || trimmed.contains('[')
-            || trimmed.split_whitespace().skip(1).any(|w| {
-                let norm = w.trim_matches(|ch: char| {
-                    matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';' | '.')
-                });
-                norm.len() > 1
-                    && norm
-                        .chars()
-                        .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
-            });
+            || (first_char_lower && trimmed.contains('['))
+            || (first_char_lower
+                && trimmed.split_whitespace().skip(1).any(|w| {
+                    let norm = w.trim_matches(|ch: char| {
+                        matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';' | '.')
+                    });
+                    norm.len() > 1
+                        && norm
+                            .chars()
+                            .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+                }));
         if !has_long_flag && !has_short_flag && !has_positional {
             return false;
         }
