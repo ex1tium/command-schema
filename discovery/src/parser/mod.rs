@@ -249,7 +249,9 @@ impl HelpParser {
         let npm_strategy = strategies::npm::NpmStrategy;
         let gnu_strategy = strategies::gnu::GnuStrategy;
         let usage_strategy = strategies::usage::UsageStrategy;
-        let strategy_plan = strategies::ranked_strategy_names(&format_scores);
+        let man_detected = self.detected_format == Some(HelpFormat::Man)
+            || strategies::man::detect::detect_roff_variant(&line_refs).is_some();
+        let strategy_plan = strategies::ranked_strategy_names(&format_scores, man_detected);
         parsers_used.push(format!("strategy-plan:{}", strategy_plan.join("+")));
         let run_man_strategy = strategy_plan.contains(&"man");
 
@@ -269,6 +271,7 @@ impl HelpParser {
         };
         let man_detected = man_bundle.format.is_some();
         let man_has_entities = man_bundle.has_entities();
+        let man_primary_extracted = man_detected && man_has_entities;
         if self.detected_format == Some(HelpFormat::Man) || (man_has_entities && man_detected) {
             schema.source = SchemaSource::ManPage;
         }
@@ -290,6 +293,10 @@ impl HelpParser {
         let prefer_man = !flag_candidates.is_empty()
             || !subcommand_candidates.is_empty()
             || !arg_candidates.is_empty();
+        let allow_permissive_subcommand_fallbacks = !man_primary_extracted;
+        if !allow_permissive_subcommand_fallbacks && subcommand_candidates.is_empty() {
+            parsers_used.push("subcommand-fallbacks-skipped:man-primary".to_string());
+        }
         parsers_used.push(format!("strategy-executed:{}", section_strategy.name()));
 
         // Extract subcommands from explicit command sections.
@@ -399,7 +406,7 @@ impl HelpParser {
         // Stage 2: format-aware and well-known structural fallbacks.
 
         // npm-style command lists (All commands:)
-        if subcommand_candidates.is_empty() {
+        if subcommand_candidates.is_empty() && allow_permissive_subcommand_fallbacks {
             parsers_used.push(format!("strategy-executed:{}", npm_strategy.name()));
             let npm_subcommands = npm_strategy.collect_subcommands(self, &indexed_lines);
             if !npm_subcommands.is_empty() {
@@ -413,7 +420,10 @@ impl HelpParser {
         // Dense command-grid sections (e.g. OpenSSL "Standard commands"),
         // where each row contains multiple command tokens and no per-row
         // descriptions.
-        if subcommand_candidates.is_empty() && !keybinding_document {
+        if subcommand_candidates.is_empty()
+            && allow_permissive_subcommand_fallbacks
+            && !keybinding_document
+        {
             let (grid_subcommands, grid_recognized, primary_grid_section) =
                 self.parse_dense_command_grid_subcommands(&indexed_lines);
             if !grid_subcommands.is_empty() {
@@ -435,6 +445,7 @@ impl HelpParser {
         // identified (or were empty). This is still structural and should happen
         // before more permissive fallbacks.
         if subcommand_candidates.is_empty()
+            && allow_permissive_subcommand_fallbacks
             && !keybinding_document
             && sections.subcommands.is_empty()
             && sections.arguments.is_empty()
@@ -460,7 +471,7 @@ impl HelpParser {
         // Stty-style named settings and similar rows are structural command
         // tokens, but often appear in mixed sections that the block parser does
         // not fully capture.
-        if subcommand_candidates.is_empty() {
+        if subcommand_candidates.is_empty() && allow_permissive_subcommand_fallbacks {
             let (named_settings, named_settings_recognized) =
                 self.parse_named_setting_rows(&indexed_lines);
             if !named_settings.is_empty() {
@@ -3883,6 +3894,25 @@ usage: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase> | --keep-base]
     --abort               abort and check out the original branch
 "#;
 
+    const MAN_PROSE_SUBCOMMAND_FALSE_POSITIVE_HELP: &str = r#"
+GREP(1)                     User Commands                    GREP(1)
+
+NAME
+  grep - print lines that match patterns
+
+SYNOPSIS
+  grep [OPTION]... PATTERNS [FILE]...
+
+DESCRIPTION
+  Character classes and bracket expressions.
+  they are [:alnum:], [:alpha:], [:blank:], [:cntrl:], [:digit:].
+  character set encoding, this is the same as [0-9A-Za-z].
+
+OPTIONS
+  -i, --ignore-case    ignore case distinctions in patterns and input data
+  -n, --line-number    print line number with output lines
+"#;
+
     const SYSTEMCTL_STYLE_HELP: &str = r#"
 systemctl [OPTIONS...] COMMAND ...
 
@@ -4519,6 +4549,31 @@ Commands:
         let schema = parser.parse().unwrap();
 
         assert!(schema.find_subcommand("and").is_none());
+    }
+
+    #[test]
+    fn test_man_primary_skips_permissive_subcommand_fallbacks() {
+        let mut parser = HelpParser::new("grep", MAN_PROSE_SUBCOMMAND_FALSE_POSITIVE_HELP);
+        let schema = parser.parse().unwrap();
+
+        assert_eq!(parser.detected_format(), Some(HelpFormat::Man));
+        assert!(schema.find_global_flag("--ignore-case").is_some());
+        assert!(schema.find_subcommand("they").is_none());
+        assert!(schema.find_subcommand("character").is_none());
+
+        let diagnostics = parser.diagnostics();
+        assert!(
+            diagnostics
+                .parsers_used
+                .iter()
+                .any(|entry| entry == "subcommand-fallbacks-skipped:man-primary")
+        );
+        assert!(
+            !diagnostics
+                .parsers_used
+                .iter()
+                .any(|entry| entry == "generic-two-column-subcommands")
+        );
     }
 
     #[test]

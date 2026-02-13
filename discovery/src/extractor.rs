@@ -164,6 +164,15 @@ struct ProbeRun {
     attempts: Vec<ProbeAttempt>,
 }
 
+#[derive(Debug, Clone, Copy, Default)]
+struct ProbeOutputQuality {
+    entities: usize,
+    confidence: f64,
+    coverage: f64,
+    has_subcommands: bool,
+    bytes: usize,
+}
+
 #[derive(Debug)]
 struct DirectProbeOutcome {
     attempt: ProbeAttempt,
@@ -233,6 +242,8 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
     let base_command = parts[0].to_ascii_lowercase();
     let mut env_overrides = default_probe_env();
     env_overrides.extend(command_specific_probe_env(base_command.as_str()));
+    let mut best_man_output: Option<String> = None;
+    let mut best_man_quality: Option<ProbeOutputQuality> = None;
 
     for man_page in man_probe_pages(&parts) {
         let cmd_parts = vec!["man".to_string(), man_page.clone()];
@@ -247,10 +258,22 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         }
         attempts.push(outcome.attempt);
         if let Some(help_text) = outcome.accepted_output {
-            return ProbeRun {
-                help_output: Some(adapt_help_output_for_command(command, help_text)),
-                attempts,
-            };
+            let adapted = adapt_help_output_for_command(command, help_text);
+            let quality = evaluate_help_output_quality(command, adapted.as_str());
+            if best_man_quality
+                .map(|current| output_quality_score(quality) > output_quality_score(current))
+                .unwrap_or(true)
+            {
+                best_man_output = Some(adapted.clone());
+                best_man_quality = Some(quality);
+            }
+
+            if man_output_is_sufficient(&parts, quality) {
+                return ProbeRun {
+                    help_output: Some(adapted),
+                    attempts,
+                };
+            }
         }
     }
 
@@ -266,8 +289,15 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
         }
         attempts.push(outcome.attempt);
         if let Some(help_text) = outcome.accepted_output {
+            let selected = select_output_after_fallback(
+                command,
+                &parts,
+                best_man_output.take(),
+                best_man_quality,
+                help_text,
+            );
             return ProbeRun {
-                help_output: Some(adapt_help_output_for_command(command, help_text)),
+                help_output: Some(selected),
                 attempts,
             };
         }
@@ -289,8 +319,15 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
             let shell_probe = probe_shell_help(&parts, help_flag, &env_overrides);
             attempts.push(shell_probe.attempt);
             if let Some(help_text) = shell_probe.accepted_output {
+                let selected = select_output_after_fallback(
+                    command,
+                    &parts,
+                    best_man_output.take(),
+                    best_man_quality,
+                    help_text,
+                );
                 return ProbeRun {
-                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    help_output: Some(selected),
                     attempts,
                 };
             }
@@ -305,8 +342,15 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
                 length = help_text.len(),
                 "Got help output"
             );
+            let selected = select_output_after_fallback(
+                command,
+                &parts,
+                best_man_output.take(),
+                best_man_quality,
+                help_text,
+            );
             return ProbeRun {
-                help_output: Some(adapt_help_output_for_command(command, help_text)),
+                help_output: Some(selected),
                 attempts,
             };
         }
@@ -327,25 +371,136 @@ fn probe_command_help_with_metadata(command: &str) -> ProbeRun {
             let shell_probe = probe_shell_help(&parts, "help", &env_overrides);
             attempts.push(shell_probe.attempt);
             if let Some(help_text) = shell_probe.accepted_output {
+                let selected = select_output_after_fallback(
+                    command,
+                    &parts,
+                    best_man_output.take(),
+                    best_man_quality,
+                    help_text,
+                );
                 return ProbeRun {
-                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    help_output: Some(selected),
                     attempts,
                 };
             }
         } else {
             attempts.push(outcome.attempt);
             if let Some(help_text) = outcome.accepted_output {
+                let selected = select_output_after_fallback(
+                    command,
+                    &parts,
+                    best_man_output.take(),
+                    best_man_quality,
+                    help_text,
+                );
                 return ProbeRun {
-                    help_output: Some(adapt_help_output_for_command(command, help_text)),
+                    help_output: Some(selected),
                     attempts,
                 };
             }
         }
     }
 
+    if let Some(man_output) = best_man_output {
+        return ProbeRun {
+            help_output: Some(man_output),
+            attempts,
+        };
+    }
+
     ProbeRun {
         help_output: None,
         attempts,
+    }
+}
+
+fn evaluate_help_output_quality(command: &str, output: &str) -> ProbeOutputQuality {
+    let mut parser = HelpParser::new(command, output);
+    let schema = parser.parse();
+    let coverage = parser.diagnostics().coverage();
+
+    match schema {
+        Some(schema) => ProbeOutputQuality {
+            entities: schema.global_flags.len() + schema.subcommands.len() + schema.positional.len(),
+            confidence: schema.confidence,
+            coverage,
+            has_subcommands: !schema.subcommands.is_empty(),
+            bytes: output.len(),
+        },
+        None => ProbeOutputQuality {
+            entities: 0,
+            confidence: 0.0,
+            coverage,
+            has_subcommands: false,
+            bytes: output.len(),
+        },
+    }
+}
+
+fn output_quality_score(quality: ProbeOutputQuality) -> f64 {
+    let subcommand_bonus = if quality.has_subcommands { 2.0 } else { 0.0 };
+    quality.entities as f64
+        + quality.coverage * 4.0
+        + quality.confidence * 2.0
+        + subcommand_bonus
+        + ((quality.bytes.min(12_000) as f64) / 12_000.0)
+}
+
+fn man_output_is_sufficient(parts: &[&str], quality: ProbeOutputQuality) -> bool {
+    if parts.len() <= 1 {
+        // Root commands generally need command tables to be useful.
+        return (quality.has_subcommands && quality.entities >= 6)
+            || (quality.entities >= 18 && quality.coverage >= 0.20);
+    }
+
+    // Nested command pages are often option-dense and do not expose further
+    // subcommand tables, so lower requirements are acceptable.
+    (quality.entities >= 4) || (quality.entities >= 2 && quality.coverage >= 0.20)
+}
+
+fn prefer_fallback_help_over_man(
+    parts: &[&str],
+    man_quality: ProbeOutputQuality,
+    fallback_quality: ProbeOutputQuality,
+) -> bool {
+    if fallback_quality.entities == 0 {
+        return false;
+    }
+    if parts.len() <= 1 && fallback_quality.has_subcommands && !man_quality.has_subcommands {
+        return true;
+    }
+    if fallback_quality.entities >= man_quality.entities + 6 {
+        return true;
+    }
+    if fallback_quality.coverage >= man_quality.coverage + 0.15
+        && fallback_quality.entities >= man_quality.entities
+    {
+        return true;
+    }
+
+    output_quality_score(fallback_quality) > output_quality_score(man_quality) + 1.0
+}
+
+fn select_output_after_fallback(
+    command: &str,
+    parts: &[&str],
+    man_output: Option<String>,
+    man_quality: Option<ProbeOutputQuality>,
+    fallback_output: String,
+) -> String {
+    let adapted_fallback = adapt_help_output_for_command(command, fallback_output);
+    let Some(man_output) = man_output else {
+        return adapted_fallback;
+    };
+    let Some(man_quality) = man_quality else {
+        return adapted_fallback;
+    };
+
+    let fallback_quality = evaluate_help_output_quality(command, adapted_fallback.as_str());
+    if prefer_fallback_help_over_man(parts, man_quality, fallback_quality) {
+        adapted_fallback
+    } else {
+        man_output
     }
 }
 
@@ -2061,6 +2216,51 @@ mod tests {
             "remote",
             &parsed,
             &sibling_names
+        ));
+    }
+
+    #[test]
+    fn test_man_output_is_sufficient_requires_subcommands_for_root_commands() {
+        let root_sparse = ProbeOutputQuality {
+            entities: 12,
+            confidence: 0.8,
+            coverage: 0.4,
+            has_subcommands: false,
+            bytes: 5000,
+        };
+        assert!(!man_output_is_sufficient(&["git"], root_sparse));
+
+        let root_rich = ProbeOutputQuality {
+            entities: 12,
+            confidence: 0.8,
+            coverage: 0.4,
+            has_subcommands: true,
+            bytes: 5000,
+        };
+        assert!(man_output_is_sufficient(&["git"], root_rich));
+    }
+
+    #[test]
+    fn test_prefer_fallback_help_over_man_when_fallback_has_subcommands() {
+        let man_quality = ProbeOutputQuality {
+            entities: 10,
+            confidence: 0.85,
+            coverage: 0.45,
+            has_subcommands: false,
+            bytes: 7000,
+        };
+        let fallback_quality = ProbeOutputQuality {
+            entities: 9,
+            confidence: 0.8,
+            coverage: 0.4,
+            has_subcommands: true,
+            bytes: 6500,
+        };
+
+        assert!(prefer_fallback_help_over_man(
+            &["git"],
+            man_quality,
+            fallback_quality
         ));
     }
 

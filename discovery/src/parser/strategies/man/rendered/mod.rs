@@ -52,6 +52,9 @@ pub fn parse_candidates(lines: &[IndexedLine]) -> RenderedExtraction {
             extraction
                 .args
                 .extend(synopsis::parse_synopsis_args(section));
+            extraction
+                .subcommands
+                .extend(synopsis::parse_synopsis_subcommands(section));
         }
         if name.contains("COMMAND") {
             extraction
