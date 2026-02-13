@@ -4,9 +4,9 @@
   "description": "STRIP(1) GNU Development Tools STRIP(1)",
   "global_flags": [
     {
-      "short": null,
+      "short": "-U",
       "long": "--disable-deterministic-archives",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "not operate in deterministic mode.  This is the inverse of the -D option, above: when copying archive members and writing the archive index, use their actual UID, GID, timestamp, and file mode values.",
       "multiple": false,
@@ -14,41 +14,41 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-x",
       "long": "--discard-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Remove all non-global symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-X",
       "long": "--discard-locals",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "(These usually start with L or ..)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-D",
       "long": "--enable-deterministic-archives",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "When copying archive members and writing the archive index, use zero for UIDs, GIDs, timestamps, and  use consistent file modes for all files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display this output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,17 +58,17 @@
       "long": "--info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "List object formats & architectures supported",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-I",
       "long": "--input-target",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Assume input file is in format <bfdname>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--keep-section",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Do not strip section <name>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,13 +98,13 @@
       "long": "--keep-section-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not strip section symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-K",
       "long": "--keep-symbol",
       "value_type": "String",
       "takes_value": true,
@@ -114,10 +114,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-M",
       "long": "--merge-notes",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -154,21 +154,21 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-O",
       "long": "--output-target",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Create an output file in format <bfdname>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--preserve-dates",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Copy modified/access timestamps to the output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -184,9 +184,9 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-R",
       "long": "--remove-section",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "any section named sectionname from the output file, in addition to whatever sections would otherwise be removed.  This option may be given more than once.  Note that using this option inappropriately may make the output file unusable.  The wildcard character * may be given at the end of sectionname.  If so, then any section starting with sectionname will be removed.",
       "multiple": false,
@@ -194,11 +194,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-s",
       "long": "--strip-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Remove all symbol and relocation information",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -234,11 +234,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-N",
       "long": "--strip-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Do not copy symbol <name>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,23 +248,23 @@
       "long": "--strip-unneeded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Remove all symbols not needed by relocations",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-F",
       "long": "--target",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Set both input and output format to <bfdname>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
@@ -274,61 +274,21 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display this program's version number",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-w",
       "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
       "description": "The question mark (?), asterisk  (*),  backslash  (\\)  and square  brackets  ([])  operators  can be used anywhere in the symbol name.  If the first character of the symbol name is the exclamation point (!) then the sense of the switch is reversed for that symbol.  For example:",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-K",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -344,77 +304,7 @@
       "requires": []
     },
     {
-      "short": "-M",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-S",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
       "long": null,
       "value_type": "String",
       "takes_value": true,
@@ -438,7 +328,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Remove all debugging symbols & sections",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -449,56 +339,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "the  stripped output in file, rather than replacing the existing file.  When this argument is used, only one objfile argument may be specified.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-w",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1703,7 +1543,7 @@
     }
   ],
   "positional": [],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

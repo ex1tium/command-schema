@@ -5,10 +5,10 @@
   "global_flags": [
     {
       "short": null,
-      "long": "--[no-]uniform-compression",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "that  the same compression parameters should be used for all archive members (i.e. control.tar and data.tar; since dpkg 1.17.6). Otherwise only the data.tar member will use those parameters.  The only supported compression types allowed  to  be  uniformly  used  are none,  gzip,  xz and zstd.  The --no-uniform-compression option disables uniform compression (since dpkg 1.19.0).  Uniform compression is the default (since dpkg 1.19.0).",
+      "long": "--ctrl-tarfile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Output control tarfile.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -35,6 +35,26 @@
     },
     {
       "short": null,
+      "long": "--fsys-tarfile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Output filesystem tarfile.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show this help message.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--nocheck",
       "value_type": "Bool",
       "takes_value": false,
@@ -48,7 +68,7 @@
       "long": "--root-owner-group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Forces the owner and groups to root.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +88,7 @@
       "long": "--threads-max",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Use at most <threads> with compressor. --[no-]uniform-compression Use the compression params on all members.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -84,6 +104,36 @@
       "requires": []
     },
     {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show the version.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Show info to stdout.",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-Scompress-strategy",
       "long": null,
       "value_type": "Bool",
@@ -94,11 +144,81 @@
       "requires": []
     },
     {
+      "short": "-W",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show information on package(s)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Extract & list files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-Zcompress-type",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": "Allowed values are  gzip,  xz  (since  dpkg  1.15.6),  zstd  (since  dpkg 1.21.18) and none (default is zstd).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "Build an archive.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "List contents.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show field(s) to stdout.",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Extract files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,16 +236,8 @@
   ],
   "subcommands": [
     {
-      "name": "is",
-      "description": "specified, rather than a file, the --nocheck option may not be used (since dpkg-deb needs to read and parse the package control file to determine which filename to use).",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "problems",
-      "description": "dpkg-deb will also check the permissions of the maintainer scripts and other files found in the DEBIAN control information directory.",
+      "name": "Unless",
+      "description": "you  specify  --nocheck,  dpkg-deb  will  read  DEBIAN/control  and parse it.  It will check the file for syntax errors and other problems, and display the name of the binary package being built.  dpkg-deb will also check the permissions of the maintainer scripts and other files found in the DEBIAN control information directory.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -133,7 +245,7 @@
     }
   ],
   "positional": [],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

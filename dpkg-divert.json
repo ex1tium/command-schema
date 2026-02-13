@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-divert",
-  "description": null,
+  "description": "dpkg-divert(1) dpkg suite dpkg-divert(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "File",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "set the directory with the diversions file.",
+      "description": "Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,15 +16,15 @@
     {
       "short": null,
       "long": "--divert",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "the name used by other packages' versions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-?",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
@@ -38,7 +38,7 @@
       "long": "--instdir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "set the root directory, but not the admin dir.",
+      "description": "the  installation  directory,  which  refers  to the directory where packages get installed (since dpkg 1.19.2).  Defaults to «/» if DPKG_ROOT has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--local",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all packages' versions are diverted.",
+      "description": "that  all  packages'  versions  of  this file are diverted.  This means, that there are no exceptions, and whatever package is installed, the file is diverted.  This can be used by an admin to install a locally modified version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--no-rename",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not move the file aside (or back) (default).",
+      "description": "that  the  file  should  not be renamed while adding or removing the diversion into the database (since dpkg 1.19.1).  This is intended for diversions of files from the Essential package  set,  where  the  temporary  disappearance  of  the  original  file  is  not acceptable, as it can render the system non-functional.  This is the default behavior, but that will change in the dpkg 1.20.x cycle.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--package",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "name of the package whose copy of <file> will not be diverted.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "i.e. file will be diverted for all packages except package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--rename",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "actually move the file aside (or back).",
+      "description": "dpkg-divert will abort operation in case the destination  file  already  exists.   This  is  the common behavior used for diversions of files from the non-Essential package set (see --no-rename for more details).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": null,
       "long": "--root",
-      "value_type": "File",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "set the directory of the root filesystem.",
+      "description": "which  sets  the  installation  directory  to  «directory»  and  the  administrative  directory  to «directory/var/lib/dpkg» (since dpkg 1.19.2) if DPKG_ROOT has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,7 +166,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "Merged",
+  "confidence": 0.8,
   "version": null
 }

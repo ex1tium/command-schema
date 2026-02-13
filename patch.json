@@ -14,11 +14,31 @@
       "requires": []
     },
     {
+      "short": "-b",
+      "long": "--backup",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "or  --backup Make  backup  files.   That is, when patching a file, rename or copy the original instead of removing it.  See the -V or --version-control option for details about how backup file names are determined.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--backup-if-mismatch",
       "value_type": "Bool",
       "takes_value": false,
       "description": "This is the default unless  patch is conforming to POSIX.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--batch",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --batch Suppress  questions  like  -f, but make some different assumptions: skip patches whose headers do not contain file names (the same as -f); skip patches for which the file has the wrong version for the Prereq: line in the patch; and assume that patches are reversed if they look like they are.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -34,11 +54,31 @@
       "requires": []
     },
     {
+      "short": "-c",
+      "long": "--context",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --context Interpret the patch file as a ordinary context diff.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--dry-run",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not actually change any files; just print what would happen.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--ed",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --ed Interpret the patch file as an ed script.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -54,11 +94,41 @@
       "requires": []
     },
     {
+      "short": "-f",
+      "long": "--force",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --force Assume that the user knows exactly what he or she is doing, and do not ask any questions.  Skip patches whose headers  do  not  say  which file  is to be patched; patch files even though they have the wrong version for the Prereq: line in the patch; and assume that patches are not reversed even if they look like they are.  This option does not suppress commentary; use -s for that.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--forward",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "or  --forward When a patch does not apply, patch usually checks if the patch looks like it has been applied already by trying to reverse-apply the first hunk.  The --forward option prevents that.  See also -R.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Output this help.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--ignore-whitespace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --ignore-whitespace Match  patterns  loosely,  in  case  tabs  or spaces have been munged in your files.  Any sequence of one or more blanks in the patch file matches any sequence in the original file, and sequences of blanks at the ends of lines are ignored.  Normal characters must  still  match exactly.  Each line of the context must still match a line in the original file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -84,11 +154,31 @@
       "requires": []
     },
     {
+      "short": "-n",
+      "long": "--normal",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --normal Interpret the patch file as a normal diff.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--posix",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Conform to the POSIX standard.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --silent  or  --quiet Work silently, unless an error occurs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +198,7 @@
       "long": "--read-only",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "How to handle read-only input files: 'ignore' that they are read-only, 'warn' (default), or 'fail'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -124,11 +214,71 @@
       "requires": []
     },
     {
+      "short": "-E",
+      "long": "--remove-empty-files",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "or  --remove-empty-files Remove  output files that are empty after the patches have been applied.  Normally this option is unnecessary, since patch can examine the time stamps on the header to determine whether a file should exist after patching.  However, if the input is not  a  context  diff  or  if patch  is  conforming to POSIX, patch does not remove empty patched files unless this option is given.  When patch removes a file, it also attempts to remove any empty ancestor directories.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": "--reverse",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "or  --reverse Assume that this patch was created with the old and new files swapped.  (Yes, I'm afraid that does happen occasionally, human nature being what it is.)  patch attempts to swap each hunk around before applying it.  Rejects come out in the swapped format.  The -R option does not work with ed diff scripts because there is too little information to reconstruct the reverse operation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--set-time",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "or  --set-time Set the modification and access times of patched files from time stamps given in context diff  headers.   Unless  specified  in  the  time stamps, assume that the context diff headers use local time.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": "--set-utc",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "or  --set-utc Set the modification and access times of patched files from time stamps given in context  diff  headers.  Unless  specified  in  the  time stamps,  assume that the context diff headers use Coordinated Universal Time (UTC, often known as GMT).  Also see the -T or --set-time op‐ tion.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": "--unified",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --unified Interpret the patch file as a unified context diff.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Output extra information about the work being done.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "or  --version Print out patch's revision header and patch level, and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -154,51 +304,11 @@
       "requires": []
     },
     {
-      "short": "-E",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "or  --remove-empty-files Remove  output files that are empty after the patches have been applied.  Normally this option is unnecessary, since patch can examine the time stamps on the header to determine whether a file should exist after patching.  However, if the input is not  a  context  diff  or  if patch  is  conforming to POSIX, patch does not remove empty patched files unless this option is given.  When patch removes a file, it also attempts to remove any empty ancestor directories.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-F",
       "long": null,
       "value_type": "Number",
       "takes_value": true,
       "description": "or  --fuzz=num Set the maximum fuzz factor.  This option only applies to diffs that have context, and causes patch to ignore up to  that  many  lines  of context  in  looking for places to install a hunk.  Note that a larger fuzz factor increases the odds of a faulty patch.  The default fuzz factor is 2.  A fuzz factor greater than or equal to the number of lines of context in the context diff, ordinarily 3,  ignores  all  con‐ text.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "or  --forward When a patch does not apply, patch usually checks if the patch looks like it has been applied already by trying to reverse-apply the first hunk.  The --forward option prevents that.  See also -R.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "or  --reverse Assume that this patch was created with the old and new files swapped.  (Yes, I'm afraid that does happen occasionally, human nature being what it is.)  patch attempts to swap each hunk around before applying it.  Rejects come out in the swapped format.  The -R option does not work with ed diff scripts because there is too little information to reconstruct the reverse operation.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "or  --set-time Set the modification and access times of patched files from time stamps given in context diff  headers.   Unless  specified  in  the  time stamps, assume that the context diff headers use local time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -224,61 +334,11 @@
       "requires": []
     },
     {
-      "short": "-Z",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "or  --set-utc Set the modification and access times of patched files from time stamps given in context  diff  headers.  Unless  specified  in  the  time stamps,  assume that the context diff headers use Coordinated Universal Time (UTC, often known as GMT).  Also see the -T or --set-time op‐ tion.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "or  --backup Make  backup  files.   That is, when patching a file, rename or copy the original instead of removing it.  See the -V or --version-control option for details about how backup file names are determined.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --context Interpret the patch file as a ordinary context diff.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-d",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": "or  --directory=dir Change to the directory dir immediately, before doing anything else.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --ed Interpret the patch file as an ed script.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --force Assume that the user knows exactly what he or she is doing, and do not ask any questions.  Skip patches whose headers  do  not  say  which file  is to be patched; patch files even though they have the wrong version for the Prereq: line in the patch; and assume that patches are not reversed even if they look like they are.  This option does not suppress commentary; use -s for that.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -304,31 +364,21 @@
       "requires": []
     },
     {
-      "short": "-l",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --ignore-whitespace Match  patterns  loosely,  in  case  tabs  or spaces have been munged in your files.  Any sequence of one or more blanks in the patch file matches any sequence in the original file, and sequences of blanks at the ends of lines are ignored.  Normal characters must  still  match exactly.  Each line of the context must still match a line in the original file.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --normal Interpret the patch file as a normal diff.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-o",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": "or  --output=outfile Send  output  to  outfile  instead of patching files in place.  Do not use this option if outfile is one of the files to be patched.  When outfile is -, send output to standard output, and send any messages that would usually go to standard output to standard error.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -349,46 +399,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "or  --reject-file=rejectfile Put rejects into rejectfile instead of the default .rej file.  When rejectfile is -, discard rejects.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --silent  or  --quiet Work silently, unless an error occurs.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --batch Suppress  questions  like  -f, but make some different assumptions: skip patches whose headers do not contain file names (the same as -f); skip patches for which the file has the wrong version for the Prereq: line in the patch; and assume that patches are reversed if they look like they are.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --unified Interpret the patch file as a unified context diff.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or  --version Print out patch's revision header and patch level, and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -445,7 +455,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

@@ -5,10 +5,20 @@
   "global_flags": [
     {
       "short": null,
+      "long": "--about",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print pkgconf version and license to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--atleast-pkgconfig-version",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "check whether or not pkgconf is compatible with a specified pkg-config version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,7 @@
       "long": "--atleast-version",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "require a specific version of a module",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +38,27 @@
       "long": "--cflags",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "print required CFLAGS to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cflags-only-I",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "print required include-dir CFLAGS to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cflags-only-other",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "print required non-include-dir CFLAGS to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +98,7 @@
       "long": "--dont-define-prefix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "do not override the prefix variable under any circumstances",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +108,17 @@
       "long": "--dont-relocate-paths",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "disables path relocation support",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dump-personality",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "dumps details concerning selected personality",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +138,7 @@
       "long": "--env-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "look only for package entries in PKG_CONFIG_PATH",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +148,7 @@
       "long": "--errors-to-stdout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print all errors on stdout instead of stderr",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +158,7 @@
       "long": "--exact-version",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "require an exact version of a module",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +168,7 @@
       "long": "--exists",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "check whether or not a module exists",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +178,17 @@
       "long": "--fragment-filter",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "filter output fragments to the specified types",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "this message",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +198,17 @@
       "long": "--ignore-conflicts",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "ignore 'conflicts' rules in modules",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--internal-cflags",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not filter 'internal' cflags from output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +218,17 @@
       "long": "--keep-system-cflags",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "keep -I/usr/include entries in cflags output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-system-libs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "keep -L/lib:/lib/i386-linux-gnu:/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnux32:/lib32:/libx32:/usr/lib:/usr/lib/i386-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnux32:/usr/lib32:/usr/libx32 entries in libs output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +238,37 @@
       "long": "--libs",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "print required linker flags to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--libs-only-L",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print required LDPATH linker flags to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--libs-only-l",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print required LIBNAME linker flags to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--libs-only-other",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print required other linker flags to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -185,10 +285,30 @@
     },
     {
       "short": null,
+      "long": "--list-package-names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list all known package names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--log-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "write an audit log to a specified file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--max-version",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "require a maximum version of a module",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +328,17 @@
       "long": "--modversion",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print the specified module's version to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--msvc-syntax",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print translatable fragments in MSVC syntax",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +358,7 @@
       "long": "--no-provides",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "do not use 'provides' rules to resolve dependencies",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +368,7 @@
       "long": "--no-uninstalled",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "never use uninstalled modules when satisfying dependencies",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -255,10 +385,30 @@
     },
     {
       "short": null,
+      "long": "--personality",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "sets the personality to 'triplet' or a file named 'filename'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--prefix-variable",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "sets the name of the variable that pkgconf considers to be the package prefix",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-errors",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "ensure all errors are printed",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +418,7 @@
       "long": "--print-provides",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print provided dependencies to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +428,17 @@
       "long": "--print-requires",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print required dependency frameworks to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-requires-private",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print required dependency frameworks for static linking to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +448,7 @@
       "long": "--print-variables",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print all known variables in module to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +478,17 @@
       "long": "--shared",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use a simplified dependency graph (usually default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--short-errors",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "be less verbose about some errors",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +498,7 @@
       "long": "--silence-errors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "explicitly be silent about errors",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +518,7 @@
       "long": "--static",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "be more aggressive when computing dependency graph (for static linking)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +528,7 @@
       "long": "--uninstalled",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "check whether or not an uninstalled module will be used",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +538,7 @@
       "long": "--validate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "validate specific .pc files for correctness",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +548,7 @@
       "long": "--variable",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "print specified variable entry to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +558,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print supported pkg-config version to stdout",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +598,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

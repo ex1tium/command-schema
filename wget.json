@@ -18,15 +18,15 @@
       "long": "--accept-regex",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "regex matching accepted URLs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-E",
       "long": "--adjust-extension",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "a  file  of  type application/xhtml+xml or text/html is downloaded and the URL does not end with the regexp \\.[Hh][Tt][Mm][Ll]?, this option will cause the suffix .html to be appended to the local filename.  This is useful, for instance, when you're  mirroring  a  remote site that uses .asp pages, but you want the mirrored pages to be viewable on your stock Apache server.  Another good use for this is when you're downloading CGI-generated materials.  A URL like http://site.com/article.cgi?25 will be saved as article.cgi?25.html.",
       "multiple": false,
@@ -34,10 +34,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-a",
       "long": "--append-output",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "This is the same as -o, only it appends to logfile instead of overwriting the old log  file.   If  logfile  does  not exist, a new file is created.",
       "multiple": false,
       "conflicts_with": [],
@@ -64,7 +64,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-b",
       "long": "--background",
       "value_type": "Bool",
       "takes_value": false,
@@ -74,10 +74,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-K",
       "long": "--backup-converted",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Affects the behavior of -N.",
       "multiple": false,
       "conflicts_with": [],
@@ -94,9 +94,9 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-B",
       "long": "--base",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "HTML  file  specified  via  the  -i/--input-file option  (together with --force-html, or when the input file was fetched remotely from a server describing it as HTML). This is equivalent to the presence of a \"BASE\" tag in the HTML input file, with URL as the value for the \"href\" attribute.",
       "multiple": false,
@@ -128,7 +128,7 @@
       "long": "--body-data",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "send STRING as data. --method MUST be set",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--config",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "specify config file to use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--content-disposition",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "honor the Content-Disposition header when choosing local file names (EXPERIMENTAL)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,13 +238,13 @@
       "long": "--content-on-error",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "output the received content on server errors",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-c",
       "long": "--continue",
       "value_type": "Bool",
       "takes_value": false,
@@ -258,13 +258,13 @@
       "long": "--convert-file-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "convert the file part of the URLs only (usually known as the basename)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-k",
       "long": "--convert-links",
       "value_type": "Bool",
       "takes_value": false,
@@ -294,7 +294,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-d",
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
@@ -308,7 +308,7 @@
       "long": "--default-page",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "change the default page name (normally this is 'index.html'.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -324,9 +324,9 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-P",
       "long": "--directory-prefix",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "The directory prefix is the directory where all other files and subdirectories will be  saved  to,  i.e. the top of the retrieval tree.  The default is . (the current directory).",
       "multiple": false,
@@ -354,7 +354,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-D",
       "long": "--domains",
       "value_type": "String",
       "takes_value": true,
@@ -374,7 +374,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-X",
       "long": "--exclude-directories",
       "value_type": "String",
       "takes_value": true,
@@ -388,13 +388,13 @@
       "long": "--exclude-domains",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "comma-separated list of rejected domains",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-e",
       "long": "--execute",
       "value_type": "Bool",
       "takes_value": false,
@@ -424,7 +424,7 @@
       "requires": []
     },
     {
-      "short": "-nd---create",
+      "short": "-x",
       "long": "--force-directories",
       "value_type": "Bool",
       "takes_value": false,
@@ -434,9 +434,9 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-F",
       "long": "--force-html",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "input  is read from a file, force it to be treated as an HTML file.  This enables you to retrieve relative links from existing HTML files on your local disk, by adding \"<base href=\"url\">\" to HTML, or using the --base command-line option.",
       "multiple": false,
@@ -458,7 +458,7 @@
       "long": "--ftp-user",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set ftp user to USER",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -495,6 +495,16 @@
     },
     {
       "short": null,
+      "long": "--ftps-resume-ssl",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "resume the SSL/TLS session started in the control connection when opening a data connection",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--header",
       "value_type": "String",
       "takes_value": true,
@@ -504,7 +514,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
@@ -538,7 +548,7 @@
       "long": "--http-user",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set http user to USER",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +558,7 @@
       "long": "--https-only",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "only follow secure HTTPS links",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -584,7 +594,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-I",
       "long": "--include-directories",
       "value_type": "String",
       "takes_value": true,
@@ -594,7 +604,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-4",
       "long": "--inet4-only",
       "value_type": "Bool",
       "takes_value": false,
@@ -604,20 +614,20 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-6",
       "long": "--inet6-only",
-      "value_type": "Url",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "With --inet4-only or -4, Wget will only connect to IPv4 hosts, ignoring AAAA records in DNS, and  refusing  to connect to IPv6 addresses specified in URLs.  Conversely, with --inet6-only or -6, Wget will only connect to IPv6 hosts and ignore A records and IPv4 addresses.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-i",
       "long": "--input-file",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "If - is specified as file, URLs are read from the standard input.  (Use ./- to read from a file literally named -.)",
       "multiple": false,
       "conflicts_with": [],
@@ -654,10 +664,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-l",
       "long": "--level",
-      "value_type": "Directory",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "the  maximum  number  of subdirectories that Wget will recurse into to depth.  In order to prevent one from accidentally downloading very large websites when using recursion this is limited to a depth of 5 by default, i.e., it will traverse at most  5  directories  deep starting from the provided URL.  Set -l 0 or -l inf for infinite recursion depth.",
       "multiple": false,
       "conflicts_with": [],
@@ -744,10 +754,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-m",
       "long": "--mirror",
-      "value_type": "Directory",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "on  options  suitable for mirroring.  This option turns on recursion and time-stamping, sets infinite recursion depth and keeps FTP directory listings.  It is currently equivalent to -r -N -l inf --no-remove-listing.",
       "multiple": false,
       "conflicts_with": [],
@@ -774,11 +784,21 @@
       "requires": []
     },
     {
-      "short": "-nc.",
+      "short": "-nc",
       "long": "--no-clobber",
       "value_type": "Bool",
       "takes_value": false,
       "description": "In certain cases, the local file will be clobbered, or overwritten, upon repeated download.  In other cases it will be preserved.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-config",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not read any config file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -794,7 +814,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-nd",
       "long": "--no-directories",
       "value_type": "Bool",
       "takes_value": false,
@@ -834,7 +854,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-nH",
       "long": "--no-host-directories",
       "value_type": "Bool",
       "takes_value": false,
@@ -868,7 +888,7 @@
       "long": "--no-if-modified-since",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "don't use conditional if-modified-since get requests in timestamping mode",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -878,7 +898,7 @@
       "long": "--no-iri",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "turn off IRI support",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -894,7 +914,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-np",
       "long": "--no-parent",
       "value_type": "Bool",
       "takes_value": false,
@@ -918,7 +938,7 @@
       "long": "--no-proxy",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "explicitly turn off proxy",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -938,13 +958,13 @@
       "long": "--no-use-server-timestamps",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't set the local file's timestamp by the one on the server",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-nv",
       "long": "--no-verbose",
       "value_type": "Bool",
       "takes_value": false,
@@ -958,7 +978,7 @@
       "long": "--no-warc-compression",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "do not compress WARC files with GZIP",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -968,7 +988,7 @@
       "long": "--no-warc-digests",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "do not calculate SHA1 digests",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -978,15 +998,15 @@
       "long": "--no-warc-keep-log",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "do not store the log file in a WARC record",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-O",
       "long": "--output-document",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "documents  will not be written to the appropriate files, but all will be concatenated together and written to file.  If - is used as file, documents will be printed to standard output, disabling link conversion.  (Use ./- to print to a file literally named -.)",
       "multiple": false,
@@ -994,20 +1014,20 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-o",
       "long": "--output-file",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "The messages are normally reported to standard error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--page-requisites",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "This includes such things as inlined images, sounds, and referenced stylesheets.",
       "multiple": false,
       "conflicts_with": [],
@@ -1038,7 +1058,7 @@
       "long": "--post-data",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "use the POST method; send STRING as the data",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1078,7 +1098,7 @@
       "long": "--preserve-permissions",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "preserve remote file permissions",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1138,13 +1158,13 @@
       "long": "--proxy-user",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set USER as proxy username",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-q",
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
@@ -1154,7 +1174,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-Q",
       "long": "--quota",
       "value_type": "String",
       "takes_value": true,
@@ -1194,7 +1214,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-r",
       "long": "--recursive",
       "value_type": "Bool",
       "takes_value": false,
@@ -1238,7 +1258,7 @@
       "long": "--reject-regex",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "regex matching rejected URLs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1254,10 +1274,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-L",
       "long": "--relative",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Useful for retrieving a specific home page without any distractions, not even those from the same hosts.",
       "multiple": false,
       "conflicts_with": [],
@@ -1318,7 +1338,7 @@
       "long": "--retry-on-host-error",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "consider host errors as non-fatal, transient errors",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1348,7 +1368,7 @@
       "long": "--save-headers",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "save the HTTP headers to file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1364,7 +1384,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-S",
       "long": "--server-response",
       "value_type": "String",
       "takes_value": true,
@@ -1378,16 +1398,16 @@
       "long": "--show-progress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display the progress bar in any verbosity mode",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-H",
       "long": "--span-hosts",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1424,7 +1444,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-T",
       "long": "--timeout",
       "value_type": "String",
       "takes_value": true,
@@ -1444,10 +1464,10 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-t",
       "long": "--tries",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "The default is to retry 20 times, with  the  exception  of  fatal errors like \"connection refused\" or \"not found\" (404), which are not retried.",
       "multiple": false,
       "conflicts_with": [],
@@ -1468,7 +1488,7 @@
       "long": "--unlink",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "remove file before clobber",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1488,13 +1508,13 @@
       "long": "--user",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set both ftp and http user to USER",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-U",
       "long": "--user-agent",
       "value_type": "String",
       "takes_value": true,
@@ -1504,7 +1524,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
@@ -1514,20 +1534,20 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-w",
       "long": "--wait",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Use of this option is recommended, as it lightens the server load by making the requests less frequent.  Instead of in seconds, the time can be specified in minutes using the \"m\" suffix, in hours using \"h\" suffix, or in days using \"d\" suffix.",
       "multiple": false,
       "conflicts_with": [],
@@ -1548,7 +1568,7 @@
       "long": "--warc-cdx",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "write CDX index files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1558,7 +1578,7 @@
       "long": "--warc-dedup",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "do not store records listed in this CDX file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1568,7 +1588,7 @@
       "long": "--warc-file",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "save request/response data to a .warc.gz file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1578,7 +1598,7 @@
       "long": "--warc-header",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "insert STRING into the warcinfo record",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1588,7 +1608,7 @@
       "long": "--warc-max-size",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set maximum size of WARC files to NUMBER",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1598,7 +1618,7 @@
       "long": "--warc-tempdir",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "location for temporary files created by the WARC writer",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1608,417 +1628,7 @@
       "long": "--xattr",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-4",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-6",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-B",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-E",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-H",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-K",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Q",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-X",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-k",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-m",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-nH",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-nc",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-nd",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-np",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-nv",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-w",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "turn on storage of metadata in extended file attributes",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -9732,7 +9342,7 @@
     }
   ],
   "positional": [],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

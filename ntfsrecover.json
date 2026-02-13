@@ -1,41 +1,41 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsrecover",
-  "description": "ntfsrecover partition",
+  "description": "NTFSRECOVER(8) System Manager's Manual NTFSRECOVER(8)",
   "global_flags": [
     {
-      "short": "-V",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-b",
-      "long": null,
+      "long": "--backward",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "the  actions  described in the logfile backward from the latest one to the earliest one without applying any update. This may encompass records generated during several sessions, and when Windows is restarted, it often does not restart writing where  it  ended the previous session, so this leads to errors and bad sequencing when examining the full log file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "long": "--clusters",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "the  output  generated  when using options -b -f -u -p to the actions operating on a cluster within the given cluster range. CLUSTER-RANGE is defined by the first and last cluster numbers separated by a hyphen, for instance 100-109 or  0x3e8-0x3ff.  A  single number means restricting to a single cluster. The first four log blocks have a special role and they are always shown.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-f",
-      "long": null,
+      "long": "--forward",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  actions described in the logfile forward from the first one to the last one without applying any update. As the log file is reused circularly, the first one is generally not the earliest. Moreover when Windows is restarted, it often does not restart writ‐ ing where it ended the previous sessions, and this leads to errors when examining a log file generated during several sessions.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -44,8 +44,88 @@
       "requires": []
     },
     {
-      "short": "-h",
-      "long": null,
+      "short": "-k",
+      "long": "--kill-fast-restart",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "the Windows cache.  This is dangerous and may cause loss of data.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--no-action",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--play",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "COUNT transaction sets and redo a single one, a transaction set being all transactions between two consecutive checkpoints. This is useful for replaying some transaction in the past. As a few actions are not undoable, this is not always possible.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--range",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": "--sync",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "option,  used  when none of the options -n, -f, -r, -p and -u are present.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": "--transactions",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": "--undo",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "all  transactions between two consecutive checkpoints. As a few actions are not undoable, this is not always possible.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -62,91 +142,19 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-k",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "Merged",
+  "confidence": 0.9,
   "version": null
 }

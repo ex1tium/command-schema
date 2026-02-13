@@ -18,7 +18,7 @@
       "long": "--allow-ocsp",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "allow sending OCSP requests",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -64,11 +64,21 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-c",
       "long": "--csh",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Format the info output in daemon mode for use with the standard Bourne shell respective the C-shell. The default is to guess it  based on the environment variable SHELL which is in almost all cases sufficient.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--daemon",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "run in daemon mode (background)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--disable-http",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "inhibit the use of HTTP",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": "--disable-ldap",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "inhibit the use of LDAP",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -175,10 +185,30 @@
     },
     {
       "short": null,
+      "long": "--fetch-crl",
+      "value_type": "Url",
+      "takes_value": true,
+      "description": "fetch a CRL from URL",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--flush",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "flush the cache",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "force loading of outdated CRLs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -335,10 +365,30 @@
     },
     {
       "short": null,
+      "long": "--list-crls",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list the contents of the CRL cache",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--listen-backlog",
       "value_type": "Bool",
       "takes_value": false,
       "description": "The default is 64.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--load-crl",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "load CRL from FILE into cache",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -369,6 +419,16 @@
       "value_type": "Directory",
       "takes_value": true,
       "description": "``Tor mode'' Dirmngr uses a public resolver via Tor to resolve DNS names.  If the default public resolver, which is 8.8.8.8, shall not be used a different one can be given using this option.  Note that a numerical IP address must be given (IPv6 or IPv4) and that no error checking is done for ipaddr.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-detach",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "do not detach from the console",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -464,6 +524,16 @@
       "requires": []
     },
     {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "be somewhat more quiet",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--recursive-resolver",
       "value_type": "Bool",
@@ -485,10 +555,30 @@
     },
     {
       "short": null,
+      "long": "--server",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "run in server mode (foreground)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
       "long": "--sh",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "sh-style command output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--shutdown",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "shutdown the dirmngr",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,47 +608,17 @@
       "long": "--use-tor",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "You can increase the verbosity by giving several verbose commands to dirmngr,  such  as",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "route all network traffic via Tor",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": null,
+      "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "You can increase the verbosity by giving several verbose commands to dirmngr,  such  as",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -576,7 +636,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 0.8,
-  "version": "2.1"
+  "version": "2.4.4"
 }

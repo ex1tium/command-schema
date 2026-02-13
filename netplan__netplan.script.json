@@ -8,7 +8,17 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Enable debug messages",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show this help message and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -17,14 +27,14 @@
   "subcommands": [
     {
       "name": "apply",
-      "description": "NETPLAN-APPLY(8) NETPLAN-APPLY(8)",
+      "description": "Apply current netplan config to running system",
       "flags": [
         {
           "short": null,
           "long": "--debug",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Enable debug messages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -34,7 +44,37 @@
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--only-ovs-cleanup",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Only clean up old OpenVSwitch interfaces and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sriov-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Only apply SR-IOV related configuration and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--state",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory containing previous YAML configuration",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -42,7 +82,7 @@
       ],
       "positional": [
         {
-          "name": "apply",
+          "name": "STATE",
           "value_type": "String",
           "required": true,
           "multiple": false,
@@ -54,14 +94,14 @@
     },
     {
       "name": "generate",
-      "description": "NETPLAN-GENERATE(8) NETPLAN-GENERATE(8)",
+      "description": "Generate backend specific configuration files from /etc/netplan/*.yaml",
       "flags": [
         {
           "short": null,
           "long": "--debug",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Enable debug messages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -71,7 +111,7 @@
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -81,7 +121,7 @@
           "long": "--mapping",
           "value_type": "String",
           "takes_value": true,
-          "description": "device  specified  in MAPPING.",
+          "description": "Display the netplan device ID/backend/interface name mapping and exit.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -89,9 +129,9 @@
         {
           "short": null,
           "long": "--root-dir",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
-          "description": null,
+          "description": "Search for and generate configuration files in this root directory instead of /",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -99,21 +139,14 @@
       ],
       "positional": [
         {
-          "name": "generate",
+          "name": "MAPPING",
           "value_type": "String",
           "required": true,
           "multiple": false,
           "description": null
         },
         {
-          "name": "mapping",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "root_dir",
+          "name": "ROOT_DIR",
           "value_type": "Directory",
           "required": true,
           "multiple": false,
@@ -125,14 +158,14 @@
     },
     {
       "name": "get",
-      "description": "NETPLAN-GET(8) NETPLAN-GET(8)",
+      "description": "Get a setting by specifying a nested key like \"ethernets.eth0.addresses\", or \"all\"",
       "flags": [
         {
           "short": null,
           "long": "--debug",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Enable debug messages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -142,7 +175,7 @@
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -150,9 +183,9 @@
         {
           "short": null,
           "long": "--root-dir",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
-          "description": null,
+          "description": "Read configuration files from this root directory instead of /",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -160,18 +193,200 @@
       ],
       "positional": [
         {
-          "name": "get",
+          "name": "key",
           "value_type": "String",
           "required": true,
           "multiple": false,
-          "description": null
+          "description": "The nested key in dotted format"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "help",
+      "description": "Show this help message",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "info",
+      "description": "Show available features",
+      "flags": [
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Enable debug messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         },
         {
-          "name": "key",
-          "value_type": "String",
-          "required": false,
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
           "multiple": false,
-          "description": null
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output version and features in JSON format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--yaml",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output version and features in YAML format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "ip",
+      "description": "Retrieve IP information from the system",
+      "flags": [
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Enable debug messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "help",
+          "description": "Show this help message",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "leases",
+          "description": "Display IP leases",
+          "flags": [
+            {
+              "short": null,
+              "long": "--debug",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "Enable debug messages",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "show this help message and exit",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            },
+            {
+              "short": null,
+              "long": "--root-dir",
+              "value_type": "File",
+              "takes_value": true,
+              "description": "Search for configuration files in this root directory instead of /",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [
+            {
+              "name": "interface",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": "Interface for which to display IP lease settings."
+            }
+          ],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "rebind",
+      "description": "Rebind SR-IOV virtual functions of given physical functions to their driver",
+      "flags": [
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Enable debug messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root-dir",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Search for configuration files in this root directory instead of /",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "netdevs",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "Space separated list of PF interface names"
         }
       ],
       "subcommands": [],
@@ -179,14 +394,14 @@
     },
     {
       "name": "set",
-      "description": "NETPLAN-SET(8) NETPLAN-SET(8)",
+      "description": "Add new setting by specifying a dotted key=value pair like ethernets.eth0.dhcp4=true",
       "flags": [
         {
           "short": null,
           "long": "--debug",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Enable debug messages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -196,7 +411,7 @@
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -204,7 +419,7 @@
         {
           "short": null,
           "long": "--origin-hint",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
           "description": null,
           "multiple": false,
@@ -214,9 +429,9 @@
         {
           "short": null,
           "long": "--root-dir",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
-          "description": null,
+          "description": "Overwrite configuration files in this root directory instead of /",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -224,11 +439,11 @@
       ],
       "positional": [
         {
-          "name": "set",
+          "name": "key_value",
           "value_type": "String",
           "required": true,
           "multiple": false,
-          "description": null
+          "description": "The nested key=value pair in dotted format. Value can be NULL to delete a key."
         }
       ],
       "subcommands": [],
@@ -236,14 +451,14 @@
     },
     {
       "name": "status",
-      "description": "NETPLAN-STATUS(8) NETPLAN-STATUS(8)",
+      "description": "Query networking state of the running system",
       "flags": [
         {
           "short": "-a",
           "long": "--all",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Show all interface data (incl. inactive)",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -253,7 +468,7 @@
           "long": "--debug",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Enable debug messages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -261,9 +476,9 @@
         {
           "short": null,
           "long": "--diff",
-          "value_type": "File",
-          "takes_value": true,
-          "description": "and display differences between the current system configuration and network definitions present in the YAML files.  The con‐ figuration analysed includes IP addresses, routes, MAC addresses, DNS addresses, search domains and missing network interfaces.",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show the differences between the system's and netplan's states",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -273,17 +488,7 @@
           "long": "--diff-only",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": "--format",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
+          "description": "Only show the differences between the system's and netplan's states",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -293,7 +498,7 @@
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -301,18 +506,28 @@
         {
           "short": null,
           "long": "--root-dir",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
-          "description": null,
+          "description": "Search for configuration files in this root directory instead of /",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": null,
+          "short": "-v",
           "long": "--verbose",
           "value_type": "Bool",
           "takes_value": false,
+          "description": "Show extra information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -321,18 +536,11 @@
       ],
       "positional": [
         {
-          "name": "interface",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "status",
+          "name": "ifname",
           "value_type": "String",
           "required": true,
           "multiple": false,
-          "description": null
+          "description": "Show only this interface"
         }
       ],
       "subcommands": [],
@@ -340,14 +548,14 @@
     },
     {
       "name": "try",
-      "description": "NETPLAN-TRY(8) NETPLAN-TRY(8)",
+      "description": "Try to apply a new netplan config to running system, with automatic rollback",
       "flags": [
         {
           "short": null,
           "long": "--config-file",
           "value_type": "File",
           "takes_value": true,
-          "description": "It must be a YAML file in the netplan(5) format.",
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -357,7 +565,7 @@
           "long": "--debug",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "Enable debug messages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -367,7 +575,17 @@
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--state",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Directory containing previous YAML configuration",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -375,9 +593,9 @@
         {
           "short": null,
           "long": "--timeout",
-          "value_type": "String",
+          "value_type": "Number",
           "takes_value": true,
-          "description": "Defaults to 120 seconds.  Note that some network configurations (such  as  STP)  may  take over a minute to settle.",
+          "description": "Maximum number of seconds to wait for the user's confirmation",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -385,21 +603,21 @@
       ],
       "positional": [
         {
-          "name": "config_file",
+          "name": "CONFIG_FILE",
           "value_type": "File",
           "required": true,
           "multiple": false,
           "description": null
         },
         {
-          "name": "timeout",
+          "name": "STATE",
           "value_type": "String",
           "required": true,
           "multiple": false,
           "description": null
         },
         {
-          "name": "try",
+          "name": "TIMEOUT",
           "value_type": "String",
           "required": true,
           "multiple": false,
@@ -411,7 +629,7 @@
     }
   ],
   "positional": [],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 0.85,
   "version": null
 }

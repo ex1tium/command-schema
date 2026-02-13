@@ -18,7 +18,7 @@
       "long": "--add-architecture",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Add <arch> to the list of architectures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--assert-help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show help on assertions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--clear-avail",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Erase existing available info.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show this help message.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "List packages concisely.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": "--listfiles",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "List files 'owned' by package(s).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +368,7 @@
       "long": "--no-debsig",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not try to verify package signatures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +388,7 @@
       "long": "--no-pager",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Disables the use of any pager.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--path-exclude",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Do not install paths which match a shell pattern.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +448,7 @@
       "long": "--pre-invoke",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Set a pre-invoke hook.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +458,7 @@
       "long": "--predep-package",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print pre-dependencies to unpack.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,7 +468,7 @@
       "long": "--print-architecture",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print dpkg architecture.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +488,7 @@
       "long": "--print-foreign-architectures",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print allowed foreign architectures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +568,7 @@
       "long": "--search",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Find package(s) owning file(s).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,7 +598,7 @@
       "long": "--skip-same-version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Skip packages with same installed version/arch.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -608,7 +608,7 @@
       "long": "--status",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display package status details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -698,7 +698,7 @@
       "long": "--verify-format",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Verify output format (supported: 'rpm').",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -708,7 +708,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show the version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -728,7 +728,37 @@
       "long": "--yet-to-unpack",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print packages selected for installation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Check for broken package(s).",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Enable debugging (see -Dhelp or --debug=help).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Dh",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show help on debugging.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -744,7 +774,55 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "--build",
+      "description": "Use 'apt' or 'aptitude' for user-friendly package management;",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "--contents",
+        "--control",
+        "--info",
+        "-I",
+        "-c",
+        "-e"
+      ]
+    },
+    {
+      "name": "archname",
+      "description": "dpkg: error: need an action option",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "trigname"
+      ]
+    }
+  ],
   "positional": [
     {
       "name": "action",
@@ -1048,7 +1126,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "source": "Merged",
+  "confidence": 0.95,
   "version": null
 }

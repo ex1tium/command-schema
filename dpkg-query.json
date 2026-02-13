@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-query",
-  "description": null,
+  "description": "dpkg-query(1) dpkg suite dpkg-query(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Use <directory> instead of /var/lib/dpkg.",
+      "description": "The default location is /var/lib/dpkg.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--load-avail",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use available file on --show and --list.",
+      "description": "load  the  available file when using the --show and --list commands, which now default to only querying the status file (since dpkg 1.16.2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,7 +106,7 @@
     {
       "short": null,
       "long": "--root",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
       "description": "Use <directory> instead of /.",
       "multiple": false,
@@ -129,7 +129,17 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Show information on package(s).",
-      "multiple": true,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--showformat",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The  format  is  a  string that will be output for each package listed.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -152,21 +162,20 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use alternative format for --show.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "An",
+      "description": "uppercase  status  or error letter indicates the package is likely to cause severe problems.  Please refer to dpkg(1) for information about the above states and flags.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "Merged",
+  "confidence": 1.0,
   "version": null
 }

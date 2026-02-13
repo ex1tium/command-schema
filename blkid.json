@@ -8,7 +8,7 @@
       "long": "--cache-file",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "read from <file> instead of reading from the default cache file (-c /dev/null means no cache)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--garbage-collect",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "garbage collect the blkid cache",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--hint",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set hint for probing function",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "gather information about I/O limits",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--label",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "convert LABEL to device name",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--list-filesystems",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "list all known filesystems/RAIDs and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--list-one",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "look up only first device with token specified by -t",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--match-tag",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "show specified tag(s) (default show all tags)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--match-token",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "find device with a specific token (NAME=value pair)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--match-types",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "filter by filesystem type (e.g. -n vfat,ext3)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--no-encoding",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "don't encode non-printing characters",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--no-part-details",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't print info from partition table",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--offset",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "probe at the given offset",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--output",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "output format; can be one of: value, device, export or full; (default: full)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--probe",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "low-level superblocks probing (bypass cache)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--size",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "overwrite device size",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--usages",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "filter by \"usage\" (e.g. -u filesystem,raid)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--uuid",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "convert UUID to device name",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1020,21 +1020,133 @@
   ],
   "positional": [
     {
-      "name": "device",
-      "value_type": "String",
-      "required": false,
-      "multiple": true,
-      "description": null
-    },
-    {
-      "name": "format",
+      "name": "EiB",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "list",
+      "name": "GiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "PiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "TiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "YiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ZiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "all",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "and",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "be",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "by",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "default",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "details",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dev",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "devices",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "followed",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "for",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "is",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "may",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "more",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -1048,21 +1160,63 @@
       "description": null
     },
     {
-      "name": "size",
+      "name": "optional",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "tag",
+      "name": "probe",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "see",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "size",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "specify",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "suffixes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "the",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "to",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

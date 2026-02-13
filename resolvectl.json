@@ -8,7 +8,17 @@
       "long": "--cache",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow response from cache (default: yes)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--class",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Query RR with DNS class",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,7 @@
       "long": "--cname",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Follow CNAME redirects (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--json",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Output as JSON",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--legend",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Print headers and additional info (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--network",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow response from network (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--no-pager",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not pipe output into a pager",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +108,17 @@
       "long": "--protocol",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Look via protocol",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--raw",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump the answer as binary data",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +138,7 @@
       "long": "--search",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Use search domains for single-label names (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +148,7 @@
       "long": "--service-address",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Resolve address for services (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +158,7 @@
       "long": "--service-txt",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Resolve TXT records for services (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +168,7 @@
       "long": "--stale-data",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow response from cache with stale data (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +178,7 @@
       "long": "--synthesize",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow synthetic response (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +188,7 @@
       "long": "--trust-anchor",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow response from local trust anchor (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +208,7 @@
       "long": "--validate",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow DNSSEC validation (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +218,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show package version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +228,7 @@
       "long": "--zone",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +238,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Resolve IPv4 addresses",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-6",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Resolve IPv6 addresses",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -254,6 +284,16 @@
       "requires": []
     },
     {
+      "short": "-j",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Same as --json=pretty on tty, --json=short otherwise",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-m",
       "long": null,
       "value_type": "Bool",
@@ -276,8 +316,1616 @@
   ],
   "subcommands": [
     {
-      "name": "defaults",
-      "description": "Send control commands to the network name resolution manager, or",
+      "name": "default-route",
+      "description": "Get/set per-interface default route flag",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cache",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--class",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS class",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cname",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Follow CNAME redirects (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--interface",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look on interface",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Output as JSON",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--legend",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Print headers and additional info (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from network (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--protocol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look via protocol",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--raw",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Dump the answer as binary data",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--search",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use search domains for single-label names (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-address",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve address for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-txt",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve TXT records for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stale-data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache with stale data (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--synthesize",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow synthetic response (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trust-anchor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from local trust anchor (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS type",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--validate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow DNSSEC validation (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--zone",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv4 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv6 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Same as --json=pretty on tty, --json=short otherwise",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "dns",
+          "description": "Get/set per-interface DNS server address",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnsovertls",
+          "description": "Get/set per-interface DNS-over-TLS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnssec",
+          "description": "Get/set per-interface DNSSEC mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "domain",
+          "description": "Get/set per-interface search domain",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "flush-caches",
+          "description": "Flush all local DNS caches",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "llmnr",
+          "description": "Get/set per-interface LLMNR mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "log-level",
+          "description": "Get/set logging threshold for systemd-resolved",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "mdns",
+          "description": "Get/set per-interface MulticastDNS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor DNS queries",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "nta",
+          "description": "Get/set per-interface DNSSEC NTA",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "query",
+          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-server-features",
+          "description": "Forget learnt DNS server feature levels",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-statistics",
+          "description": "Reset resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "revert",
+          "description": "Revert per-interface configuration",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-cache",
+          "description": "Show cache contents",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-server-state",
+          "description": "Show servers state",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "statistics",
+          "description": "Show resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": "Show link and server status",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "tlsa",
+          "description": "Query TLS public key",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "dns",
+      "description": "Get/set per-interface DNS server address",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cache",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--class",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS class",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cname",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Follow CNAME redirects (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--interface",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look on interface",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Output as JSON",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--legend",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Print headers and additional info (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from network (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--protocol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look via protocol",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--raw",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Dump the answer as binary data",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--search",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use search domains for single-label names (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-address",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve address for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-txt",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve TXT records for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stale-data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache with stale data (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--synthesize",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow synthetic response (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trust-anchor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from local trust anchor (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS type",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--validate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow DNSSEC validation (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--zone",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv4 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv6 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Same as --json=pretty on tty, --json=short otherwise",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "default-route",
+          "description": "Get/set per-interface default route flag",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnsovertls",
+          "description": "Get/set per-interface DNS-over-TLS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnssec",
+          "description": "Get/set per-interface DNSSEC mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "domain",
+          "description": "Get/set per-interface search domain",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "flush-caches",
+          "description": "Flush all local DNS caches",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "llmnr",
+          "description": "Get/set per-interface LLMNR mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "log-level",
+          "description": "Get/set logging threshold for systemd-resolved",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "mdns",
+          "description": "Get/set per-interface MulticastDNS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor DNS queries",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "nta",
+          "description": "Get/set per-interface DNSSEC NTA",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "query",
+          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-server-features",
+          "description": "Forget learnt DNS server feature levels",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-statistics",
+          "description": "Reset resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "revert",
+          "description": "Revert per-interface configuration",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-cache",
+          "description": "Show cache contents",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-server-state",
+          "description": "Show servers state",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "statistics",
+          "description": "Show resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": "Show link and server status",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "tlsa",
+          "description": "Query TLS public key",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "dnsovertls",
+      "description": "Get/set per-interface DNS-over-TLS mode",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cache",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--class",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS class",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cname",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Follow CNAME redirects (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--interface",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look on interface",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Output as JSON",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--legend",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Print headers and additional info (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from network (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--protocol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look via protocol",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--raw",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Dump the answer as binary data",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--search",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use search domains for single-label names (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-address",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve address for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-txt",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve TXT records for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stale-data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache with stale data (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--synthesize",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow synthetic response (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trust-anchor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from local trust anchor (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS type",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--validate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow DNSSEC validation (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--zone",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv4 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv6 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Same as --json=pretty on tty, --json=short otherwise",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "default-route",
+          "description": "Get/set per-interface default route flag",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dns",
+          "description": "Get/set per-interface DNS server address",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnssec",
+          "description": "Get/set per-interface DNSSEC mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "domain",
+          "description": "Get/set per-interface search domain",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "flush-caches",
+          "description": "Flush all local DNS caches",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "llmnr",
+          "description": "Get/set per-interface LLMNR mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "log-level",
+          "description": "Get/set logging threshold for systemd-resolved",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "mdns",
+          "description": "Get/set per-interface MulticastDNS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor DNS queries",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "nta",
+          "description": "Get/set per-interface DNSSEC NTA",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "query",
+          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-server-features",
+          "description": "Forget learnt DNS server feature levels",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-statistics",
+          "description": "Reset resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "revert",
+          "description": "Revert per-interface configuration",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-cache",
+          "description": "Show cache contents",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-server-state",
+          "description": "Show servers state",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "statistics",
+          "description": "Show resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": "Show link and server status",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "tlsa",
+          "description": "Query TLS public key",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "dnssec",
+      "description": "Get/set per-interface DNSSEC mode",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cache",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--class",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS class",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cname",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Follow CNAME redirects (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--interface",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look on interface",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Output as JSON",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--legend",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Print headers and additional info (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from network (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--protocol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look via protocol",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--raw",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Dump the answer as binary data",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--search",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use search domains for single-label names (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-address",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve address for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-txt",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve TXT records for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stale-data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache with stale data (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--synthesize",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow synthetic response (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trust-anchor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from local trust anchor (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS type",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--validate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow DNSSEC validation (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--zone",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv4 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv6 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Same as --json=pretty on tty, --json=short otherwise",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "default-route",
+          "description": "Get/set per-interface default route flag",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dns",
+          "description": "Get/set per-interface DNS server address",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnsovertls",
+          "description": "Get/set per-interface DNS-over-TLS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "domain",
+          "description": "Get/set per-interface search domain",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "flush-caches",
+          "description": "Flush all local DNS caches",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "llmnr",
+          "description": "Get/set per-interface LLMNR mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "log-level",
+          "description": "Get/set logging threshold for systemd-resolved",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "mdns",
+          "description": "Get/set per-interface MulticastDNS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor DNS queries",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "nta",
+          "description": "Get/set per-interface DNSSEC NTA",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "query",
+          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-server-features",
+          "description": "Forget learnt DNS server feature levels",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-statistics",
+          "description": "Reset resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "revert",
+          "description": "Revert per-interface configuration",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-cache",
+          "description": "Show cache contents",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-server-state",
+          "description": "Show servers state",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "statistics",
+          "description": "Show resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": "Show link and server status",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "tlsa",
+          "description": "Query TLS public key",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "domain",
+      "description": "Get/set per-interface search domain",
       "flags": [
         {
           "short": null,
@@ -555,14 +2203,6 @@
           "aliases": []
         },
         {
-          "name": "domain",
-          "description": "Get/set per-interface search domain",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
           "name": "flush-caches",
           "description": "Flush all local DNS caches",
           "flags": [],
@@ -683,426 +2323,11 @@
           "aliases": []
         }
       ],
-      "aliases": [
-        "default-route",
-        "dnsovertls",
-        "dnssec",
-        "domain",
-        "llmnr",
-        "mdns"
-      ]
-    },
-    {
-      "name": "dns",
-      "description": "Send control commands to the network name resolution manager, or",
-      "flags": [
-        {
-          "short": null,
-          "long": "--cache",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": "--class",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS class",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cname",
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "Follow CNAME redirects (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": "--interface",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look on interface",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--json",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Output as JSON",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--legend",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Print headers and additional info (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--network",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from network (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--no-pager",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not pipe output into a pager",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": "--protocol",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look via protocol",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--raw",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Dump the answer as binary data",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--search",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Use search domains for single-label names (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-address",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve address for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-txt",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve TXT records for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stale-data",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache with stale data (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--synthesize",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow synthetic response (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--trust-anchor",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from local trust anchor (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": "--type",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS type",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--validate",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow DNSSEC validation (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show package version",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--zone",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-4",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv4 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-6",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv6 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Same as --json=pretty on tty, --json=short otherwise",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [
-        {
-          "name": "default-route",
-          "description": "Get/set per-interface default route flag",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnsovertls",
-          "description": "Get/set per-interface DNS-over-TLS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnssec",
-          "description": "Get/set per-interface DNSSEC mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "domain",
-          "description": "Get/set per-interface search domain",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "flush-caches",
-          "description": "Flush all local DNS caches",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "llmnr",
-          "description": "Get/set per-interface LLMNR mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "log-level",
-          "description": "Get/set logging threshold for systemd-resolved",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "mdns",
-          "description": "Get/set per-interface MulticastDNS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "monitor",
-          "description": "Monitor DNS queries",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "nta",
-          "description": "Get/set per-interface DNSSEC NTA",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "query",
-          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-server-features",
-          "description": "Forget learnt DNS server feature levels",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-statistics",
-          "description": "Reset resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "revert",
-          "description": "Revert per-interface configuration",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-cache",
-          "description": "Show cache contents",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-server-state",
-          "description": "Show servers state",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "statistics",
-          "description": "Show resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "status",
-          "description": "Show link and server status",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "tlsa",
-          "description": "Query TLS public key",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
-      "aliases": [
-        "default-route",
-        "dnssec",
-        "domain",
-        "llmnr",
-        "mdns"
-      ]
+      "aliases": []
     },
     {
       "name": "flush-caches",
-      "description": "Send control commands to the network name resolution manager, or",
+      "description": "Flush all local DNS caches",
       "flags": [
         {
           "short": null,
@@ -1503,8 +2728,8 @@
       "aliases": []
     },
     {
-      "name": "followed",
-      "description": "Send control commands to the network name resolution manager, or",
+      "name": "llmnr",
+      "description": "Get/set per-interface LLMNR mode",
       "flags": [
         {
           "short": null,
@@ -1792,14 +3017,6 @@
         {
           "name": "flush-caches",
           "description": "Flush all local DNS caches",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "llmnr",
-          "description": "Get/set per-interface LLMNR mode",
           "flags": [],
           "positional": [],
           "subcommands": [],
@@ -1914,7 +3131,7 @@
     },
     {
       "name": "log-level",
-      "description": "Send control commands to the network name resolution manager, or",
+      "description": "Get/set logging threshold for systemd-resolved",
       "flags": [
         {
           "short": null,
@@ -2316,7 +3533,7 @@
     },
     {
       "name": "mdns",
-      "description": "Send control commands to the network name resolution manager, or",
+      "description": "Get/set per-interface MulticastDNS mode",
       "flags": [
         {
           "short": null,
@@ -2718,7 +3935,7 @@
     },
     {
       "name": "monitor",
-      "description": "Send control commands to the network name resolution manager, or",
+      "description": "Monitor DNS queries",
       "flags": [
         {
           "short": null,
@@ -3119,8 +4336,410 @@
       "aliases": []
     },
     {
+      "name": "nta",
+      "description": "Get/set per-interface DNSSEC NTA",
+      "flags": [
+        {
+          "short": null,
+          "long": "--cache",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--class",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS class",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--cname",
+          "value_type": "Directory",
+          "takes_value": true,
+          "description": "Follow CNAME redirects (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--interface",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look on interface",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Output as JSON",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--legend",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Print headers and additional info (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--network",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from network (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--protocol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Look via protocol",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--raw",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Dump the answer as binary data",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--search",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Use search domains for single-label names (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-address",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve address for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--service-txt",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Resolve TXT records for services (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stale-data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from cache with stale data (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--synthesize",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow synthetic response (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trust-anchor",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from local trust anchor (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query RR with DNS type",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--validate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow DNSSEC validation (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--zone",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv4 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Resolve IPv6 addresses",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Same as --json=pretty on tty, --json=short otherwise",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "default-route",
+          "description": "Get/set per-interface default route flag",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dns",
+          "description": "Get/set per-interface DNS server address",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnsovertls",
+          "description": "Get/set per-interface DNS-over-TLS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dnssec",
+          "description": "Get/set per-interface DNSSEC mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "domain",
+          "description": "Get/set per-interface search domain",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "flush-caches",
+          "description": "Flush all local DNS caches",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "llmnr",
+          "description": "Get/set per-interface LLMNR mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "log-level",
+          "description": "Get/set logging threshold for systemd-resolved",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "mdns",
+          "description": "Get/set per-interface MulticastDNS mode",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Monitor DNS queries",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "query",
+          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-server-features",
+          "description": "Forget learnt DNS server feature levels",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset-statistics",
+          "description": "Reset resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "revert",
+          "description": "Revert per-interface configuration",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-cache",
+          "description": "Show cache contents",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show-server-state",
+          "description": "Show servers state",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "statistics",
+          "description": "Show resolver statistics",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": "Show link and server status",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "tlsa",
+          "description": "Query TLS public key",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
       "name": "query",
-      "description": "Send control commands to the network name resolution manager, or",
+      "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
       "flags": [
         {
           "short": null,
@@ -3522,7 +5141,7 @@
     },
     {
       "name": "reset-server-features",
-      "description": "Send control commands to the network name resolution manager, or",
+      "description": "Forget learnt DNS server feature levels",
       "flags": [
         {
           "short": null,
@@ -3924,1631 +5543,23 @@
     },
     {
       "name": "reset-statistics",
-      "description": "Send control commands to the network name resolution manager, or",
-      "flags": [
-        {
-          "short": null,
-          "long": "--cache",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": "--class",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS class",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cname",
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "Follow CNAME redirects (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": "--interface",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look on interface",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--json",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Output as JSON",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--legend",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Print headers and additional info (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--network",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from network (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--no-pager",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not pipe output into a pager",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": "--protocol",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look via protocol",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--raw",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Dump the answer as binary data",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--search",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Use search domains for single-label names (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-address",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve address for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-txt",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve TXT records for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stale-data",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache with stale data (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--synthesize",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow synthetic response (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--trust-anchor",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from local trust anchor (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": "--type",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS type",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--validate",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow DNSSEC validation (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show package version",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--zone",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-4",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv4 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-6",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv6 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Same as --json=pretty on tty, --json=short otherwise",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
+      "description": "Reset resolver statistics",
+      "flags": [],
       "positional": [],
-      "subcommands": [
-        {
-          "name": "default-route",
-          "description": "Get/set per-interface default route flag",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dns",
-          "description": "Get/set per-interface DNS server address",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnsovertls",
-          "description": "Get/set per-interface DNS-over-TLS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnssec",
-          "description": "Get/set per-interface DNSSEC mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "domain",
-          "description": "Get/set per-interface search domain",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "flush-caches",
-          "description": "Flush all local DNS caches",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "llmnr",
-          "description": "Get/set per-interface LLMNR mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "log-level",
-          "description": "Get/set logging threshold for systemd-resolved",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "mdns",
-          "description": "Get/set per-interface MulticastDNS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "monitor",
-          "description": "Monitor DNS queries",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "nta",
-          "description": "Get/set per-interface DNSSEC NTA",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "query",
-          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-server-features",
-          "description": "Forget learnt DNS server feature levels",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "revert",
-          "description": "Revert per-interface configuration",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-cache",
-          "description": "Show cache contents",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-server-state",
-          "description": "Show servers state",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "statistics",
-          "description": "Show resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "status",
-          "description": "Show link and server status",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "tlsa",
-          "description": "Query TLS public key",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
-      "aliases": []
-    },
-    {
-      "name": "resolves",
-      "description": "Send control commands to the network name resolution manager, or",
-      "flags": [
-        {
-          "short": null,
-          "long": "--cache",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": "--class",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS class",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cname",
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "Follow CNAME redirects (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": "--interface",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look on interface",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--json",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Output as JSON",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--legend",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Print headers and additional info (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--network",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from network (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--no-pager",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not pipe output into a pager",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": "--protocol",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look via protocol",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--raw",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Dump the answer as binary data",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--search",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Use search domains for single-label names (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-address",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve address for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-txt",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve TXT records for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stale-data",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache with stale data (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--synthesize",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow synthetic response (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--trust-anchor",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from local trust anchor (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": "--type",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS type",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--validate",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow DNSSEC validation (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show package version",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--zone",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-4",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv4 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-6",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv6 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Same as --json=pretty on tty, --json=short otherwise",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [
-        {
-          "name": "default-route",
-          "description": "Get/set per-interface default route flag",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dns",
-          "description": "Get/set per-interface DNS server address",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnsovertls",
-          "description": "Get/set per-interface DNS-over-TLS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnssec",
-          "description": "Get/set per-interface DNSSEC mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "domain",
-          "description": "Get/set per-interface search domain",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "flush-caches",
-          "description": "Flush all local DNS caches",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "llmnr",
-          "description": "Get/set per-interface LLMNR mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "log-level",
-          "description": "Get/set logging threshold for systemd-resolved",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "mdns",
-          "description": "Get/set per-interface MulticastDNS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "monitor",
-          "description": "Monitor DNS queries",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "nta",
-          "description": "Get/set per-interface DNSSEC NTA",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "query",
-          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-server-features",
-          "description": "Forget learnt DNS server feature levels",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-statistics",
-          "description": "Reset resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "revert",
-          "description": "Revert per-interface configuration",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-cache",
-          "description": "Show cache contents",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-server-state",
-          "description": "Show servers state",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "statistics",
-          "description": "Show resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "status",
-          "description": "Show link and server status",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "tlsa",
-          "description": "Query TLS public key",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
+      "subcommands": [],
       "aliases": []
     },
     {
       "name": "revert",
-      "description": "Send control commands to the network name resolution manager, or",
-      "flags": [
-        {
-          "short": null,
-          "long": "--cache",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": "--class",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS class",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cname",
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "Follow CNAME redirects (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": "--interface",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look on interface",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--json",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Output as JSON",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--legend",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Print headers and additional info (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--network",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from network (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--no-pager",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not pipe output into a pager",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": "--protocol",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look via protocol",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--raw",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Dump the answer as binary data",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--search",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Use search domains for single-label names (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-address",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve address for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-txt",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve TXT records for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stale-data",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache with stale data (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--synthesize",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow synthetic response (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--trust-anchor",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from local trust anchor (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": "--type",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS type",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--validate",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow DNSSEC validation (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show package version",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--zone",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-4",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv4 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-6",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv6 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Same as --json=pretty on tty, --json=short otherwise",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
+      "description": "Revert per-interface configuration",
+      "flags": [],
       "positional": [],
-      "subcommands": [
-        {
-          "name": "default-route",
-          "description": "Get/set per-interface default route flag",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dns",
-          "description": "Get/set per-interface DNS server address",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnsovertls",
-          "description": "Get/set per-interface DNS-over-TLS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnssec",
-          "description": "Get/set per-interface DNSSEC mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "domain",
-          "description": "Get/set per-interface search domain",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "flush-caches",
-          "description": "Flush all local DNS caches",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "llmnr",
-          "description": "Get/set per-interface LLMNR mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "log-level",
-          "description": "Get/set logging threshold for systemd-resolved",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "mdns",
-          "description": "Get/set per-interface MulticastDNS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "monitor",
-          "description": "Monitor DNS queries",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "nta",
-          "description": "Get/set per-interface DNSSEC NTA",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "query",
-          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-server-features",
-          "description": "Forget learnt DNS server feature levels",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-statistics",
-          "description": "Reset resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-cache",
-          "description": "Show cache contents",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-server-state",
-          "description": "Show servers state",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "statistics",
-          "description": "Show resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "status",
-          "description": "Show link and server status",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "tlsa",
-          "description": "Query TLS public key",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
-      "aliases": []
-    },
-    {
-      "name": "service",
-      "description": "Send control commands to the network name resolution manager, or",
-      "flags": [
-        {
-          "short": null,
-          "long": "--cache",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-c",
-          "long": "--class",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS class",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cname",
-          "value_type": "Directory",
-          "takes_value": true,
-          "description": "Follow CNAME redirects (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-i",
-          "long": "--interface",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look on interface",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--json",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Output as JSON",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--legend",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Print headers and additional info (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--network",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from network (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--no-pager",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not pipe output into a pager",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": "--protocol",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Look via protocol",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--raw",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Dump the answer as binary data",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--search",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Use search domains for single-label names (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-address",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve address for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--service-txt",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Resolve TXT records for services (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--stale-data",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from cache with stale data (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--synthesize",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow synthetic response (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--trust-anchor",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from local trust anchor (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-t",
-          "long": "--type",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Query RR with DNS type",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--validate",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow DNSSEC validation (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show package version",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--zone",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Allow response from locally registered mDNS/LLMNR records (default: yes)",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-4",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv4 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-6",
-          "long": null,
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Resolve IPv6 addresses",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-j",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Same as --json=pretty on tty, --json=short otherwise",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [
-        {
-          "name": "default-route",
-          "description": "Get/set per-interface default route flag",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dns",
-          "description": "Get/set per-interface DNS server address",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnsovertls",
-          "description": "Get/set per-interface DNS-over-TLS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "dnssec",
-          "description": "Get/set per-interface DNSSEC mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "domain",
-          "description": "Get/set per-interface search domain",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "flush-caches",
-          "description": "Flush all local DNS caches",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "llmnr",
-          "description": "Get/set per-interface LLMNR mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "log-level",
-          "description": "Get/set logging threshold for systemd-resolved",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "mdns",
-          "description": "Get/set per-interface MulticastDNS mode",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "monitor",
-          "description": "Monitor DNS queries",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "nta",
-          "description": "Get/set per-interface DNSSEC NTA",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "query",
-          "description": "Resolve domain names, IPv4 and IPv6 addresses service [[NAME] TYPE] DOMAIN Resolve service (SRV)",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-server-features",
-          "description": "Forget learnt DNS server feature levels",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "reset-statistics",
-          "description": "Reset resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "revert",
-          "description": "Revert per-interface configuration",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-cache",
-          "description": "Show cache contents",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "show-server-state",
-          "description": "Show servers state",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "statistics",
-          "description": "Show resolver statistics",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "status",
-          "description": "Show link and server status",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "tlsa",
-          "description": "Query TLS public key",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
+      "subcommands": [],
       "aliases": []
     },
     {
       "name": "show-cache",
-      "description": null,
+      "description": "Show cache contents",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -5556,15 +5567,7 @@
     },
     {
       "name": "show-server-state",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "specified",
-      "description": null,
+      "description": "Show servers state",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -5572,7 +5575,7 @@
     },
     {
       "name": "statistics",
-      "description": null,
+      "description": "Show resolver statistics",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -5580,7 +5583,7 @@
     },
     {
       "name": "status",
-      "description": null,
+      "description": "Show link and server status",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -5588,15 +5591,7 @@
     },
     {
       "name": "tlsa",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "type",
-      "description": null,
+      "description": "Query TLS public key",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -5612,7 +5607,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

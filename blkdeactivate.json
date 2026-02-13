@@ -1,33 +1,33 @@
 {
   "schema_version": "1.0.0",
   "command": "blkdeactivate",
-  "description": "blkdeactivate: Utility to deactivate block devices",
+  "description": "BLKDEACTIVATE(8) BLKDEACTIVATE(8)",
   "global_flags": [
     {
       "short": "-d",
-      "long": null,
+      "long": "--dmoptions",
       "value_type": "String",
       "takes_value": true,
-      "description": "DM_OPTIONS Comma separated DM specific options",
+      "description": "Accepted dmsetup(8) options are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-e",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Show errors reported from tools",
+      "long": "--errors",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "errors  reported  from tools called by blkdeactivate. Without this option, any error messages from these external tools are sup‐ pressed and the blkdeactivate itself provides only a summary message to indicate the device was skipped.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "long": "--help",
+      "value_type": "String",
+      "takes_value": true,
       "description": "Show this help message",
       "multiple": false,
       "conflicts_with": [],
@@ -35,7 +35,7 @@
     },
     {
       "short": "-l",
-      "long": null,
+      "long": "--lvmoptions",
       "value_type": "String",
       "takes_value": true,
       "description": "LVM_OPTIONS Comma separated LVM specific options",
@@ -44,28 +44,8 @@
       "requires": []
     },
     {
-      "short": "-m",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "MPATH_OPTIONS Comma separated DM-multipath specific options",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "VDO_OPTIONS Comma separated VDO specific options",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-r",
-      "long": null,
+      "long": "--mdraidoptions",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -74,20 +54,40 @@
       "requires": []
     },
     {
+      "short": "-m",
+      "long": "--mpathoptions",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "MPATH_OPTIONS Comma separated DM-multipath specific options",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Unmount the device if mounted",
+      "long": "--umount",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Without this option used, a device that is mounted is not deactivated.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": "--vdooptions",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "VDO_OPTIONS Comma separated VDO specific options",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "long": "--verbose",
+      "value_type": "String",
+      "takes_value": true,
       "description": "Verbose mode (also implies -e)",
       "multiple": false,
       "conflicts_with": [],
@@ -120,8 +120,51 @@
       "aliases": []
     }
   ],
-  "positional": [],
-  "source": "HelpCommand",
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "dm_options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "lvm_options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mdraid_options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mpath_options",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "vdo_options",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

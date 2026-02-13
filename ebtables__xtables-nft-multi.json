@@ -1,8 +1,48 @@
 {
   "schema_version": "1.0.0",
   "command": "ebtables",
-  "description": "ebtables 1.8.10 (nf_tables)",
+  "description": "EBTABLES(8) System Manager's Manual EBTABLES(8)",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--Lc",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Lmac2",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Ln",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Lx",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--append",
@@ -214,6 +254,16 @@
       "requires": []
     },
     {
+      "short": "-t",
+      "long": "--table",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the MAC destination address), OUTPUT (for locally-generated or (b)routed frames) and FORWARD (for frames being forwarded by the bridge). nat  is  mostly  used  to change the mac addresses and contains three built-in chains: PREROUTING (for altering frames as soon as they come in), OUTPUT (for altering locally generated or (b)routed frames before they are bridged) and POSTROUTING (for altering frames  as they  are  about  to  go out). A small note on the naming of chains PREROUTING and POSTROUTING: it would be more accurate to call them PREFORWARDING and POSTFORWARDING, but for all those who come from the iptables world to ebtables it is easier to have the same  names. Note that you can change the name (-E) if you don't like the default. broute  is  used  to  make  a brouter, it has one built-in chain: BROUTING.  The targets DROP and ACCEPT have a special meaning in the broute table (these names are used for compatibility reasons with ebtables-legacy).  DROP actually means the frame has to  be  routed, while  ACCEPT  means the frame has to be bridged. The BROUTING chain is traversed very early.  Normally those frames would be bridged, but you can decide otherwise here.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": null,
       "long": "--verbose",
       "value_type": "Bool",
@@ -244,6 +294,16 @@
       "requires": []
     },
     {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-F",
       "long": null,
       "value_type": "String",
@@ -264,11 +324,51 @@
       "requires": []
     },
     {
+      "short": "-N",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-Z",
       "long": null,
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
       "description": ": put counters on zero in chain or in all chains",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-[ACDI",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -314,17 +414,289 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "BUGS",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "FILES",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "MAILINGLISTS",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "Specify",
+      "description": "stp  BPDU (bridge protocol data unit) fields. The destination address (-d) must be specified as the bridge group address (BGA).  For all options for which a range of values can be specified, it holds that if the lower bound is omitted (but the colon is not), then the lowest possible lower bound for that option is used, while if the upper bound is omitted (but the colon again is not), the  highest  possible  upper bound for that option is used.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "The",
+      "description": "ebtables  command arguments specify the actions to perform on the table defined with the -t argument.  If you do not use the -t argument to name a table, the commands apply to the default filter table.  Only one command may be used on the command line at a time, except when the commands -L and -Z are combined or the commands -N and -P are combined.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "This",
+      "description": "module  matches at a limited rate using a token bucket filter.  A rule using this extension will match until this limit is reached.  It can be used with the --log watcher to give limited logging, for example. Its use is the same as the limit match of iptables.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "among",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "arp",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "arpreply",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "dnat",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "drop",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "ip",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "ip6",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "limit",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "log",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "mark",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "mark_m",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "nflog",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "pkttype",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "redirect",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "return",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "snat",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "stp",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "table",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "ulog",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "vlan",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
+      "name": "accept",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "chain",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "extensions",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "match",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "new-chain-name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "old-chain-name",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "rule",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "specification",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "target",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "watcher",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.9,
+  "source": "Merged",
+  "confidence": 1.0,
   "version": "1.8.10"
 }

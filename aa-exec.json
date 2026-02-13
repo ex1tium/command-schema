@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "aa-exec",
-  "description": "Confine <prog> with the specified PROFILE.",
+  "description": "AA-EXEC(1) AppArmor AA-EXEC(1)",
   "global_flags": [
     {
       "short": "-d",
@@ -26,9 +26,29 @@
     {
       "short": "-i",
       "long": "--immediate",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "change profile immediately instead of at exec",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "to  PROFILE  before  doing  executing  <command>.  This subjects the running of <command> to the exec transition rules of the current profile.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--namespace",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This will result in confinement transitioning to using the new profile namespace.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--profile",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PROFILE to confine <prog> with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -39,26 +59,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "show messages with stats",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "NAMESPACE to confine <prog> in",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "PROFILE to confine <prog> with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -74,7 +74,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

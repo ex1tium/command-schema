@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-hwdb",
-  "description": "Update or query the hardware database.",
+  "description": "SYSTEMD-HWDB(8) systemd-hwdb SYSTEMD-HWDB(8)",
   "global_flags": [
     {
       "short": "-h",
@@ -16,7 +16,7 @@
     {
       "short": "-r",
       "long": "--root",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Alternative root path in the filesystem",
       "multiple": false,
@@ -58,22 +58,164 @@
     {
       "name": "query",
       "description": "Query database and print result",
-      "flags": [],
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Alternative root path in the filesystem",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strict",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "When updating, return non-zero exit value on any parsing error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--usr",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generate in /usr/lib/udev instead of /etc/udev",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
-      "subcommands": [],
+      "subcommands": [
+        {
+          "name": "update",
+          "description": "Update the hwdb database",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "update",
       "description": "Update the hwdb database",
-      "flags": [],
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Alternative root path in the filesystem",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strict",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "When updating, return non-zero exit value on any parsing error",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--usr",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generate in /usr/lib/udev instead of /etc/udev",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
-      "subcommands": [],
+      "subcommands": [
+        {
+          "name": "query",
+          "description": "Query database and print result",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     }
   ],
-  "positional": [],
-  "source": "HelpCommand",
+  "positional": [
+    {
+      "name": "modalias",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "query",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "update",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

@@ -4,21 +4,31 @@
   "description": "NM(1) GNU Development Tools NM(1)",
   "global_flags": [
     {
-      "short": null,
+      "short": "-a",
       "long": "--debug-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display debugger-only symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-U",
       "long": "--defined-only",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "By default both defined and undefined symbols are displayed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": "--demangle",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -34,41 +44,41 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-D",
       "long": "--dynamic",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "This is only meaningful for dynamic objects, such as certain types of shared libraries.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-g",
       "long": "--extern-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display only external symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-f",
       "long": "--format",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "the output format format, which can be \"bsd\", \"sysv\", \"posix\" or \"just-symbols\".  The default is \"bsd\".  Only the first character of format is significant; it can be either upper or lower case.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display this information",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -84,17 +94,17 @@
       "requires": []
     },
     {
-      "short": "-l",
-      "long": "--inlines",
+      "short": "-j",
+      "long": "--just-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "for  all enclosing  scopes  back  to the first non-inlined function to be printed as well.  For example, if \"main\" inlines \"callee1\" which inlines \"callee2\", and address is from \"callee2\", the source information for \"callee1\" and \"main\" will also be printed.",
+      "description": "Same as --format=just-symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-l",
       "long": "--line-numbers",
       "value_type": "Bool",
       "takes_value": false,
@@ -134,31 +144,31 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--no-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not sort the symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-W",
       "long": "--no-weak",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Ignore weak symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-n",
       "long": "--numeric-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Sort symbols numerically by address",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -174,17 +184,17 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-P",
       "long": "--portability",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Equivalent to -f posix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-s",
       "long": "--print-armap",
       "value_type": "Bool",
       "takes_value": false,
@@ -194,20 +204,20 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-A",
       "long": "--print-file-name",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "once only, before all of its symbols.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-S",
       "long": "--print-size",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "This option has no effect for object formats that do not record symbol sizes, unless --size-sort is also used in which case a calculated size is displayed.",
       "multiple": false,
       "conflicts_with": [],
@@ -215,9 +225,19 @@
     },
     {
       "short": null,
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Suppress \"no symbols\" diagnostic",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
       "long": "--radix",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "It must be d for decimal, o for octal, or x for hexadecimal.",
       "multiple": false,
       "conflicts_with": [],
@@ -228,7 +248,7 @@
       "long": "--recurse-limit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Enable a demangling recursion limit. (default)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -244,11 +264,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-r",
       "long": "--reverse-sort",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Reverse the sense of the sort",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,13 +308,13 @@
       "long": "--target",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Specify the target object format as BFDNAME",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-u",
       "long": "--undefined-only",
       "value_type": "Bool",
       "takes_value": false,
@@ -314,11 +334,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display this program's version number",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -344,91 +364,11 @@
       "requires": []
     },
     {
-      "short": "-A",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-B",
       "long": null,
       "value_type": "String",
       "takes_value": true,
       "description": "The same as --format=bsd (for compatibility with the MIPS nm).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-C",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-P",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-U",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-W",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -444,21 +384,11 @@
       "requires": []
     },
     {
-      "short": "-a",
+      "short": "-e",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "(ignored)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -474,101 +404,11 @@
       "requires": []
     },
     {
-      "short": "-g",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-j",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-o",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-t",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "Same as -A",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1356,7 +1196,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

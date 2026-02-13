@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "invoke-rc.d",
-  "description": "invoke-rc.d, Debian/SysVinit (/etc/rc?.d) initscript subsystem.",
+  "description": "INVOKE-RC.D(8) Debian GNU/Linux INVOKE-RC.D(8)",
   "global_flags": [
     {
       "short": null,
@@ -18,7 +18,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "to  run the init script regardless of policy and init script subsystem errors.  Use of this option in Debian maintainer scripts is severely discouraged.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--no-fallback",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Warning: this is usually a very bad idea for any actions other than start.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--skip-systemd-native",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This  is  useful for maintainer scripts that want to defer systemd actions to deb-systemd-invoke(1p)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -87,26 +87,386 @@
   "subcommands": [
     {
       "name": "following",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "description": "invoke-rc.d, Debian/SysVinit (/etc/rc?.d) initscript subsystem.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--disclose-deny",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--query",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--skip-systemd-native",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--try-anyway",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "action",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "basename",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "extra",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "start",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "start",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "description": "invoke-rc.d, Debian/SysVinit (/etc/rc?.d) initscript subsystem.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--disclose-deny",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--query",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--skip-systemd-native",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--try-anyway",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "action",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "basename",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "extra",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "following",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "status",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "status",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "description": "invoke-rc.d, Debian/SysVinit (/etc/rc?.d) initscript subsystem.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--disclose-deny",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-fallback",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--query",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--skip-systemd-native",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--try-anyway",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "action",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "basename",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "extra",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "following",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "start",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     }
   ],
@@ -119,21 +479,35 @@
       "description": null
     },
     {
-      "name": "basename",
+      "name": "init",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "name",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "extra",
+      "name": "parameters",
       "value_type": "String",
-      "required": false,
+      "required": true,
+      "multiple": true,
+      "description": null
+    },
+    {
+      "name": "script",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

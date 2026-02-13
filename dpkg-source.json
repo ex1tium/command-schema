@@ -15,6 +15,16 @@
     },
     {
       "short": null,
+      "long": "--after-build",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "run the corresponding source package format hook.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--allow-version-of-quilt-db",
       "value_type": "String",
       "takes_value": true,
@@ -29,6 +39,26 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--before-build",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": "--build",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "build source package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -74,7 +104,7 @@
       "requires": []
     },
     {
-      "short": "-i[regex",
+      "short": "-i",
       "long": "--diff-ignore[",
       "value_type": "File",
       "takes_value": true,
@@ -89,6 +119,16 @@
       "value_type": "File",
       "takes_value": true,
       "description": "perl  regular  expression  specified  will  extend the default value used by --diff-ignore and its current value, if set (since dpkg 1.15.6).  It does this by concatenating “|regex” to the existing value.  This option is convenient to  use  in  debian/source/options  to exclude some auto-generated files from the automatic patch generation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": "--extract",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -119,6 +159,16 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Use disables the default behavior of including all branches and tags.  May  be specified  multiple  times.   The  ref can be the name of a branch or tag to include.  It may also be any parameter that can be passed to git-rev-list(1).  For example, to include only the main branch, use --git-ref=main.  To include all tags and  branches,  except  for  the private branch, use --git-ref=--all --git-ref=^private",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show this help message.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +218,7 @@
       "long": "--no-check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't check signature and checksums before unpacking",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +228,7 @@
       "long": "--no-copy",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't copy .orig tarballs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +238,7 @@
       "long": "--no-overwrite-dir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "do not overwrite directory on extraction",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -209,6 +259,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "it  did  apply  them  during  --before-build (--unapply-patches  since  dpkg 1.15.8, --no-unapply-patches since dpkg 1.16.5).  Those options allow you to forcefully disable or enable the patch unapplication process.  Those options are only allowed in debian/source/local-options so that  all  generated  source  packages have the same behavior by default.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-format",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +308,7 @@
       "long": "--skip-debianization",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "do not apply debian diff to upstream sources.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -264,7 +324,7 @@
       "requires": []
     },
     {
-      "short": "-I[file-pattern",
+      "short": "-I",
       "long": "--tar-ignore[",
       "value_type": "File",
       "takes_value": true,
@@ -294,6 +354,16 @@
       "requires": []
     },
     {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show the version.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-Dfield",
       "long": null,
       "value_type": "String",
@@ -309,16 +379,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "See dpkg-parsechangelog(1) for information about alternative formats.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "by  itself  adds  default  --exclude  options  that will filter out control files and directories of the most common revision control systems, backup and swap files and Libtool build output directories.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -384,6 +444,16 @@
       "requires": []
     },
     {
+      "short": "-sA",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "like -sa, -sk, -sp, -su, -sr but may overwrite.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-sa",
       "long": null,
       "value_type": "Bool",
@@ -418,7 +488,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use packed original source (unpack and remove).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +498,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use unpacked original source (pack and remove).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +518,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use unpacked original source (pack and keep).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -456,16 +526,8 @@
   ],
   "subcommands": [
     {
-      "name": "some",
-      "description": "point in the future, you should always document the desired source format in debian/source/format. See section \"SOURCE PACKAGE FORMATS\" for an extensive description of the various source package formats.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "the",
-      "description": "extractors' umask; if the parent directory is setgid then the extracted directories will be too, and all the files and directories will inherit its group ownership.",
+      "name": "The",
+      "description": "files  in  the extracted package will have their permissions and ownerships set to those which would have been expected if the files and directories had simply been created - directories and executable files will be 0777 and plain files will be 0666,  both  modified  by the  extractors'  umask;  if the parent directory is setgid then the extracted directories will be too, and all the files and directories will inherit its group ownership.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -473,7 +535,7 @@
     }
   ],
   "positional": [],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

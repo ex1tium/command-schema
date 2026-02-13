@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "inetutils-telnet",
-  "description": "Login to remote system HOST (optionally, on service port PORT)",
+  "description": "TELNET(1) User's Reference Manual TELNET(1)",
   "global_flags": [
     {
       "short": "-8",
       "long": "--binary",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use an 8-bit data transmission",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This causes an attempt to negotiate the TELNET BINARY option on both input and output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-L",
       "long": "--binary-output",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "use an 8-bit data transmission for output only",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This causes the BINARY option to be negotiated on output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,8 +36,8 @@
     {
       "short": "-d",
       "long": "--debug",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "turn on debugging",
       "multiple": false,
       "conflicts_with": [],
@@ -46,8 +46,8 @@
     {
       "short": "-X",
       "long": "--disable-auth",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "disable type ATYPE authentication",
       "multiple": false,
       "conflicts_with": [],
@@ -66,8 +66,8 @@
     {
       "short": "-e",
       "long": "--escape",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "use CHAR as an escape character",
       "multiple": false,
       "conflicts_with": [],
@@ -106,9 +106,9 @@
     {
       "short": "-a",
       "long": "--login",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "attempt automatic login",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "automatic login.  Currently, this sends the user name via the USER variable of the ENVIRON option if supported by the remote system.  The name used is that of the current user as returned by getlogin(2) if it agrees with the current user ID, otherwise it  is the name associated with the user ID.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--no-rc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not read the user's .telnetrc file",
+      "description": "(See the toggle skiprc command on this man page.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": "-k",
       "long": "--realm",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "obtain tickets for the remote host in REALM instead of the remote host's realm",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Kerberos  authentication  is being used, the -k option requests that telnet obtain tickets for the remote host in realm realm in‐ stead of the remote host's realm, as determined by krb_realmofhost(3).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--rlogin",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use a user-interface similar to rlogin",
+      "description": "In this mode, the escape character is set to the tilde (~) character, unless  modi‐ fied by the -e option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +166,9 @@
     {
       "short": "-n",
       "long": "--trace",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "record trace information into FILE",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "See the set tracefile command below.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--user",
       "value_type": "String",
       "takes_value": true,
-      "description": "attempt automatic login as USER",
+      "description": "connecting to the remote system, if the remote system understands the ENVIRON option, then user will be sent to the remote sys‐ tem as the value for the variable USER.  This option implies the -a option.  This option may also be used with the open command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -202,26 +202,46 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
+    },
+    {
+      "short": "-input",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is the same as the encrypt stop input command.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-output",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This is the same as the encrypt stop output command.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
     }
   ],
   "subcommands": [],
   "positional": [
     {
-      "name": "HOST",
+      "name": "host",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "PORT",
+      "name": "port",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

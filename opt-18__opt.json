@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "opt-18",
-  "description": "OVERVIEW: llvm .bc -> .bc modular optimizer and analysis printer",
+  "description": "OPT(1) LLVM OPT(1)",
   "global_flags": [
     {
       "short": null,
@@ -7606,9 +7606,19 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Write output in LLVM intermediate language (instead of bitcode).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-debug",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "See the LLVM Program‐ mer's Manual, section #DEBUG for more information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -7618,7 +7628,27 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Enable  binary  output  on terminals.  Normally, opt will refuse to write raw bitcode output if the output stream is a terminal.  With this option, opt will write raw bitcode regardless of the output device.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-help",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print a summary of command line options.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-load",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "This object should register new optimization or analysis passes.  Once loaded, the  object  will  add new  command  line  options to enable various optimizations or analyses.  To see the new complete list of optimizations, use the -help and -load options together.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -7626,9 +7656,79 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-print-passes",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-stats",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-strip",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-strip-debug",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "It is essentially the same  as",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-time-passes",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-verify-each",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "option  causes  opt  to add a verify pass after every pass otherwise specified on the command line (including -verify).  This is useful for cases where it is suspected that a pass is creating an invalid module but it is not clear which pass is doing it.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-{passname}",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The -help option  lists  all  the  passes available.   The  order  in  which  the  options  occur on the command line are the order in which they are executed (within pass con‐ straints).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -7637,14 +7737,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "input",
-      "value_type": "String",
-      "required": true,
+      "name": "filename",
+      "value_type": "File",
+      "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

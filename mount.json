@@ -4,11 +4,11 @@
   "description": "MOUNT(8) System Administration MOUNT(8)",
   "global_flags": [
     {
-      "short": null,
+      "short": "-a",
       "long": "--all",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "mount all filesystems mentioned in fstab",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--bind",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "mount a subtree somewhere else (same as -o bind)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--fake",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "dry run; skip the mount(2) syscall",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--fork",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "fork off for each device (use with -a)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--fstab",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "alternative file to /etc/fstab",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--internal-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't call the mount.<type> helpers",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--label",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "synonym for LABEL=<label>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -95,10 +95,80 @@
     },
     {
       "short": null,
-      "long": "--mkdir",
+      "long": "--make-private",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "mark a subtree as private",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-rprivate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recursively mark a whole subtree as private",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-rshared",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recursively mark a whole subtree as shared",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-rslave",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recursively mark a whole subtree as slave",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-runbindable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "recursively mark a whole subtree as unbindable",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-shared",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "mark a subtree as shared",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-slave",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "mark a subtree as slave",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-unbindable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "mark a subtree as unbindable",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +178,7 @@
       "long": "--mkdir[",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "alias to '-o X-mount.mkdir[=<mode>]'",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +188,7 @@
       "long": "--move",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "move a subtree to some other place",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +198,7 @@
       "long": "--namespace",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "perform mount in another namespace",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +208,7 @@
       "long": "--no-canonicalize",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't canonicalize paths",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +218,7 @@
       "long": "--no-mtab",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't write to /etc/mtab",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +228,7 @@
       "long": "--onlyonce",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "check if filesystem is already mounted",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +238,7 @@
       "long": "--options",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "comma-separated list of mount options",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +288,7 @@
       "long": "--rbind",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "mount a subtree and all submounts somewhere else",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +298,7 @@
       "long": "--read-only",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "mount the filesystem read-only (same as -o ro)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +308,7 @@
       "long": "--rw",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "mount the filesystem read-write (default)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +318,7 @@
       "long": "--show-labels",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "show also filesystem labels",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +328,7 @@
       "long": "--source",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "explicitly specifies source (path, label, uuid)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +338,7 @@
       "long": "--target",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "explicitly specifies mountpoint",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +358,7 @@
       "long": "--test-opts",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "limit the set of filesystems (use with -a)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +368,7 @@
       "long": "--types",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "limit the set of filesystem types",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +378,7 @@
       "long": "--uuid",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "synonym for UUID=<uuid> LABEL=<label> specifies device by filesystem label UUID=<uuid> specifies device by filesystem UUID PARTLABEL=<label> specifies device by partition label PARTUUID=<uuid> specifies device by partition UUID ID=<id> specifies device by udev hardware ID <device> specifies device by path <directory> mountpoint for bind mounts (see --bind/rbind) <file> regular file for loopdev setup",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +388,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "say what is being done",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,17 +398,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "description": "display version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -4658,28 +4718,42 @@
   ],
   "positional": [
     {
-      "name": "device",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "newdir",
+      "name": "directory",
       "value_type": "Directory",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "optlist",
+      "name": "mountpoint",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "operation",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "source",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "target",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

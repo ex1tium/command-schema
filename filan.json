@@ -44,6 +44,16 @@
       "requires": []
     },
     {
+      "short": "-?",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print this help text",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-?[?[?",
       "long": null,
       "value_type": "Bool",
@@ -64,11 +74,11 @@
       "requires": []
     },
     {
-      "short": "-L<lockfile",
+      "short": "-L",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "follow symbolic links instead of showing their properties",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,16 +96,6 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "Logs transfer statistics (bytes and blocks counters for both directions) before terminating socat. See also signal USR1. This feature is experimental and might change in future versions.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S<signals-bitmap",
-      "long": null,
       "value_type": "String",
       "takes_value": true,
       "description": "the  set of signals that are caught by socat just for printing an log message. This catching is useful to get the information about the signal into socats log, but prevents core dump or other standard actions. The default set of these signals is  SIGHUP,  SIG‐ INT,  SIGQUIT,  SIGILL,  SIGABRT, SIGBUS, SIGFPE, SIGSEGV, and SIGTERM; replace this set (0x89de on Linux) with a bitmap (e.g., SIGFPE has value 8 and its bit is 0x0080). Note: Signals SIGHUP, SIGINT, SIGQUIT, SIGUSR1, SIGPIPE, SIGALRM, SIGTERM, and SIGCHLD may be handled specially anyway.",
@@ -104,7 +104,7 @@
       "requires": []
     },
     {
-      "short": "-T<timeout",
+      "short": "-T",
       "long": null,
       "value_type": "String",
       "takes_value": true,
@@ -134,20 +134,20 @@
       "requires": []
     },
     {
-      "short": "-W<lockfile",
+      "short": "-W",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-b<size",
+      "short": "-b",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "At most <size> bytes are transferred per step. Default is 8192 bytes.",
       "multiple": false,
       "conflicts_with": [],
@@ -224,10 +224,10 @@
       "requires": []
     },
     {
-      "short": "-lf<logfile",
+      "short": "-lf",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "messages to <logfile> [filename] instead of stderr. Some third party libraries, in particular libwrap, might not obey this op‐ tion.",
       "multiple": false,
       "conflicts_with": [],
@@ -244,20 +244,20 @@
       "requires": []
     },
     {
-      "short": "-lm[<facility",
+      "short": "-lm",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "log  mode.  During startup messages are printed to stderr; when socat starts the transfer phase loop or daemon mode (i.e. after opening all streams and before starting data transfer, or, with listening sockets with fork option, before the first accept call),  it switches logging to syslog.  With optional <facility>, the syslog type can be selected, default is \"daemon\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-lp<progname",
+      "short": "-lp",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -284,10 +284,10 @@
       "requires": []
     },
     {
-      "short": "-ly[<facility",
+      "short": "-ly",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "se‐ lected, default is \"daemon\". Third party libraries might not obey this option.",
       "multiple": false,
       "conflicts_with": [],
@@ -314,10 +314,10 @@
       "requires": []
     },
     {
-      "short": "-t<timeout",
+      "short": "-t",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "be‐ fore  terminating.  Default  is  0.5  seconds. This timeout only applies to addresses where write and read part can be closed indepen‐ dently. When during the timeout interval the read part gives EOF, socat terminates without awaiting the timeout.",
       "multiple": false,
       "conflicts_with": [],
@@ -364,7 +364,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

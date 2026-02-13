@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-ifs-18",
-  "description": "OVERVIEW: shared object stubbing tool",
+  "description": "LLVM-IFS(1) LLVM LLVM-IFS(1)",
   "global_flags": [
     {
       "short": null,
-      "long": "--arch",
+      "long": "---",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specify the architecture, e.g. x86_64",
+      "description": "/* Optional, format 1, same format as llvm target triple */ Target: { Arch: x86_64, Endianness: little, Bitwidth: 64 } /* Optional, format 2 */ NeededLibs:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arch",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the architecture of the output file, and can be any string supported by ELF 'e_machine' field. If the value is conflicting with the IFS file, an error will be reported and the program will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +26,9 @@
     {
       "short": null,
       "long": "--bitwidth",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Specify the bit width",
+      "description": "flag  is  optional and it should only be used when reading an IFS file which does not define the BitWidth. This flag defines the bit width of the output file. If the value is conflicting with the input IFS file, an error will be  reported  and  the  program  will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +36,9 @@
     {
       "short": null,
       "long": "--endianness",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Specify the endianness",
+      "description": "the endianness of the output file. If the value is conflicting with the IFS file, an error will be reported and the program will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +66,9 @@
     {
       "short": null,
       "long": "--hint-ifs-target",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "will use  'Arch,  Endianness  and  BitWidth' fields to reflect the target information from the input object file. Using this flag will tell llvm-ifs the expected target triple in the output IFS file. If the value matches the target information from  the  object  file,  this value  will be used in the 'Target:' filed in the generated IFS. If it conflicts with the input object file, an error will be reported and the program will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +86,9 @@
     {
       "short": null,
       "long": "--input-format",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Specify the input file format",
+      "description": "in‐ put format can be inferred.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,7 +106,7 @@
     {
       "short": null,
       "long": "--output-elf",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Output path for ELF file",
       "multiple": false,
@@ -116,7 +126,7 @@
     {
       "short": null,
       "long": "--output-ifs",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Output path for IFS file",
       "multiple": false,
@@ -126,7 +136,7 @@
     {
       "short": null,
       "long": "--output-tbd",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Output path for TBD file",
       "multiple": false,
@@ -156,9 +166,9 @@
     {
       "short": null,
       "long": "--strip-ifs-bitwidth",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strip target bit width information away from IFS output",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "flag  is optional and should only be used when outputting an IFS file.  This flag strips the BitWidth field from the IFS file so it can be overridden later.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +176,9 @@
     {
       "short": null,
       "long": "--strip-ifs-endianness",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strip target endianness information away from IFS output",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This flag strips the Endianness field from the IFS file so it can be overridden later.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +186,9 @@
     {
       "short": null,
       "long": "--strip-ifs-target",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Strip all target information away from IFS output",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This flag strips the Target field from the IFS file so  it can be overridden later.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +208,7 @@
       "long": "--strip-size",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Remove object size from the output",
+      "description": "this  flag is set, llvm-ifs will remove the size field from the output ifs file. This is useful for shared objects that only in‐ tend to be linked against position independent code which doesn't need copy relocations, or where the size of an object is not a  use‐ ful part of the abi to track.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +226,9 @@
     {
       "short": null,
       "long": "--target",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Specify the target triple, e.g. x86_64-linux-gnu",
+      "description": "endianness  and  bit  width  of the output file using llvm target triple.  This flag cannot be used simultaneously with other target related flags.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -291,7 +301,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 0.9,
   "version": null
 }

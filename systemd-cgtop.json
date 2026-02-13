@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-cgtop",
-  "description": "Show top control groups by their resource usage.",
+  "description": "SYSTEMD-CGTOP(1) systemd-cgtop SYSTEMD-CGTOP(1)",
   "global_flags": [
     {
       "short": "-b",
       "long": "--batch",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Run in batch mode, accepting no input",
       "multiple": false,
       "conflicts_with": [],
@@ -76,7 +76,7 @@
     {
       "short": "-p",
       "long": "--order",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Order by path",
       "multiple": false,
@@ -86,19 +86,19 @@
     {
       "short": "-r",
       "long": "--raw",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Provide raw (not human-readable) numbers",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-P",
       "long": "--recursive",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Count userspace processes instead of tasks (excl. kernel)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -124,16 +124,6 @@
       "requires": []
     },
     {
-      "short": "-P",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Count userspace processes instead of tasks (excl. kernel)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-k",
       "long": null,
       "value_type": "Bool",
@@ -145,8 +135,16 @@
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "group",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "Merged",
+  "confidence": 0.9,
   "version": null
 }

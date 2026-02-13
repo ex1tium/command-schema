@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "gpgconf",
-  "description": "gpgconf (GnuPG) 2.4.4",
+  "description": "GPGCONF(1) GNU Privacy Guard 2.4 GPGCONF(1)",
   "global_flags": [
     {
       "short": null,
@@ -64,11 +64,31 @@
       "requires": []
     },
     {
+      "short": null,
+      "long": "--chuid",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "This can be used from the root account to get  information  on the GnuPG environment of the specified user or to start or kill daemons.  If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset.  To override the latter the option --homedir can be used.  This option has currently no effect on Windows.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-n",
       "long": "--dry-run",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not make any changes",
+      "description": "This is currently only implemented for --change-options and can be used for testing purposes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--homedir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "It is  only  recog‐ nized when given on the command line.  It also overrides any home directory stated through the environment variable ‘GNUPGHOME’ or (on Windows systems) by means of the Registry entry HKCU\\Software\\GNU\\GnuPG:HomeDir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +158,7 @@
       "long": "--output",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use as output file",
+      "description": "Default is to write to stdout.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +198,7 @@
       "long": "--runtime",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "activate changes at runtime, if possible",
+      "description": "used together with --change-options.  If one of the modified options can be changed in a running daemon process, signal the run‐ ning daemon to ask it to reparse its configuration file after changing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +226,9 @@
     {
       "short": null,
       "long": "--status-fd",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "write status info to this FD",
+      "description": "special status strings to the file descriptor n.  This program returns the status messages SUCCESS or FAILURE which are helpful when the caller uses a double fork approach and can't easily get the return code of the process.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,15 +238,23 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose",
+      "description": "Specifically, this extends numerical field values by human-readable descriptions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "component",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "Merged",
+  "confidence": 0.9,
   "version": "2.4.4"
 }

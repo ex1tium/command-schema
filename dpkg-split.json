@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-split",
-  "description": null,
+  "description": "dpkg-split(1) dpkg suite dpkg-split(1)",
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
-      "value_type": "Directory",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Use <directory> instead of /var/lib/dpkg.",
+      "description": "This  is  where  the  statoverride  file  is  stored.   Defaults  to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": null,
       "long": "--depotdir",
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "Use <directory> instead of /var/lib/dpkg/parts.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is /var/lib/dpkg/parts.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--npquiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Be quiet when -a is not a part.",
+      "description": "a  binary  package  part. This  option  suppresses  this  message,  to  allow  programs such as dpkg to cope with both split and unsplit packages without producing spurious messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,8 +56,8 @@
     {
       "short": "-o",
       "long": "--output",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Filename, for -j (default is <package>_<version>_<arch>.deb).",
       "multiple": false,
       "conflicts_with": [],
@@ -66,9 +66,9 @@
     {
       "short": "-S",
       "long": "--partsize",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "In KiB, for -s (default is 450).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The default is 450 KiB.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--root",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "Use <directory> instead of /.",
+      "description": "the  root  directory  to directory (since dpkg 1.21.10), which sets the installation directory to «directory» and the administrative directory to «directory/var/lib/dpkg» if DPKG_ROOT has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -154,9 +154,26 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "If",
+      "description": "part  is not a split binary package part then dpkg-split will exit with status 1; if some other trouble occurs then it will exit with status 2.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "The",
+      "description": "part  files given as arguments must be all the parts of exactly the same original binary file.  Each part must occur exactly once in the argument list, though the parts to not need to be listed in order.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "Merged",
+  "confidence": 1.0,
   "version": null
 }

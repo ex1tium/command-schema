@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "command": "blkzone",
-  "description": "Run zone command on the given block device.",
+  "description": "BLKZONE(8) System Administration BLKZONE(8)",
   "global_flags": [
     {
       "short": "-c",
       "long": "--count",
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "maximum number of zones",
       "multiple": false,
       "conflicts_with": [],
@@ -36,8 +36,8 @@
     {
       "short": "-l",
       "long": "--length",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -46,8 +46,8 @@
     {
       "short": "-o",
       "long": "--offset",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "start sector of zone to act (in 512-byte sectors)",
       "multiple": false,
       "conflicts_with": [],
@@ -78,41 +78,1569 @@
     {
       "name": "capacity",
       "description": "Report sum of zone capacities for the given device",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "maximum number of zones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enforce on block devices used by the system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--length",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--offset",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "start sector of zone to act (in 512-byte sectors)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display more details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "EiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "GiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "TiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "YiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ZiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "and",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "be",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "by",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "details",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "followed",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "is",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "may",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "more",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "optional",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sector",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sectors",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "see",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "suffixes",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "close",
+          "description": "Close a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "finish",
+          "description": "Set a range of zones to Full.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "open",
+          "description": "Open a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset",
+          "description": "Reset a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "close",
       "description": "Close a range of zones.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "maximum number of zones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enforce on block devices used by the system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--length",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--offset",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "start sector of zone to act (in 512-byte sectors)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display more details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "EiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "GiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "TiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "YiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ZiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "and",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "be",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "by",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "details",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "followed",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "is",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "may",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "more",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "optional",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sector",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sectors",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "see",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "suffixes",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "capacity",
+          "description": "Report sum of zone capacities for the given device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "finish",
+          "description": "Set a range of zones to Full.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "open",
+          "description": "Open a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset",
+          "description": "Reset a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "finish",
       "description": "Set a range of zones to Full.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "maximum number of zones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enforce on block devices used by the system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--length",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--offset",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "start sector of zone to act (in 512-byte sectors)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display more details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "EiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "GiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "TiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "YiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ZiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "and",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "be",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "by",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "details",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "followed",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "is",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "may",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "more",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "optional",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sector",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sectors",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "see",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "suffixes",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "capacity",
+          "description": "Report sum of zone capacities for the given device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "close",
+          "description": "Close a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "open",
+          "description": "Open a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset",
+          "description": "Reset a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "open",
       "description": "Open a range of zones.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "maximum number of zones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enforce on block devices used by the system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--length",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--offset",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "start sector of zone to act (in 512-byte sectors)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display more details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "EiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "GiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "TiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "YiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ZiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "and",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "be",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "by",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "details",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "followed",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "is",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "may",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "more",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "optional",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sector",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sectors",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "see",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "suffixes",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "capacity",
+          "description": "Report sum of zone capacities for the given device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "close",
+          "description": "Close a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "finish",
+          "description": "Set a range of zones to Full.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset",
+          "description": "Reset a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "report",
+      "description": "Run zone command on the given block device.",
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "maximum number of zones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enforce on block devices used by the system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--length",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--offset",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "start sector of zone to act (in 512-byte sectors)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display more details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "EiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "GiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "TiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "YiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ZiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "and",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "be",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "by",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "details",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "followed",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "is",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "may",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "more",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "optional",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sector",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sectors",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "see",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "suffixes",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "capacity",
+          "description": "Report sum of zone capacities for the given device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "close",
+          "description": "Close a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "finish",
+          "description": "Set a range of zones to Full.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "open",
+          "description": "Open a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "reset",
+          "description": "Reset a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     },
     {
       "name": "reset",
       "description": "Reset a range of zones.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "maximum number of zones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enforce on block devices used by the system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--length",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--offset",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "start sector of zone to act (in 512-byte sectors)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display more details",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "EiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "GiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "TiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "YiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ZiB",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "and",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "be",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "by",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "details",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "followed",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "is",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "may",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "more",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "optional",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sector",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "sectors",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "see",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "suffixes",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "capacity",
+          "description": "Report sum of zone capacities for the given device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "close",
+          "description": "Close a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "finish",
+          "description": "Set a range of zones to Full.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "open",
+          "description": "Open a range of zones.",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     }
   ],
@@ -265,7 +1793,7 @@
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

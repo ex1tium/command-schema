@@ -1,8 +1,78 @@
 {
   "schema_version": "1.0.0",
   "command": "genccode",
-  "description": "read each binary input file and",
+  "description": "GENCCODE(8) ICU 74.2 Manual GENCCODE(8)",
   "global_flags": [
+    {
+      "short": "-a",
+      "long": "--assembly",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use -h to see the list of available types of assembly to generate and to specify for this op‐ tion.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--destdir",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": "The default destination directory is the current directory.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--entrypoint",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The default entry point name  is  made of the data (set by the -n, --name option) followed by an underscore and the type of the data (set by the -t, --type option).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--filename",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "an  ICU data file such as mydata.icu will be turned into mydata_icu.c and mydata_icu.o.  However, if this parameter was set to \"somedata\", the output files will be somedata.o and somedata.c, respectively.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--file‐",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "this usage text",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": "--name",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "the  data name to name instead of the default. This name is also used as the base name of the output. The default name is made of the icudt prefix, followed by a two-digit version number corresponding to the current version of the ICU release, and a single  letter indicating the endianness of the data (the letter b indicated big endian data, and the letter l indicates little endian ones).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--skip-dll-export",
@@ -14,51 +84,11 @@
       "requires": []
     },
     {
-      "short": "-a",
+      "short": "-?",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Create assembly file. (possible values are: gcc, gcc-darwin, gcc-darwin-ppc, gcc-cygwin, gcc-mingw64, sun, sun-x86, xlc, aCC-ia64, aCC-parisc, nasm, masm, masm64)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-d",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "destination directory, followed by the path",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "entry point name, followed by the name (_dat will be appended)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Specify an alternate base filename. (default: symbolname_typ)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-h",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "this usage text",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -69,16 +99,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "match the architecture (CPU, 32/64 bits) of the specified .o ELF format defaults to i386. Windows defaults to the native platform.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "symbol prefix, followed by the prefix",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -117,21 +137,28 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "filename1",
+      "name": "destination",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filename",
       "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "filename2",
-      "value_type": "File",
+      "name": "name",
+      "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 0.9,
-  "version": null
+  "version": "74.2"
 }

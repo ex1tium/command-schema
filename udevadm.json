@@ -356,8 +356,8 @@
     {
       "short": "-w",
       "long": "--settle",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "udevadm settle waits for all events to finish. This option only waits for events triggered by the same command to finish.",
       "multiple": false,
       "conflicts_with": [],
@@ -502,22 +502,124 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-w[SECONDS",
-      "long": "--wait-for-initialization[",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [
     {
+      "name": "control",
+      "description": "Control the udev daemon",
+      "flags": [
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "info",
+          "description": "Query sysfs or the udev database",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "lock",
+          "description": "Lock a block device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Listen to kernel and udev events",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "settle",
+          "description": "Wait for pending udev events",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "test",
+          "description": "Test an event run",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "test-builtin",
+          "description": "Test a built-in command",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "trigger",
+          "description": "Request events from the kernel",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "verify",
+          "description": "Verify udev rules files",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "wait",
+          "description": "Wait for device or device symlink",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
       "name": "info",
-      "description": "Query sysfs or the udev database.",
+      "description": "Query sysfs or the udev database",
       "flags": [
         {
           "short": null,
@@ -815,6 +917,203 @@
       "aliases": []
     },
     {
+      "name": "lock",
+      "description": "Lock a block device",
+      "flags": [
+        {
+          "short": "-b",
+          "long": "--backing",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "File whose backing block device to lock",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--device",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Block device to lock",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print this message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--print",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Only show which block device the lock would be taken on",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--timeout",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Block at most the specified time waiting for lock",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print version of the program",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "monitor",
+      "description": "Listen to kernel and udev events",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": "--kernel",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print kernel uevents",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--property",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the event properties",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--subsystem-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--tag-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Filter events by tag",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--udev",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print udev events",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "settle",
+      "description": "Wait for pending udev events",
+      "flags": [
+        {
+          "short": "-E",
+          "long": "--exit-if-exists",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Stop waiting if file exists",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--timeout",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Maximum time to wait for events",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "syspath",
       "description": "Send control commands or test the device manager.",
       "flags": [
@@ -933,6 +1232,534 @@
         }
       ],
       "aliases": []
+    },
+    {
+      "name": "test",
+      "description": "Test an event run",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--action",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Set action string",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--resolve-names",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "When to resolve names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "test-builtin",
+      "description": "Test a built-in command",
+      "flags": [
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "control",
+          "description": "Control the udev daemon",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "info",
+          "description": "Query sysfs or the udev database",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "lock",
+          "description": "Lock a block device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Listen to kernel and udev events",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "settle",
+          "description": "Wait for pending udev events",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "test",
+          "description": "Test an event run",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "trigger",
+          "description": "Request events from the kernel",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "verify",
+          "description": "Verify udev rules files",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "wait",
+          "description": "Wait for device or device symlink",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "trigger",
+      "description": "Request events from the kernel",
+      "flags": [
+        {
+          "short": "-c",
+          "long": "--action",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Event action value, default is \"change\"",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--attr-match",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Trigger devices with a matching attribute",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-A",
+          "long": "--attr-nomatch",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Exclude devices with a matching attribute",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not actually trigger the events",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--initialized-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Trigger devices that are already initialized",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--initialized-nomatch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Trigger devices that are not initialized yet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Trigger devices with this /dev name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--parent-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Trigger devices with that parent device",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--prioritized-subsystem",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--property-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Trigger devices with a matching property",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress error logging in triggering events",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--settle",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Wait for the triggered events to complete",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--subsystem-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Trigger devices from a matching subsystem",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--subsystem-nomatch",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Exclude devices from a matching subsystem",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": "--sysname-match",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Trigger devices with this /sys path",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": "--tag-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Trigger devices with a matching tag",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Type of events to trigger devices sysfs devices (default) subsystems sysfs subsystems and drivers all sysfs devices, subsystems, and drivers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--uuid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print synthetic uevent UUID",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print the list of devices while running",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--wait-daemon",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Wait for udevd daemon to be initialized before triggering uevents",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "verify",
+      "description": "Verify udev rules files",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-style",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Ignore style issues",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-summary",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show summary",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--resolve-names",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "When to resolve names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--root",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Operate on an alternate filesystem root",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "wait",
+      "description": "Wait for device or device symlink",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print this message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--initialized",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--removed",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Wait for devices being removed",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--settle",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Also wait for all queued events being processed",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--timeout",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Maximum time to wait for the device",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print version of the program",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     }
   ],
   "positional": [
@@ -1007,7 +1834,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "Merged",
   "confidence": 1.0,
   "version": null
 }

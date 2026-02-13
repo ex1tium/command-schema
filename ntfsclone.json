@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsclone",
-  "description": "ntfsclone v2022.10.3 (libntfs-3g)",
+  "description": "NTFSCLONE(8) System Manager's Manual NTFSCLONE(8)",
   "global_flags": [
     {
       "short": "-f",
@@ -18,7 +18,7 @@
       "long": "--full-logfile",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Include the full logfile in metadata output",
+      "description": "the  Windows log file in the copy. This is only useful for extracting metadata, saving or cloning a file system which was not properly unmounted from Windows.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--ignore-fs-check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Ignore the filesystem check result",
+      "description": "the  --metadata  option,  for  the safety of user's data. The clusters which cause the inconsistency are saved too.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-m",
       "long": "--metadata",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Clone *only* metadata (for NTFS experts)",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "ONLY METADATA (for NTFS experts). Only cloning to a (sparse) file is allowed, unless used the option --save-image is also used. You can't metadata-only clone to a device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--new-half-serial",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Set a partial new serial number",
+      "description": "the  device  during  the  mounting process, so it has to be changed to enable the original file system and the clone to be mounted at the same time on the same computer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-n",
       "long": "--no-action",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Test restoring, without outputting anything",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the  image  is not tested.  The option --restore-image must also be present, and the options --output and --overwrite must be omitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--output",
       "value_type": "File",
       "takes_value": true,
-      "description": "Clone NTFS to the non-existent FILE",
+      "description": "If FILE is '-' then clone to the standard output. This option cannot be used for creating a par‐ tition, use --overwrite for an existing partition.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,7 +96,7 @@
     {
       "short": "-O",
       "long": "--overwrite",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Clone NTFS to FILE, overwriting if exists",
       "multiple": false,
@@ -128,7 +128,7 @@
       "long": "--rescue",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Continue after disk read errors",
+      "description": "The contents of the unreadable sec‐ tors are filled by character '?' and the beginning of such sectors are marked by \"BadSectoR\\0\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-r",
       "long": "--restore-image",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Restore from the special image format",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "from the special image format specified by SOURCE argument. If the SOURCE is '-' then the image is read from the standard in‐ put.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--save-image",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Save to the special image format",
+      "description": "e.g. for image compression, encryption or streaming through a network.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -162,19 +162,29 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
+    },
+    {
+      "short": "-fv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
     }
   ],
   "subcommands": [],
   "positional": [
     {
-      "name": "SOURCE",
+      "name": "source",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
+  "source": "Merged",
   "confidence": 0.9,
   "version": "2022.10.3"
 }

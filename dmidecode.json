@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "command": "dmidecode",
-  "description": null,
+  "description": "DMIDECODE(8) System Manager's Manual DMIDECODE(8)",
   "global_flags": [
     {
       "short": "-d",
       "long": "--dev-mem",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Read memory from device FILE (default: /dev/mem)",
       "multiple": false,
@@ -18,7 +18,7 @@
       "long": "--dump",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not decode the entries",
+      "description": "not decode the entries, dump their contents as hexadecimal instead.  Note that this is still a text output, no binary data will be thrown upon you. The strings attached to each entry are displayed as both hexadecimal and ASCII. This option is mainly useful for  de‐ bugging.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--dump-bin",
       "value_type": "File",
       "takes_value": true,
-      "description": "Dump the DMI data to a binary file",
+      "description": "not  decode the entries, instead dump the DMI data to a file in binary form. The generated file is suitable to pass to --from-dump later.  FILE must not exist.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,7 +36,7 @@
     {
       "short": null,
       "long": "--from-dump",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
       "description": "Read the DMI data from a binary file",
       "multiple": false,
@@ -48,7 +48,7 @@
       "long": "--handle",
       "value_type": "String",
       "takes_value": true,
-      "description": "Only display the entry of given handle",
+      "description": "HANDLE is a 16-bit integer.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--no-quirks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Decode everything without quirks",
+      "description": "everything  exactly  as  it is in the table, without trying to fix up common mistakes or hide irrelevant fields.  This mode is primarily aimed at firmware developers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,8 +76,8 @@
     {
       "short": null,
       "long": "--no-sysfs",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Do not attempt to read DMI data from sysfs files",
       "multiple": false,
       "conflicts_with": [],
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--oem-string",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Only display the value of the given OEM string",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "number  of OEM strings instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-s",
       "long": "--string",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Only display the value of the given DMI string",
+      "description": "KEYWORD.   It  must  be  a  keyword  from  the  following  list:  bios-vendor, bios-version,   bios-release-date,   bios-revision,   firmware-revision,   system-manufacturer,  system-product-name,  system-version, system-serial-number,    system-uuid,    system-sku-number,     system-family,     baseboard-manufacturer,     baseboard-product-name, baseboard-version,     baseboard-serial-number,     baseboard-asset-tag,    chassis-manufacturer,    chassis-type,    chassis-version, chassis-serial-number, chassis-asset-tag, processor-family, processor-manufacturer, processor-version, processor-frequency.  Each key‐ word corresponds to a given DMI type and a given offset within this entry type.  Not all strings may be meaningful or even defined  on all  systems. Some keywords may return more than one result on some systems (e.g.  processor-version on a multi-processor system).  If KEYWORD is not provided or not valid, a list of all valid keywords is printed and dmidecode exits with an error.  This  option  cannot be used more than once.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-t",
       "long": "--type",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Only display the entries of given type",
+      "description": "numbers,  or  a  keyword from  the following list: bios, system, baseboard, chassis, processor, memory, cache, connector, slot.  Refer to the DMI TYPES section below for details.  If this option is used more than once, the set of displayed entries will be the union of all the given types.   If TYPE is not provided or not valid, a list of all valid keywords is printed and dmidecode exits with an error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,7 +136,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "HelpCommand",
-  "confidence": 0.75,
+  "source": "Merged",
+  "confidence": 0.8,
   "version": null
 }
