@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "stty",
-  "description": "STTY(1) User Commands STTY(1)",
+  "description": "Print or change terminal characteristics.",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print all current settings in human-readable form",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-F",
       "long": "--file",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "open and use the specified DEVICE instead of stdin",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--save",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print all current settings in a stty-readable form",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "output version information and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "same as icanon cooked same as brkint ignpar istrip icrnl ixon opost isig icanon, eof and eol characters to their default values",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "same as raw crt same as echoe echoctl echoke dec same as echoe echoctl echoke -ixany intr ^c erase 0177 kill ^u * [-]decctlq same as [-]ixany ek erase and kill characters to their default values evenp same as parenb -parodd cs7",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,13 +78,33 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "same as -parenb cs8 * [-]lcase same as xcase iuclc olcuc litout same as -parenb -istrip -opost cs8",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-inlcr",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-flusho",
+      "short": "-isig",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ixoff",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -98,7 +118,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "same as parenb istrip opost cs7 nl same as -icrnl -onlcr",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same as icrnl -inlcr -igncr onlcr -ocrnl -onlret",
+      "description": "same as icrnl -inlcr -igncr onlcr -ocrnl -onlret oddp same as parenb parodd cs7",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +138,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same as -parenb cs8",
+      "description": "same as -parenb cs8 [-]parity same as [-]evenp pass8 same as -parenb -istrip cs8",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +148,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "same as parenb istrip cs7 raw same as -ignbrk -brkint -ignpar -parmrk -inpck -istrip",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,17 +158,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same as cooked",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-xcase",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "same as cooked sane same as cread -ignbrk brkint -inlcr -igncr icrnl icanon iexten echo echoe echok -echonl -noflsh",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,48 +166,8 @@
   ],
   "subcommands": [
     {
-      "name": "crt",
-      "description": "same as echoe echoctl echoke",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "dec",
-      "description": "same as echoe echoctl echoke -ixany intr ^c erase 0177 kill ^u",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "evenp",
-      "description": "same as parenb -parodd cs7",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "nl",
-      "description": "same as -icrnl -onlcr",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "oddp",
-      "description": "same as parenb parodd cs7",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "sane",
-      "description": "same as cread -ignbrk brkint -inlcr -igncr icrnl icanon iexten echo echoe echok -echonl -noflsh -ixoff -iutf8 -iuclc -ixany imaxbel",
+      "name": "cbreak",
+      "description": "same as -icanon",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -214,21 +184,77 @@
   ],
   "positional": [
     {
-      "name": "-f",
+      "name": "DEVICE",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "device",
+      "name": "bs0",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cr0",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cs7",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "cs8",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ff0",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "nl0",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "pass8",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tab0",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "vt0",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 1.0,
   "version": null
 }

@@ -18,7 +18,7 @@
       "long": "--add-architecture",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "can  be  installed  without  using  --force-architecture  (since  dpkg 1.16.2).  The architecture dpkg is built for (i.e. the output of --print-architecture) is always part of that list.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--admindir",
       "value_type": "File",
       "takes_value": true,
-      "description": "This directory contains many files that give information about status  of  installed  or uninstalled packages, etc.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
+      "description": "the  administrative  directory  to directory.  This directory contains many files that give information about status of installed or uninstalled packages, etc.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--assert-feature",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  dpkg  supports  the  requested  feature.  Returns 0 if the feature is fully supported, 1 if the feature is known but dpkg cannot provide support for it yet, and 2 if the feature is unknown.  The current list of assertable features is:",
+      "description": "Returns 0 if the feature is fully supported, 1 if the feature is known but dpkg cannot provide support for it yet, and 2 if the feature is unknown.  The current list of assertable features is:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--auto-deconfigure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  the  removed  package.   Specifying  this option will cause automatic deconfiguration of the package which depended on the removed package.",
+      "description": "Specifying this option will cause automatic deconfiguration of the package which depended on the removed package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--clear-selections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  requested  state  of  every  non-essential package to deinstall (since dpkg 1.13.18).  This is intended to be used immediately before --set-selections, to deinstall any packages not in list given to --set-selections.",
+      "description": "This is intended to be used immediately before",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--compare-versions",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "version  numbers,  where op is a binary operator.  dpkg returns true (0) if the specified condition is satisfied, and false (1) otherwise.  There are two groups of operators, which differ in how they treat an empty ver1 or ver2.  These treat an  empty  version  as earlier  than  any  version: lt le eq ne ge gt.  These treat an empty version as later than any version: lt-nl le-nl ge-nl gt-nl.  These are provided only for compatibility with control file syntax: < << <= = >= >> >.  The < and > operators are obsolete and should  not  be used, due to confusing semantics.  To illustrate: 0.1 < 0.1 evaluates to true.",
+      "description": "dpkg returns true (0) if the specified condition is  satisfied,  and  false  (1) otherwise.   There  are  two  groups of operators, which differ in how they treat an empty ver1 or ver2.  These treat an empty version as earlier than any version: lt le eq ne ge gt.  These treat an empty version as later than any version: lt-nl le-nl ge-nl gt-nl.  These are provided only for compatibility with control file syntax: < << <= = >= >> >.  The < and > operators are obsolete and should not be  used, due to confusing semantics.  To illustrate: 0.1 < 0.1 evaluates to true.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--configure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If -a or --pending is given instead of package,  all  unpacked  but unconfigured packages are configured.",
+      "description": "or --pending is given instead of a package name, then all packages unpacked, but marked to be removed in file /var/lib/dpkg/status, are removed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--debug",
       "value_type": "String",
       "takes_value": true,
-      "description": "octal is formed by bitwise-ORing desired values together from the list below (note that these values may change in future releases).  -Dh or --debug=help display these debugging values.",
+      "description": "octal is formed by bitwise-ORing desired values together from the list below (note that these values may change  in future releases).  -Dh or --debug=help display these debugging values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--force-help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Things marked with (*) are forced by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--forget-old-unavail",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "do not contain user information such as package selections.",
+      "description": "that  do not contain user information such as package selections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--get-selections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "list  of  package  selections,  and  write  it  to  stdout.   Without a pattern, non-installed packages (i.e. those which have been previously purged) will not be shown.",
+      "description": "Without a pattern, non-installed packages (i.e. those which have been previously purged) will not be shown.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--ignore-depends",
       "value_type": "String",
       "takes_value": true,
-      "description": "This affects the Pre-Depends, Depends and Breaks fields.",
+      "description": "dependency-checking for specified packages (actually, checking is performed, but only warnings about conflicts are given, nothing else).  This affects the Pre-Depends, Depends and Breaks fields.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": "--instdir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the installation directory, which refers to the directory where packages are to be installed.  instdir is also the directory passed to chroot(2) before running package's installation scripts, which means that the scripts see instdir as a root directory.   Defaults  to «/».",
+      "description": "instdir is also the  directory  passed to  chroot(2)  before  running package's installation scripts, which means that the scripts see instdir as a root directory.  Defaults to «/».",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": "--log",
       "value_type": "File",
       "takes_value": true,
-      "description": "status  change  updates and actions to filename, instead of the default /var/log/dpkg.log.  If this option is given multiple times, the last filename is used.  Log messages are of the form:",
+      "description": "If this option is given multiple times, the last filename is used.  Log messages are of the form:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--merge-avail",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dpkg's  and  dselect's  idea  of  which  packages  are  available.   With action --merge-avail, old information is combined with information from Packages-file.  With action --update-avail, old information is replaced with the information in the Packages-file.  The Packages-file distributed with Debian is simply named «Packages».  If the Packages-file argument is missing or named «-» then it will be read from standard input (since dpkg 1.17.7).  dpkg keeps its record of available packages in /var/lib/dpkg/available.",
+      "description": "dpkg's  and  dselect's  idea  of  which  packages  are  available.   With  action --merge-avail, old information is combined with information from Packages-file.  With action --update-avail, old information is replaced with the information in the Packages-file.   The Packages-file  distributed with Debian is simply named «Packages».  If the Packages-file argument is missing or named «-» then it will be read from standard input (since dpkg 1.17.7).  dpkg keeps its record of available packages in /var/lib/dpkg/available.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +358,7 @@
       "long": "--no-act",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "everything  which  is  supposed  to  be done, but don't write any changes.  This is used to see what would happen with the specified action, without actually modifying anything.",
+      "description": "This is used to  see  what  would  happen  with  the  specified action, without actually modifying anything.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": "--no-force-things",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "or  refuse  (no-force  and  refuse  mean the same thing) to do some things.  things is a comma separated list of things specified below.  --force-help displays a message describing them.  Things marked with (*) are forced by default.",
+      "description": "things is a comma separated list of things specified below.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +398,7 @@
       "long": "--no-triggers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  run any triggers in this run (since dpkg 1.14.17), but activations will still be recorded.  If used with --configure package or",
+      "description": "not  run  any triggers in this run (since dpkg 1.14.17), but activations will still be recorded.  If used with --configure package or",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -416,9 +416,9 @@
     {
       "short": null,
       "long": "--path-include",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "glob-pattern as a path filter, either by excluding or re-including previously excluded paths matching the specified patterns during install (since dpkg 1.15.8).",
+      "description": "patterns  during install (since dpkg 1.15.8).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -434,11 +434,11 @@
       "requires": []
     },
     {
-      "short": "-c”",
+      "short": null,
       "long": "--post-invoke",
       "value_type": "File",
       "takes_value": true,
-      "description": "remove and  purge  actions  (since dpkg 1.15.4), and add-architecture and remove-architecture actions (since dpkg 1.17.19).  This option can be specified multiple times.  The order the options are specified  is  preserved,  with  the  ones  from  the  configuration  files  taking precedence.  The environment variable DPKG_HOOK_ACTION is set for the hooks to the current dpkg action.",
+      "description": "an  invoke hook command to be run via “sh -c” before or after the dpkg run for the unpack, configure, install, triggers-only, remove and purge actions (since dpkg 1.15.4), and add-architecture and remove-architecture actions (since dpkg 1.17.19).   This  option  can  be specified  multiple  times.   The  order  the  options  are  specified  is  preserved,  with the ones from the configuration files taking precedence.  The environment variable DPKG_HOOK_ACTION is set for the hooks to the current dpkg action.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +478,7 @@
       "long": "--print-avail",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "details about package-name, as found in /var/lib/dpkg/available.  Users of APT-based frontends should use apt show package- name instead.",
+      "description": "details  about package-name, as found in /var/lib/dpkg/available.  Users of APT-based frontends should use apt show package- name instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +498,7 @@
       "long": "--purge",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This removes everything, including conffiles, and anything else cleaned up from  postrm. If  -a  or  --pending  is  given  instead  of  a  package  name,  then all packages unpacked or removed, but marked to be purged in file /var/lib/dpkg/status, are purged.",
+      "description": "This removes everything, including conffiles, and anything else cleaned up  from  postrm. If  -a  or  --pending  is  given  instead  of  a  package  name,  then  all packages unpacked or removed, but marked to be purged in file /var/lib/dpkg/status, are purged.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +508,7 @@
       "long": "--record-avail",
       "value_type": "File",
       "takes_value": true,
-      "description": "dpkg  and  dselect's  idea of which packages are available with information from the package package-file.  If --recursive or -R option is specified, package-file must refer to a directory instead.",
+      "description": "dpkg  and  dselect's  idea  of which packages are available with information from the package package-file.  If --recursive or -R option is specified, package-file must refer to a directory instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +518,7 @@
       "long": "--recursive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "handle  all regular files matching pattern *.deb found at specified directories and all of its subdirectories.  This can be used with -i, -A, --install, --unpack and --record-avail actions.",
+      "description": "This  can  be used with -i, -A, --install, --unpack and --record-avail actions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +528,7 @@
       "long": "--remove",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This removes everything except conffiles and other data cleaned up by the postrm script, which  may  avoid having  to reconfigure the package if it is reinstalled later (conffiles are configuration files that are listed in the DEBIAN/conffiles control file).  If there is no DEBIAN/conffiles control file nor DEBIAN/postrm script, this command is equivalent  to  calling  --purge. If  -a  or  --pending  is  given  instead  of  a  package  name,  then  all  packages  unpacked,  but  marked  to  be  removed  in  file /var/lib/dpkg/status, are removed.",
+      "description": "an  installed  package.  This removes everything except conffiles and other data cleaned up by the postrm script, which may avoid having to reconfigure the package if it is reinstalled later (conffiles are configuration files that are listed in  the  DEBIAN/conffiles control file).  If there is no DEBIAN/conffiles control file nor DEBIAN/postrm script, this command is equivalent to calling --purge.  If",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,7 +538,7 @@
       "long": "--remove-architecture",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "architecture  from  the list of architectures for which packages can be installed without using --force-architecture (since dpkg 1.16.2).  If the architecture is currently in use in the database then the operation will be refused, except if --force-architecture  is specified.  The architecture dpkg is built for (i.e. the output of --print-architecture) can never be removed from that list.",
+      "description": "architecture  from  the  list of architectures for which packages can be installed without using --force-architecture (since dpkg 1.16.2).  If the architecture is currently in use in the database then the operation will be refused, except if  --force-architecture  is specified.  The architecture dpkg is built for (i.e. the output of --print-architecture) can never be removed from that list.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +548,7 @@
       "long": "--robot",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a  machine-readable  output  format.  This provides an interface for programs that need to parse the output of some of the commands that do not otherwise emit a machine-readable output format.  No localization will be used, and the output will be modified to  make  it easier to parse.",
+      "description": "This provides an interface for programs that need to parse the output of some of the commands that do not otherwise emit a machine-readable output format.  No localization will be used, and the output will be modified to make it  easier to parse.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -558,7 +558,7 @@
       "long": "--root",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the  root  directory  to  directory,  which  sets  the  installation  directory  to  «dir»  and  the  administrative  directory  to «dir/var/lib/dpkg».",
+      "description": "the  root  directory  to  directory,  which  sets  the  installation  directory  to  «dir»  and  the  administrative  directory   to «dir/var/lib/dpkg».",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -578,7 +578,7 @@
       "long": "--selected-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The actual marking is done with dselect  or  by  dpkg,  when  it  handles packages.  For example, when a package is removed, it will be marked selected for deinstallation.",
+      "description": "process  the  packages  that  are  selected  for installation.  The actual marking is done with dselect or by dpkg, when it handles packages.  For example, when a package is removed, it will be marked selected for deinstallation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -588,7 +588,7 @@
       "long": "--set-selections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This file should be in the format “package state”, where state is  one  of  install, hold, deinstall or purge.  Blank lines and comment lines beginning with ‘#’ are also permitted.",
+      "description": "package  selections  using  file read from stdin.  This file should be in the format “package state”, where state is one of install, hold, deinstall or purge.  Blank lines and comment lines beginning with ‘#’ are also permitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,7 +618,17 @@
       "long": "--status-fd",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option can be specified multiple  times.   The information is generally one record per line, in one of the following forms:",
+      "description": "This option can be specified  multiple  times.   The information is generally one record per line, in one of the following forms:",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--status-logger",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "-c”  (since  dpkg 1.16.0).  This option can be specified multiple times.  The output format used is the same as in --status-fd.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -638,7 +648,7 @@
       "long": "--triggers-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use of this option may leave packages in the improper triggers-awaited and triggers-pending states.  This can be  fixed  later  by  running:  dpkg  --configure",
+      "description": "Use of this option  may leave  packages  in  the  improper  triggers-awaited  and  triggers-pending states.  This can be fixed later by running: dpkg --configure",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -668,7 +678,7 @@
       "long": "--validate-thing",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Returns 0 if the string is valid, 1 if the string is  invalid but might be accepted in lax contexts, and 2 if the string is invalid.  The current list of validatable things is:",
+      "description": "that  the thing string has a correct syntax (since dpkg 1.18.16).  Returns 0 if the string is valid, 1 if the string is invalid but might be accepted in lax contexts, and 2 if the string is invalid.  The current list of validatable things is:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -678,7 +688,7 @@
       "long": "--verify",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "package  with the  files  metadata  information  stored in the dpkg database (since dpkg 1.17.2).  The origin of the files metadata information in the database is the binary packages themselves.  That metadata gets collected at package unpack time during the installation process.",
+      "description": "the  integrity  of package-name or all packages if omitted, by comparing information from the files installed by a package with the files metadata information stored in the dpkg database (since dpkg 1.17.2).  The origin of the  files  metadata  information  in  the database is the binary packages themselves.  That metadata gets collected at package unpack time during the installation process.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

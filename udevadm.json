@@ -514,29 +514,428 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "info",
+      "description": "Query sysfs or the udev database.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--attr-match",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--attr-nomatch",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--attribute-walk",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print all key matches walking along the chain of parent devices",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--cleanup-db",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Clean up the udev database",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--device-id-of-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--export",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Export key/value pairs",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--export-db",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Export the content of the udev database",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": "--export-prefix",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Export the key name with a prefix",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print this message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--initialized-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Query devices that are already initialized",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--initialized-nomatch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Query devices that are not initialized yet",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Generate JSON output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--name",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Node or symlink name used for query or attribute walk",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query devices with this /dev name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--parent-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query devices with this parent device",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--path",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "sysfs device path used for query or attribute walk",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--property",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show only properties by this name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--property-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--query",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Query device information: name Name of device node symlink Pointing to node path sysfs device path property The device properties all All values",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--root",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Prepend dev directory to path names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--subsystem-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--subsystem-nomatch",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sysname-match",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Query devices with this /sys path",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tag-match",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Query devices with a matching tag",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--tree",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show tree of devices",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--value",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "When showing properties, print only their values",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Print version of the program",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--wait-for-initialization",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "syspath",
+      "description": "Send control commands or test the device manager.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "control",
+          "description": "Control the udev daemon",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "info",
+          "description": "Query sysfs or the udev database",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "lock",
+          "description": "Lock a block device",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "monitor",
+          "description": "Listen to kernel and udev events",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "settle",
+          "description": "Wait for pending udev events",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "test",
+          "description": "Test an event run",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "test-builtin",
+          "description": "Test a built-in command",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "trigger",
+          "description": "Request events from the kernel",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "verify",
+          "description": "Verify udev rules files",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "wait",
+          "description": "Wait for device or device symlink",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    }
+  ],
   "positional": [
-    {
-      "name": "--debug",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--help",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--version",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "control",
       "value_type": "String",
@@ -548,13 +947,6 @@
       "name": "devpath",
       "value_type": "File",
       "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "info",
-      "value_type": "String",
-      "required": true,
       "multiple": false,
       "description": null
     },
@@ -616,6 +1008,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

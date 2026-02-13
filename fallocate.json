@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "command": "fallocate",
-  "description": "FALLOCATE(1) User Commands FALLOCATE(1)",
+  "description": "Preallocate space to, or deallocate space from a file.",
   "global_flags": [
     {
       "short": "-c",
       "long": "--collapse-range",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -16,9 +16,9 @@
     {
       "short": "-d",
       "long": "--dig-holes",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "detect zeroes and replace with holes",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--insert-range",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "insert a hole at range, shifting existing data",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-n",
       "long": "--keep-size",
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "maintain the apparent size of the file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,19 +56,19 @@
     {
       "short": "-l",
       "long": "--length",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "length for range operations, in bytes",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-o",
       "long": "--offset",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "offset for range operations, in bytes",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-x",
       "long": "--posix",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use posix_fallocate(3) instead of fallocate(2)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-p",
       "long": "--punch-hole",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "replace a range with a hole (implies -n)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "verbose mode",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,19 +116,9 @@
     {
       "short": "-z",
       "long": "--zero-range",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "zero and ensure allocation of a range",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -137,49 +127,147 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "-l",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-n",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-o",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "filename",
-      "value_type": "File",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "length",
+      "name": "EiB",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "offset",
+      "name": "GiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "PiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "TiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "YiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ZiB",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "and",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "be",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "by",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "details",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "followed",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "for",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "is",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "may",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "more",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "num",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "optional",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "see",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "suffixes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "the",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
   "version": null
 }

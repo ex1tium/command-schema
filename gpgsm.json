@@ -8,7 +8,7 @@
       "long": "--agent-program",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default value is determined by running the command gpgconf.  Note that the pipe symbol (|) is used for a regression test suite hack and may thus not be used in the file name.",
+      "description": "an agent program to be used for secret key operations.  The default value is determined by running the command gpgconf.  Note that the pipe symbol (|) is used for a regression test suite hack and may thus not be used in the file name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--always-trust",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The only  requirement  is  that  the certificate is capable of encryption.  Note that this option is ineffective if --require-compliance is used.",
+      "description": "The only requirement is that the cer‐ tificate is capable of encryption.  Note that this option is ineffective if --require-compliance is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--auto-issuer-key-retrieve",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "loca‐ tion.   This  usually means that Dirmngr is employed to search for the certificate.  Note that this option makes a \"web bug\" like be‐ havior possible.  LDAP server operators can see which keys you request, so by sending you a message signed by a brand new key  (which you naturally will not have on your local keybox), the operator can tell both your IP address and the time when you verified the sig‐ nature.  Note that if CRL checking is not disabled issuer certificates are retrieved in any case using the caIssuers authorityInfoAc‐ cess method.",
+      "description": "a  required certificate is missing while validating the chain of certificates, try to load that certificate from an external loca‐ tion.  This usually means that Dirmngr is employed to search for the certificate.  Note that this option makes a \"web bug\" like behav‐ ior possible.  LDAP server operators can see which keys you request, so by sending you a message signed by a brand new key (which  you naturally  will  not  have on your local keybox), the operator can tell both your IP address and the time when you verified the signa‐ ture.  Note that if CRL checking is not disabled issuer certificates are retrieved in any case using the caIssuers authorityInfoAccess method.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--chuid",
       "value_type": "File",
       "takes_value": true,
-      "description": "This can be used from the root account to run gpgsm  for  an‐ other  user.  If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset.  To override the latter the op‐ tion --homedir can be used.  This option has only an effect when used on the command line.  This option has currently  no  effect  at all on Windows.",
+      "description": "This can be used from the root account to run  gpgsm  for  an‐ other  user.   If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset.  To override the latter the op‐ tion --homedir can be used.  This option has only an effect when used on the command line.  This option has currently no effect at all on Windows.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--cipher-algo",
       "value_type": "String",
       "takes_value": true,
-      "description": "For convenience the strings 3DES, AES and  AES256  may be used instead of their OIDs.  The default is AES (2.16.840.1.101.3.4.1.2).",
+      "description": "For convenience the strings 3DES, AES and AES256 may be used instead of their OIDs.  The default is AES (2.16.840.1.101.3.4.1.2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--compatibility-flags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The flags are given as a comma  separated list  of flag names and are OR-ed together.  The special flag \"none\" clears the list and allows one to start over with an empty list. To get a list of available flags the sole word \"help\" can be used.",
+      "description": "compatibility  flags to work around problems due to non-compliant certificates or data.  The flags are given as a comma separated list of flag names and are OR-ed together.  The special flag \"none\" clears the list and allows one to start over with an  empty  list. To get a list of available flags the sole word \"help\" can be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "All flags are or-ed and flags may be given in C syntax (e.g. 0x0042) or as a comma separated list  of  flag  names. To  get  a  list of all supported flags the single word \"help\" can be used. This option is only useful for debugging and the behavior may change at any time without notice.",
+      "description": "All flags are or-ed and flags may be given in C syntax (e.g. 0x0042) or as a comma separated list of flag names.  To get a list of all supported flags the single word \"help\" can be used. This option is only useful for debugging and  the  behavior  may change at any time without notice.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--debug-allow-core-dump",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "However,  bugs  are pretty  durable  beasts and to squash them it is sometimes useful to have a core dump.  This option enables core dumps unless the Bad Thing happened before the option parsing.",
+      "description": "gpgsm  tries  to avoid dumping core by well written code and by disabling core dumps for security reasons.  However, bugs are pretty durable beasts and to squash them it is sometimes useful to have a core dump.  This option enables core dumps  unless  the  Bad Thing happened before the option parsing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--debug-ignore-expiration",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It lets gpgsm ignore all notAfter dates, this is used  by  the  re‐ gression tests.",
+      "description": "It lets gpgsm ignore all notAfter dates, this is used by the regres‐ sion tests.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--default-key",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This key is used if no other key has been defined as a signing  key.   Note,  that  the first --local-users option also sets this key if it has not yet been set; however --default-key always overrides this.",
+      "description": "This key is used if no other key has been defined as a  signing  key.   Note,  that  the first --local-users option also sets this key if it has not yet been set; however --default-key always overrides this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--digest-algo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "name  as  the message digest algorithm.  Usually this algorithm is deduced from the respective signing certificate.  This option forces the use of the given algorithm and may lead to severe interoperability problems.",
+      "description": "name  as  the  message digest algorithm.  Usually this algorithm is deduced from the respective signing certificate.  This option forces the use of the given algorithm and may lead to severe interoperability problems.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +216,9 @@
     {
       "short": null,
       "long": "--disable-crl-checks",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "The disable option is  most  useful with an off-line network connection to suppress this check and also to avoid that new certificates introduce a web bug by including a certificate  specific  CRL DP.  The disable option also disables an issuer certificate lookup via the authorityInfoAccess property of the certificate; the --enable-issuer-key-retrieve can be used to make use of that property anyway.",
+      "description": "default  the  CRL checks are enabled and the DirMngr is used to check for revoked certificates.  The disable option is most useful with an off-line network connection to suppress this check and also to avoid that new certificates introduce a web bug by including  a certificate  specific  CRL  DP.  The disable option also disables an issuer certificate lookup via the authorityInfoAccess property of the certificate; the --enable-issuer-key-retrieve can be used to make use of that property anyway.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--disable-ocsp",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "The enable option may be used to enable OCSP checks via Dirmngr.  If CRL checks  are  also  en‐ abled,  CRLs  will  be used as a fallback if for some reason an OCSP request will not succeed.  Note, that you have to allow OCSP re‐ quests in Dirmngr's configuration too (option --allow-ocsp) and configure Dirmngr properly.  If you do not do so you will get the er‐ ror code ‘Not supported’.",
+      "description": "The enable option may be used to enable OCSP checks via Dirmngr.  If CRL  checks  are  also  en‐ abled,  CRLs  will  be  used as a fallback if for some reason an OCSP request will not succeed.  Note, that you have to allow OCSP re‐ quests in Dirmngr's configuration too (option --allow-ocsp) and configure Dirmngr properly.  If you do not do so you will get the  er‐ ror code ‘Not supported’.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,17 +258,7 @@
       "long": "--disable-trusted-cert-crl-check",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "This allows a CA  to  revoke  its  own certificates voluntary without the need of putting all ever issued certificates into a CRL.  The disable option may be used to switch this  extra  check  off.  Due to the caching done by the Dirmngr, there will not be any noticeable performance gain.  Note, that this also disables possible OCSP checks for trusted root certificates.  A more specific way of disabling this check is by adding the ``re‐ lax'' keyword to the root CA line of the ‘trustlist.txt’",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--dump-cert.",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "This allows a CA to revoke its own cer‐ tificates voluntary without the need of putting all ever issued certificates into a CRL.  The disable option may  be  used  to  switch this  extra  check  off.   Due to the caching done by the Dirmngr, there will not be any noticeable performance gain.  Note, that this also disables possible OCSP checks for trusted root certificates.  A more specific way of disabling this check is by adding the  ``re‐ lax'' keyword to the root CA line of the ‘trustlist.txt’",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +278,7 @@
       "long": "--enable-issuer-based-crl-check",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "This requires that a suitable  LDAP  server  has been  configured  in  Dirmngr  and  that  the CRL can be found using the issuer.  This option reverts to what GnuPG did up to version 2.2.20.  This option is in general not useful.",
+      "description": "This requires that a  suitable  LDAP  server  has been  configured  in  Dirmngr  and  that  the  CRL can be found using the issuer.  This option reverts to what GnuPG did up to version 2.2.20.  This option is in general not useful.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +318,7 @@
       "long": "--extra-digest-algo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "signatures  are  broken in that they announce a different digest algorithm than actually used.  gpgsm uses a one-pass data processing model and thus needs to rely on the announced digest algorithms to properly hash the data.  As a  workaround  this  option may  be used to tell gpgsm to also hash the data using the algorithm name; this slows processing down a little bit but allows verifi‐ cation of such broken signatures.  If gpgsm prints an error like ``digest algo 8 has not been enabled'' you may want to try this  op‐ tion, with ‘SHA256’ for name.",
+      "description": "gpgsm  uses  a  one-pass  data processing model and thus needs to rely on the announced digest algorithms to properly hash the data.  As a workaround this option may be  used to tell gpgsm to also hash the data using the algorithm name; this slows processing down a little bit but allows verification of such broken signatures.  If gpgsm prints an error like ``digest algo 8 has not been enabled'' you may want to try this option, with ‘SHA256’ for name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +328,7 @@
       "long": "--faked-system-time",
       "value_type": "String",
       "takes_value": true,
-      "description": "elapsed  since the year 1970.  Alternatively epoch may be given as a full ISO time string (e.g. \"20070924T154812\").",
+      "description": "seconds  elapsed  since the year 1970.  Alternatively epoch may be given as a full ISO time string (e.g. \"20070924T154812\").",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +338,7 @@
       "long": "--force-crl-refresh",
       "value_type": "File",
       "takes_value": true,
-      "description": "For better performance, the dirmngr will actually optimize this by  suppressing the loading for short time intervals (e.g. 30 minutes). This option is useful to make sure that a fresh CRL is available for certifi‐ cates  hold  in the keybox.  The suggested way of doing this is by using it along with the option --with-validation for a key listing command.  This option should not be used in a configuration file.",
+      "description": "the  dirmngr to reload the CRL for each request.  For better performance, the dirmngr will actually optimize this by suppressing the loading for short time intervals (e.g. 30 minutes). This option is useful to make sure that a fresh CRL is available for  certifi‐ cates  hold  in  the keybox.  The suggested way of doing this is by using it along with the option --with-validation for a key listing command.  This option should not be used in a configuration file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +348,7 @@
       "long": "--homedir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It is only  recog‐ nized  when  given  on the command line.  It also overrides any home directory stated through the environment variable ‘GNUPGHOME’ or (on Windows systems) by means of the Registry entry HKCU\\Software\\GNU\\GnuPG:HomeDir.",
+      "description": "the  name of the home directory to dir. If this option is not used, the home directory defaults to ‘~/.gnupg’.  It is only recog‐ nized when given on the command line.  It also overrides any home directory stated through the environment variable ‘GNUPGHOME’ or (on Windows systems) by means of the Registry entry HKCU\\Software\\GNU\\GnuPG:HomeDir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +358,7 @@
       "long": "--ignore-cert-extension",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The oid is expected to be in dotted decimal form, like 2.5.29.3.  This option may  be used more than once.  Critical flagged certificate extensions matching one of the OIDs in the list are treated as if they are actually handled and thus the certificate will not be rejected due to an unknown critical extension.  Use this option with  care  be‐ cause extensions are usually flagged as critical for a reason.",
+      "description": "The oid is expected to be in dotted decimal form, like 2.5.29.3.  This  option may  be  used more than once.  Critical flagged certificate extensions matching one of the OIDs in the list are treated as if they are actually handled and thus the certificate will not be rejected due to an unknown critical extension.  Use this option  with  care  be‐ cause extensions are usually flagged as critical for a reason.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +368,7 @@
       "long": "--ignore-cert-with-oid",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "oid  to  the  list of OIDs to be checked while reading certificates from smartcards. The oid is expected to be in dotted decimal form, like 2.5.29.3.  This option may be used more than once.  As of now certificates with an extended  key  usage  matching  one  of those  OIDs  are ignored during a --learn-card operation and not imported.  This option can help to keep the local key database clear of unneeded certificates stored on smartcards.",
+      "description": "to  be  in  dotted  decimal form, like 2.5.29.3.  This option may be used more than once.  As of now certificates with an extended key usage matching one of those OIDs  are  ignored during a --learn-card operation and not imported.  This option can help to keep the local key database clear of un‐ needed certificates stored on smartcards.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +378,7 @@
       "long": "--include-certs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default is -2.",
+      "description": "only the signers cert and all other positive values include up to n certificates starting with the signer cert.  The default is -2.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +388,7 @@
       "long": "--input-size-hint",
       "value_type": "Number",
       "takes_value": true,
-      "description": "option  can be used to tell GPGSM the size of the input data in bytes.  n must be a positive base-10 number.  It is used by the",
+      "description": "option  can  be used to tell GPGSM the size of the input data in bytes.  n must be a positive base-10 number.  It is used by the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +398,7 @@
       "long": "--keyserver",
       "value_type": "String",
       "takes_value": true,
-      "description": "It was used to add an LDAP server to use for X.509 certificate and CRL lookup.  The alias  --ldapserver existed from version 2.2.28 to 2.2.33 and 2.3.2 to 2.3.4 but is now entirely ignored.",
+      "description": "It was used to add an LDAP server to use for X.509 certificate and CRL lookup.  The  alias  --ldapserver existed from version 2.2.28 to 2.2.33 and 2.3.2 to 2.3.4 but is now entirely ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +438,7 @@
       "long": "--min-rsa-length",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  adjusts the compliance mode \"de-vs\" for stricter key size requirements.  For example, a value of 3000 turns rsa2048 and dsa2048 keys into non-VS-NfD compliant keys.",
+      "description": "For example, a value of 3000  turns  rsa2048  and dsa2048 keys into non-VS-NfD compliant keys.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +448,7 @@
       "long": "--no-autostart",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  start the gpg-agent or the dirmngr if it has not yet been started and its service is required.  This option is mostly useful on machines where the connection to gpg-agent has been redirected to another machines.  If dirmngr is required on the remote machine, it may be started manually using gpgconf --launch dirmngr.",
+      "description": "This option is mostly useful on machines where the connection to gpg-agent has been redirected to another machines.  If dirmngr is required on the remote machine,  it may be started manually using gpgconf --launch dirmngr.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +468,7 @@
       "long": "--no-pretty-dn",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "of  the  parts).  However, this format can't be used as input strings.  This option reverts printing to standard RFC-2253 format and thus avoids the need to use --dump-cert or --with-colons to get the ``real'' name.",
+      "description": "default gpgsm prints distinguished names (DNs) like the Issuer or Subject in a more readable format (e.g. using a well defined or‐ der of the parts).  However, this format can't be used as input strings.  This option reverts printing to standard RFC-2253 format and thus avoids the need to use --dump-cert or --with-colons to get the ``real'' name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +488,7 @@
       "long": "--options",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "configuration  from  file  instead  of  from the default per-user configuration file.  The default configuration file is named ‘gpgsm.conf’ and expected in the ‘.gnupg’ directory directly below the home directory of the user.",
+      "description": "file.   The  default  configuration  file  is  named ‘gpgsm.conf’ and expected in the ‘.gnupg’ directory directly below the home directory of the user.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +508,7 @@
       "long": "--p12-charset",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option may be used to force the passphrase to be en‐ coded in the specified encoding name.  This is useful if the application used to import the key uses a different  encoding  and  thus will  not  be  able to import a file generated by gpgsm.  Commonly used values for name are Latin1 and CP850.  Note that gpgsm itself automagically imports any file with a passphrase encoded to the most commonly used encodings.",
+      "description": "This option may be used to force the passphrase to be  en‐ coded  in  the  specified  encoding name.  This is useful if the application used to import the key uses a different encoding and thus will not be able to import a file generated by gpgsm.  Commonly used values for name are Latin1 and CP850.  Note that gpgsm itself au‐ tomagically imports any file with a passphrase encoded to the most commonly used encodings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +518,7 @@
       "long": "--passphrase-fd",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  passphrase  from  file  descriptor  n.  Only  the  first line will be read from file descriptor n. If you use 0 for n, the passphrase will be read from STDIN. This can only be used if only one passphrase is supplied.",
+      "description": "the  passphrase  from  file  descriptor  n.  Only  the  first  line will be read from file descriptor n. If you use 0 for n, the passphrase will be read from STDIN. This can only be used if only one passphrase is supplied.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -578,7 +568,7 @@
       "long": "--request-origin",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "gpgsm  to  assume that the operation ultimately originated at origin.  Depending on the origin certain restrictions are applied and the Pinentry may include an extra note on the origin.  Supported values for origin are: local which is the default, remote to in‐ dicate a remote origin or browser for an operation requested by a web browser.",
+      "description": "Depending on the origin certain restrictions are applied and the Pinentry may include an extra note on the origin.  Supported values for origin are: local which is the default, remote to indicate a remote origin or browser for an operation requested by a web browser.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -588,7 +578,7 @@
       "long": "--require-compliance",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "sta‐ tus lines.  This is allows frontends to handle compliance check in a more flexible way.  However, for scripted use the required eval‐ uation  of the status-line requires quite some effort; this option can be used instead to make sure that the gpgsm process exits with a failure if the compliance rules are not fulfilled.  Note that this option has currently an effect only in \"de-vs\" mode.",
+      "description": "This is allows frontends to handle compliance check in a more flexible way.  However, for scripted use the required evaluation of  the status-line requires quite some effort; this option can be used instead to make sure that the gpgsm process exits with a fail‐ ure if the compliance rules are not fulfilled.  Note that this option has currently an effect only in \"de-vs\" mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -608,7 +598,7 @@
       "long": "--validation-model",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option changes the default validation model.  The only possible values are \"shell\" (which is the default), \"chain\" which forces the use of the chain model and \"steed\" for a new simplified model.  The chain model is also used if an option in the  ‘trustlist.txt’ or an attribute of the certificate requests it.  However the standard model (shell) is in that case always tried first.",
+      "description": "The only possible values are \"shell\" (which is the default), \"chain\"  which  forces the  use  of the chain model and \"steed\" for a new simplified model.  The chain model is also used if an option in the ‘trustlist.txt’ or an attribute of the certificate requests it.  However the standard model (shell) is in that case always tried first.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,7 +608,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "additional  information  while running.  You can increase the verbosity by giving several verbose commands to gpgsm, such as ‘-vv’.",
+      "description": "additional  information  while  running.  You can increase the verbosity by giving several verbose commands to gpgsm, such as ‘-vv’.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -628,7 +618,7 @@
       "long": "--with-ephemeral-keys",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ephemeral  flagged  keys  in  the output of key listings.  Note that they are included anyway if the key specification for a listing is given as fingerprint or keygrip.",
+      "description": "Note that they are included anyway if the key specification for a list‐ ing is given as fingerprint or keygrip.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -638,7 +628,7 @@
       "long": "--with-key-data",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "extra  information with the --list-keys commands.  Especially a line tagged grp is printed which tells you the keygrip of a key.  This string is for example used as the file name of the secret key.  Implies --with-colons.",
+      "description": "extra  information  with the --list-keys commands.  Especially a line tagged grp is printed which tells you the keygrip of a key.  This string is for example used as the file name of the secret key.  Implies --with-colons.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -678,7 +668,7 @@
       "long": "--with-validation",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is usually a slow operation because  it requires a CRL lookup and other operations.",
+      "description": "This is usually a slow operation  because  it requires a CRL lookup and other operations.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -736,20 +726,6 @@
   ],
   "subcommands": [],
   "positional": [
-    {
-      "name": "--homedir",
-      "value_type": "Directory",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--options",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "dir",
       "value_type": "Directory",

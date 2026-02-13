@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0.0",
   "command": "mii-tool",
-  "description": "MII-TOOL(8) Linux System Administrator's Manual MII-TOOL(8)",
+  "description": null,
   "global_flags": [
     {
       "short": "-A",
       "long": "--advertise",
       "value_type": "String",
       "takes_value": true,
-      "description": "Multiple technologies should  be  separated by commas.  Valid media are 100baseT4, 100baseTx-FD, 100baseTx-HD, 10baseT-FD, and 10baseT-HD.",
-      "multiple": false,
+      "description": "advertise only specified media",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -18,7 +18,7 @@
       "long": "--force",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "force specified media technology",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-l",
       "long": "--log",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "with -w, write events to syslog",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--phy",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "set PHY (MII address) to report",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-R",
       "long": "--reset",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "reset MII to poweron state",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +56,9 @@
     {
       "short": "-r",
       "long": "--restart",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "restart autonegotiation",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-v",
       "long": "--verbose",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "If used twice, also display raw MII register contents. Alert:  If  used three times, will force reading all MII registers, including non standard ones. It's not guaranteed any valid answer from PHY while PHY communication can even hang.  With driver e1000e will fail while reading register 0x07.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "more verbose output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display version information",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-w",
       "long": "--watch",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "The MII interfaces are polled at one second intervals.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "monitor for link status changes",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -97,51 +97,16 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "-a",
+      "name": "MII",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "-f",
+      "name": "PHY",
       "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-l",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-p",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-r",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-v",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-w",
-      "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
@@ -151,9 +116,16 @@
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "media",
+      "value_type": "String",
+      "required": true,
+      "multiple": true,
+      "description": null
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "source": "HelpCommand",
+  "confidence": 0.85,
   "version": null
 }

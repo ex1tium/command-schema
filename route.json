@@ -8,7 +8,7 @@
       "long": "--help",
       "value_type": "String",
       "takes_value": true,
-      "description": "as  an alias for -A inet",
+      "description": "-4  as  an alias for -A inet",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use netstat(8)-format for displaying the routing table.  -ee will generate a very long line with all parameters from the routing  ta‐ ble.",
+      "description": "use netstat(8)-format for displaying the routing table.  -ee will generate a very long line with all parameters from the  routing  ta‐ ble.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show  numerical  addresses  instead of trying to determine symbolic host names. This is useful if you are trying to determine why the route to your nameserver has vanished.",
+      "description": "show  numerical  addresses  instead  of trying to determine symbolic host names. This is useful if you are trying to determine why the route to your nameserver has vanished.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -124,64 +124,305 @@
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
-    {
-      "name": "--help",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--version",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-a",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-cfvnnee",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-h",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-v",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
+  "subcommands": [
     {
       "name": "add",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": null,
+      "flags": [
+        {
+          "short": "-C",
+          "long": "--cache",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display routing cache instead of FIB",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--extend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display other/more information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--fib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display Forwarding Information Base (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--numeric",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't resolve names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "AF",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "AF.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "del",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": null,
+      "flags": [
+        {
+          "short": "-C",
+          "long": "--cache",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display routing cache instead of FIB",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--extend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display other/more information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--fib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display Forwarding Information Base (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--numeric",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't resolve names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "AF",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "AF.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
+    {
+      "name": "family",
+      "description": null,
+      "flags": [
+        {
+          "short": "-C",
+          "long": "--cache",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display routing cache instead of FIB",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--extend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display other/more information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--fib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display Forwarding Information Base (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--numeric",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't resolve names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "AF",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "AF.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "target",
+      "description": null,
+      "flags": [
+        {
+          "short": "-C",
+          "long": "--cache",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display routing cache instead of FIB",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--extend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display other/more information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--fib",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display Forwarding Information Base (default)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--numeric",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't resolve names",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "be verbose",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "AF",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "AF.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
     {
       "name": "dev",
       "value_type": "String",
@@ -193,13 +434,6 @@
       "name": "dyn",
       "value_type": "String",
       "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "family",
-      "value_type": "String",
-      "required": true,
       "multiple": false,
       "description": null
     },
@@ -295,13 +529,6 @@
       "description": null
     },
     {
-      "name": "target",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "w",
       "value_type": "String",
       "required": true,
@@ -317,6 +544,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

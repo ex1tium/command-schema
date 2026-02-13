@@ -58,7 +58,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  available  encodings,  one per line, in case-insensitive order.  Note that only the canonical names are listed; many aliases exist.  For example, the names are case-insensitive, and many standard and common aliases work, such as \"latin1\"  for  \"ISO-8859-1\",  or \"ibm850\" instead of \"cp850\", or \"winlatin1\" for \"cp1252\".  See Encode::Supported for a full discussion.",
+      "description": "all  available  encodings,  one  per line, in case-insensitive order.  Note that only the canonical names are listed; many aliases exist.  For example, the names are case-insensitive, and many standard and common aliases work, such as  \"latin1\"  for  \"ISO-8859-1\",  or \"ibm850\" instead of \"cp850\", or \"winlatin1\" for \"cp1252\".  See Encode::Supported for a full discussion.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -134,59 +134,368 @@
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
-    {
-      "name": "-c",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-d",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-f",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-s",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-t",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "encoding_alias",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
+  "subcommands": [
     {
       "name": "from_encoding",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "piconv -r encoding_alias",
+      "flags": [
+        {
+          "short": "-D",
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--htmlcref",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to &#NNN; where NNN is the decimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--perlqq",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to \\x{HHHH} where HHHH is the hexadecimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--resolve",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--scheme",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the scheme for conversion",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--string",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--to",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--xmlcref",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to &#xHHHH; where HHHH is the hexadecimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "check the validity of the input",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "n",
+      "description": "piconv -r encoding_alias",
+      "flags": [
+        {
+          "short": "-D",
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--htmlcref",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to &#NNN; where NNN is the decimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--perlqq",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to \\x{HHHH} where HHHH is the hexadecimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--resolve",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--scheme",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the scheme for conversion",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--string",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--to",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--xmlcref",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to &#xHHHH; where HHHH is the hexadecimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "check the validity of the input",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "scheme",
+      "description": "piconv -r encoding_alias",
+      "flags": [
+        {
+          "short": "-D",
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--from",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--htmlcref",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to &#NNN; where NNN is the decimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--perlqq",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to \\x{HHHH} where HHHH is the hexadecimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--resolve",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--scheme",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "use the scheme for conversion",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--string",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--to",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--xmlcref",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "transliterate characters missing in encoding to &#xHHHH; where HHHH is the hexadecimal Unicode code point",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "check the validity of the input",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "encoding_alias",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -201,6 +510,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

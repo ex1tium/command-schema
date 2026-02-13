@@ -8,7 +8,7 @@
       "long": "--disable-deterministic-archives",
       "value_type": "File",
       "takes_value": true,
-      "description": "This is the inverse of the -D option, above: when copying archive members and writing the archive index, use their actual UID, GID, timestamp, and file mode values.",
+      "description": "not operate in deterministic mode.  This is the inverse of the -D option, above: when copying archive members and writing the archive index, use their actual UID, GID, timestamp, and file mode values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--enable-deterministic-archives",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When copying archive members and writing the archive index, use zero for UIDs, GIDs, timestamps, and use consistent file modes for all files.",
+      "description": "When copying archive members and writing the archive index, use zero for UIDs, GIDs, timestamps, and  use consistent file modes for all files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--keep-file-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "stripping  a  file,  perhaps  with --strip-debug or --strip-unneeded, retain any symbols specifying source file names, which would otherwise get stripped.",
+      "description": "specifying  source  file  names,  which  would otherwise get stripped.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--keep-section-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "--strip-unneeded,  retain  any  symbols  specifying  section  names,  which  would otherwise get stripped.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--no-merge-notes",
       "value_type": "String",
       "takes_value": true,
-      "description": "The default is to attempt this reduction unless stripping debug or DWO information.",
+      "description": "The default  is to attempt this reduction unless stripping debug or DWO information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--only-keep-debug",
       "value_type": "File",
       "takes_value": true,
-      "description": "--strip-debug  and  leaving  the  debugging  sections intact.  In ELF files, this preserves all the note sections in the output as well.",
+      "description": "a  file,  emptying  the  contents  of  any sections that would not be stripped by --strip-debug and leaving the debugging sections intact.  In ELF files, this preserves all the note sections in the output as well.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--remove-relocations",
       "value_type": "File",
       "takes_value": true,
-      "description": "relocations  from  the output file for any section matching sectionpattern.  This option may be given more than once.  Note that using this option inappropriately may make the output file unusable.  Wildcard characters are accepted in sectionpattern.  For example:",
+      "description": "relocations  from  the  output file for any section matching sectionpattern.  This option may be given more than once.  Note that using this option inappropriately may make the output file unusable.  Wildcard characters are accepted in sectionpattern.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--remove-section",
       "value_type": "File",
       "takes_value": true,
-      "description": "This option may be  given  more than once.  Note that using this option inappropriately may make the output file unusable.  The wildcard character * may be given at the end of sectionname.  If so, then any section starting with sectionname will be removed.",
+      "description": "any section named sectionname from the output file, in addition to whatever sections would otherwise be removed.  This option may be given more than once.  Note that using this option inappropriately may make the output file unusable.  The wildcard character * may be given at the end of sectionname.  If so, then any section starting with sectionname will be removed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -215,20 +215,10 @@
     },
     {
       "short": null,
-      "long": "--strip-debug.",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--strip-dwo",
       "value_type": "String",
       "takes_value": true,
-      "description": "See the description of this option in the objcopy section for more information.",
+      "description": "the contents of all DWARF .dwo sections, leaving the remaining debugging sections and all symbols intact.  See the description of this option in the objcopy section for more information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,9 +236,9 @@
     {
       "short": null,
       "long": "--strip-symbol",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "symbol  symbolname  from  the source file. This option may be given more than once, and may be combined with strip options other than -K.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +248,7 @@
       "long": "--strip-unneeded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  needed  for  relocation  processing  in  addition  to  debugging  symbols  and  sections  stripped  by",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +288,7 @@
       "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The question mark (?), asterisk (*),  backslash  (\\)  and square  brackets  ([])  operators can be used anywhere in the symbol name.  If the first character of the symbol name is the exclamation point (!) then the sense of the switch is reversed for that symbol.  For example:",
+      "description": "The question mark (?), asterisk  (*),  backslash  (\\)  and square  brackets  ([])  operators  can be used anywhere in the symbol name.  If the first character of the symbol name is the exclamation point (!) then the sense of the switch is reversed for that symbol.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,6 +328,16 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-K.",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -448,7 +448,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When this argument is used, only one objfile argument may  be specified.",
+      "description": "the  stripped output in file, rather than replacing the existing file.  When this argument is used, only one objfile argument may be specified.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -504,136 +504,1238 @@
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
-    {
-      "name": "--help",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--info",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--keep-file-symbols",
-      "value_type": "File",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--keep-section-symbols",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--only-keep-debug",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--strip-dwo",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--strip-section-headers",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-f",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-i",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-k",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-n",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-o",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-r",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-v",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-x",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
+  "subcommands": [
     {
       "name": "bfdname",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Removes symbols and sections from files",
+      "flags": [
+        {
+          "short": "-U",
+          "long": "--disable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--discard-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all non-global symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": "--discard-locals",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove any compiler-generated symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--enable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--info",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List object formats & architectures supported",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": "--input-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Assume input file is in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-file-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip file symbol(s)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip section symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": "--keep-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not attempt to remove redundant notes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--only-keep-debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip everything but the debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--output-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create an output file in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--preserve-dates",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Copy modified/access timestamps to the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-relocations",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Remove relocations from section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--remove-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Also remove section <name> from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strip-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbol and relocation information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-dwo",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all DWO sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-section-headers",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip section headers from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--strip-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not copy symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-unneeded",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbols not needed by relocations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Set both input and output format to <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all object files modified",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this program's version number",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--wildcard",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Permit wildcard in symbol comparison",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all debugging symbols & sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Place stripped output into <file>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "x86_64-linux-gnu-strip",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "objfile",
+      "description": "Removes symbols and sections from files",
+      "flags": [
+        {
+          "short": "-U",
+          "long": "--disable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--discard-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all non-global symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": "--discard-locals",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove any compiler-generated symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--enable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--info",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List object formats & architectures supported",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": "--input-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Assume input file is in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-file-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip file symbol(s)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip section symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": "--keep-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not attempt to remove redundant notes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--only-keep-debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip everything but the debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--output-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create an output file in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--preserve-dates",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Copy modified/access timestamps to the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-relocations",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Remove relocations from section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--remove-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Also remove section <name> from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strip-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbol and relocation information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-dwo",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all DWO sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-section-headers",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip section headers from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--strip-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not copy symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-unneeded",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbols not needed by relocations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Set both input and output format to <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all object files modified",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this program's version number",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--wildcard",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Permit wildcard in symbol comparison",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all debugging symbols & sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Place stripped output into <file>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "x86_64-linux-gnu-strip",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "sectionname",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Removes symbols and sections from files",
+      "flags": [
+        {
+          "short": "-U",
+          "long": "--disable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--discard-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all non-global symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": "--discard-locals",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove any compiler-generated symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--enable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--info",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List object formats & architectures supported",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": "--input-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Assume input file is in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-file-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip file symbol(s)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip section symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": "--keep-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not attempt to remove redundant notes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--only-keep-debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip everything but the debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--output-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create an output file in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--preserve-dates",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Copy modified/access timestamps to the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-relocations",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Remove relocations from section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--remove-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Also remove section <name> from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strip-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbol and relocation information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-dwo",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all DWO sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-section-headers",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip section headers from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--strip-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not copy symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-unneeded",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbols not needed by relocations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Set both input and output format to <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all object files modified",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this program's version number",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--wildcard",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Permit wildcard in symbol comparison",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all debugging symbols & sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Place stripped output into <file>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "x86_64-linux-gnu-strip",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "symbolname",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Removes symbols and sections from files",
+      "flags": [
+        {
+          "short": "-U",
+          "long": "--disable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--discard-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all non-global symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": "--discard-locals",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove any compiler-generated symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": "--enable-deterministic-archives",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--info",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List object formats & architectures supported",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": "--input-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Assume input file is in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-file-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip file symbol(s)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--keep-section-symbols",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not strip section symbols",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": "--keep-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not strip symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-merge-notes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not attempt to remove redundant notes",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--only-keep-debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip everything but the debug information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--output-target",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Create an output file in format <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--preserve-dates",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Copy modified/access timestamps to the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remove-relocations",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Remove relocations from section <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--remove-section",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Also remove section <name> from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--strip-all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbol and relocation information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-dwo",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all DWO sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-section-headers",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Strip section headers from the output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--strip-symbol",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Do not copy symbol <name>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--strip-unneeded",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all symbols not needed by relocations",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--target",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Set both input and output format to <bfdname>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List all object files modified",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display this program's version number",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--wildcard",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Permit wildcard in symbol comparison",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Remove all debugging symbols & sections",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Place stripped output into <file>",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "x86_64-linux-gnu-strip",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     }
   ],
+  "positional": [],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

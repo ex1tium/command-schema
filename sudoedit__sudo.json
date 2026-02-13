@@ -8,7 +8,7 @@
       "long": "--askpass",
       "value_type": "File",
       "takes_value": true,
-      "description": "If the -A (askpass) option is specified, a (possi‐ bly  graphical)  helper  program  is  executed  to  read the user's password and output the password to the standard output.  If the SUDO_ASKPASS environment variable is set, it specifies the path to the helper program.  Otherwise, if sudo.conf(5) contains  a  line specifying the askpass program, that value will be used.  For example:",
+      "description": "If the -A (askpass) option is specified, a  (possi‐ bly  graphical)  helper  program  is  executed  to  read  the user's password and output the password to the standard output.  If the SUDO_ASKPASS environment variable is set, it specifies the path to the helper program.  Otherwise, if sudo.conf(5)  contains  a  line specifying the askpass program, that value will be used.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--background",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the given command in the background.  It is not possible to use shell job control to manipulate background processes started by sudo.  Most interactive commands will fail to work properly in background mode.",
+      "description": "the  given command in the background.  It is not possible to use shell job control to manipulate background processes started by sudo.  Most interactive commands will fail to work properly in background mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--chdir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "The security policy may return an error if the user does not have permission to specify the working directory.",
+      "description": "the command in the specified directory instead of the current working directory.  The security policy may return an error if the user does not have permission to specify the working directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--chroot",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "to  the specified root directory (see chroot(8)) before running the command.  The security policy may return an error if the user does not have permission to specify the root directory.",
+      "description": "to  the  specified root directory (see chroot(8)) before running the command.  The security policy may return an error if the user does not have permission to specify the root directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--close-from",
       "value_type": "File",
       "takes_value": true,
-      "description": "Values less than three are not  permitted.   By default,  sudo  will close all open file descriptors other than standard input, standard output, and standard error when executing a command.  The security policy may restrict the user's ability to use this option.  The sudoers policy only permits use of the -C op‐ tion when the administrator has enabled the closefrom_override option.",
+      "description": "Values less than three are  not  permitted.   By default,  sudo  will  close all open file descriptors other than standard input, standard output, and standard error when executing a command.  The security policy may restrict the user's ability to use this option.  The sudoers policy only permits use of the -C  op‐ tion when the administrator has enabled the closefrom_override option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--command-timeout",
       "value_type": "String",
       "takes_value": true,
-      "description": "If the timeout expires before the command has exited, the command will be  terminated.   The security  policy  may  restrict the user's ability to set timeouts.  The sudoers policy requires that user-specified timeouts be ex‐ plicitly enabled.",
+      "description": "If the timeout expires before the command has exited, the command will  be  terminated.   The security policy may restrict the user's ability to set timeouts.  The sudoers policy requires that user-specified timeouts be explic‐ itly enabled.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--edit",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "In lieu of a path name, the string \"sudoedit\" is used when consulting the  se‐ curity policy.  If the user is authorized by the policy, the following steps are taken:",
+      "description": "In lieu of a path name, the string \"sudoedit\" is used when consulting the secu‐ rity policy.  If the user is authorized by the policy, the following steps are taken:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--group",
       "value_type": "String",
       "takes_value": true,
-      "description": "user's  password  database entry.   The  group  may  be either a group name or a numeric group-ID (GID) prefixed with the ‘#’ character (e.g., ‘#0’ for GID 0). When running a command as a GID, many shells require that the ‘#’ be escaped with a backslash (‘\\’).  If no -u option is  specified, the  command  will be run as the invoking user.  In either case, the primary group will be set to group.  The sudoers policy permits any of the target user's groups to be specified via the -g option as long as the -P option is not in use.",
+      "description": "The group may be either a group name or a numeric group-ID (GID) prefixed with the ‘#’ character (e.g., ‘#0’ for GID 0).   When running  a  command  as a GID, many shells require that the ‘#’ be escaped with a backslash (‘\\’).  If no -u option is specified, the command will be run as the invoking user.  In either case, the primary group will be set to group.  The sudoers policy permits any of the target user's groups to be specified via the -g option as long as the -P option is not in use.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--list",
       "value_type": "String",
       "takes_value": true,
-      "description": "no command is specified, list the privileges for the invoking user (or the user specified by the -U option) on the current host. A longer list format is used if this option is specified multiple times and the security policy supports a verbose output format.",
+      "description": "no  command is specified, list the privileges for the invoking user (or the user specified by the -U option) on the current host. A longer list format is used if this option is specified multiple times and the security policy supports a verbose output format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--login",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  shell  specified  by  the target user's password database entry as a login shell.  This means that login-specific resource files such as .profile, .bash_profile, or .login will be read by the shell.  If a command is specified, it is passed to the shell as a simple command using the -c option.  The command and any args are concatenated, separated by spaces, after escaping each character (including white space) with a backslash (‘\\’) except for alphanumerics, underscores, hyphens, and dollar signs.  If no  command  is specified,  an  interactive shell is executed.  sudo attempts to change to that user's home directory before running the shell.  The command is run with an environment similar to the one a user would receive at log in.  Most shells behave differently when a command is specified as compared to an interactive session; consult the shell's manual for details.  The Command environment section in  the sudoers(5) manual documents how the -i option affects the environment in which a command is run when the sudoers policy is in use.",
+      "description": "This means that login-specific resource files such as .profile, .bash_profile, or .login will be read by the shell.  If a command is specified, it is passed to the shell as a sim‐ ple  command  using  the  -c  option.   The command and any args are concatenated, separated by spaces, after escaping each character (including white space) with a backslash (‘\\’) except for alphanumerics, underscores, hyphens, and dollar signs.  If  no  command  is specified,  an  interactive  shell is executed.  sudo attempts to change to that user's home directory before running the shell.  The command is run with an environment similar to the one a user would receive at log in.  Most shells behave differently when a  command is  specified  as compared to an interactive session; consult the shell's manual for details.  The Command environment section in the sudoers(5) manual documents how the -i option affects the environment in which a command is run when the sudoers policy is in use.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--no-update",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not update the user's cached credentials, even if the user successfully authenticates.  Unlike the -k flag, existing cached cre‐ dentials are used if they are valid.  To detect when the user's cached credentials are valid  (or  when  no  authentication  is  re‐ quired), the following can be used:",
+      "description": "not  update the user's cached credentials, even if the user successfully authenticates.  Unlike the -k flag, existing cached cre‐ dentials are used if they are valid.  To detect when the user's cached credentials are valid (or when no authentication is required), the following can be used:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--non-interactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prompting  the user for input of any kind.  If a password is required for the command to run, sudo will display an error mes‐ sage and exit.",
+      "description": "If a password is required for the command to run, sudo will display an error message and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--other-user",
       "value_type": "String",
       "takes_value": true,
-      "description": "The  security  policy  may restrict  listing  other  users'  privileges.  When using the sudoers policy, the -U option is restricted to the root user and users with either the “list” priviege for the specified user or the ability to run any command as root or user on the current host.",
+      "description": "The security policy may re‐ strict  listing  other users' privileges.  When using the sudoers policy, the -U option is restricted to the root user and users with either the “list” priviege for the specified user or the ability to run any command as root or user on the current host.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--preserve-env",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The security policy may re‐ turn an error if the user does not have permission to preserve the environment.",
+      "description": "The security policy may  re‐ turn an error if the user does not have permission to preserve the environment.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--preserve-groups",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "By default, the sudoers policy will initialize the group vector to the list of groups the target user is a member of.  The real and effective group-IDs, however, are still set to match the target user.",
+      "description": "By default, the sudoers policy will initialize the group vector to the list  of groups the target user is a member of.  The real and effective group-IDs, however, are still set to match the target user.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--prompt",
       "value_type": "String",
       "takes_value": true,
-      "description": "The following percent (‘%’) escape  sequences  are  supported  by  the sudoers policy:",
+      "description": "a  custom  password  prompt  with  optional escape sequences.  The following percent (‘%’) escape sequences are supported by the sudoers policy:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,19 +188,17 @@
       "long": "--remove-timestamp",
       "value_type": "String",
       "takes_value": true,
-      "description": "to the -k option, except that it removes every cached credential for the user, regardless of the terminal or parent process ID.  The next time sudo is run, a password must be entered if the security policy requires authentication.  It is  not  possible  to use  the  -K option in conjunction with a command or other option.  This option does not require a password.  Not all security poli‐ cies support credential caching.",
+      "description": "parent  process ID.  The next time sudo is run, a password must be entered if the security policy requires authentication.  It is not possible to use the  -K  option  in  conjunction with a command or other option.  This option does not require a password.  Not all security policies support credential caching.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "-k"
-      ]
+      "requires": []
     },
     {
       "short": "-k",
       "long": "--reset-timestamp",
       "value_type": "File",
       "takes_value": true,
-      "description": "The next time sudo is  run  in  the session,  a password must be entered if the security policy requires authentication.  By default, the sudoers policy uses a separate record in the credential cache for each terminal (or parent process ID if no terminal is present).  This prevents the -k option from interfering with sudo commands run in a different terminal session.  See the timestamp_type option in sudoers(5) for  more  informa‐ tion.  This option does not require a password, and was added to allow a user to revoke sudo permissions from a .logout file.",
+      "description": "The next time sudo  is  run  in  the session,  a  password must be entered if the security policy requires authentication.  By default, the sudoers policy uses a separate record in the credential cache for each terminal (or parent process ID if no terminal is present).  This prevents the -k option  from interfering  with  sudo  commands run in a different terminal session.  See the timestamp_type option in sudoers(5) for more informa‐ tion.  This option does not require a password, and was added to allow a user to revoke sudo permissions from a .logout file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -220,7 +218,7 @@
       "long": "--set-home",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  target  user's  password database entry.  Depending on the policy, this may be the default behavior.",
+      "description": "by  the  target  user's  password database entry.  Depending on the policy, this may be the default behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -230,7 +228,7 @@
       "long": "--shell",
       "value_type": "String",
       "takes_value": true,
-      "description": "data‐ base entry.  If a command is specified, it is passed to the shell as a simple command using the -c option.  The command and any args are  concatenated,  separated by spaces, after escaping each character (including white space) with a backslash (‘\\’) except for al‐ phanumerics, underscores, hyphens, and dollar signs.  If no command is specified, an interactive shell is executed.  Most shells be‐ have differently when a command is specified as compared to an interactive session; consult the shell's manual for details.",
+      "description": "password  data‐ base  entry.  If a command is specified, it is passed to the shell as a simple command using the -c option.  The command and any args are concatenated, separated by spaces, after escaping each character (including white space) with a backslash (‘\\’)  except  for  al‐ phanumerics,  underscores, hyphens, and dollar signs.  If no command is specified, an interactive shell is executed.  Most shells be‐ have differently when a command is specified as compared to an interactive session; consult the shell's manual for details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -250,7 +248,7 @@
       "long": "--type",
       "value_type": "String",
       "takes_value": true,
-      "description": "If no type is specified, the default type is de‐ rived from the role.",
+      "description": "If no type is specified, the default type is  de‐ rived from the role.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -260,7 +258,7 @@
       "long": "--user",
       "value_type": "String",
       "takes_value": true,
-      "description": "The user may be either a user name or a numeric  user- ID  (UID)  prefixed with the ‘#’ character (e.g., ‘#0’ for UID 0).  When running commands as a UID, many shells require that the ‘#’ be escaped with a backslash (‘\\’).  Some security policies may restrict UIDs to those listed in the password database.  The  sudoers policy allows UIDs that are not in the password database as long as the targetpw option is not set.  Other security policies may not support this.",
+      "description": "The user may be either a user name or a numeric user-ID (UID)  prefixed  with  the ‘#’ character (e.g., ‘#0’ for UID 0).  When running commands as a UID, many shells require that the ‘#’ be escaped with a backslash (‘\\’).  Some security policies may restrict UIDs to those listed in the password database.  The sudoers pol‐ icy allows UIDs that are not in the password database as long as the targetpw option is not set.  Other  security  policies  may  not support this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -270,7 +268,7 @@
       "long": "--validate",
       "value_type": "String",
       "takes_value": true,
-      "description": "For the sudoers plugin, this extends the  sudo  timeout for another 15 minutes by default, but does not run a command.  Not all security policies support cached credentials.",
+      "description": "the  user's  cached credentials, authenticating the user if necessary.  For the sudoers plugin, this extends the sudo timeout for another 15 minutes by default, but does not run a command.  Not all security policies support cached credentials.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -280,7 +278,7 @@
       "long": "--version",
       "value_type": "String",
       "takes_value": true,
-      "description": "If the invoking user is already root, the -V option  will display the options passed to configure when sudo was built; plugins may display additional information such as default options.",
+      "description": "the sudo version string as well as the version string of any configured plugins.  If the invoking user is already root, the -V option will display the options passed to configure when sudo was built; plugins may display additional information such  as  default options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,95 +304,20 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "group",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
-    {
-      "name": "-abbehnps",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-abknns",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-c",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-d",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-g",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-h",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-i",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-p",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-r",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-t",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-u",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "directory",
       "value_type": "Directory",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "group",
-      "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
@@ -457,6 +380,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

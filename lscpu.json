@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "lscpu",
-  "description": "LSCPU(1) User Commands LSCPU(1)",
+  "description": "Display information about the CPU architecture.",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print both online and offline CPUs (default for -e)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,14 +18,24 @@
       "long": "--bytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print sizes in bytes rather than in human readable format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-C",
-      "long": "--caches[",
+      "long": "--caches",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "info about caches in extended readable format",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--extended",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -34,11 +44,11 @@
       "requires": []
     },
     {
-      "short": "-e",
-      "long": "--extended[",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,16 +56,16 @@
     {
       "short": "-x",
       "long": "--hex",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print hexadecimal masks rather than lists of CPUs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--hierarchic[",
+      "long": "--hierarchic",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -66,9 +76,9 @@
     {
       "short": "-J",
       "long": "--json",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use JSON for default or extended format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--offline",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print offline CPUs only",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +98,7 @@
       "long": "--online",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print online CPUs only (default for -p)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,17 +108,17 @@
       "long": "--output-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print all available columns for -e, -p or -C",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-p",
-      "long": "--parse[",
+      "long": "--parse",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "print out a parsable format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +126,9 @@
     {
       "short": "-y",
       "long": "--physical",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print physical instead of logical IDs",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,19 +136,19 @@
     {
       "short": "-s",
       "long": "--sysroot",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": null,
+      "description": "use specified directory as system root",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-p.",
-      "long": null,
+      "short": "-V",
+      "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,7 +156,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.8,
   "version": null
 }

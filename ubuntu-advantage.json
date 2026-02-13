@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ubuntu-advantage",
-  "description": "UBUNTU-PRO(1) Ubuntu Pro UBUNTU-PRO(1)",
+  "description": null,
   "global_flags": [
     {
       "short": null,
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "show all debug log messages to console",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-h",
       "long": "--help",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Displays help on pro and command line options",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "show version of pro",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,35 +36,129 @@
   ],
   "subcommands": [
     {
-      "name": "COPYRIGHT",
-      "description": "pro: error: argument <command>: invalid choice: 'COPYRIGHT' (choose from 'api', 'attach', 'auto-attach', 'collect-logs', 'cve', 'cves', 'config', 'detach', 'disable', 'enable', 'fix', 'help', 'refresh', 'security-status', 'status', 'system')",
+      "name": "api",
+      "description": "Calls the Client API endpoints.",
       "flags": [
         {
           "short": null,
-          "long": "--debug",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
+          "long": "--args",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Options to pass to the API endpoint, formatted as key=value",
+          "multiple": true,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
+          "long": "--data",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "arguments in JSON format to the API endpoint",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": "-h",
-          "long": null,
+          "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-progress",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "For endpoints that support progress updates, show each progress update on a new line in JSON format",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "endpoint",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "API endpoint to call"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "attach",
+      "description": "attach this machine to an Ubuntu Pro subscription",
+      "flags": [
+        {
+          "short": null,
+          "long": "--attach-config",
+          "value_type": "File",
+          "takes_value": true,
           "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in the specified format (default: cli)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-auto-enable",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not enable any recommended services automatically",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "token",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "token obtained for Ubuntu Pro authentication"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "auto-attach",
+      "description": "automatically attach on supported platforms",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -75,22 +169,878 @@
       "aliases": []
     },
     {
-      "name": "SERVICES",
-      "description": "pro: error: argument <command>: invalid choice: 'SERVICES' (choose from 'api', 'attach', 'auto-attach', 'collect-logs', 'cve', 'cves', 'config', 'detach', 'disable', 'enable', 'fix', 'help', 'refresh', 'security-status', 'status', 'system')",
+      "name": "collect-logs",
+      "description": "collect Pro logs and debug information",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "OUTPUT",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "config",
+      "description": "manage Ubuntu Pro configuration on this machine",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "set",
+          "description": "Set and apply Ubuntu Pro configuration settings.",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "show this help message and exit",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [
+            {
+              "name": "apt_https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "apt_news",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "apt_news_url",
+              "value_type": "Url",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "global_apt_http_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "global_apt_https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "key_value_pair",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": "key=value pair to configure for Ubuntu Pro services. Key must be one of: http_proxy, https_proxy, apt_http_proxy,"
+            },
+            {
+              "name": "lxd_guest_attach",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "metering_timer",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "ua_apt_http_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "ua_apt_https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "update_messaging_timer",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "vulnerability_data_url_prefix",
+              "value_type": "Url",
+              "required": true,
+              "multiple": false,
+              "description": null
+            }
+          ],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "show",
+          "description": "Show customizable configuration settings.",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "show this help message and exit",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [
+            {
+              "name": "key",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": "Optional key or key(s) to show configuration settings."
+            }
+          ],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "unset",
+          "description": "Unset an Ubuntu Pro configuration setting, restoring the default value.",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "show this help message and exit",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [
+            {
+              "name": "apt_http_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "apt_https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "apt_news",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "apt_news_url",
+              "value_type": "Url",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "global_apt_http_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "global_apt_https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "http_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "key",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": "configuration key to unset from Ubuntu Pro services. One of:"
+            },
+            {
+              "name": "lxd_guest_attach",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "metering_timer",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "ua_apt_http_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "ua_apt_https_proxy",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "update_messaging_timer",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": null
+            },
+            {
+              "name": "vulnerability_data_url_prefix",
+              "value_type": "Url",
+              "required": true,
+              "multiple": false,
+              "description": null
+            }
+          ],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "cve",
+      "description": "show information about a CVE",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "cve",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "CVE to display information. Format: CVE-yyyy-nnnn or CVE-yyyy-"
+        },
+        {
+          "name": "nnnnnnn",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "cves",
+      "description": "list the vulnerabilities that affect the system",
       "flags": [
         {
           "short": null,
-          "long": "--debug",
+          "long": "--fixable",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "List only vulnerabilities with a fix available",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--version",
+          "long": "--unfixable",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List only vulnerabilities without a fix available",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "detach",
+      "description": "remove this machine from an Ubuntu Pro subscription",
+      "flags": [
+        {
+          "short": null,
+          "long": "--assume-yes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not prompt for confirmation before performing the detach",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in the specified format (default: cli)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "disable",
+      "description": "disable a specific Ubuntu Pro service on this machine",
+      "flags": [
+        {
+          "short": null,
+          "long": "--assume-yes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not prompt for confirmation before performing the disable",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in the specified format (default: cli)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--purge",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "disable the service and remove/downgrade related packages (experimental)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "esm-infra",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "esm-infra-legacy",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "fips",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "fips-",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "fips-updates",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "kernel",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "landscape",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "legacy",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "livepatch",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "preview",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "realtime-",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ros",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ros-updates",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "service",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "the name(s) of the Ubuntu Pro services to disable. One of: anbox-cloud, cc-eal, cis, esm-apps, esm-apps-"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "enable",
+      "description": "enable a specific Ubuntu Pro service on this machine",
+      "flags": [
+        {
+          "short": null,
+          "long": "--access-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not auto-install packages. Valid for cc-eal, cis and realtime-kernel.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--assume-yes",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "do not prompt for confirmation before performing the enable",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--auto",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "enable all default services",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--beta",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "allow beta service to be enabled",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "output in the specified format (default: cli)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--variant",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "The name of the variant to use when enabling the service",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "esm-infra",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "esm-infra-legacy",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "fips",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "fips-",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "fips-updates",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "kernel",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "landscape",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "legacy",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "livepatch",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "preview",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "realtime-",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ros",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ros-updates",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "service",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "the name(s) of the Ubuntu Pro services to enable. One of: anbox-cloud, cc-eal, cis, esm-apps, esm-apps-"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "fix",
+      "description": "check for and mitigate the impact of a CVE/USN on this system",
+      "flags": [
+        {
+          "short": null,
+          "long": "--dry-run",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "If used, fix will not actually run but will display everything that will happen on the machine during the command.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-related",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "If used, when fixing a USN, the command will not try to also fix related USNs to the target USN.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "dd",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "security_issue",
+          "value_type": "Url",
+          "required": true,
+          "multiple": false,
+          "description": "Security vulnerability ID to inspect and resolve on this system. Format: CVE-yyyy-nnnn, CVE-yyyy-nnnnnnn or USN-nnnn-"
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "refresh",
+      "description": "refresh Ubuntu Pro services",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "Target",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "refresh.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "to",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "security-status",
+      "description": "list available security updates for the system",
+      "flags": [
+        {
+          "short": null,
+          "long": "--esm-apps",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List and present information about esm-apps packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--esm-infra",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List and present information about esm-infra packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -100,10 +1050,30 @@
         },
         {
           "short": "-h",
-          "long": null,
+          "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--thirdparty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List and present information about third-party packages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--unavailable",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "List and present information about unavailable packages",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -112,32 +1082,116 @@
       "positional": [],
       "subcommands": [],
       "aliases": []
-    }
-  ],
-  "positional": [
-    {
-      "name": "--debug",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
     },
     {
-      "name": "--version",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
+      "name": "status",
+      "description": "current status of all Ubuntu Pro services",
+      "flags": [
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Include unavailable and beta services",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--format",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--simulate-with-token",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--wait",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Block waiting on pro to complete",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "TOKEN",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
     {
-      "name": "-h",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
+      "name": "system",
+      "description": "show system information related to Pro services",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "show this help message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "reboot-required",
+          "description": "does the system need to be rebooted",
+          "flags": [
+            {
+              "short": "-h",
+              "long": "--help",
+              "value_type": "Bool",
+              "takes_value": false,
+              "description": "show this help message and exit",
+              "multiple": false,
+              "conflicts_with": [],
+              "requires": []
+            }
+          ],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.95,
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.7999999999999999,
   "version": null
 }

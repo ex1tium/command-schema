@@ -1,14 +1,34 @@
 {
   "schema_version": "1.0.0",
   "command": "dumpkeys",
-  "description": "DUMPKEYS(1) General Commands Manual DUMPKEYS(1)",
+  "description": null,
   "global_flags": [
+    {
+      "short": "-c",
+      "long": "--charset",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "interpret character action codes to be from the specified character set.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": "-d",
       "long": "--compose-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is available only if your kernel has  com‐ pose key support.",
+      "description": "display only compose key combinations.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": "--console",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "the console device to be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +38,7 @@
       "long": "--full-table",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "form.  First  a keymaps  line describing the currently defined modifier combinations is printed. Then for each key a row with a column for each modi‐ fier combination is printed. For example, if the current keymap in use uses seven modifiers, every row will have  seven  action  code columns. This format can be useful for example to programs that post-process the output of dumpkeys.",
+      "description": "don't use short-hand notations, one row per keycode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +48,7 @@
       "long": "--funcs-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "this  option is given, dumpkeys prints only the function key string definitions. Normally dumpkeys prints both the key bindings and the string definitions.",
+      "description": "display only the function key strings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +58,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print this usage message.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,17 +68,7 @@
       "long": "--keys-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": "--long-info",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "display only key bindings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--numeric",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display keytable in hexadecimal notation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,6 +88,16 @@
       "long": "--separate-lines",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "one line per (modifier,keycode) pair.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--shape",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -88,7 +108,7 @@
       "long": "--short-info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display information about keyboard driver.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +118,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "be more verbose.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,39 +126,19 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print version number.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-Cdev",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "--console=dev The affected console device can be specified using the -C (or --console ) option. This option supports exactly one device name.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Sshape",
+      "short": "-l",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "--shape=shape Available shapes:",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-ccharset",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "--charset=charset This  instructs  dumpkeys to interpret character code values according to the specified character set. This affects only the transla‐ tion of character code values to symbolic names. Valid values for charset currently are iso-8859-X, Where X is a digit in 1-9.  If no charset is specified, iso-8859-1 is used as a default.  This option produces an output line `charset \"iso-8859-X\"', telling  loadkeys how to interpret the keymap. (For example, \"division\" is 0xf7 in iso-8859-1 but 0xba in iso-8859-8.)",
+      "description": "display above and symbols known to loadkeys.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,7 +146,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "ManPage",
-  "confidence": 0.8,
+  "source": "HelpCommand",
+  "confidence": 0.75,
   "version": null
 }

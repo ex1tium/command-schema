@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-creds",
-  "description": "Display and Process Credentials.",
+  "description": "SYSTEMD-CREDS(1) systemd-creds SYSTEMD-CREDS(1)",
   "global_flags": [
     {
       "short": null,
@@ -16,9 +16,9 @@
     {
       "short": null,
       "long": "--name",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Override filename included in encrypted credential",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--no-legend",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not show the headers and footers",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--no-pager",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not pipe output into a pager",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,27 +58,27 @@
       "long": "--not-after",
       "value_type": "String",
       "takes_value": true,
-      "description": "Include specified invalidation time in encrypted credential",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-p",
       "long": "--pretty",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Output as SetCredentialEncrypted= line",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-q",
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Suppress output for 'has-tpm2' verb",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show credentials passed to system",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--timestamp",
       "value_type": "String",
       "takes_value": true,
-      "description": "Include specified timestamp in encrypted credential",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--tpm2-device",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "/dev/tpmrm0). Alternatively the special value \"auto\" may be specified, in order to automatically determine the device node of a suitable TPM2 device (of which there must be exactly one). The special value \"list\" may be used to enumerate all suitable TPM2 devices currently discovered.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -164,7 +164,7 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-H",
       "long": "--with-key",
       "value_type": "String",
       "takes_value": true,
@@ -172,53 +172,23 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
-    },
-    {
-      "short": "-H",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Shortcut for --with-key=host",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Shortcut for --with-key=tpm2",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Output as SetCredentialEncrypted= line",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-q",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Suppress output for 'has-tpm2' verb",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
     }
   ],
   "subcommands": [
     {
-      "name": "list",
-      "description": "Show installed and available versions cat CREDENTIAL...       Show specified credentials setup                   Generate credentials host key, if not existing yet encrypt INPUT OUTPUT    Encrypt plaintext credential file and write to ciphertext credential file decrypt INPUT [OUTPUT]  Decrypt ciphertext credential file and write to plaintext credential file has-tpm2                Report whether TPM2 support is available",
+      "name": "cat",
+      "description": "Display and Process Credentials.",
       "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
         {
           "short": null,
           "long": "--json",
@@ -280,7 +250,7 @@
           "requires": []
         },
         {
-          "short": null,
+          "short": "-p",
           "long": "--pretty",
           "value_type": "Bool",
           "takes_value": false,
@@ -290,7 +260,7 @@
           "requires": []
         },
         {
-          "short": null,
+          "short": "-q",
           "long": "--quiet",
           "value_type": "Bool",
           "takes_value": false,
@@ -322,7 +292,7 @@
         {
           "short": null,
           "long": "--tpm2-device",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
           "description": null,
           "multiple": false,
@@ -342,7 +312,7 @@
         {
           "short": null,
           "long": "--tpm2-public-key",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
           "description": null,
           "multiple": false,
@@ -362,7 +332,7 @@
         {
           "short": null,
           "long": "--tpm2-signature",
-          "value_type": "String",
+          "value_type": "File",
           "takes_value": true,
           "description": null,
           "multiple": false,
@@ -375,6 +345,16 @@
           "value_type": "String",
           "takes_value": true,
           "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -408,10 +388,130 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "decrypt",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         },
         {
           "short": "-p",
-          "long": null,
+          "long": "--pretty",
           "value_type": "Bool",
           "takes_value": false,
           "description": "Output as SetCredentialEncrypted= line",
@@ -421,22 +521,1767 @@
         },
         {
           "short": "-q",
-          "long": null,
+          "long": "--quiet",
           "value_type": "Bool",
           "takes_value": false,
           "description": "Suppress output for 'has-tpm2' verb",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         }
       ],
       "positional": [],
-      "subcommands": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "drivers",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output as SetCredentialEncrypted= line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output for 'has-tpm2' verb",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "has-tpm2",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output as SetCredentialEncrypted= line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output for 'has-tpm2' verb",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "is",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output as SetCredentialEncrypted= line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output for 'has-tpm2' verb",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "list",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output as SetCredentialEncrypted= line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output for 'has-tpm2' verb",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "setup",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output as SetCredentialEncrypted= line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output for 'has-tpm2' verb",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "supported",
+      "description": "Display and Process Credentials.",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--name",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "Override filename included in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--newline",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-legend",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not show the headers and footers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--not-after",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified invalidation time in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Output as SetCredentialEncrypted= line",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Suppress output for 'has-tpm2' verb",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show credentials passed to system",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timestamp",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Include specified timestamp in encrypted credential",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-device",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-public-key-pcrs",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--tpm2-signature",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--transcode",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--with-key",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Shortcut for --with-key=tpm2",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "cat",
+          "description": "Show specified credentials",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "decrypt",
+          "description": "Decrypt ciphertext credential file and write to plaintext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "encrypt",
+          "description": "Encrypt plaintext credential file and write to ciphertext credential file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "has-tpm2",
+          "description": "Report whether TPM2 support is available",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "list",
+          "description": "Show installed and available versions",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "setup",
+          "description": "Generate credentials host key, if not existing yet",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
       "aliases": []
     }
   ],
   "positional": [],
-  "source": "HelpCommand",
+  "source": "ManPage",
   "confidence": 1.0,
   "version": null
 }

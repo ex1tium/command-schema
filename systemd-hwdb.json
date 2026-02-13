@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-hwdb",
-  "description": "SYSTEMD-HWDB(8) systemd-hwdb SYSTEMD-HWDB(8)",
+  "description": "Update or query the hardware database.",
   "global_flags": [
     {
       "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,9 +16,9 @@
     {
       "short": "-r",
       "long": "--root",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Alternative root path in the filesystem",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--strict",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "When updating, return non-zero exit value on any parsing error",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,37 +38,42 @@
       "long": "--usr",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Generate in /usr/lib/udev instead of /etc/udev",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show package version",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
-    {
-      "name": "modalias",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
+  "subcommands": [
     {
       "name": "query",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Query database and print result",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "update",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Update the hwdb database",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 1.0,
   "version": null
 }

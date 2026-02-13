@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "aa-exec",
-  "description": "AA-EXEC(1) AppArmor AA-EXEC(1)",
+  "description": "Confine <prog> with the specified PROFILE.",
   "global_flags": [
     {
       "short": "-d",
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "show messages with debugging information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -16,29 +26,9 @@
     {
       "short": "-i",
       "long": "--immediate",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "to  PROFILE  before  doing  executing <command>.  This subjects the running of <command> to the exec transition rules of the current profile.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-n",
-      "long": "--namespace",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "This will result in confinement transitioning to using the new profile namespace.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-p",
-      "long": "--profile",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "change profile immediately instead of at exec",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,15 +38,43 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "show messages with stats",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "NAMESPACE to confine <prog> in",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "PROFILE to confine <prog> with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
-  "source": "ManPage",
-  "confidence": 0.8,
+  "positional": [
+    {
+      "name": "prog",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
   "version": null
 }

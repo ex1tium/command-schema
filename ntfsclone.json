@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "ntfsclone",
-  "description": "NTFSCLONE(8) System Manager's Manual NTFSCLONE(8)",
+  "description": "ntfsclone v2022.10.3 (libntfs-3g)",
   "global_flags": [
     {
       "short": "-f",
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Force to progress (DANGEROUS)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--full-logfile",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the Windows log file in the copy. This is only useful for extracting metadata, saving or cloning a file system which was not properly unmounted from Windows.",
+      "description": "Include the full logfile in metadata output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Display this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--ignore-fs-check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "--metadata  option,  for  the safety of user's data. The clusters which cause the inconsistency are saved too.",
+      "description": "Ignore the filesystem check result",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-m",
       "long": "--metadata",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Clone *only* metadata (for NTFS experts)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--new-half-serial",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "device  during  the  mounting process,  so  it  has  to be changed to enable the original file system and the clone to be mounted at the same time on the same com‐ puter.",
+      "description": "Set a partial new serial number",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--new-serial",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Set a new serial number",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-n",
       "long": "--no-action",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "the  consistency of a saved image by simulating its restoring without writing anything. The NTFS data contained in the image is not tested.  The option --restore-image must also be present, and the options --output and --overwrite must be omitted.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Test restoring, without outputting anything",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--output",
       "value_type": "File",
       "takes_value": true,
-      "description": "If FILE is '-' then clone to the standard output. This option cannot be  used  for  creating  a partition, use --overwrite for an existing partition.",
+      "description": "Clone NTFS to the non-existent FILE",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-O",
       "long": "--overwrite",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Clone NTFS to FILE, overwriting if exists",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not display any progress bars",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--rescue",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "minimal  stress on  them. Ntfsclone works at the lowest, sector level in this mode too thus more data can be rescued.  The contents of the unreadable sectors are filled by character '?' and the beginning of such sectors are marked by \"BadSectoR\\0\".",
+      "description": "Continue after disk read errors",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-r",
       "long": "--restore-image",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Restore from the special image format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,17 +148,17 @@
       "long": "--save-image",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Save to the special image format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-fv",
-      "long": null,
+      "short": "-V",
+      "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Long named options can be abbreviated to any unique prefix of their name.",
+      "description": "Display version information",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -167,14 +167,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "source",
+      "name": "SOURCE",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
-  "version": null
+  "version": "2022.10.3"
 }

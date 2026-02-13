@@ -28,7 +28,7 @@
       "long": "--human",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "sizes in human readable format (e.g. 1.0k, 1.2M, etc.)  The units displayed with this option supersede any other default units (e.g.  kilobytes, sectors...) associated with the metrics.",
+      "description": "The units displayed with this option supersede any other  default  units (e.g.  kilobytes, sectors...) associated with the metrics.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--pretty",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The device name will be printed on the right side. The report may also be broken into sub-reports if there are many metrics to display (use --compact option to prevent this).",
+      "description": "the Device Utilization Report easier to read by a human.  The device name will be printed on the right side. The report may also be broken into sub-reports if there are many metrics to display (use --compact option to prevent this).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "This option must be used with option -g and indicates that only global statistics for the group are to be displayed, and not  statis‐ tics for individual devices in the group.",
+      "description": "This  option  must be used with option -g and indicates that only global statistics for the group are to be displayed, and not statis‐ tics for individual devices in the group.",
       "multiple": false,
       "conflicts_with": [],
       "requires": [
@@ -100,7 +100,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an  alternative directory for iostat to read devices statistics. Option -f tells iostat to use only the files located in the alternative directory, whereas option +f tells it to use both the standard kernel files and the files located in the alternative  di‐ rectory to read device statistics.",
+      "description": "an  alternative  directory for iostat to read devices statistics. Option -f tells iostat to use only the files located in the alternative directory, whereas option +f tells it to use both the standard kernel files and the files located in the  alternative  di‐ rectory to read device statistics.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -110,7 +110,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "statistics for a group of devices.  The iostat command reports statistics for each individual device in the list then a line of global statistics for the group displayed as group_name and made up of all the devices in the list. The ALL keyword means that all the block devices defined by the system shall be included in the group.",
+      "description": "statistics  for a group of devices.  The iostat command reports statistics for each individual device in the list then a line of global statistics for the group displayed as group_name and made up of all the devices in the list. The ALL keyword means that  all the block devices defined by the system shall be included in the group.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -130,7 +130,7 @@
       "long": null,
       "value_type": "Directory",
       "takes_value": true,
-      "description": "are  not  limited, only  prerequisite  is  that  directory  with required persistent names is present in /dev/disk.  Optionally, multiple devices can be specified in the chosen persistent name type.  Because persistent device names are usually long, option --pretty  is  implicitly  set with this option.",
+      "description": "persistent  device  names.  Keywords ID, LABEL, etc. specify the type of the persistent name. These keywords are not limited, only prerequisite is that directory with required persistent names is present in /dev/disk.  Optionally, multiple devices can be spec‐ ified in the chosen persistent name type.  Because persistent device names are usually long, option --pretty is  implicitly  set  with this option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -160,7 +160,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "the  statistics  in  JSON  (JavaScript Object Notation) format.  JSON output field order is undefined, and new fields may be added in the future.",
+      "description": "JSON output field order is undefined, and new fields may be added in the future.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -170,7 +170,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "If a device name is entered on  the  com‐ mand  line,  then  statistics for it and all its partitions are displayed. Last, the ALL keyword indicates that statistics have to be displayed for all the block devices and partitions defined by the system, including those that have never been used. If option -j  is defined before this option, devices entered on the command line can be specified with the chosen persistent name type.",
+      "description": "If a device name is entered on the command line,  then  statistics  for  it and all its partitions are displayed. Last, the ALL keyword indicates that statistics have to be dis‐ played for all the block devices and partitions defined by the system, including those that have never been used. If option -j is  de‐ fined before this option, devices entered on the command line can be specified with the chosen persistent name type.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -190,7 +190,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Print the time for each report displayed. The timestamp format may depend on the value of the S_TIME_FORMAT environment variable (see below).",
+      "description": "Print the time for each report displayed. The timestamp format may depend on the value of the S_TIME_FORMAT environment variable  (see below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,7 +226,123 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "all",
+      "description": null,
+      "flags": [],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interval",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "directory",
+      "description": null,
+      "flags": [],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interval",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "json",
+      "description": null,
+      "flags": [],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interval",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "label",
+      "description": null,
+      "flags": [],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interval",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "uuid",
+      "description": null,
+      "flags": [],
+      "positional": [
+        {
+          "name": "count",
+          "value_type": "Number",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interval",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
       "name": "0",
@@ -244,13 +360,6 @@
     },
     {
       "name": "2",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "all",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -290,30 +399,9 @@
       "required": true,
       "multiple": false,
       "description": null
-    },
-    {
-      "name": "json",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "label",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "uuid",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

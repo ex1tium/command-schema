@@ -8,7 +8,7 @@
       "long": "--allowinterfaces",
       "value_type": "String",
       "takes_value": true,
-      "description": "discovering  interfaces,  the interface name must match pattern which is a space or comma separated list of patterns passed to fnmatch(3).  If the same interface is matched in -Z, --denyinterfaces then it is still denied.",
+      "description": "of  patterns  passed  to fnmatch(3).  If the same interface is matched in -Z, --denyinterfaces then it is still denied.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--broadcast",
       "value_type": "String",
       "takes_value": true,
-      "description": "Normally this is only set for non-Ethernet interfaces,  such  as FireWire and InfiniBand.  In most instances, dhcpcd will set this automatically.",
+      "description": "the  DHCP  server to broadcast replies back to the client.  Normally this is only set for non-Ethernet interfaces, such as FireWire and InfiniBand.  In most instances, dhcpcd will set this automatically.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--clientid",
       "value_type": "String",
       "takes_value": true,
-      "description": "If the string is of the format 01:02:03 then it is encoded as hex.  For interfaces  whose  hardware  address  is longer than 8 bytes, or if the clientid is an empty string then dhcpcd sends a default clientid of the hardware family and the hard‐ ware address.",
+      "description": "the  clientid.   If  the  string is of the format 01:02:03 then it is encoded as hex.  For interfaces whose hardware address is longer than 8 bytes, or if the clientid is an empty string then dhcpcd sends a default clientid of the hardware family and the  hard‐ ware address.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--denyinterfaces",
       "value_type": "String",
       "takes_value": true,
-      "description": "patterns  passed to fnmatch(3).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--duid",
       "value_type": "File",
       "takes_value": true,
-      "description": "If a system UUID is available, that will be used to create a DUID-UUID, otherwise if persistent stor‐ age is available then a DUID-LLT (link local address + time) is generated, otherwise DUID-LL is generated (link local address).  The DUID  type can be hinted as an optional parameter if the file /var/lib/dhcpcd/duid does not exist.  If not ll, lt or uuid then value will be converted from 00:11:22:33 format.  This, plus the IAID will be used as the -I, --clientid.  The DUID generated will be held in /var/lib/dhcpcd/duid and should not be copied to other hosts.  This file also takes precedence over the above  rules  except  for setting a value.",
+      "description": "If a system UUID is available, that will be used to create a DUID-UUID, otherwise if persistent  stor‐ age  is available then a DUID-LLT (link local address + time) is generated, otherwise DUID-LL is generated (link local address).  The DUID type can be hinted as an optional parameter if the file /var/lib/dhcpcd/duid does not exist.  If not ll, lt or uuid  then  value will  be converted from 00:11:22:33 format.  This, plus the IAID will be used as the -I, --clientid.  The DUID generated will be held in /var/lib/dhcpcd/duid and should not be copied to other hosts.  This file also takes precedence over the  above  rules  except  for setting a value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--dumplease",
       "value_type": "String",
       "takes_value": true,
-      "description": "If no interface is given then all interfaces are dumped.  Use  the  -4  or  -6 flags  to  specify  an address family.  If a lease is piped in via standard input then use the special interface named - to dump it. In this case, specifying an address family is mandatory.",
+      "description": "the  current  lease  for  the interface to stdout.  If no interface is given then all interfaces are dumped.  Use the -4 or -6 flags to specify an address family.  If a lease is piped in via standard input then use the special interface named - to dump it.  In this case, specifying an address family is mandatory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--env",
       "value_type": "String",
       "takes_value": true,
-      "description": "For example, you can force the hostname hook to always set the  host‐ name with -e force_hostname=YES.",
+      "description": "value  to the environment for use in dhcpcd-run-hooks(8).  For example, you can force the hostname hook to always set the host‐ name with -e force_hostname=YES.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--exit",
       "value_type": "String",
       "takes_value": true,
-      "description": "If no interface is specified, then the above  is  ap‐ plied to all interfaces in Manager mode.  See the -p, --persistent option to control configuration persistence on exit, which is en‐ abled by default in dhcpcd.conf(5).  dhcpcd then waits until this process has exited.",
+      "description": "will  signal  an existing dhcpcd process running on the interface to exit.  If no interface is specified, then the above is ap‐ plied to all interfaces in Manager mode.  See the -p, --persistent option to control configuration persistence on exit, which is  en‐ abled by default in dhcpcd.conf(5).  dhcpcd then waits until this process has exited.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--fqdn",
       "value_type": "String",
       "takes_value": true,
-      "description": "Valid values for fqdn are disable,  none,  ptr  and both.  dhcpcd itself never does any DNS updates.  dhcpcd encodes the FQDN hostname as specified in RFC 1035.",
+      "description": "Valid values for fqdn are  disable,  none,  ptr  and both.  dhcpcd itself never does any DNS updates.  dhcpcd encodes the FQDN hostname as specified in RFC 1035.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--hostname",
       "value_type": "String",
       "takes_value": true,
-      "description": "hostname  to the DHCP server so it can be registered in DNS.  If hostname is an empty string then the current system hostname is sent.  If hostname is a FQDN (i.e., contains a .) then it will be encoded as such.",
+      "description": "If hostname is an empty string then the current system hostname is sent.  If hostname is a FQDN (i.e., contains a .) then it will be encoded as such.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--inactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This allows dhcpcd to be started  in  Manager  mode  and then wait for subsequent dhcpcd commands to start each interface as required.",
+      "description": "This allows dhcpcd to be started in Manager mode and then wait for subsequent dhcpcd commands to start each interface as required.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--inform",
       "value_type": "Number",
       "takes_value": true,
-      "description": "This does not get a lease as  such,  just notifies the DHCP server of the address in use.  You should also include the optional cidr network number in case the address is not already  configured  on  the interface.  dhcpcd remains running and pretends it has an infinite lease.  dhcpcd will not de-configure the interface when it exits.  If dhcpcd fails to contact a DHCP server then it returns a failure instead of falling back on IPv4LL.",
+      "description": "like  -r,  --request as above, but sends a DHCP INFORM instead of DISCOVER/REQUEST.  This does not get a lease as such, just notifies the DHCP server of the address in use.  You should also include the optional cidr network number in case the address is  not already configured on the interface.  dhcpcd remains running and pretends it has an infinite lease.  dhcpcd will not de-configure the interface when it exits.  If dhcpcd fails to contact a DHCP server then it returns a failure instead of falling back on IPv4LL.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--inform6",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "No address is requested or specified, but all other DHCPv6 options  are  allowed.   This  is normally performed automatically when the IPv6 Router Advertises that the client should perform this operation.  This option is only needed when dhcpcd is not processing IPv6RA messages and the need for DHCPv6 Information Request exists.",
+      "description": "No address is requested or specified, but all other DHCPv6 options are allowed.  This is nor‐ mally  performed  automatically  when  the IPv6 Router Advertises that the client should perform this operation.  This option is only needed when dhcpcd is not processing IPv6RA messages and the need for DHCPv6 Information Request exists.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--lastleaseextend",
       "value_type": "String",
       "takes_value": true,
-      "description": "as  the  above, but the lease will be retained even if it expires.  dhcpcd will give it up if any other host tries to claim it for their own via ARP.  This violates RFC 2131, section 3.7, which states the lease should be dropped once it has expired.",
+      "description": "dhcpcd will give it up if any other host tries to claim it for their own via ARP.  This violates RFC 2131, section 3.7, which states the lease should be dropped once it has expired.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--leasetime",
       "value_type": "String",
       "takes_value": true,
-      "description": "a  lease  time  of  seconds.   -1 represents an infinite lease time.  By default dhcpcd does not request any lease time and leaves it in the hands of the DHCP server.",
+      "description": "-1 represents an infinite lease time.  By default dhcpcd does not request any lease time and leaves it in the hands of the DHCP server.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--logfile",
       "value_type": "File",
       "takes_value": true,
-      "description": "dhcpcd still writes to syslog(3).  The logfile is reopened when dhcpcd receives the  SIGUSR2  sig‐ nal.",
+      "description": "dhcpcd still writes to syslog(3).  The logfile is reopened when dhcpcd receives the SIGUSR2 signal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--metric",
       "value_type": "String",
       "takes_value": true,
-      "description": "interface  over  another  one,  lowest  wins.   dhcpcd  will  supply  a  default  metric  of  1000  + if_nametoindex(3).   This  will be offset by 2000 for wireless interfaces, with additional offsets of 1000000 for IPv4LL and 2000000 for roaming interfaces.",
+      "description": "are  used  to  prefer  an  interface  over  another  one,  lowest  wins.   dhcpcd  will  supply  a  default metric of 1000 + if_nametoindex(3).  This will be offset by 2000 for wireless interfaces, with additional offsets of 1000000 for  IPv4LL  and  2000000 for roaming interfaces.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--nobackground",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "run  in the background when we acquire a lease.  This is mainly useful for running under the control of another process, such as a debugger or a network manager.",
+      "description": "This is mainly useful for running under the control of another process, such as a debugger or a network manager.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--noconfigure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is only of use if the --script that dhcpcd calls at each network event configures the  system instead.  This is different from -T, --test mode in that it's not one shot and the only change to the environment is the addition of if_configured=false.",
+      "description": "will not configure the system at all.  This is only of use if the --script that dhcpcd calls at each network event configures the system instead.  This is different from -T, --test mode in that it's not one shot and the only change to the environment  is  the addition of if_configured=false.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": "--nolink",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "receive  link  messages  for  carrier  status.   You should only have to use this with buggy device drivers or running dhcpcd through a network manager.",
+      "description": "You should only have to use this with buggy device drivers or running dhcpcd through a network manager.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -376,9 +376,9 @@
     {
       "short": "-p",
       "long": "--persistent",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Sometimes, this isn't desirable  if,  for  example, you  have root mounted over NFS or SSH clients connect to this host and they need to be notified of the host shutting down.  You can use this option to stop this from happening.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If no interface is specified then this applies to all interfaces in Manager mode.   If  no  interfaces  are left running, dhcpcd will exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +398,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dhcpcd on the command line, only warnings and errors will be displayed.  If this option is used another time then all console output is disabled.  These messages are still logged via syslog(3).",
+      "description": "dhcpcd  on the command line, only warnings and errors will be displayed.  If this option is used another time then all console output is disabled.  These messages are still logged via syslog(3).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--rebind",
       "value_type": "String",
       "takes_value": true,
-      "description": "If no interface is specified then this  applies  to all interfaces in Manager mode.  If dhcpcd is not running, then it starts up as normal.",
+      "description": "dhcpcd  to  reload its configuration and rebind the specified interface.  If no interface is specified then this applies to all interfaces in Manager mode.  If dhcpcd is not running, then it starts up as normal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +418,7 @@
       "long": "--reboot",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allow reboot seconds before starting fall‐ back states from the discover phase.  IPv4LL is started when the first reboot timeout is reached.  The default is 5 seconds.  A set‐ ting  of  0  seconds  causes dhcpcd to skip the reboot phase and go straight into discover.  This has no effect on DHCPv6 other than skipping the reboot phase.",
+      "description": "reboot seconds before moving to the discover phase if we have an old lease to use.  Allow reboot seconds before starting fall‐ back states from the discover phase.  IPv4LL is started when the first reboot timeout is reached.  The default is 5 seconds.  A  set‐ ting  of  0  seconds  causes  dhcpcd to skip the reboot phase and go straight into discover.  This has no effect on DHCPv6 other than skipping the reboot phase.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +428,7 @@
       "long": "--reconfigure",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is useful so that a 3rd party such as PPP  or  VPN can change the routing table and / or DNS, etc and then instruct dhcpcd to put things back afterwards.  dhcpcd does not read a new configuration when this happens - you should rebind if you need that functionality.",
+      "description": "This is useful so that a 3rd party such  as PPP  or  VPN  can change the routing table and / or DNS, etc and then instruct dhcpcd to put things back afterwards.  dhcpcd does not read a new configuration when this happens - you should rebind if you need that functionality.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -438,7 +438,7 @@
       "long": "--release",
       "value_type": "String",
       "takes_value": true,
-      "description": "causes  an  existing dhcpcd process running on the interface to release its lease and de-configure the interface regardless of the -p, --persistent option.  If no interface is specified then this applies to all interfaces in Manager mode.   If  no  interfaces are left running, dhcpcd will exit.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +448,7 @@
       "long": "--renew",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dhcpcd  to renew existing addresses on the specified interface.  If no interface is specified then this applies to all in‐ terfaces in Manager mode.  If dhcpcd is not running, then it starts up as normal.  Unlike the -n, --rebind option above, the config‐ uration for dhcpcd is not reloaded.",
+      "description": "If no interface is specified then this applies to all inter‐ faces in Manager mode.  If dhcpcd is not running, then it starts up as normal.  Unlike the -n, --rebind option above, the  configura‐ tion for dhcpcd is not reloaded.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +458,7 @@
       "long": "--request",
       "value_type": "String",
       "takes_value": true,
-      "description": "There is no guarantee this is the address the DHCP server will actually give.  If no address is given then the first address currently assigned to the interface is used.",
+      "description": "There is no guarantee this is the address the DHCP server will actually give.   If no address is given then the first address currently assigned to the interface is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,7 +468,7 @@
       "long": "--require",
       "value_type": "String",
       "takes_value": true,
-      "description": "To enforce that dhcpcd only  responds  to DHCP servers and not BOOTP servers, you can -Q dhcp_message_type.",
+      "description": "To enforce that dhcpcd  only  responds  to DHCP servers and not BOOTP servers, you can -Q dhcp_message_type.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +488,7 @@
       "long": "--static",
       "value_type": "String",
       "takes_value": true,
-      "description": "If you set ip_address then dhcpcd will not attempt to obtain a lease and just use the value for the address with an infinite lease time.",
+      "description": "If you set ip_address then dhcpcd will not attempt to obtain a lease and just use the value for  the address with an infinite lease time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +498,7 @@
       "long": "--test",
       "value_type": "File",
       "takes_value": true,
-      "description": "found in the message to the console.  The interface configuration isn't touched and neither are any configuration files.  The rapid_commit option  is  not sent in TEST mode so that the server does not lease an address.  To test INFORM the interface needs to be configured with the desired address before starting dhcpcd.",
+      "description": "variables  found in  the message to the console.  The interface configuration isn't touched and neither are any configuration files.  The rapid_commit option is not sent in TEST mode so that the server does not lease an address.  To test INFORM the interface needs  to  be  configured with the desired address before starting dhcpcd.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +508,7 @@
       "long": "--timeout",
       "value_type": "String",
       "takes_value": true,
-      "description": "after  seconds, instead of the default 30.  A setting of 0 seconds causes dhcpcd to wait forever to get a lease.  If dhcpcd is working on a single interface then dhcpcd will exit when a timeout occurs, otherwise dhcpcd will fork into the background.",
+      "description": "A setting of 0 seconds causes dhcpcd to wait forever to get a lease.  If dhcpcd is working on a single interface then dhcpcd will exit when a timeout occurs, otherwise dhcpcd will fork into the background.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +518,7 @@
       "long": "--userclass",
       "value_type": "String",
       "takes_value": true,
-      "description": "DHCP servers use this to give members of the class DHCP options  other  than  the default, without having to know things like hardware address or hostname.",
+      "description": "DHCP servers use this to give members of the class DHCP options other than the de‐ fault, without having to know things like hardware address or hostname.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +528,7 @@
       "long": "--variables",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "Variables  are  prefixed  with new_  and  old_  unless the option number is -.  Variables without an option are part of the DHCP message and cannot be directly re‐ quested.",
+      "description": "Variables  are  prefixed  with new_  and  old_  unless  the option number is -.  Variables without an option are part of the DHCP message and cannot be directly re‐ quested.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,7 +538,7 @@
       "long": "--vendor",
       "value_type": "String",
       "takes_value": true,
-      "description": "an encapsulated vendor option.  code should be between 1 and 254 inclusive.  To add a raw vendor string, omit code but keep the comma.  Examples.",
+      "description": "an  encapsulated vendor option.  code should be between 1 and 254 inclusive.  To add a raw vendor string, omit code but keep the comma.  Examples.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +548,7 @@
       "long": "--vendorclassid",
       "value_type": "String",
       "takes_value": true,
-      "description": "The default is dhcpcd-<version>:<os>:<machine>:<platform>.  For example dhcpcd-5.5.6:NetBSD-6.99.5:i386:i386 If  not set then none is sent.  Some badly configured DHCP servers reject unknown vendorclassids.  To work around it, try and imper‐ sonate Windows by using the MSFT vendorclassid.",
+      "description": "The default is dhcpcd-<version>:<os>:<machine>:<platform>.  For example dhcpcd-5.5.6:NetBSD-6.99.5:i386:i386 If  not  set then none is sent.  Some badly configured DHCP servers reject unknown vendorclassids.  To work around it, try and imper‐ sonate Windows by using the MSFT vendorclassid.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +568,7 @@
       "long": "--waitip",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  is  enabled  in this instance to maintain compatibility with older versions.  Using a single interface, optionally further limited to an address protocol, also affects the -k, -N, -n and -x options, where the same interface and any address protocol will  need  to be  specified,  as a lack of an interface will imply Manager mode which this is not.  To force starting in Manager mode with only one inter‐ face, the -M, --manager option can be used.",
+      "description": "Using a single interface, optionally further lim‐ ited  to  an  address protocol, also affects the -k, -N, -n and -x options, where the same interface and any address protocol will need to be specified, as a lack of an interface will imply Manager mode which this is not.  To force starting in Manager mode with only  one  interface, the -M, --manager option can be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -614,176 +614,1771 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "hook",
+      "description": null,
+      "flags": [
+        {
+          "short": null,
+          "long": "--allowinterfaces",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--blacklist",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--clientid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--denyinterfaces",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dumplease",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--env",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fqdn",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--inactive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--inform",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--inform6",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--leasetime",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--logfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--metric",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nohook",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nooption",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--option",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rebind",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reboot",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--request",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--require",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--script",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--static",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timeout",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userclass",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vendor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vendorclassid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--waitip",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--whitelist",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-1",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-A",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-G",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-J",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Q",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "4",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "FQDN",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interface",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "seconds",
+      "description": null,
+      "flags": [
+        {
+          "short": null,
+          "long": "--allowinterfaces",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--blacklist",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--clientid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--config",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--denyinterfaces",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dumplease",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--env",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--exit",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fqdn",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--inactive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--inform",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--inform6",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--leasetime",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--logfile",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--metric",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nohook",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nooption",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--option",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--rebind",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reboot",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--release",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--request",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--require",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--script",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--static",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--timeout",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--userclass",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vendor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vendorclassid",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--waitip",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--whitelist",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-1",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-4",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-6",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-A",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-D",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-G",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-J",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-K",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Q",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-X",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-k",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "4",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "FQDN",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "interface",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
-    {
-      "name": "--configure",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--inactive",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--inform6",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--noconfigure",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-146abbddegghjklmnppqtv",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-c",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-e",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-f",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-h",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-i",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-j",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-l",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-m",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-o",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-q",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-r",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-s",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-t",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-u",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-v",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-w",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-x",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-y",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-z",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "6",
       "value_type": "String",
@@ -834,13 +2429,6 @@
       "description": null
     },
     {
-      "name": "hook",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "hostname",
       "value_type": "String",
       "required": true,
@@ -883,13 +2471,6 @@
       "description": null
     },
     {
-      "name": "seconds",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "value",
       "value_type": "String",
       "required": true,
@@ -905,6 +2486,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

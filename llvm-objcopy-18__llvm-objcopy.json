@@ -16,9 +16,9 @@
     {
       "short": null,
       "long": "--add-section",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "a section named <section> with the contents of <file> to the output. For ELF objects the section will be of type SHT_NOTE, if the name starts with \".note\". Otherwise, it will have type SHT_PROGBITS. Can be specified multiple times to add multiple sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--add-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "a  new  symbol called <name> to the output symbol table, in the section named <section>, with value <value>. If <section> is not specified, the symbol is added as an absolute symbol. The <flags> affect the symbol properties. Accepted values are:",
+      "description": "If  <section>  is  not specified, the symbol is added as an absolute symbol. The <flags> affect the symbol properties. Accepted values are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--allow-broken-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be  set  to zero.",
+      "description": "llvm-objcopy  to  remove  sections even if it would leave invalid section references. Any invalid sh_link fields will be set to zero.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--compress-debug-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": "DWARF  debug sections in the output, using the specified format.  Supported formats are zlib and zstd. Use zlib if <format> is omitted.",
+      "description": "Supported formats are zlib and zstd. Use zlib if <format> is omitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--discard-all",
       "value_type": "File",
       "takes_value": true,
-      "description": "file and section symbols in ELF objects will not be discarded. Additionally, remove all debug sections.",
+      "description": "example,  file and section symbols in ELF objects will not be discarded. Additionally, remove all debug sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--dump-section",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  contents of section <section> into the file <file>. Can be specified multiple times to dump multiple sections to different files.  <file> is unrelated to the input and output files provided to llvm-objcopy and as such the normal copying and editing  opera‐ tions will still be performed. No operations are performed on the sections prior to dumping them.",
+      "description": "the  contents  of section <section> into the file <file>. Can be specified multiple times to dump multiple sections to different files.  <file> is unrelated to the input and output files provided to llvm-objcopy and as such the normal copying and  editing  opera‐ tions will still be performed. No operations are performed on the sections prior to dumping them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--globalize-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  file,  each line  represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified mul‐ tiple times to read names from multiple files.",
+      "description": "In  the  file,  each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multi‐ ple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--input-target",
       "value_type": "String",
       "takes_value": true,
-      "description": "will attempt to determine the format automatically.",
+      "description": "the  input as the specified format. See SUPPORTED FORMATS for a list of valid <format> values. If unspecified, llvm-objcopy will attempt to determine the format automatically.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--keep-global-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "all  symbols local in the output, except for symbols with the name <symbol>. Can be specified multiple times to ignore multiple symbols.",
+      "description": "to  ignore  multiple symbols.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--keep-global-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "line  represents  a  single symbol,  with  leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--keep-section",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "sec‐ tions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--keep-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "keep  multiple  sym‐ bols.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--keep-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "removing symbols from the output do not remove symbols named in the file <filename>. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to  read  names from multiple files.",
+      "description": "removing  symbols from the output do not remove symbols named in the file <filename>. In the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times  to  read  names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--localize-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "any  defined non-common symbol named <symbol> as a local symbol in the output. Can be specified multiple times to mark multiple symbols as local.",
+      "description": "any  defined  non-common symbol named <symbol> as a local symbol in the output. Can be specified multiple times to mark multiple symbols as local.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": "--localize-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  output.  In  the file,  each  line  represents  a  single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "in  the  output.  In  the file, each line represents a single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be spec‐ ified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -346,9 +346,9 @@
     {
       "short": "-O",
       "long": "--output-target",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "for‐ mat  is  assumed  to be the same as the value specified for --input-target or the input file's format if that option is also unspeci‐ fied.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--redefine-syms",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "rename,  with the old name and new name separated by whitespace. Leading and trailing whitespace is ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "to  rename,  with the  old name and new name separated by whitespace. Leading and trailing whitespace is ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -438,7 +438,7 @@
       "long": "--rename-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "for  a  list  of supported flags. Can be specified multiple times to rename multiple sections.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +458,7 @@
       "long": "--set-section-flags",
       "value_type": "String",
       "takes_value": true,
-      "description": "section  properties  in the output of section <section> based on the specified <flag> values. Can be specified multiple times to update multiple sections.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +488,7 @@
       "long": "--split-dwo",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  running  llvm-objcopy  with  --extract-dwo  and  <dwo-file>  as  the  output file and no other options, and then with",
+      "description": "to  running  llvm-objcopy  with  --extract-dwo  and  <dwo-file>  as  the  output  file and no other options, and then with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +498,7 @@
       "long": "--strip-all",
       "value_type": "String",
       "takes_value": true,
-      "description": "ELF  objects,  remove  from the output all symbols and non-alloc sections not within segments, except for .gnu.warning, .ARM.at‐ tribute sections and the section name table.",
+      "description": "ELF  objects,  remove  from  the output all symbols and non-alloc sections not within segments, except for .gnu.warning, .ARM.at‐ tribute sections and the section name table.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +548,7 @@
       "long": "--strip-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an object without section headers.",
+      "description": "use  an object without section headers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +568,7 @@
       "long": "--strip-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "line  represents  a  single  symbol name,  with  leading  and  trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "mul‐ tiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,7 +598,7 @@
       "long": "--strip-unneeded-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "In the file, each line represents a single symbol name, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "all symbols whose names appear in the file <filename>, from the output, if they are local or undefined and are not required by any relocation.  In the file, each line represents a single symbol name, with leading and trailing whitespace ignored, as is  anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -626,9 +626,9 @@
     {
       "short": null,
       "long": "--update-section",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "segment,  the  new contents cannot be larger than the existing section.",
+      "description": "the  contents  of  the section <name> with contents from the file <file>. If the section <name> is part of a segment, the new contents cannot be larger than the existing section.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -658,7 +658,7 @@
       "long": "--weaken-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "any  global  symbol  named <symbol> as a weak symbol in the output. Can be specified multiple times to mark multiple symbols as weak.",
+      "description": "any  global  symbol  named  <symbol> as a weak symbol in the output. Can be specified multiple times to mark multiple symbols as weak.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -668,7 +668,7 @@
       "long": "--weaken-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "line represents  a  single symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
+      "description": "each  line represents  a  single  symbol, with leading and trailing whitespace ignored, as is anything following a '#'. Can be specified multiple times to read names from multiple files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

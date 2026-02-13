@@ -8,7 +8,7 @@
       "long": "--add",
       "value_type": "File",
       "takes_value": true,
-      "description": "items from the list to the package. The list can be a single filename with a .txt file extension containing a list of item file‐ names, or an ICU .dat package filename.",
+      "description": "item  file‐ names, or an ICU .dat package filename.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--extract",
       "value_type": "File",
       "takes_value": true,
-      "description": "items from the list from the package. The list can be a single filename with a .txt file extension containing a list of item filenames, or an ICU .dat package filename.",
+      "description": "of  item filenames, or an ICU .dat package filename.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--remove",
       "value_type": "File",
       "takes_value": true,
-      "description": "of  item filenames, or an ICU .dat package filename.",
+      "description": "items  from  the list from the package. The list can be a single filename with a .txt file extension containing a list of item filenames, or an ICU .dat package filename.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -164,22 +164,757 @@
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
+  "subcommands": [
     {
       "name": "b",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Read the input ICU .dat package file, modify it according to the options,",
+      "flags": [
+        {
+          "short": null,
+          "long": "--ignore-deps",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not fail if not all resource dependencies are met. Use this option if the missing resources come from another source. In the .dat package, the Table of Contents (ToC) contains an entry for each item of the form prefix/tree/itemname . The prefix normally matches the package basename, and icupkg checks that, but this is not necessary when ICU need not find and load the package by filename. ICU package names end with the platform type letter, and thus differ between platform types. This is not required for user data packages.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "include a comment string",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add items to the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --extract items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print this message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the matching mode for item names with wildcards noslash: the '*' wildcard does not match the '/' tree separator",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path/filename for the --list output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove items from the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --add items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write the output package even if no items are removed or added (e.g., for only swapping the data)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "extract items from the package The list can be a single item's filename, or a .txt filename with a list of item filenames, or an ICU .dat package filename.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "outfilename",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "comment",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Read the input ICU .dat package file, modify it according to the options,",
+      "flags": [
+        {
+          "short": null,
+          "long": "--ignore-deps",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not fail if not all resource dependencies are met. Use this option if the missing resources come from another source. In the .dat package, the Table of Contents (ToC) contains an entry for each item of the form prefix/tree/itemname . The prefix normally matches the package basename, and icupkg checks that, but this is not necessary when ICU need not find and load the package by filename. ICU package names end with the platform type letter, and thus differ between platform types. This is not required for user data packages.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "include a comment string",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add items to the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --extract items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print this message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the matching mode for item names with wildcards noslash: the '*' wildcard does not match the '/' tree separator",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path/filename for the --list output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove items from the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --add items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write the output package even if no items are removed or added (e.g., for only swapping the data)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "extract items from the package The list can be a single item's filename, or a .txt filename with a list of item filenames, or an ICU .dat package filename.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "outfilename",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
+    {
+      "name": "e",
+      "description": "Read the input ICU .dat package file, modify it according to the options,",
+      "flags": [
+        {
+          "short": null,
+          "long": "--ignore-deps",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not fail if not all resource dependencies are met. Use this option if the missing resources come from another source. In the .dat package, the Table of Contents (ToC) contains an entry for each item of the form prefix/tree/itemname . The prefix normally matches the package basename, and icupkg checks that, but this is not necessary when ICU need not find and load the package by filename. ICU package names end with the platform type letter, and thus differ between platform types. This is not required for user data packages.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "include a comment string",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add items to the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --extract items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print this message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the matching mode for item names with wildcards noslash: the '*' wildcard does not match the '/' tree separator",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path/filename for the --list output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove items from the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --add items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write the output package even if no items are removed or added (e.g., for only swapping the data)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "extract items from the package The list can be a single item's filename, or a .txt filename with a list of item filenames, or an ICU .dat package filename.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "outfilename",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "l",
+      "description": "Read the input ICU .dat package file, modify it according to the options,",
+      "flags": [
+        {
+          "short": null,
+          "long": "--ignore-deps",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not fail if not all resource dependencies are met. Use this option if the missing resources come from another source. In the .dat package, the Table of Contents (ToC) contains an entry for each item of the form prefix/tree/itemname . The prefix normally matches the package basename, and icupkg checks that, but this is not necessary when ICU need not find and load the package by filename. ICU package names end with the platform type letter, and thus differ between platform types. This is not required for user data packages.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "include a comment string",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "add items to the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --extract items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "print this message and exit",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "set the matching mode for item names with wildcards noslash: the '*' wildcard does not match the '/' tree separator",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "path/filename for the --list output",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "remove items from the package",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "directory for the --add items",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "write the output package even if no items are removed or added (e.g., for only swapping the data)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "extract items from the package The list can be a single item's filename, or a .txt filename with a list of item filenames, or an ICU .dat package filename.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "outfilename",
+          "value_type": "File",
+          "required": false,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
     {
       "name": "destination",
       "value_type": "String",
@@ -188,22 +923,8 @@
       "description": null
     },
     {
-      "name": "e",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "infilename",
       "value_type": "File",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "l",
-      "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
@@ -238,6 +959,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": "74.2"
 }

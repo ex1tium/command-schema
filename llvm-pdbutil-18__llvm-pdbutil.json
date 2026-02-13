@@ -108,7 +108,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "record with the specified index.  For example, if type index 0x4000 is a function whose return type has index 0x3000, and you specify -dependents=0x4000, then this would dump both records (as well as any other dependents in the tree).",
+      "description": "used in conjunction with -type-index or -id-index, dumps the entire dependency graph for the specified index instead of just the single record with the specified index.  For example, if type index 0x4000 is a function whose return type has index 0x3000,  and  you specify -dependents=0x4000, then this would dump both records (as well as any other dependents in the tree).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-exclude-compilands",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "dumping  compilands,  compiland source-file contributions, or per-compiland symbols, this option instructs llvm-pdbutil to omit any compilands that match the specified regular expression.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "the  speci‐ fied regular expression.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,9 +276,9 @@
     {
       "short": "-include-compilands",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "dumping compilands, compiland source-file contributions, or per-compiland symbols, limit the initial search to only those compi‐ lands that match the specified regular expression.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "dumping global, public, or per-compiland symbols, limit the initial search to only those symbols that match the specified regu‐ lar expression.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "absolute address.",
+      "description": "the  absolute address.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "aggregate field members.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "display types that have at least the specified amount of alignment padding, ignoring padding in base classes and aggregate field members.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +368,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "By default, options in this category will dump bytes from all mod‐ ules.",
+      "description": "By default, options in this category will dump bytes from all  mod‐ ules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +548,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Format is SN[:Start][@Size].  For example,  -stream-data=7:3@12  dumps  12  bytes  from stream 7, starting at offset 3 in the stream.",
+      "description": "binary  data  from  the  specified  streams.  Format is SN[:Start][@Size].  For example, -stream-data=7:3@12 dumps 12 bytes from stream 7, starting at offset 3 in the stream.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -725,6 +725,110 @@
     }
   ],
   "subcommands": [
+    {
+      "name": "llvm-pdbutil",
+      "description": "is separated into several subcommands each tailored to a different purpose. A brief summary of each command follows, with more detail in the sections that follow.",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help-list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "llvm-pdbutil-18",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [
+        {
+          "name": "bytes",
+          "description": "Dump raw bytes from the PDB file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "diadump",
+          "description": "Dump debug information using a DIA-like API",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "dump",
+          "description": "Dump MSF and CodeView debug info",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "explain",
+          "description": "Explain the meaning of a file offset",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "export",
+          "description": "Write binary data from a stream to a file",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "merge",
+          "description": "Merge multiple PDBs into a single PDB pdb2yaml - Generate a detailed YAML description of a PDB File",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        },
+        {
+          "name": "pretty",
+          "description": "Dump semantic information about types and symbols yaml2pdb - Generate a PDB file from a YAML description",
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
     {
       "name": "pretty",
       "description": "OVERVIEW: LLVM PDB Dumper",

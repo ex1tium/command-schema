@@ -4,6 +4,16 @@
   "description": "RG(1) User Commands RG(1)",
   "global_flags": [
     {
+      "short": "-A/--after-context",
+      "long": "--.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-A",
       "long": "--after-context",
       "value_type": "String",
@@ -38,7 +48,7 @@
       "long": "--binary",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "in  order to improve the relevance of results and make the search faster.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--block-buffered",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an  in-memory  buffer and  will not be written to stdout until the buffer reaches a certain size. This is the default when ripgrep's stdout is redirected to a pipeline or a file. When ripgrep's stdout is connected to a tty, line buffering will be used by default. Forcing block buffering can  be useful when dumping a large amount of contents to a tty.",
+      "description": "ripgrep's  stdout  is  redirected  to  a pipeline  or  a file. When ripgrep's stdout is connected to a tty, line buffering will be used by default. Forcing block buffering can be useful when dumping a large amount of contents to a tty.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--byte-offset",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If -o/--only-matching is specified, print the offset of the matched text itself.",
+      "description": "If -o/--only-matching is specified, print the offset  of the matched text itself.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +88,7 @@
       "long": "--color",
       "value_type": "File",
       "takes_value": true,
-      "description": "flag controls when to use colors. The default setting is auto, which means ripgrep will try to guess when to use colors. For exam‐ ple, if ripgrep is printing to a tty, then it will use colors, but if it is redirected to a file or a pipe, then it will suppress  color output.",
+      "description": "For  exam‐ ple,  if  ripgrep is printing to a tty, then it will use colors, but if it is redirected to a file or a pipe, then it will suppress color output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -94,11 +104,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-n/--line-number.",
       "long": "--column",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "column  numbers  (1-based).  This only shows the column numbers for the first match on each line. This does not try to account for Unicode. One byte is equal to one column. This implies -n/--line-number.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +118,7 @@
       "long": "--context",
       "value_type": "String",
       "takes_value": true,
-      "description": "and  -A/--after-context  flags with the same value.",
+      "description": "NUM  lines  before  and after each match. This is equivalent to providing both the -B/--before-context and -A/--after-context flags with the same value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +128,7 @@
       "long": "--context-separator",
       "value_type": "String",
       "takes_value": true,
-      "description": "is  used  (that is, -A/--after-context, -B/--before-context or -C/--context). Escape sequences like \\x7F or \\t may be used. The default value is --.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +138,7 @@
       "long": "--count",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Each  file  con‐ taining  a  match  has  its  path and count printed on each line. Note that unless -U/--multiline is enabled, this reports the number of lines that match and not the total number of matches. In multiline mode, -c/--count is equivalent to --count-matches.",
+      "description": "the  number  of  lines that match and not the total number of matches. In multiline mode, -c/--count is equivalent to --count-matches.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +178,7 @@
       "long": "--dfa-size-limit",
       "value_type": "String",
       "takes_value": true,
-      "description": "for  many  smallish  patterns. This  should  only  be changed on very large regex inputs where the (slower) fallback regex engine may otherwise be used if the limit is reached.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +188,7 @@
       "long": "--encoding",
       "value_type": "File",
       "takes_value": true,
-      "description": "the text encoding that ripgrep will use on all files searched. The default value is auto, which will cause ripgrep to do a best effort automatic detection of encoding on a per-file basis. Automatic detection in this case only applies to files  that  begin  with  a UTF-8  or  UTF-16 byte-order mark (BOM). No other automatic detection is performed. One can also specify none which will then completely disable BOM sniffing and always result in searching the raw bytes, including a BOM if it's present, regardless of its encoding.",
+      "description": "the  text encoding that ripgrep will use on all files searched. The default value is auto, which will cause ripgrep to do a best effort automatic detection of encoding on a per-file basis. Automatic detection in this case only applies to  files  that  begin  with  a UTF-8  or  UTF-16  byte-order mark (BOM). No other automatic detection is performed. One can also specify none which will then completely disable BOM sniffing and always result in searching the raw bytes, including a BOM if it's present, regardless of its encoding.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +198,7 @@
       "long": "--engine",
       "value_type": "File",
       "takes_value": true,
-      "description": "rip‐ grep (e.g., via multiple -e/--regexp or -f/--file flags).",
+      "description": "to  rip‐ grep (e.g., via multiple -e/--regexp or -f/--file flags).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +206,9 @@
     {
       "short": null,
       "long": "--field-context-separator",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "the field context separator. This separator is only used when printing contextual lines. It is used to delimit file paths, line num‐ bers, columns and the contextual line itself. The separator may be any number of bytes, including zero. Escape sequences like \\x7F or  \\t may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +216,9 @@
     {
       "short": null,
       "long": "--field-match-separator",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Escape sequences like \\x7F or \\t may be used.",
+      "description": "the field match separator. This separator is only used when printing matching lines. It is used to delimit file paths, line numbers, columns and the matching line itself. The separator may be any number of bytes, including zero.  Escape sequences like \\x7F or \\t may  be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,7 @@
       "long": "--file",
       "value_type": "File",
       "takes_value": true,
-      "description": "in  combination  with  the",
+      "description": "for  patterns  from  the  given file, with one pattern per line. When this flag is used multiple times or in combination with the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +238,7 @@
       "long": "--files",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is useful to determine whether a particular file is being searched or not.",
+      "description": "each file that would be searched without actually performing the search.  This is useful to determine whether a particular file is being searched or not.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +268,7 @@
       "long": "--fixed-strings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "regular  expression  meta  characters such as .(){}*+ should not need be escaped.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +278,7 @@
       "long": "--follow",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "rip‐ grep will check for symbolic link loops and report errors if it finds one. ripgrep will also report errors for broken links. To suppress error messages, use the --no-messages flag.",
+      "description": "that  rip‐ grep  will check for symbolic link loops and report errors if it finds one. ripgrep will also report errors for broken links. To suppress error messages, use the --no-messages flag.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +288,7 @@
       "long": "--generate",
       "value_type": "String",
       "takes_value": true,
-      "description": "flag instructs ripgrep to generate some special kind of output identified by KIND and then quit without searching. KIND can be one of the following values:",
+      "description": "be  one of the following values:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +298,7 @@
       "long": "--glob",
       "value_type": "File",
       "takes_value": true,
-      "description": "flags may be used. Globbing rules match .gitignore globs. Precede a glob with a ! to exclude it. If multiple globs match a file or directory, the glob given later in the command line takes precedence.",
+      "description": "Multiple glob  flags  may be used. Globbing rules match .gitignore globs. Precede a glob with a ! to exclude it. If multiple globs match a file or directory, the glob given later in the command line takes precedence.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +318,7 @@
       "long": "--heading",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "flag  prints the file path above clusters of matches from each file instead of printing the file path as a prefix for each matched line.",
+      "description": "flag  prints  the file path above clusters of matches from each file instead of printing the file path as a prefix for each matched line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +338,7 @@
       "long": "--hidden",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is whitelisted  in  an  ignore file, then it will be searched even if this flag isn't provided.  Similarly if a hidden file or directory is given explicitly as an argumnet to ripgrep.",
+      "description": "hidden  files and directories. By default, hidden files and directories are skipped. Note that if a hidden file or a directory is whitelisted in an ignore file, then it will be searched even if this flag isn't provided.  Similarly if a hidden  file  or  directory  is given explicitly as an argumnet to ripgrep.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +348,7 @@
       "long": "--hostname-bin",
       "value_type": "File",
       "takes_value": true,
-      "description": "or something that can be found via your system's PATH environment variable). When set, ripgrep will run this executable, with no arguments, and treat its output (with leading and trailing whitespace stripped) as your system's hostname.",
+      "description": "flag  controls how ripgrep determines this system's hostname. The flag's value should correspond to an executable (either a path or something that can be found via your system's PATH environment variable). When set, ripgrep will run this executable, with no  arguments, and treat its output (with leading and trailing whitespace stripped) as your system's hostname.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +358,7 @@
       "long": "--hyperlink-format",
       "value_type": "File",
       "takes_value": true,
-      "description": "such  as  file  paths, clickable.  This  generally  only works in terminal emulators that support OSC-8 hyperlinks. For example, the format file://{host}{path} will emit an RFC 8089 hyperlink.  To see the format that ripgrep is using, pass the --debug flag.",
+      "description": "output,  such  as  file  paths, clickable.  This  generally  only  works in terminal emulators that support OSC-8 hyperlinks. For example, the format file://{host}{path} will emit an RFC 8089 hyperlink.  To see the format that ripgrep is using, pass the --debug flag.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -356,9 +366,9 @@
     {
       "short": null,
       "long": "--iglob",
-      "value_type": "Directory",
+      "value_type": "File",
       "takes_value": true,
-      "description": "or directory, the glob given later in the command line takes precedence. Globs used via this flag are matched case insensitively.",
+      "description": "Multiple glob  flags  may be used. Globbing rules match .gitignore globs. Precede a glob with a ! to exclude it. If multiple globs match a file or directory, the glob given later in the command line takes precedence. Globs used via this flag are matched case insensitively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +378,7 @@
       "long": "--ignore-case",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "this  flag  is provided, all patterns will be searched case insensitively.  The case insensitivity rules used by ripgrep's default regex engine conform to Unicode's \"simple\" case folding rules.",
+      "description": "this  flag  is  provided, all patterns will be searched case insensitively.  The case insensitivity rules used by ripgrep's default regex engine conform to Unicode's \"simple\" case folding rules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +388,7 @@
       "long": "--ignore-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "a  path  to  one or more gitignore formatted rules files.  These patterns are applied after the patterns found in .gitignore, .rgignore and .ignore are applied and are matched relative to the current working directory. Multiple additional  ignore  files  can  be specified by using this flag repeatedly. When specifying multiple ignore files, earlier files have lower precedence than later files.",
+      "description": "These patterns are applied after  the  patterns  found  in  .gitignore, .rgignore  and  .ignore  are  applied  and are matched relative to the current working directory. Multiple additional ignore files can be specified by using this flag repeatedly. When specifying multiple ignore files, earlier files have lower precedence than later files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,17 +398,17 @@
       "long": "--ignore-file-case-insensitive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ignore files (.gitignore, .ignore, etc.) case insensitively. Note that this comes with a performance penalty and is most useful on case insensitive file systems (such as Windows).",
+      "description": "most  useful on case insensitive file systems (such as Windows).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-c/--count",
       "long": "--include-zero",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "used  with -c/--count or --count-matches, this causes ripgrep to print the number of matches for each file even if there were zero matches. This is disabled by default but can be enabled to make ripgrep behave more like grep.",
+      "description": "there  were  zero matches. This is disabled by default but can be enabled to make ripgrep behave more like grep.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +438,7 @@
       "long": "--line-buffered",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "stdout  immedi‐ ately.  This is the default when ripgrep's stdout is connected to a tty, but otherwise, ripgrep will use block buffering, which is typi‐ cally faster. This flag forces ripgrep to use line buffering even if it would otherwise use block buffering. This is typically useful in shell pipelines, for example:",
+      "description": "enabled,  ripgrep  will always use line buffering. That is, whenever a matching line is found, it will be flushed to stdout immedi‐ ately. This is the default when ripgrep's stdout is connected to a tty, but otherwise, ripgrep will use block buffering, which  is  typi‐ cally  faster. This flag forces ripgrep to use line buffering even if it would otherwise use block buffering. This is typically useful in shell pipelines, for example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +458,7 @@
       "long": "--line-regexp",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is equivalent to surrounding every pattern with ^  and $. In other words, this only prints lines where the entire line participates in a match.",
+      "description": "This is equivalent to surrounding every pattern with  ^  and $. In other words, this only prints lines where the entire line participates in a match.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +468,7 @@
       "long": "--max-columns",
       "value_type": "String",
       "takes_value": true,
-      "description": "that line is printed.",
+      "description": "in  that line is printed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +498,7 @@
       "long": "--max-depth",
       "value_type": "File",
       "takes_value": true,
-      "description": "given paths themselves.",
+      "description": "flag  limits the depth of directory traversal to NUM levels beyond the paths given. A value of 0 only searches the explicitly given paths themselves.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -524,11 +534,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-U/--multiline",
       "long": "--multiline-dotall",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "multiline  searching  is  enabled. This flag has no effect if multiline searching isn't enabled with the -U/--multiline flag.",
+      "description": "will automatically avoid reading each file into memory before searching it. Nevertheless, if you only care about matches spanning at most one line, then it is always better to disable multiline mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -536,9 +546,9 @@
     {
       "short": null,
       "long": "--no-config",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "set, ripgrep will never read configuration files. When this flag is present, ripgrep will not respect the RIPGREP_CONFIG_PATH envi‐ ronment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +558,7 @@
       "long": "--no-filename",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ripgrep  is  explicitly  in‐ structed to search one file or stdin.",
+      "description": "when  ripgrep  is  explicitly  in‐ structed to search one file or stdin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -558,7 +568,7 @@
       "long": "--no-ignore",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "implies  --no-ignore-dot,  --no-ignore-ex‐ clude, --no-ignore-global, --no-ignore-parent and --no-ignore-vcs.",
+      "description": "set,  ignore  files  such as .gitignore, .ignore and .rgignore will not be respected. This implies --no-ignore-dot, --no-ignore-ex‐ clude, --no-ignore-global, --no-ignore-parent and --no-ignore-vcs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -578,7 +588,7 @@
       "long": "--no-ignore-exclude",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "For example, this includes  git's  .git/info/ex‐ clude.",
+      "description": "For example, this  includes  git's  .git/info/ex‐ clude.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,7 +608,7 @@
       "long": "--no-ignore-global",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "respect filter rules from ignore files that come from \"global\" sources such as git's core.excludesFile configuration option (which defaults to $HOME/.config/git/ignore).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -608,7 +618,7 @@
       "long": "--no-ignore-messages",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to stderr. In cases where these errors are expected, this flag can be used to avoid seeing the noise produced by the messages.",
+      "description": "this  flag is enabled, all error messages related to parsing ignore files are suppressed. By default, error messages are printed to stderr. In cases where these errors are expected, this flag can be used to avoid seeing the noise produced by the messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,7 +628,7 @@
       "long": "--no-ignore-parent",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "directories  of the current working directory to look for any applicable ignore files that should be applied. In some cases this may not be desirable.",
+      "description": "the parent  directories  of  the current working directory to look for any applicable ignore files that should be applied. In some cases this may not be desirable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -628,7 +638,7 @@
       "long": "--no-ignore-vcs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "git's  ig‐ nore rules for automatic filtering. In some cases, it may not be desirable to respect the source control's ignore rules and instead only respect rules in .ignore or .rgignore.",
+      "description": "only  re‐ spect rules in .ignore or .rgignore.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -648,7 +658,7 @@
       "long": "--no-messages",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "flag suppresses some error messages. Specifically, messages related to the failed opening and reading of files. Error messages re‐ lated to the syntax of the pattern are still shown.",
+      "description": "messages  re‐ lated to the syntax of the pattern are still shown.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -686,9 +696,9 @@
     {
       "short": "-0",
       "long": "--null",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "a  file path is printed, follow it with a NUL byte. This includes printing file paths before matches, and when printing a list of matching files such as with -c/--count, -l/--files-with-matches and --files. This option is useful for use with xargs.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -738,7 +748,7 @@
       "long": "--path-separator",
       "value_type": "File",
       "takes_value": true,
-      "description": "Unix  and  \\  on Windows.   This  flag is intended for overriding the default when the environment demands it (e.g., cygwin). A path separator is limited to a single byte.",
+      "description": "This flag is intended for overriding the default when the environment demands it (e.g., cygwin). A path separator is limited to a single byte.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -758,7 +768,7 @@
       "long": "--pcre2-version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "this flag is present, ripgrep will print the version of PCRE2 in use, along with other information, and then exit. If PCRE2 is not available, then ripgrep will print an error message and exit with an error code.",
+      "description": "is  not available, then ripgrep will print an error message and exit with an error code.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -768,7 +778,7 @@
       "long": "--pre",
       "value_type": "File",
       "takes_value": true,
-      "description": "This  op‐ tion  expects  the  COMMAND  program to either be a path or to be available in your PATH. Either an empty string COMMAND or the --no-pre flag will disable this behavior.",
+      "description": "This option expects the COMMAND program to either be a path or to be available in your PATH. Either an empty string COMMAND or the --no-pre flag will disable this behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -778,7 +788,7 @@
       "long": "--pre-glob",
       "value_type": "File",
       "takes_value": true,
-      "description": "flag works in conjunction with the --pre flag. Namely, when one or more --pre-glob flags are given, then only files that match the given set of globs will be handed to the command specified by the --pre flag. Any non-matching files will be searched without using  the preprocessor command.",
+      "description": "match  the given  set  of globs will be handed to the command specified by the --pre flag. Any non-matching files will be searched without using the preprocessor command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -788,7 +798,7 @@
       "long": "--pretty",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is  a  convenience alias for --color=always --heading --line-number. This flag is useful when you still want pretty output even if you're piping ripgrep to another program or file. For example: rg -p foo | less -R.",
+      "description": "is  a  convenience  alias for --color=always --heading --line-number. This flag is useful when you still want pretty output even if you're piping ripgrep to another program or file. For example: rg -p foo | less -R.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -798,7 +808,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ripgrep  is  used only for its exit code (which will be an error code if no matches are found).",
+      "description": "when  ripgrep  is  used only for its exit code (which will be an error code if no matches are found).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -808,7 +818,7 @@
       "long": "--regex-size-limit",
       "value_type": "Number",
       "takes_value": true,
-      "description": "of the  patterns  provided  to ripgrep. The default limit is generous enough that most reasonable patterns (or even a small number of them) should fit.",
+      "description": "all  of the  patterns  provided  to  ripgrep. The default limit is generous enough that most reasonable patterns (or even a small number of them) should fit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -818,7 +828,7 @@
       "long": "--regexp",
       "value_type": "File",
       "takes_value": true,
-      "description": "pattern to search for. This option can be provided multiple times, where all patterns given are searched, in addition to any patterns provided by -f/--file. Lines matching at least one of the provided patterns are printed.  This flag can also be used when searching  for patterns that start with a dash.",
+      "description": "any  patterns provided  by  -f/--file. Lines matching at least one of the provided patterns are printed.  This flag can also be used when searching for patterns that start with a dash.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -838,7 +848,7 @@
       "long": "--search-zip",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "files  are  supported. This option expects the decompression binaries (such as gzip) to be available in your PATH. If the required binaries are not found, then ripgrep will not emit an error messages by default. Use the --debug flag to see more information.",
+      "description": "flag  instructs  ripgrep  to search in compressed files. Currently gzip, bzip2, xz, LZ4, LZMA, Brotli and Zstd files are supported. This option expects the decompression binaries (such as gzip) to be available in your PATH. If the required binaries are not found,  then ripgrep will not emit an error messages by default. Use the --debug flag to see more information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -848,7 +858,7 @@
       "long": "--smart-case",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "flag  instructs ripgrep to searches case insensitively if the pattern is all lowercase. Otherwise, ripgrep will search case sensi‐ tively.",
+      "description": "search  case  sensi‐ tively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -888,7 +898,7 @@
       "long": "--stats",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "fol‐ lowing  stats  to  stdout at the end of the search: number of matched lines, number of files with matches, number of files searched, and the time taken for the entire search to complete.",
+      "description": "enabled,  ripgrep will print aggregate statistics about the search. When this flag is present, ripgrep will print at least the fol‐ lowing stats to stdout at the end of the search: number of matched lines, number of files with matches, number of files searched, and the time taken for the entire search to complete.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -898,7 +908,7 @@
       "long": "--stop-on-nonmatch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "this option will cause ripgrep to stop reading a file once it encounters a non-matching line after it has encountered a match‐ ing line.  This is useful if it is expected that all matches in a given file will be on sequential lines, for example due to  the  lines being sorted.",
+      "description": "This is useful if it is expected that all matches in a given file will be on sequential lines, for example due to the lines  being sorted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -908,7 +918,7 @@
       "long": "--text",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "flag  instructs ripgrep to search binary files as if they were text. When this flag is present, ripgrep's binary file detection is disabled. This means that when a binary file is searched, its contents may be printed if there is a match. This may cause  escape  codes to be printed that alter the behavior of your terminal.",
+      "description": "flag  instructs  ripgrep to search binary files as if they were text. When this flag is present, ripgrep's binary file detection is disabled. This means that when a binary file is searched, its contents may be printed if there is a match. This may cause escape codes to be printed that alter the behavior of your terminal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -918,7 +928,7 @@
       "long": "--threads",
       "value_type": "Number",
       "takes_value": true,
-      "description": "thread  count using heuristics.",
+      "description": "flag  sets  the approximate number of threads to use. A value of 0 (which is the default) causes ripgrep to choose the thread count using heuristics.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -928,7 +938,7 @@
       "long": "--trace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the information you're looking for.",
+      "description": "emit  the information you're looking for.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -956,9 +966,9 @@
     {
       "short": null,
       "long": "--type-add",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "flag  adds a new glob for a particular file type. Only one glob can be added at a time. Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added to any existing globs defined inside of ripgrep.",
+      "description": "can  be  provided. Unless --type-clear is used, globs are added to any existing globs defined inside of ripgrep.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -968,7 +978,7 @@
       "long": "--type-clear",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "af‐ ter this flag.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -978,7 +988,7 @@
       "long": "--type-list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "account.  Each type is printed on its own line, followed by a : and then a comma-delimited list of globs for that type on the same line.",
+      "description": "all  supported  file types and their corresponding globs. This takes any --type-add and --type-clear flags given into account. Each type is printed on its own line, followed by a : and then a comma-delimited list of globs for that type on the same line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -998,7 +1008,7 @@
       "long": "--unrestricted",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "repeated  three  times, ripgrep will search every file in a directory tree.",
+      "description": "flag  reduces  the  level of \"smart\" filtering. Repeated uses (up to 3) reduces the filtering even more. When repeated three times, ripgrep will search every file in a directory tree.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1008,7 +1018,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "flag  prints  ripgrep's version. This also may print other relevant information, such as the presence of target specific optimiza‐ tions and the git revision that this build of ripgrep was compiled from.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1028,7 +1038,7 @@
       "long": "--with-filename",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is the default when more than one file is searched.  If",
+      "description": "This is the default when more than one file is  searched.  If",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1038,23 +1048,13 @@
       "long": "--word-regexp",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enabled,  ripgrep  will  only  show  matches  surrounded by word boundaries.  This is equivalent to surrounding every pattern with \\b{start-half} and \\b{end-half}.",
+      "description": "This  is  equivalent  to  surrounding  every  pattern  with \\b{start-half} and \\b{end-half}.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-e/--regexp",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "flag,  then  all  patterns  provided  are  searched. Empty pattern lines will match all input lines, and the newline is not counted as part of the pattern.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f/--file",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -1066,8 +1066,8 @@
   ],
   "subcommands": [
     {
-      "name": "can",
-      "description": "disable parallelism with the -j1 flag. Secondly, ripgrep always needs to have at least a single line in memory in order to execute a",
+      "name": "--no-config",
+      "description": "includes any future support for auto-loading configuration files from pre-determined paths.",
       "flags": [
         {
           "short": "-A",
@@ -3396,8 +3396,1173 @@
       "aliases": []
     },
     {
-      "name": "is",
-      "description": "ripgrep 14.1.0",
+      "name": "disable",
+      "description": "parallelism with the -j1 flag. Secondly, ripgrep always needs to have at least a single line in memory in order to execute a search.",
+      "flags": [
+        {
+          "short": "-A",
+          "long": "--after-context",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--auto-hybrid-regex",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": "--before-context",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--binary",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--block-buffered",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-b",
+          "long": "--byte-offset",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": "--case-sensitive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--colors",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--column",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": "--context",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--context-separator",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--count",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--count-matches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--crlf",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--debug",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--dfa-size-limit",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--engine",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--field-context-separator",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--field-match-separator",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--files",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": true,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--files-with-matches",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--files-without-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": "--fixed-strings",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-L",
+          "long": "--follow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--generate",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--glob-case-insensitive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--heading",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hostname-bin",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--hyperlink-format",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--iglob",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--ignore-case",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-file",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-file-case-insensitive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--include-zero",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--invert-match",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--json",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--line-buffered",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--line-number",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-x",
+          "long": "--line-regexp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": "--max-columns",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--max-columns-preview",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--max-filesize",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mmap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-U",
+          "long": "--multiline",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--multiline-dotall",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-config",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-context-separator",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-I",
+          "long": "--no-filename",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-dot",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-exclude",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-files",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-global",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-messages",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-parent",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ignore-vcs",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-line-number",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-messages",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pcre2-unicode",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-require-git",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-unicode",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-0",
+          "long": "--null",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--null-data",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--one-file-system",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-o",
+          "long": "--only-matching",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--passthru",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--path-separator",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-P",
+          "long": "--pcre2",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pcre2-version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pre",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pre-glob",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": "--pretty",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--regex-size-limit",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-e",
+          "long": "--regexp",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": "--search-zip",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-S",
+          "long": "--smart-case",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sort",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sort-files",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--sortr",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stats",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--stop-on-nonmatch",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": "--text",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trace",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--trim",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--type",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type-add",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type-clear",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type-list",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--type-not",
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-u",
+          "long": "--unrestricted",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--vimgrep",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": "--with-filename",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": "--word-regexp",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-g",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "Url",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "A",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "PATTERN",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "To",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "beginning",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "dash",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "expression",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "flag.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "for",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "match",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "regular",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "searching.",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "the",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "use",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "used",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "with",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "include",
+      "description": "the corpus being searched, the rg command, the actual output and the expected output. Please also include the output of running the same rg command but with the --debug flag.",
       "flags": [
         {
           "short": "-A",
@@ -4562,7 +5727,7 @@
     },
     {
       "name": "ripgrep",
-      "description": "also provides a flag, --no-config, that when present will suppress any and all support for configuration. This includes any future support for auto-loading configuration files from pre-determined paths.",
+      "description": "may abort unexpectedly when using default settings if it searches a file that is simultaneously truncated. This behavior can be avoided by passing the --no-mmap flag which will forcefully disable the use of memory maps in all cases.",
       "flags": [
         {
           "short": "-A",
@@ -5726,8 +6891,8 @@
       "aliases": []
     },
     {
-      "name": "with",
-      "description": "the -a/--text flag enabled. (When the -a/--text flag isn't enabled, ripgrep will replace all NUL bytes with line terminators, which",
+      "name": "then",
+      "description": "the entire output for each individual file is buffered into memory in order to prevent interleaving matches in the output. To avoid this, you can",
       "flags": [
         {
           "short": "-A",

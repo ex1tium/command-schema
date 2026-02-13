@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "cksum",
-  "description": "CKSUM(1) User Commands CKSUM(1)",
+  "description": "Print or verify checksums.",
   "global_flags": [
     {
       "short": "-a",
       "long": "--algorithm",
       "value_type": "String",
       "takes_value": true,
-      "description": "See DIGEST below.",
+      "description": "select the digest type to use. See DIGEST below.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--base64",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "emit base64-encoded digests, not hexadecimal",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "read checksums from the FILEs and check them",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "indicate which implementation used",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--ignore-missing",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't fail or report status for missing files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--length",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "digest length in bits; must not exceed the max for the blake2 algorithm and must be a multiple of 8",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": null,
       "long": "--quiet",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "don't print OK for each successfully verified file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--status",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "don't output anything, status code shows success",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--strict",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "exit non-zero for improperly formatted checksum lines",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--untagged",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "create a reversed style checksum, without digest type",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "output version information and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--warn",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "warn about improperly formatted checksum lines",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,15 +158,104 @@
       "long": "--zero",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "end each output line with NUL, not newline, and disable file name escaping",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "blake2b",
+      "description": "(equivalent to b2sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "bsd",
+      "description": "(equivalent to sum -r)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "crc",
+      "description": "(equivalent to cksum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "md5",
+      "description": "(equivalent to md5sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sha1",
+      "description": "(equivalent to sha1sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sha224",
+      "description": "(equivalent to sha224sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sha256",
+      "description": "(equivalent to sha256sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sha384",
+      "description": "(equivalent to sha384sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sha512",
+      "description": "(equivalent to sha512sum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sm3",
+      "description": "(only available through cksum)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "sysv",
+      "description": "(equivalent to sum -s)",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [],
-  "source": "ManPage",
-  "confidence": 0.8,
+  "source": "HelpCommand",
+  "confidence": 1.0,
   "version": null
 }

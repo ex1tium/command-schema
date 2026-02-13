@@ -8,7 +8,7 @@
       "long": "--all-blocks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "causes  llvm-cov  to  show  the count for each block instead of just one count for the entire line.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--hash-filenames",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "followed  by  MD5  hash calculated for it.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--long-file-names",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "coverage output of files included from the main source file, add the main file name followed by ## as a prefix to the output file names. This can be combined with the --preserve-paths option to use complete paths for both the main file and the included file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--object-directory",
       "value_type": "File",
       "takes_value": true,
-      "description": "objects  in  DIR or based on FILE's path. If you specify a particular object file, the coverage data files are expected to have the same base name with .gcno and .gcda extensions. If you specify a directory, the files are expected in  that  directory  with  the same base name as the source file.",
+      "description": "directory  with  the  same base name as the source file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--preserve-paths",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to that file. The directories are separate by # characters, with . directories removed and .. directories replaced by ^ charac‐ ters. When used with the --long-file-names option, this applies to both the main file name and the included file name.",
+      "description": "path components when naming the coverage output files. In addition to the source file name, include the directories from the path to that file. The directories are separate by # characters, with . directories removed and .. directories replaced by  ^  charac‐ ters. When used with the --long-file-names option, this applies to both the main file name and the included file name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "The demangler is expected to read  a  newline-sepa‐ rated list of symbols from stdin and write a newline-separated list of the same length to stdout.",
+      "description": "sup‐ ply  arguments  to  the demangler (e.g -Xdemangler c++filt -Xdemangler -n for C++).  The demangler is expected to read a newline-sepa‐ rated list of symbols from stdin and write a newline-separated list of the same length to stdout.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "not  included  in  the universal binary or to use an architecture that does not match a non-universal binary.",
+      "description": "a list of architectures such that the Nth entry in the list corresponds to the Nth specified binary. If the covered object is a universal binary, this specifies the architecture to use. It is an error to specify an architecture that is not included in the uni‐ versal binary or to use an architecture that does not match a non-universal binary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "of  -fcover‐ age-prefix-map -fcoverage-compilation-dir, or -ffile-compilation-dir.",
+      "description": "used  as  a base for relative coverage mapping paths. Only applicable when binaries have been compiled with one of -fcover‐ age-prefix-map -fcoverage-compilation-dir, or -ffile-compilation-dir.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "high and low watermarks for coverage in html format output. This allows you to set the high and low watermark of coverage as de‐ sired, green when coverage >= high, red when coverage < low, and yellow otherwise. Both high and low should be between 0-100 and high > low.",
+      "description": "high  and low watermarks for coverage in html format output. This allows you to set the high and low watermark of coverage as de‐ sired, green when coverage >= high, red when coverage < low, and yellow otherwise. Both high and low should be between 0-100 and  high > low.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": null,
       "value_type": "Directory",
       "takes_value": true,
-      "description": "system build ID directories.",
+      "description": "to  system build ID directories.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +196,9 @@
     {
       "short": "-debuginfod",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "debuginfod to look up coverage mapping for binary IDs present in the profile but not in any object given on the command line. De‐ faults to true if debuginfod is compiled in and configured via the DEBUGINFOD_URLS environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,9 +266,9 @@
     {
       "short": "-name-allowlist",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "code  coverage only for functions listed in the given file. Each line in the file should start with allowlist_fun:, immediately followed by the name of the function to accept. This name can be a wildcard expression.",
+      "description": "with  allowlist_fun:,  immediately followed by the name of the function to accept. This name can be a wildcard expression.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -286,9 +286,9 @@
     {
       "short": "-num-threads",
       "long": null,
-      "value_type": "File",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "N  threads to write file reports (only applicable when -output-dir is specified). When N=0, llvm-cov auto-detects an appropriate number of threads to use. This is the default.",
+      "description": "auto-detects  an  appropriate number of threads to use. This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "view  mode (i.e  when  -name or -name-regex are used to select specific functions), the report is written to PATH/functions.EXTENSION. When used in file view mode, a report for each file is written to PATH/REL_PATH_TO_FILE.EXTENSION.",
+      "description": "a  directory  to write coverage reports into. If the directory does not exist, it is created. When used in function view mode (i.e when -name or -name-regex are used to select specific functions), the report is written to PATH/functions.EXTENSION. When used in file view mode, a report for each file is written to PATH/REL_PATH_TO_FILE.EXTENSION.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "llvm-cov  on  a different machine where you have the same files on a different path. Multiple -path-equivalence arguments can be passed to specify different mappings. Each argument consists of a source path <from> and its corresponding local path <to>.  The map‐ pings are applied in the order they are specified. If multiple mappings can be applied to a single path, the  first  mapping  encoun‐ tered is used.",
+      "description": "then use  llvm-cov  on  a  different machine where you have the same files on a different path. Multiple -path-equivalence arguments can be passed to specify different mappings. Each argument consists of a source path <from> and its corresponding local path <to>.  The  map‐ pings are applied in the order they are specified. If multiple mappings can be applied to a single path, the first mapping encountered is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +388,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an  index file in each directory that contains at least one source file with a top level index showing aggregates. Defaults to false.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +428,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the combined summary.  Defaults to true.",
+      "description": "source  regions that are instantiated multiple times, such as templates in C++, show each instantiation separately as well as the combined summary.  Defaults to true.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +448,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "multi‐ ple on the line.  Defaults to false.",
+      "description": "Defaults to false.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +488,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  execution  counts  for each region by displaying a caret that points to the character where the region starts. Defaults to false.",
+      "description": "the  region  starts.  Defaults  to false.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -526,9 +526,9 @@
     {
       "short": "-summary-only",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "units such as individual functions or regions. The result will contain the same information as produced by the llvm-cov report command, but presented in JSON or lcov format rather than text.",
+      "description": "only  summary information for each file in the coverage data. This mode will not export coverage information for smaller units such as individual functions or regions. The result will contain the same information as produced by the llvm-cov report command,  but presented in JSON or lcov format rather than text.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -584,8 +584,8 @@
       "aliases": []
     },
     {
-      "name": "rate",
-      "description": ".gcda file for each object file. Each time you run the program, the execution counts are summed into any existing .gcda files, so be sure to remove any old files if you do not want their contents to be included.",
+      "name": "the",
+      "description": "-fprofile-arcs and -ftest-coverage options to add the instrumentation. (Alternatively, you can use the --coverage option, which includes both of those other options.)",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -593,20 +593,6 @@
     }
   ],
   "positional": [
-    {
-      "name": "-object",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-sources",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "bin",
       "value_type": "String",

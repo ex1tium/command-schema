@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "mknod",
-  "description": "MKNOD(1) User Commands MKNOD(1)",
+  "description": "Create the special file NAME of the given TYPE.",
   "global_flags": [
     {
-      "short": "-Z",
-      "long": "--context[",
-      "value_type": "String",
+      "short": null,
+      "long": "--context",
+      "value_type": "Url",
       "takes_value": true,
-      "description": "set the SELinux security context to default type",
+      "description": "like -Z, or if CTX is specified then set the SELinux or SMACK security context to CTX",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": "-m",
       "long": "--mode",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "set file permission bits to MODE, not a=rw - umask",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,44 +38,81 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "output version information and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "set the SELinux security context to default type",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "b",
+      "description": "create a block (buffered) special file",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "c",
+      "description": "create a character (unbuffered) special file",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "u"
+      ]
+    },
+    {
+      "name": "p",
+      "description": "create a FIFO",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
-      "name": "major",
+      "name": "MAJOR",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     },
     {
-      "name": "minor",
+      "name": "MINOR",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "name",
+      "name": "NAME",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "type",
+      "name": "TYPE",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "source": "HelpCommand",
+  "confidence": 1.0,
   "version": null
 }

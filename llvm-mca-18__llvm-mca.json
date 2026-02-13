@@ -8,7 +8,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  hardware  statistics.  This enables extra statistics related to the dispatch logic, the hardware schedulers, the register file(s), and the retire control unit. This option is disabled by default.",
+      "description": "the  hardware  schedulers,  the  register file(s), and the retire control unit. This option is disabled by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "information  about bottlenecks that affect the throughput. This analysis can be expensive, and it is disabled by default. Bot‐ tlenecks are highlighted in the summary view. Bottleneck analysis is currently not supported for processors with an in-order backend.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "target  specific  implementation.  The generic classes never detect any custom hazards or make any post processing modifications to instructions.",
+      "description": "the  target  specific  implementation.  The generic classes never detect any custom hazards or make any post processing modifications to instructions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "usage of the generic InstrumentManager rather than using the target specific implementation. The generic class creates Instru‐ ments that provide no extra information, and InstrumentManager never overrides the default schedule class for a given instruction.",
+      "description": "usage  of the generic InstrumentManager rather than using the target specific implementation. The generic class creates Instru‐ ments that provide no extra information, and InstrumentManager never overrides the default schedule class for a given instruction.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "a  different dispatch width for the processor. The dispatch width defaults to field 'IssueWidth' in the processor scheduling model.  If width is zero, then the default dispatch width is used.",
+      "description": "a  different  dispatch width for the processor. The dispatch width defaults to field 'IssueWidth' in the processor scheduling model.  If width is zero, then the default dispatch width is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "well  as  static/dynamic  dispatch stall events. This view is disabled by default.",
+      "description": "extra  dispatch  statistics.  This  view collects and analyzes instruction dispatch events, as well as static/dynamic dispatch stall events. This view is disabled by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "from  the  re‐ source pressure view because it doesn't require that the code is simulated. It instead prints the theoretical uniform distribution of resource pressure for every instruction in sequence.",
+      "description": "resource  pressure  information  based on the static information available from the processor model. This differs from the re‐ source pressure view because it doesn't require that the code is simulated. It instead prints the theoretical uniform distribution  of resource pressure for every instruction in sequence.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-iterations",
       "long": null,
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "to  a  default  value (i.e. 100).",
+      "description": "the  number  of  iterations  to run. If this flag is set to 0, then the tool sets the number of iterations to a default value (i.e. 100).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Print the requested views in valid JSON format. The instructions and the processor resources are printed as members  of  special  top level  JSON  objects.   The individual views refer to them by index. However, not all views are currently supported. For example, the report from the bottleneck analysis is not printed out in JSON. All the default views are currently supported.",
+      "description": "Print  the  requested  views  in valid JSON format. The instructions and the processor resources are printed as members of special top level JSON objects.  The individual views refer to them by index. However, not all views are currently supported. For example, the re‐ port from the bottleneck analysis is not printed out in JSON. All the default views are currently supported.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": "the  size  of the load queue in the load/store unit emulated by the tool.  By default, the tool assumes an unbound number of entries in the load queue.  A value of zero for this flag is ignored, and the default load queue size is used instead.",
+      "description": "By default, the tool assumes an unbound number of en‐ tries in the load queue.  A value of zero for this flag is ignored, and the default load queue size is used instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "On x86, possible values are [0, 1]. A value of 0 (vic.  1) for this flag enables the AT&T (vic. Intel) assembly format for the code printed out by the tool in the analysis report.",
+      "description": "On x86, possible values are [0, 1]. A value of 0  (vic.  1) for this flag enables the AT&T (vic. Intel) assembly format for the code printed out by the tool in the analysis report.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,9 +206,9 @@
     {
       "short": "-register-file-size",
       "long": null,
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "renam‐ ing purposes. A value of zero for this flag means \"unlimited number of physical registers\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -276,9 +276,9 @@
     {
       "short": "-squeue",
       "long": null,
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "unbound  number  of entries in the store queue. A value of zero for this flag is ignored, and the default store queue size is used instead.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,9 +306,9 @@
     {
       "short": "-timeline-max-iterations",
       "long": null,
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  number  of iterations to print in the timeline view. By default, the timeline view prints information for up to 10 itera‐ tions.",
+      "description": "up  to  10  itera‐ tions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

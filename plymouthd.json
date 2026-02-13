@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "plymouthd",
-  "description": "PLYMOUTHD(8) System Administration PLYMOUTHD(8)",
+  "description": "Splash server",
   "global_flags": [
     {
       "short": null,
       "long": "--attach-to-session",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Redirect console messages from screen to log",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Output debugging information",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,19 @@
     {
       "short": null,
       "long": "--debug-file",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "File to output debugging information to",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--graphical-boot",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use graphical splashes even if the kernel console is not a VT",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,17 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "This help message",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-serial-consoles",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Ignore serial consoles",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +68,7 @@
       "long": "--kernel-command-line",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Fake kernel command line to use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +78,17 @@
       "long": "--mode",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Mode is one of: boot, shutdown",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-boot-log",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not write boot log file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +98,7 @@
       "long": "--no-daemon",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do not daemonize",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +106,9 @@
     {
       "short": null,
       "long": "--pid-file",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Write the pid of the daemon to a file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +118,7 @@
       "long": "--tty",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "TTY to use instead of default",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,7 +126,7 @@
   ],
   "subcommands": [],
   "positional": [],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.8,
   "version": null
 }

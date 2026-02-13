@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "tput",
-  "description": "tput(1) User commands tput(1)",
+  "description": null,
   "global_flags": [
     {
       "short": "-S",
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "retrieves  more than one capability per invocation of tput.  The capabilities must be passed to tput from the standard input stream instead of from the command line (see section “EXAMPLES” below).  Only one cap-code is allowed per line.  The -S option changes the meanings of the 0 and 1 exit statuses (see section “EXIT STATUS” below).",
+      "description": "read commands from standard input",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "indicates the terminal's type.  Normally this option is unnecessary, because a default is taken from the TERM environment variable. If specified, the environment variables LINES and COLUMNS are also ignored.",
+      "description": "use this instead of $TERM",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,19 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "reports the version of ncurses associated with tput, and exits with a successful status.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print curses-version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "verbose, show warnings",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,79 +48,48 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "prevents “tput clear” from attempting to clear the scrollback buffer.",
+      "description": "do not try to clear scrollback",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
+  "subcommands": [
     {
-      "name": "-t",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-x",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "cap-code",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "name": "capname",
+      "description": "unlike clear/init/reset, print value for capability \"capname\"",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "clear",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "clear the screen",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "init",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "longname",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "parameter",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
+      "description": "initialize the terminal",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "reset",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "terminal-type",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "reinitialize the terminal",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.95,
   "version": null
 }

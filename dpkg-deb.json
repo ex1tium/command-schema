@@ -8,7 +8,7 @@
       "long": "--[no-]uniform-compression",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "1.17.6). Otherwise  only  the  data.tar  member will use those parameters.  The only supported compression types allowed to be uniformly used are none, gzip, xz and zstd.  The --no-uniform-compression option disables uniform compression (since dpkg 1.19.0).  Uniform compression  is the default (since dpkg 1.19.0).",
+      "description": "that  the same compression parameters should be used for all archive members (i.e. control.tar and data.tar; since dpkg 1.17.6). Otherwise only the data.tar member will use those parameters.  The only supported compression types allowed  to  be  uniformly  used  are none,  gzip,  xz and zstd.  The --no-uniform-compression option disables uniform compression (since dpkg 1.19.0).  Uniform compression is the default (since dpkg 1.19.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--deb-format",
       "value_type": "String",
       "takes_value": true,
-      "description": "Allowed values are 2.0 for the new format, and 0.939000 for  the old one (default is 2.0).",
+      "description": "the  archive format version used when building (since dpkg 1.17.0).  Allowed values are 2.0 for the new format, and 0.939000 for the old one (default is 2.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--nocheck",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "You can build any archive  you  want,  no  matter  how broken, this way.",
+      "description": "You can build any  archive  you  want,  no  matter  how broken, this way.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--showformat",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  is  used  to  specify  the  format of the output --show will produce.  The format is a string that will be output for each package listed.",
+      "description": "The format is a string that will be output for each package listed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Allowed  values  are none (since dpkg 1.16.4), filtered, huffman, rle and fixed for gzip (since dpkg 1.17.0) and extreme for xz.",
+      "description": "which  compression  strategy  to use on the compressor backend, when building a package (since dpkg 1.16.2).  Allowed values are none (since dpkg 1.16.4), filtered, huffman, rle and fixed for gzip (since dpkg 1.17.0) and extreme for xz.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "which  compression  type  to  use  when  building a package.  Allowed values are gzip, xz (since dpkg 1.15.6), zstd (since dpkg 1.21.18) and none (default is zstd).",
+      "description": "Allowed values are  gzip,  xz  (since  dpkg  1.15.6),  zstd  (since  dpkg 1.21.18) and none (default is zstd).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,13 +108,21 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "gzip,  6  for  xz,  19  for zstd).   The accepted values are compressor specific.  For gzip, from 0-9 with 0 being mapped to compressor none.  For xz from 0-9.  For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.  Before dpkg 1.16.2 level 0 was equivalent to compressor none for all compressors.",
+      "description": "For gzip, from 0-9 with 0 being mapped to compressor none.  For xz from 0-9.  For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.  Before  dpkg  1.16.2  level  0  was  equivalent  to  compressor  none  for  all compressors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [
+    {
+      "name": "is",
+      "description": "specified, rather than a file, the --nocheck option may not be used (since dpkg-deb needs to read and parse the package control file to determine which filename to use).",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
     {
       "name": "problems",
       "description": "dpkg-deb will also check the permissions of the maintainer scripts and other files found in the DEBIAN control information directory.",

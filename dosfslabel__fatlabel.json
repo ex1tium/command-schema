@@ -1,24 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dosfslabel",
-  "description": "FATLABEL(8) System Manager's Manual FATLABEL(8)",
+  "description": "Change the FAT filesystem label or serial on DEVICE to NEW or display the",
   "global_flags": [
-    {
-      "short": "-c",
-      "long": "--codepage",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "By default codepage 850 is used.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-h",
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print this message and terminate",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +16,9 @@
     {
       "short": "-r",
       "long": "--reset",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove label or generate new serial number",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +28,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show version number and terminate",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +36,19 @@
     {
       "short": "-i",
       "long": "--volume-id",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Work on serial number instead of label",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "use DOS codepage N to encode/decode label (default: 850)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -57,21 +57,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "device",
+      "name": "DEVICE",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "new",
+      "name": "NEW",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
   "version": null
 }

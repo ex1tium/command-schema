@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-trigger",
-  "description": "dpkg-trigger(1) dpkg suite dpkg-trigger(1)",
+  "description": null,
   "global_flags": [
     {
       "short": null,
       "long": "--admindir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "Defaults to /var/lib/dpkg if DPKG_ADMINDIR has not been set.",
+      "description": "Use <directory> instead of /var/lib/dpkg.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--await",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If the interested package has declared  a  “noawait”  directive,  then this option will not be effective.  It is currently the default behavior.",
+      "description": "Package needs to await the processing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,27 @@
       "long": "--by-package",
       "value_type": "String",
       "takes_value": true,
-      "description": "trigger  awaiter  (normally  set  by dpkg through the DPKG_MAINTSCRIPT_PACKAGE environment variable of the maintainer scripts, naming the package to which the script belongs, and this will be used by default).",
+      "description": "Override trigger awaiter (normally set by dpkg).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--check-supported",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Check if the running dpkg supports triggers.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-?",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show this help message.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +58,7 @@
       "long": "--no-act",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Just test - don't actually change anything.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +66,9 @@
     {
       "short": null,
       "long": "--no-await",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "the  interested  package(s)  I, will  not  be added to T's trigger processing awaited list and T's status is unchanged.  T may be considered installed even though I may not yet have processed the trigger.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "No package needs to await the processing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,9 +76,19 @@
     {
       "short": null,
       "long": "--root",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": null,
+      "description": "Use <directory> instead of /.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show the version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -74,7 +104,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "source": "HelpCommand",
+  "confidence": 0.85,
   "version": null
 }

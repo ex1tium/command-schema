@@ -1,23 +1,43 @@
 {
   "schema_version": "1.0.0",
   "command": "llvm-dwarfutil-18",
-  "description": "LLVM-DWARFUTIL(1) LLVM LLVM-DWARFUTIL(1)",
+  "description": "OVERVIEW: llvm-dwarfutil is a tool to copy and manipulate debug info",
   "global_flags": [
     {
       "short": null,
-      "long": "--garbage-collection",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "When the linker does section garbage collection the abandoned de‐ bug info is left behind. Such abandoned debug info references address ranges using tombstone values. Thus, when this option is speci‐ fied, the tool removes debug info which is marked with the tombstone value.",
+      "long": "--build-accelerator",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
+      "long": "--garbage-collection",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do garbage collection for debug info(default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "Prints this help output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--linker",
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -35,10 +55,20 @@
     },
     {
       "short": null,
+      "long": "--no-odr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --no-odr-deduplication",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--no-odr-deduplication",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Don`t do ODR deduplication for debug types",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -54,11 +84,21 @@
       "requires": []
     },
     {
-      "short": "-j",
+      "short": null,
       "long": "--num-threads",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--odr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --odr-deduplication",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +108,7 @@
       "long": "--odr-deduplication",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Do ODR deduplication for debug types(default)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +118,7 @@
       "long": "--separate-debug-file",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Create two output files: file w/o debug tables and file with debug tables",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +138,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Enable verbose logging",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +146,9 @@
     {
       "short": null,
       "long": "--verify",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Run the DWARF verifier on the resulting debug info",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +158,37 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print the version and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --help",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-j",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Alias for --num-threads",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -141,7 +211,7 @@
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
   "version": null
 }

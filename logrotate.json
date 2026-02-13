@@ -8,7 +8,7 @@
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  debug  mode, which means that no changes are made to the logs and the logrotate state file is not updated.  Only debug mes‐ sages are printed.",
+      "description": "Only debug messages are printed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Sometimes this is useful after adding new entries to a logrotate config file, or if old log files have been removed by hand, as the new files will be created, and  logging  will  con‐ tinue correctly.",
+      "description": "Sometimes this is useful after adding new  entries to a logrotate config file, or if old log files have been removed by hand, as the new files will be created, and logging will continue correctly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--log",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The verbose output logged to that file is the same as when  running  logro‐ tate with -v switch.  The log file is overwritten on every logrotate execution.",
+      "description": "The verbose output logged to that file is the same as when running logrotate with -v switch.  The log file is overwritten on every logrotate execution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--state",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is useful if logrotate is being run as a different user for various sets of log files.  To prevent parallel execution logrotate by default acquires a lock on the state file, if it cannot be acquired logrotate will exit with value 3.  The default state file is /var/lib/logrotate/status.  If /dev/null is given as the  state  file,  then  logrotate will not try to lock or write the state file.",
+      "description": "logrotate to use an alternate state file.  This is useful if logrotate is being run as a different user for various sets of log files.  To prevent parallel execution logrotate by default acquires a lock on the state file, if it cannot be acquired logrotate  will exit with value 3.  The default state file is /var/lib/logrotate/status.  If /dev/null is given as the state file, then logrotate will not try to lock or write the state file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,325 +108,14 @@
       "long": "--wait-for-state-lock",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "until  lock  on the state file is released by another logrotate process.  This option may cause logrotate to wait indefinitely. Use with caution.",
+      "description": "until  lock  on  the state file is released by another logrotate process.  This option may cause logrotate to wait indefinitely. Use with caution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [
-    {
-      "name": "first",
-      "description": "argument to the script. That means a single script may be run multiple times for log file entries which match multiple files (such as the /var/log/news/* example). If sharedscripts is specified, the scripts are only run once, no matter how many logs match",
-      "flags": [
-        {
-          "short": "-d",
-          "long": "--debug",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Don't do anything, just test and print debug messages",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": "--force",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Force file rotation",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-?",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": "--log",
-          "value_type": "File",
-          "takes_value": true,
-          "description": "Log file or 'syslog' to log to syslog",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": "--mail",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Command to send mail (instead of `/usr/bin/mail')",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--skip-state-lock",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not lock the state file",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": "--state",
-          "value_type": "File",
-          "takes_value": true,
-          "description": "Path of state file",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--usage",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display brief usage message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display messages during rotation",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display version information",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--wait-for-state-lock",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Wait for lock on the state file",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "configfile",
-          "value_type": "File",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "the",
-      "description": "wildcarded pattern, and whole pattern is passed to them. However, if none of the logs in the pattern require rotating, the",
-      "flags": [
-        {
-          "short": "-d",
-          "long": "--debug",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Don't do anything, just test and print debug messages",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-f",
-          "long": "--force",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Force file rotation",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-?",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Show this help message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-l",
-          "long": "--log",
-          "value_type": "File",
-          "takes_value": true,
-          "description": "Log file or 'syslog' to log to syslog",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-m",
-          "long": "--mail",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "Command to send mail (instead of `/usr/bin/mail')",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--skip-state-lock",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Do not lock the state file",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-s",
-          "long": "--state",
-          "value_type": "File",
-          "takes_value": true,
-          "description": "Path of state file",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--usage",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display brief usage message",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-v",
-          "long": "--verbose",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display messages during rotation",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--version",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display version information",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--wait-for-state-lock",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Wait for lock on the state file",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "configfile",
-          "value_type": "File",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    }
-  ],
+  "subcommands": [],
   "positional": [
-    {
-      "name": "--debug",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--force",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--log",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--mail",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--skip-state-lock",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--state",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--verbose",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--wait-for-state-lock",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "config_file2",
       "value_type": "File",
@@ -443,6 +132,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 1.0,
+  "confidence": 0.9,
   "version": null
 }

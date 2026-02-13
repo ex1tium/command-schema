@@ -38,7 +38,7 @@
       "long": "--count",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "specified on the command line, tcpdump counts only packets that were matched by the filter expression.",
+      "description": "only  on stdout the packet count when reading capture file(s) instead of parsing/printing the packets. If a filter is specified on the command line, tcpdump counts only packets that were matched by the filter expression.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": null,
       "long": "--direction",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": null,
+      "description": "send/receive direction direction for which packets should be captured. Possible values are `in', `out' and `inout'. Not avail‐ able on all platforms.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--dont-verify-checksums",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is useful for interfaces that perform some or all of those checksum calcula‐ tion in hardware; otherwise, all outgoing TCP checksums will be flagged as bad.",
+      "description": "attempt to verify IP, TCP, or UDP checksums.  This is useful for interfaces that perform some or all of those checksum calcula‐ tion in hardware; otherwise, all outgoing TCP checksums will be flagged as bad.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--immediate-mode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "In this mode, packets are delivered to tcpdump as soon as they arrive, rather than being  buffered  for efficiency.   This is the default when printing packets rather than saving packets to a ``savefile'' if the packets are being printed to a terminal rather than to a file or pipe.",
+      "description": "in  \"immediate  mode\".  In this mode, packets are delivered to tcpdump as soon as they arrive, rather than being buffered for efficiency.  This is the default when printing packets rather than saving packets to a ``savefile'' if the packets are  being  printed to a terminal rather than to a file or pipe.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,17 +88,17 @@
       "long": "--interface",
       "value_type": "String",
       "takes_value": true,
-      "description": "on  interface.   If unspecified and if the -d flag is not given, tcpdump searches the system interface list for the lowest num‐ bered, configured up interface (excluding loopback), which may turn out to be, for example, ``eth0''.",
+      "description": "report the list of link-layer types, report the list of time stamp types, or report the results of compiling a filter expres‐ sion on interface.  If unspecified and if the -d flag is not given, tcpdump searches the system interface list  for  the  lowest  num‐ bered, configured up interface (excluding loopback), which may turn out to be, for example, ``eth0''.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-L",
       "long": "--linktype",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  data  link  type  to  use  while  capturing packets (see -L) or just compiling and dumping packet-matching code (see -d) to datalinktype.",
+      "description": "just  compiling  and  dumping  packet-matching  code  (see  -d)  to datalinktype.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--list-data-link-types",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The list of known data link types may  be  depen‐ dent  on  the  specified mode; for example, on some platforms, a Wi-Fi interface might support one set of data link types when not in monitor mode (for example, it might support only fake Ethernet headers, or might support 802.11 headers but not support 802.11  head‐ ers with radio information) and another set of data link types when in monitor mode (for example, it might support 802.11 headers, or 802.11 headers with radio information, only in monitor mode).",
+      "description": "The list of known data link types may be dependent on the specified mode; for example, on some platforms, a Wi-Fi interface might support one set of data link types when not in  monitor mode  (for  example,  it might support only fake Ethernet headers, or might support 802.11 headers but not support 802.11 headers with radio information) and another set of data link types when in monitor mode (for example, it might support 802.11  headers,  or  802.11 headers with radio information, only in monitor mode).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--list-interfaces",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  list of the network interfaces available on the system and on which tcpdump can capture packets.  For each network inter‐ face, a number and an interface name, possibly followed by a text description of the interface, are printed.  The interface  name  or the number can be supplied to the -i flag to specify an interface on which to capture.",
+      "description": "For  each  network  inter‐ face,  a  number  and an interface name, possibly followed by a text description of the interface, are printed.  The interface name or the number can be supplied to the -i flag to specify an interface on which to capture.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--list-time-stamp-types",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  supported  time  stamp  types for the interface and exit.  If the time stamp type cannot be set for the interface, no time stamp types are listed.",
+      "description": "If the time stamp type cannot be set for the interface, no time stamp types are listed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--monitor-mode",
       "value_type": "String",
       "takes_value": true,
-      "description": "only  on  some  operating systems.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": null,
       "long": "--nano",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "stamp  precision  accordingly.   When reading  packets from a savefile, using --micro truncates time stamps if the savefile was created with nanosecond precision.  In con‐ trast, a savefile created with microsecond precision will have trailing zeroes added to the time stamp when --nano is used.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "for  --time-stamp-precision=micro  or  --time-stamp-precision=nano,  adjusting the time stamp precision accordingly.  When reading packets from a savefile, using --micro truncates time stamps if the savefile was created with nanosecond precision.   In  con‐ trast, a savefile created with microsecond precision will have trailing zeroes added to the time stamp when --nano is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--no-promiscuous-mode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Note that the interface might be in promiscuous mode for some  other  reason;  hence, `-p' cannot be used as an abbreviation for `ether host {local-hw-addr} or ether broadcast'.",
+      "description": "Note that the interface might be in promiscuous mode for  some  other  reason;  hence, `-p' cannot be used as an abbreviation for `ether host {local-hw-addr} or ether broadcast'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -194,21 +194,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-w",
       "long": "--packet-buffered",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  -w  option  is  not  specified, or if it is specified but the --print flag is also specified, make the printed packet output ``packet-buffered''; i.e., as the description of the contents of each packet is printed, it will be written to the  standard  output, rather than, when not writing to a terminal, being written only when the output buffer fills.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-w",
-      "long": "--print",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "They can later be printed with the -r option. Standard output is used if file is ``-''.",
+      "description": "also  specified,  make  the  printed  packet  output ``packet-buffered'';  i.e.,  as  the description of the contents of each packet is printed, it will be written to the standard output, rather than, when not writing to a terminal, being written only when the output buffer fills.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,9 +206,9 @@
     {
       "short": null,
       "long": "--relinquish-privileges",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "tcpdump is running as root, after opening the capture device or input savefile, change the user ID to user and the group ID to the primary group of user.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +218,7 @@
       "long": "--snapshot-length",
       "value_type": "String",
       "takes_value": true,
-      "description": "Packets truncated because of a  limited  snap‐ shot  are  indicated  in  the output with ``[|proto]'', where proto is the name of the protocol level at which the truncation has oc‐ curred.",
+      "description": "Packets truncated because of a limited snapshot are indicated in the output with ``[|proto]'', where proto is the name of the protocol level at which the truncation has occurred.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +228,7 @@
       "long": "--time-stamp-precision",
       "value_type": "File",
       "takes_value": true,
-      "description": "Note that  availability  of  high  precision  time stamps  (nanoseconds)  and  their actual accuracy is platform and hardware dependent.  Also note that when writing captures made with nanosecond accuracy to a savefile, the time stamps are written with nanosecond resolution, and the file is written with  a  different magic number, to indicate that the time stamps are in seconds and nanoseconds; not all programs that read pcap savefiles will be able to read those captures.",
+      "description": "Note  that  availability  of  high  precision  time stamps  (nanoseconds)  and  their  actual accuracy is platform and hardware dependent.  Also note that when writing captures made with nanosecond accuracy to a savefile, the time stamps are written with nanosecond resolution, and the file is written  with  a  different magic  number, to indicate that the time stamps are in seconds and nanoseconds; not all programs that read pcap savefiles will be able to read those captures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +238,7 @@
       "long": "--time-stamp-type",
       "value_type": "String",
       "takes_value": true,
-      "description": "The names to use for the time stamp types are given in  pcap-tstamp(7);  not all the types listed there will necessarily be valid for any given interface.",
+      "description": "the  time  stamp type for the capture to tstamp_type.  The names to use for the time stamp types are given in pcap-tstamp(7); not all the types listed there will necessarily be valid for any given interface.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +288,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "writing  a  raw packet to a savefile, check whether the file is currently larger than file_size and, if so, close the current savefile and open a new one.  Savefiles after the first savefile will have the name specified with the -w flag, with a  number  after it, starting at 1 and continuing upward.  The units of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes).",
+      "description": "so,  close  the  current savefile  and  open  a new one.  Savefiles after the first savefile will have the name specified with the -w flag, with a number after it, starting at 1 and continuing upward.  The units of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +308,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Use spi@ipaddr algo:secret for decrypting IPsec ESP packets that are addressed to addr and contain  Security  Parameter  Index  value spi. This combination may be repeated with comma or newline separation.",
+      "description": "Use spi@ipaddr algo:secret for decrypting IPsec ESP packets that are addressed to addr and contain Security Parameter Index value spi. This combination may be repeated with comma or newline separation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +328,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Savefiles will have the  name  speci‐ fied  by  -w  which should include a time format as defined by strftime(3).  If no time format is specified, each new file will over‐ write the previous.  Whenever a generated filename is not unique, tcpdump will overwrite the  pre-existing  data;  providing  a  time specification that is coarser than the capture period is therefore not advised.",
+      "description": "Savefiles will have the name specified by  -w which should include a time format as defined by strftime(3).  If no time format is specified, each new file will overwrite the previous.  Whenever a generated filename is not unique, tcpdump will overwrite the pre-existing data; providing a  time  specification that is coarser than the capture period is therefore not advised.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -384,16 +374,6 @@
       "requires": []
     },
     {
-      "short": "-L",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-M",
       "long": null,
       "value_type": "String",
@@ -408,7 +388,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Don't  print  domain  name  qualification  of  host  names.   E.g.,  if you give this flag then tcpdump will print ``nic'' instead of ``nic.ddn.mil''.",
+      "description": "Don't  print  domain  name  qualification  of  host  names.   E.g.,  if  you give this flag then tcpdump will print ``nic'' instead of ``nic.ddn.mil''.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +428,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Currently known types are aodv (Ad-hoc  On-demand  Dis‐ tance  Vector  protocol),  carp (Common Address Redundancy Protocol), cnfp (Cisco NetFlow protocol), domain (Domain Name System), lmp (Link Management Protocol), pgm (Pragmatic General Multicast), pgm_zmtp1 (ZMTP/1.0 inside PGM/EPGM), ptp (Precision  Time  Protocol), radius  (RADIUS),  resp  (REdis Serialization Protocol), rpc (Remote Procedure Call), rtcp (Real-Time Applications control protocol), rtp (Real-Time Applications protocol), snmp (Simple Network Management Protocol), someip (SOME/IP), tftp (Trivial File Transfer  Pro‐ tocol),  vat  (Visual Audio Tool), vxlan (Virtual eXtensible Local Area Network), wb (distributed White Board) and zmtp1 (ZeroMQ Mes‐ sage Transport Protocol 1.0).",
+      "description": "packets  selected  by \"expression\" to be interpreted the specified type.  Currently known types are aodv (Ad-hoc On-demand Dis‐ tance Vector protocol), carp (Common Address Redundancy Protocol), cnfp (Cisco NetFlow protocol), domain  (Domain  Name  System),  lmp (Link  Management  Protocol),  pgm (Pragmatic General Multicast), pgm_zmtp1 (ZMTP/1.0 inside PGM/EPGM), ptp (Precision Time Protocol), radius (RADIUS), resp (REdis Serialization Protocol), rpc (Remote Procedure Call), rtcp (Real-Time Applications control protocol), rtp (Real-Time Applications protocol), snmp (Simple Network Management Protocol), someip (SOME/IP), tftp (Trivial File Transfer Protocol), vat (Visual Audio Tool), vxlan (Virtual eXtensible Local Area Network), wb (distributed White Board) and zmtp1 (ZeroMQ Message  Trans‐ port Protocol 1.0).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +438,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "is  similar to -l in its behavior, but it will cause output to be ``packet-buffered'', so that the output is written to stdout at the end of each packet rather than at the end of each line; this is buffered on all platforms, including Windows.",
+      "description": "is  similar  to -l in its behavior, but it will cause output to be ``packet-buffered'', so that the output is written to stdout at the end of each packet rather than at the end of each line; this is buffered on all platforms, including Windows.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +458,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "in  conjunction  with the -C option, this will limit the number of files created to the specified number, and begin overwriting files from the beginning, thus creating a 'rotating' buffer.  In addition, it will name the files with enough leading 0s  to  support the maximum number of files, allowing them to sort correctly.",
+      "description": "number,  and  begin  overwriting files  from  the  beginning, thus creating a 'rotating' buffer.  In addition, it will name the files with enough leading 0s to support the maximum number of files, allowing them to sort correctly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +468,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "When  parsing  and  printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex and ASCII.  This is very handy for analysing new protocols.  In the current implementation this flag may have the same effect as -XX if the packet is truncated.",
+      "description": "When parsing and printing, in addition to printing the headers of each packet, print the data of each packet  (minus  its  link  level header)  in hex and ASCII.  This is very handy for analysing new protocols.  In the current implementation this flag may have the same effect as -XX if the packet is truncated.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +478,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "When parsing and printing, in addition to printing the headers of each packet, print the data of  each  packet,  including  its  link level header, in hex and ASCII.",
+      "description": "When parsing and printing, in addition to printing the headers of each packet, print the data of each packet, including its link level header, in hex and ASCII.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +548,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Print  the  link-level  header  on each dump line.  This can be used, for example, to print MAC layer addresses for protocols such as Ethernet and IEEE 802.11.",
+      "description": "Print the link-level header on each dump line.  This can be used, for example, to print MAC layer addresses for protocols such as Eth‐ ernet and IEEE 802.11.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -578,7 +558,7 @@
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": "Print  `foreign'  IPv4  addresses numerically rather than symbolically (this option is intended to get around serious brain damage in Sun's NIS server — usually it hangs forever translating non-local internet numbers).",
+      "description": "Print  `foreign'  IPv4  addresses  numerically rather than symbolically (this option is intended to get around serious brain damage in Sun's NIS server — usually it hangs forever translating non-local internet numbers).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -668,7 +648,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "packets  from file (which was created with the -w option or by other tools that write pcap or pcapng files).  Standard input is used if file is ``-''.",
+      "description": "Standard  input  is used if file is ``-''.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -708,7 +688,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print a delta (microsecond or nanosecond resolution depending on the --time-stamp-precision option) between current and previous line on each dump line.  The default is microsecond resolution.",
+      "description": "Print a delta (microsecond or nanosecond resolution depending on the --time-stamp-precision option) between current and previous  line on each dump line.  The default is microsecond resolution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -719,6 +699,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Print a timestamp, as hours, minutes, seconds, and fractions of a second since midnight, preceded by the date, on each dump line.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ttttt",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "a delta (microsecond or nanosecond resolution depending on the --time-stamp-precision option) between current and first line on each dump line.  The default is microsecond resolution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -738,7 +728,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "When  parsing  and printing, produce (slightly more) verbose output.  For example, the time to live, identification, total length and options in an IP packet are printed.  Also enables additional packet integrity checks such as verifying the IP and ICMP header check‐ sum.",
+      "description": "When  parsing  and  printing, produce (slightly more) verbose output.  For example, the time to live, identification, total length and options in an IP packet are printed.  Also enables additional packet integrity checks such as verifying the IP and ICMP header  check‐ sum.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -758,7 +748,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Even  more  verbose output.  For example, telnet SB ... SE options are printed in full.  With -X Telnet options are printed in hex as well.",
+      "description": "Even  more  verbose  output.  For example, telnet SB ... SE options are printed in full.  With -X Telnet options are printed in hex as well.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -768,7 +758,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When  parsing  and  printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex.  The smaller of the entire packet or snaplen bytes will be printed.  Note that this is the entire link-layer  packet, so  for link layers that pad (e.g. Ethernet), the padding bytes will also be printed when the higher layer packet is shorter than the required padding.  In the current implementation this flag may have the same effect as -xx if the packet is truncated.",
+      "description": "When  parsing  and  printing,  in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex.  The smaller of the entire packet or snaplen bytes will be printed.  Note that this is the entire  link-layer  packet, so  for  link layers that pad (e.g. Ethernet), the padding bytes will also be printed when the higher layer packet is shorter than the required padding.  In the current implementation this flag may have the same effect as -xx if the packet is truncated.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -778,7 +768,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When parsing and printing, in addition to printing the headers of each packet, print the data of  each  packet,  including  its  link level header, in hex.",
+      "description": "When parsing and printing, in addition to printing the headers of each packet, print the data of each packet, including its link level header, in hex.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -796,23 +786,854 @@
     {
       "short": "-z",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "be‐ ing closed after each rotation. For example, specifying -z gzip or -z bzip2 will compress each savefile using gzip or bzip2.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
+  "subcommands": [
     {
       "name": "buffer_size",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "tcpdump version 4.99.4",
+      "flags": [
+        {
+          "short": null,
+          "long": "--count",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--immediate-mode",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--micro",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nano",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--number",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--time-stamp-precision",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-G",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Q",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
+    {
+      "name": "inout",
+      "description": "tcpdump version 4.99.4",
+      "flags": [
+        {
+          "short": null,
+          "long": "--count",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--immediate-mode",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--micro",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nano",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--number",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--time-stamp-precision",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-G",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Q",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "out",
+      "description": "tcpdump version 4.99.4",
+      "flags": [
+        {
+          "short": null,
+          "long": "--count",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--immediate-mode",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--micro",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--nano",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--number",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--print",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--time-stamp-precision",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-B",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-E",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-F",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-G",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Q",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-T",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-W",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-Z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": null,
+          "value_type": "Number",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-j",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-s",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-w",
+          "long": null,
+          "value_type": "File",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-y",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-z",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
     {
       "name": "count",
       "value_type": "Number",
@@ -913,6 +1734,6 @@
     }
   ],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

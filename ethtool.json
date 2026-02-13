@@ -18,7 +18,7 @@
       "long": "--cable-test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "approximate  distance  to  the fault may be reported.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--cable-test-tdr",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "A pulse is sent down a cable pair and the amplitude  of  the reflection,  for  a  given  distance, is reported. A break in the cable returns a big reflection. Minor damage to the cable returns a small reflection. If the cable is shorted, the amplitude of the reflection can be negative. By default, data is returned for  lengths between 0 and 150m at 1m steps, for all pairs. However parameters can be passed to restrict the collection of data. It should be not‐ ed,  that  the  interface will round the distances to whatever granularity is actually implemented. This is often 0.8 of a meter. The results should include the actual rounded first and last distance and step size.",
+      "description": "a  cable  test and report the raw Time Domain Reflectometer data.  A pulse is sent down a cable pair and the amplitude of the reflection, for a given distance, is reported. A break in the cable returns a big reflection. Minor damage  to  the  cable  returns  a small  reflection.  If the cable is shorted, the amplitude of the reflection can be negative. By default, data is returned for lengths between 0 and 150m at 1m steps, for all pairs. However parameters can be passed to restrict the collection of data. It should be  not‐ ed, that the interface will round the distances to whatever granularity is actually implemented. This is often 0.8 of a meter. The re‐ sults should include the actual rounded first and last distance and step size.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--change-eeprom",
       "value_type": "String",
       "takes_value": true,
-      "description": "offset and value specify which byte and it's new value. If  value  is  not specified, stdin is read and written to the EEPROM. The length and offset parameters allow writing to certain por‐ tions of the EEPROM.  Because of the persistent nature of writing to the EEPROM, a device-specific magic key  must  be  specified  to prevent the accidental writing to the EEPROM.",
+      "description": "value is specified, changes EEPROM byte for the specified network device.  offset and value specify which byte and it's new value. If value is not specified, stdin is read and written to the EEPROM. The length and offset parameters allow writing to certain portions of the EEPROM.  Because of the persistent nature of writing to the EEPROM, a device-specific magic key must be  specified  to  prevent the accidental writing to the EEPROM.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--dump-module-eeprom",
       "value_type": "String",
       "takes_value": true,
-      "description": "If the driver and module support it,  the  optical diagnostic  information is also read and decoded.  When either one of page, bank or i2c parameters is specified, dumps only of a sin‐ gle page or its portion is allowed. In such a case offset and length parameters are treated relatively to EEPROM page boundaries.",
+      "description": "and  if  possible decodes the EEPROM from plugin modules, e.g SFP+, QSFP.  If the driver and module support it, the optical diagnostic information is also read and decoded.  When either one of page, bank or i2c parameters is specified, dumps only of a single page or its portion is allowed. In such a case offset and length parameters are treated relatively to EEPROM page boundaries.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--eeprom-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "When raw is enabled, then it dumps the raw EEPROM data to std‐ out. The length and offset parameters allow dumping certain portions of the EEPROM.  Default is to dump the entire EEPROM.",
+      "description": "When raw is enabled, then it dumps the raw EEPROM data to  std‐ out. The length and offset parameters allow dumping certain portions of the EEPROM.  Default is to dump the entire EEPROM.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--features",
       "value_type": "String",
       "takes_value": true,
-      "description": "The following feature names are built-in and oth‐ ers may be defined by the kernel.",
+      "description": "the offload parameters and other features of the specified network device.  The following feature names are built-in and oth‐ ers may be defined by the kernel.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--get-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "By default, it prints out the dump flag, version and length  of the dump data.  When data is indicated, then ethtool fetches the dump data and directs it to a file.",
+      "description": "and  prints firmware dump for the specified network device.  By default, it prints out the dump flag, version and length of the dump data.  When data is indicated, then ethtool fetches the dump data and directs it to a file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--get-plca-status",
       "value_type": "String",
       "takes_value": true,
-      "description": "BEACON  signal.  If off, the PLCA function is temporarily disabled and the PHY is operating in plain CSMA/CD mode.",
+      "description": "the  current  PLCA  status for the given interface. If on, the PHY is successfully receiving or generating the BEACON signal. If off, the PLCA function is temporarily disabled and the PHY is operating in plain CSMA/CD mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--identify",
       "value_type": "String",
       "takes_value": true,
-      "description": "adapter-specific  action  intended to enable an operator to easily identify the adapter by sight.  Typically this involves blinking one or more LEDs on the specific network port.",
+      "description": "sight.   Typically  this  involves blinking one or more LEDs on the specific network port.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +226,9 @@
     {
       "short": "-I",
       "long": "--include-statistics",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "layer sta‐ tistics counters will also be retrieved.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--json",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "results in JavaScript Object Notation (JSON). Only a subset of options support this. Those which do not will continue to out‐ put plain text in the presence of this option.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": "--register-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "and  prints  a  register dump for the specified network device.  The register format for some devices is known and decoded others are printed in hex.  When raw is enabled, then ethtool dumps the raw register data to stdout.  If file is specified, then  use contents of previous raw register dump, rather than reading from the device.",
+      "description": "The register format for some devices is known and decoded oth‐ ers are printed in hex.  When raw is enabled, then ethtool dumps the raw register data to stdout.  If file is specified, then use con‐ tents of previous raw register dump, rather than reading from the device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -476,9 +476,9 @@
     {
       "short": "-l",
       "long": "--show-channels",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the specified network device for the numbers of channels it has.  A channel is an IRQ and the set of queues that can trigger that IRQ.",
+      "description": "A channel is an IRQ and the set of queues that  can  trigger that IRQ.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -519,16 +519,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--show-mm",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "the MAC Merge layer state. The ethtool argument -I --include-statistics can be used with this command, and MAC Merge layer sta‐ tistics counters will also be retrieved.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,7 +588,7 @@
       "long": "--show-priv-flags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The names and meanings of private flags (if any)  are  defined  by  each network device driver.",
+      "description": "The names and meanings of private flags (if any) are defined by each net‐ work device driver.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -658,7 +648,7 @@
       "long": "--show-tunnels",
       "value_type": "String",
       "takes_value": true,
-      "description": "List UDP ports kernel has programmed the device to parse as VxLAN, or GENEVE tun‐ nels.",
+      "description": "tunnel-related device capabilities and state.  List UDP ports kernel has programmed the device to parse as VxLAN, or GENEVE tun‐ nels.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -668,7 +658,7 @@
       "long": "--src",
       "value_type": "String",
       "takes_value": true,
-      "description": "their  aggregate).  Only valid if ethtool was invoked with the -I --include-statistics argument.",
+      "description": "the  MAC  Merge  layer is supported, request a particular source of device statistics (eMAC or pMAC, or their aggregate). Only valid if ethtool was invoked with the -I --include-statistics argument.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -746,8 +736,24 @@
   ],
   "subcommands": [
     {
+      "name": "a",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "advertise",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "ah4",
-      "description": "IPSEC AH over IPv4",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -755,15 +761,79 @@
     },
     {
       "name": "ah6",
-      "description": "IPSEC AH over IPv6",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "drv",
-      "description": "0x0001 General driver status",
+      "name": "aui",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "auto",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "b",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "baser",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "bnc",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "d",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "default",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "devname",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "disable",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -771,7 +841,7 @@
     },
     {
       "name": "esp4",
-      "description": "IPSEC ESP over IPv4",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -779,15 +849,47 @@
     },
     {
       "name": "esp6",
-      "description": "IPSEC ESP over IPv6",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "ether",
-      "description": "Ethernet",
+      "name": "eth-phy",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "external",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "external_lb",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "f",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "flow-type",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -795,7 +897,7 @@
     },
     {
       "name": "forced-master",
-      "description": "Force the PHY in MASTER role. Can be used without autonegotiation",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -803,39 +905,23 @@
     },
     {
       "name": "forced-slave",
-      "description": "Force the PHY in SLAVE role. Can be used without autonegotiation",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "hw",
-      "description": "0x2000 Hardware status",
+      "name": "full",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "ifdown",
-      "description": "0x0010 Interface being brought down",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "ifup",
-      "description": "0x0020 Interface being brought up",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "intr",
-      "description": "0x0200 Interrupt handling",
+      "name": "g",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -843,7 +929,7 @@
     },
     {
       "name": "ip4",
-      "description": "Raw IPv4",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -851,31 +937,79 @@
     },
     {
       "name": "ip6",
-      "description": "Raw IPv6",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "link",
-      "description": "0x0004 Link state",
+      "name": "llrs",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "pktdata",
-      "description": "0x1000 Packet contents",
+      "name": "m",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "preferred-master",
-      "description": "Prefer MASTER role on autonegotiation",
+      "name": "mii",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "msglvl",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "n",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "new",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "off",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "on",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "online",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -883,31 +1017,39 @@
     },
     {
       "name": "preferred-slave",
-      "description": "Prefer SLAVE role on autonegotiation",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "probe",
-      "description": "0x0002 Hardware probing",
+      "name": "r",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "rx_err",
-      "description": "0x0040 Receive error",
+      "name": "rs",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "rx_status",
-      "description": "0x0800 Receive completion",
+      "name": "rule",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "s",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -915,7 +1057,7 @@
     },
     {
       "name": "sctp4",
-      "description": "SCTP over IPv4",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -923,7 +1065,15 @@
     },
     {
       "name": "sctp6",
-      "description": "SCTP over IPv6",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "t",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -931,7 +1081,7 @@
     },
     {
       "name": "tcp4",
-      "description": "TCP over IPv4",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -939,39 +1089,15 @@
     },
     {
       "name": "tcp6",
-      "description": "TCP over IPv6",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "timer",
-      "description": "0x0008 Periodic status check",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "tx_done",
-      "description": "0x0400 Transmit completion",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "tx_err",
-      "description": "0x0080 Transmit error",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "tx_queued",
-      "description": "0x0100 Transmit queueing",
+      "name": "u",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -979,7 +1105,7 @@
     },
     {
       "name": "udp4",
-      "description": "UDP over IPv4",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -987,7 +1113,23 @@
     },
     {
       "name": "udp6",
-      "description": "UDP over IPv6",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "v",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "weight",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -995,7 +1137,7 @@
     },
     {
       "name": "wol",
-      "description": "0x4000 Wake-on-LAN status",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1003,27 +1145,6 @@
     }
   ],
   "positional": [
-    {
-      "name": "--debug",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--json",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-i",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "action",
       "value_type": "String",
@@ -1040,13 +1161,6 @@
     },
     {
       "name": "adaptive-tx",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "advertise",
       "value_type": "String",
       "required": false,
       "multiple": false,
@@ -1165,27 +1279,6 @@
       "description": null
     },
     {
-      "name": "default",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "delete",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "devname",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "dma",
       "value_type": "String",
       "required": false,
@@ -1285,13 +1378,6 @@
     },
     {
       "name": "eth-mac",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "eth-phy",
       "value_type": "String",
       "required": false,
       "multiple": false,
@@ -1452,13 +1538,6 @@
       "description": null
     },
     {
-      "name": "m",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "mac",
       "value_type": "String",
       "required": false,
@@ -1522,28 +1601,7 @@
       "description": null
     },
     {
-      "name": "msglvl",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "n",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "name",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "new",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -2127,20 +2185,6 @@
       "name": "w1",
       "value_type": "String",
       "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "weight",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "wol",
-      "value_type": "String",
-      "required": false,
       "multiple": false,
       "description": null
     },

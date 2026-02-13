@@ -184,38 +184,418 @@
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
+  "subcommands": [
     {
-      "name": "-dflnrv",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-o",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-t",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
+      "name": "device",
+      "description": "Unmount filesystems.",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unmount all filesystems",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-A",
+          "long": "--all-targets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unmount all mountpoints for the given device in the current namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--detach-loop",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "if mounted loop device, also free this loop device",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fake",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run; skip the umount(2) syscall",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force unmount (in case of an unreachable NFS system)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--internal-only",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "don't call the umount.<type> helpers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--lazy",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "detach the filesystem now, clean up things later",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--namespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "perform umount in another namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--no-canonicalize",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't canonicalize paths",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--no-mtab",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't write to /etc/mtab",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress 'not mounted' error messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--read-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "in case unmounting fails, try to remount read-only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--recursive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "recursively unmount a target with all its children",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--test-opts",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "limit the set of filesystems (use with -a)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--types",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "limit the set of filesystem types",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "say what is being done",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "directory",
+          "value_type": "Directory",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "source",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     },
     {
       "name": "fstype",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "description": "Unmount filesystems.",
+      "flags": [
+        {
+          "short": "-a",
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unmount all filesystems",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-A",
+          "long": "--all-targets",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "unmount all mountpoints for the given device in the current namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-d",
+          "long": "--detach-loop",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "if mounted loop device, also free this loop device",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--fake",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "dry run; skip the umount(2) syscall",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "force unmount (in case of an unreachable NFS system)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display this help",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-i",
+          "long": "--internal-only",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "don't call the umount.<type> helpers",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-l",
+          "long": "--lazy",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "detach the filesystem now, clean up things later",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-N",
+          "long": "--namespace",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "perform umount in another namespace",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-c",
+          "long": "--no-canonicalize",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't canonicalize paths",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--no-mtab",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "don't write to /etc/mtab",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-q",
+          "long": "--quiet",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "suppress 'not mounted' error messages",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-r",
+          "long": "--read-only",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "in case unmounting fails, try to remount read-only",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-R",
+          "long": "--recursive",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "recursively unmount a target with all its children",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-O",
+          "long": "--test-opts",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "limit the set of filesystems (use with -a)",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-t",
+          "long": "--types",
+          "value_type": "File",
+          "takes_value": true,
+          "description": "limit the set of filesystem types",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "say what is being done",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-V",
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "display version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [
+        {
+          "name": "directory",
+          "value_type": "Directory",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "source",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        }
+      ],
+      "subcommands": [],
+      "aliases": []
     }
   ],
+  "positional": [],
   "source": "ManPage",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

@@ -1,14 +1,24 @@
 {
   "schema_version": "1.0.0",
   "command": "watchgnupg",
-  "description": "WATCHGNUPG(1) GNU Privacy Guard 2.4 WATCHGNUPG(1)",
+  "description": "watchgnupg (GnuPG) 2.4.4",
   "global_flags": [
+    {
+      "short": null,
+      "long": "--clock",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "print only a millisecond timestamp",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
     {
       "short": null,
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is implicitly used if no socket name has been given on the command line.",
+      "description": "delete an already existing socket file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +28,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +38,7 @@
       "long": "--homedir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "no socket name is given on the command line, pass DIR to gpgconf so that the socket for a GnuPG running with DIR has its home di‐ rectory is used.  Note that the environment variable GNUPGHOME is ignored by watchgnupg.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +46,9 @@
     {
       "short": null,
       "long": "--tcp",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "A Unix domain socket can optionally also be  given  as  a second source.  This option does not use a default socket name.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "listen on a TCP port and optionally on a local socket",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +58,7 @@
       "long": "--time-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print only the time; not a full timestamp",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "enable extra informational output",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "print version of the program and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -77,28 +87,21 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "--force",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "--verbose",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "socketname",
+      "name": "PORT",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
+    },
+    {
+      "name": "SOCKETNAME",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
-  "version": "2.4"
+  "version": "2.4.4"
 }

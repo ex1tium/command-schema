@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "setupcon",
-  "description": "SETUPCON(1) Console-setup User's Manual SETUPCON(1)",
+  "description": "Sets up the font and the keyboard on Linux console.",
   "global_flags": [
     {
       "short": null,
       "long": "--current-tty",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "setup only the current virtual terminal",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--font-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "On Linux this configuration should be repeated each time a new  con‐ sole driver is activated (for example when the frame buffer becomes active).",
+      "description": "setup the font only, do not setup the keyboard",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Notice that you can be forced to hard-reboot your computer if you run setupcon with this option and the screen is controlled by a X server.",
+      "description": "do not check whether we are on the console",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "display this help and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,17 @@
       "long": "--keyboard-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "On Linux it is enough to do this configuration only once.",
+      "description": "setup the keyboard only, do not setup the font",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-commands-only",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +68,7 @@
       "long": "--save",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  can be useful if you want to use setupcon early in the boot process while /usr is not yet mounted and the required data are not available.  This option will make setupcon copy the required files in /etc/console-setup/ in order to make them available be‐ fore /usr is mounted.  If you use setupcon early in the boot process, then you should run it with this option after every  change  of the console configuration.",
+      "description": "copy the font and the console map in /etc/console-setup, update /etc/console-setup/cached.*",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +78,7 @@
       "long": "--save-keyboard",
       "value_type": "File",
       "takes_value": true,
-      "description": "Do not configure anything.  Save an usable keyboard layout in FILE.",
+      "description": "options for initrd builders",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,17 +88,7 @@
       "long": "--save-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "same  as --save, but does not setup anything.  This option can be useful if you want to save the required files while the screen is controlled by a X server.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--setup-dir",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Do not configure anything.  Arrange in the directory DIR everything necessary in order to configure  the console.   The  file  DIR/morefiles lists all binaries the initrd builder has to install in the initrd image.  All other files in DIR have to be copied unchanged in the initrd.  In order to configure the console one has to run the script DIR/bin/setupcon.",
+      "description": "only save; don't setup keyboard/font immediately (implies --force)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--terminal-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "setup the terminal only",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use this option if something goes wrong or while experimenting with the configuration files.",
+      "description": "explain what is being doing, try it if s.t. goes wrong",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -117,14 +117,14 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "variant",
+      "name": "VARIANT",
       "value_type": "String",
       "required": false,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
   "version": null
 }

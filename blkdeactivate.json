@@ -1,62 +1,72 @@
 {
   "schema_version": "1.0.0",
   "command": "blkdeactivate",
-  "description": "BLKDEACTIVATE(8) BLKDEACTIVATE(8)",
+  "description": "blkdeactivate: Utility to deactivate block devices",
   "global_flags": [
     {
       "short": "-d",
-      "long": "--dmoptions",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Accepted dmsetup(8) options are:",
+      "description": "DM_OPTIONS Comma separated DM specific options",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-e",
-      "long": "--errors",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "are  sup‐ pressed and the blkdeactivate itself provides only a summary message to indicate the device was skipped.",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show errors reported from tools",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-h",
-      "long": "--help",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show this help message",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-l",
-      "long": "--lvmoptions",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": "--mdraidoptions",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "description": "LVM_OPTIONS Comma separated LVM specific options",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-m",
-      "long": "--mpathoptions",
+      "long": null,
       "value_type": "File",
+      "takes_value": true,
+      "description": "MPATH_OPTIONS Comma separated DM-multipath specific options",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "VDO_OPTIONS Comma separated VDO specific options",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "String",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -65,144 +75,53 @@
     },
     {
       "short": "-u",
-      "long": "--umount",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Without this option used, a device that is mounted is not deactivated.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-o",
-      "long": "--vdooptions",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Unmount the device if mounted",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-v",
-      "long": "--verbose",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Verbose mode (also implies -e)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
-  "positional": [
+  "subcommands": [
     {
-      "name": "-d",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
+      "name": "force",
+      "description": "force device removal",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
-      "name": "-e",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
+      "name": "retry",
+      "description": "retry removal several times in case of failure",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     },
     {
-      "name": "-h",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-l",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-m",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-o",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-r",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-u",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "-v",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "device",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "dm_options",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "lvm_options",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "mdraid_options",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "mpath_options",
-      "value_type": "File",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "vdo_options",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
+      "name": "wholevg",
+      "description": "deactivate the whole VG when processing an LV",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
     }
   ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 1.0,
   "version": null
 }

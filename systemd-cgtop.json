@@ -1,14 +1,14 @@
 {
   "schema_version": "1.0.0",
   "command": "systemd-cgtop",
-  "description": "SYSTEMD-CGTOP(1) systemd-cgtop SYSTEMD-CGTOP(1)",
+  "description": "Show top control groups by their resource usage.",
   "global_flags": [
     {
       "short": "-b",
       "long": "--batch",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Run in batch mode, accepting no input",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--delay",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Delay between updates",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--depth",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Maximum traversal depth (default: 3)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show this help",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--iterations",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Run for N iterations before exiting",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--machine",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "Show container",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-p",
       "long": "--order",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Order by path",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,17 +86,17 @@
     {
       "short": "-r",
       "long": "--raw",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Provide raw (not human-readable) numbers",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-P",
+      "short": null,
       "long": "--recursive",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -108,7 +108,27 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Show package version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-1",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Shortcut for --iterations=1",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Count userspace processes instead of tasks (excl. kernel)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,23 +138,15 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Count all processes instead of tasks (incl. kernel)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [
-    {
-      "name": "group",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    }
-  ],
-  "source": "ManPage",
-  "confidence": 0.9,
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.8,
   "version": null
 }

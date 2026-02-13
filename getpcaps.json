@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "getpcaps",
-  "description": "GETPCAPS(8) System Manager's Manual GETPCAPS(8)",
+  "description": "This program displays the capabilities on the queried process(es).",
   "global_flags": [
     {
       "short": null,
@@ -16,9 +16,19 @@
     {
       "short": null,
       "long": "--iab",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Displays IAB tuple capabilities from the process. The output format here is the text format described in  cap_iab(3).  Double  quotes encase the regular process capabilities and square brackets encase the IAB tuple. This format is also used by captree(8).",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "show IAB of process too.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--license",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "display license info",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +38,7 @@
       "long": "--ugly",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use the archaic legacy output format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +48,7 @@
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "use a more verbose output format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -47,7 +57,7 @@
   "subcommands": [],
   "positional": [
     {
-      "name": "optional",
+      "name": "opts",
       "value_type": "String",
       "required": false,
       "multiple": false,
@@ -57,11 +67,11 @@
       "name": "pid",
       "value_type": "String",
       "required": true,
-      "multiple": true,
+      "multiple": false,
       "description": null
     }
   ],
-  "source": "ManPage",
+  "source": "HelpCommand",
   "confidence": 0.9,
   "version": null
 }
