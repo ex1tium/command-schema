@@ -1,0 +1,972 @@
+{
+  "schema_version": "1.0.0",
+  "command": "wasm-ld-18",
+  "description": "OVERVIEW: LLVM Linker",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--Bdynamic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Link against shared libraries (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Bstatic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not link against shared libraries",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Bsymbolic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Bind defined symbols locally",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Map",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Print a link map to the specified file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allow-undefined",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Allow undefined symbols in linked binary. This options is equivalent to --import-undefined and --unresolved-symbols=ignore-all",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allow-undefined-file",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--build-id",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --build-id=fast",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--check-features",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Check feature compatibility of linked objects (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--color-diagnostics",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --color-diagnostics=always",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--compress-relocations",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Compress the relocation targets in the code section.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--demangle",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Demangle symbol names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dn",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --Bstatic",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dy",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --Bdynamic",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--emit-relocs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Generate relocations in output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--end-lib",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "End a grouping of objects that should be treated as if they were together in an archive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--entry",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Name of entry point symbol",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--error-limit",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Maximum number of errors to emit before stopping (0 = no limit)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--error-unresolved-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--experimental-pic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable Experimental PIC",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force a symbol to be exported",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Export all symbols (normally combined with --no-gc-sections)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export-dynamic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Put symbols in the dynamic symbol table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export-if-defined",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export-memory",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--export-table",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Export function table to the environment",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--extra-features",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fatal-warnings",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Treat warnings as errors",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--features",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Comma-separated used features, inferred from input objects by default.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--gc-sections",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable garbage collection of unused sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--global-base",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Memory offset at which to place global data (Defaults to 1024)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--growable-table",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove maximum size from function table, allowing table to grow",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print option help",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--import-memory",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--import-table",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Import function table from the environment",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--import-undefined",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Turn undefined symbols into imports where possible",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--initial-heap",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Initial size of the heap",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--initial-memory",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--keep-section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Preserve a section even when --strip-all is given. This is useful for compiler drivers such as clang or emcc that, for example, depend on the features section for post-link processing. Can be specified multiple times to keep multiple sections",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lto-debug-pass-manager",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lto-partitions",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-memory",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Maximum size of the linear memory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--merge-data-segments",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable merging data segments",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mllvm",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Additional arguments to forward to LLVM's option processing",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-check-features",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Ignore feature compatibility of linked objects",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-color-diagnostics",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --color-diagnostics=never",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-demangle",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not demangle symbol names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-entry",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not output any entry point",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-export-dynamic",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not put symbols in the dynamic symbol table (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-gc-sections",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable garbage collection of unused sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-merge-data-segments",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-pie",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not create a position independent executable (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-print-gc-sections",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not list removed unused sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-whole-archive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not force load of all members in a static library (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--pie",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Create a position independent executable",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-gc-sections",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "List removed unused sections",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-map",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print a link map to the standard output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--relocatable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Create relocatable object file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reproduce",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Dump linker invocation and input files for debugging",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rsp-quoting",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--save-temps",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Save intermediate LTO compilation results",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--shared",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Build a shared object",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--shared-memory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use shared linear memory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--soname",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set the module name in the generated name section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stack-first",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Place stack at start of linear memory rather than after data",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--start-lib",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Start a grouping of objects that should be treated as if they were together in an archive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--static",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --Bstatic",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Strip all symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strip-debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Strip debugging information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--table-base",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Table offset at which to place address taken functions (Defaults to 1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--thinlto-cache-dir",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--thinlto-cache-policy",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--thinlto-jobs",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Number of ThinLTO jobs. Default to --threads=",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--threads",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Number of threads. '1' disables multi-threading. By default all available hardware threads are used",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--trace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the names of the input files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--trace-symbol",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Trace references to symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--undefined",
+      "value_type": "Url",
+      "takes_value": true,
+      "description": "Force undefined symbol during linking",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unresolved-symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Verbose mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the version number and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--warn-unresolved-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--whole-archive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Force load of all members in a static library",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--why-extract",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Print to a file about why archive members are extracted",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--wrap",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --export-dynamic",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add a directory to the library search path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --print-map",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Optimize output file size",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --strip-debug",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Root name of library to use",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set target emulation",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Path to file to write output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --strip-all",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --trace",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the version number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-y",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --trace-symbol",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Linker option extensions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.8,
+  "version": null
+}

@@ -1,0 +1,447 @@
+{
+  "schema_version": "1.0.0",
+  "command": "zstd",
+  "description": "*** Zstandard CLI (64-bit) v1.5.5, by Yann Collet ***",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--adapt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dynamically adapt compression level to I/O conditions.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--auto-threads",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": "--decompress",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Perform decompression.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dictID",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Force dictionary ID to #. [Default: Random]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exclude-compressed",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Only compress files that are not already compressed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fast",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use to very fast compression levels. [Default: 1]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--filelist",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Read a list of files to operate on from LIST.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": "--force",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable input and output checks. Allows overwriting existing files, receiving input from the console, printing output to STDOUT, and operating on links, block devices, etc. Unrecognized formats will be passed-through through as-is.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--format",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Compress files to the `.zst` format. [Default]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display full help and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": "--keep",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Preserve INPUT file(s). [Default]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--long",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Enable long distance matching with window log #. [Default: 27]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--maxdict",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Limit dictionary to specified size #. [Default: 112640]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mmap-dict",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Memory-map dictionary file rather than mallocing and loading all at once --format=gzip Compress files to the `.gz` format.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-dictID",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't write `dictID` into the header (dictionary compression only). --[no-]compress-literals Force (un)compressed literals. --[no-]row-match-finder Explicitly enable/disable the fast, row-based matchfinder for the 'greedy', 'lazy', and 'lazy2' strategies.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-dir-flat",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Store processed files in DIR.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-dir-mirror",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Store processed files in DIR, respecting original directory structure. --[no-]asyncio Use asynchronous IO. [Default: Enabled]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--patch-from",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use REF as the reference point for Zstandard's diff engine.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--priority",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set process priority to real-time.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Suppress warnings; pass twice to suppress errors.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rm",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove INPUT file(s) after successful (de)compression.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rsyncable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Compress using a rsync-friendly method (`-B` sets block size).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--single-thread",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Share a single thread for I/O and compression (slightly different than `-T1`).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--size-hint",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Optimize compression parameters for streaming input of approximately size #.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--stdout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Write to STDOUT (even if it is a console) and keep the INPUT file(s).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stream-size",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Specify size of streaming input from STDIN.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--target-compressed-block-size",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--test",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Test compressed file integrity.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--trace",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Log tracing information to LOG.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--train",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Create a dictionary from a training set of files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--train-cover",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--train-fastcover",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--train-legacy",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use the legacy algorithm with selectivity #. [Default: 9]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ultra",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable levels beyond 19, up to 22; requires more memory.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable verbose output; pass multiple times to increase verbosity.",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the program version and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use DICT as the dictionary for compression or decompression.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output one benchmark result per input file. [Default: Consolidated result]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display short usage and exit.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print information about Zstandard-compressed files.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Write output to a single file, OUTPUT.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Operate recursively on directories.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "INPUT",
+      "value_type": "String",
+      "required": false,
+      "multiple": true,
+      "description": null
+    },
+    {
+      "name": "OUTPUT",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": "1.5.5"
+}

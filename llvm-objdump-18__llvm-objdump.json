@@ -1,0 +1,1108 @@
+{
+  "schema_version": "1.0.0",
+  "command": "llvm-objdump-18",
+  "description": "OVERVIEW: llvm object file dumper",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--adjust-vma",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Increase the displayed address by the specified offset",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--all-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display all available header information, relocation entries and the symbol table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arch",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "architecture(s) from a Mach-O file to dump",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arch-name",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Target arch to disassemble for, see --version for available targets",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--archive-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display archive header information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--archive-member-offsets",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--bind",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display mach-o binding info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--build-id",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Build ID to look up. Once found, added as an input file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--chained-fixups",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print chained fixup information (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--data-in-code",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the data in code table for Mach-O objects (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--debug-file-directory",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-vars",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Print the locations (in registers or memory) of source-level variables alongside disassembly. Supported formats: ascii, unicode (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-vars-indent",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debuginfod",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use debuginfod to find debug files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--demangle",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Demangle symbol names",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dis-symname",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "disassemble just this symbol's instructions (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--disassemble",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disassemble all executable sections found in the input files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disassemble-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disassemble all sections found in the input files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disassemble-symbols",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disassemble-zeroes",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not skip blocks of zeroes when disassembling",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disassembler-color",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disassembler-options",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dsym",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Use .dSYM file for debug info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dwarf",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump the specified DWARF debug sections. The only supported value is 'frames'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dyld-info",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print bind and rebase information used by dyld to resolve external references in a final linked binary (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--dylib-id",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the shared library's id for the dylib Mach-O file (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--dylibs-used",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the shared libraries used for linked Mach-O files (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--dynamic-reloc",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the dynamic relocation entries in the file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dynamic-syms",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the contents of the dynamic symbol table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--exports-trie",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display mach-o exported symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fault-map-section",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the content of the fault map section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--file-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the contents of the overall file header",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--full-contents",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the content of each section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--full-leading-addr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print full leading address",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--function-starts",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --section-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display available options (--help-hidden for more)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--indirect-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print indirect symbol table for Mach-O objects (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--info-plist",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the info plist section as strings for Mach-O objects (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--lazy-bind",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display mach-o lazy binding info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--line-numbers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "When disassembling, display source line numbers. Implies --disassemble",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--link-opt-hints",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the linker optimization hints for Mach-O objects (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--macho",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use MachO specific object file parser",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mattr",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Target specific attributes (--mattr=help for details)",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mcpu",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Target a specific cpu type (--mcpu=help for details)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-addresses",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --no-leading-addr",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-debuginfod",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't use debuginfod to find debug files",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-leading-addr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "When disassembling, do not print leading addresses for instructions or inline relocations",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-leading-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print no leading headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-print-imm-hex",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not use hex format for immediate values",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-show-raw-insn",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "When disassembling instructions, do not print the instruction bytes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-symbolic-operands",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--non-verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the info for Mach-O objects in non-verbose or numeric form (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "-ver",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--objc-meta-data",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the Objective-C runtime meta data for Mach-O files (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-C",
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--offloading",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the content of the offloading section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prefix",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add prefix to absolute paths",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prefix-strip",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Strip out initial directories from absolute paths. No effect without --prefix",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-imm-hex",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use hex format for immediate values (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--private-header",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display only the first format specific file header",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--private-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display format specific file headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--raw-clang-ast",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump the raw binary contents of the clang AST section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rebase",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display mach-o rebasing info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reloc",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the relocation entries in the file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rpaths",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the runtime search paths for the Mach-O file (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--section",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Operate on the specified sections only. With --macho dump segment,section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--section-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display summaries of the headers for each section.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-all-symbols",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show all symbols during disassembly, even if multiple symbols are defined at the same location",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-lma",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display LMA column when dumping ELF section headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--source",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "When disassembling, display source interleaved with the disassembly. Implies --disassemble",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--start-address",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--stop-address",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set the stop address for disassembling, printing relocations and printing symbols",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--symbol-description",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Add symbol description for disassembly. This option is for XCOFF files only",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--symbolize-operands",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Symbolize instruction operands when disassembling",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--syms",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the symbol table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--traceback-table",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Decode traceback table in disassembly. Implies --disassemble. This option is for XCOFF files only",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--triple",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Target triple to disassemble for, see --version for available targets",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--universal-headers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print Mach-O universal headers (requires --macho)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-O",
+        "--macho"
+      ]
+    },
+    {
+      "short": null,
+      "long": "--unwind-info",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display unwind information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the version of this program",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--weak-bind",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display mach-o weak binding info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--wide",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Ignored for compatibility with GNU objdump",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--x86-asm-syntax",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Emit AT&T-style disassembly",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --demangle",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --disassemble-all",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --disassembler-options=",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --dynamic-reloc",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --source",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --dynamic-syms",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --archive-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --disassemble",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --file-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print line information from debug info if available",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --section-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-j",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --section",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --line-numbers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --macho",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mllvm",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Specify an argument to forward to LLVM's CommandLine library",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --private-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --reloc",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --full-contents",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --syms",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --unwind-info",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --version",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --all-headers",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for --disassemble-zeroes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "input",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": null
+}

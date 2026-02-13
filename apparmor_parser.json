@@ -1,0 +1,460 @@
+{
+  "schema_version": "1.0.0",
+  "command": "apparmor_parser",
+  "description": "AppArmor parser version 4.0.1",
+  "global_flags": [
+    {
+      "short": "-C",
+      "long": "--Complain",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Force the profile into complain mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Werror",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Convert warnings to errors. If n is specified turn warn n into an error",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--abort-on-error",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Abort processing of profiles on first error",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": "--add",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Add apparmor definitions [default]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": "--binary",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Input is precompiled profile",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": "--cache-loc",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set the location of the profile caches",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--config-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Specify the parser config file location, processed early before other options.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Debug cache file checks",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--kernel-features",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Kernel features set in file n",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-jobs",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Hard cap on --jobs. Default 8*cpus",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--names",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump names of profiles in input.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--override-policy-abi",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "As policy-features but override ABI rules",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--policy-features",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Policy features set in file n",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--preprocess",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump preprocessed profile",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-cache-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the cache directory path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-config",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print config file location",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--purge-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Clear cache regardless of its state",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't emit warnings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": "--readimpliesX",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Map profile read permissions to mr",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": "--remove",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove apparmor definitions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": "--replace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Replace apparmor definitions",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": "--show-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Report cache hit/miss details",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--skip-bad-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't clear cache if out of sync",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--skip-bad-cache-rebuild",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-K",
+      "long": "--skip-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not attempt to load or save cached profiles",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": "--skip-kernel-load",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do everything except loading into kernel",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": "--skip-read-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Do not attempt to load cached profiles",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--stdout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Dump compiled profile to stdout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show profile names as they load",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display version info and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--warn",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Enable warnings (see --help=warn)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W",
+      "long": "--write-cache",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Save cached profile (force with -T)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Dump internal info for debugging",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Add n to the search path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Control dfa optimizations",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set base dir and cwd",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Debug apparmor definitions OR [n]",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set location of apparmor filesystem",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display this text or info about cmd",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-j",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set the number of compile threads",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use only features n",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set Namespace for the profile",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Write output to file n",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "profile",
+      "value_type": "File",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": "4.0.1"
+}

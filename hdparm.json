@@ -1,0 +1,850 @@
+{
+  "schema_version": "1.0.0",
+  "command": "hdparm",
+  "description": "hdparm - get/set hard disk parameters - version v9.65, by Mark Lord.",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--Iraw",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Write raw binary identify data to the specfied file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Istdin",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Read identify data from stdin as ASCII hex",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--Istdout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Write identify data to stdout as ASCII hex",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dco-freeze",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Freeze/lock current device configuration until next power cycle",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dco-identify",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Read/dump device configuration identify data",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dco-restore",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Reset device configuration back to factory defaults",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dco-setmax",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use DCO to set maximum addressable sectors",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--direct",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use O_DIRECT to bypass page cache for timings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--drq-hsm-error",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Crash system with a \"stuck DRQ\" error (VERY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fallocate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Create a file without writing data to disk",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fibmap",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show device extents (and fragmentation) for a file",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fwdownload",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download firmware file to drive (EXTREMELY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fwdownload-mode3",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download firmware using min-size segments (EXTREMELY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fwdownload-mode3-max",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download firmware using max-size segments (EXTREMELY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fwdownload-mode7",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download firmware using a single segment (EXTREMELY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fwdownload-modee",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download firmware using mode E (min-size segments) (EXTREMELY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fwdownload-modee-max",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Download firmware using mode E (max-size segments) (EXTREMELY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--idle-immediate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Idle drive immediately",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--idle-unload",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Idle immediately and unload heads",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--make-bad-sector",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--offset",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use with -t, to begin timings at given offset (in GiB) from start of drive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--prefer-ata12",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use 12-byte (instead of 16-byte) SAT commands when possible",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--read-sector",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Read and dump (in hex) a sector directly from the media",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--repair-sector",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for the --write-sector option (VERY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-antifreeze-lock",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Block sanitize-freeze-lock command until next power cycle",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-block-erase",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Start block erase operation",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-crypto-scramble",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Change the internal encryption keys that used for used data",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-freeze-lock",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Lock drive's sanitize features until next power cycle",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-overwrite",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "PATTERN Overwrite the internal media with constant PATTERN",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-overwrite-passes",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Number of overwrite passes from 0 to 7, default 0 means 16 passes",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--sanitize-status",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show sanitize status information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--security-help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display help for ATA security commands",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--set-sector-size",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Change logical sector size of drive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--trim-sector-ranges",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Tell SSD firmware to discard unneeded data sectors: lba:count ..",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--trim-sector-ranges-stdin",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Same as above, but reads lba:count pairs from stdin",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display extra diagnostics from some commands",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--write-sector",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Repair/overwrite a (possibly bad) sector directly on the media (VERY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set the drive look-ahead flag (0/1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-B",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set Advanced Power Management setting (1-255)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Check drive power mode status",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable/disable drive defect management",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set cd/dvd drive speed",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Flush drive write cache",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Read temperature from drive (Hitachi only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Detailed/current information directly from drive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-J",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set Western DIgital \"Idle3\" timeout for a WDC \"Green\" drive (DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-K",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set drive keep_features_over_reset flag (0/1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set drive doorlock (0/1) (removable harddisks only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set acoustic management (0-254, 128: quiet, 254: fast)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set max visible number of sectors (HPA) (VERY DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set drive prefetch count",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set DMA queue_depth (if supported)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set device write-read-verify flag",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set standby (spindown) timeout",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Perform cache read timings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Obsolete",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display program version and exit immediately",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-W",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set drive write-caching flag (0/1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-X",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set IDE xfer mode (DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Y",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Put drive to sleep",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable Seagate auto-powersaving mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set fs readahead",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-b",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set bus state (0 == off, 1 == on, 2 == tristate)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Get/set IDE 32-bit IO setting",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set using_dma flag",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Flush buffer cache for device on exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display drive geometry",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display terse usage information",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display drive identification",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-k",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set keep_settings_over_reset flag (0/1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-m",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set multiple sector count",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-n",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set ignore-write-errors flag (0/1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set PIO mode on IDE interface chipset (0,1,2,3,4,...)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Change next setting quietly",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set device readonly flag (DANGEROUS to set)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set power-up in standby flag (0/1) (DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Perform device read timings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Get/set unmaskirq flag (0/1)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use defaults; same as -acdgkmur for IDE drives",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Perform device reset (DANGEROUS)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Obsolete",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-y",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Put drive in standby mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Re-read partition table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "device",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": "9.65"
+}

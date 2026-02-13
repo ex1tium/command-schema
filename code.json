@@ -638,15 +638,15 @@
         {
           "short": null,
           "long": "--extensions-dir",
-          "value_type": "File",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-h",
+          "short": null,
           "long": "--help",
           "value_type": "Bool",
           "takes_value": false,
@@ -658,8 +658,8 @@
         {
           "short": null,
           "long": "--install-extension",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -668,8 +668,8 @@
         {
           "short": null,
           "long": "--log",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
           "multiple": false,
           "conflicts_with": [],
@@ -678,8 +678,8 @@
         {
           "short": null,
           "long": "--name",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": "Sets the machine name for port forwarding service",
           "multiple": false,
           "conflicts_with": [],
@@ -708,8 +708,8 @@
         {
           "short": null,
           "long": "--reconnection-grace-time",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -718,8 +718,8 @@
         {
           "short": null,
           "long": "--server-data-dir",
-          "value_type": "Directory",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -734,70 +734,23 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         }
       ],
       "positional": [],
       "subcommands": [
         {
-          "name": "help",
-          "description": "Print this message or the help of the given subcommand(s)",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "kill",
-          "description": "Stops any running tunnel on the system",
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
           "name": "prune",
-          "description": "Delete all servers which are currently not running",
+          "description": "Delete all servers which are currently not running kill        Stops any running tunnel on the system restart     Restarts any running tunnel on the system status      Gets whether there is a tunnel running on the current machine rename      Rename the name of this machine associated with port forwarding service unregister  Remove this machine's association with the port forwarding service user service     (Preview) Manages the tunnel when installed as a system service, help        Print this message or the help of the given subcommand(s)",
           "flags": [
             {
               "short": null,
@@ -842,670 +795,6 @@
           ],
           "positional": [],
           "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "rename",
-          "description": "Rename the name of this machine associated with port forwarding service",
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [
-            {
-              "name": "NAME",
-              "value_type": "String",
-              "required": true,
-              "multiple": false,
-              "description": "The name you'd like to rename your machine to"
-            }
-          ],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "restart",
-          "description": "Restarts any running tunnel on the system",
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "service",
-          "description": "(Preview) Manages the tunnel when installed as a system service,",
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [
-            {
-              "name": "help",
-              "description": "Print this message or the help of the given subcommand(s)",
-              "flags": [],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "install",
-              "description": "Installs or re-installs the tunnel service on the machine",
-              "flags": [
-                {
-                  "short": null,
-                  "long": "--accept-server-license-terms",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "If set, the user accepts the server license terms and the server will be started without a user prompt",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--cli-data-dir",
-                  "value_type": "Directory",
-                  "takes_value": true,
-                  "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print help",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--log",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--name",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Sets the machine name for port forwarding service",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--verbose",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print verbose output (implies --wait)",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "log",
-              "description": "Shows logs for the running service",
-              "flags": [
-                {
-                  "short": null,
-                  "long": "--cli-data-dir",
-                  "value_type": "Directory",
-                  "takes_value": true,
-                  "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print help",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--log",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--verbose",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print verbose output (implies --wait)",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "uninstall",
-              "description": "Uninstalls and stops the tunnel service",
-              "flags": [
-                {
-                  "short": null,
-                  "long": "--cli-data-dir",
-                  "value_type": "Directory",
-                  "takes_value": true,
-                  "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print help",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--log",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--verbose",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print verbose output (implies --wait)",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            }
-          ],
-          "aliases": []
-        },
-        {
-          "name": "status",
-          "description": "Gets whether there is a tunnel running on the current machine",
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "unregister",
-          "description": "Remove this machine's association with the port forwarding service",
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "user",
-          "description": null,
-          "flags": [
-            {
-              "short": null,
-              "long": "--cli-data-dir",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print help",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--log",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--verbose",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Print verbose output (implies --wait)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [
-            {
-              "name": "help",
-              "description": "Print this message or the help of the given subcommand(s)",
-              "flags": [],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "login",
-              "description": "Log in to port forwarding service",
-              "flags": [
-                {
-                  "short": null,
-                  "long": "--access-token",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "An access token to store for authentication [env: VSCODE_CLI_ACCESS_TOKEN=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--cli-data-dir",
-                  "value_type": "Directory",
-                  "takes_value": true,
-                  "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print help",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--log",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--provider",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "The auth provider to use. If not provided, a prompt will be shown [possible values: microsoft, github]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--refresh-token",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "An access token to store for authentication [env: VSCODE_CLI_REFRESH_TOKEN=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--verbose",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print verbose output (implies --wait)",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "logout",
-              "description": "Log out of port forwarding service",
-              "flags": [
-                {
-                  "short": null,
-                  "long": "--cli-data-dir",
-                  "value_type": "Directory",
-                  "takes_value": true,
-                  "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print help",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--log",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--verbose",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print verbose output (implies --wait)",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "show",
-              "description": "Show the account that's logged into port forwarding service",
-              "flags": [
-                {
-                  "short": null,
-                  "long": "--cli-data-dir",
-                  "value_type": "Directory",
-                  "takes_value": true,
-                  "description": "Directory where CLI metadata should be stored [env: VSCODE_CLI_DATA_DIR=]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print help",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--log",
-                  "value_type": "String",
-                  "takes_value": true,
-                  "description": "Log level to use [possible values: trace, debug, info, warn, error, critical, off]",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--verbose",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Print verbose output (implies --wait)",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            }
-          ],
           "aliases": []
         }
       ],

@@ -1,0 +1,560 @@
+{
+  "schema_version": "1.0.0",
+  "command": "claude.bak.20260212-224957",
+  "description": "non-interactive output",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--add-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Additional directories to allow tool access to",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--agent",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Agent for the current session. Overrides the 'agent' setting.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--agents",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "JSON object defining custom agents (e.g. '{\"reviewer\": {\"description\": \"Reviews code\", \"prompt\": \"You are a code reviewer\"}}')",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allow-dangerously-skip-permissions",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable bypassing all permission checks as an option, without it being enabled by default. Recommended only for sandboxes with no internet access.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allowed-tools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma or space-separated list of tool names to allow (e.g. \"Bash(git:*) Edit\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allowedTools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma or space-separated list of tool names to allow (e.g. \"Bash(git:*) Edit\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--append-system-prompt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Append a system prompt to the default system prompt",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--betas",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Beta headers to include in API requests (API key users only)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--chrome",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable Claude in Chrome integration",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--continue",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Continue the most recent conversation in the current directory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dangerously-skip-permissions",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Bypass all permission checks. Recommended only for sandboxes with no internet access.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable debug mode with optional category filtering (e.g., \"api,hooks\" or \"!1p,!file\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug-file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Write debug logs to a specific file path (implicitly enables debug mode)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disable-slash-commands",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable all skills",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disallowed-tools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma or space-separated list of tool names to deny (e.g. \"Bash(git:*) Edit\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disallowedTools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma or space-separated list of tool names to deny (e.g. \"Bash(git:*) Edit\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--effort",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Effort level for the current session (low, medium, high)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fallback-model",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable automatic fallback to specified model when default model is overloaded (only works with --print)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--file",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "File resources to download at startup. Format: file_id:relative_path (e.g., --file file_abc:doc.txt file_def:img.png)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fork-session",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "When resuming, create a new session ID instead of reusing the original (use with --resume or --continue)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--from-pr",
+      "value_type": "Url",
+      "takes_value": true,
+      "description": "Resume a session linked to a PR by PR number/URL, or open interactive picker with optional search term",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display help for command",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ide",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Automatically connect to IDE on startup if exactly one valid IDE is available",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--include-partial-messages",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Include partial message chunks as they arrive (only works with --print and --output-format=stream-json)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--input-format",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Input format (only works with --print): \"text\" (default), or \"stream-json\" (realtime streaming input) (choices: \"text\", \"stream-json\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--json-schema",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "JSON Schema for structured output validation. Example: {\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"}},\"required\":[\"name\"]}",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-budget-usd",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Maximum dollar amount to spend on API calls (only works with --print)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mcp-config",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Load MCP servers from JSON files or strings (space-separated)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mcp-debug",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "[DEPRECATED. Use --debug instead] Enable MCP debug mode (shows MCP server errors)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--model",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Model for the current session. Provide an alias for the latest model (e.g. 'sonnet' or 'opus') or a model's full name (e.g. 'claude-sonnet-4-5-20250929').",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-chrome",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable Claude in Chrome integration",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-session-persistence",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Disable session persistence - sessions will not be saved to disk and cannot be resumed (only works with --print)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--output-format",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output format (only works with --print): \"text\" (default), \"json\" (single result), or \"stream-json\" (realtime streaming) (choices: \"text\", \"json\", \"stream-json\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--permission-mode",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Permission mode to use for the session (choices: \"acceptEdits\", \"bypassPermissions\", \"default\", \"delegate\", \"dontAsk\", \"plan\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--plugin-dir",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Load plugins from directories for this session only (repeatable)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print response and exit (useful for pipes). Note: The workspace trust dialog is skipped when Claude is run with the -p mode. Only use this flag in directories you trust.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--replay-user-messages",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--resume",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Resume a conversation by session ID, or open interactive picker with optional search term",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--session-id",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Use a specific session ID for the conversation (must be a valid UUID)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--setting-sources",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma-separated list of setting sources to load (user, project, local).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--settings",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Path to a settings JSON file or a JSON string to load additional settings from",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strict-mcp-config",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Only use MCP servers from --mcp-config, ignoring all other MCP configurations",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--system-prompt",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "System prompt to use for the session",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Specify the list of available tools from the built-in set. Use \"\" to disable all tools, \"default\" to use all tools, or specify tool names (e.g. \"Bash,Edit,Read\").",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--verbose",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Override verbose mode setting from config",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output the version number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Continue the most recent conversation in the current directory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable debug mode with optional category filtering (e.g., \"api,hooks\" or \"!1p,!file\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display help for command",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print response and exit (useful for pipes). Note: The workspace trust dialog is skipped when Claude is run with the -p mode. Only use this flag in directories you trust.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Resume a conversation by session ID, or open interactive picker with optional search term",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output the version number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [
+    {
+      "name": "doctor",
+      "description": "Check the health of your Claude Code auto-updater install [options] [target]                        Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version) mcp                                               Configure and manage MCP servers plugin                                            Manage Claude Code plugins setup-token                                       Set up a long-lived authentication token (requires Claude subscription) update|upgrade                                    Check for updates and install if available",
+      "flags": [
+        {
+          "short": "-h",
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Display help for command",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
+  "positional": [
+    {
+      "name": "prompt",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": "Your prompt"
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 1.0,
+  "version": null
+}

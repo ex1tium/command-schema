@@ -6,15 +6,15 @@
     {
       "short": null,
       "long": "--adjust-system-clock",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-a",
+      "short": null,
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
@@ -24,7 +24,7 @@
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
@@ -34,7 +34,7 @@
       "requires": []
     },
     {
-      "short": "-H",
+      "short": null,
       "long": "--host",
       "value_type": "String",
       "takes_value": true,
@@ -44,7 +44,7 @@
       "requires": []
     },
     {
-      "short": "-M",
+      "short": null,
       "long": "--machine",
       "value_type": "String",
       "takes_value": true,
@@ -84,7 +84,7 @@
       "requires": []
     },
     {
-      "short": "-p",
+      "short": null,
       "long": "--property",
       "value_type": "String",
       "takes_value": true,
@@ -112,85 +112,393 @@
       "multiple": false,
       "conflicts_with": [],
       "requires": []
+    },
+    {
+      "short": "-H",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Operate on remote host",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Operate on local container",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-a",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show all properties, including empty ones",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Show this help message",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Show only properties by this name",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
     }
   ],
   "subcommands": [
     {
-      "name": "list-timezones",
-      "description": "Show known time zones",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "revert",
-      "description": "Revert the interface specific NTP servers",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "set-local-rtc",
-      "description": "Control whether RTC is in local time",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "set-ntp",
-      "description": "Enable or disable network time synchronization",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "set-time",
-      "description": "Set system time",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "set-timezone",
-      "description": "Set system time zone",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "show",
-      "description": "Show properties of systemd-timedated",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "show-timesync",
-      "description": "Show properties of systemd-timesyncd ntp-servers INTERFACE SERVER… Set the interface specific NTP servers",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "status",
-      "description": "Show current time settings",
-      "flags": [],
+      "description": "Show current time settings show                     Show properties of systemd-timedated set-time TIME            Set system time set-timezone ZONE        Set system time zone list-timezones           Show known time zones set-local-rtc BOOL       Control whether RTC is in local time set-ntp BOOL             Enable or disable network time synchronization",
+      "flags": [
+        {
+          "short": null,
+          "long": "--adjust-system-clock",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all properties, including empty ones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--host",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on remote host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--machine",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--monitor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Monitor status of systemd-timesyncd",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ask-password",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not prompt for password",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--property",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show only properties by this name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--value",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "When showing properties, only print the value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on remote host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all properties, including empty ones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show only properties by this name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
       "name": "timesync-status",
-      "description": "Show status of systemd-timesyncd",
-      "flags": [],
+      "description": "Show status of systemd-timesyncd show-timesync            Show properties of systemd-timesyncd ntp-servers INTERFACE SERVER… Set the interface specific NTP servers revert INTERFACE         Revert the interface specific NTP servers",
+      "flags": [
+        {
+          "short": null,
+          "long": "--adjust-system-clock",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--all",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all properties, including empty ones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--host",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on remote host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--machine",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--monitor",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Monitor status of systemd-timesyncd",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-ask-password",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not prompt for password",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--no-pager",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Do not pipe output into a pager",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--property",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show only properties by this name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--value",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "When showing properties, only print the value",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--version",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show package version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-H",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on remote host",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-M",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Operate on local container",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-a",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show all properties, including empty ones",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-h",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Show this help message",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-p",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": "Show only properties by this name",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []

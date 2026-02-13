@@ -6,18 +6,18 @@
     {
       "short": null,
       "long": "--add-dir",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Additional directories to allow tool access to",
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--agent",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Agent for the current session. Overrides the 'agent' setting.",
       "multiple": false,
       "conflicts_with": [],
@@ -26,12 +26,7 @@
     {
       "short": null,
       "long": "--agents",
-      "value_type": {
-        "Choice": [
-          "\"reviewer\": {\"description\": \"Reviews code\"",
-          "\"prompt\": \"You are a code reviewer\""
-        ]
-      },
+      "value_type": "String",
       "takes_value": true,
       "description": "JSON object defining custom agents (e.g. '{\"reviewer\": {\"description\": \"Reviews code\", \"prompt\": \"You are a code reviewer\"}}')",
       "multiple": false,
@@ -50,19 +45,29 @@
     },
     {
       "short": null,
-      "long": "--allowedTools",
-      "value_type": "String",
-      "takes_value": true,
+      "long": "--allowed-tools",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Comma or space-separated list of tool names to allow (e.g. \"Bash(git:*) Edit\")",
-      "multiple": true,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allowedTools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma or space-separated list of tool names to allow (e.g. \"Bash(git:*) Edit\")",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--append-system-prompt",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Append a system prompt to the default system prompt",
       "multiple": false,
       "conflicts_with": [],
@@ -74,7 +79,7 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Beta headers to include in API requests (API key users only)",
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -89,7 +94,7 @@
       "requires": []
     },
     {
-      "short": "-c",
+      "short": null,
       "long": "--continue",
       "value_type": "Bool",
       "takes_value": false,
@@ -109,10 +114,10 @@
       "requires": []
     },
     {
-      "short": "-d",
+      "short": null,
       "long": "--debug",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Enable debug mode with optional category filtering (e.g., \"api,hooks\" or \"!1p,!file\")",
       "multiple": false,
       "conflicts_with": [],
@@ -121,8 +126,8 @@
     {
       "short": null,
       "long": "--debug-file",
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Write debug logs to a specific file path (implicitly enables debug mode)",
       "multiple": false,
       "conflicts_with": [],
@@ -140,19 +145,29 @@
     },
     {
       "short": null,
-      "long": "--disallowedTools",
-      "value_type": "String",
-      "takes_value": true,
+      "long": "--disallowed-tools",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Comma or space-separated list of tool names to deny (e.g. \"Bash(git:*) Edit\")",
-      "multiple": true,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disallowedTools",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Comma or space-separated list of tool names to deny (e.g. \"Bash(git:*) Edit\")",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--effort",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Effort level for the current session (low, medium, high)",
       "multiple": false,
       "conflicts_with": [],
@@ -161,8 +176,8 @@
     {
       "short": null,
       "long": "--fallback-model",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Enable automatic fallback to specified model when default model is overloaded (only works with --print)",
       "multiple": false,
       "conflicts_with": [],
@@ -171,18 +186,18 @@
     {
       "short": null,
       "long": "--file",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "File resources to download at startup. Format: file_id:relative_path (e.g., --file file_abc:doc.txt file_def:img.png)",
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--fork-session",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "When resuming, create a new session ID instead of reusing the original (use with --resume or --continue)",
       "multiple": false,
       "conflicts_with": [],
@@ -199,7 +214,7 @@
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
@@ -211,8 +226,8 @@
     {
       "short": null,
       "long": "--ide",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Automatically connect to IDE on startup if exactly one valid IDE is available",
       "multiple": false,
       "conflicts_with": [],
@@ -221,8 +236,8 @@
     {
       "short": null,
       "long": "--include-partial-messages",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Include partial message chunks as they arrive (only works with --print and --output-format=stream-json)",
       "multiple": false,
       "conflicts_with": [],
@@ -231,8 +246,8 @@
     {
       "short": null,
       "long": "--input-format",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Input format (only works with --print): \"text\" (default), or \"stream-json\" (realtime streaming input) (choices: \"text\", \"stream-json\")",
       "multiple": false,
       "conflicts_with": [],
@@ -241,12 +256,7 @@
     {
       "short": null,
       "long": "--json-schema",
-      "value_type": {
-        "Choice": [
-          "\"type\":\"object\"",
-          "\"properties\":{\"name\":{\"type\":\"string\""
-        ]
-      },
+      "value_type": "String",
       "takes_value": true,
       "description": "JSON Schema for structured output validation. Example: {\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"}},\"required\":[\"name\"]}",
       "multiple": false,
@@ -266,18 +276,18 @@
     {
       "short": null,
       "long": "--mcp-config",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": "Load MCP servers from JSON files or strings (space-separated)",
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--mcp-debug",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "[DEPRECATED. Use --debug instead] Enable MCP debug mode (shows MCP server errors)",
       "multiple": false,
       "conflicts_with": [],
@@ -286,8 +296,8 @@
     {
       "short": null,
       "long": "--model",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Model for the current session. Provide an alias for the latest model (e.g. 'sonnet' or 'opus') or a model's full name (e.g. 'claude-sonnet-4-5-20250929').",
       "multiple": false,
       "conflicts_with": [],
@@ -316,8 +326,8 @@
     {
       "short": null,
       "long": "--output-format",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Output format (only works with --print): \"text\" (default), \"json\" (single result), or \"stream-json\" (realtime streaming) (choices: \"text\", \"json\", \"stream-json\")",
       "multiple": false,
       "conflicts_with": [],
@@ -326,8 +336,8 @@
     {
       "short": null,
       "long": "--permission-mode",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Permission mode to use for the session (choices: \"acceptEdits\", \"bypassPermissions\", \"default\", \"delegate\", \"dontAsk\", \"plan\")",
       "multiple": false,
       "conflicts_with": [],
@@ -336,15 +346,15 @@
     {
       "short": null,
       "long": "--plugin-dir",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Load plugins from directories for this session only (repeatable)",
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-p",
+      "short": null,
       "long": "--print",
       "value_type": "Bool",
       "takes_value": false,
@@ -356,18 +366,18 @@
     {
       "short": null,
       "long": "--replay-user-messages",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Re-emit user messages from stdin back on stdout for acknowledgment (only works with --input-format=stream-json and --output-format=stream-json)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-r",
+      "short": null,
       "long": "--resume",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Resume a conversation by session ID, or open interactive picker with optional search term",
       "multiple": false,
       "conflicts_with": [],
@@ -386,8 +396,8 @@
     {
       "short": null,
       "long": "--setting-sources",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Comma-separated list of setting sources to load (user, project, local).",
       "multiple": false,
       "conflicts_with": [],
@@ -396,7 +406,7 @@
     {
       "short": null,
       "long": "--settings",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": "Path to a settings JSON file or a JSON string to load additional settings from",
       "multiple": false,
@@ -406,8 +416,8 @@
     {
       "short": null,
       "long": "--strict-mcp-config",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Only use MCP servers from --mcp-config, ignoring all other MCP configurations",
       "multiple": false,
       "conflicts_with": [],
@@ -416,8 +426,8 @@
     {
       "short": null,
       "long": "--system-prompt",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "System prompt to use for the session",
       "multiple": false,
       "conflicts_with": [],
@@ -426,10 +436,10 @@
     {
       "short": null,
       "long": "--tools",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Specify the list of available tools from the built-in set. Use \"\" to disable all tools, \"default\" to use all tools, or specify tool names (e.g. \"Bash,Edit,Read\").",
-      "multiple": true,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -444,8 +454,68 @@
       "requires": []
     },
     {
-      "short": "-v",
+      "short": null,
       "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Output the version number",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Continue the most recent conversation in the current directory",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable debug mode with optional category filtering (e.g., \"api,hooks\" or \"!1p,!file\")",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display help for command",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print response and exit (useful for pipes). Note: The workspace trust dialog is skipped when Claude is run with the -p mode. Only use this flag in directories you trust.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Resume a conversation by session ID, or open interactive picker with optional search term",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": "Output the version number",
@@ -457,504 +527,7 @@
   "subcommands": [
     {
       "name": "doctor",
-      "description": "Check the health of your Claude Code auto-updater",
-      "flags": [
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display help for command",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "install",
-      "description": "Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)",
-      "flags": [
-        {
-          "short": null,
-          "long": "--force",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Force installation even if already installed",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display help for command",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "target",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "mcp",
-      "description": "Configure and manage MCP servers",
-      "flags": [
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display help for command",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [
-        {
-          "name": "add",
-          "description": "Add an MCP server to Claude Code.",
-          "flags": [
-            {
-              "short": null,
-              "long": "--callback-port",
-              "value_type": "Directory",
-              "takes_value": true,
-              "description": "Fixed port for OAuth callback (for servers requiring pre-registered redirect URIs)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--client-id",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "OAuth client ID for HTTP/SSE servers",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--client-secret",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Prompt for OAuth client secret (or set MCP_CLIENT_SECRET env var)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-e",
-              "long": "--env",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Set environment variables (e.g. -e KEY=value)",
-              "multiple": true,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-H",
-              "long": "--header",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Set WebSocket headers (e.g. -H \"X-Api-Key: abc123\" -H \"X-Custom: value\")",
-              "multiple": true,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-s",
-              "long": "--scope",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Configuration scope (local, user, or project) (default: \"local\")",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-t",
-              "long": "--transport",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Transport type (stdio, sse, http). Defaults to stdio if not specified.",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [
-            {
-              "name": "commandOrUrl",
-              "value_type": "Url",
-              "required": true,
-              "multiple": false,
-              "description": null
-            },
-            {
-              "name": "name",
-              "value_type": "String",
-              "required": true,
-              "multiple": false,
-              "description": null
-            }
-          ],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
-      "aliases": []
-    },
-    {
-      "name": "plugin",
-      "description": "Manage Claude Code plugins",
-      "flags": [
-        {
-          "short": "-h",
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "Display help for command",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [
-        {
-          "name": "disable",
-          "description": "Disable an enabled plugin",
-          "flags": [
-            {
-              "short": "-a",
-              "long": "--all",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Disable all enabled plugins",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-s",
-              "long": "--scope",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Installation scope: user, project, local (default: user)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [
-            {
-              "name": "plugin",
-              "value_type": "String",
-              "required": false,
-              "multiple": false,
-              "description": null
-            }
-          ],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "enable",
-          "description": "Enable a disabled plugin",
-          "flags": [
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-s",
-              "long": "--scope",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Installation scope: user, project, local (default: user)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [
-            {
-              "name": "plugin",
-              "value_type": "String",
-              "required": true,
-              "multiple": false,
-              "description": null
-            }
-          ],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "help",
-          "description": "display help for command",
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "list",
-          "description": "List installed plugins",
-          "flags": [
-            {
-              "short": null,
-              "long": "--available",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Include available plugins from marketplaces (requires --json)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": [
-                "--json"
-              ]
-            },
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": null,
-              "long": "--json",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Output as JSON",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "manifest",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "marketplace",
-          "description": "Manage Claude Code marketplaces",
-          "flags": [
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [
-            {
-              "name": "name",
-              "value_type": "String",
-              "required": false,
-              "multiple": false,
-              "description": null
-            }
-          ],
-          "subcommands": [
-            {
-              "name": "add",
-              "description": "Add a marketplace from a URL, path, or GitHub",
-              "flags": [
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Display help for command",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [
-                {
-                  "name": "source",
-                  "value_type": "String",
-                  "required": true,
-                  "multiple": false,
-                  "description": null
-                }
-              ],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "help",
-              "description": "display help for command",
-              "flags": [],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "list",
-              "description": "List all configured marketplaces",
-              "flags": [
-                {
-                  "short": "-h",
-                  "long": "--help",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Display help for command",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                },
-                {
-                  "short": null,
-                  "long": "--json",
-                  "value_type": "Bool",
-                  "takes_value": false,
-                  "description": "Output as JSON",
-                  "multiple": false,
-                  "conflicts_with": [],
-                  "requires": []
-                }
-              ],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            },
-            {
-              "name": "repo",
-              "description": null,
-              "flags": [],
-              "positional": [],
-              "subcommands": [],
-              "aliases": []
-            }
-          ],
-          "aliases": []
-        },
-        {
-          "name": "update",
-          "description": "Update a plugin to the latest version (restart required to apply)",
-          "flags": [
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            },
-            {
-              "short": "-s",
-              "long": "--scope",
-              "value_type": "String",
-              "takes_value": true,
-              "description": "Installation scope: user, project, local, managed (default: user)",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [
-            {
-              "name": "plugin",
-              "value_type": "String",
-              "required": true,
-              "multiple": false,
-              "description": null
-            }
-          ],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "validate",
-          "description": "Validate a plugin or marketplace",
-          "flags": [
-            {
-              "short": "-h",
-              "long": "--help",
-              "value_type": "Bool",
-              "takes_value": false,
-              "description": "Display help for command",
-              "multiple": false,
-              "conflicts_with": [],
-              "requires": []
-            }
-          ],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
-      "aliases": []
-    },
-    {
-      "name": "setup-token",
-      "description": "Set up a long-lived authentication token (requires Claude subscription)",
+      "description": "Check the health of your Claude Code auto-updater install [options] [target]                        Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version) mcp                                               Configure and manage MCP servers plugin                                            Manage Claude Code plugins setup-token                                       Set up a long-lived authentication token (requires Claude subscription) update|upgrade                                    Check for updates and install if available",
       "flags": [
         {
           "short": "-h",

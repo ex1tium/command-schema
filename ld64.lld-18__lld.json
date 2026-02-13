@@ -1,0 +1,772 @@
+{
+  "schema_version": "1.0.0",
+  "command": "ld64.lld-18",
+  "description": "OVERVIEW: LLVM Linker",
+  "global_flags": [
+    {
+      "short": null,
+      "long": "--call-graph-profile-sort",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--check-category-conflicts",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--color-diagnostics",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --color-diagnostics=always",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cs-profile-generate",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Perform context sensitive PGO instrumentation",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--cs-profile-path",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dead-strip-duplicates",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--deduplicate-strings",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Enable string deduplication",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--end-lib",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "End a grouping of objects that should be treated as if they were together in an archive",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--error-limit",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Maximum number of errors to print before exiting (default: 20)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--help-hidden",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display help for hidden options",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icf",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Set level for identical code folding (default: none)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ignore-auto-link-option",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--lto-debug-pass-manager",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-call-graph-profile-sort",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-color-diagnostics",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Alias for --color-diagnostics=never",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-deduplicate-strings",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-pgo-warn-mismatch",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "turn off warnings about profile cfg mismatch",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-warn-dylib-install-name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--pgo-warn-mismatch",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "turn on warnings about profile cfg mismatch (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-dylib-search",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print which paths lld searched when trying to find dylibs",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--print-symbol-order",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reproduce",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Write tar file containing inputs and command to reproduce link",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--start-lib",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--strict-auto-link",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Always warn for missing frameworks or libraries if they are loaded via LC_LINKER_OPTIONS",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--thinlto-cache-policy",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--thinlto-jobs",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Number of ThinLTO jobs. Default to --threads=",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--threads",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Number of threads. '1' disables multi-threading. By default all available hardware threads are used",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--time-trace",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Record time trace to <file>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--time-trace-granularity",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Display the version number and exit",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--warn-dylib-install-name",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add dir to the framework search path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add dir to the library search path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Optimize output file size",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-ObjC",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Load all members of static archives that are an Objective-C class or category.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Strip debug information (STABS or DWARF) from the output",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-U",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Allow <symbol> to have no definition",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Z",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Remove standard directories from the library and framework search paths",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-alias",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-arch",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-bundle",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Produce a bundle",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-demangle",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Demangle symbol names in diagnostics",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dylib",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Produce a shared library",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-dynamic",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Link dynamically (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Make <symbol> the entry point of an executable (default is \"start\" from crt1.o)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-encryptable",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Generate the LC_ENCRYPTION_INFO load command",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-execute",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Produce a main executable (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-filelist",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-framework",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Search for <name>.framework/<name> on the framework search path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-headerpad",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Allocate hex <size> extra space for future expansion of the load commands via install_name_tool (default is 0x20)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-hidden-l",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Like -l<name>, but load all symbols with hidden visibility",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-map",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Writes all symbols and their addresses to <path>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mcpu",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Processor family target for LTO code generation",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mllvm",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Options to pass to LLVM",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-needed-l",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Like -l<name>, but link library even if its symbols are not used and -dead_strip_dylibs is active",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-o",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "The name of the output file (default: `a.out')",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-pie",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Build a position independent executable (default)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-reexport-l",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Like -l<name>, but export all symbols of <name> from newly created library",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-reproducible",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Make the output reproducible by removing timestamps and other non-deterministic data. This is the default behavior.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-rpath",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Add <path> to dyld search list for dylibs with load path prefix `@rpath/'",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-save-temps",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Save intermediate LTO compilation results",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sectalign",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sectcreate",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sectorder",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-segcreate",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-segprot",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-syslibroot",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Prepend <rootdir> to all library and framework search paths",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-t",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Log every file the linker loads: object, archive, and dylib",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-u",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Require that <symbol> be defined for the link to succeed",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-umbrella",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Re-export this dylib through the umbrella framework <name>",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-undefined",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the linker version and search paths in addition to linking",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-w",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Suppress all warnings",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-weak-l",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Like -l<name>, but mark library and its references as weak imports",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-whyload",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alias for -why_load",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-x",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Exclude non-global symbols from the output symbol table",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [],
+  "source": "HelpCommand",
+  "confidence": 0.8,
+  "version": null
+}

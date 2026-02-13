@@ -1,0 +1,764 @@
+{
+  "schema_version": "1.0.0",
+  "command": "nping",
+  "description": "Nping 0.7.94SVN ( https://nmap.org/nping )",
+  "global_flags": [
+    {
+      "short": "-6",
+      "long": "--IPv6",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Use IP version 6.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ack",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": ": Set ACK number.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": ARP/RARP probe mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arp-sender-ip",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<addr> : Set sender IP address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arp-sender-mac",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set sender MAC address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arp-target-ip",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<addr> : Set target IP address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arp-target-mac",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set target MAC address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--arp-type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Type: ARP, ARP-reply, RARP, RARP-reply.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--badsum",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Use a random invalid checksum.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--badsum-ip",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Use a random invalid checksum.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--bpf-filter",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Specify custom BPF filter.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": "--count",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": ": Stop after <n> rounds.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--data",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Include a custom payload.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--data-length",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Include len random bytes as payload.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--data-string",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Include a custom ASCII text.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--debug",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set verbosity and debug to the max level.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--delay",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Adjust delay between probes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dest-ip",
+      "value_type": {
+        "Choice": [
+          "target specification"
+        ]
+      },
+      "takes_value": true,
+      "description": ": Set destination IP address (used as an alternative to {target specification} ).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dest-mac",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set destination mac address. (Disables ARP resolution)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": "--dest-port",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set destination port(s).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--df",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set Don't Fragment flag.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--echo-client",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Run Nping in client mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--echo-port",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Use custom <port> to listen or connect.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--echo-server",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Run Nping in server mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ether-type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set EtherType value.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--evil",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set Reserved / Evil flag.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--flags",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set TCP flags (ACK,PSH,RST,SYN,FIN...)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--flow",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set flow label.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": "--help",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Display help information.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-H",
+      "long": "--hide-sent",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Do not display sent packets.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--hop-limit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set hop limit (same as IPv4 TTL).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": ICMP probe mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-advert-entry",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Add router advertisement entry.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-advert-lifetime",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set router advertisement lifetime.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-code",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": ICMP code.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-id",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set identifier.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-orig-time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<timestamp> : Set originate timestamp.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-param-pointer",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set parameter problem pointer.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-recv-time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<timestamp> : Set receive timestamp.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-redirect-addr",
+      "value_type": "Directory",
+      "takes_value": true,
+      "description": ": Set redirect address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-seq",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": ": Set sequence number.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-trans-time",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set transmit timestamp.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--icmp-type",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": ICMP type.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--id",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<id> : Set identification field (16 bits).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-e",
+      "long": "--interface",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Use supplied network interface.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ip-options",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mf",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set More Fragments flag.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--mtu",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set MTU. Packets get fragmented if MTU is small enough.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-N",
+      "long": "--no-capture",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Do not try to capture replies.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--no-crypto",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Disable encryption and authentication.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--once",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Stop the server after one connection.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--privileged",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Assume user is fully privileged.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--quiet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set verbosity and debug level to minimum.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--rate",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "<rate> : Send num packets per second.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--safe-payloads",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Erase application data in echoed packets.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--send-eth",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Send packets at the raw Ethernet layer.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--send-ip",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Send packets using raw IP sockets.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--seq",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": ": Set sequence number.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": "--source-ip",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Set source IP address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--source-mac",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set source MAC address.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-g",
+      "long": "--source-port",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": ": Try to use a custom source port.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tcp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": TCP probe mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tcp-connect",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Unprivileged TCP connect probe mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tos",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set type of service field (8bits).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--tr",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Traceroute mode (can only be used with TCP/UDP/ICMP modes).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--traffic-class",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set traffic class.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--ttl",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set time to live [0-255].",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--udp",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": UDP probe mode.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unprivileged",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Assume user lacks raw socket privileges.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": "--version",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": Display current version number.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--win",
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set window size.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-d",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set debugging level. E.g: -d3",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-q",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Decrease verbosity level N times",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": ": Set verbosity level. E.g: -v4",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    }
+  ],
+  "subcommands": [],
+  "positional": [
+    {
+      "name": "Probe",
+      "value_type": "String",
+      "required": false,
+      "multiple": false,
+      "description": null
+    }
+  ],
+  "source": "HelpCommand",
+  "confidence": 0.9,
+  "version": "0.7.94"
+}
