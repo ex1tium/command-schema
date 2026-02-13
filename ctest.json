@@ -4,31 +4,11 @@
   "description": "ctest - CTest Command-Line Reference",
   "global_flags": [
     {
-      "short": "-A",
-      "long": "--add-notes",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--build-and-test",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "= Configure, build and run a test.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-C",
-      "long": "--build-config",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "= Configure, build and run a test.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +16,9 @@
     {
       "short": null,
       "long": "--build-config-sample",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "e.g.  Debug, Release etc.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "= A sample executable to use to determine the configuration",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -56,8 +36,8 @@
     {
       "short": null,
       "long": "--build-generator",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "= Specify the generator to use.",
       "multiple": false,
       "conflicts_with": [],
@@ -88,7 +68,7 @@
       "long": "--build-makeprogram",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  explicit  make program to be used by CMake when configuring and building the project. Only applicable for Make and Ninja based generators.",
+      "description": "= Specify the make program to use.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +96,9 @@
     {
       "short": null,
       "long": "--build-options",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "for  the  build  tool).   Note  that  if  this  is  specified,  the",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "= Add extra options to the build step.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +128,7 @@
       "long": "--build-target",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The option can be given multiple times with different targets, in which case each target is built in turn.  A clean will be done before building each target unless the --build-noclean option is given.",
+      "description": "= Specify a specific target to build.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -164,16 +144,6 @@
       "requires": []
     },
     {
-      "short": "-D",
-      "long": "--dashboard",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "= Define a variable for script mode",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--debug",
       "value_type": "Bool",
@@ -184,20 +154,10 @@
       "requires": []
     },
     {
-      "short": "-E",
-      "long": "--exclude-regex",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--extra-submit",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -206,39 +166,9 @@
     {
       "short": "-VV",
       "long": "--extra-verbose",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "= Enable more verbose output from tests.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-FA",
-      "long": "--fixture-exclude-any",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-FC",
-      "long": "--fixture-exclude-cleanup",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-FS",
-      "long": "--fixture-exclude-setup",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -256,15 +186,15 @@
     {
       "short": null,
       "long": "--group",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "= Specify what build group on the dashboard you'd like to submit results to.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-h",
+      "short": null,
       "long": "--help",
       "value_type": "String",
       "takes_value": true,
@@ -276,8 +206,8 @@
     {
       "short": null,
       "long": "--help-command",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -286,8 +216,8 @@
     {
       "short": null,
       "long": "--help-command-list",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -296,8 +226,8 @@
     {
       "short": null,
       "long": "--help-commands",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Print cmake-commands manual and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -306,8 +236,8 @@
     {
       "short": null,
       "long": "--help-full",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Print all help manuals and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -316,8 +246,8 @@
     {
       "short": null,
       "long": "--help-manual",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -326,8 +256,8 @@
     {
       "short": null,
       "long": "--help-manual-list",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= List help manuals available and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -336,8 +266,8 @@
     {
       "short": null,
       "long": "--help-module",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -346,8 +276,8 @@
     {
       "short": null,
       "long": "--help-module-list",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= List modules with help available and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -356,8 +286,8 @@
     {
       "short": null,
       "long": "--help-modules",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Print cmake-modules manual and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -366,8 +296,8 @@
     {
       "short": null,
       "long": "--help-policies",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Print cmake-policies manual and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -376,8 +306,8 @@
     {
       "short": null,
       "long": "--help-policy",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -386,8 +316,8 @@
     {
       "short": null,
       "long": "--help-policy-list",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= List policies with help available and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -396,8 +326,8 @@
     {
       "short": null,
       "long": "--help-properties",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Print cmake-properties manual and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -406,8 +336,8 @@
     {
       "short": null,
       "long": "--help-property",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -416,8 +346,8 @@
     {
       "short": null,
       "long": "--help-property-list",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -426,8 +356,8 @@
     {
       "short": null,
       "long": "--help-variable",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -436,8 +366,8 @@
     {
       "short": null,
       "long": "--help-variable-list",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -446,8 +376,8 @@
     {
       "short": null,
       "long": "--help-variables",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Print cmake-variables manual and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -466,29 +396,9 @@
     {
       "short": null,
       "long": "--interactive-debug-mode",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-LE",
-      "long": "--label-exclude",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "With multiple -LE, exclude tests where each regular expression matches at least one label.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": "--label-regex",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "With multiple -L, run tests where each regular expression matches at least one label.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -506,8 +416,8 @@
     {
       "short": null,
       "long": "--max-width",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "= Set the max width for a test name to output",
       "multiple": false,
       "conflicts_with": [],
@@ -556,19 +466,9 @@
     {
       "short": null,
       "long": "--output-junit",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "= Output test results to JUnit XML file.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-O",
-      "long": "--output-log",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "= Output test results to JUnit XML file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -576,9 +476,9 @@
     {
       "short": null,
       "long": "--output-on-failure",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "anything  outputted  by  the  test  program  if  the  test  should  fail.   This  option  can  also  be enabled by setting the CTEST_OUTPUT_ON_FAILURE environment variable",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "= Output anything outputted by the test program if the test should fail.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -594,21 +494,11 @@
       "requires": []
     },
     {
-      "short": "-j",
-      "long": "--parallel",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "thresh‐ old.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--preset",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "working directory must contain CMake preset files.  See preset for more details.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -636,8 +526,8 @@
     {
       "short": "-Q",
       "long": "--quiet",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "= Make ctest quiet.",
       "multiple": false,
       "conflicts_with": [],
@@ -646,19 +536,9 @@
     {
       "short": null,
       "long": "--repeat",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "The modes are:",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--repeat-until-fail",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "= Allow each test to run up to <n> times in order to pass",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -676,8 +556,8 @@
     {
       "short": null,
       "long": "--resource-spec-file",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "= Set the resource spec file to use.",
       "multiple": false,
       "conflicts_with": [],
@@ -689,26 +569,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "= Use a random order for scheduling tests",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": "--script",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-SP",
-      "long": "--script-new-process",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -736,8 +596,8 @@
     {
       "short": null,
       "long": "--stop-time",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "= Set a time at which all tests should stop running.",
       "multiple": false,
       "conflicts_with": [],
@@ -748,17 +608,7 @@
       "long": "--submit-index",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not use.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-T",
-      "long": "--test-action",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "description": "= Submit individual dashboard tests with specific index",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -766,8 +616,8 @@
     {
       "short": null,
       "long": "--test-command",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "= The test to run with the --build-and-test option.",
       "multiple": false,
       "conflicts_with": [],
@@ -776,9 +626,9 @@
     {
       "short": null,
       "long": "--test-dir",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "the  directory in which to look for tests, typically a CMake project build directory. If not specified, the current directory is used.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "= Specify the directory in which to look for tests.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -794,8 +644,8 @@
       "requires": []
     },
     {
-      "short": "-M",
-      "long": "--test-model",
+      "short": null,
+      "long": "--test-output-size-failed",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -805,19 +655,9 @@
     },
     {
       "short": null,
-      "long": "--test-output-size-failed",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--test-output-size-passed",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -826,8 +666,8 @@
     {
       "short": null,
       "long": "--test-output-truncation",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -844,30 +684,10 @@
       "requires": []
     },
     {
-      "short": "-I",
-      "long": "--tests-information",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-R",
-      "long": "--tests-regex",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--timeout",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "= Set the default test timeout.",
       "multiple": false,
       "conflicts_with": [],
@@ -886,8 +706,8 @@
     {
       "short": "-U",
       "long": "--union",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "= Take the Union of -I and -R",
       "multiple": false,
       "conflicts_with": [],
@@ -896,19 +716,59 @@
     {
       "short": "-V",
       "long": "--verbose",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "= Enable verbose output from tests.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-version",
+      "short": null,
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "The output is printed to a named <file> if given.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-C",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "= Define a variable for script mode",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-E",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -916,95 +776,165 @@
     {
       "short": "-F",
       "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "= Enable failover.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-FA",
+      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Enable failover.",
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-FC",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-FS",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-I",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "With multiple -L, run tests where each regular expression matches at least one label.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-LE",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "With multiple -LE, exclude tests where each regular expression matches at least one label.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-M",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-SP",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-h",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-j",
+      "long": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [
-    {
-      "name": "An",
-      "description": "object containing a major integer field and a minor integer field.  Currently, the only supported version is major 1, minor 0. Any other value is an error.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Because",
-      "description": "some platforms have case-insensitive names for environment variables, the names of resource types may not clash in a case-in‐ sensitive environment.  Because of this, for the sake of simplicity, all resource types  must  be  listed  in  all  lowercase  in  the resource  specification  file  and  in  the  RESOURCE_GROUPS  property,  and  they  are  converted  to  all uppercase in the CTEST_RE‐ SOURCE_GROUP_<num>_<resource-type> environment variable.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "COPYRIGHT",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "CTEST_RESOURCE_GROUP_COUNT",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Identifiers",
-      "description": "must  be unique within a resource type. However, they do not have to be unique across resource types. For example, it is valid to have a gpus resource named 0 and a crypto_chips resource named 0, but not two gpus resources both named 0.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "If",
-      "description": "a dashboard script is used and RESOURCE_SPEC_FILE is not specified, the value of CTEST_RESOURCE_SPEC_FILE in the dashboard script is used instead.  If --resource-spec-file, RESOURCE_SPEC_FILE, and CTEST_RESOURCE_SPEC_FILE in the dashboard script are not specified, the  value  of CTEST_RESOURCE_SPEC_FILE in the CMake build is used instead.  If none of these are specified, no resource spec file is used.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "In",
-      "description": "this  example,  group 0 gets 2 slots from GPU 0, group 1 gets 2 slots from GPU 2, and group 2 gets 4 slots from GPU 1, 1 slot from GPU 3, and 2 slots from cryptography chip card0.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Note",
-      "description": "that  even if a test specifies a RESOURCE_GROUPS property, it is still possible for that to test to run without any resource allocation (and without the corresponding environment variables) if the user does not pass a resource specification  file.  Passing  this  file,  either through the --resource-spec-file command-line argument or the RESOURCE_SPEC_FILE argument to ctest_test(), is what activates the resource al‐ location  feature.  Tests  should check the CTEST_RESOURCE_GROUP_COUNT environment variable to find out whether or not resource allocation is activated. This variable will always (and only) be defined if resource allocation is activated. If resource allocation is not activated, then the CTEST_RESOURCE_GROUP_COUNT variable will not exist, even if it exists for the parent ctest process. If a test absolutely  must  have  re‐ source  allocation,  then  it  can return a failing exit code or use the SKIP_RETURN_CODE or SKIP_REGULAR_EXPRESSION properties to indicate a skipped test.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "The",
-      "description": "RESOURCE_GROUPS property tells CTest what resources a test expects to use grouped in a way meaningful to the test.  The test itself must read the environment variables to determine which resources have been allocated to each group.  For example, each group may correspond  to  a process the test will spawn when executed.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "When",
-      "description": "the resource allocation feature is used, CTest will not oversubscribe resources. For example, if a resource has 8 slots, CTest will not run tests that collectively use more than 8 slots at a time. This has the effect of limiting how many tests can run at any given  time,  even if  a high -j argument is used, if those tests all use some slots from the same resource.  In addition, it means that a single test that uses more of a resource than is available on a machine will not run at all (and will be reported as Not Run).",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
     {
       "name": "backtrace",
       "description": null,
@@ -1022,24 +952,8 @@
       "aliases": []
     },
     {
-      "name": "id",
-      "description": "A string consisting of an identifier for the resource. Each character in the identifier can be a lowercase letter, a digit,  or an underscore.  Uppercase letters are not allowed.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "line",
       "description": "Line number in the file where the backtrace was added.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "local",
-      "description": "A JSON array of resource sets present on the system.  Currently, this array is restricted to being of size 1.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1070,24 +984,8 @@
       "aliases": []
     },
     {
-      "name": "slots",
-      "description": "An optional unsigned number specifying the number of slots available on the resource. For example, this could be  megabytes  of RAM  on  a  GPU, or cryptography units available on a cryptography chip. If slots is not specified, a default value of 1 is as‐ sumed.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "tests",
       "description": "A JSON array listing information about each test.  Each entry is a JSON object with members:",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "version",
-      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1096,35 +994,7 @@
   ],
   "positional": [
     {
-      "name": "and",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "client",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "ctest",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "help",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "mode",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -1133,13 +1003,6 @@
     {
       "name": "path-to-build",
       "value_type": "File",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "test",
-      "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null

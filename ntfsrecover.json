@@ -8,7 +8,7 @@
       "long": "--backward",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  actions  described in the logfile backward from the latest one to the earliest one without applying any update. This may encompass records generated during several sessions, and when Windows is restarted, it often does not restart writing where  it  ended the previous session, so this leads to errors and bad sequencing when examining the full log file.",
+      "description": "the  actions described in the logfile backward from the latest one to the earliest one without applying any update. This may encompass records generated during several sessions, and when Windows is restarted, it often does not restart writing where it  ended the previous session, so this leads to errors and bad sequencing when examining the full log file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--clusters",
       "value_type": "Number",
       "takes_value": true,
-      "description": "the  output  generated  when using options -b -f -u -p to the actions operating on a cluster within the given cluster range. CLUSTER-RANGE is defined by the first and last cluster numbers separated by a hyphen, for instance 100-109 or  0x3e8-0x3ff.  A  single number means restricting to a single cluster. The first four log blocks have a special role and they are always shown.",
+      "description": "the  output  generated when using options -b -f -u -p to the actions operating on a cluster within the given cluster range. CLUSTER-RANGE is defined by the first and last cluster numbers separated by a hyphen, for instance 100-109 or 0x3e8-0x3ff.  A  single number means restricting to a single cluster. The first four log blocks have a special role and they are always shown.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--forward",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  actions described in the logfile forward from the first one to the last one without applying any update. As the log file is reused circularly, the first one is generally not the earliest. Moreover when Windows is restarted, it often does not restart writ‐ ing where it ended the previous sessions, and this leads to errors when examining a log file generated during several sessions.",
+      "description": "the actions described in the logfile forward from the first one to the last one without applying any update. As the log file is reused circularly, the first one is generally not the earliest. Moreover when Windows is restarted,  it  often  does  not  restart writing where it ended the previous sessions, and this leads to errors when examining a log file generated during several sessions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--kill-fast-restart",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the Windows cache.  This is dangerous and may cause loss of data.",
+      "description": "Windows  has  been interrupted with fast restart mode activated, part of pending changes are kept in the Windows cache and only the same Windows version can recover them. This option can be used to apply the changes recorded in the log file and drop the ones in the Windows cache.  This is dangerous and may cause loss of data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-p",
       "long": "--play",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "COUNT transaction sets and redo a single one, a transaction set being all transactions between two consecutive checkpoints. This is useful for replaying some transaction in the past. As a few actions are not undoable, this is not always possible.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--range",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "applying  any  update. The first four log blocks have a special role and they are always examined.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--sync",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option,  used  when none of the options -n, -f, -r, -p and -u are present.",
+      "description": "the  file system by applying the committed actions which have not been synced previously. This is the default option, used when none of the options -n, -f, -r, -p and -u are present.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-u",
       "long": "--undo",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "all  transactions between two consecutive checkpoints. As a few actions are not undoable, this is not always possible.",
+      "description": "COUNT transaction sets, thus resetting the file system to some checkpoint in the past, a transaction set being all transactions between two consecutive checkpoints. As a few actions are not undoable, this is not always possible.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

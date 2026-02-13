@@ -16,8 +16,8 @@
     {
       "short": null,
       "long": "--add-architecture",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Add <arch> to the list of architectures.",
       "multiple": false,
       "conflicts_with": [],
@@ -28,17 +28,7 @@
       "long": "--admindir",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  administrative  directory  to directory.  This directory contains many files that give information about status of installed or uninstalled packages, etc.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--assert-feature",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Returns 0 if the feature is fully supported, 1 if the feature is known but dpkg cannot provide support for it yet, and 2 if the feature is unknown.  The current list of assertable features is:",
+      "description": "This directory contains many files that give information about status  of  installed  or uninstalled packages, etc.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -54,31 +44,11 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--audit",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "This is only an integrity check and should not be considered as any kind of security verification.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-B",
       "long": "--auto-deconfigure",
       "value_type": "String",
       "takes_value": true,
-      "description": "Specifying this option will cause automatic deconfiguration of the package which depended on the removed package.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-b",
-      "long": "--build",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "on  the  removed  package.   Specifying  this option will cause automatic deconfiguration of the package which depended on the removed package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +68,7 @@
       "long": "--clear-selections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is intended to be used immediately before",
+      "description": "Deselect every non-essential package.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,49 +76,19 @@
     {
       "short": null,
       "long": "--compare-versions",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "dpkg returns true (0) if the specified condition is  satisfied,  and  false  (1) otherwise.   There  are  two  groups of operators, which differ in how they treat an empty ver1 or ver2.  These treat an empty version as earlier than any version: lt le eq ne ge gt.  These treat an empty version as later than any version: lt-nl le-nl ge-nl gt-nl.  These are provided only for compatibility with control file syntax: < << <= = >= >> >.  The < and > operators are obsolete and should not be  used, due to confusing semantics.  To illustrate: 0.1 < 0.1 evaluates to true.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a",
-      "long": "--configure",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "or --pending is given instead of a package name, then all packages unpacked, but marked to be removed in file /var/lib/dpkg/status, are removed.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-c",
-      "long": "--contents",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-e",
-      "long": "--control",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "Compare version numbers - see below.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--ctrl-tarfile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "long": "--configure",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<package>... | -a|--pending",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,17 +98,7 @@
       "long": "--debug",
       "value_type": "String",
       "takes_value": true,
-      "description": "octal is formed by bitwise-ORing desired values together from the list below (note that these values may change  in future releases).  -Dh or --debug=help display these debugging values.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-x",
-      "long": "--extract",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "octal is formed by bitwise-ORing desired values together from the list below (note that these values may change in future releases).  -Dh or --debug=help display these debugging values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +108,7 @@
       "long": "--field",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "archive [control-field...] Display control field(s) of a package.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,17 +128,7 @@
       "long": "--force-help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Things marked with (*) are forced by default.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--force-remove-reinstreq",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "Show help on forcing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,17 +148,7 @@
       "long": "--forget-old-unavail",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "that  do not contain user information such as package selections.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fsys-tarfile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "Forget uninstalled unavailable pkgs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,10 +156,10 @@
     {
       "short": null,
       "long": "--get-selections",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Without a pattern, non-installed packages (i.e. those which have been previously purged) will not be shown.",
-      "multiple": false,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Get list of selections to stdout.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -268,27 +178,7 @@
       "long": "--ignore-depends",
       "value_type": "String",
       "takes_value": true,
-      "description": "dependency-checking for specified packages (actually, checking is performed, but only warnings about conflicts are given, nothing else).  This affects the Pre-Depends, Depends and Breaks fields.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-I",
-      "long": "--info",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": "--install",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "If --recursive or -R option is specified, package-file must refer to a directory instead.",
+      "description": "This affects the Pre-Depends, Depends and Breaks fields.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,27 +188,7 @@
       "long": "--instdir",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "instdir is also the  directory  passed to  chroot(2)  before  running package's installation scripts, which means that the scripts see instdir as a root directory.  Defaults to «/».",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
-      "long": "--list",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "List packages concisely.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-L",
-      "long": "--listfiles",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "List files 'owned' by package(s).",
+      "description": "the installation directory, which refers to the directory where packages are to be installed.  instdir is also the directory passed to chroot(2) before running package's installation scripts, which means that the scripts see instdir as a root directory.   Defaults  to «/».",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +198,7 @@
       "long": "--log",
       "value_type": "File",
       "takes_value": true,
-      "description": "If this option is given multiple times, the last filename is used.  Log messages are of the form:",
+      "description": "status  change  updates and actions to filename, instead of the default /var/log/dpkg.log.  If this option is given multiple times, the last filename is used.  Log messages are of the form:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -336,9 +206,9 @@
     {
       "short": null,
       "long": "--merge-avail",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "dpkg's  and  dselect's  idea  of  which  packages  are  available.   With  action --merge-avail, old information is combined with information from Packages-file.  With action --update-avail, old information is replaced with the information in the Packages-file.   The Packages-file  distributed with Debian is simply named «Packages».  If the Packages-file argument is missing or named «-» then it will be read from standard input (since dpkg 1.17.7).  dpkg keeps its record of available packages in /var/lib/dpkg/available.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Merge with info from file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +218,7 @@
       "long": "--no-act",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is used to  see  what  would  happen  with  the  specified action, without actually modifying anything.",
+      "description": "everything  which  is  supposed  to  be done, but don't write any changes.  This is used to see what would happen with the specified action, without actually modifying anything.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +238,7 @@
       "long": "--no-force-things",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "things is a comma separated list of things specified below.",
+      "description": "or  refuse  (no-force  and  refuse  mean the same thing) to do some things.  things is a comma separated list of things specified below.  --force-help displays a message describing them.  Things marked with (*) are forced by default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +258,7 @@
       "long": "--no-triggers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  run  any triggers in this run (since dpkg 1.14.17), but activations will still be recorded.  If used with --configure package or",
+      "description": "not  run any triggers in this run (since dpkg 1.14.17), but activations will still be recorded.  If used with --configure package or",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -406,9 +276,9 @@
     {
       "short": null,
       "long": "--path-include",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "patterns  during install (since dpkg 1.15.8).",
+      "description": "glob-pattern as a path filter, either by excluding or re-including previously excluded paths matching the specified patterns during install (since dpkg 1.15.8).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +298,7 @@
       "long": "--post-invoke",
       "value_type": "File",
       "takes_value": true,
-      "description": "an  invoke hook command to be run via “sh -c” before or after the dpkg run for the unpack, configure, install, triggers-only, remove and purge actions (since dpkg 1.15.4), and add-architecture and remove-architecture actions (since dpkg 1.17.19).   This  option  can  be specified  multiple  times.   The  order  the  options  are  specified  is  preserved,  with the ones from the configuration files taking precedence.  The environment variable DPKG_HOOK_ACTION is set for the hooks to the current dpkg action.",
+      "description": "remove and  purge  actions  (since dpkg 1.15.4), and add-architecture and remove-architecture actions (since dpkg 1.17.19).  This option can be specified multiple times.  The order the options are specified  is  preserved,  with  the  ones  from  the  configuration  files  taking precedence.  The environment variable DPKG_HOOK_ACTION is set for the hooks to the current dpkg action.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -464,16 +334,6 @@
       "requires": []
     },
     {
-      "short": "-p",
-      "long": "--print-avail",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "details  about package-name, as found in /var/lib/dpkg/available.  Users of APT-based frontends should use apt show package- name instead.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--print-foreign-architectures",
       "value_type": "Bool",
@@ -484,41 +344,11 @@
       "requires": []
     },
     {
-      "short": "-P",
-      "long": "--purge",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "This removes everything, including conffiles, and anything else cleaned up  from  postrm. If  -a  or  --pending  is  given  instead  of  a  package  name,  then  all packages unpacked or removed, but marked to be purged in file /var/lib/dpkg/status, are purged.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-A",
-      "long": "--record-avail",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "dpkg  and  dselect's  idea  of which packages are available with information from the package package-file.  If --recursive or -R option is specified, package-file must refer to a directory instead.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-R",
       "long": "--recursive",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "This  can  be used with -i, -A, --install, --unpack and --record-avail actions.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-r",
-      "long": "--remove",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "an  installed  package.  This removes everything except conffiles and other data cleaned up by the postrm script, which may avoid having to reconfigure the package if it is reinstalled later (conffiles are configuration files that are listed in  the  DEBIAN/conffiles control file).  If there is no DEBIAN/conffiles control file nor DEBIAN/postrm script, this command is equivalent to calling --purge.  If",
+      "description": "handle  all regular files matching pattern *.deb found at specified directories and all of its subdirectories.  This can be used with -i, -A, --install, --unpack and --record-avail actions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -526,9 +356,9 @@
     {
       "short": null,
       "long": "--remove-architecture",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "architecture  from  the  list of architectures for which packages can be installed without using --force-architecture (since dpkg 1.16.2).  If the architecture is currently in use in the database then the operation will be refused, except if  --force-architecture  is specified.  The architecture dpkg is built for (i.e. the output of --print-architecture) can never be removed from that list.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Remove <arch> from the list of architectures.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,7 +368,7 @@
       "long": "--robot",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This provides an interface for programs that need to parse the output of some of the commands that do not otherwise emit a machine-readable output format.  No localization will be used, and the output will be modified to make it  easier to parse.",
+      "description": "a  machine-readable  output  format.  This provides an interface for programs that need to parse the output of some of the commands that do not otherwise emit a machine-readable output format.  No localization will be used, and the output will be modified to  make  it easier to parse.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,17 +378,7 @@
       "long": "--root",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the  root  directory  to  directory,  which  sets  the  installation  directory  to  «dir»  and  the  administrative  directory   to «dir/var/lib/dpkg».",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": "--search",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Find package(s) owning file(s).",
+      "description": "the  root  directory  to  directory,  which  sets  the  installation  directory  to  «dir»  and  the  administrative  directory  to «dir/var/lib/dpkg».",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +388,7 @@
       "long": "--selected-only",
       "value_type": "String",
       "takes_value": true,
-      "description": "process  the  packages  that  are  selected  for installation.  The actual marking is done with dselect or by dpkg, when it handles packages.  For example, when a package is removed, it will be marked selected for deinstallation.",
+      "description": "The actual marking is done with dselect  or  by  dpkg,  when  it  handles packages.  For example, when a package is removed, it will be marked selected for deinstallation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -578,7 +398,7 @@
       "long": "--set-selections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "package  selections  using  file read from stdin.  This file should be in the format “package state”, where state is one of install, hold, deinstall or purge.  Blank lines and comment lines beginning with ‘#’ are also permitted.",
+      "description": "Set package selections from stdin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -594,21 +414,11 @@
       "requires": []
     },
     {
-      "short": "-s",
-      "long": "--status",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Display package status details.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--status-fd",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option can be specified  multiple  times.   The information is generally one record per line, in one of the following forms:",
+      "description": "This option can be specified multiple  times.   The information is generally one record per line, in one of the following forms:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -618,7 +428,7 @@
       "long": "--status-logger",
       "value_type": "String",
       "takes_value": true,
-      "description": "-c”  (since  dpkg 1.16.0).  This option can be specified multiple times.  The output format used is the same as in --status-fd.",
+      "description": "(since  dpkg 1.16.0).  This option can be specified multiple times.  The output format used is the same as in --status-fd.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -638,7 +448,7 @@
       "long": "--triggers-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use of this option  may leave  packages  in  the  improper  triggers-awaited  and  triggers-pending states.  This can be fixed later by running: dpkg --configure",
+      "description": "Use of this option may leave packages in the improper triggers-awaited and triggers-pending states.  This can be  fixed  later  by  running:  dpkg  --configure",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -648,7 +458,7 @@
       "long": "--unpack",
       "value_type": "File",
       "takes_value": true,
-      "description": "If --recursive or -R option is specified, package-file must refer to a directory instead.",
+      "description": "<.deb file name>... | -R|--recursive <directory>...",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -656,29 +466,9 @@
     {
       "short": null,
       "long": "--update-avail",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--validate-thing",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "that  the thing string has a correct syntax (since dpkg 1.18.16).  Returns 0 if the string is valid, 1 if the string is invalid but might be accepted in lax contexts, and 2 if the string is invalid.  The current list of validatable things is:",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-V",
-      "long": "--verify",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  integrity  of package-name or all packages if omitted, by comparing information from the files installed by a package with the files metadata information stored in the dpkg database (since dpkg 1.17.2).  The origin of the  files  metadata  information  in  the database is the binary packages themselves.  That metadata gets collected at package unpack time during the installation process.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -704,21 +494,21 @@
       "requires": []
     },
     {
-      "short": "-X",
-      "long": "--vextract",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--yet-to-unpack",
       "value_type": "Bool",
       "takes_value": false,
       "description": "Print packages selected for installation.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "<.deb file name>... | -R|--recursive <directory>...",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -760,6 +550,96 @@
       "takes_value": true,
       "description": "Don't install a package if a newer version of the same package is already installed.  This is an alias of --refuse-downgrade.",
       "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-L",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "List files 'owned' by package(s).",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<package>... | -a|--pending",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-S",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Find package(s) owning file(s).",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-V",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Verify the integrity of package(s).",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-i",
+      "long": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "<.deb file name>... | -R|--recursive <directory>...",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "List packages concisely.",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-p",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display available version details.",
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "<package>... | -a|--pending",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-s",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Display package status details.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     }
@@ -816,286 +696,6 @@
   "positional": [
     {
       "name": "action",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "and",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "are",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "be",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "by",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "descriptions",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "detail",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "does",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "for",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "how",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "in",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "inadequate",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "install",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "installing",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "intended",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "is",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "line",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "maintainers",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "manual",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "more",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "not",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "of",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "package",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "packages",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "particularly",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "provided",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "removing",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "should",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "states",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "than",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "that",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "the",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "their",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "to",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "understand",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "used",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "users",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "what",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "when",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "will",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "wishing",
       "value_type": "String",
       "required": true,
       "multiple": false,

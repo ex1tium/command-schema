@@ -8,7 +8,7 @@
       "long": "--arch",
       "value_type": "File",
       "takes_value": true,
-      "description": "the architecture of the output file, and can be any string supported by ELF 'e_machine' field. If the value is conflicting with the IFS file, an error will be reported and the program will stop.",
+      "description": "flag  is  optional and it should only be used when reading an IFS file which does not define the Arch (architecture). This flag defines the architecture of the output file, and can be any string supported by ELF 'e_machine' field. If the  value  is  conflicting with the IFS file, an error will be reported and the program will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--bitwidth",
       "value_type": "File",
       "takes_value": true,
-      "description": "flag  is  optional and it should only be used when reading an IFS file which does not define the BitWidth. This flag defines the bit width of the output file. If the value is conflicting with the input IFS file, an error will be  reported  and  the  program  will stop.",
+      "description": "flag  is optional and it should only be used when reading an IFS file which does not define the BitWidth. This flag defines the bit width of the output file. If the value is conflicting with the input IFS file, an error will be reported  and  the  program  will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -26,9 +26,9 @@
     {
       "short": null,
       "long": "--endianness",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the endianness of the output file. If the value is conflicting with the IFS file, an error will be reported and the program will stop.",
+      "description": "Specify the endianness",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--hint-ifs-target",
       "value_type": "File",
       "takes_value": true,
-      "description": "will use  'Arch,  Endianness  and  BitWidth' fields to reflect the target information from the input object file. Using this flag will tell llvm-ifs the expected target triple in the output IFS file. If the value matches the target information from  the  object  file,  this value  will be used in the 'Target:' filed in the generated IFS. If it conflicts with the input object file, an error will be reported and the program will stop.",
+      "description": "'Arch,  Endianness  and BitWidth' fields to reflect the target information from the input object file. Using this flag will tell llvm-ifs the expected target triple in the output IFS file. If the value matches the target information from the  object  file,  this value will be used in the 'Target:' filed in the generated IFS. If it conflicts with the input object file, an error will be reported and the program will stop.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--input-format",
       "value_type": "String",
       "takes_value": true,
-      "description": "in‐ put format can be inferred.",
+      "description": "Specify the input file format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--strip-ifs-bitwidth",
       "value_type": "File",
       "takes_value": true,
-      "description": "flag  is optional and should only be used when outputting an IFS file.  This flag strips the BitWidth field from the IFS file so it can be overridden later.",
+      "description": "flag is optional and should only be used when outputting an IFS file.  This flag strips the BitWidth field from the IFS file so it can be overridden later.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--strip-ifs-endianness",
       "value_type": "File",
       "takes_value": true,
-      "description": "This flag strips the Endianness field from the IFS file so it can be overridden later.",
+      "description": "This flag strips the Endianness field from the  IFS  file so it can be overridden later.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--strip-ifs-target",
       "value_type": "File",
       "takes_value": true,
-      "description": "This flag strips the Target field from the IFS file so  it can be overridden later.",
+      "description": "This flag strips the Target field from the IFS file so it can be overridden later.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--strip-size",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "this  flag is set, llvm-ifs will remove the size field from the output ifs file. This is useful for shared objects that only in‐ tend to be linked against position independent code which doesn't need copy relocations, or where the size of an object is not a  use‐ ful part of the abi to track.",
+      "description": "this flag is set, llvm-ifs will remove the size field from the output ifs file. This is useful for shared objects that only in‐ tend to be linked against position independent code which doesn't need copy relocations, or where the size of an object is not a use‐ ful part of the abi to track.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--target",
       "value_type": "File",
       "takes_value": true,
-      "description": "endianness  and  bit  width  of the output file using llvm target triple.  This flag cannot be used simultaneously with other target related flags.",
+      "description": "flag  is  optional and should only be used when reading an IFS file which does not define any target information. This flag de‐ fines architecture, endianness and bit width of the output file using llvm target triple.  This flag cannot  be  used  simultaneously with other target related flags.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--write-if-changed",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Write the output file only if it is new or has changed",
+      "description": "be  different  from the existing file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

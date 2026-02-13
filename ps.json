@@ -18,7 +18,7 @@
       "long": "--User",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It selects the processes whose real user name or ID is in the userlist list. The real user ID identifies the user who created the process, see getuid(2).",
+      "description": "by real user ID (RUID) or name. It selects the processes whose real user name or ID is in the userlist list. The real user ID identifies the user who created the process, see getuid(2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a help message. The section argument can be one of simple, list, output, threads, misc, or all. The argument can be shortened to one of the underlined letters as in: s|l|o|t|m|a.",
+      "description": "The section argument can be one of simple, list, output, threads, misc, or all. The argument can be shortened to one of the underlined letters as in: s|l|o|t|m|a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This selects the processes whose executable name is given in cmdlist. NOTE: The command name is not the same as the command line. Previous versions of procps and the kernel truncated this command name to 15 characters. This limitation is no longer present in both. If you depended on matching only 15 characters, you may no longer get a match.",
+      "description": "by command name. This selects the processes whose executable name is given in cmdlist. NOTE: The command name is not the same as the command line. Previous versions of procps and the kernel truncated this command name to 15 characters. This limitation is no longer present in both. If you depended on matching only 15 characters, you may no longer get a match.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -518,7 +518,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "by PID (quick mode). This selects the processes whose process ID numbers appear in pidlist. With this option ps reads the necessary info only for the pids listed in the pidlist and doesn't apply additional filtering rules. The order of pids is unsorted and preserved. No additional selection options, sorting and forest type listings are allowed in this mode. Identical to q and",
+      "description": "This selects the processes whose process ID numbers appear in pidlist. With this option ps reads the necessary info only for the pids listed in the pidlist and doesn't apply additional filtering rules. The order of pids is unsorted and preserved. No additional selection options, sorting and forest type listings are allowed in this mode. Identical to q and",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,7 +538,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This selects the processes associated with the terminals given in ttylist. Terminals (ttys, or screens for text output) can be specified in several forms: /dev/ttyS1, ttyS1, S1. A plain \"-\" may be used to select processes not attached to any terminal.",
+      "description": "by tty. This selects the processes associated with the terminals given in ttylist. Terminals (ttys, or screens for text output) can be specified in several forms: /dev/ttyS1, ttyS1, S1. A plain \"-\" may be used to select processes not attached to any terminal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -702,14 +702,6 @@
       "aliases": []
     },
     {
-      "name": "h",
-      "description": "No header. (or, one header per screen in the BSD personality). The h option is problematic. Standard BSD ps uses this option to",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "hp",
       "description": "like HP-UX ps",
       "flags": [
@@ -731,6 +723,25 @@
     {
       "name": "hpux",
       "description": "like HP-UX ps",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "individual",
+      "description": "threads. Use the m option or the -m option to see both. According to the width of the field, a 32 or 64",
       "flags": [
         {
           "short": null,
@@ -875,8 +886,8 @@
       "aliases": []
     },
     {
-      "name": "posix",
-      "description": "standard",
+      "name": "pending",
+      "description": "PENDING mask of the pending signals. See signal(7). Signals pending on the process are distinct from signals pending on",
       "flags": [
         {
           "short": null,
@@ -894,8 +905,8 @@
       "aliases": []
     },
     {
-      "name": "print",
-      "description": "a header on each page of output, but older Linux ps uses this option to totally disable the header. This version of ps follows the Linux usage of not printing the header unless the BSD personality has been selected, in which case it prints a header on each page",
+      "name": "posix",
+      "description": "standard",
       "flags": [
         {
           "short": null,

@@ -6,8 +6,8 @@
     {
       "short": null,
       "long": "--check-hash-based-pycs",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -44,10 +44,10 @@
       "requires": []
     },
     {
-      "short": "-X",
+      "short": null,
       "long": "--help-xoptions",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -66,9 +66,9 @@
     {
       "short": "-B",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Don't write .pyc files on import. See also PYTHONDONTWRITEBYTECODE.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": don't write .pyc files on import; also PYTHONDONTWRITEBYTECODE=x",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-E",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Ignore environment variables like PYTHONPATH and PYTHONHOME that modify the behavior of the interpreter.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": ignore PYTHON* environment variables (such as PYTHONPATH)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": "-I",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Run Python in isolated mode. This also implies -E, -P and -s. In isolated mode sys.path contains neither the  script's  directory  nor the  user's  site-packages directory. All PYTHON* environment variables are ignored, too.  Further restrictions may be imposed to pre‐ vent the user from injecting malicious code.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": isolate Python from the user's environment (implies -E and -s)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-O",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Remove assert statements and any code conditional on the value of __debug__; augment the filename for  compiled  (bytecode)  files  by adding .opt-1 before the .pyc extension.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": remove assert and __debug__-dependent statements; add .opt-1 before .pyc extension; also PYTHONOPTIMIZE=x",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": "-OO",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Do -O and also discard docstrings; change the filename for compiled (bytecode) files by adding .opt-2 before the .pyc extension.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": do -O changes and also discard docstrings; add .opt-2 before .pyc extension",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": "-P",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Don't  automatically  prepend  a potentially unsafe path to sys.path such as the current directory, the script's directory or an empty string. See also the PYTHONSAFEPATH environment variable.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": don't prepend a potentially unsafe path to sys.path; also PYTHONSAFEPATH",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Disable the import of the module site and the site-dependent manipulations of sys.path that it entails.  Also disable these  manipula‐ tions if site is explicitly imported later.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": don't imply 'import site' on initialization",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,9 +136,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "--version Prints the Python version number of the executable and exits.  When given twice, print more information about the build.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": print the Python version number and exit (also --version) when given twice, print more information about the build",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -154,61 +154,11 @@
       "requires": []
     },
     {
-      "short": "-Walways",
+      "short": "-X",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "# Warn every time",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Wdefault",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "# Warn once per call location",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Werror",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "# Convert to exceptions",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Wignore",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "# Never warn",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Wmodule",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "# Warn once per calling module",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Wonce",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "# Warn once per Python process",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Issue warnings about str(bytes_instance), str(bytearray_instance) and comparing bytes/bytearray with str. (-bb: issue errors)",
+      "description": ": issue warnings about converting bytes/bytearray to str and comparing bytes/bytearray with str or bytes with int. (-bb: issue errors)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +176,9 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "This terminates the option list (following options are passed as arguments to  the command).",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Turn on parser debugging output (for expert only, depending on compilation options).",
+      "description": ": turn on parser debugging output (for experts only, only works on debug builds); also PYTHONDEBUG=x",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +198,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "-? ,  --help Prints the usage for the interpreter executable and exits.",
+      "description": ": print this help message and exit (also -? or --help)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When  a script is passed as first argument or the -c option is used, enter interactive mode after executing the script or the command. It does not read the $PYTHONSTARTUP file.  This can be useful to inspect global variables or a stack trace when a script raises an ex‐ ception.",
+      "description": ": inspect interactively after running script; forces a prompt even if stdin does not appear to be a terminal; also PYTHONINSPECT=x",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -266,8 +216,8 @@
     {
       "short": "-m",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -278,7 +228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do not print the version and copyright messages. These messages are also suppressed in non-interactive mode.",
+      "description": ": don't print version and copyright messages on interactive startup",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +238,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't add user site directory to sys.path.",
+      "description": ": don't add user site directory to sys.path; also PYTHONNOUSERSITE=x",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +248,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Force the stdout and stderr streams to be unbuffered.  This option has no effect on the stdin stream.",
+      "description": ": force the stdout and stderr streams to be unbuffered; this option has no effect on stdin; also PYTHONUNBUFFERED=x",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +258,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print  a  message  each  time  a module is initialized, showing the place (filename or built-in module) from which it is loaded.  When given twice, print a message for each file that is checked for when searching for a  module.   Also  provides  information  on  module cleanup at exit.",
+      "description": ": verbose (trace import statements); also PYTHONVERBOSE=x can be supplied multiple times to increase verbosity",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,9 +266,9 @@
     {
       "short": "-x",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "Skip the first line of the source.  This is intended for a DOS specific hack only.  Warning: the line numbers in error  messages  will be off by one!",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": ": skip first line of source, allowing use of non-Unix forms of #!cmd",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

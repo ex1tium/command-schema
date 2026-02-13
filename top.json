@@ -6,9 +6,9 @@
     {
       "short": "-S",
       "long": "--accum-time-toggle",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "When Cumulative time mode is On, each process is listed with the cpu time that it and its dead children have used.  See the `S' interactive command for additional information regarding this mode.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "When Cumulative time mode is On, each process is listed with the cpu time that it and its dead children have used. See the `S' interactive command for additional information regarding this mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--batch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "top  in  Batch mode, which could be useful for sending output from top to other programs or to a file.  In this mode, top will not accept input and runs until the iterations limit you've set with the `-n' command-line option or until killed.",
+      "description": "top in Batch mode, which could be useful for sending output from top to other programs or to a file. In this mode, top will not accept input and runs until the iterations limit you've set with the `-n' command-line option or until killed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--cmdline-toggle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Thus, if top was displaying command lines,  now  that  field  will  show  program names, and vice versa.  See the `c' interactive command for additional information.",
+      "description": "Thus, if top was displaying command lines, now that field will show program names, and vice versa. See the `c' interactive command for additional information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": "-d",
       "long": "--delay",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  delay  between  screen  updates, and overrides the corresponding value in one's personal configuration file or the startup default.  Later this can be changed with the `d' or `s' interactive commands.",
+      "description": "the delay between screen updates, and overrides the corresponding value in one's personal configuration file or the startup default. Later this can be changed with the `d' or `s' interactive commands.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-U",
       "long": "--filter-any-user",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "only  processes  with  a  user  id or user name matching that given.  This option matches on any user (real, effective, saved, or filesystem).",
+      "description": "This option matches on any user (real, effective, saved, or filesystem).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-i",
       "long": "--idle-toggle",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "When this toggle is Off, tasks that have not used any CPU since the  last  update will not be displayed.  For additional information regarding this toggle see topic 4c. TASK AREA Commands, SIZE.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "top with the last remembered `i' state reversed. When this toggle is Off, tasks that have not used any CPU since the last update will not be displayed. For additional information regarding this toggle see topic 4c. TASK AREA Commands, SIZE.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -96,9 +96,9 @@
     {
       "short": "-O",
       "long": "--list-fields",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "option  acts  as  a  form  of help for the -o option shown below.  It will cause top to print each of the available field names on a separate line, then quit.  Such names are subject to NLS (National Language Support) translation.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "It will cause top to print each of the available field names on a separate line, then quit. Such names are subject to NLS (National Language Support) translation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,8 +108,8 @@
       "long": "--pid",
       "value_type": "String",
       "takes_value": true,
-      "description": "However, when combined with Threads mode (`H'), all processes in the thread group (see TGID) of each monitored PID will also be shown.",
-      "multiple": false,
+      "description": "only processes with specified process IDs. However, when combined with Threads mode (`H'), all processes in the thread group (see TGID) of each monitored PID will also be shown.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -138,7 +138,7 @@
       "long": "--secure-mode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This mode is far better controlled through a system configuration file (see  topic  6. FILES).",
+      "description": "top with secure mode forced, even for root. This mode is far better controlled through a system configuration file (see topic 6. FILES).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,9 +146,9 @@
     {
       "short": "-1",
       "long": "--single-cpu-toggle",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "Either all cpu information will be  displayed  in  a single line or each cpu will be displayed separately, depending on the state of the NUMA Node command toggle (`2').",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Either all cpu information will be displayed in a single line or each cpu will be displayed separately, depending on the state of the NUMA Node command toggle (`2').",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-o",
       "long": "--sort-override",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "reflected  in  the  configuration  file.   You  can prepend  a  `+' or `-' to the field name to also override the sort direction.  A leading `+' will force sorting high to low, whereas a `-' will ensure a low to high ordering.",
+      "description": "the name of the field on which tasks will be sorted, independent of what is reflected in the configuration file. You can prepend a `+' or `-' to the field name to also override the sort direction. A leading `+' will force sorting high to low, whereas a `-' will ensure a low to high ordering.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +166,9 @@
     {
       "short": "-H",
       "long": "--threads-show",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Without this command-line option a summation of all threads in each process is shown.  Later this can be changed with the `H' interactive command.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Without this command-line option a summation of all threads in each process is shown. Later this can be changed with the `H' interactive command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,8 +176,8 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "output version information & exit",
       "multiple": false,
       "conflicts_with": [],
@@ -188,7 +188,7 @@
       "long": "--width",
       "value_type": "Number",
       "takes_value": true,
-      "description": "output  using  the  COLUMNS=  and  LINES=  environment  variables,  if  set. Otherwise,  width  will be fixed at the maximum 512 columns.  With an argument, output width can be decreased or increased (up to 512) but the number of rows is considered unlimited.",
+      "description": "Batch mode, when used without an argument top will format output using the COLUMNS= and LINES= environment variables, if set. Otherwise, width will be fixed at the maximum 512 columns. With an argument, output width can be decreased or increased (up to 512) but the number of rows is considered unlimited.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -370,38 +370,6 @@
       "aliases": []
     },
     {
-      "name": "across",
-      "description": "such groups. Thus, an autogroup with many CPU intensive processes (e.g make -j) will not dominate an autogroup with only one or two processes.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "amounts",
-      "description": "greater than 100% may be",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "appropriate",
-      "description": "but for others, like compilers, perhaps not. Experiment with two task windows sharing the same sort field but with different `S' states and see which representation you prefer.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "as",
-      "description": "all prior task displays will have already been painted.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "avail",
       "description": "( MemAvailable, which is physical memory )",
       "flags": [],
@@ -412,6 +380,14 @@
     {
       "name": "available",
       "description": "once you have selected a particular file or command. They are familiar to anyone who has used the pager `less' and are summarized here for future reference.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "be",
+      "description": "scaled from KiB through PiB. That scaling is influenced via the `e' interactive command or established for startup through a build option.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -450,6 +426,14 @@
       "aliases": []
     },
     {
+      "name": "divided",
+      "description": "between the non-cached portion of used and any remaining memory not otherwise accounted for by avail. See topic 4b. SUMMARY AREA Commands and the `m' command for additional information on that special 4-way toggle.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "f",
       "description": "7 5b. Commands-for-Windows",
       "flags": [],
@@ -473,8 +457,16 @@
       "aliases": []
     },
     {
-      "name": "forest",
-      "description": "view mode it is still possible to toggle between program name and command line (see the `c' interactive command) or between processes and threads (see the `H' interactive command).",
+      "name": "focus",
+      "description": "commands that might be active. It also provides for an exit from PID monitoring, User filtering, Other filtering, Locate processing and Combine Cpus mode.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "forked",
+      "description": "processes in that session inherit membership in this autogroup. The kernel then attempts to equalize distribution of CPU cycles",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -531,14 +523,6 @@
     {
       "name": "ioWop",
       "description": "-- I/O Write Operations",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "is",
-      "description": "definitely true when displaying detailed statistics via the `t' command toggle since such data cannot be scaled like the graphic representations.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -633,6 +617,14 @@
       "aliases": []
     },
     {
+      "name": "node",
+      "description": "will be shown until the `1', `2' or `4' command toggle is pressed. This interactive command is only available if a system has the requisite NUMA support.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "nsCGROUP",
       "description": "-- CGROUP namespace The Inode of the namespace used to hide the identity of the control group of which process is a member.",
       "flags": [],
@@ -705,6 +697,14 @@
       "aliases": []
     },
     {
+      "name": "presumably",
+      "description": "one with forked children. If forest view mode is Off this key has no effect.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "q",
       "description": null,
       "flags": [],
@@ -739,6 +739,14 @@
     {
       "name": "t",
       "description": "tebibytes",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "the",
+      "description": "designated sort field; 3) all fields in their current order along with descriptions. Entries marked with an asterisk are the currently displayed fields, screen width permitting.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -786,7 +794,7 @@
     },
     {
       "name": "variables",
-      "description": "if set. With an argument, output width can only be decreased, not increased. Whether using environment variables or an argument with -w, when not in Batch mode actual terminal dimensions can never be exceeded.",
+      "description": "With an argument, output width can only be decreased, not increased. Whether using environment variables or an argument with -w, when not in Batch mode actual terminal dimensions can never be exceeded.",
       "flags": [],
       "positional": [],
       "subcommands": [],

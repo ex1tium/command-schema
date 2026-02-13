@@ -18,7 +18,7 @@
       "long": "--cable-test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "approximate  distance  to  the fault may be reported.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--cable-test-tdr",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a  cable  test and report the raw Time Domain Reflectometer data.  A pulse is sent down a cable pair and the amplitude of the reflection, for a given distance, is reported. A break in the cable returns a big reflection. Minor damage  to  the  cable  returns  a small  reflection.  If the cable is shorted, the amplitude of the reflection can be negative. By default, data is returned for lengths between 0 and 150m at 1m steps, for all pairs. However parameters can be passed to restrict the collection of data. It should be  not‐ ed, that the interface will round the distances to whatever granularity is actually implemented. This is often 0.8 of a meter. The re‐ sults should include the actual rounded first and last distance and step size.",
+      "description": "A pulse is sent down a cable pair and the amplitude  of  the reflection,  for  a  given  distance, is reported. A break in the cable returns a big reflection. Minor damage to the cable returns a small reflection. If the cable is shorted, the amplitude of the reflection can be negative. By default, data is returned for  lengths between 0 and 150m at 1m steps, for all pairs. However parameters can be passed to restrict the collection of data. It should be not‐ ed,  that  the  interface will round the distances to whatever granularity is actually implemented. This is often 0.8 of a meter. The results should include the actual rounded first and last distance and step size.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--change-eeprom",
       "value_type": "String",
       "takes_value": true,
-      "description": "value is specified, changes EEPROM byte for the specified network device.  offset and value specify which byte and it's new value. If value is not specified, stdin is read and written to the EEPROM. The length and offset parameters allow writing to certain portions of the EEPROM.  Because of the persistent nature of writing to the EEPROM, a device-specific magic key must be  specified  to  prevent the accidental writing to the EEPROM.",
+      "description": "offset and value specify which byte and it's new value. If  value  is  not specified, stdin is read and written to the EEPROM. The length and offset parameters allow writing to certain por‐ tions of the EEPROM.  Because of the persistent nature of writing to the EEPROM, a device-specific magic key  must  be  specified  to prevent the accidental writing to the EEPROM.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--dump-module-eeprom",
       "value_type": "String",
       "takes_value": true,
-      "description": "and  if  possible decodes the EEPROM from plugin modules, e.g SFP+, QSFP.  If the driver and module support it, the optical diagnostic information is also read and decoded.  When either one of page, bank or i2c parameters is specified, dumps only of a single page or its portion is allowed. In such a case offset and length parameters are treated relatively to EEPROM page boundaries.",
+      "description": "If the driver and module support it,  the  optical diagnostic  information is also read and decoded.  When either one of page, bank or i2c parameters is specified, dumps only of a sin‐ gle page or its portion is allowed. In such a case offset and length parameters are treated relatively to EEPROM page boundaries.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--eeprom-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "When raw is enabled, then it dumps the raw EEPROM data to  std‐ out. The length and offset parameters allow dumping certain portions of the EEPROM.  Default is to dump the entire EEPROM.",
+      "description": "When raw is enabled, then it dumps the raw EEPROM data to std‐ out. The length and offset parameters allow dumping certain portions of the EEPROM.  Default is to dump the entire EEPROM.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--features",
       "value_type": "String",
       "takes_value": true,
-      "description": "the offload parameters and other features of the specified network device.  The following feature names are built-in and oth‐ ers may be defined by the kernel.",
+      "description": "The following feature names are built-in and oth‐ ers may be defined by the kernel.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--get-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "and  prints firmware dump for the specified network device.  By default, it prints out the dump flag, version and length of the dump data.  When data is indicated, then ethtool fetches the dump data and directs it to a file.",
+      "description": "By default, it prints out the dump flag, version and length  of the dump data.  When data is indicated, then ethtool fetches the dump data and directs it to a file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--get-plca-status",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  current  PLCA  status for the given interface. If on, the PHY is successfully receiving or generating the BEACON signal. If off, the PLCA function is temporarily disabled and the PHY is operating in plain CSMA/CD mode.",
+      "description": "BEACON  signal.  If off, the PLCA function is temporarily disabled and the PHY is operating in plain CSMA/CD mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--identify",
       "value_type": "String",
       "takes_value": true,
-      "description": "sight.   Typically  this  involves blinking one or more LEDs on the specific network port.",
+      "description": "adapter-specific  action  intended to enable an operator to easily identify the adapter by sight.  Typically this involves blinking one or more LEDs on the specific network port.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +226,9 @@
     {
       "short": "-I",
       "long": "--include-statistics",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "layer sta‐ tistics counters will also be retrieved.",
+      "description": "request device statistics related to the command (not supported by all commands)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--json",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "enable JSON output format (not supported by all commands)",
+      "description": "results in JavaScript Object Notation (JSON). Only a subset of options support this. Those which do not will continue to out‐ put plain text in the presence of this option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": "--register-dump",
       "value_type": "String",
       "takes_value": true,
-      "description": "The register format for some devices is known and decoded oth‐ ers are printed in hex.  When raw is enabled, then ethtool dumps the raw register data to stdout.  If file is specified, then use con‐ tents of previous raw register dump, rather than reading from the device.",
+      "description": "and  prints  a  register dump for the specified network device.  The register format for some devices is known and decoded others are printed in hex.  When raw is enabled, then ethtool dumps the raw register data to stdout.  If file is specified, then  use contents of previous raw register dump, rather than reading from the device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -476,9 +476,9 @@
     {
       "short": "-l",
       "long": "--show-channels",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "A channel is an IRQ and the set of queues that  can  trigger that IRQ.",
+      "description": "the specified network device for the numbers of channels it has.  A channel is an IRQ and the set of queues that can trigger that IRQ.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -519,6 +519,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--show-mm",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "the MAC Merge layer state. The ethtool argument -I --include-statistics can be used with this command, and MAC Merge layer sta‐ tistics counters will also be retrieved.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -588,7 +598,7 @@
       "long": "--show-priv-flags",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The names and meanings of private flags (if any) are defined by each net‐ work device driver.",
+      "description": "The names and meanings of private flags (if any)  are  defined  by  each network device driver.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -648,7 +658,7 @@
       "long": "--show-tunnels",
       "value_type": "String",
       "takes_value": true,
-      "description": "tunnel-related device capabilities and state.  List UDP ports kernel has programmed the device to parse as VxLAN, or GENEVE tun‐ nels.",
+      "description": "List UDP ports kernel has programmed the device to parse as VxLAN, or GENEVE tun‐ nels.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -658,7 +668,7 @@
       "long": "--src",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  MAC  Merge  layer is supported, request a particular source of device statistics (eMAC or pMAC, or their aggregate). Only valid if ethtool was invoked with the -I --include-statistics argument.",
+      "description": "their  aggregate).  Only valid if ethtool was invoked with the -I --include-statistics argument.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

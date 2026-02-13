@@ -28,7 +28,7 @@
       "long": "--before-build",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "support  since dpkg  1.18.16).  If --as-root is also given, then the command is executed as root (see --root-command).  Note that known targets that are required to be run as root do not need this option (i.e. the clean, binary, binary-arch and binary-indep targets).",
+      "description": "and stops the package build process here (since dpkg 1.15.0, long option since dpkg 1.18.8, multi-target support since dpkg 1.18.16).  If --as-root is also given, then the command is executed as root (see --root-command).  Note that known targets that are required to be run as root do not need this option (i.e. the clean, binary, binary-arch and binary-indep targets).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--build",
       "value_type": "File",
       "takes_value": true,
-      "description": "All the specified  components  get  combined  to select the single build type to use, which implies a single build run with a single .changes file generated.  Passed to dpkg-genchanges.",
+      "description": "the  build  type from a comma-separated list of components (since dpkg 1.18.5).  All the specified components get combined to select the single build type to use, which implies a single build run with a single .changes file generated.  Passed to dpkg-genchanges.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--build-profiles",
       "value_type": "File",
       "takes_value": true,
-      "description": "The default  behavior  is to  build  for  no  specific  profile.   Also  sets them (as a space separated list) as the DEB_BUILD_PROFILES environment variable which allows, for example, debian/rules files to use this information for conditional builds.",
+      "description": "The default behavior  is to  build  for  no  specific  profile.   Also sets them (as a space separated list) as the DEB_BUILD_PROFILES environment variable which allows, for example, debian/rules files to use this information for conditional builds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--check-command",
       "value_type": "File",
       "takes_value": true,
-      "description": "used  to  check  the .changes file itself and any artifact built referenced in the file (since dpkg 1.17.6).  The command should take the .changes pathname as an argument.  This command will usually be lintian.",
+      "description": "used  to  check the .changes file itself and any artifact built referenced in the file (since dpkg 1.17.6).  The command should take the .changes pathname as an argument.  This command will usually be lintian.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--check-option",
       "value_type": "String",
       "takes_value": true,
-      "description": "dpkg  1.17.6).   Can  be  used  multiple times.",
+      "description": "1.17.6).   Can  be  used  multiple times.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--force-sign",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "of  -us,  --unsigned-source,  -ui,  --unsigned-buildinfo,  -uc,",
+      "description": "the  signing  of  the  resulting files (since dpkg 1.17.0), regardless of -us, --unsigned-source, -ui, --unsigned-buildinfo, -uc,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--hook-hook-name",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the  specified  shell  code  hook-command  as the hook hook-name, which will run at the times specified in the run steps (since dpkg 1.17.6).  The hooks will always be executed even if the following action is not performed (except for the binary hook).   All  the  hooks will run in the unpacked source directory.",
+      "description": "the  specified  shell  code  hook-command as the hook hook-name, which will run at the times specified in the run steps (since dpkg 1.17.6).  The hooks will always be executed even if the following action is not performed (except for the binary hook).  All  the  hooks will run in the unpacked source directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--host-arch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The architecture of the machine we build on is determined automatically, and is also the default for the host machine.",
+      "description": "1.17.17).   The  architecture  of  the  machine  we  build  on  is determined automatically, and is also the default for the host machine.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--host-type",
       "value_type": "String",
       "takes_value": true,
-      "description": "It can be used in place of --host-arch or as a complement  to override the default GNU system type of the host Debian architecture.",
+      "description": "It can be used in place of --host-arch or as a complement to override the default GNU system type of the host Debian architecture.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--ignore-builtin-builddeps",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(since  dpkg  1.18.2).   These  are  the  distribution  specific  implicit  build dependencies usually required in a build environment, the so called Build-Essential package set.",
+      "description": "not  check  built-in  build  dependencies  and  conflicts  (since  dpkg 1.18.2).  These are the distribution specific implicit build dependencies usually required in a build environment, the so called Build-Essential package set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--jobs",
       "value_type": "Number",
       "takes_value": true,
-      "description": "The  number  of  jobs matching  the  number  of online processors if auto is specified (since dpkg 1.17.10), or unlimited number if jobs is not specified.  The default behavior is auto (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer  to  use  with  any package including those that are not parallel-build safe.  Setting the number of jobs to 1 will restore serial execution.",
+      "description": "The  number  of  jobs matching  the  number of online processors if auto is specified (since dpkg 1.17.10), or unlimited number if jobs is not specified.  The default behavior is auto (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer to  use  with  any package including those that are not parallel-build safe.  Setting the number of jobs to 1 will restore serial execution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--jobs-force",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  make",
+      "description": "option (since dpkg 1.21.10) is equivalent to the --jobs option except that it will enable forced parallel mode, by adding the make",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--no-pre-clean",
       "value_type": "String",
       "takes_value": true,
-      "description": "Implies -b if nothing else has been selected among -F, -g,",
+      "description": "Implies -b if nothing else has been  selected  among  -F,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": "--root-command",
       "value_type": "File",
       "takes_value": true,
-      "description": "if one  has been specified (long option since dpkg 1.18.8).  Otherwise, if none has been specified, fakeroot will be used by default, if the command is present.  gain-root-command should start with the name of a program on the PATH and will get as arguments the name of the real command to run and the arguments it should take.  gain-root-command can include parameters (they must be space-separated)  but  no  shell metacharacters.   gain-root-command might typically be fakeroot, sudo, super or really.  su is not suitable, since it can only invoke the user's shell with -c instead of passing arguments individually to the command to be run.",
+      "description": "Otherwise, if none has been specified, fakeroot will be used by default, if the command is present.  gain-root-command should start with the name of a program on the PATH and will get as arguments  the  name  of  the real  command  to  run and the arguments it should take.  gain-root-command can include parameters (they must be space-separated) but no shell metacharacters.  gain-root-command might typically be fakeroot, sudo, super or really.  su is not  suitable,  since  it  can  only invoke the user's shell with -c instead of passing arguments individually to the command to be run.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--rules-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "long option  since  dpkg 1.18.8).  With this option it's possible to use another program invocation to build the package (it can include space separated parameters).  Alternatively it can be used to execute the standard rules file with another make program (for example  by  using /usr/local/bin/make -f debian/rules as rules-file).",
+      "description": "since dpkg 1.18.8).  With this option it's possible to use another program invocation to build the package (it can include space separated parameters).  Alternatively it can be used to execute the standard rules file with another make program (for example by  using /usr/local/bin/make -f debian/rules as rules-file).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +368,7 @@
       "long": "--rules-target",
       "value_type": "String",
       "takes_value": true,
-      "description": "debian/rules  target  once  per  target  specified,  after  having  setup  the  build  environment (except for calling dpkg-source",
+      "description": "specified,  after  having  setup  the  build  environment  (except  for  calling  dpkg-source",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": "--sanitize-env",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  build  environment  (since  dpkg  1.20.0).   This will reset or remove environment variables, umask, and any other process attributes that might otherwise adversely affect the build  of  packages.   Because  the  official  entry  point  to  build  packages  is debian/rules,  packages  cannot  rely on these settings being in place, and thus should work even when they are not.  What to sanitize is vendor specific.",
+      "description": "the  build  environment  (since  dpkg  1.20.0).  This will reset or remove environment variables, umask, and any other process attributes that might otherwise adversely affect the build of  packages.   Because  the  official  entry  point  to  build  packages  is debian/rules,  packages  cannot rely on these settings being in place, and thus should work even when they are not.  What to sanitize is vendor specific.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -396,9 +396,9 @@
     {
       "short": "-p",
       "long": "--sign-command",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": ".changes file  it  will  run  sign-command  (searching the PATH if necessary) instead of the default or auto-detected backend command (long option since dpkg 1.18.8).  sign-command will get all the backend specific arguments according to  the  --sign-backend  selected.   sign-command should not contain spaces or any other shell metacharacters.",
+      "description": "backend  command  (long  option since  dpkg  1.18.8).   sign-command will get all the backend specific arguments according to the --sign-backend selected.  sign-command should not contain spaces or any other shell metacharacters.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--sign-key",
       "value_type": "String",
       "takes_value": true,
-      "description": "an  OpenPGP  key-ID  (either  a fingerprint or a user-ID) for the secret key to use when signing packages (--sign-key since dpkg 1.18.8, --sign-keyid since dpkg 1.21.10).",
+      "description": "packages  (--sign-key  since  dpkg 1.18.8, --sign-keyid since dpkg 1.21.10).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +498,7 @@
       "long": "--target-type",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  GNU  system  type the binaries built will build for (since dpkg 1.17.17).  It can be used in place of --target-arch or as a complement to override the default GNU system type of the target Debian architecture.",
+      "description": "the  GNU  system type the binaries built will build for (since dpkg 1.17.17).  It can be used in place of --target-arch or as a complement to override the default GNU system type of the target Debian architecture.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

@@ -4,6 +4,16 @@
   "description": "keytool - a key and certificate management utility",
   "global_flags": [
     {
+      "short": "-A",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "CSR is intended to be sent to a CA. The CA authenticates the certificate requestor (usually offline) and returns a certificate or certificate chain to replace the existing certificate chain (initially a self-signed certificate) in the keystore.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-addprovider",
       "long": null,
       "value_type": "Bool",
@@ -28,7 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  the  cacerts keystore .  This option is equivalent to -keystore path_to_cacerts -storetype type_of_cacerts.  An error is reported if the -keystore or -storetype option is used with the -cacerts option.",
+      "description": "This option is equivalent to -keystore path_to_cacerts -storetype type_of_cacerts. An error is reported if the -keystore or -storetype option is used with the -cacerts option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +46,9 @@
     {
       "short": "-certreq",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "The command reads the request either from infile or, if omitted, from the standard input, signs it  by  using  the alias's private key, and outputs the X.509 certificate into either outfile or, if omitted, to the standard output.  When -rfc is spec‐ ified, the output format is Base64-encoded PEM; otherwise, a binary DER is created.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The command reads the request from file. If there is no file, then the request is read from the standard input.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,8 +86,8 @@
     {
       "short": "-destkeystore",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -98,10 +108,13 @@
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": "an  X.509  certificate  extension.  The option can be used in -genkeypair and -gencert to embed extensions into the generated certificate, or in -certreq to show what extensions are requested in the certificate request.  The option can appear  multiple  times. The  name argument can be a supported extension name (see Supported Named Extensions) or an arbitrary OID number.  The value argument, when provided, denotes the argument for the extension.  When value is omitted, the default value of the extension or the extension it‐ self requires no argument.  The :critical modifier, when provided, means the extension's isCritical attribute is true;  otherwise,  it is false.  You can use :c in place of :critical.",
-      "multiple": false,
+      "description": "The option can be used in -genkeypair and -gencert to embed extensions into the generated certificate, or in -certreq to show what extensions are requested in the certificate request. The option can appear multiple times. The name argument can be a supported extension name (see Supported Named Extensions) or an arbitrary OID number. The value argument, when provided, denotes the argument for the extension. When value is omitted, the default value of the extension or the extension itself requires no argument. The :critical modifier, when provided, means the extension's isCritical attribute is true; otherwise, it is false. You can use :c in place of :critical.",
+      "multiple": true,
       "conflicts_with": [],
-      "requires": []
+      "requires": [
+        "-gen",
+        "-cer"
+      ]
     },
     {
       "short": "-file",
@@ -116,8 +129,8 @@
     {
       "short": "-gencert",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Generates certificate from a certificate request",
       "multiple": false,
       "conflicts_with": [],
@@ -196,8 +209,8 @@
     {
       "short": "-keystore",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -248,7 +261,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "this value as true when a password must be specified by way of a protected authentication path, such as a dedicated PIN read‐ er.  Because there are two keystores involved in the -importkeystore command, the following two options, -srcprotected  and  -destpro‐ tected, are provided for the source keystore and the destination keystore respectively.",
+      "description": "Because there are two keystores involved in the -importkeystore command, the following two options, -srcprotected and -destpro‐ tected, are provided for the source keystore and the destination keystore respectively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +281,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "secu‐ rity properties file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -296,9 +309,9 @@
     {
       "short": "-rfc",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Inter‐ net RFC 1421 Certificate Encoding Standard.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +331,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option is specified, a new certificate is generated and signed by the designated signer and stored as a multiple-element cer‐ tificate chain (containing the generated certificate itself, and the signer's certificate chain).  The certificate chain  and  private key are stored in a new keystore entry that is identified by its alias.",
+      "description": "The certificate chain and private key are stored in a new keystore entry that is identified by its alias.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -329,16 +342,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-srcstorepass",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "to recover the entry.  If -srcstorepass is not provided or is incorrect, then the user is prompted for a password.  The destination entry is protected with -destkeypass.  If -destkeypass isn't provided, then the destination entry is  protected  with  the source  entry  password.  For example, most third-party tools require storepass and keypass in a PKCS #12 keystore to be the same.  To create a PKCS#12 keystore for these tools, always specify a -destkeypass that is the same as -deststorepass.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -366,8 +369,8 @@
     {
       "short": "-storetype",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -404,8 +407,8 @@
       "aliases": []
     },
     {
-      "name": "ciated",
-      "description": "certificates for use in self-authentication (where a user authenticates themselves to other users and services) or data integrity and",
+      "name": "but",
+      "description": "not supplied on the command line, the user is prompted for each of the subcomponents. In this case, a comma doesn't need to be escaped by a backslash (\\).",
       "flags": [
         {
           "short": "-certreq",
@@ -602,8 +605,206 @@
       "aliases": []
     },
     {
-      "name": "rithms",
-      "description": "and jdk.security.legacyAlgorithms security properties are defined in the java.security file (located in the JDK's $JAVA_HOME/conf/se‐ curity directory).",
+      "name": "company",
+      "description": "some other",
+      "flags": [
+        {
+          "short": "-certreq",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generates a certificate request",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-changealias",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Changes an entry's alias",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-delete",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Deletes an entry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-exportcert",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Exports certificate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-gencert",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generates certificate from a certificate request",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-genkeypair",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generates a key pair",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-genseckey",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Generates a secret key",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-importcert",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Imports a certificate or a certificate chain",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-importkeystore",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Imports one or all entries from another keystore",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-importpass",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Imports a password",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-keypasswd",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Changes the key password of an entry",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-list",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Lists entries in a keystore",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-printcert",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Prints the content of a certificate",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-printcertreq",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Prints the content of a certificate request",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-printcrl",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Prints the content of a CRL file",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-showinfo",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Displays security-related information",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-storepasswd",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Changes the store password of a keystore",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-version",
+          "long": null,
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "Prints the program version",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
+      "positional": [],
+      "subcommands": [
+        {
+          "name": "-h",
+          "description": null,
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "name": "you",
+      "description": "can also specify the destination alias name, protection password for a secret or private key, and the destination protection password",
       "flags": [
         {
           "short": "-certreq",
@@ -801,20 +1002,6 @@
     }
   ],
   "positional": [
-    {
-      "name": "A",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "SSL",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "ca1",
       "value_type": "String",

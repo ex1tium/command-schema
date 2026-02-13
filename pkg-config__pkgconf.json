@@ -16,8 +16,8 @@
     {
       "short": null,
       "long": "--atleast-pkgconfig-version",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "check whether or not pkgconf is compatible with a specified pkg-config version",
       "multiple": false,
       "conflicts_with": [],
@@ -26,18 +26,18 @@
     {
       "short": null,
       "long": "--atleast-version",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "require a specific version of a module",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-I",
+      "short": null,
       "long": "--cflags",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "print required CFLAGS to stdout",
       "multiple": false,
       "conflicts_with": [],
@@ -66,9 +66,9 @@
     {
       "short": null,
       "long": "--define-prefix",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "to  determine  the prefix variable to use for CFLAGS and LIBS entry relocations.  This is mainly useful for platforms where framework SDKs are relocatable, such as Windows.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "override the prefix variable with one that is guessed based on the location of the .pc file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--define-variable",
       "value_type": "String",
       "takes_value": true,
-      "description": "VARNAME  as VALUE.  Variables are used in query output, and some modules' results may change based on the presence of a vari‐ able definition.",
+      "description": "define variable 'varname' as 'value'",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--digraph",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This can be used with graphviz to visualize module  interdependen‐ cies.",
+      "description": "print entire dependency graph in graphviz 'dot' format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -125,16 +125,6 @@
     },
     {
       "short": null,
-      "long": "--env",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--env-only",
       "value_type": "Bool",
       "takes_value": false,
@@ -156,8 +146,8 @@
     {
       "short": null,
       "long": "--exact-version",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "require an exact version of a module",
       "multiple": false,
       "conflicts_with": [],
@@ -216,8 +206,8 @@
     {
       "short": null,
       "long": "--keep-system-cflags",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "keep -I/usr/include entries in cflags output",
       "multiple": false,
       "conflicts_with": [],
@@ -234,10 +224,10 @@
       "requires": []
     },
     {
-      "short": "-L",
+      "short": null,
       "long": "--libs",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "print required linker flags to stdout",
       "multiple": false,
       "conflicts_with": [],
@@ -276,9 +266,9 @@
     {
       "short": null,
       "long": "--list-all",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "all  directories listed in the PKG_CONFIG_PATH environmental variable and display information on packages which have registered information there.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list all known packages",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,8 +296,8 @@
     {
       "short": null,
       "long": "--max-version",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "require a maximum version of a module",
       "multiple": false,
       "conflicts_with": [],
@@ -316,9 +306,9 @@
     {
       "short": null,
       "long": "--maximum-traverse-depth",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "For example, a depth of 2 will restrict the  resolver  from  acting  on child dependencies of modules added to the resolver's solution.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "maximum allowed depth for dependency graph",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +338,7 @@
       "long": "--no-cache",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "caching  packages when they are loaded into the internal resolver.  This may result in an alternate dependency graph being com‐ puted.",
+      "description": "do not cache already seen packages when walking the dependency graph",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +368,7 @@
       "long": "--path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Display the filenames of the ‘.pc’ files used by the dependency resolver for a given dependency set.",
+      "description": "show the exact filenames for any matching .pc files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -458,7 +448,7 @@
       "long": "--pure",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Treats the computed dependency graph as if it were pure.  This is mainly intended for use with the --static flag.",
+      "description": "optimize a static dependency graph as if it were a normal dependency graph",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -468,7 +458,7 @@
       "long": "--relocate",
       "value_type": "File",
       "takes_value": true,
-      "description": "This is mainly used by the testsuite to provide a guaranteed interface to  the system's path relocation backend.",
+      "description": "relocates a path and exits (mostly for testsuite)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +498,7 @@
       "long": "--simulate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Dumps a series  of  trees  denoting  pkg‐ conf's resolver state.",
+      "description": "simulate walking the calculated dependency graph",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -568,7 +558,17 @@
       "long": "--with-path",
       "value_type": "File",
       "takes_value": true,
-      "description": "Paths added in this way are given preference before other paths.",
+      "description": "adds a directory to the search path",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fPIC",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -599,6 +599,6 @@
     }
   ],
   "source": "Merged",
-  "confidence": 0.9,
+  "confidence": 0.85,
   "version": null
 }

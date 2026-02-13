@@ -18,7 +18,7 @@
       "long": "--cap-uid",
       "value_type": "String",
       "takes_value": true,
-      "description": "use libcap cap_setuid() to change uid",
+      "description": "the  cap_setuid(3)  function  to  set the UID of the current process. This performs all preparations for setting the UID without dropping capabilities in the process. Following this command the prevailing effective capabilities will be lowered.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--caps",
       "value_type": "String",
       "takes_value": true,
-      "description": "Where cap-set is a text-representation of capability state  as per cap_from_text(3).",
+      "description": "Where cap-set is a text-representation of capability state as per cap_from_text(3).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--chroot",
       "value_type": "String",
       "takes_value": true,
-      "description": "This operation requires CAP_SYS_CHROOT to be in  ef‐ fect.",
+      "description": "This operation requires CAP_SYS_CHROOT to be in ef‐ fect.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--drop",
       "value_type": "String",
       "takes_value": true,
-      "description": "drop xxx,... caps from bounding set",
+      "description": "the listed capabilities from the prevailing bounding set. The capabilities are a comma-separated list of capabilities as rec‐ ognized by the cap_from_name(3) function. Use of this feature requires that capsh is operating with CAP_SETPCAP in its effective set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--explain",
       "value_type": "Number",
       "takes_value": true,
-      "description": "a  brief  textual description of what privileges the specified capability makes available to a running program. Note, instead of cap_xxx, one can provide a decimal number and capsh will look up the corresponding capability's description.",
+      "description": "a  brief textual description of what privileges the specified capability makes available to a running program. Note, instead of cap_xxx, one can provide a decimal number and capsh will look up the corresponding capability's description.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--forkfor",
       "value_type": "String",
       "takes_value": true,
-      "description": "command causes the program to fork a child process for so many seconds. The child will sleep that long and then exit with status 0. The purpose of this command is to support exploring the way processes are killable in the  face  of  capability  changes.  See  the",
+      "description": "The  purpose  of  this  command is to support exploring the way processes are killable in the face of capability changes. See the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--groups",
       "value_type": "String",
       "takes_value": true,
-      "description": "--user  for  a more convenient way of doing this.",
+      "description": "for  a more convenient way of doing this.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--iab",
       "value_type": "String",
       "takes_value": true,
-      "description": "The text conventions used for xxx are those of cap_iab_from_text(3).",
+      "description": "to   set   the  IAB  tuple  of  inheritable  capability  vectors.   The  text  conventions  used  for  xxx  are  those  of cap_iab_from_text(3).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--inh",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  inheritable set of capabilities for the current process to equal those provided in the comma separated list. For this action to succeed, the prevailing process should already have each of these capabilities in the union of the current inheritable and  permit‐ ted capability sets, or capsh should be operating with CAP_SETPCAP in its effective set.",
+      "description": "action to succeed, the prevailing process should already have each of these capabilities in the union of the current inheritable and permit‐ ted capability sets, or capsh should be operating with CAP_SETPCAP in its effective set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--keep",
       "value_type": "String",
       "takes_value": true,
-      "description": "changes UID to some lesser user, then capabilities are dropped. For these situations, the kernel can permit the process to retain its capabilities after a setuid(2) system call. This feature is known as keep-caps support. The way to activate it  using  this program is with this argument. Setting the value to 1 will cause keep-caps to be active. Setting it to 0 will cause keep-caps to deac‐ tivate for the current process. In all cases, keep-caps is deactivated when an exec() is performed. See --secbitsand--mode for ways to disable this feature.",
+      "description": "a  non-pure  capability mode, the kernel provides liberal privilege to the super-user. However, it is normally the case that when the super-user changes UID to some lesser user, then capabilities are dropped. For  these  situations,  the  kernel  can  permit  the process  to retain its capabilities after a setuid(2) system call. This feature is known as keep-caps support. The way to activate it using this program is with this argument. Setting the value to 1 will cause keep-caps to be active. Setting it to 0 will cause  keep- caps  to  deactivate  for  the  current  process.  In  all cases, keep-caps is deactivated when an exec() is performed. See --secbit‐ sand--mode for ways to disable this feature.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "argument  is ignored unless it is the first one. If present, it suppresses the capsh runtime check to confirm the running libcap is recent enough that it can name all of the kernel supported capability values.",
+      "description": "libcap is recent enough that it can name all of the kernel supported capability values.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--secbits",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  security-bits for the program.  This is done using the prctl(2) PR_SET_SECUREBITS operation.  The list of supported bits and their meaning can be found in the <sys/secbits.h> header file. The program will list these bits via the --print command.  The argument is expressed as a numeric bitmask, in any of the formats permitted by strtoul(3).  An alternative to this bit-twiddling is embedded in the --mode* commandline arguments.",
+      "description": "This is done using the prctl(2) PR_SET_SECUREBITS operation.  The list of supported bits  and their  meaning  can be found in the <sys/secbits.h> header file. The program will list these bits via the --print command.  The argu‐ ment is expressed as a numeric bitmask, in any of the formats permitted by strtoul(3).  An alternative to this bit-twiddling  is  em‐ bedded in the --mode* commandline arguments.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +368,7 @@
       "long": "--strict",
       "value_type": "Number",
       "takes_value": true,
-      "description": "Effec‐ tive flag does not contain CAP_SETPCAP the to be raised Inheritable Flag values (in strict mode) are limited to those in the Permitted set. The strict mode defaults to off. Supplying this argument an even number of times restores this default behavior.",
+      "description": "Permit‐ ted set. The strict mode defaults to off. Supplying this argument an even number of times restores this default behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +388,7 @@
       "long": "--supports",
       "value_type": "String",
       "takes_value": true,
-      "description": "However, when  run  on kernel 2.6.38 it will silently succeed.",
+      "description": "on  the  system. For example, --supports=cap_syslog will cause capsh to promptly exit with a status of 1 when run on kernel 2.6.27.  However, when run on kernel 2.6.38 it will silently succeed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +398,7 @@
       "long": "--uid",
       "value_type": "String",
       "takes_value": true,
-      "description": "set uid to <n> (hint: id <username>)",
+      "description": "preparation  of  the  effective set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +408,7 @@
       "long": "--user",
       "value_type": "String",
       "takes_value": true,
-      "description": "the identity of the named user. That is, look up the user's UID and GID with getpwuid(3) and their group memberships with get‐ grouplist(3) and set them all using cap_setuid(3) and cap_setgroups(3).  Following this command, the effective  capabilities  will  be cleared, but the permitted set will not be, so the running program is still privileged.",
+      "description": "and  set them all using cap_setuid(3) and cap_setgroups(3).  Following this command, the effective capabilities will be cleared, but the permitted set will not be, so the running program is still privileged.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -425,44 +425,8 @@
     }
   ],
   "subcommands": [],
-  "positional": [
-    {
-      "name": "IAB",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "capsh",
-      "value_type": "String",
-      "required": false,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "n",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "username",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "xxx",
-      "value_type": "String",
-      "required": true,
-      "multiple": true,
-      "description": null
-    }
-  ],
+  "positional": [],
   "source": "Merged",
-  "confidence": 0.85,
+  "confidence": 0.8,
   "version": null
 }

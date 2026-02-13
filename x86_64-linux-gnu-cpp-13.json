@@ -18,7 +18,7 @@
       "long": "--sysroot",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  both  header files and libraries).  See the --sysroot option for more information.",
+      "description": "both  header files and libraries).  See the --sysroot option for more information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "an  assertion with the predicate predicate and answer answer.  This form is preferred to the older form -A predicate(answer), which is still supported, because it does not use shell special characters.",
+      "description": "an assertion with the predicate predicate and answer answer.  This form is preferred to the older form -A predicate(answer), which is still supported, because it does not use shell special characters.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Do not discard comments.  All comments are passed through to the output file, except for comments  in  processed  directives,  which  are deleted along with the directive.",
+      "description": "Do not discard comments.  All comments are passed through to the output file, except for comments in  processed  directives,  which  are deleted along with the directive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "This is like -C, except that comments contained within macros are also passed through to the output file where the macro is expanded.",
+      "description": "not  discard  comments,  including  during  macro expansion.  This is like -C, except that comments contained within macros are also passed through to the output file where the macro is expanded.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -104,11 +104,31 @@
       "requires": []
     },
     {
+      "short": "-F",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-G",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-H",
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Print  the name of each header file used, in addition to other normal activities.  Each name is indented to show how deep in the #include stack it is.  Precompiled header files are also printed, even if they are found to be invalid; an  invalid  precompiled  header  file  is printed with ...x and a valid one with ...! .",
+      "description": "Print the name of each header file used, in addition to other normal activities.  Each name is indented to show how deep in the #include stack  it  is.   Precompiled  header files are also printed, even if they are found to be invalid; an invalid precompiled header file is printed with ...x and a valid one with ...! .",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +148,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Instead  of  outputting the result of preprocessing, output a rule suitable for make describing the dependencies of the main source file. The preprocessor outputs one make rule containing the object file name for that source file, a colon, and the names of all  the  included files, including those coming from -include or -imacros command-line options.",
+      "description": "Instead  of outputting the result of preprocessing, output a rule suitable for make describing the dependencies of the main source file. The preprocessor outputs one make rule containing the object file name for that source file, a colon, and the names of all the  included files, including those coming from -include or -imacros command-line options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +158,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "The driver determines file based on whether an -o option is given.   If it  is,  the  driver  uses  its  argument  but  with a suffix of .d, otherwise it takes the name of the input file, removes any directory components and suffix, and applies a .d suffix.",
+      "description": "The driver determines file based on whether an -o option is given.  If it  is,  the  driver  uses  its  argument  but with a suffix of .d, otherwise it takes the name of the input file, removes any directory components and suffix, and applies a .d suffix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +168,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "If no -MF switch is given the preprocessor sends the  rules  to the same place it would send preprocessed output.",
+      "description": "If no -MF switch is given the preprocessor sends the rules  to the same place it would send preprocessed output.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +178,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "conjunction with an option such as -M requesting dependency generation, -MG assumes missing header files are generated files and adds them to the dependency list without raising an error.  The dependency filename is taken directly from the  \"#include\"  directive  without prepending any path.  -MG also suppresses preprocessed output, as a missing header file renders this useless.",
+      "description": "to  the dependency list without raising an error.  The dependency filename is taken directly from the \"#include\" directive without prepending any path.  -MG also suppresses preprocessed output, as a missing header file renders this useless.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +186,9 @@
     {
       "short": "-MM",
       "long": null,
-      "value_type": "File",
+      "value_type": "Directory",
       "takes_value": true,
-      "description": "-M  but  do  not  mention header files that are found in system header directories, nor header files that are included, directly or indirectly, from such a header.",
+      "description": "are  included,  directly  or indirectly, from such a header.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +208,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "option  instructs CPP to add a phony target for each dependency other than the main file, causing each to depend on nothing.  These dummy rules work around errors make gives if you remove header files without updating the Makefile to match.",
+      "description": "These dummy rules work around errors make gives if you remove header files without updating the Makefile to match.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +228,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "By default CPP takes the name  of  the  main  input  file,  deletes  any directory components and any file suffix such as .c, and appends the platform's usual object suffix.  The result is the target.",
+      "description": "the  target  of  the  rule  emitted by dependency generation.  By default CPP takes the name of the main input file, deletes any directory components and any file suffix such as .c, and appends the platform's usual object suffix.  The result is the target.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +238,17 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Inhibit generation of linemarkers in the output from the preprocessor.  This might be useful when running the preprocessor  on  something that is not C code, and will be sent to a program which might be confused by the linemarkers.",
+      "description": "Inhibit generation of linemarkers in the output from the preprocessor.  This might be useful when running the preprocessor on  something that is not C code, and will be sent to a program which might be confused by the linemarkers.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Q",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -229,6 +259,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Compile only; do not assemble or link.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-T",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +308,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This warning is enabled by -Wall.",
+      "description": "whenever  a  comment-start  sequence  /*  appears  in a /* comment, or whenever a backslash-newline appears in a // comment.  This warning is enabled by -Wall.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +338,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "if  any  trigraphs  are  encountered that might change the meaning of the program.  Trigraphs within comments are not warned about, except those that would form escaped newlines.",
+      "description": "Trigraphs within comments  are  not  warned  about, except those that would form escaped newlines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +418,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Both kinds of output go to the standard output file.",
+      "description": "both  the  #define  directives  and  the result of preprocessing.  Both kinds of output go to the standard output file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +438,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "directives  for  all  the  macros  defined  during  the  execution  of  the preprocessor,  including  predefined  macros.   This  gives  you  a  way  of  finding  out  what is predefined in your version of the preprocessor.  Assuming you have no file foo.h, the command",
+      "description": "for  all  the  macros  defined  during  the  execution  of  the preprocessor,  including  predefined  macros.   This  gives  you  a  way  of  finding  out what is predefined in your version of the preprocessor.  Assuming you have no file foo.h, the command",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +458,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "-dD  except  that  only  macros  that are expanded, or whose definedness is tested in preprocessor directives, are output; the output is delayed until the use or test of the macro; and #undef directives are also output for macros tested but undefined  at  the time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +468,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "to  make  debugging  dumps  during  compilation  as  specified  by  letters.   The  flags documented here are those relevant to the preprocessor.  Other letters are interpreted by the compiler proper, or reserved for future versions of GCC, and so are silently ignored. If you specify letters whose behavior conflicts, the result is undefined.",
+      "description": "by  letters.   The  flags  documented  here  are  those  relevant  to  the preprocessor.   Other  letters  are  interpreted  by  the  compiler  proper, or reserved for future versions of GCC, and so are silently ignored.  If you specify letters whose behavior conflicts, the result is undefined.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +528,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "This suppresses things like  macro  expansion,  trigraph conversion, escaped newline splicing, and processing of most directives.  The preprocessor still recognizes and removes comments, so that you  can pass a file preprocessed with -C to the compiler without problems.  In this mode the integrated preprocessor is little more than a tokenizer for the front ends.",
+      "description": "to  the preprocessor that the input file has already been preprocessed.  This suppresses things like macro expansion, trigraph conversion, escaped newline splicing, and processing of most directives.  The preprocessor still recognizes  and  removes  comments,  so that you can pass a file preprocessed with -C to the compiler without problems.  In this mode the integrated preprocessor is little more than a tokenizer for the front ends.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +538,7 @@
       "long": null,
       "value_type": "Number",
       "takes_value": true,
-      "description": "This helps the preprocessor report correct column numbers in warnings or errors, even if tabs appear on the line.  If the value is less than 1 or greater than 100, the option is ignored.  The default is 8.",
+      "description": "This helps the preprocessor report correct column numbers in  warnings  or  errors,  even  if  tabs appear on the line.  If the value is less than 1 or greater than 100, the option is ignored.  The default is 8.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +568,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "like  -include, except that any output produced by scanning file is thrown away.  Macros it defines remain defined.  This allows you to acquire all the macros from a header without also processing its declarations.",
+      "description": "Macros it defines remain defined.  This  allows you to acquire all the macros from a header without also processing its declarations.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +588,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "file  as  if \"#include \"file\"\" appeared as the first line of the primary source file.  However, the first directory searched for file is the preprocessor's working directory instead of the directory containing the main  source  file.   If  not  found  there,  it  is searched for in the remainder of the \"#include \"...\"\" search chain as normal.",
+      "description": "However, the first directory  searched  for file  is  the  preprocessor's  working  directory  instead  of the directory containing the main source file.  If not found there, it is searched for in the remainder of the \"#include \"...\"\" search chain as normal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,7 +638,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dir  to  the  prefix  specified  previously  with  -iprefix,  and  add  the  resulting  directory  to  the  include  search path.",
+      "description": "dir  to  the  prefix  specified  previously  with  -iprefix,  and  add  the  resulting  directory  to  the  include search path.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -628,7 +668,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "not  search  the standard system directories for header files.  Only the directories explicitly specified with -I, -iquote, -isystem, and/or -idirafter options (and the directory of the current file, if appropriate) are searched.",
+      "description": "not  search the standard system directories for header files.  Only the directories explicitly specified with -I, -iquote, -isystem, and/or -idirafter options (and the directory of the current file, if appropriate) are searched.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -778,7 +818,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "You should use this option consistently for both compilation  and linking.  This option is supported on GNU/Linux targets, most other Unix derivatives, and also on x86 Cygwin and MinGW targets.",
+      "description": "You should use this option consistently for both compilation and linking.  This option is supported on GNU/Linux targets, most other Unix derivatives, and also on x86 Cygwin and MinGW targets.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -888,7 +928,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "These are three-character sequences, all starting with ??, that are defined  by  ISO  C  to  stand  for  single characters.  For example, ??/ stands for \\, so '??/n' is a character constant for a newline.",
+      "description": "These are three-character sequences, all starting with ??, that are defined by  ISO  C  to  stand  for  single characters.  For example, ??/ stands for \\, so '??/n' is a character constant for a newline.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -936,13 +976,6 @@
   ],
   "subcommands": [],
   "positional": [
-    {
-      "name": "a",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
     {
       "name": "above",
       "value_type": "String",

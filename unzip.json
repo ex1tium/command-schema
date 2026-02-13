@@ -4,16 +4,6 @@
   "description": "unzip - list, test and extract compressed files in a ZIP archive",
   "global_flags": [
     {
-      "short": "-2",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[VMS] force unconditionally conversion of file names to ODS2-compatible names.  The default is to exploit the destination file system, preserving case and extended file name characters on an ODS5 destination file system; and applying the  ODS2-compatibility  file  name filtering on an ODS2 destination file system.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-A",
       "long": null,
       "value_type": "String",
@@ -24,51 +14,11 @@
       "requires": []
     },
     {
-      "short": "-B",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[when  compiled  with  UNIXBACKUP defined] save a backup copy of each overwritten file. The backup file is gets the name of the target file with a tilde and optionally a unique sequence number (up to 5 digits) appended.  The sequence number is applied whenever  another file  with  the original name plus tilde already exists.  When used together with the \"overwrite all\" option -o, numbered backup files are never created. In this case, all backup files are named as the original file with an appended tilde,  existing  backup  files  are deleted without notice.  This feature works similarly to the default behavior of emacs(1) in many locations.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-C",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "use  case-insensitive matching for the selection of archive entries from the command-line list of extract selection patterns.  unzip's philosophy is ``you get what you ask for'' (this is also responsible for the -L/-U change; see the relevant options  below).   Because some file systems are fully case-sensitive (notably those under the Unix operating system) and because both ZIP archives and unzip it‐ self  are  portable across platforms, unzip's default behavior is to match both wildcard and literal filenames case-sensitively.  That is, specifying ``makefile'' on the command line will only match ``makefile'' in the archive, not  ``Makefile''  or  ``MAKEFILE''  (and similarly  for wildcard specifications).  Since this does not correspond to the behavior of many other operating/file systems (for ex‐ ample, OS/2 HPFS, which preserves mixed case but is not sensitive to it), the -C option may be used to force all filename  matches  to be  case-insensitive.   In the example above, all three files would then match ``makefile'' (or ``make*'', or similar).  The -C option affects file specs in both the normal file list and the excluded-file list (xlist).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "skip  restoration  of  timestamps for extracted items.  Normally, unzip tries to restore all meta-information for extracted items that are supplied in the Zip archive (and do not require privileges or impose a security risk).  By specifying -D, unzip is  told  to  sup‐ press  restoration  of timestamps for directories explicitly created from Zip archive entries.  This option only applies to ports that support setting timestamps for directories (currently ATheOS, BeOS, MacOS, OS/2, Unix, VMS, Win32, for other unzip ports,  -D  has  no effect).   The  duplicated  option  -DD forces suppression of timestamp restoration for all extracted entries (files and directories). This option results in setting the timestamps for all extracted entries to the current time.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-E",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "[MacOS only] display contents of MacOS extra field during restore operation.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-F",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[Acorn only] suppress removal of NFS filetype extension from stored filenames.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "match filenames case-insensitively",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -84,21 +34,11 @@
       "requires": []
     },
     {
-      "short": "-J",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[BeOS only] junk file attributes.  The file's BeOS file attributes are not restored, just the file's data.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-K",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[AtheOS, BeOS, Unix only] retain SUID/SGID/Tacky file attributes.  Without this flag, these attribute bits are  cleared  for  security reasons.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "keep setuid/setgid/tacky permissions",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +46,9 @@
     {
       "short": "-L",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "convert  to lowercase any filename originating on an uppercase-only operating system or file system.  (This was unzip's default behav‐ ior in releases prior to 5.11; the new default behavior is identical to the old behavior with the -U option, which is now obsolete and will be removed in a future release.)  Depending on the archiver, files archived under single-case file systems (VMS, old MS-DOS  FAT, etc.)  may be stored as all-uppercase names; this can be ugly or inconvenient when extracting to a case-preserving file system such as OS/2 HPFS or a case-sensitive one such as under Unix.  By default unzip lists and extracts such filenames exactly  as  they're  stored (excepting  truncation, conversion of unsupported characters, etc.); this option causes the names of all files from certain systems to be converted to lowercase.  The -LL option forces conversion of every filename to lowercase, regardless of the originating  file  sys‐ tem.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "make (some) names lowercase",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,19 +56,9 @@
     {
       "short": "-M",
       "long": null,
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "pipe all output through an internal pager similar to the Unix more(1) command.  At the end of a screenful of output, unzip pauses with a  ``--More--'' prompt; the next screenful may be viewed by pressing the Enter (Return) key or the space bar.  unzip can be terminated by pressing the ``q'' key and, on some systems, the Enter/Return key.  Unlike Unix more(1), there is no forward-searching  or  editing capability.   Also, unzip doesn't notice if long lines wrap at the edge of the screen, effectively resulting in the printing of two or more lines and the likelihood that some text will scroll off the top of the screen before being viewed.  On some systems the number of available lines on the screen is not detected, in which case unzip assumes the height is 24 lines.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[Amiga] extract file comments as Amiga filenotes.  File comments are created with the -c option of zip(1), or with the  -N  option  of the Amiga port of zip(1), which stores filenotes as comments.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "pipe through \"more\" pager",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -144,31 +74,11 @@
       "requires": []
     },
     {
-      "short": "-P",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "THIS IS INSECURE!  Many multi-user operating systems provide ways for any user  to  see  the current command line of any other user; even on stand-alone systems there is always the threat of over-the-shoulder peeking.  Storing the plaintext password as part of a command line in an automated script is even worse.  Whenever possible,  use  the non-echoing, interactive prompt to enter passwords.  (And where security is truly important, use strong encryption such as Pretty Good Privacy instead of the relatively weak encryption provided by standard zipfile utilities.)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-S",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[VMS] convert text files (-a, -aa) into Stream_LF record format, instead of the  text-file  default,  variable-length  record  format. (Stream_LF  is the default record format of VMS unzip. It is applied unless conversion (-a, -aa and/or -b, -bb) is requested or a VMS- specific entry is processed.)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-T",
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "[most  OSes]  set the timestamp on the archive(s) to that of the newest file in each one.  This corresponds to zip's -go option except that it can be used on wildcard zipfiles (e.g., ``unzip -T \\*.zip'') and is much faster.",
+      "description": "[most  OSes] set the timestamp on the archive(s) to that of the newest file in each one.  This corresponds to zip's -go option except that it can be used on wildcard zipfiles (e.g., ``unzip -T \\*.zip'') and is much faster.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,9 +86,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[UNICODE_SUPPORT only] modify or disable UTF-8 handling.  When UNICODE_SUPPORT is available, the option -U forces unzip to escape  all non-ASCII  characters from UTF-8 coded filenames as ``#Uxxxx'' (for UCS-2 characters, or ``#Lxxxxxx'' for unicode codepoints needing 3 octets).  This option is mainly provided for debugging purpose when the fairly new UTF-8 support is suspected to mangle  up  extracted filenames.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "use escapes for all non-ASCII Unicode",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,19 +106,9 @@
     {
       "short": "-V",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "retain (VMS) file version numbers.  VMS files can be stored with a version number, in the format file.ext;##.  By default the  ``;##'' version numbers are stripped, but this option allows them to be retained.  (On file systems that limit filenames to particularly short lengths, the version numbers may be truncated or stripped regardless of this option.)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-W",
-      "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "[only when WILD_STOP_AT_DIR compile-time option enabled] modifies the pattern matching routine so that both `?' (single-char wildcard) and `*' (multi-char wildcard) do not match the directory separator character `/'.  (The two-character sequence ``**'' acts as a multi- char wildcard that includes the directory separator in its matched characters.)  Examples:",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "retain VMS version numbers",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -216,19 +116,9 @@
     {
       "short": "-X",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[VMS, Unix, OS/2, NT, Tandem] restore owner/protection info (UICs and ACL entries) under VMS, or user and group info  (UID/GID)  under Unix,  or access control lists (ACLs) under certain network-enabled versions of OS/2 (Warp Server with IBM LAN Server/Requester 3.0 to 5.0; Warp Connect with IBM Peer 1.0), or security ACLs under Windows NT.  In most cases this will require special  system  privileges, and  doubling  the option (-XX) under NT instructs unzip to use privileges for extraction; but under Unix, for example, a user who be‐ longs to several groups can restore files owned by any of those groups, as long as the user IDs match his or her own.  Note that ordi‐ nary file attributes are always restored--this option applies only to optional, extra ownership info available on some operating  sys‐ tems.   [NT's  access  control  lists  do  not appear to be especially compatible with OS/2's, so no attempt is made at cross-platform portability of access privileges.  It is not clear under what conditions this would ever be useful anyway.]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Y",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[VMS] treat archived file name endings of ``.nnn'' (where ``nnn''  is  a  decimal   number)  as  if  they  were  VMS  version  numbers (``;nnn'').  (The default is to treat them as file types.)  Example: \"a.b.3\" -> \"a.b;3\".",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "restore UID/GID info",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +128,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "zipinfo(1) mode.  If the first option on the command line is -Z, the remaining options are taken to be zipinfo(1)  options.   See  the appropriate manual page for a description of these options.",
+      "description": "zipinfo(1)  mode.   If the first option on the command line is -Z, the remaining options are taken to be zipinfo(1) options.  See the appropriate manual page for a description of these options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -246,9 +136,9 @@
     {
       "short": "-a",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "convert  text files.  Ordinarily all files are extracted exactly as they are stored (as ``binary'' files).  The -a option causes files identified by zip as text files (those with the `t' label in zipinfo listings, rather than `b') to be automatically extracted as such, converting line endings, end-of-file characters and the character set itself as necessary.  (For example, Unix files  use  line  feeds (LFs) for end-of-line (EOL) and have no end-of-file (EOF) marker; Macintoshes use carriage returns (CRs) for EOLs; and most PC operat‐ ing  systems use CR+LF for EOLs and control-Z for EOF.  In addition, IBM mainframes and the Michigan Terminal System use EBCDIC rather than the more common ASCII character set, and NT supports Unicode.)  Note that zip's identification of text files is by no means  per‐ fect;  some ``text'' files may actually be binary and vice versa.  unzip therefore prints ``[text]'' or ``[binary]'' as a visual check for each file it extracts when using the -a option.  The -aa option forces all files to be extracted as text, regardless of  the  sup‐ posed file type.  On VMS, see also -S.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "auto-convert any text files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -264,21 +154,11 @@
       "requires": []
     },
     {
-      "short": "-b",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "[general] treat all files as binary (no text conversions).  This is a shortcut for ---a.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-c",
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "extract  files to stdout/screen (``CRT'').  This option is similar to the -p option except that the name of each file is printed as it is extracted, the -a option is allowed, and ASCII-EBCDIC conversion is automatically performed if appropriate.   This  option  is  not listed in the unzip usage screen.",
+      "description": "extract files to stdout/screen (``CRT'').  This option is similar to the -p option except that the name of each file is printed as it is extracted, the -a option is allowed, and ASCII-EBCDIC conversion is automatically performed if appropriate.  This  option  is  not listed in the unzip usage screen.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,17 +178,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "freshen existing files, i.e., extract only those files that already exist on disk and that are newer than the disk copies.  By default unzip  queries before overwriting, but the -o option may be used to suppress the queries.  Note that under many operating systems, the TZ (timezone) environment variable must be set correctly in order for -f and -u to work properly (under Unix the variable  is  usually set  automatically).   The reasons for this are somewhat subtle but have to do with the differences between DOS-format file times (al‐ ways local time) and Unix-format times (always in GMT/UTC) and the necessity to compare the two.  A typical TZ  value  is  ``PST8PDT'' (US Pacific time with automatic adjustment for Daylight Savings Time or ``summer time'').",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-i",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "[MacOS  only]  ignore  filenames stored in MacOS extra fields. Instead, the most compatible filename stored in the generic part of the entry's header is used.",
+      "description": "freshen  existing  files,  i.e., extract only those files that already exist on disk and that are newer than the disk copies.  By de‐ fault unzip queries before overwriting, but the -o option may be used to suppress the queries.  Note that under many  operating  sys‐ tems,  the  TZ (timezone) environment variable must be set correctly in order for -f and -u to work properly (under Unix the variable is usually set automatically).  The reasons for this are somewhat subtle but have to do with the differences between DOS-format  file times  (always  local  time)  and  Unix-format times (always in GMT/UTC) and the necessity to compare the two.  A typical TZ value is ``PST8PDT'' (US Pacific time with automatic adjustment for Daylight Savings Time or ``summer time'').",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +188,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "junk paths.  The archive's directory structure is not recreated; all files are deposited in the extraction directory (by default,  the current one).",
+      "description": "junk paths (do not make directories)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +198,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "list  archive  files  (short  format).  The names, uncompressed file sizes and modification dates and times of the specified files are printed, along with totals for all files specified.  If UnZip was compiled with OS2_EAS defined, the -l option also lists columns  for the  sizes  of stored OS/2 extended attributes (EAs) and OS/2 access control lists (ACLs).  In addition, the zipfile comment and indi‐ vidual file comments (if any) are displayed.  If a file was archived from a single-case file system (for example, the old  MS-DOS  FAT file system) and the -L option was given, the filename is converted to lowercase and is prefixed with a caret (^).",
+      "description": "list archive files (short format).  The names, uncompressed file sizes and modification dates and times of the  specified  files  are printed, along with totals for all files specified.  If UnZip was compiled with OS2_EAS defined, the -l option also lists columns for the  sizes of stored OS/2 extended attributes (EAs) and OS/2 access control lists (ACLs).  In addition, the zipfile comment and indi‐ vidual file comments (if any) are displayed.  If a file was archived from a single-case file system (for example, the old MS-DOS  FAT file system) and the -L option was given, the filename is converted to lowercase and is prefixed with a caret (^).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "never overwrite existing files.  If a file already exists, skip the extraction of that  file  without  prompting.   By  default  unzip queries  before  extracting any file that already exists; the user may choose to overwrite only the current file, overwrite all files, skip extraction of the current file, skip extraction of all existing files, or rename the current file.",
+      "description": "never overwrite existing files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "overwrite existing files without prompting.  This is a dangerous option, so use it with care.  (It is often used with -f, however, and is the only way to overwrite directory EAs under OS/2.)",
+      "description": "overwrite files WITHOUT prompting",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "extract  files  to  pipe  (stdout).  Nothing but the file data is sent to stdout, and the files are always extracted in binary format, just as they are stored (no conversions).",
+      "description": "extract  files  to  pipe (stdout).  Nothing but the file data is sent to stdout, and the files are always extracted in binary format, just as they are stored (no conversions).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,17 +238,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "perform  operations  quietly (-qq = even quieter).  Ordinarily unzip prints the names of the files it's extracting or testing, the ex‐ traction methods, any file or zipfile comments that may be stored in the archive, and possibly  a  summary  when  finished  with  each archive.  The -q[q] options suppress the printing of some or all of these messages.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-s",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "[OS/2, NT, MS-DOS] convert spaces in filenames to underscores.  Since all PC operating systems allow spaces in filenames, unzip by de‐ fault  extracts  filenames  with spaces intact (e.g., ``EA DATA. SF'').  This can be awkward, however, since MS-DOS in particular does not gracefully support spaces in filenames.  Conversion of spaces to underscores can eliminate the awkwardness in some cases.",
+      "description": "quiet mode (-qq => quieter)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +248,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "test archive files.  This option extracts each specified file in memory and compares the CRC (cyclic  redundancy  check,  an  enhanced checksum) of the expanded file with the original file's stored CRC value.",
+      "description": "test archive files.  This option extracts each specified file in memory and compares the CRC (cyclic redundancy  check,  an  enhanced checksum) of the expanded file with the original file's stored CRC value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +258,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "update existing files and create new ones if needed.  This option performs the same function as the -f option, extracting (with query) files that are newer than those with the same name on disk, and in addition it extracts those files that do not already exist on disk. See -f above for information on setting the timezone properly.",
+      "description": "update existing files and create new ones if needed.  This option performs the same function  as  the  -f  option,  extracting  (with query)  files that are newer than those with the same name on disk, and in addition it extracts those files that do not already exist on disk.  See -f above for information on setting the timezone properly.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,7 +268,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "list archive files (verbose format) or show diagnostic version info.  This option has evolved and now behaves as both an option and  a modifier.   As  an  option  it has two purposes:  when a zipfile is specified with no other options, -v lists archive files verbosely, adding to the basic -l info the compression method, compressed size, compression ratio and 32-bit CRC.  In contrast  to  most  of  the competing  utilities,  unzip removes the 12 additional header bytes of encrypted entries from the compressed size numbers.  Therefore, compressed size and compression ratio figures are independent of the entry's encryption status and show the correct  compression  per‐ formance.   (The  complete size of the encrypted compressed data stream for zipfile entries is reported by the more verbose zipinfo(1) reports, see the separate manual.)  When no zipfile is specified (that is, the complete command is simply ``unzip -v''), a  diagnostic screen  is  printed.  In addition to the normal header with release date and version, unzip lists the home Info-ZIP ftp site and where to find a list of other ftp and non-ftp sites; the target operating system for which it was compiled, as well as (possibly) the  hard‐ ware on which it was compiled, the compiler and version used, and the compilation date; any special compilation options that might af‐ fect  the program's operation (see also DECRYPTION below); and any options stored in environment variables that might do the same (see ENVIRONMENT OPTIONS below).  As a modifier it works in conjunction with other options (e.g., -t) to produce more verbose or  debugging output; this is not yet fully implemented but will be in future releases.",
+      "description": "list archive files (verbose format) or show diagnostic version info.  This option has evolved and now behaves as both an option and a modifier.  As an option it has two purposes:  when a zipfile is specified with no other options, -v lists  archive  files  verbosely, adding  to  the  basic -l info the compression method, compressed size, compression ratio and 32-bit CRC.  In contrast to most of the competing utilities, unzip removes the 12 additional header bytes of encrypted entries from the compressed size numbers.   Therefore, compressed  size and compression ratio figures are independent of the entry's encryption status and show the correct compression per‐ formance.  (The complete size of the encrypted compressed data stream for zipfile entries is reported by the more verbose  zipinfo(1) reports, see the separate manual.)  When no zipfile is specified (that is, the complete command is simply ``unzip -v''), a diagnostic screen  is printed.  In addition to the normal header with release date and version, unzip lists the home Info-ZIP ftp site and where to find a list of other ftp and non-ftp sites; the target operating system for which it was compiled, as well as (possibly) the hard‐ ware on which it was compiled, the compiler and version used, and the compilation date; any special compilation  options  that  might affect  the  program's  operation (see also DECRYPTION below); and any options stored in environment variables that might do the same (see ENVIRONMENT OPTIONS below).  As a modifier it works in conjunction with other options (e.g., -t) to produce more verbose or  de‐ bugging output; this is not yet fully implemented but will be in future releases.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -434,7 +294,16 @@
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "Environment",
+      "description": "options  are,  in effect, considered to be just like any other command-line options, except that they are effectively the first options on the command line.  To override an environment option, one may use the ``minus operator'' to remove it.  For instance, to override one of the quiet-flags in the example above, use the command",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
       "name": "exdir",
@@ -445,6 +314,6 @@
     }
   ],
   "source": "Merged",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": "6.00"
 }

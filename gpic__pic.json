@@ -78,7 +78,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Be  more  compatible  with tpic; implies -t.  Lines beginning with \\ are not passed through transparently.  Lines beginning with . are passed through with the initial . changed to \\.  A line beginning with .ps is given special treatment: it takes  an  optional  integer argument specifying the line thickness (pen size) in milliinches; a missing argument restores the previous line thickness; the default line  thickness is 8 milliinches.  The line thickness thus specified takes effect only when a non-negative line thickness has not been specified by use of the thickness attribute or by setting the linethick variable.",
+      "description": "Be more compatible with tpic; implies -t.  Lines beginning with \\ are not passed through transparently.  Lines beginning with  .  are passed  through  with the initial . changed to \\.  A line beginning with .ps is given special treatment: it takes an optional integer argument specifying the line thickness (pen size) in milliinches; a missing argument restores the previous line  thickness;  the  de‐ fault  line  thickness  is 8 milliinches.  The line thickness thus specified takes effect only when a non-negative line thickness has not been specified by use of the thickness attribute or by setting the linethick variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Don't use groff extensions to the troff drawing commands.  Specify this option if a postprocessor you're using doesn't  support  these extensions, described in groff_out(5).  This option also causes pic not to use zero-length lines to draw dots in troff mode.",
+      "description": "Don't use groff extensions to the troff drawing commands.  Specify this option if a postprocessor you're using doesn't support  these extensions, described in groff_out(5).  This option also causes pic not to use zero-length lines to draw dots in troff mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,8 +116,8 @@
   ],
   "subcommands": [
     {
-      "name": "An",
-      "description": "alternative  may  be  to use the -Tpdf option to convert your picture directly into PDF format.  The MediaBox of the file produced can be controlled by passing a -P-p papersize to groff.",
+      "name": "As",
+      "description": "the  Encapsulated  PostScript File Format EPS is getting more and more important, and the conversion wasn't regarded trivial in the past you might be interested to know that there is a conversion tool named ps2eps which does the right job.  It is  much  better  than  the  tool ps2epsi packaged with gs.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -125,7 +125,7 @@
     },
     {
       "name": "Boxes",
-      "description": "can  have rounded corners.  The rad attribute specifies the radius of the quarter-circles at each corner.  If no rad or diam attribute is given, a radius of boxrad is used.  Initially, boxrad has a value of 0.  A box with rounded corners can be dotted or dashed.",
+      "description": "can have rounded corners.  The rad attribute specifies the radius of the quarter-circles at each corner.  If no rad or diam attribute is given, a radius of boxrad is used.  Initially, boxrad has a value of 0.  A box with rounded corners can be dotted or dashed.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -149,7 +149,7 @@
     },
     {
       "name": "Concatenate",
-      "description": "arguments  and pass them as a line to troff or TeX.  Each arg must be an expression, a position, or text.  command allows the values of pic variables to be passed to the formatter.  For example, .PS x = 14 command \".ds string x is \" x \".\" .PE \\*[string] produces x is 14. when formatted with troff.",
+      "description": "and  write arguments to the standard error stream followed by a newline.  Each arg must be an expression, a position, or text.  This is useful for debugging.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -164,16 +164,8 @@
       "aliases": []
     },
     {
-      "name": "Each",
-      "description": "text object has an invisible box associated with it.  The compass points of a text object are determined by this box.  The implicit mo‐ tion associated with the object is also determined by this box.  The dimensions of this box are taken from the width and  height  attributes; if  the  width  attribute is not supplied then the width will be taken to be textwid; if the height attribute is not supplied then the height will be taken to be the number of text strings associated with the object times textht.  Initially, textwid and textht have a value of 0.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Evaluate",
-      "description": "expr;  if it is non-zero then do if-true, otherwise do if-false.  X can be any character not occurring in if-true.  Y can be any character not occurring in if-false.",
+      "name": "END",
+      "description": null,
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -196,24 +188,16 @@
       "aliases": []
     },
     {
-      "name": "It",
-      "description": "is  necessary to feed this file into groff without adding any page information, so you must check which .PS and .PE requests are actually called.  For example, the mm macro package adds a page number, which is very annoying.  At the moment, calling  standard  groff  without  any macro package works.  Alternatively, you can define your own requests, e.g., to do nothing:",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Set",
-      "description": "variable to expr1.  While the value of variable is less than or equal to expr2, do body and increment variable by expr3; if by is not given, increment variable by 1.  If expr3 is prefixed by * then variable will instead be multiplied by expr3.  The value of  expr3 can  be  negative for the additive case; variable is then tested whether it is greater than or equal to expr2.  For the multiplicative case, expr3 must be greater than zero.  If the constraints aren't met, the loop isn't executed.  X can be any character not  occurring in body.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "The",
-      "description": "thickness  of  the  lines used to draw objects is controlled by the linethick variable.  This gives the thickness of lines in points.  A negative value means use the default thickness: in TeX output mode, this means use a thickness of 8 milliinches; in TeX output mode with  the",
+      "description": "troff  output  of pic is device-independent.  The -T option is therefore redundant.  All numbers are taken to be in inches; numbers are never interpreted to be in troff machine units.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "This",
+      "description": "syntax  resembles  variable assignment with = except that var must already be defined, and expr will be assigned to var without creating a variable local to the current block.  (By contrast, = defines var in the current block if it is not already defined there, and then changes the value in the current block only.)  For example, .PS x = 3 y = 3 [ x := 5 y = 5 ] print x   y .PE writes 5 3 to the standard error stream.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -221,7 +205,39 @@
     },
     {
       "name": "To",
-      "description": "change the name of the vbox in TeX mode, set the pseudo-variable figname (which is actually a specially parsed command) within a picture. Example:",
+      "description": "obtain  a stand-alone picture from a pic file, enclose your pic code with .PS and .PE requests; roff configuration commands may be added at the beginning of the file, but no roff text.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "and",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "are",
+      "description": "equivalent.  The commands to be performed for each line can also be taken from a macro defined earlier by giving the name of the macro as the argument to thru.  The argument after thru is looked up as a macro name first; if not defined, its  first  character  is interpreted as a delimiter.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "box",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "for",
+      "description": "i  between 1 and 9, are replaced by the i-th word of the line.  If filename is not given, lines are taken from the current input up to .PE.  If an until clause is specified, lines will be read only until a line the first word of which is  word;  that  line  will then be discarded.  X can be any character not occurring in body.  For example, .PS copy thru % circle at ($1,$2) % until \"END\" 1 2 3 4 5 6",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -230,14 +246,6 @@
     {
       "name": "reset",
       "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "would",
-      "description": "draw a circle using a line with a thickness of 1.5 points.  The thickness of lines is not affected by the value of the scale variable, nor by the width or height given in the .PS line.",
       "flags": [],
       "positional": [],
       "subcommands": [],

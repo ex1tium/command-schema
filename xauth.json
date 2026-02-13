@@ -18,7 +18,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This  option  indicates that xauth should attempt to break any authority file locks before proceeding.  Use this option only to clean up stale locks.",
+      "description": "This  option indicates that xauth should attempt to break any authority file locks before proceeding.  Use this option only to clean up stale locks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "By default, xauth will use the file specified by the  XAUTHORITY  envi‐ ronment variable or .Xauthority in the user's home directory.",
+      "description": "option specifies the name of the authority file to use.  By default, xauth will use the file specified by the XAUTHORITY envi‐ ronment variable or .Xauthority in the user's home directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option indicates that xauth should ignore any authority file locks.  Normally, xauth will refuse to read or edit  any  authority files that have been locked by other programs (usually xdm or another xauth).",
+      "description": "This option indicates that xauth should ignore any authority file locks.  Normally, xauth will refuse to read or edit any  authority files that have been locked by other programs (usually xdm or another xauth).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option indicates that xauth should not attempt to resolve any hostnames, but should simply always  print  the  host  address  as stored in the authority file.",
+      "description": "This option indicates that xauth should not attempt to resolve any hostnames, but should simply always print  the  host  address  as stored in the authority file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This  option  indicates that xauth should operate quietly and not print unsolicited status messages.  This is the default if an xauth command is given on the command line or if the standard output is not directed to a terminal.",
+      "description": "This option indicates that xauth should operate quietly and not print unsolicited status messages.  This is the default if an  xauth command is given on the command line or if the standard output is not directed to a terminal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option indicates that xauth should operate verbosely and print status messages indicating  the  results  of  various  operations (e.g.,  how many records have been read in or written out).  This is the default if xauth is reading commands from its standard input and its standard output is directed to a terminal.",
+      "description": "This  option  indicates  that  xauth should operate verbosely and print status messages indicating the results of various operations (e.g., how many records have been read in or written out).  This is the default if xauth is reading commands from its standard input and its standard output is directed to a terminal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,72 +76,8 @@
   ],
   "subcommands": [
     {
-      "name": "AUTHOR",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "An",
-      "description": "authorization entry for the indicated display using the given protocol and key data is added to the authorization file.  The data is specified as an even-lengthed string of hexadecimal digits, each pair representing one octet.  The first digit of each pair  gives the  most  significant  4  bits of the octet, and the second digit of the pair gives the least significant 4 bits.  For example, a 32 character hexkey would represent a 128-bit value.  A protocol name consisting of just a single period is treated as  an  abbreviation for MIT-MAGIC-COOKIE-1.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "Authorization",
-      "description": "entries  for  each of the specified displays (or all if no displays are named) are printed on the standard output.  If the nlist command is used, entries will be shown in the numeric format used by the nextract command; otherwise, they are shown  in  a textual format.  Key data is always displayed in the hexadecimal format given in the description of the add command.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "BUGS",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "ENVIRONMENT",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "EXAMPLE",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "FILES",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "HOME",
-      "description": "to get the user's home directory if XAUTHORITY isn't defined.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "If",
-      "description": "the  trusted  option  is used, clients that connect using this authorization will have full run of the display, as usual.  If un‐ trusted is used, clients that connect using this authorization will be considered untrusted and prevented from stealing or  tampering with data belonging to trusted clients.  See the SECURITY extension specification for full details on the restrictions imposed on un‐ trusted clients.  The default is untrusted.",
+      "description": "entries  for  each of the specified displays are written to the indicated file.  If the nextract command is used, the entries are written in a numeric format suitable for non-binary transmission (such as secure electronic mail).   The  extracted  en‐ tries  can be read back in using the merge and nmerge commands.  If the filename consists of just a single dash, the entries will be written to the standard output.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -149,31 +85,15 @@
     },
     {
       "name": "The",
-      "description": "timeout  option specifies how long in seconds this authorization will be valid.  If the authorization remains unused (no clients are connected with it) for longer than this time period, the server purges the authorization, and future attempts to connect using it will fail.  Note that the purging done by the server does not delete the authorization entry from the authorization  file.   The  de‐ fault timeout is 60 seconds.",
+      "description": "data  option specifies data that the server should use to generate the authorization.  Note that this is not the same data that gets written to the authorization file.  The interpretation of this data depends on the authorization protocol.  The hexdata  is  in the same format as the hexkey described in the add command.  The default is to send no data.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "Users",
-      "description": "that have insecure networks should take care to use encrypted file transfer mechanisms to copy authorization entries between machines. Similarly, the MIT-MAGIC-COOKIE-1 protocol is not very useful in insecure environments.  Sites that are interested in additional security may need to use encrypted authorization mechanisms such as Kerberos.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "XAUTHORITY",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "common",
-      "description": "-display  command line argument.  Display-specific information (such as the screen number) is unnecessary and will be ignored.  Same- machine connections (such as local-host sockets, shared memory, and the Internet Protocol  hostname  localhost)  are  referred  to  as  host‐ name/unix:displaynumber so that local entries for different machines may be stored in one authority file.",
+      "name": "This",
+      "description": "command  is  similar to add.  The main difference is that instead of requiring the user to supply the key data, it connects to the server specified in displayname and uses the SECURITY extension in order to get the key data to store in the authorization file. If the server cannot be contacted or if it does not support the SECURITY extension, the command fails.  Otherwise, an  authorization entry  for  the indicated display using the given protocol is added to the authorization file.  A protocol name consisting of just a single period is treated as an abbreviation for MIT-MAGIC-COOKIE-1.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -181,7 +101,7 @@
     },
     {
       "name": "exit",
-      "description": "If  any  modifications  have  been  made,  the  authority file is written out (if allowed), and the program exits.  An end of file is treated as an implicit exit command.",
+      "description": "If  any  modifications  have  been  made,  the authority file is written out (if allowed), and the program exits.  An end of file is treated as an implicit exit command.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -230,7 +150,7 @@
     },
     {
       "name": "info",
-      "description": "Information describing the authorization file, whether or not any changes have been made, and from where  xauth  commands  are  being read is printed on the standard output.",
+      "description": "Information describing the authorization file, whether or not any changes have been made, and from where xauth  commands  are  being read is printed on the standard output.",
       "flags": [],
       "positional": [],
       "subcommands": [],

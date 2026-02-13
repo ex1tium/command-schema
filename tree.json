@@ -26,9 +26,9 @@
     {
       "short": null,
       "long": "--dirsfirst",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "This option is disabled when -U is used.",
+      "description": "List directories before files (-U disables).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,22 +36,19 @@
     {
       "short": null,
       "long": "--du",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "For  each  directory  report  its size as the accumulation of sizes of all its files and sub-directories (and their files, and so on). The total amount of used space is also given in the final report (like the 'du -c' command.) This option requires tree to read the en‐ tire directory tree before emitting it, see BUGS AND NOTES below.  Implies -s.",
+      "description": "Compute size of directories by their contents.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "-c",
-        "-s"
-      ]
+      "requires": []
     },
     {
       "short": null,
       "long": "--fflinks",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "symbolic  link  information found in a file, as from the output of 'tree -fi --noreport'.  Only the first occurrence of the string ' -> ' is used to denote the separation of the filename from the link.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Process link information when using --fromfile. ------- Miscellaneous options -------",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -59,6 +56,36 @@
     {
       "short": null,
       "long": "--filelimit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--filesfirst",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "List files before directories (-U disables).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fromfile",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Reads paths from files (.=stdin)",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--fromtabfile",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -68,39 +95,9 @@
     },
     {
       "short": null,
-      "long": "--filesfirst",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "This option is disabled when -U is used.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fromfile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "a  directory listing from a file rather than the file-system.  Paths provided on the command line are files to read from rather than directories to search.  The dot (.) directory indicates that tree should read paths from standard input. NOTE: this is only suit‐ able for reading the output of a program such as find, not 'tree -fi' as symlinks are not distinguished from files that simply contain ' -> ' as part of the filename unless the --fflinks option is used.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--fromtabfile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "indicate  the directory nesting level.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--gitfile",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Explicitly read gitignore file.",
       "multiple": false,
       "conflicts_with": [],
@@ -111,7 +108,7 @@
       "long": "--gitignore",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Also uses $GIT_DIR/info/exclude if present.",
+      "description": "Filter by using .gitignore files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -129,9 +126,9 @@
     {
       "short": null,
       "long": "--hintro",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Use an empty file or /dev/null to eliminate the intro altogether.",
+      "description": "Use file X as the HTML intro.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -139,9 +136,9 @@
     {
       "short": null,
       "long": "--houtro",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Use an empty file or /dev/null to eliminate the outro altogether.",
+      "description": "Use file X as the HTML outro. ------- Input options -------",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -151,7 +148,7 @@
       "long": "--ignore-case",
       "value_type": "String",
       "takes_value": true,
-      "description": "a  match pattern is specified by the -P or -I option, this will cause the pattern to match without regard to the case of each let‐ ter.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -159,9 +156,9 @@
     {
       "short": null,
       "long": "--info",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "See .INFO FILES below for more information on the format of .info files.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print information about files found in .info files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -179,19 +176,19 @@
     {
       "short": null,
       "long": "--inodes",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Print inode number of each file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-P",
+      "short": null,
       "long": "--matchdirs",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "You may have multiple -P options. Note: you must use the -a option to also consider those files beginning with a dot `.' for matching. Valid wildcard operators are `*' (any zero or more characters), `**` (any zero or more characters as well as null /'s, i.e. /**/ may match a single /), `?' (any single character), `[...]' (any single charac‐ ter listed between brackets (optional - (dash) for character range may be used: ex: [A-Z]), and `[^...]' (any single character not listed in brackets) and `|' separates alternate patterns. A '/' at the end of the pattern matches directories, but not files.",
+      "description": "Include directory names in -P pattern matching.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -199,8 +196,8 @@
     {
       "short": null,
       "long": "--metafirst",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Print meta-data at the beginning of each line.",
       "multiple": false,
       "conflicts_with": [],
@@ -209,8 +206,8 @@
     {
       "short": null,
       "long": "--nolinks",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Turn off hyperlinks in HTML output.",
       "multiple": false,
       "conflicts_with": [],
@@ -219,8 +216,8 @@
     {
       "short": null,
       "long": "--noreport",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Turn off file/directory count at end of tree listing.",
       "multiple": false,
       "conflicts_with": [],
@@ -241,27 +238,27 @@
       "long": "--si",
       "value_type": "String",
       "takes_value": true,
-      "description": "Like -h but use SI units (powers of 1000) instead.",
+      "description": "Like -h, but use in SI units (powers of 1000).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-c",
+      "short": null,
       "long": "--sort",
       "value_type": "String",
       "takes_value": true,
-      "description": "Sort the output by last status change instead of alphabetically. Modifies the -D option (if used) to print the last status change in‐ stead of modification time.",
+      "description": "Select sort: name,version,size,mtime,ctime. ------- Graphics options -------",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-D",
+      "short": null,
       "long": "--timefmt",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Print the date of the last modification time or if -c is used, the last status change time for the file listed.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -269,8 +266,8 @@
     {
       "short": null,
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Print version and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -279,9 +276,9 @@
     {
       "short": "-A",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Turn on ANSI line graphics hack when printing the indentation lines.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print ANSI lines graphic indentation lines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -289,9 +286,19 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Turn  colorization on always, using built-in color defaults if the LS_COLORS or TREE_COLORS environment variables are not set.  Useful to colorize output to a pipe.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Turn colorization on always. ------- XML/HTML/JSON options -------",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print the date of last modification or (-c) status change.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -299,9 +306,9 @@
     {
       "short": "-F",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Append a `/' for directories, a `=' for socket files, a `*' for executable files, a `>' for doors (Solaris) and a `|' for  FIFO's,  as per ls -F",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Appends '/', '=', '*', '@', '|' or '>' as per ls -F.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -309,9 +316,9 @@
     {
       "short": "-H",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "baseHREF gives the base ftp location when  using  HTML  output. That  is, the local directory may be `/local/ftp/pub', but it must be referenced as `ftp://hostname.organization.domain/pub' (baseHREF should be `ftp://hostname.organization.domain'). Hint: don't use ANSI lines with this option, and don't give more than  one  directory in the directory list. If you wish to use colors via CSS style-sheet, use the -C option in addition to this option to force color out‐ put.",
+      "description": "Prints out HTML format with baseHREF as top directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -321,7 +328,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "You may have multiple -I options.  See -P above for information on wildcard patterns.",
+      "description": "Do not list files that match the given pattern.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -329,9 +336,9 @@
     {
       "short": "-J",
       "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "Turn on JSON output. Outputs the directory tree as a JSON formatted array.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Prints out an JSON representation of the tree.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -349,9 +356,19 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Number",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print non-printable characters as is.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-P",
+      "long": null,
+      "value_type": "String",
       "takes_value": true,
-      "description": "Print non-printable characters as is instead of as escaped octal numbers.",
+      "description": "List only those files that match the pattern given.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -359,9 +376,9 @@
     {
       "short": "-Q",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Quote the names of files in double quotes.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Quote filenames with double quotes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -369,9 +386,9 @@
     {
       "short": "-R",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Recursively  cross down the tree each level directories (see -L option), and at each level outputting to a file named 00Tree.html (ala",
+      "description": "Rerun tree when max dir level reached.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -379,9 +396,9 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Turn on CP437 line graphics (useful when using Linux console mode fonts). This option is now equivalent to `--charset=IBM437' and  may eventually be depreciated.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Print with CP437 (console) graphics indentation lines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -399,9 +416,9 @@
     {
       "short": "-U",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Do not sort.  Lists files in directory order. Disables --dirsfirst.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Leave files unsorted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -409,9 +426,9 @@
     {
       "short": "-X",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Turn on XML output. Outputs the directory tree as an XML formatted file.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Prints out an XML representation of the tree.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -421,7 +438,17 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "All files are printed.  By default tree does not print hidden files (those beginning with a dot `.').  In no event does tree print the file system constructs `.' (current directory) and `..' (previous directory).",
+      "description": "All files are listed.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-c",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Sort files by last status change time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -441,7 +468,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Prints the full path prefix for each file.",
+      "description": "Print the full path prefix for each file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -449,9 +476,9 @@
     {
       "short": "-g",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Print the group name, or GID # if no group name is available, of the file.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Displays file group owner or GID number.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -461,7 +488,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the size of each file but in a more human readable way, e.g. appending a size letter for kilobytes (K), megabytes (M), gigabytes (G), terabytes (T), petabytes (P) and exabytes (E).",
+      "description": "Print the size in a more human readable way.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -469,9 +496,9 @@
     {
       "short": "-i",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Makes  tree  not  print the indentation lines, useful when used in conjunction with the -f option.  Also removes as much whitespace as possible when used with the -J or -X options.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Don't print indentation lines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -481,7 +508,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Follows symbolic links if they point to directories, as if they were directories. Symbolic links that will  result  in  recursion  are avoided when detected.",
+      "description": "Follow symbolic links like directories.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -489,9 +516,9 @@
     {
       "short": "-n",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Turn colorization off always, over-ridden by the -C option, however overrides CLICOLOR_FORCE if present.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Turn colorization off always (-C overrides).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -499,8 +526,8 @@
     {
       "short": "-o",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "Output to file instead of stdout. ------- File options -------",
       "multiple": false,
       "conflicts_with": [],
@@ -511,7 +538,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the file type and permissions for each file (as per ls -l).",
+      "description": "Print the protections for each file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -521,7 +548,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print non-printable characters in filenames as question marks instead of the default.",
+      "description": "Print non-printable characters as '?'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -529,9 +556,9 @@
     {
       "short": "-r",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Sort the output in reverse order.  This is a meta-sort that alter the above sorts.  This option is disabled when -U is used.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Reverse the order of the sort.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -541,7 +568,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print the size of each file in bytes along with the name.",
+      "description": "Print the size in bytes of each file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -551,7 +578,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Sort the output by last modification time instead of alphabetically.",
+      "description": "Sort files by last modification time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -559,9 +586,9 @@
     {
       "short": "-u",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Print the username, or UID # if no username is available, of the file.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Displays file owner or UID number.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -571,7 +598,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Sort the output by version.",
+      "description": "Sort files alphanumerically by version.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -581,13 +608,22 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Stay on the current file-system only.  Ala find -xdev.",
+      "description": "Stay on current filesystem only.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "present",
+      "description": "and the environment variable STDDATA_FD is defined or set to a positive non-zero file descriptor value to use to output on. It is hoped that some day a better Linux/Unix shell may take advantage of this feature, though BSON would probably be a better format for this.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
       "name": "basehref",
@@ -633,6 +669,6 @@
     }
   ],
   "source": "Merged",
-  "confidence": 0.9,
+  "confidence": 1.0,
   "version": null
 }

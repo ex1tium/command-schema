@@ -18,7 +18,7 @@
       "long": "--adjust-vma",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the specified offset to object file addresses when performing lookups.  This can be used to perform lookups as if the object were relocated by the offset.",
+      "description": "This can be used to perform lookups as if the object were relocated by the offset.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--color",
       "value_type": "String",
       "takes_value": true,
-      "description": "Whether to use color when symbolizing log markup: always, auto, never",
+      "description": "Speci‐ fying --color alone is equivalent to --color=always.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--debug-file-directory",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "instances of this argument are searched in the order given.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--debuginfod",
       "value_type": "Url",
       "takes_value": true,
-      "description": "or  not to try debuginfod lookups for debug binaries. Unless specified, debuginfod is only enabled if libcurl was compiled in (LLVM_ENABLE_CURL) and at least one server URL was provided by the environment variable DEBUGINFOD_URLS.",
+      "description": "or not to try debuginfod lookups for debug binaries. Unless specified, debuginfod is only enabled if libcurl was compiled in (LLVM_ENABLE_CURL) and at least one server URL was provided by the environment variable DEBUGINFOD_URLS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--default-arch",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "for  a given  architecture.   You can also specify the architecture by writing binary_name:arch_name in the input (see example below). If the architecture is not specified in either way, the address will not be symbolized. Defaults to empty string.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--demangle",
       "value_type": "String",
       "takes_value": true,
-      "description": "Demangle function names",
+      "description": "the  non-mangled  name foz is printed as is). Defaults to true.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": null,
       "long": "--dia",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "Use the Windows DIA SDK for symbolization. If the DIA SDK is not found, llvm-symbolizer will fall back to the native implementation.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Use the DIA library to access symbols (Windows only)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -116,9 +116,9 @@
     {
       "short": null,
       "long": "--dsym-hint",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "op‐ tion. This flag can be used multiple times.",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "Path to .dSYM bundles to search for debug info for the object files",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--fallback-debug-path",
       "value_type": "String",
       "takes_value": true,
-      "description": "locat‐ ing the debug data if it cannot be found relative to the object.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--filter-markup",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "from  standard input, converts contained Symbolizer Markup into human-readable form, and prints the results to standard output. The following markup elements are not yet supported:",
+      "description": "from standard input, converts contained Symbolizer Markup into human-readable form, and prints the results to standard output. The following markup elements are not yet supported:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--functions",
       "value_type": "String",
       "takes_value": true,
-      "description": "respectively). Defaults to linkage.",
+      "description": "Print function name for a given address",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--obj",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  object file to be symbolized. If - is specified, read the object directly from the standard input stream. Mutually exclusive with --build-id.",
+      "description": "to object file to be symbolized. If - is specified, read the object directly from the standard input stream. Mutually exclusive with --build-id.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--output-style",
       "value_type": "String",
       "takes_value": true,
-      "description": "GNU,  the  tool  follows  the  style  of  GNU's addr2line.  The differences from the LLVM style are:",
+      "description": "the  tool  follows  the  style  of  GNU's addr2line.  The differences from the LLVM style are:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--pretty-print",
       "value_type": "String",
       "takes_value": true,
-      "description": "For JSON output, the option will cause JSON to be indented and split over new lines. Otherwise, the JSON output will be printed in a compact form.",
+      "description": "human  readable output. If --inlining is specified, the enclosing scope is prefixed by (inlined by).  For JSON output, the op‐ tion will cause JSON to be indented and split over new lines. Otherwise, the JSON output will be printed in a compact form.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": "--relativenames",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  file's  path  relative to the compilation directory, instead of the absolute path. If the command-line to the compiler in‐ cluded the full path, this will be the same as the default.",
+      "description": "the  compiler  in‐ cluded the full path, this will be the same as the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

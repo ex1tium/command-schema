@@ -8,7 +8,7 @@
       "long": "--admindir",
       "value_type": "File",
       "takes_value": true,
-      "description": "This  is  where  the  statoverride  file  is  stored.   Defaults  to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
+      "description": "the  administrative  directory  to  directory  (since  dpkg  1.21.10).  This is where the statoverride file is stored.  Defaults to «/var/lib/dpkg» if DPKG_ADMINDIR has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--npquiet",
       "value_type": "String",
       "takes_value": true,
-      "description": "a  binary  package  part. This  option  suppresses  this  message,  to  allow  programs such as dpkg to cope with both split and unsplit packages without producing spurious messages.",
+      "description": "doing  automatic  queue-or-reassembly dpkg-split usually prints a message if it is given a part that is not a binary package part. This option suppresses this message, to allow programs such as dpkg to cope with both  split  and  unsplit  packages  without  producing spurious messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--root",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "the  root  directory  to directory (since dpkg 1.21.10), which sets the installation directory to «directory» and the administrative directory to «directory/var/lib/dpkg» if DPKG_ROOT has not been set.",
+      "description": "and  the  administrative directory to «directory/var/lib/dpkg» if DPKG_ROOT has not been set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,8 +156,16 @@
   ],
   "subcommands": [
     {
+      "name": "For",
+      "description": "each  package  file of which parts are in the queue the output gives the name of the package, the parts in the queue, and the total number of bytes stored in the queue.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "If",
-      "description": "part  is not a split binary package part then dpkg-split will exit with status 1; if some other trouble occurs then it will exit with status 2.",
+      "description": "part is not a split binary package part then dpkg-split will exit with status 1; if some other trouble occurs then it will exit with status 2.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -165,7 +173,7 @@
     },
     {
       "name": "The",
-      "description": "part  files given as arguments must be all the parts of exactly the same original binary file.  Each part must occur exactly once in the argument list, though the parts to not need to be listed in order.",
+      "description": "part files given as arguments must be all the parts of exactly the same original binary file.  Each part must occur exactly once in the argument list, though the parts to not need to be listed in order.",
       "flags": [],
       "positional": [],
       "subcommands": [],

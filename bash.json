@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "bash",
-  "description": "GNU bash, version 5.2.21(1)-release-(x86_64-pc-linux-gnu)",
+  "description": "bash - GNU Bourne-Again SHell",
   "global_flags": [
     {
       "short": null,
@@ -18,17 +18,17 @@
       "long": "--debugger",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "for  the  debugger profile to be executed before the shell starts.  Turns on extended debugging mode (see the description of the extdebug option to the shopt builtin below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-D",
       "long": "--dump-po-strings",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "A list of all double-quoted strings preceded by $ is printed on the standard output. These are the strings that are subject to language translation when the current locale is not C or POSIX. This implies the -n option; no commands will be executed. [-+]O [shopt_option] shopt_option is one of the shell options accepted by the shopt builtin (see SHELL BUILTIN COMMANDS below). If shopt_option is present, -O sets the value of that option; +O unsets it. If shopt_option is not supplied, the names and values of the shell op‐ tions accepted by shopt are printed on the standard output. If the invocation option is +O, the output is displayed in a format that may be reused as input.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -64,11 +64,11 @@
       "requires": []
     },
     {
-      "short": null,
+      "short": "-l",
       "long": "--login",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Make bash act as if it had been invoked as a login shell (see INVOCATION below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,8 +76,8 @@
     {
       "short": null,
       "long": "--noediting",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--noprofile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "By default, bash reads these files when it is invoked as a login shell (see INVOCATION below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--norc",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "not  read  and execute the system wide initialization file /etc/bash.bashrc and the personal initialization file ~/.bashrc if the shell is interactive.  This option is on by default if the shell is invoked as sh.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": null,
       "long": "--posix",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "See  SEE ALSO below for a reference to a document that details how posix mode affects bash's behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": null,
       "long": "--rcfile",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "personal  initialization file ~/.bashrc if the shell is interactive (see INVOCATION below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -136,19 +136,19 @@
     {
       "short": null,
       "long": "--restricted",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--verbose",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print shell input lines as they are read.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -175,16 +175,6 @@
     },
     {
       "short": "-C",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -266,9 +256,9 @@
     {
       "short": "-c",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "If the -c option is present, then commands are read from the first non-option argument command_string.  If there are arguments af‐ ter the command_string, the first argument is assigned to $0 and any remaining arguments are assigned to  the  positional  parame‐ ters.  The assignment to $0 sets the name of the shell, which is used in warning and error messages.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,23 +298,13 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "If the -i option is present, the shell is interactive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-k",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-l",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -376,9 +356,9 @@
     {
       "short": "-r",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "If the -r option is present, the shell becomes restricted (see RESTRICTED SHELL below).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +368,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "If  the  -s  option is present, or if no arguments remain after option processing, then commands are read from the standard input. This option allows the positional parameters to be set when invoking an interactive shell or when reading input through a pipe.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -414,37 +394,43 @@
       "requires": []
     },
     {
-      "short": "-v",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-x",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "Print commands and their arguments as they are executed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [],
+  "subcommands": [
+    {
+      "name": "command_string",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    }
+  ],
   "positional": [
     {
-      "name": "GNU",
+      "name": "BASH_ENV",
       "value_type": "String",
-      "required": false,
+      "required": true,
+      "multiple": false,
+      "description": "environment, expands"
+    },
+    {
+      "name": "INVOCATION",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }
   ],
-  "source": "HelpCommand",
-  "confidence": 0.9,
+  "source": "Merged",
+  "confidence": 1.0,
   "version": "5.2.21"
 }

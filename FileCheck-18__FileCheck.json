@@ -8,7 +8,7 @@
       "long": "--allow-deprecated-dag-overlap",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is deprecated and is only provided  for convenience as old tests are migrated to the new non-overlapping CHECK-DAG: implementation.",
+      "description": "This option is deprecated and is only provided for convenience as old tests are migrated to the new non-overlapping CHECK-DAG: implementation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--allow-unused-prefixes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  controls  the  behavior  when using more than one prefix as specified by --check-prefix or --check-prefixes, and some of these prefixes are missing in the test file. If true, this is allowed, if false, FileCheck will report an error, listing  the  missing prefixes. The default value is false.",
+      "description": "--check-prefixes,  and  some  of these  prefixes are missing in the test file. If true, this is allowed, if false, FileCheck will report an error, listing the missing prefixes. The default value is false.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--check-prefix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "By default, these patterns are prefixed with  \"CHECK:\".   If you'd  like  to  use  a  different  prefix  (e.g.  because  the  same  input file is checking multiple different tool or options), the",
+      "description": "searches the contents of match-filename for patterns to match.  By default, these patterns are prefixed with \"CHECK:\".  If you'd like to use a different prefix (e.g. because the same  input  file  is  checking  multiple  different  tool  or  options),  the",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--comment-prefixes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "line  by  \"COM:\"  or \"RUN:\". See the section The \"COM:\" directive for usage details.",
+      "description": "default,  FileCheck  ignores any occurrence in match-filename of any check prefix if it is preceded on the same line by \"COM:\" or \"RUN:\". See the section The \"COM:\" directive for usage details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--dump-input",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "input to stderr, adding annotations representing currently enabled diagnostics.  When there are multiple occurrences of this op‐ tion, the <value> that appears earliest in the list below has precedence.  The default is fail.",
+      "description": "When there are multiple occurrences of this op‐ tion, the <value> that appears earliest in the list below has precedence.  The default is fail.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--dump-input-context",
       "value_type": "String",
       "takes_value": true,
-      "description": "When there are multiple occurrences of this option, the largest specified <N> has precedence.  The default is 5.",
+      "description": "after  any  lines  specified  by  --dump-in‐ put-filter.  When there are multiple occurrences of this option, the largest specified <N> has precedence.  The default is 5.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--dump-input-filter",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "any  context  specified  by  --dump-input-context. When  there  are multiple occurrences of this option, the <value> that appears earliest in the list below has precedence.  The default is error when --dump-input=fail, and it's all when --dump-input=always.",
+      "description": "the  dump  requested  by --dump-input, print only input lines of kind <value> plus any context specified by --dump-input-context. When there are multiple occurrences of this option, the <value> that appears earliest in the list below has precedence.  The  default is error when --dump-input=fail, and it's all when --dump-input=always.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--implicit-check-not",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "writing  stricter  tests  without stuffing them with CHECK-NOTs.",
+      "description": "stricter  tests  without stuffing them with CHECK-NOTs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +166,9 @@
     {
       "short": null,
       "long": "--match-full-lines",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "default,  FileCheck  allows  matches of anywhere on a line. This option will require all positive matches to cover an entire line. Leading and trailing whitespace is ignored, unless --strict-whitespace is also specified. (Note: negative matches from  CHECK-NOT  are not affected by this option!)",
+      "description": "an  entire  line. Leading  and trailing whitespace is ignored, unless --strict-whitespace is also specified. (Note: negative matches from CHECK-NOT are not affected by this option!)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--strict-whitespace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "match a tab).  The --strict-whitespace argument disables this behavior. End-of-line sequences are canonicalized to UNIX-style \\n in all modes.",
+      "description": "to  ignore  these  differences  (a space  will  match  a  tab).   The  --strict-whitespace  argument  disables this behavior. End-of-line sequences are canonicalized to UNIX-style \\n in all modes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print  good directive pattern matches.  However, if -dump-input=fail or -dump-input=always, add those matches as input annotations in‐ stead.",
+      "description": "Print good directive pattern matches.  However, if -dump-input=fail or -dump-input=always, add those matches as input annotations in‐ stead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Print information helpful in diagnosing internal FileCheck issues, such as discarded overlapping CHECK-DAG: matches, implicit EOF pat‐ tern matches, and CHECK-NOT: patterns that do not have matches.  Implies -v.  However, if -dump-input=fail or -dump-input=always, just add that information as input annotations instead.",
+      "description": "Print information helpful in diagnosing internal FileCheck issues, such as discarded overlapping  CHECK-DAG:  matches,  implicit  EOF pattern  matches, and CHECK-NOT: patterns that do not have matches.  Implies -v.  However, if -dump-input=fail or -dump-input=always, just add that information as input annotations instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

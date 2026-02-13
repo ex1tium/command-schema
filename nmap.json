@@ -5,6 +5,46 @@
   "global_flags": [
     {
       "short": null,
+      "long": "--adler32",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "RFC 2960[13] originally defined Adler32 as checksum algorithm for SCTP; RFC 4960[6] later redefined the SCTP checksums to use CRC-32C. Current SCTP implementations should be using CRC-32C, but in order to elicit responses from old, legacy SCTP implementations, it may be preferable to use Adler32.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--allports",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--append-output",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--badsum",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--data",
       "value_type": "Bool",
       "takes_value": false,
@@ -26,9 +66,9 @@
     {
       "short": null,
       "long": "--data-string",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "string can contain any string. However, note that some characters may depend on your system's locale and the receiver may not see the same information. Also, make sure you enclose the string in double quotes and escape any special characters from the shell. Examples: --data-string \"Scan conducted by Security Ops, extension 7192\" or --data-string \"Ph34r my l33t skills\". Keep in mind that nobody is likely to actually see any comments left by this option unless they are carefully monitoring the network with a sniffer or custom IDS rules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -45,11 +85,51 @@
     },
     {
       "short": null,
-      "long": "--dns-servers",
-      "value_type": "String",
-      "takes_value": true,
+      "long": "--defeat-icmp-ratelimit",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--defeat-rst-ratelimit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--disable-arp-ping",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--discovery-ignore-rst",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--dns-servers",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "(Servers to use for reverse DNS queries) By default, Nmap determines your DNS servers (for rDNS resolution) from your resolv.conf file (Unix) or the Registry (Win32). Alternatively, you may use this option to specify alternate servers. This option is not honored if you are using --system-dns. Using multiple DNS servers is often faster, especially if you choose authoritative servers for your target IP space. This option can also improve stealth, as your requests can be bounced off just about any recursive DNS server on the Internet.",
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -59,7 +139,7 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
-      "multiple": false,
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -76,8 +156,8 @@
     {
       "short": null,
       "long": "--excludefile",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -95,7 +175,37 @@
     },
     {
       "short": null,
+      "long": "--iflist",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--initial-rtt-timeout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--ip-options",
+      "value_type": "File",
+      "takes_value": true,
+      "description": null,
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-os-tries",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -106,7 +216,7 @@
     {
       "short": null,
       "long": "--max-rate",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -116,6 +226,46 @@
     {
       "short": null,
       "long": "--max-retries",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-rtt-timeout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "T5 does the equivalent of",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--max-scan-delay",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--min-hostgroup",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--min-parallelism",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -135,9 +285,9 @@
     },
     {
       "short": null,
-      "long": "--mtu",
-      "value_type": "String",
-      "takes_value": true,
+      "long": "--min-rtt-timeout",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -145,7 +295,77 @@
     },
     {
       "short": null,
+      "long": "--no-stylesheet",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--noninteractive",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--nsock-engine",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--open",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--osscan-limit",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--packet-trace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--port-ratio",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "ratio must be between 0.0 and 1.0.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--privileged",
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -165,6 +385,46 @@
     },
     {
       "short": null,
+      "long": "--randomize-hosts",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--reason",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--release-memory",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--resolve-all",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--resume",
       "value_type": "Bool",
       "takes_value": false,
@@ -175,10 +435,20 @@
     },
     {
       "short": null,
-      "long": "--scanflags",
-      "value_type": "String",
-      "takes_value": true,
+      "long": "--scan-delay",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--scanflags",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Let your creative juices flow, while evading intrusion detection systems whose vendors simply paged through the Nmap man page adding specific rules!",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -186,17 +456,21 @@
     {
       "short": null,
       "long": "--script",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
-      "multiple": false,
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
       "long": "--script-args",
-      "value_type": "String",
+      "value_type": {
+        "Choice": [
+          "n3=v3"
+        ]
+      },
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -206,8 +480,8 @@
     {
       "short": null,
       "long": "--script-args-file",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -216,8 +490,68 @@
     {
       "short": null,
       "long": "--script-help",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--script-timeout",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--script-trace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--script-updatedb",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--send-eth",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--send-ip",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--servicedb",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -226,8 +560,8 @@
     {
       "short": "-g",
       "long": "--source-port",
-      "value_type": "Number",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -245,9 +579,29 @@
     },
     {
       "short": null,
+      "long": "--stats-every",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
       "long": "--stylesheet",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "The XML output includes an xml-stylesheet directive which points to nmap.xml where it was initially installed by Nmap. Run the XML file through an XSLT processor such as xsltproc[16] to produce an HTML file. Directly opening the XML file in a browser no longer works well because modern browsers limit the locations a stylesheet may be loaded from. If you wish to use a different stylesheet, specify it as the argument to",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--system-dns",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -258,6 +612,16 @@
       "long": "--top-ports",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "n must be 1 or greater.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--traceroute",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -266,8 +630,38 @@
     {
       "short": null,
       "long": "--ttl",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unique",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--unprivileged",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version-all",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -278,16 +672,119 @@
       "long": "--version-intensity",
       "value_type": "Bool",
       "takes_value": false,
+      "description": "The default is 7. When a probe is registered to the target port via the nmap-service-probes ports directive, that probe is tried regardless of intensity level. This ensures that the DNS probes will always be attempted against any open port 53, the SSL probe will be done against 443, etc.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--version-light",
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-D",
+      "short": null,
+      "long": "--version-trace",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--versiondb",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": null,
+      "long": "--webxml",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-1",
       "long": null,
       "value_type": "String",
       "takes_value": true,
+      "description": "Some lines are self explanatory, but the messages become more obscure as the debug level is increased.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-6",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-A",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "More features may be added in the future. The point is to enable a comprehensive set of scan options without people having to remember a large set of flags. However, because script scanning with the default set is considered intrusive, you should not use -A against target networks without permission. This option only enables features, and not timing options (such as -T4) or verbosity options (-v) that you might want as well. Options which require privileges (e.g. root access) such as OS detection and traceroute will only be enabled if those privileges are available.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": [
+        "-T4",
+        "-v"
+      ]
+    },
+    {
+      "short": "-D",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-O",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-PA",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -296,8 +793,58 @@
     {
       "short": "-PO",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-PS",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Alternate ports can be specified as a parameter. The syntax is the same as for the -p except that port type specifiers like T: are not allowed. Examples are -PS22 and -PS22-25,80,113,1050,35000. Note that there can be no space between -PS and the port list. If multiple probes are specified they will be sent in parallel.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-PU",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-PY",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-Pn",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-R",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -306,8 +853,8 @@
     {
       "short": "-S",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -316,8 +863,8 @@
     {
       "short": "-T",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -326,15 +873,15 @@
     {
       "short": "-b",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Server is the name or IP address of a vulnerable FTP server. As with a normal URL, you may omit username:password, in which case anonymous login credentials (user: anonymous password:-wwwuser@) are used. The port number (and preceding colon) may be omitted as well, in which case the default FTP port (21) on server is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-dd",
+      "short": "-d",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -349,6 +896,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-f",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Or you can specify your own offset size with the --mtu option. Don't also specify -f if you use --mtu. The offset must be a multiple of eight. While fragmented packets won't get by packet filters and firewalls that queue all IP fragments, such as the CONFIG_IP_ALWAYS_DEFRAG option in the Linux kernel, some networks can't afford the performance hit this causes and thus leave it disabled. Others can't enable this because fragments may take different routes into their networks. Some source systems defragment outgoing packets in the kernel. Linux with the iptables connection tracking module is one such example. Do a scan while a sniffer such as Wireshark is running to ensure that sent packets are fragmented. If your host OS is causing problems, try the --send-eth option to bypass the IP layer and send raw ethernet frames.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -374,7 +931,57 @@
       "requires": []
     },
     {
+      "short": "-n",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-oA",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-oG",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-oN",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-oS",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-oX",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -388,6 +995,36 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "1-1023). The beginning and/or end values of a range may be omitted, causing Nmap to use 1 and 65535, respectively. So you can specify -p- to scan ports from 1 through 65535. Scanning port zero is allowed if you specify it explicitly. For IP protocol scanning (-sO), this option specifies the protocol numbers you wish to scan for (0–255).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sA",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sC",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -398,13 +1035,133 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "This fascinating scan type is too complex to fully describe in this reference guide, so I wrote and posted an informal paper with full details at https://nmap.org/book/idlescan.html.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sL",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-vv",
+      "short": "-sM",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "He described the technique in Phrack Magazine issue #49 (November 1996). Nmap, which included this technique, was released two issues later. This technique is exactly the same as NULL, FIN, and Xmas scans, except that the probe is FIN/ACK. According to RFC 793[7] (TCP), a RST packet should be generated in response to such a probe whether the port is open or closed. However, Uriel noticed that many BSD-derived systems simply drop the packet if the port is open.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sO",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sR",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sS",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sT",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sU",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sV",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sW",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sY",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sZ",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sn",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-v",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,

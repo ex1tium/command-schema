@@ -6,8 +6,8 @@
     {
       "short": "-a",
       "long": "--all",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "mount all filesystems mentioned in fstab",
       "multiple": false,
       "conflicts_with": [],
@@ -16,7 +16,7 @@
     {
       "short": "-B",
       "long": "--bind",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
       "description": "mount a subtree somewhere else (same as -o bind)",
       "multiple": false,
@@ -36,8 +36,8 @@
     {
       "short": "-F",
       "long": "--fork",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "fork off for each device (use with -a)",
       "multiple": false,
       "conflicts_with": [],
@@ -46,7 +46,7 @@
     {
       "short": "-T",
       "long": "--fstab",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": "alternative file to /etc/fstab",
       "multiple": false,
@@ -66,8 +66,8 @@
     {
       "short": "-i",
       "long": "--internal-only",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "don't call the mount.<type> helpers",
       "multiple": false,
       "conflicts_with": [],
@@ -176,7 +176,7 @@
     {
       "short": "-m",
       "long": "--mkdir",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
       "description": "alias to '-o X-mount.mkdir[=<mode>]'",
       "multiple": false,
@@ -186,7 +186,7 @@
     {
       "short": "-M",
       "long": "--move",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
       "description": "move a subtree to some other place",
       "multiple": false,
@@ -246,8 +246,8 @@
     {
       "short": null,
       "long": "--options-mode",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -256,8 +256,8 @@
     {
       "short": null,
       "long": "--options-source",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -276,7 +276,7 @@
     {
       "short": "-R",
       "long": "--rbind",
-      "value_type": "String",
+      "value_type": "Directory",
       "takes_value": true,
       "description": "mount a subtree and all submounts somewhere else",
       "multiple": false,
@@ -286,8 +286,8 @@
     {
       "short": "-r",
       "long": "--read-only",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "mount the filesystem read-only (same as -o ro)",
       "multiple": false,
       "conflicts_with": [],
@@ -316,8 +316,8 @@
     {
       "short": null,
       "long": "--source",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "explicitly specifies source (path, label, uuid)",
       "multiple": false,
       "conflicts_with": [],
@@ -326,8 +326,8 @@
     {
       "short": null,
       "long": "--target",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "explicitly specifies mountpoint",
       "multiple": false,
       "conflicts_with": [],
@@ -336,8 +336,8 @@
     {
       "short": null,
       "long": "--target-prefix",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -366,7 +366,7 @@
     {
       "short": "-U",
       "long": "--uuid",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": "synonym for UUID=<uuid> LABEL=<label> specifies device by filesystem label UUID=<uuid> specifies device by filesystem UUID PARTLABEL=<label> specifies device by partition label PARTUUID=<uuid> specifies device by partition UUID ID=<id> specifies device by udev hardware ID <device> specifies device by path <directory> mountpoint for bind mounts (see --bind/rbind) <file> regular file for loopdev setup",
       "multiple": false,
@@ -386,19 +386,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "display version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-olowerdir",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "/merged",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -408,16 +398,6 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-signer",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],

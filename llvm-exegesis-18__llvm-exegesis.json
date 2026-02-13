@@ -8,7 +8,7 @@
       "long": "--analysis-clustering",
       "value_type": "File",
       "takes_value": true,
-      "description": "the clustering algorithm to use. By default DBSCAN will be used.  Naive clustering algorithm is better for doing further work on the -analysis-inconsistencies-output-file= output, it will create one cluster per opcode, and check that the cluster is stable (all points are neighbours).",
+      "description": "Naive clustering algorithm is better for doing further work on  the  -analysis-inconsistencies-output-file=  output,  it will create one cluster per opcode, and check that the cluster is stable (all points are neighbours).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--analysis-display-unstable-clusters",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "there  is  more than one benchmark for an opcode, said benchmarks may end up not being clustered into the same cluster if the mea‐ sured performance characteristics are different. by default all such opcodes are filtered out.  This flag will instead show only  such unstable opcodes.",
+      "description": "there  is more than one benchmark for an opcode, said benchmarks may end up not being clustered into the same cluster if the mea‐ sured performance characteristics are different. by default all such opcodes are filtered out.  This flag will instead show only such unstable opcodes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--analysis-filter",
       "value_type": "String",
       "takes_value": true,
-      "description": "default,  all  benchmark results are analysed, but sometimes it may be useful to only look at those that to not involve memory, or vice versa. This option allows to either keep all benchmarks, or filter out (ignore) either all the ones that do involve  memory  (in‐ volve instructions that may read or write to memory), or the opposite, to only keep such benchmarks.",
+      "description": "default,  all benchmark results are analysed, but sometimes it may be useful to only look at those that to not involve memory, or vice versa. This option allows to either keep all benchmarks, or filter out (ignore) either all the ones that do involve memory  (in‐ volve instructions that may read or write to memory), or the opposite, to only keep such benchmarks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--analysis-inconsistency-epsilon",
       "value_type": "File",
       "takes_value": true,
-      "description": "LLVM  schedule  profile  values  (analysis mode).",
+      "description": "schedule  profile  values  (analysis mode).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--analysis-override-benchmark-triple-and-cpu",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "them  for some other combination (specified via -mtriple/-mcpu), you can pass this flag.",
+      "description": "default, llvm-exegesis will analyze the benchmarks for the triple/CPU they were measured for, but if you want to analyze them for some other combination (specified via -mtriple/-mcpu), you can pass this flag.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--benchmark-phase",
       "value_type": "File",
       "takes_value": true,
-      "description": "are  running  on the hardware for which the snippet was generated, and that supports performance measurements.  However, it is possible to stop at some stage  before measuring. Choices are: * prepare-snippet: Only generate the minimal instruction sequence.  * prepare-and-assemble-snip‐ pet: Same as prepare-snippet, but also dumps an excerpt of the  sequence  (hex  encoded).   *  assemble-measured-code:  Same  as  pre‐ pare-and-assemble-snippet.  but  also  creates the full sequence that can be dumped to a file using --dump-object-to-disk.  * measure: Same as assemble-measured-code, but also runs the measurement.",
+      "description": "running  on the  hardware  for  which  the snippet was generated, and that supports performance measurements.  However, it is possible to stop at some stage before measuring. Choices are: * prepare-snippet: Only generate the minimal instruction  sequence.   *  prepare-and-assem‐ ble-snippet:  Same  as  prepare-snippet,  but also dumps an excerpt of the sequence (hex encoded).  * assemble-measured-code: Same as prepare-and-assemble-snippet. but also creates the full sequence that can be dumped to a file using  --dump-object-to-disk.   *  mea‐ sure: Same as assemble-measured-code, but also runs the measurement.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--benchmark-repeat-count",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  measurement  when  performing  latency  measurements.  By  default, llvm-exegesis will repeat a latency measurement enough times to balance run-time and noise reduction.",
+      "description": "measurement  when  performing  latency  measurements.  By  default, llvm-exegesis will repeat a latency measurement enough times to balance run-time and noise reduction.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--execution-mode",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  specifies  what execution mode to use. The inprocess execution mode is the default. The subprocess execution mode allows for additional features such as memory annotations but is currently restricted to X86-64 on Linux.",
+      "description": "option  specifies what execution mode to use. The inprocess execution mode is the default. The subprocess execution mode allows for additional features such as memory annotations but is currently restricted to X86-64 on Linux.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--loop-body-size",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "Instead of looping over the snippet directly, first duplicate it  so  that  the  loop body  contains  at  least this many instructions. This potentially results in loop body being cached in the CPU Op Cache / Loop Cache, which allows to which may have higher throughput than the CPU decoders.",
+      "description": "Instead of looping over the snippet directly, first duplicate it so  that  the  loop body  contains  at least this many instructions. This potentially results in loop body being cached in the CPU Op Cache / Loop Cache, which allows to which may have higher throughput than the CPU decoders.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--max-configs-per-opcode",
       "value_type": "String",
       "takes_value": true,
-      "description": "By default this is 1, meaning that we assume that a  single measurement is enough to characterize an opcode. This might not be true of all instructions: for example, the performance characteris‐ tics  of the LEA instruction on X86 depends on the value of assigned registers and immediates. Setting a value of -max-configs-per-op‐ code larger than 1 allows llvm-exegesis to explore more configurations to discover if some register or immediate assignments  lead  to different performance characteristics.",
+      "description": "By default this is 1, meaning that we assume that a single measurement is enough to characterize an opcode. This might not be true of all instructions: for example, the performance  character‐ istics  of  the  LEA  instruction  on  X86  depends  on  the value of assigned registers and immediates. Setting a value of -max-con‐ figs-per-opcode larger than 1 allows llvm-exegesis to explore more configurations to discover if some register or  immediate  assign‐ ments lead to different performance characteristics.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -196,9 +196,9 @@
     {
       "short": null,
       "long": "--mcpu",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "set,  measure the cpu characteristics using the counters for this CPU. This is useful when creating new sched models (the host CPU is unknown to LLVM).  (-mcpu=help for details)",
+      "description": "CPU is unknown to LLVM).  (-mcpu=help for details)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -236,19 +236,19 @@
     {
       "short": null,
       "long": "--num-repetitions",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "Higher values lead to more accurate measurements but lengthen the benchmark.",
+      "description": "the  target  number  of  executed  instructions.  Note  that  the actual repetition count of the snippet will be num-repeti‐ tions/snippet size.  Higher values lead to more accurate measurements but lengthen the benchmark.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-1",
+      "short": null,
       "long": "--opcode-index",
       "value_type": "File",
       "takes_value": true,
-      "description": "Ei‐ ther opcode-index, opcode-name or snippets-file must be set.",
+      "description": "the  opcode  to  measure, by index. Specifying -1 will result in measuring every existing opcode. See example 1 for details. Either opcode-index, opcode-name or snippets-file must be set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--opcode-name",
       "value_type": "File",
       "takes_value": true,
-      "description": "Either opcode-index, opcode-name or snippets-file must be set.",
+      "description": "details.   Ei‐ ther opcode-index, opcode-name or snippets-file must be set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--repetition-mode",
       "value_type": "Number",
       "takes_value": true,
-      "description": "until  the  loop  body  contains  at  least loop-body-size  instructions, and then wrap the result in a loop which will execute num-repetitions instructions (thus, again, repeat‐ ing the snippet num-repetitions/snippet size times). The loop mode, especially with loop unrolling tends to better hide the effects of the CPU frontend on architectures that cache decoded instructions, but consumes a register for counting iterations. If  performing  an analysis  over  many opcodes, it may be best to instead use the min mode, which will run each other mode, and produce the minimal mea‐ sured result.",
+      "description": "num-repetitions  instructions  (repeating the  snippet  num-repetitions/snippet size times). loop will, optionally, duplicate the snippet until the loop body contains at least loop-body-size instructions, and then wrap the result in a loop which will execute num-repetitions instructions (thus, again, repeat‐ ing the snippet num-repetitions/snippet size times). The loop mode, especially with loop unrolling tends to better hide  the  effects of  the CPU frontend on architectures that cache decoded instructions, but consumes a register for counting iterations. If performing an analysis over many opcodes, it may be best to instead use the min mode, which will run each other mode, and  produce  the  minimal measured result.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--snippets-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "Either opcode-index, opcode-name or snippets-file must be set.",
+      "description": "the  custom  code  snippet to measure. See example 2 for details.  Either opcode-index, opcode-name or snippets-file must be set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--use-dummy-perf-counters",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "be  used  to  ensure  a snippet doesn't crash when hardware performance counters are unavailable and for debugging llvm-exegesis itself.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": "--x86-disable-upper-sse-registers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "frontend  fetch and decode stages, potentially reducing the rate that instructions are dispatched to the backend, particularly on older hardware. Com‐ paring  baseline  results with this mode enabled can help determine the effects of the frontend and can be used to improve latency and throughput estimates.",
+      "description": "the upper xmm registers (xmm8-xmm15) forces a longer instruction encoding which may put greater pressure on the frontend fetch and decode stages, potentially reducing the rate that instructions are dispatched to the backend,  particularly  on  older  hardware. Comparing  baseline  results with this mode enabled can help determine the effects of the frontend and can be used to improve latency and throughput estimates.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +338,7 @@
       "long": "--x86-lbr-sample-period",
       "value_type": "Number",
       "takes_value": true,
-      "description": "When a positive value is specified for this  option  and when  the  mode  is latency, we will use LBRs for measuring.  On choosing the \"right\" sampling period, a small value is preferred, but throttling could occur if the sampling is too frequent. A prime number should be used to avoid consistently skipping certain blocks.",
+      "description": "the LBR sampling period - how many branches before we take a sample.  When a positive value is specified for this option and when the mode is latency, we will use LBRs for measuring.  On choosing the \"right\" sampling period, a small value is  preferred,  but throttling could occur if the sampling is too frequent. A prime number should be used to avoid consistently skipping certain blocks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

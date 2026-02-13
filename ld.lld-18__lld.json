@@ -244,7 +244,7 @@
       "long": "--build-id",
       "value_type": "String",
       "takes_value": true,
-      "description": "a  build  ID  note.   value  may be one of fast, md5, sha1, tree, uuid, 0xhex-string, and none.  tree is an alias for sha1. Build-IDs of type fast, md5, sha1, and tree are calculated from the object contents.  fast is not intended  to  be  cryptographically secure.",
+      "description": "a  build  ID  note.   value may be one of fast, md5, sha1, tree, uuid, 0xhex-string, and none.  tree is an alias for sha1. Build-IDs of type fast, md5, sha1, and tree are calculated from the object contents.  fast is not intended to  be  cryptographically secure.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -324,7 +324,7 @@
       "long": "--defsym",
       "value_type": "String",
       "takes_value": true,
-      "description": "expression may be another  symbol  or  a  linker  script  expression.   For  example,  ‘--defsym=foo=bar’  or ‘--defsym=foo=bar+0x100’.",
+      "description": "a  symbol  alias.   expression  may  be  another  symbol  or a linker script expression.  For example, ‘--defsym=foo=bar’ or ‘--defsym=foo=bar+0x100’.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -502,9 +502,9 @@
     {
       "short": null,
       "long": "--error-handing-script",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "script  script_path  upon  some error, with tag as first argument, and an extra parameter as second argument. The script is ex‐ pected to return 0 on success. Any other value is considered a generic error.  tag may be missing-lib followed by  the  name  of  the missing library.  undefined-symbol followed by the name of the undefined symbol.",
+      "description": "script  is  ex‐ pected  to  return  0 on success. Any other value is considered a generic error.  tag may be missing-lib followed by the name of the missing library.  undefined-symbol followed by the name of the undefined symbol.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -574,7 +574,7 @@
       "long": "--export-dynamic-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "Put  matched  non-local  defined  symbols to the dynamic symbol table.  (shared object) References to matched non-local STV_DEFAULT symbols shouldn't be bound to definitions within the shared object even if they would otherwise be due  to  -Bsymbolic  ,",
+      "description": "(shared object)  References  to  matched  non-local STV_DEFAULT  symbols  shouldn't be bound to definitions within the shared object even if they would otherwise be due to -Bsymbolic ,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -654,7 +654,7 @@
       "long": "--format",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  format of the inputs following this option.  input-format may be one of binary, elf, and default.  default is a synonym for elf.",
+      "description": "input-format may be one of binary, elf, and default.  default is a  synonym for elf.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -734,7 +734,7 @@
       "long": "--ignore-data-address-equality",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option allows lld to do unsafe optimization that breaks the requirement: create copies of read-only data or merge two or more read-only data that happen to have the same value.",
+      "description": "address  equality of data. C/C++ requires each data to have a unique address.  This option allows lld to do unsafe optimiza‐ tion that breaks the requirement: create copies of read-only data or merge two or more read-only data that happen to have  the  same value.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -744,7 +744,7 @@
       "long": "--ignore-function-address-equality",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option allows non-PIC calls to a function with non-default visibility in a shared object. The function may have different addresses within the executable and within the shared object.",
+      "description": "address  equality  of functions.  This option allows non-PIC calls to a function with non-default visibility in a shared ob‐ ject.  The function may have different addresses within the executable and within the shared object.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1824,7 +1824,7 @@
       "long": "--remap-inputs-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "Each line in the remap file is of the format from-glob=to-file or  a  comment  starting with #.",
+      "description": "Each line in the remap file is of the format from-glob=to-file or a  comment  starting with #.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1834,7 +1834,7 @@
       "long": "--reproduce",
       "value_type": "File",
       "takes_value": true,
-      "description": "line options and a text file called version.txt containing the output of ld.lld --version.  The archive when unpacked can be used to re-run the linker with the same options and input files.",
+      "description": "a  tar  file to path, containing all the input files needed to reproduce the link, a text file called response.txt containing the command line options and a text file called version.txt containing the output of ld.lld --version.  The  archive  when  unpacked can be used to re-run the linker with the same options and input files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1892,9 +1892,9 @@
     {
       "short": "-T",
       "long": "--script",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "If multiple linker scripts are given, they are processed as if they were  concatenated  in  the  order they appeared on the command line.",
+      "description": "linker  script  from file.  If multiple linker scripts are given, they are processed as if they were concatenated in the order they appeared on the command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1924,7 +1924,7 @@
       "long": "--shuffle-sections",
       "value_type": "String",
       "takes_value": true,
-      "description": "matched  sections  using the given seed before mapping them to the output sections.  If -1, reverse the section order. If 0, use a random seed.",
+      "description": "If -1, reverse the section order.  If  0, use a random seed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2182,9 +2182,9 @@
     {
       "short": "-u",
       "long": "--undefined",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "Force undefined symbol during linking",
+      "description": "symbol  is  not  defined after symbol resolution, and there's a static library that contains an object file defining the symbol, load the member to include the object file in the output file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2194,7 +2194,7 @@
       "long": "--undefined-glob",
       "value_type": "String",
       "takes_value": true,
-      "description": "In a glob pattern, * matches zero or more characters, ?   matches  any single  character,  and  [...] matches the characters within brackets.  All symbols that match a given pattern are handled as if they were given as arguments of --undefined.",
+      "description": "In a glob pattern, * matches zero or more characters, ?  matches  any single  character,  and [...] matches the characters within brackets.  All symbols that match a given pattern are handled as if they were given as arguments of --undefined.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2284,7 +2284,7 @@
       "long": "--warn-backrefs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This can be used to ensure linker invocation  remains  com‐ patible with traditional Unix-like linkers.",
+      "description": "This can be used to ensure linker invocation remains  com‐ patible with traditional Unix-like linkers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2314,7 +2314,7 @@
       "long": "--warn-ifunc-textrel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "about  using  ifunc symbols in conjunction with text relocations.  Older versions of glibc library (2.28 and earlier) has a bug that causes the segment that includes ifunc symbols to be marked as not executable when they are relocated.  As  a  result,  although the  program  compiles and links successfully, it gives segmentation fault when the instruction pointer reaches an ifunc symbol.  Use",
+      "description": "about  using ifunc symbols in conjunction with text relocations.  Older versions of glibc library (2.28 and earlier) has a bug that causes the segment that includes ifunc symbols to be marked as not executable when they are relocated.  As a  result,  although the  program compiles and links successfully, it gives segmentation fault when the instruction pointer reaches an ifunc symbol.  Use",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
