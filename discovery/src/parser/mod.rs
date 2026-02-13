@@ -225,9 +225,6 @@ impl HelpParser {
         debug!(format = ?self.detected_format, scores = ?format_scores.iter().map(|s| (s.format, s.score)).collect::<Vec<_>>(), "Detected help format");
 
         let mut schema = CommandSchema::new(&self.command, SchemaSource::HelpCommand);
-        if self.detected_format == Some(HelpFormat::Man) {
-            schema.source = SchemaSource::ManPage;
-        }
         let mut flag_candidates = Vec::new();
         let mut subcommand_candidates = Vec::new();
         let mut arg_candidates = Vec::new();
@@ -2263,64 +2260,23 @@ impl HelpParser {
                 .all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || ch == '-')
     }
 
+    /// Tokens that look like commands but are actually flag values or settings.
+    const NON_COMMAND_VALUE_TOKENS: &[&str] = &[
+        "none", "off", "on", "true", "false", "yes", "no",
+        "numbered", "existing", "simple", "never", "nil", "all",
+        "auto", "always", "default", "older", "warn", "warn-nopipe",
+        "exit", "exit-nopipe", "once", "pages", "and", "or", "while",
+        "gnu", "report", "full",
+        // Common git flag values that look like subcommands
+        "inherit", "amend", "reword", "fixup", "squash", "direct",
+        "shallow", "immediate", "local", "recursive", "verbose",
+        "quiet", "silent", "interactive", "manual", "normal",
+        "short", "long", "porcelain", "columns", "plain", "dense", "sparse",
+    ];
+
     fn looks_like_non_command_value_token(token: &str) -> bool {
         let lower = token.trim().to_ascii_lowercase();
-        matches!(
-            lower.as_str(),
-            "none"
-                | "off"
-                | "on"
-                | "true"
-                | "false"
-                | "yes"
-                | "no"
-                | "numbered"
-                | "existing"
-                | "simple"
-                | "never"
-                | "nil"
-                | "all"
-                | "auto"
-                | "always"
-                | "default"
-                | "older"
-                | "warn"
-                | "warn-nopipe"
-                | "exit"
-                | "exit-nopipe"
-                | "once"
-                | "pages"
-                | "and"
-                | "or"
-                | "while"
-                | "gnu"
-                | "report"
-                | "full"
-                // Common git flag values that look like subcommands
-                | "inherit"
-                | "amend"
-                | "reword"
-                | "fixup"
-                | "squash"
-                | "direct"
-                | "shallow"
-                | "immediate"
-                | "local"
-                | "recursive"
-                | "verbose"
-                | "quiet"
-                | "silent"
-                | "interactive"
-                | "manual"
-                | "normal"
-                | "short"
-                | "long"
-                | "porcelain"
-                | "columns"
-                | "plain"
-                | "dense"
-                | "sparse"
-        )
+        Self::NON_COMMAND_VALUE_TOKENS.contains(&lower.as_str())
     }
 
     #[allow(dead_code)]

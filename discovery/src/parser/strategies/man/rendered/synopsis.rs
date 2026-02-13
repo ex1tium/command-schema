@@ -94,6 +94,7 @@ pub fn parse_synopsis_flags(section: &ManSection) -> Vec<FlagCandidate> {
                     schema.takes_value = true;
                     schema.value_type = ValueType::String;
                 } else if let Some(next) = tokens.get(idx + 1)
+                    && !next.starts_with('-')
                     && looks_like_value_placeholder(next)
                 {
                     schema.takes_value = true;
@@ -215,7 +216,7 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
                             // Bare lowercase word after an unbracketed flag
                             // (e.g. "label" in `--label label`): treat as
                             // flag value when the flag is not self-contained.
-                            || (!raw.starts_with('[')
+                            || (!self_contained
                                 && !raw.contains('=')
                                 && !next.contains('[')
                                 && !next.contains('<')

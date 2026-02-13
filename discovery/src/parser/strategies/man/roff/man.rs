@@ -324,7 +324,7 @@ pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
                 } => {
                     let combined = format!("{tag} {description}");
                     for arg in
-                        parse_args_from_synopsis(&combined, line, &mut seen, &command_tokens)
+                        parse_args_from_synopsis(&combined, *line, &mut seen, &command_tokens)
                     {
                         out.push(arg);
                     }
@@ -333,7 +333,7 @@ pub fn extract_args_from_man(doc: &ManDocument) -> Vec<ArgCandidate> {
                 _ => continue,
             };
 
-            for arg in parse_args_from_synopsis(text, &line, &mut seen, &command_tokens) {
+            for arg in parse_args_from_synopsis(text, line, &mut seen, &command_tokens) {
                 out.push(arg);
             }
         }
@@ -580,7 +580,7 @@ fn parse_flag_defs(definition: &str, description: &str) -> Vec<FlagSchema> {
 
 fn parse_args_from_synopsis(
     text: &str,
-    line: &usize,
+    line: usize,
     seen: &mut HashSet<String>,
     command_tokens: &HashSet<String>,
 ) -> Vec<ArgCandidate> {
@@ -661,7 +661,7 @@ fn parse_args_from_synopsis(
         schema.multiple = multiple;
         out.push(ArgCandidate::from_schema(
             schema,
-            SourceSpan::single(*line),
+            SourceSpan::single(line),
             "man-roff-man-synopsis",
             0.92,
         ));
