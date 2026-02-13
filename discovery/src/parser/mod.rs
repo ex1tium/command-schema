@@ -35,12 +35,12 @@ mod normalize;
 mod strategies;
 pub(crate) mod util;
 
+use crate::parser::strategies::ParserStrategy;
 use regex::Regex;
 use std::collections::HashSet;
 use std::sync::LazyLock;
 use tracing::debug;
 
-use crate::parser::strategies::ParserStrategy;
 use command_schema_core::{
     ArgSchema, CommandSchema, FlagSchema, HelpFormat, SchemaSource, SubcommandSchema, ValueType,
 };
@@ -245,24 +245,13 @@ impl HelpParser {
         recognized_indices.extend(sections.header_indices.iter().copied());
         let keybinding_document = Self::looks_like_keybinding_document(&indexed_lines);
         let section_strategy = strategies::section::SectionStrategy;
-        let man_strategy = strategies::man::ManStrategy;
+        let man_strategy = strategies::man::ManStrategy::new();
         let npm_strategy = strategies::npm::NpmStrategy;
         let gnu_strategy = strategies::gnu::GnuStrategy;
         let usage_strategy = strategies::usage::UsageStrategy;
-        let strategy_objects: [&dyn strategies::ParserStrategy; 5] = [
-            &section_strategy,
-            &man_strategy,
-            &npm_strategy,
-            &gnu_strategy,
-            &usage_strategy,
-        ];
         let strategy_plan = strategies::ranked_strategy_names(&format_scores);
         parsers_used.push(format!("strategy-plan:{}", strategy_plan.join("+")));
-        parsers_used.extend(
-            strategy_objects
-                .iter()
-                .map(|strategy| format!("strategy-registered:{}", strategy.name())),
-        );
+        let run_man_strategy = strategy_plan.contains(&"man");
 
         // Capture usage rows as recognized structural context, even when we do
         // not derive additional schema entities from them.
@@ -272,7 +261,12 @@ impl HelpParser {
             parsers_used.push("usage-lines".to_string());
         }
 
-        let man_bundle = man_strategy.collect_all(self, &indexed_lines);
+        let man_bundle = if run_man_strategy {
+            parsers_used.push(format!("strategy-executed:{}", man_strategy.name()));
+            man_strategy.collect_all(self, &indexed_lines)
+        } else {
+            strategies::man::CandidateBundle::default()
+        };
         let man_detected = man_bundle.format.is_some();
         let man_has_entities = man_bundle.has_entities();
         if self.detected_format == Some(HelpFormat::Man) || (man_has_entities && man_detected) {
@@ -296,6 +290,7 @@ impl HelpParser {
         let prefer_man = !flag_candidates.is_empty()
             || !subcommand_candidates.is_empty()
             || !arg_candidates.is_empty();
+        parsers_used.push(format!("strategy-executed:{}", section_strategy.name()));
 
         // Extract subcommands from explicit command sections.
         if (!prefer_man || subcommand_candidates.is_empty()) && !sections.subcommands.is_empty() {
@@ -405,6 +400,7 @@ impl HelpParser {
 
         // npm-style command lists (All commands:)
         if subcommand_candidates.is_empty() {
+            parsers_used.push(format!("strategy-executed:{}", npm_strategy.name()));
             let npm_subcommands = npm_strategy.collect_subcommands(self, &indexed_lines);
             if !npm_subcommands.is_empty() {
                 let (_, npm_recognized) = self.parse_npm_style_commands(&indexed_lines);
@@ -486,6 +482,7 @@ impl HelpParser {
         // GNU and many custom CLIs list additional flags outside explicit
         // "Flags/Options" sections, so always run this as a top-up pass.
         if !prefer_man || flag_candidates.is_empty() {
+            parsers_used.push(format!("strategy-executed:{}", gnu_strategy.name()));
             let fallback_flags = gnu_strategy.collect_flags(self, &indexed_lines);
             let (_, fallback_recognized) = self.parse_sectionless_flags(&indexed_lines);
             if !fallback_flags.is_empty() {
@@ -498,6 +495,7 @@ impl HelpParser {
         // Compact usage fallback, e.g. tmux:
         // usage: tmux [-2CDlNuVv] [-c shell-command] ...
         if flag_candidates.is_empty() {
+            parsers_used.push(format!("strategy-executed:{}", usage_strategy.name()));
             let usage_flags = usage_strategy.collect_flags(self, &indexed_lines);
             let (_, usage_recognized) = self.parse_usage_compact_flags(&indexed_lines);
             if !usage_flags.is_empty() {
@@ -508,6 +506,7 @@ impl HelpParser {
         }
 
         if arg_candidates.is_empty() {
+            parsers_used.push(format!("strategy-executed:{}", usage_strategy.name()));
             let usage_args = usage_strategy.collect_args(self, &indexed_lines);
             let (_, usage_arg_recognized) =
                 self.parse_usage_positionals(&indexed_lines, !subcommand_candidates.is_empty());

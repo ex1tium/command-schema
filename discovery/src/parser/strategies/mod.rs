@@ -27,20 +27,11 @@ pub trait ParserStrategy {
 
 /// Returns strategy names in priority order based on format classification scores.
 ///
-/// "section" always runs first (highest confidence from explicit section headers),
-/// "npm" is added when the top format is Cobra-style, then "gnu" and "usage"
-/// provide fallback coverage for unstructured output.
+/// "man" is always included first because man extraction runs as an early pass,
+/// "section" follows for explicit headers, "npm" is added when the top format
+/// is Cobra-style, then "gnu" and "usage" provide fallback coverage.
 pub fn ranked_strategy_names(format_scores: &[FormatScore]) -> Vec<&'static str> {
-    let mut names = Vec::new();
-
-    if format_scores
-        .first()
-        .is_some_and(|score| score.format_label() == "man")
-    {
-        names.push("man");
-    }
-
-    names.push("section"); // always run explicit sections first
+    let mut names = vec!["man", "section"];
 
     if format_scores
         .first()

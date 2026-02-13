@@ -71,8 +71,6 @@ fn split_definition_and_description(line: &str) -> (&str, Option<&str>) {
 }
 
 fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<FlagSchema> {
-    let mut out = Vec::new();
-
     let parts = definition
         .split(|ch: char| ch == ',' || ch == '|' || ch.is_ascii_whitespace())
         .filter(|part| !part.trim().is_empty())
@@ -100,6 +98,10 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
             })
         });
 
+    let mut first_short: Option<String> = None;
+    let mut first_long: Option<String> = None;
+    let mut has_inline_value = false;
+
     for part in parts {
         if !part.starts_with('-') {
             continue;
@@ -109,24 +111,32 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
             .split_once('=')
             .map(|(head, _)| (head, true))
             .unwrap_or((part.as_str(), false));
+        has_inline_value |= inline_value;
 
-        let mut schema = if name.starts_with("--") {
-            FlagSchema::boolean(None, Some(name))
+        if name.starts_with("--") {
+            if first_long.is_none() {
+                first_long = Some(name.to_string());
+            }
         } else {
             // Treat all single-dash forms as short-style flags to avoid
             // generating invalid long names like "-foo".
-            FlagSchema::boolean(Some(name), None)
-        };
-
-        if inline_value || has_value_hint {
-            schema.takes_value = true;
-            schema.value_type = infer_value_type(description.unwrap_or_default());
+            if first_short.is_none() {
+                first_short = Some(name.to_string());
+            }
         }
-
-        out.push(schema);
     }
 
-    out
+    if first_short.is_none() && first_long.is_none() {
+        return Vec::new();
+    }
+
+    let mut schema = FlagSchema::boolean(first_short.as_deref(), first_long.as_deref());
+    if has_inline_value || has_value_hint {
+        schema.takes_value = true;
+        schema.value_type = infer_value_type(description.unwrap_or_default());
+    }
+
+    vec![schema]
 }
 
 fn infer_value_type(description: &str) -> ValueType {
@@ -154,5 +164,23 @@ mod tests {
         assert_eq!(flags.len(), 1);
         assert_eq!(flags[0].short.as_deref(), Some("-eany"));
         assert!(flags[0].long.is_none());
+    }
+
+    #[test]
+    fn test_parse_flag_definition_merges_alias_pair_into_single_schema() {
+        let flags = parse_flag_definition("-a, --all", Some("Show all entries"));
+        assert_eq!(flags.len(), 1);
+        assert_eq!(flags[0].short.as_deref(), Some("-a"));
+        assert_eq!(flags[0].long.as_deref(), Some("--all"));
+    }
+
+    #[test]
+    fn test_parse_flag_definition_merges_aliases_with_value_once() {
+        let flags = parse_flag_definition("-o, --output=FILE", Some("Output file path"));
+        assert_eq!(flags.len(), 1);
+        assert_eq!(flags[0].short.as_deref(), Some("-o"));
+        assert_eq!(flags[0].long.as_deref(), Some("--output"));
+        assert!(flags[0].takes_value);
+        assert_eq!(flags[0].value_type, ValueType::File);
     }
 }

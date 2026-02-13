@@ -4,6 +4,8 @@ pub mod detect;
 pub mod rendered;
 pub mod roff;
 
+use std::cell::RefCell;
+
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
 use crate::parser::strategies::ParserStrategy;
 use crate::parser::{HelpParser, IndexedLine};
@@ -12,7 +14,7 @@ use crate::parser::{HelpParser, IndexedLine};
 ///
 /// The vectors hold man-derived candidates; `format` indicates which man input
 /// shape was detected while extracting them.
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct CandidateBundle {
     /// Flag candidates extracted from raw roff or rendered man text.
     pub flags: Vec<FlagCandidate>,
@@ -62,10 +64,66 @@ fn collect_span_indices(spans: impl Iterator<Item = SourceSpan>, out: &mut Vec<u
     }
 }
 
+/// Cache entry storing a [`CandidateBundle`] keyed by the parser/lines identity.
+struct CachedBundle {
+    /// Identity of the `HelpParser` reference (pointer cast to `usize`).
+    parser_id: usize,
+    /// Identity of the `IndexedLine` slice start (pointer cast to `usize`).
+    lines_id: usize,
+    /// Length of the `IndexedLine` slice.
+    lines_len: usize,
+    /// Cached extraction result.
+    bundle: CandidateBundle,
+}
+
 /// Parser strategy that prioritizes man-page extraction before generic help parsing.
-pub struct ManStrategy;
+pub struct ManStrategy {
+    cache: RefCell<Option<CachedBundle>>,
+}
 
 impl ManStrategy {
+    /// Creates a new `ManStrategy` with an empty result cache.
+    pub fn new() -> Self {
+        Self {
+            cache: RefCell::new(None),
+        }
+    }
+
+    /// Returns a cached [`CandidateBundle`] when the caller identity matches,
+    /// otherwise computes via [`collect_all`](Self::collect_all), stores the
+    /// result, and returns a clone.
+    fn get_or_compute_bundle(
+        &self,
+        parser: &HelpParser,
+        lines: &[IndexedLine],
+    ) -> CandidateBundle {
+        let parser_id = parser as *const HelpParser as usize;
+        let lines_id = lines.as_ptr() as usize;
+        let lines_len = lines.len();
+
+        {
+            let cache = self.cache.borrow();
+            if let Some(cached) = cache.as_ref() {
+                if cached.parser_id == parser_id
+                    && cached.lines_id == lines_id
+                    && cached.lines_len == lines_len
+                {
+                    return cached.bundle.clone();
+                }
+            }
+        }
+
+        let bundle = self.collect_all(parser, lines);
+        let result = bundle.clone();
+        *self.cache.borrow_mut() = Some(CachedBundle {
+            parser_id,
+            lines_id,
+            lines_len,
+            bundle,
+        });
+        result
+    }
+
     /// Extracts flags, subcommands, and args from man-oriented input lines.
     ///
     /// Raw roff (`mdoc`/`man`) is attempted first; rendered parsing is used as
@@ -164,7 +222,7 @@ impl ParserStrategy for ManStrategy {
     }
 
     fn collect_flags(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<FlagCandidate> {
-        self.collect_all(parser, lines).flags
+        self.get_or_compute_bundle(parser, lines).flags
     }
 
     fn collect_subcommands(
@@ -172,10 +230,10 @@ impl ParserStrategy for ManStrategy {
         parser: &HelpParser,
         lines: &[IndexedLine],
     ) -> Vec<SubcommandCandidate> {
-        self.collect_all(parser, lines).subcommands
+        self.get_or_compute_bundle(parser, lines).subcommands
     }
 
     fn collect_args(&self, parser: &HelpParser, lines: &[IndexedLine]) -> Vec<ArgCandidate> {
-        self.collect_all(parser, lines).args
+        self.get_or_compute_bundle(parser, lines).args
     }
 }

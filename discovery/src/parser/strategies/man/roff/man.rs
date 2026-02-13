@@ -425,7 +425,6 @@ fn flush_tagged_paragraph(
 }
 
 fn parse_flag_defs(definition: &str, description: &str) -> Vec<FlagSchema> {
-    let mut out = Vec::new();
     let mut parts = definition
         .split(|ch: char| ch == ',' || ch == '|' || ch.is_ascii_whitespace())
         .filter(|part| !part.trim().is_empty())
@@ -447,31 +446,44 @@ fn parse_flag_defs(definition: &str, description: &str) -> Vec<FlagSchema> {
             .split_whitespace()
             .any(|token| token.chars().all(|ch| ch.is_ascii_uppercase()) && token.len() > 1);
 
+    let mut first_short: Option<String> = None;
+    let mut first_long: Option<String> = None;
+    let mut has_inline_value = false;
+
     for part in parts {
         let (raw_name, inline_value) = part
             .split_once('=')
             .map(|(name, _)| (name, true))
             .unwrap_or((part.as_str(), false));
+        has_inline_value |= inline_value;
 
-        let mut schema = if raw_name.starts_with("--") {
-            FlagSchema::boolean(None, Some(raw_name))
+        if raw_name.starts_with("--") {
+            if first_long.is_none() {
+                first_long = Some(raw_name.to_string());
+            }
         } else {
             // Treat all single-dash forms as short-style flags to avoid
             // generating invalid long names like "-foo".
-            FlagSchema::boolean(Some(raw_name), None)
-        };
-
-        if inline_value || value_hint {
-            schema.takes_value = true;
-            schema.value_type = infer_value_type(description);
+            if first_short.is_none() {
+                first_short = Some(raw_name.to_string());
+            }
         }
-        if let Some(clean) = clean_description(description) {
-            schema.description = Some(clean);
-        }
-        out.push(schema);
     }
 
-    out
+    if first_short.is_none() && first_long.is_none() {
+        return Vec::new();
+    }
+
+    let mut schema = FlagSchema::boolean(first_short.as_deref(), first_long.as_deref());
+    if has_inline_value || value_hint {
+        schema.takes_value = true;
+        schema.value_type = infer_value_type(description);
+    }
+    if let Some(clean) = clean_description(description) {
+        schema.description = Some(clean);
+    }
+
+    vec![schema]
 }
 
 fn parse_args_from_synopsis(
@@ -574,5 +586,30 @@ fn infer_value_type(text: &str) -> ValueType {
         ValueType::Number
     } else {
         ValueType::String
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::parse_flag_defs;
+    use command_schema_core::ValueType;
+
+    #[test]
+    fn test_parse_flag_defs_merges_alias_pair_into_single_schema() {
+        let flags = parse_flag_defs("-a, --all", "Show all entries");
+        assert_eq!(flags.len(), 1);
+        assert_eq!(flags[0].short.as_deref(), Some("-a"));
+        assert_eq!(flags[0].long.as_deref(), Some("--all"));
+        assert_eq!(flags[0].description.as_deref(), Some("Show all entries"));
+    }
+
+    #[test]
+    fn test_parse_flag_defs_merges_aliases_with_value_once() {
+        let flags = parse_flag_defs("-o, --output=FILE", "Write FILE to disk");
+        assert_eq!(flags.len(), 1);
+        assert_eq!(flags[0].short.as_deref(), Some("-o"));
+        assert_eq!(flags[0].long.as_deref(), Some("--output"));
+        assert!(flags[0].takes_value);
+        assert_eq!(flags[0].value_type, ValueType::File);
     }
 }
