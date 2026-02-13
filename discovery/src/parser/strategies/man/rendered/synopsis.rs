@@ -6,6 +6,7 @@ use command_schema_core::{ArgSchema, FlagSchema, SubcommandSchema, ValueType};
 
 use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCandidate};
 use crate::parser::strategies::man::infer_value_type;
+use crate::parser::IndexedLine;
 
 use super::sections::ManSection;
 
@@ -125,6 +126,17 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
     let mut out = Vec::new();
     let mut seen = HashSet::new();
 
+    // Strip BNF grammar definition blocks (e.g. `OBJECT := { ... }`,
+    // `OPTIONS := { ... }`) from the synopsis before extracting positional
+    // args. These blocks define grammar structure; their contents (flag
+    // values, object names) are not positional arguments.
+    let clean_section = ManSection {
+        name: section.name.clone(),
+        start_line: section.start_line,
+        end_line: section.end_line,
+        lines: strip_grammar_definitions(&section.lines),
+    };
+
     // Pre-compute subcommand names from the full joined synopsis so that
     // continuation lines (which lack the root command token) still filter
     // correctly.
@@ -158,7 +170,7 @@ pub fn parse_synopsis_args(section: &ManSection) -> Vec<ArgCandidate> {
         })
         .unwrap_or_default();
 
-    for line in &section.lines {
+    for line in &clean_section.lines {
         let trimmed = line.text.trim();
         if trimmed.is_empty() {
             continue;
@@ -372,12 +384,23 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
         return out;
     }
 
-    // Strip parenthesized groups that contain pipes — these are flag-value
-    // alternatives (e.g. `(amend|reword)`, `(direct|inherit)`) not subcommands.
-    // Also strip `=[...]` and `=<...>` patterns for the same reason.
+    // Pre-extract subcommands from BNF-style grammar definitions
+    // (e.g. `OBJECT := { link | address | ... }`) before stripping
+    // braced groups. Definitions whose content starts with `-` (flags)
+    // are skipped.
+    extract_grammar_definition_subcommands(line, &mut out);
+
+    // Strip parenthesized/braced groups that contain pipes — these are
+    // flag-value alternatives (e.g. `(amend|reword)`, `{inet|inet6}`)
+    // not subcommands. Also strip `=[...]` and `=<...>` patterns.
     let cleaned = strip_flag_value_alternatives(line);
 
     if !cleaned.contains('|') {
+        // Even if no pipes remain, we may have collected subcommands
+        // from grammar definitions above.
+        if out.len() < 2 {
+            out.clear();
+        }
         return out;
     }
 
@@ -387,6 +410,9 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
         .map(|t| normalize_synopsis_arg_token(t))
         .unwrap_or_default();
     if !looks_like_command_name(&root) {
+        if out.len() < 2 {
+            out.clear();
+        }
         return out;
     }
     let root_lower = root.to_ascii_lowercase();
@@ -407,10 +433,13 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
             }
             if token.starts_with('-') {
                 // If the flag already contains its value (=, <) or is
-                // self-contained in brackets ([...]), don't expect a
-                // bare value word to follow.
+                // self-contained in brackets ([--flag]), don't expect a
+                // bare value word to follow. Abbreviation notation like
+                // -f[amily] does NOT count as self-contained — the [...]
+                // is part of the flag name, and a value may follow.
+                let self_contained = raw.starts_with('[') && raw.ends_with(']');
                 prev_was_flag =
-                    !raw.contains('=') && !raw.contains('<') && !raw.ends_with(']');
+                    !raw.contains('=') && !raw.contains('<') && !self_contained;
                 continue;
             }
             // Skip bare words immediately after a flag — they are flag
@@ -449,9 +478,72 @@ fn extract_synopsis_subcommand_heads(line: &str) -> HashSet<String> {
     out
 }
 
-/// Removes parenthesized groups that contain `|` (flag-value alternatives like
-/// `(amend|reword)` or `(direct|inherit)`) and `=`-prefixed bracketed groups
-/// from the synopsis text. This prevents flag value enums from being
+/// Extracts subcommand names from BNF-style grammar definitions like
+/// `OBJECT := { link | address | addrlabel | ... }`. Skips definitions
+/// whose content contains flags (e.g. `OPTIONS := { -V[ersion] | ... }`).
+fn extract_grammar_definition_subcommands(text: &str, out: &mut HashSet<String>) {
+    // Find each `:=` occurrence and extract the `{...}` block that follows.
+    let mut search_start = 0;
+    while let Some(assign_pos) = text[search_start..].find(":=") {
+        let assign_pos = search_start + assign_pos;
+        search_start = assign_pos + 2;
+
+        // Find the opening `{` after `:=`.
+        let after_assign = &text[assign_pos + 2..];
+        let Some(brace_offset) = after_assign.find('{') else {
+            continue;
+        };
+        let brace_start = assign_pos + 2 + brace_offset + 1; // char after `{`
+
+        // Find matching `}` with depth tracking.
+        let mut depth = 1;
+        let mut brace_end = brace_start;
+        for ch in text[brace_start..].chars() {
+            if ch == '{' {
+                depth += 1;
+            } else if ch == '}' {
+                depth -= 1;
+                if depth == 0 {
+                    break;
+                }
+            }
+            brace_end += ch.len_utf8();
+        }
+        if depth != 0 {
+            continue;
+        }
+
+        let content = &text[brace_start..brace_end];
+
+        // Skip definitions whose content contains flag-like tokens (starts
+        // with `-`), indicating this is an OPTIONS/FLAGS definition.
+        let has_flags = content
+            .split_whitespace()
+            .any(|w| w.starts_with('-') || normalize_synopsis_arg_token(w).starts_with('-'));
+        if has_flags {
+            continue;
+        }
+
+        // Extract pipe-separated alternatives as subcommand candidates.
+        for segment in content.split('|') {
+            let token = segment.trim();
+            let clean = normalize_synopsis_arg_token(token);
+            let lower = clean.to_ascii_lowercase();
+            if !clean.is_empty()
+                && looks_like_command_name(&clean)
+                && !is_placeholder_command_token(&lower)
+            {
+                out.insert(lower);
+            }
+        }
+
+        search_start = brace_end;
+    }
+}
+
+/// Removes bracketed/braced groups that contain `|` (flag-value alternatives
+/// like `(amend|reword)`, `{inet|inet6|link}`) and `=`-prefixed bracketed
+/// groups from the synopsis text. This prevents flag value enums from being
 /// misidentified as subcommand alternatives.
 fn strip_flag_value_alternatives(line: &str) -> String {
     let mut result = String::with_capacity(line.len());
@@ -502,8 +594,87 @@ fn strip_flag_value_alternatives(line: &str) -> String {
             // No pipe inside parens — keep it.
         }
 
+        // Match `{...}` groups that contain `|` AND whose content looks
+        // flag-like. These are flag/option grammar blocks
+        // (e.g. `{ -V[ersion] | -s[tatistics] | ... }` in ip(8)).
+        // Subcommand alternatives in braces (e.g. `{update | upgrade}`)
+        // do NOT start with `-` and are preserved.
+        if chars[i] == '{' {
+            let mut depth = 1;
+            let mut j = i + 1;
+            let mut has_pipe = false;
+            let mut first_content_char: Option<char> = None;
+            while j < chars.len() && depth > 0 {
+                if chars[j] == '{' {
+                    depth += 1;
+                } else if chars[j] == '}' {
+                    depth -= 1;
+                } else if chars[j] == '|' && depth == 1 {
+                    has_pipe = true;
+                }
+                if first_content_char.is_none() && depth == 1 && !chars[j].is_whitespace() {
+                    first_content_char = Some(chars[j]);
+                }
+                j += 1;
+            }
+            let starts_with_flag = first_content_char == Some('-');
+            if has_pipe && depth == 0 && starts_with_flag {
+                result.push(' ');
+                i = j;
+                continue;
+            }
+            // Non-flag braces or no pipes — keep it.
+        }
+
         result.push(chars[i]);
         i += 1;
+    }
+
+    result
+}
+
+/// Strips BNF-style grammar definition blocks (`WORD := { ... }`) from the
+/// synopsis lines. Tracks brace depth across lines so that multi-line
+/// definitions (like `OPTIONS := { ... | ... | ... }`) are fully removed.
+fn strip_grammar_definitions(lines: &[IndexedLine]) -> Vec<IndexedLine> {
+    let mut result = Vec::new();
+    let mut in_grammar_block = false;
+    let mut brace_depth: i32 = 0;
+
+    for line in lines {
+        let trimmed = line.text.trim();
+
+        if trimmed.contains(":=") {
+            in_grammar_block = true;
+            brace_depth = 0;
+            for ch in trimmed.chars() {
+                if ch == '{' {
+                    brace_depth += 1;
+                } else if ch == '}' {
+                    brace_depth -= 1;
+                }
+            }
+            if brace_depth <= 0 {
+                in_grammar_block = false;
+            }
+            continue;
+        }
+
+        if in_grammar_block {
+            for ch in trimmed.chars() {
+                if ch == '{' {
+                    brace_depth += 1;
+                } else if ch == '}' {
+                    brace_depth -= 1;
+                }
+            }
+            if brace_depth <= 0 {
+                in_grammar_block = false;
+            }
+            continue;
+        }
+
+        result.push(line.clone());
     }
 
     result
@@ -613,7 +784,13 @@ fn looks_like_command_name(token: &str) -> bool {
 fn is_placeholder_command_token(token: &str) -> bool {
     matches!(
         token,
-        "command" | "commands" | "cmd" | "subcommand" | "option" | "options"
+        "command"
+            | "commands"
+            | "cmd"
+            | "subcommand"
+            | "object"
+            | "option"
+            | "options"
     )
 }
 

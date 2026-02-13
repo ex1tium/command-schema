@@ -1194,7 +1194,7 @@ impl HelpParser {
             // looks_lower_with_index checks above.
             for mut arg in Self::parse_argument_tokens_inner(token, false) {
                 let lower = arg.name.to_ascii_lowercase();
-                if has_subcommands && matches!(lower.as_str(), "command" | "subcommand" | "cmd") {
+                if has_subcommands && matches!(lower.as_str(), "command" | "subcommand" | "cmd" | "object") {
                     continue;
                 }
                 if matches!(
@@ -1203,8 +1203,18 @@ impl HelpParser {
                 ) {
                     continue;
                 }
-                // Avoid parsing grammar rows from network/route tools.
-                if usage_lower.contains(":=") && arg.name.chars().all(|ch| ch.is_ascii_uppercase())
+                // Avoid treating BNF meta-variables as positional args.
+                // In usage lines with grammar notation (`:=` definitions or
+                // `{ ... | ... }` alternatives), bare ALL-CAPS tokens are
+                // structural grammar variables (OBJECT, NETNS), not args.
+                let has_bnf_grammar = usage_lower.contains(":=")
+                    || (usage_lower.contains('{') && usage_lower.contains('|'));
+                if has_bnf_grammar
+                    && !has_placeholder_markers
+                    && arg.name.len() > 1
+                    && arg.name
+                        .chars()
+                        .all(|ch| ch.is_ascii_uppercase() || ch == '_')
                 {
                     continue;
                 }
@@ -2796,7 +2806,25 @@ impl HelpParser {
         if trimmed.starts_with('-') {
             return false;
         }
-        if !(trimmed.contains("--") || trimmed.contains(" -")) {
+        // BNF grammar definition lines (e.g. "OPTIONS := { -V[ersion] | ... }")
+        // define notation structure, not usage patterns.
+        if trimmed.contains(":=") {
+            return false;
+        }
+        // Require an actual flag pattern: `--` (long flag) or ` -X` where X
+        // is alphanumeric/`[` (short flag).  A bare ` - ` (space-dash-space)
+        // is a title separator (e.g. "IP - COMMAND SYNTAX"), not a flag.
+        let has_long_flag = trimmed.contains("--");
+        let has_short_flag = {
+            let bytes = trimmed.as_bytes();
+            let len = bytes.len();
+            (0..len.saturating_sub(2)).any(|i| {
+                bytes[i] == b' '
+                    && bytes[i + 1] == b'-'
+                    && (bytes[i + 2].is_ascii_alphanumeric() || bytes[i + 2] == b'[')
+            })
+        };
+        if !has_long_flag && !has_short_flag {
             return false;
         }
 
