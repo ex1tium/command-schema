@@ -341,6 +341,21 @@ fn merge_positional_args(
             }
         }
         MergeStrategy::Union => {
+            // When both lists are non-empty and one is drastically larger,
+            // the longer list is almost certainly garbage (prose words
+            // misidentified as positionals).  Prefer the shorter, cleaner
+            // list in that case.  Real commands rarely exceed ~8 positionals.
+            if !base.is_empty() && !overlay.is_empty() {
+                let (shorter, longer) = if overlay.len() <= base.len() {
+                    (overlay, base)
+                } else {
+                    (base, overlay)
+                };
+                if longer.len() > 10 && longer.len() > shorter.len() * 3 {
+                    return shorter.to_vec();
+                }
+            }
+
             // Take the longer list, fill missing descriptions from the shorter.
             let (primary, secondary) = if overlay.len() >= base.len() {
                 (overlay, base)

@@ -546,12 +546,20 @@ impl HelpParser {
         });
         arg_candidates.retain(|candidate| {
             let drop = classify::is_placeholder_token(candidate.name.as_str())
-                || classify::is_prose_word(candidate.name.as_str());
+                || classify::is_prose_word(candidate.name.as_str())
+                || classify::is_brand_or_status_word(candidate.name.as_str());
             if drop {
                 false_positive_filter_hits += 1;
             }
             !drop
         });
+
+        // Safety net: real commands almost never have > 15 positional args.
+        // An excessive count signals the parser ingested prose or description
+        // text rather than actual positional argument definitions.
+        if arg_candidates.len() > 15 {
+            arg_candidates.clear();
+        }
 
         let flag_result =
             merge::merge_flag_candidates(flag_candidates, merge::HIGH_CONFIDENCE_THRESHOLD);
@@ -2855,15 +2863,40 @@ impl HelpParser {
             return true;
         }
 
+        // Bare words (no brackets, flags, or structural markers) are only
+        // valid continuations when they look like synopsis placeholders:
+        // ALL_UPPER (FILE, INPUT), alpha+digit (arg1, file2), or have
+        // angle brackets / ellipsis.  Pure lowercase words like "accept",
+        // "array", "concern" are description prose, not usage continuations.
         let words = trimmed.split_whitespace().collect::<Vec<_>>();
         if words.is_empty() || words.len() > 2 {
             return false;
         }
 
-        words.iter().all(|word| {
+        // Every word must be structurally valid AND at least one must
+        // look like a synopsis token (not plain prose).
+        let all_valid = words.iter().all(|word| {
             word.chars().all(|ch| {
-                ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '<' | '>' | '[' | ']')
+                ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | '<' | '>' | '[' | ']' | '|')
             })
+        });
+        if !all_valid {
+            return false;
+        }
+
+        words.iter().any(|word| {
+            // Contains angle brackets or ellipsis
+            word.contains('<') || word.contains('>') || word.contains("...")
+            // Pipe separator (alternatives like "FILE|DIR")
+            || word.contains('|')
+            // ALL_UPPER placeholder (FILE, INPUT_PATH)
+            || (word.len() > 1
+                && word.chars().any(|ch| ch.is_ascii_alphabetic())
+                && word.chars().all(|ch| ch.is_ascii_uppercase() || ch.is_ascii_digit() || matches!(ch, '_' | '-' | '.')))
+            // Mixed alpha+digit (arg1, file2)
+            || (word.chars().any(|ch| ch.is_ascii_alphabetic())
+                && word.chars().any(|ch| ch.is_ascii_digit())
+                && word.chars().all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.')))
         })
     }
 

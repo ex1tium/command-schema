@@ -299,6 +299,18 @@ pub fn is_prose_word(name: &str) -> bool {
     )
 }
 
+/// Returns `true` when `name` is a short uppercase token that is an acronym
+/// or status word, not a real positional argument name.  These leak from man
+/// page headers (e.g. "GNU Bash" → "GNU") or status descriptions ("OK").
+pub fn is_brand_or_status_word(name: &str) -> bool {
+    matches!(
+        name,
+        "GNU" | "BSD" | "OK" | "YES" | "NO" | "ON" | "OFF" | "N/A" | "TBD" | "NB"
+        | "POSIX" | "IEEE" | "ISO" | "ANSI" | "UTF" | "ASCII" | "HTTP" | "HTTPS"
+        | "TCP" | "UDP" | "IP" | "URL" | "URI" | "API"
+    )
+}
+
 /// Returns `true` if `line` looks like an environment variable assignment row
 /// (e.g. `export FOO=bar` or `MY_VAR=value`).
 pub fn is_env_var_row(line: &str) -> bool {
