@@ -1,6 +1,7 @@
 //! Man page format detection.
 
 pub use crate::parser::util::looks_like_man_title_line;
+use crate::parser::util::{is_roff_macro_line, starts_with_roff_macro};
 
 /// Normalized format buckets used by the man strategy detector.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -192,37 +193,6 @@ pub fn looks_like_rendered_section_header(line: &str) -> bool {
             | "EXAMPLES"
             | "EXIT STATUS"
     )
-}
-
-/// Returns `true` when a lowercased line starts with the given macro name
-/// (e.g. `".sh"`) followed by ASCII whitespace or end-of-line.
-fn starts_with_roff_macro(line: &str, macro_name: &str) -> bool {
-    if !line.starts_with(macro_name) {
-        return false;
-    }
-    // After the macro name: must be whitespace or end-of-line.
-    line[macro_name.len()..]
-        .chars()
-        .next()
-        .is_none_or(|ch| ch.is_ascii_whitespace())
-}
-
-fn is_roff_macro_line(line: &str) -> bool {
-    let trimmed = line.trim_start();
-    let mut chars = trimmed.chars();
-    let Some(control) = chars.next() else {
-        return false;
-    };
-    if control != '.' && control != '\'' {
-        return false;
-    }
-    let Some(a) = chars.next() else {
-        return false;
-    };
-    let Some(b) = chars.next() else {
-        return false;
-    };
-    a.is_ascii_alphabetic() && b.is_ascii_alphabetic()
 }
 
 #[cfg(test)]

@@ -138,7 +138,7 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
 
         let (name, inline_value) = if let Some((head, _)) = part.split_once('=') {
             (head, true)
-        } else if let Some(pos) = part.find(|ch: char| ch == '<' || ch == '[') {
+        } else if let Some(pos) = part.find(|ch: char| ch == '<' || ch == '[' || ch == '(') {
             (&part[..pos], true)
         } else {
             (part.as_str(), false)
@@ -146,7 +146,7 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
         has_inline_value |= inline_value;
 
         let name = name
-            .trim_end_matches(|ch: char| matches!(ch, ']' | '>' | '[' | '.' | ','));
+            .trim_end_matches(|ch: char| matches!(ch, ']' | '>' | '[' | '.' | ',' | '(' | ')'));
 
         if name.starts_with("--") {
             // Long flag: must have valid body — starts with a letter,

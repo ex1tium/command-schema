@@ -6,7 +6,7 @@
 use command_schema_core::HelpFormat;
 
 use super::strategies::man::rendered::sections::normalize_section_name;
-use super::util::looks_like_man_title_line;
+use super::util::{is_roff_macro_line, looks_like_man_title_line, starts_with_roff_macro};
 use super::{FormatScore, IndexedLine};
 
 /// Scores the given help output lines against known `HelpFormat` variants.
@@ -195,34 +195,6 @@ fn score_man_format(lines: &[&str]) -> f64 {
         score += (section_hits.min(4) as f64) * 0.10;
     }
     score.clamp(0.0, 1.0)
-}
-
-fn starts_with_roff_macro(line: &str, macro_name: &str) -> bool {
-    if !line.starts_with(macro_name) {
-        return false;
-    }
-    line[macro_name.len()..]
-        .chars()
-        .next()
-        .is_none_or(|ch| ch.is_ascii_whitespace())
-}
-
-fn is_roff_macro_line(line: &str) -> bool {
-    let trimmed = line.trim_start();
-    let mut chars = trimmed.chars();
-    let Some(control) = chars.next() else {
-        return false;
-    };
-    if control != '.' && control != '\'' {
-        return false;
-    }
-    let Some(a) = chars.next() else {
-        return false;
-    };
-    let Some(b) = chars.next() else {
-        return false;
-    };
-    a.is_ascii_alphabetic() && b.is_ascii_alphabetic()
 }
 
 fn looks_like_rendered_man_section_header(line: &str) -> bool {

@@ -2780,7 +2780,20 @@ impl HelpParser {
                     && (bytes[i + 2].is_ascii_alphanumeric() || bytes[i + 2] == b'[')
             })
         };
-        if !has_long_flag && !has_short_flag {
+        // Positional-only synopsis lines: contain angle brackets (<FILE>),
+        // leading square brackets ([ARG]), or all-caps placeholder tokens.
+        let has_positional = trimmed.contains('<')
+            || trimmed.contains('[')
+            || trimmed.split_whitespace().skip(1).any(|w| {
+                let norm = w.trim_matches(|ch: char| {
+                    matches!(ch, '<' | '>' | '[' | ']' | '(' | ')' | ',' | ';' | '.')
+                });
+                norm.len() > 1
+                    && norm
+                        .chars()
+                        .all(|ch| ch.is_ascii_uppercase() || ch == '_' || ch == '-')
+            });
+        if !has_long_flag && !has_short_flag && !has_positional {
             return false;
         }
 

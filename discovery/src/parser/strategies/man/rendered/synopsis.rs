@@ -796,11 +796,10 @@ fn is_valid_flag_name(name: &str) -> bool {
                 .chars()
                 .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_' || ch == '.')
     } else if name.starts_with('-') {
-        // Short flag: `-` followed by 1-2 alphanumeric or symbolic chars
-        // (e.g. -?, -@).
+        // Single-dash flag: `-` followed by alphanumeric or symbolic chars
+        // (e.g. -v, -?, -help, -eany).
         let body = &name[1..];
         !body.is_empty()
-            && body.len() <= 2
             && body
                 .chars()
                 .all(|ch| ch.is_ascii_alphanumeric() || ch.is_ascii_punctuation())
