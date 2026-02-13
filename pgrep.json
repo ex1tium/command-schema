@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "pgrep",
-  "description": "pgrep, pkill, pidwait - look up, signal, or wait for processes based on",
+  "description": "pgrep, pkill, pidwait - look up, signal, or wait for processes based on name and other attributes",
   "global_flags": [
     {
       "short": null,
@@ -18,7 +18,7 @@
       "long": "--count",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output;  instead  print  a  count  of  matching processes.   When  count  does  not match anything, e.g. returns zero, the command will return  non-zero  value.  Note  that  for pkill   and  pidwait,  the  count  is  the  number  of  matching processes, not the processes that were successfully signaled  or waited for.",
+      "description": "When count does not match anything, e.g. returns zero, the com‐ mand  will  return  non-zero value. Note that for pkill and pidwait, the count is the number of matching processes, not the processes that were successfully signaled or waited for.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--delimiter",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  string  used to delimit each process ID in the output (by default a newline).  (pgrep only.)",
+      "description": "(pgrep only.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--exact",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "command  lines  if  -f  is specified) exactly match the pattern.",
+      "description": "match exactly with the command name",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--full",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "process  name. When -f is set, the full command line is used.",
+      "description": "When -f is set, the full command line is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--group",
       "value_type": "Number",
       "takes_value": true,
-      "description": "match processes whose real group ID is listed.  Either the numerical or symbolical value may be used.",
+      "description": "Either the numerical or symbolical value may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--ignore-ancestors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "For  example, this can be useful when elevating with sudo or similar tools.",
+      "description": "For example, this can be useful when elevating with sudo or similar tools.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--inverse",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is usually used in pgrep's or pidwait's context.  In pkill's context the short option is  dis‐ abled to avoid accidental usage of the option.",
+      "description": "This option is usually used in pgrep's or pidwait's context.  In pkill's context the short option is  disabled to avoid accidental usage of the option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--lightweight",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  thread  ids  instead of pids in pgrep's or pidwait's context.  In pkill's context this option is disabled.",
+      "description": "In pkill's context this option is disabled.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--list-full",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "process  ID.   (pgrep only.)",
+      "description": "(pgrep only.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--newest",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "only  the newest (most recently started) of the matching processes.",
+      "description": "select most recently started",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--ns",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "processes that belong to the same namespaces. Required to run as root to match processes from other  users.  See  --nslist for how to limit which namespaces to match.",
+      "description": "match the processes that belong to the same namespace as <pid>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--nslist",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "only  the provided namespaces. Available namespaces: ipc, mnt, net, pid, user, uts.",
+      "description": "list which namespaces will be considered for the --ns option. Available namespaces: ipc, mnt, net, pid, user, uts",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--oldest",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "matching processes.",
+      "description": "select least recently started",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--pgroup",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "match  processes in the process group IDs listed.  Process group 0 is translated into pgrep's, pkill's,  or  pidwait's  own process group.",
+      "description": "Process group 0 is translated into pgrep's, pkill's, or pidwait's own  process group.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--pidfile",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "PIDs  from  file.  This option is more useful for pkill or pidwait than pgrep.",
+      "description": "This option is more useful for pkill or pidwait than pgrep.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--queue",
       "value_type": "String",
       "takes_value": true,
-      "description": "value  argument  is used  to  specify  an integer to be sent with the signal. If the receiving process has installed a handler for this signal  using the  SA_SIGINFO  flag  to  sigaction(2), then it can obtain this data via the si_value field of the siginfo_t structure.",
+      "description": "has  installed  a  handler  for  this signal using the SA_SIGINFO flag to sigaction(2), then it can obtain this data via the si_value field of the siginfo_t structure.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--session",
       "value_type": "String",
       "takes_value": true,
-      "description": "match  processes whose process session ID is listed.  Ses‐ sion ID 0 is translated into pgrep's, pkill's, or pidwait's  own session ID.",
+      "description": "match processes whose process session ID is listed.  Session ID 0 is translated into pgrep's, pkill's, or pidwait's own session ID.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--signal",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Either  the numeric  or  the  symbolic  signal name can be used. In pgrep or pidwait mode only the long option can be used and has no  effect unless  used  in conjunction with --require-handler to filter to processes with a userspace signal handler present for a particu‐ lar signal.",
+      "description": "Either the numeric or the symbolic signal name can be used. In pgrep or  pidwait mode only the long option can be used and has no effect unless used in conjunction with --require-handler to filter to processes with a userspace signal handler present for a particular signal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--terminal",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "match processes whose controlling terminal is listed.  The terminal name should be specified without the \"/dev/\" prefix.",
+      "description": "The terminal name should be specified without the \"/dev/\" prefix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": "--uid",
       "value_type": "Number",
       "takes_value": true,
-      "description": "match  processes whose real user ID is listed.  Either the numerical or symbolical value may be used.",
+      "description": "Either the numerical or symbolical value may be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

@@ -18,7 +18,7 @@
       "long": "--abi-windowed",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  \".xtensa.info\"  section.   ABI  tag indicates  ABI  of  the  assembly code.  A warning is issued by the linker on an attempt to link object  files  with  inconsistent  ABI tags.  Default ABI is chosen by the Xtensa core configuration.",
+      "description": "ABI tag indicates ABI of the assembly code.  A warning is issued by the linker on an attempt to link object files with inconsistent ABI tags.  Default ABI is chosen by the Xtensa core configuration.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--absolute-literals",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to the assembler whether \"L32R\" instructions use absolute or PC-relative addressing.  If the processor includes the  absolute addressing   option,   the   default  is  to  use  absolute  \"L32R\" relocations.  Otherwise, only the  PC-relative  \"L32R\"  relocations can be used.",
+      "description": "If the processor  includes  the  absolute addressing option, the default is to use absolute \"L32R\" relocations.  Otherwise, only the PC-relative \"L32R\" relocations can be used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": null,
       "long": "--auto-litpools",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "the   treatment   of   literal  pools.   The  default  is",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "the  treatment  of  literal  pools.   The default is --no-auto-litpools, which in the absence of --text-section-literals places literals in separate sections in the output file.  This allows the literal pool to be placed in a data RAM/ROM.   With  --auto-litpools, the  literals  are  interspersed  in  the  text  section  in  order  to  keep  them  as  close as possible to their references, explicit \".literal_position\" directives are not required.  This may be necessary for very large functions,  where  single  literal  pool  at  the beginning of the function may not be reachable by \"L32R\" instructions at the end.  These options only affect literals referenced via PC- relative  \"L32R\"  instructions;  literals  for  absolute  mode  \"L32R\"  instructions  are  handled  separately.  When used together with",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--compress-debug-sections",
       "value_type": "File",
       "takes_value": true,
-      "description": "DWARF  debug sections using zlib with SHF_COMPRESSED from the ELF ABI.  The resulting object file may not be compatible  with older linkers and object file utilities.  Note if compression would make a given section larger then it is not compressed.",
+      "description": "DWARF  debug  sections  using zlib with SHF_COMPRESSED from the ELF ABI.  The resulting object file may not be compatible with older linkers and object file utilities.  Note if compression would make a given section larger then it is not compressed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -86,9 +86,9 @@
     {
       "short": null,
       "long": "--debug-prefix-map",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "assembling  files  in   directory   old,   record   debugging information describing them as in new instead.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--defsym",
       "value_type": "File",
       "takes_value": true,
-      "description": "As in C, a leading 0x indicates a hexadecimal value, and a leading 0 indicates an octal value.  The value  of the symbol can be overridden inside a source file via the use of a \".set\" pseudo-op.",
+      "description": "value must be an integer constant.  As in C, a leading 0x indicates a hexadecimal value, and a leading 0 indicates an octal value.  The value of the symbol can be overridden inside a source file  via  the use of a \".set\" pseudo-op.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--divide",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "SVR4-derived platforms, the character / is treated as a comment character, which means that it cannot be used in expressions.   The",
+      "description": "in  expressions.   The",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,27 +138,7 @@
       "long": "--emulation",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  desired form.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--enable-x86-relax-relocations",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--enable-x86-used-note",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "select  the  desired form.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +178,7 @@
       "long": "--gdwarf-2",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "information  for  each  assembler  line. This  may help debugging assembler code, if the debugger can handle it.  Note---this option is only supported by some targets, not  all of them.",
+      "description": "DWARF2  debugging information for each assembler line.  This may help debugging assembler code, if the debugger can handle it. Note---this option is only supported by some targets, not all of them.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +188,7 @@
       "long": "--gdwarf-3",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  is  the same as the --gdwarf-2 option, except that it allows for  the  possibility  of  the  generation  of  extra  debug information  as  per  version 3 of the DWARF specification.  Note - enabling this option does not guarantee the generation of any extra information, the choice to do so is on a per target basis.",
+      "description": "Note - enabling this option does not guarantee the generation of  any  extra  information, the choice to do so is on a per target basis.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +198,7 @@
       "long": "--gdwarf-4",
       "value_type": "String",
       "takes_value": true,
-      "description": "except  that  it allows  for  the  possibility  of  the  generation  of  extra debug information as per version 4 of the DWARF  specification.   Note  - enabling this option does not guarantee the generation of any extra information, the choice to do so is on a per target basis.",
+      "description": "per  version  4 of the DWARF specification.  Note - enabling this option does not guarantee the generation of any extra information, the choice to do so is on a per target basis.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +208,7 @@
       "long": "--gdwarf-5",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  is  the same as the --gdwarf-2 option, except that it allows for  the  possibility  of  the  generation  of  extra  debug information  as  per  version 5 of the DWARF specification.  Note - enabling this option does not guarantee the generation of any extra information, the choice to do so is on a per target basis.",
+      "description": "Note - enabling this option does not guarantee the generation of  any  extra  information, the choice to do so is on a per target basis.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +218,7 @@
       "long": "--gdwarf-cie-version",
       "value_type": "String",
       "takes_value": true,
-      "description": "Information  Entries  (CIEs) are  produced.   When  this  flag  is  not specified the default is version 1, though some targets  can  modify  this  default.   Other possible values for version are 3 or 4.",
+      "description": "When this flag is not specified the default  is  version 1, though some targets can modify this default.  Other possible values for version are 3 or 4.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +228,7 @@
       "long": "--gdwarf-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": ".debug_line  section,  create  a  series  of .debug_line.foo sections where foo is the name of the corresponding code  section.   For  example a code section called .text.func will have its dwarf line number information placed into a section called .debug_line.text.func.  If the code section is  just  called  .text then  debug  line  section  will  still  be called just .debug_line without any suffix.",
+      "description": "of  creating a .debug_line section, create a series of .debug_line.foo sections where foo is the name of the corresponding code section.  For example a code section called .text.func will have its  dwarf  line  number  information  placed  into  a  section  called .debug_line.text.func.   If  the code section is just called .text then debug line section will still be called just .debug_line without any suffix.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +238,7 @@
       "long": "--gen-debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This  currently means  either  STABS,  ECOFF  or  DWARF2.  When the debug format is DWARF then  a  \".debug_info\"  and  \".debug_line\"  section  is  only emitted when the assembly file doesn't generate one itself.",
+      "description": "debugging  information for each assembler source line using whichever debug format is preferred by the target.  This currently means either STABS, ECOFF or DWARF2.  When the debug format is DWARF then a \".debug_info\" and \".debug_line\" section is only emitted when the assembly file doesn't generate one itself.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +278,7 @@
       "long": "--hash-size",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Supported  for  command  line  compatibility  with other assemblers.",
+      "description": "Supported for command line compatibility with other assemblers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +298,7 @@
       "long": "--keep-locals",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "These symbols start with system-specific  local label prefixes, typically .L for ELF systems or L for traditional a.out systems.",
+      "description": "(in  the symbol table) local symbols.  These symbols start with system-specific local label prefixes, typically .L for ELF systems or L for traditional a.out systems.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -326,9 +306,9 @@
     {
       "short": null,
       "long": "--listing-cont-lines",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  maximum number of lines printed in a listing for a single line of input to number + 1.",
+      "description": "set the maximum number of continuation lines used for the output data column of the listing @FILE read options from FILE",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -336,9 +316,9 @@
     {
       "short": null,
       "long": "--listing-lhs-width",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "for  an assembler listing to number.",
+      "description": "set the width in words of the output data column of the listing",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -346,9 +326,9 @@
     {
       "short": null,
       "long": "--listing-lhs-width2",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  maximum  width,  in  words, of the output data column for continuation lines in an assembler listing to number.",
+      "description": "set the width in words of the continuation lines of the output data column; ignored if smaller than the width of the first line",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -356,9 +336,9 @@
     {
       "short": null,
       "long": "--listing-rhs-width",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "displayed  in  a listing, to number bytes.",
+      "description": "set the max width in characters of the lines from the source file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -368,7 +348,7 @@
       "long": "--longcalls",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "or  disable  transformation  of  call instructions to allow calls across a greater range of addresses.    This option should be used when call targets can potentially be out  of  range.   It  may degrade  both  code  size  and  performance,  but  the  linker  can generally optimize away the unnecessary overhead when a  call  ends up within range.  The default is --no-longcalls.",
+      "description": "This option should be  used when call targets can potentially be out of range.  It may degrade both code size and performance, but the linker can generally optimize away the unnecessary overhead when a call ends up within range.  The default is --no-longcalls.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +358,7 @@
       "long": "--m32rx",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "family  is  the  target.   The default  is  normally  the  M32R, but this option changes it to the M32RX.",
+      "description": "The default is normally the M32R, but this option changes it to the M32RX.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -405,20 +385,10 @@
     },
     {
       "short": null,
-      "long": "--no-auto-litpools",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "in  the  output  file.   This allows  the  literal  pool  to  be  placed in a data RAM/ROM.  With",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
       "long": "--no-break",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "how  to  deal with multiplication overflow and division by zero.  --trap or  --no-break  (which  are  synonyms)  take  a  trap exception  (and  only work for Instruction Set Architecture level 2 and higher); --break or --no-trap (also synonyms, and the  default) take a break exception.",
+      "description": "how to deal with multiplication overflow and division by zero.  --trap or --no-break (which are synonyms) take a trap exception (and only work for Instruction Set Architecture level 2 and higher); --break or --no-trap (also synonyms, and the default) take a  break exception.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +398,7 @@
       "long": "--no-construct-floats",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "--no-construct-floats  option  disables  the  construction  of double width floating point constants by loading the two halves  of the  value  into the two single width floating point registers that make up the double width register.  By  default  --construct-floats is   selected,   allowing  construction  of  these  floating  point constants.",
+      "description": "--no-construct-floats  option  disables  the construction of double width floating point constants by loading the two halves of the value into the two single width floating point registers that make up the double  width  register.   By  default  --construct-floats  is selected, allowing construction of these floating point constants.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -438,7 +408,7 @@
       "long": "--no-pad-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  the alignment of that section.  The default is to pad the sections, but this  can  waste  space which might be needed on targets which have tight memory constraints.",
+      "description": "The default is to pad  the  sections,  but this can waste space which might be needed on targets which have tight memory constraints.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,17 +418,17 @@
       "long": "--no-relax-branch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "relaxation  of  out-of-range branches.   By  default  --no-relax-branch is selected, causing any out-of-range branches to produce an error.",
+      "description": "--relax-branch  option enables the relaxation of out-of-range branches.  By default --no-relax-branch is selected, causing any out- of-range branches to produce an error.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--no-text-section-literals",
+      "long": "--no-transform",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "which  places  literals  in   separate sections  in  the  output file.  This allows the literal pool to be placed  in  a  data  RAM/ROM.   With  --text-section-literals,  the literals are interspersed in the text section in order to keep them as  close  as  possible to their references.  This may be necessary for large assembly files, where the literals would otherwise be out of range of the \"L32R\" instructions in the text section.   Literals are  grouped into pools following \".literal_position\" directives or preceding \"ENTRY\" instructions.  These options only affect literals referenced  via  PC-relative  \"L32R\"  instructions;  literals   for absolute mode \"L32R\" instructions are handled separately.",
+      "description": "specified  in  the  assembly source.  Using --no-transform causes out of range instruction operands to be errors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -488,7 +458,7 @@
       "long": "--no-warn-explicit-parallel-conflicts",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not   produce  warning  messages  when  questionable  parallel constructs are encountered.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +468,7 @@
       "long": "--nocompress-debug-sections",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "--compress-debug-sections=zlib  and",
+      "description": "--compress-debug-sections=zlib    and    --compress-debug-sections=zlib-gabi    are    equivalent    to",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -538,7 +508,7 @@
       "long": "--rename-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "This  option  can  be  used multiple times to rename multiple sections.",
+      "description": "This option can be used multiple times to rename multiple sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +518,7 @@
       "long": "--scfi",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "should  synthesize  CFI for  hand-written  input.   If  the  input  already  contains  some synthesizable CFI directives, the assembler ignores them and  emits a  warning.   Note that \"--scfi=experimental\" is not intended to be used for compiler-generated code, including inline assembly.   This experimental  support is work in progress.  Only System V AMD64 ABI is supported.",
+      "description": "option  controls  whether  the  assembler  should  synthesize  CFI  for  hand-written  input.   If the input already contains some synthesizable CFI directives, the assembler ignores them and emits a warning.  Note that \"--scfi=experimental\" is  not  intended  to  be used for compiler-generated code, including inline assembly.  This experimental support is work in progress.  Only System V AMD64 ABI is supported.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -598,7 +568,7 @@
       "long": "--target-align",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "expense  in  code  size.     This  optimization is enabled by default.  Note that the assembler will  always  align  instructions like \"LOOP\" that have fixed alignment requirements.",
+      "description": "or  disable  automatic  alignment  to  reduce  branch penalties at some expense in code size.    This optimization is enabled by default.  Note that the assembler will always align instructions like \"LOOP\" that have fixed alignment requirements.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -616,9 +586,9 @@
     {
       "short": null,
       "long": "--text-section-literals",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "the   treatment   of   literal  pools.   The  default  is",
+      "value_type": "File",
+      "takes_value": true,
+      "description": "The default is --no-text-section-literals, which places literals in separate  sections  in  the output  file.  This allows the literal pool to be placed in a data RAM/ROM.  With --text-section-literals, the literals are interspersed in the text section in order to keep them as close as possible to their references.  This may be necessary  for  large  assembly  files, where  the  literals  would  otherwise  be out of range of the \"L32R\" instructions in the text section.  Literals are grouped into pools following \".literal_position\" directives or preceding \"ENTRY\" instructions.  These options  only  affect  literals  referenced  via  PC- relative \"L32R\" instructions; literals for absolute mode \"L32R\" instructions are handled separately.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -638,7 +608,7 @@
       "long": "--trampolines",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "or  disable  transformation  of  jump instructions to allow jumps across a greater range of addresses.    This option should be used when jump targets can potentially be out  of  range.   In  the absence  of  such  jumps  this  option does not affect code size or performance.  The default is --trampolines.",
+      "description": "or disable transformation of jump instructions to allow jumps across a greater range of addresses.    This option should be used when jump targets can potentially be out of range.  In the absence of such jumps this option does not affect code size  or  performance. The default is --trampolines.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -648,7 +618,7 @@
       "long": "--transform",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "or   disable   all  assembler  transformations  of  Xtensa instructions, including  both  relaxation  and  optimization.   The default  is  --transform; --no-transform should only be used in the rare cases when the instructions must be exactly  as  specified  in the  assembly  source.   Using  --no-transform  causes out of range instruction operands to be errors.",
+      "description": "or  disable  all  assembler  transformations of Xtensa instructions, including both relaxation and optimization.  The default is",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -688,16 +658,6 @@
       "long": "--warn-explicit-parallel-conflicts",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "are encountered.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--with-arch",
-      "value_type": "String",
-      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -708,7 +668,7 @@
       "long": "--x32",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  word  size,  either  32 bits or 64 bits.  --32 implies Intel i386 architecture, while --x32  and  --64  imply  AMD  x86-64 architecture with 32-bit or 64-bit word-size respectively.",
+      "description": "--32  implies  Intel  i386  architecture,  while  --x32  and  --64  imply  AMD  x86-64 architecture with 32-bit or 64-bit word-size respectively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -718,7 +678,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Enable  debugging  in  target  specific  backends,  if   supported. Otherwise  ignored.   Even  if ignored, this option is accepted for script compatibility with calls to other assemblers.",
+      "description": "Enable  debugging  in  target  specific backends, if supported.  Otherwise ignored.  Even if ignored, this option is accepted for script compatibility with calls to other assemblers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -728,7 +688,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option  specifies  that the output generated by the assembler should be marked as being encoded for a big-endian processor.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -738,7 +698,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "by  the  assembler should be marked as being encoded for a little-endian processor.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -758,7 +718,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "option  sets  the  largest  size  of  an  object  that can be referenced implicitly with the \"gp\" register.  It is only  accepted for  targets  that  use  ECOFF format, such as a DECstation running Ultrix.  The default value is 8.",
+      "description": "option  sets  the  largest  size  of  an object that can be referenced implicitly with the \"gp\" register.  It is only accepted for targets that use ECOFF format, such as a DECstation running Ultrix.  The default value is 8.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -768,7 +728,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "local  common symbol larger than size is placed in \".bss\", while smaller symbols are placed in \".sbss\".",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -808,7 +768,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "instruction  size.   -O and  -O1  encode  64-bit  register  load  instructions  with 64-bit immediate as 32-bit  register  load  instructions  with  31-bit  or 32-bits  immediates,  encode  64-bit register clearing instructions with 32-bit register clearing instructions, encode  256-bit/512-bit VEX/EVEX  vector  register  clearing  instructions with 128-bit VEX vector register clearing instructions, encode 128-bit/256-bit  EVEX vector  register  load/store  instructions with VEX vector register load/store instructions, and  encode  128-bit/256-bit  EVEX  packed integer   logical  instructions  with  128-bit/256-bit  VEX  packed integer logical.",
+      "description": "instruction encoding with smaller instruction size.  -O and -O1 encode 64-bit register load instructions with 64-bit immediate as 32-bit register load instructions with 31-bit or 32-bits  immediates,  encode  64-bit  register  clearing  instructions  with  32-bit register  clearing  instructions, encode 256-bit/512-bit VEX/EVEX vector register clearing instructions with 128-bit VEX vector register clearing instructions, encode 128-bit/256-bit  EVEX  vector  register  load/store  instructions  with  VEX  vector  register  load/store instructions, and encode 128-bit/256-bit EVEX packed integer logical instructions with 128-bit/256-bit VEX packed integer logical.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -818,7 +778,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "plus  encodes  256-bit/512-bit  EVEX vector  register  clearing  instructions  with  128-bit EVEX vector register  clearing  instructions.   In  64-bit  mode  VEX   encoded instructions  with commutative source operands will also have their source operands swapped if this allows using the 2-byte VEX  prefix form instead of the 3-byte one.  Certain forms of AND as well as OR with  the  same  (register)  operand  specified  twice will also be changed to TEST.",
+      "description": "includes -O1 optimization plus encodes 256-bit/512-bit EVEX vector register clearing instructions with 128-bit EVEX vector register clearing instructions.  In 64-bit mode VEX encoded instructions with commutative source operands will also have  their  source  operands swapped  if  this  allows  using the 2-byte VEX prefix form instead of the 3-byte one.  Certain forms of AND as well as OR with the same (register) operand specified twice will also be changed to TEST.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -828,7 +788,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "optimization  plus  encodes  16-bit,  32-bit  and 64-bit  register  tests  with immediate as 8-bit register test with immediate.  -O0 turns off this optimization.",
+      "description": "64-bit  register  tests  with  immediate  as  8-bit  register  test  with immediate.  -O0 turns off this optimization.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1018,7 +978,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "treated  as labels.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1048,7 +1008,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "\"fast\"---skip  whitespace  and comment preprocessing (assume source is compiler output).",
+      "description": "\"fast\"---skip whitespace and comment preprocessing (assume source is compiler output).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1128,7 +1088,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Shorten  references  to  undefined  symbols, to one word instead of two.",
+      "description": "Shorten references to undefined symbols, to one word instead of two.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1248,7 +1208,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "family  is  the  target.   The default  is  normally  the  68020,  but  this  can  be  changed  at configuration time.",
+      "description": "what  processor in the 68000 family is the target.  The default is normally the 68020, but this can be changed at configuration time.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1268,7 +1228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "machine  does  (or  does  not)  have  a  floating-point coprocessor.   The  default  is  to assume a coprocessor for 68020, 68030, and cpu32.  Although the basic 68000 is not compatible  with the  68881,  a  combination of the two can be specified, since it's possible to do emulation of the coprocessor instructions  with  the main processor.",
+      "description": "The default is to assume a coprocessor for 68020,  68030,  and cpu32.   Although the basic 68000 is not compatible with the 68881, a combination of the two can be specified, since it's possible to do emulation of the coprocessor instructions with the main processor.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1318,7 +1278,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "which  ABI the source code uses.  The recognized arguments are: \"ilp32\" and \"lp64\", which decides the generated object file in ELF32 and ELF64 format respectively.  The default is \"lp64\".",
+      "description": "The recognized arguments are: \"ilp32\" and \"lp64\", which decides the generated  object  file  in ELF32 and ELF64 format respectively.  The default is \"lp64\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1328,7 +1288,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "the  H8300  machine variant.  The following machine names are recognised: \"h8300h\", \"h8300hn\", \"h8300s\", \"h8300sn\", \"h8300sx\" and \"h8300sxn\".",
+      "description": "the  H8300  machine  variant.  The following machine names are recognised: \"h8300h\", \"h8300hn\", \"h8300s\", \"h8300sn\", \"h8300sx\" and \"h8300sxn\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1408,7 +1368,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "option specifies the target architecture.  The assembler will issue an error message  if  an  attempt  is  made  to  assemble  an instruction which will not execute on the target architecture.  The following    architecture    names   are   recognized:   \"armv8-a\", \"armv8.1-a\",  \"armv8.2-a\",  \"armv8.3-a\",  \"armv8.4-a\"  \"armv8.5-a\", \"armv8.6-a\",   \"armv8.7-a\",  \"armv8.8-a\",  \"armv8.9-a\",  \"armv8-r\", \"armv9-a\", \"armv9.1-a\", \"armv9.2-a\", \"armv9.3-a\" and \"armv9.4-a\".",
+      "description": "The assembler will issue an  error  message  if  an  attempt  is  made  to  assemble  an instruction which will not execute on the target architecture.  The following architecture names are recognized: \"armv8-a\", \"armv8.1-a\", \"armv8.2-a\",   \"armv8.3-a\",   \"armv8.4-a\"   \"armv8.5-a\",  \"armv8.6-a\",  \"armv8.7-a\",  \"armv8.8-a\",  \"armv8.9-a\",  \"armv8-r\",  \"armv9-a\", \"armv9.1-a\", \"armv9.2-a\", \"armv9.3-a\" and \"armv9.4-a\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1508,7 +1468,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "processor.   The  assembler  will issue  an  error  message  if  an  attempt  is  made to assemble an instruction which will not execute on the  target  processor.   The following    processor    names   are   recognized:   \"cortex-a34\", \"cortex-a35\",     \"cortex-a53\",     \"cortex-a55\",     \"cortex-a57\", \"cortex-a65\",     \"cortex-a65ae\",    \"cortex-a72\",    \"cortex-a73\", \"cortex-a75\",    \"cortex-a76\",    \"cortex-a76ae\",     \"cortex-a77\", \"cortex-a78\",    \"cortex-a78ae\",    \"cortex-a78c\",   \"cortex-a510\", \"cortex-a520\", \"cortex-a710\", \"cortex-a720\",  \"ares\",  \"exynos-m1\", \"falkor\",      \"neoverse-n1\",     \"neoverse-n2\",     \"neoverse-e1\", \"neoverse-v1\", \"qdf24xx\", \"saphira\", \"thunderx\", \"vulcan\", \"xgene1\" \"xgene2\", \"cortex-r82\", \"cortex-x1\", \"cortex-x2\", \"cortex-x3\",  and \"cortex-x4\".   The  special  name  \"all\"  may  be used to allow the assembler to accept instructions valid for any supported processor, including all optional extensions.",
+      "description": "option specifies the target processor.  The assembler will issue an error message if an attempt is made to assemble an instruction which will not execute on the target processor.  The following processor names are recognized: \"cortex-a34\", \"cortex-a35\", \"cortex-a53\", \"cortex-a55\", \"cortex-a57\",  \"cortex-a65\",  \"cortex-a65ae\",  \"cortex-a72\",  \"cortex-a73\",  \"cortex-a75\",  \"cortex-a76\",  \"cortex-a76ae\", \"cortex-a77\",   \"cortex-a78\",   \"cortex-a78ae\",  \"cortex-a78c\",  \"cortex-a510\",  \"cortex-a520\",  \"cortex-a710\",  \"cortex-a720\",  \"ares\", \"exynos-m1\", \"falkor\", \"neoverse-n1\", \"neoverse-n2\", \"neoverse-e1\", \"neoverse-v1\", \"qdf24xx\", \"saphira\", \"thunderx\", \"vulcan\",  \"xgene1\" \"xgene2\",  \"cortex-r82\",  \"cortex-x1\",  \"cortex-x2\",  \"cortex-x3\",  and  \"cortex-x4\".   The  special name \"all\" may be used to allow the assembler to accept instructions valid for any supported processor, including all optional extensions.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1538,7 +1498,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "option  specifies  the assembly language dialect to recognize while assembling.  The assembler supports normal and pseudoc.",
+      "description": "The assembler supports normal and pseudoc.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1698,7 +1658,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "bit  instructions  are  allowed. This is the default behavior.",
+      "description": "This is the default behavior.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1798,7 +1758,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "but these  flags force a certain group of registers to be treated as 32 bits wide at all times.   -mgp32  controls  the  size  of  general- purpose  registers  and  -mfp32 controls the size of floating-point registers.",
+      "description": "treated  as  32 bits wide at all times.  -mgp32 controls the size of general-purpose registers and -mfp32 controls the size of floating-point registers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1808,7 +1768,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "but these  flags force a certain group of registers to be treated as 64 bits wide at all times.   -mgp64  controls  the  size  of  general- purpose  registers  and  -mfp64 controls the size of floating-point registers.",
+      "description": "register  sizes  are normally inferred from the ISA and ABI, but these flags force a certain group of registers to be treated as 64 bits wide at all times.  -mgp64 controls the size of general-purpose registers and -mfp64 controls the size of floating-point registers.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1828,7 +1788,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "but using this flag in combination with -mabi=32 enables an ABI variant which  will  operate  correctly with floating-point registers which are 32 or 64 bits wide.",
+      "description": "ABI  variant which will operate correctly with floating-point registers which are 32 or 64 bits wide.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1878,7 +1838,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "with  Hardware  Transactional  Memory instructions.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1908,7 +1868,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "only  AMD64 or  Intel64  ISA  in 64-bit mode.  The default is to accept common, Intel64 only and AMD64 ISAs.",
+      "description": "The  default  is  to  accept  common, Intel64 only and AMD64 ISAs.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1918,7 +1878,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  default  behaviour,  which  restricts  the permitted instructions to just the basic IP2022 ones.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2098,7 +2058,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Instruction  Set  Architecture level.  -mips1 is an alias for -march=r3000, -mips2 is an alias for",
+      "description": "-mips1 is an alias for -march=r3000, -mips2  is  an  alias  for",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2288,7 +2248,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "between  the  IEEE  754-2008  (-mnan=2008)  or  the  legacy (-mnan=legacy) NaN encoding format.  The latter is the default.",
+      "description": "The latter is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2508,7 +2468,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "linker  relaxations  to  reduce  the  number  of instructions required to materialize symbol addresses. (default)",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2608,7 +2568,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "option  specifies  that  the  assembler  should  encode  SSE instructions with VEX prefix.",
+      "description": "encode SSE instructions with VEX prefix",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2658,7 +2618,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "option  specifies  a  processor to optimize for. When used in conjunction with  the  -march  option,  only  instructions  of  the processor specified by the -march option will be generated.",
+      "description": "option  specifies a processor to optimize for. When used in conjunction with the -march option, only instructions of the processor specified by the -march option will be generated.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2738,7 +2698,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  architecture  mode,  either  the   Enterprise   System Architecture (esa) or the z/Architecture mode (zarch).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2748,7 +2708,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "By default, x86 GAS replaces multiple  nop  instructions  used  for alignment  within  code  sections  with multi-byte nop instructions such as leal 0(%esi,1),%esi.  This switch disables the optimization if a single byte nop (0x90) is explicitly  specified  as  the  fill byte for alignment.",
+      "description": "By default, x86 GAS replaces multiple nop instructions used for alignment within code sections with multi-byte nop instructions such  as leal  0(%esi,1),%esi.   This  switch  disables the optimization if a single byte nop (0x90) is explicitly specified as the fill byte for alignment.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2768,7 +2728,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It is accepted for compatibility with  the native tools.",
+      "description": "It is accepted for compatibility with the native tools.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2776,9 +2736,9 @@
     {
       "short": "-nops",
       "long": null,
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "an  alignment  directive  inserts  more  than count nops, put a branch at the beginning to skip execution of the nops.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2788,7 +2748,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "or  disables  the optimization of procedure calls, both at assemblage and at link time.  These options are only available  for VMS  targets  and  \"-replace\" is the default.  See section 1.4.1 of the OpenVMS Linker Utility Manual.",
+      "description": "or disables the optimization of procedure calls, both at assemblage and at link time.  These options are only available for VMS targets and \"-replace\" is the default.  See section 1.4.1 of the OpenVMS Linker Utility Manual.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2838,7 +2798,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "file, instead  of saving space and resolving some relocations at assembly time.   Note  that  this  option  does  not  propagate  all  symbol arithmetic  into the object file, because not all symbol arithmetic can be represented.  However, the option can  still  be  useful  in specific applications.",
+      "description": "option  forces  all relocations to be put into the object file, instead of saving space and resolving some relocations at assembly time.  Note that this option does not propagate all symbol arithmetic into the object file, because not all  symbol  arithmetic  can  be represented.  However, the option can still be useful in specific applications.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2934,16 +2894,16 @@
   ],
   "positional": [
     {
-      "name": "BPF",
-      "value_type": "String",
+      "name": "dir",
+      "value_type": "Directory",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "target-options",
-      "value_type": "String",
-      "required": false,
+      "name": "objfile",
+      "value_type": "File",
+      "required": true,
       "multiple": false,
       "description": null
     }

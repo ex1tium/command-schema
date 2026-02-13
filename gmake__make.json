@@ -26,9 +26,9 @@
     {
       "short": null,
       "long": "--debug",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "debugging information in addition to normal processing.  If the FLAGS are omitted, then the behavior is the same as if -d  was specified.  FLAGS may be a for all debugging output (same as using",
+      "description": "If the FLAGS are omitted, then the behavior is the same  as  if  -d  was specified.   FLAGS  may  be a for all debugging output (same as using -d), b for basic debugging, v for more verbose basic debugging, i for showing implicit rules, j for details on invocation of commands, and m for debugging while remaking makefiles.  Use  n  to  disable all previous debugging flags.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--directory",
       "value_type": "String",
       "takes_value": true,
-      "description": "If multiple -C options are specified, each is  inter‐ preted  relative to the previous one: -C / -C etc is equivalent to",
+      "description": "If multiple -C options are specified, each is interpreted relative to the previous one: -C / -C etc is equivalent to -C /etc.  This is typically used with recursive invocations of make.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--environment-overrides",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "precedence  over  vari‐ ables from makefiles.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--include-dir",
       "value_type": "File",
       "takes_value": true,
-      "description": "a  directory  dir to search for included makefiles.  If several -I options are used to specify  several  directories,  the directories are searched in the order specified.  Unlike the argu‐ ments  to other flags of make, directories given with -I flags may come directly after the flag: -Idir is allowed, as well as -I dir. This syntax is allowed for compatibility with the C preprocessor's",
+      "description": "a directory dir to search for included makefiles.  If several -I options are used to specify several directories, the direc‐ tories are searched in the order specified.  Unlike the arguments to other flags of make, directories given with -I flags may come  di‐ rectly  after  the  flag:  -Idir  is allowed, as well as -I dir.  This syntax is allowed for compatibility with the C preprocessor's -I flag.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--jobs",
       "value_type": "Number",
       "takes_value": true,
-      "description": "If there is more than one -j option, the last one is  effective.   If the  -j  option  is given without an argument, make will not limit the number of jobs that can run simultaneously. When make  invokes a sub-make, all instances of make will coordinate to run the spec‐ ified  number of jobs at a time; see the section PARALLEL MAKE AND THE JOBSERVER for details.",
+      "description": "invokes a sub- make, all instances of make will coordinate to run the specified number of jobs at a time; see the section PARALLEL MAKE AND THE JOB‐ SERVER for details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -106,9 +106,9 @@
     {
       "short": null,
       "long": "--jobserver-fds",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  jobserver  pipe  read  and write file descriptor numbers to sub-makes; see the section PARAL‐ LEL MAKE AND THE JOBSERVER for details",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--keep-going",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "as  much  as  possible after an error.  While the target that failed, and those that depend on it, cannot  be  remade,  the other dependencies of these targets can be processed all the same.",
+      "description": "While the target that failed, and those that depend on it, cannot be  remade,  the  other dependencies of these targets can be processed all the same.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--load-average",
       "value_type": "Number",
       "takes_value": true,
-      "description": "that  no new jobs (commands) should be started if there are others jobs running and the load average is at least  load  (a floating-point number).  With no argument, removes a previous load limit.",
+      "description": "that  no  new  jobs  (commands)  should be started if there are others jobs running and the load average is at least load (a floating-point number).  With no argument, removes a previous load limit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--no-builtin-rules",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "use of the built-in implicit rules.  Also clear out the default list of suffixes for suffix rules.",
+      "description": "Also clear out the default list of suffixes for suffix rules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--no-keep-going",
       "value_type": "String",
       "takes_value": true,
-      "description": "This is never  necessary  ex‐ cept in a recursive make where -k might be inherited from the top- level make via MAKEFLAGS or if you set -k in MAKEFLAGS in your en‐ vironment.",
+      "description": "This is never necessary except in a recursive make where -k might be inherited from the  top-level make via MAKEFLAGS or if you set -k in MAKEFLAGS in your environment.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--no-print-directory",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a message containing the working directory before and after other processing. This may be useful for tracking down errors from complicated nests of recursive make commands.",
+      "description": "This may be useful for tracking down errors from complicated nests of recursive make commands.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--old-file",
       "value_type": "File",
       "takes_value": true,
-      "description": "and  do  not remake anything on account of changes in file. Essentially the file is treated as very old and its rules are  ig‐ nored.",
+      "description": "file.   Es‐ sentially the file is treated as very old and its rules are ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--output-sync",
       "value_type": "String",
       "takes_value": true,
-      "description": "running multiple jobs in parallel with -j, ensure the output of each job is collected together rather  than  interspersed  with output from other jobs.  If type is not specified or is target the output from the entire recipe for each target is grouped together. If  type is line the output from each command line within a recipe is grouped together.  If type is recurse output from an entire re‐ cursive make is grouped together.  If type is none output synchro‐ nization is disabled.",
+      "description": "running multiple jobs in parallel with -j, ensure the output of each job is collected together rather than interspersed with out‐ put from other jobs.  If type is not specified or is target the output from the entire recipe for each target is grouped together.   If type is line the output from each command line within a recipe is grouped together.  If type is recurse output from an entire recursive make is grouped together.  If type is none output synchronization is disabled.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--print-data-base",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "from reading the makefiles; then execute as usual or as otherwise spec‐ ified.   This  also prints the version information given by the -v switch (see below).  To print the data base without trying to  re‐ make any files, use make -p -f/dev/null.",
+      "description": "the  data base (rules and variable values) that results from reading the makefiles; then execute as usual or as otherwise speci‐ fied.  This also prints the version information given by the -v switch (see below).  To print the data base without  trying  to  remake any files, use make -p -f/dev/null.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--question",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "mode''.   Do  not run any commands, or print anything; just return an exit status that is zero if the  specified  targets are already up to date, nonzero otherwise.",
+      "description": "mode''.   Do  not run any commands, or print anything; just return an exit status that is zero if the specified targets are already up to date, nonzero otherwise.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--touch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "files  (mark  them up to date without really changing them) instead of running their commands.  This is used to  pretend  that the  commands  were  done,  in order to fool future invocations of make.",
+      "description": "files  (mark  them up to date without really changing them) instead of running their commands.  This is used to pretend that the commands were done, in order to fool future invocations of make.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--trace",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "printed  (why the  target  is being rebuilt and what commands are run to rebuild it).",
+      "description": "Print tracing information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--version",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "of authors and a notice that there is no warranty.",
+      "description": "Print the version number of make and exit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--what-if",
       "value_type": "File",
       "takes_value": true,
-      "description": "that  the  target file has just been modified.  When used with the -n flag, this shows you what would happen if you were  to modify  that file.  Without -n, it is almost the same as running a touch command on the given file before running make,  except  that the modification time is changed only in the imagination of make.",
+      "description": "that the target file has just been modified.  When used with the -n flag, this shows you what would happen if you were to mod‐ ify that file.  Without -n, it is almost the same as running a touch command on the given file before running  make,  except  that  the modification time is changed only in the imagination of make.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,70 +318,13 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Print debugging information in addition to normal processing.  The debugging  information  says  which files are being considered for remaking, which file-times are being compared and  with  what  re‐ sults,  which  files  actually  need  to be remade, which implicit rules are considered and which are applied---everything  interest‐ ing about how make decides what to do.",
+      "description": "Print debugging information in addition to normal processing.  The debugging information says which files are being considered for  re‐ making,  which  file-times  are  being compared and with what results, which files actually need to be remade, which implicit rules are considered and which are applied---everything interesting about how make decides what to do.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
-  "subcommands": [
-    {
-      "name": "files",
-      "description": "to decide which of the files need to be updated. For each of those files, it issues the commands recorded in the makefile.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "make",
-      "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "makefile",
-      "description": "and Makefile, in that order.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "most",
-      "description": "makefiles. You should use this name if you have a makefile that",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "names",
-      "description": "where name is typically a program. If no -f option is present,",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "ning",
-      "description": "of a directory listing, right near other important files such as",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "suffices",
-      "description": "to perform all necessary recompilations. The make program",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    }
-  ],
+  "subcommands": [],
   "positional": [
     {
       "name": "target",
@@ -392,6 +335,6 @@
     }
   ],
   "source": "Merged",
-  "confidence": 1.0,
+  "confidence": 0.9,
   "version": null
 }

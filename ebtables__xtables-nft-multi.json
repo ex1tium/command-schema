@@ -16,8 +16,8 @@
     {
       "short": null,
       "long": "--Lmac2",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -258,7 +258,7 @@
       "long": "--table",
       "value_type": "String",
       "takes_value": true,
-      "description": "is the default table and contains three built-in chains: INPUT (for frames destined for the bridge itself, on  the  level of  the  MAC destination address), OUTPUT (for locally-generated or (b)routed frames) and FORWARD (for frames being forwarded  by the bridge). nat  is  mostly  used  to  change the mac addresses and contains three built-in chains: PREROUTING (for altering frames  as  soon as  they  come  in),  OUTPUT  (for altering locally generated or (b)routed frames before they are bridged) and  POSTROUTING  (for altering  frames  as  they are about to go out). A small note on the naming of chains PREROUTING and  POSTROUTING:  it  would  be more accurate to call them PREFORWARDING and POSTFORWARDING, but for all those who come from the iptables world to ebtables it is easier to have the same names. Note that you can change the name (-E) if you don't like the default. broute  is  used  to  make a brouter, it has one built-in chain: BROUTING.  The targets DROP and ACCEPT have a special meaning in the broute table (these names are used for compatibility reasons with ebtables-legacy).  DROP actually means the frame has to  be routed,  while  ACCEPT  means  the  frame has to be bridged. The BROUTING chain is traversed very early.  Normally  those  frames would be bridged, but you can decide otherwise here.",
+      "description": "is  mostly  used to change the mac addresses and contains three built-in chains: PREROUTING (for altering frames as soon as they come in), OUTPUT (for altering locally generated or (b)routed frames before they are bridged) and POSTROUTING (for altering frames as they are about to go out). A small note on the naming of chains PREROUTING and POSTROUTING: it would be more accurate  to  call  them PREFORWARDING and POSTFORWARDING, but for all those who come from the iptables world to ebtables it is easier to have the same names. Note that you can change the name (-E) if you don't like the default. broute  is  used  to  make a brouter, it has one built-in chain: BROUTING.  The targets DROP and ACCEPT have a special meaning in the broute table (these names are used for compatibility reasons with ebtables-legacy).  DROP actually means the frame has to be  routed, while  ACCEPT means the frame has to be bridged. The BROUTING chain is traversed very early.  Normally those frames would be bridged, but you can decide otherwise here.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -406,8 +406,8 @@
   ],
   "subcommands": [
     {
-      "name": "Checks",
-      "description": "for  ARP  gratuitous  packets:  checks  equality of IPv4 source address and  IPv4  destination  address  inside  the  ARP header.",
+      "name": "Match",
+      "description": "a MAC address or MAC/IP address pair versus a list of MAC addresses and MAC/IP address pairs.  A list entry has the following format: xx:xx:xx:xx:xx:xx[=ip.ip.ip.ip][,]. Multiple list entries are separated by a comma, specifying an IP address corresponding to  the  MAC  ad‐ dress  is  optional.  Multiple MAC/IP address pairs with the same MAC address but different IP address (and vice versa) can be specified. If the MAC address doesn't match any entry from the list, the frame doesn't match the rule (unless \"!\" was used).",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -415,7 +415,7 @@
     },
     {
       "name": "The",
-      "description": "ebtables  command  arguments specify the actions to perform on the table defined with the -t argument.  If you do not use the -t  argument to  name a table, the commands apply to the default filter table.  Only one command may be used on the command line at a time, except when  the commands -L and -Z are combined or the commands -N and -P are combined.",
+      "description": "ebtables command arguments specify the actions to perform on the table defined with the -t argument.  If you do not use the -t argument to name a table, the commands apply to the default filter table.  Only one command may be used on the command line at a  time,  except  when the commands -L and -Z are combined or the commands -N and -P are combined.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -423,7 +423,7 @@
     },
     {
       "name": "This",
-      "description": "module  matches at a limited rate using a token bucket filter.  A rule using this extension will match until this limit is  reached.   It can  be  used with the --log watcher to give limited logging, for exam‐ ple. Its use is the same as the limit match of iptables.",
+      "description": "module matches at a limited rate using a token bucket filter.  A rule using this extension will match until this limit is reached.  It can be used with the --log watcher to give limited logging, for example. Its use is the same as the limit match of iptables.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -448,22 +448,6 @@
     {
       "name": "arpreply",
       "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "at",
-      "description": "the  same  place.  This  allows for a form of communication between ebtables and iptables.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "cide",
-      "description": "to accept the frames or not. These watchers only see the frame if the frame matches the rule, and they see it before the target  is  exe‐ cuted.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -617,7 +601,7 @@
     {
       "name": "chain",
       "value_type": "String",
-      "required": false,
+      "required": true,
       "multiple": false,
       "description": null
     },
@@ -643,7 +627,7 @@
       "description": null
     },
     {
-      "name": "sions",
+      "name": "old-chain-name",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -651,6 +635,13 @@
     },
     {
       "name": "specification",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "table",
       "value_type": "String",
       "required": true,
       "multiple": false,

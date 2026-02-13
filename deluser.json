@@ -8,7 +8,7 @@
       "long": "--backup",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  files  contained  in the userhome and the mailspool file to a file named username.tar.bz2 or username.tar.gz.  Valid Modes: deluser, deluser --system,",
+      "description": "Valid  Modes: deluser, deluser --system,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--backup-suffix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "backup.   Can be  set  to  any  suffix recognized by tar --auto-compress.  De‐ faults to .gz.  Valid Modes: deluser, deluser --system,",
+      "description": "compression  algorithm for a home directory backup.  Can be set to any suffix recognized by tar --auto-compress.  Defaults to .gz.  Valid Modes: deluser, deluser --system,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--backup-to",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dir. This  implicitly sets --backup also.  (defaulting to the current working directory).  Valid Modes: deluser, deluser --system,",
+      "description": "This implicitly sets --backup  also.   (defaulting  to  the  current working directory).  Valid Modes: deluser, deluser --system,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--conf",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  default  files  /etc/deluser.conf  and /etc/adduser.conf.  Multiple --conf options may be given.",
+      "description": "Multiple --conf options may be given.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a  group.   This is the default action if the program is invoked as delgroup.  Valid Mode: deluser.",
+      "description": "This is the default action if the program is invoked as delgroup.  Valid Mode: deluser.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--logmsglevel",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "and  the console,  respectively.   Values  are  trace, debug, info, warn, err, and fatal.  Messages with the priority set here  or  higher get  printed  to  the  respective  medium.   Messages printed to stderr are not repeated on stdout.  That allows the local  admin to  control  adduser's  chattiness on the console and in the log independently, keeping probably confusing information to  itself while still leaving helpful information in the log.",
+      "description": "Values are trace, debug, info, warn, err,  and fatal.   Messages  with the priority set here or higher get printed to the respective medium.  Messages printed to stderr are not re‐ peated on stdout.  That allows the local admin to control adduser's chattiness on the console and in the log  independently,  keeping probably confusing information to itself while still leaving helpful information in the log.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--only-if-empty",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "no  members  are  left.   Valid  Modes:  deluser",
+      "description": "Valid Modes: deluser --group, delgroup,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--remove-all-files",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  files  from  the  system owned by this user.  Note:",
+      "description": "all  files  from the system owned by this user.  Note: --remove-home does not have an effect any more.  If --backup is speci‐ fied, the files are deleted after having performed the backup.  Valid Modes: deluser, deluser --system,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--remove-home",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If --backup  is specified,  the  files  are  deleted  after having performed the backup.  Valid Modes: deluser, deluser --system,",
+      "description": "If --backup is specified, the files are deleted after having performed  the backup.  Valid Modes: deluser, deluser --system,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "If  the  user does  not  exist,  no  error  value  is  returned.  Valid Modes: deluser, deluser --system,",
+      "description": "delete  if  user/group  is a system user/group.  If the user does not exist, no error value is returned.  Valid Modes: deluser, deluser --system,",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -176,6 +176,27 @@
   ],
   "subcommands": [],
   "positional": [
+    {
+      "name": "dir",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "prio",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "str",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "user",
       "value_type": "String",

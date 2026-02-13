@@ -8,7 +8,7 @@
       "long": "--absolute-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  rela‐ tive paths.  The flag can be overridden with '--relative-path'.",
+      "description": "The flag can be overridden with '--relative-path'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--and",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "which  must  be matched. Multiple additional patterns can be specified. The pat‐ terns    are    regular    expressions,   unless   '--glob'   or '--fixed-strings' is used.",
+      "description": "additional  required  search patterns, all of which must be matched. Multiple additional patterns can be specified. The patterns are regular expressions, unless '--glob' or '--fixed-strings' is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--case-sensitive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "searches, unless the pattern contains an uppercase char‐ acter (smart case).",
+      "description": "an  uppercase  character (smart case).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--exact-depth",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "show  search  results at the exact given depth. This is an alias for '--min-depth <depth> --max-depth <depth>'.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--fixed-strings",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "regular  ex‐ pression.  Note that this also performs substring comparison. If you want to match on an exact filename, consider using '--glob'.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--follow",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "default, fd does not descend into symlinked directories. Us‐ ing this flag, symbolic links are also traversed. The  flag  can be overridden with '--no-follow'.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--full-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(or  directory  name).  Using  this  flag,  the pattern is matched against the full path.",
+      "description": "default,  the  search  pattern  is only matched against the filename (or directory name). Using this flag, the pattern is matched against the full path.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--glob",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "instead  of  a  regular  expression search.   If combined with the '--full-path' option, '**' can be used to match multiple path components.",
+      "description": "If combined with the '--full-path' option, '**' can be  used  to match multiple path components.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--hidden",
       "value_type": "String",
       "takes_value": true,
-      "description": "(de‐ fault:  hidden  files and directories are skipped). The flag can be overridden with '--no-hidden'.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--ignore-case",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "case-in‐ sensitive  searches,  unless  the  pattern contains an uppercase character (smart case).",
+      "description": "a case-insensitive search. By default, fd uses case-insensitive searches, unless the pattern contains an uppercase character (smart case).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--list-details",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "for  '--exec-batch  ls  -l' with some additional 'ls' op‐ tions. This can be used to see more metadata,  to  show  symlink targets and to achieve a deterministic sort order.",
+      "description": "additional  'ls'  options. This can be used to see more metadata, to show symlink targets and to achieve a deterministic sort order.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--max-depth",
       "value_type": "String",
       "takes_value": true,
-      "description": "directory  traversal to at most d levels of depth. By de‐ fault, there is no limit on the search depth.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--max-results",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  number of search results to 'count' and quit immedi‐ ately.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--min-depth",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "also: '--max-depth' and '--exact-depth'.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -316,9 +316,9 @@
     {
       "short": null,
       "long": "--no-ignore-vcs",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "value_type": "File",
+      "takes_value": true,
+      "description": "and the global gitignore configuration (core.excludesFile git setting, which defaults to $HOME/.config/git/ignore).  The pat‐ tern \".git/\" is automatically added to the list of VCS ignore rules.  The flag can be overridden with '--ignore-vcs'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": "--no-require-git",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  require  a git repository to respect gitignores. By de‐ fault, fd will only respect global gitignore  rules,  .gitignore rules and local exclude rules if fd detects that you are search‐ ing  inside a git repository. This flag allows you to relax this restriction such that fd will respect  all  git  related  ignore rules regardless of whether you’re searching in a git repository or not. The flag can be overridden with '--require-git'.",
+      "description": "and local exclude rules if fd detects that you are searching inside a git repository. This flag allows you to relax this restriction such that  fd will respect all git related ignore rules regardless of whether you’re searching in a git repository or not. The flag can be overridden with '--require-git'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--one-file-system",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "default,  fd  will  traverse  the file system tree as far as other options dictate. With this flag, fd ensures that  it  does not descend into a different file system than the one it started in. Comparable to the -mount or -xdev filters of find(1).",
+      "description": "default,  fd  will traverse the file system tree as far as other options dictate. With this flag, fd ensures that it does not de‐ scend into a different file system than the one it started in. Comparable to the -mount or -xdev filters of find(1).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": "--print0",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "of  new‐ lines). Useful for piping results to xargs.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,7 +398,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  flag  is present, the program does not print anything and will instead exit with a code of 0 if there is at least  one search  result.   Otherwise,  the  exit code will be 1.  This is mainly for usage in scripts and can be faster than checking  for output  because  the search can be stopped early after the first match.  --has-results can be used as an alias.",
+      "description": "search result.   Otherwise, the exit code will be 1.  This is mainly for usage in scripts and can be faster than checking for output because the search can be stopped early after the first match.  --has-results can be used as an alias.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -428,7 +428,7 @@
       "long": "--show-errors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "such  as insufficient permissions or dead symlinks.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +448,7 @@
       "long": "--strip-cwd-prefix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "default, relative paths are prefixed with './' when the out‐ put goes to a non interactive terminal (TTY). Use this  flag  to disable this behaviour.",
+      "description": "disable this behaviour.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -478,7 +478,7 @@
       "long": "--unrestricted",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "an  unrestricted  search,  including ignored and hidden files. This is an alias for '--hidden --no-ignore'.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -498,7 +498,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Limit the search to a single result and quit  immediately.  This is an alias for '--max-results=1'.",
+      "description": "Limit the search to a single result and quit immediately. This is an alias for '--max-results=1'.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -507,9 +507,51 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "depth",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "exclude",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ext",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "filetype",
+      "value_type": "File",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "num",
+      "value_type": "Number",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "pattern",
       "value_type": "String",
       "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "when",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }

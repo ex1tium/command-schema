@@ -8,7 +8,7 @@
       "long": "--add-signature",
       "value_type": "String",
       "takes_value": true,
-      "description": "a  U+FEFF  Unicode  signature character (BOM) if the output charset supports it and does not add one anyway.",
+      "description": "add a U+FEFF Unicode signature character (BOM)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--block-size",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "block size is 4096.",
+      "description": "read size bytes blocks (default: 4096)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,17 +28,17 @@
       "long": "--callback",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  original  encoding  and  characters  that  cannot  be transcoded to the destination encoding.  See  section  CALLBACKS for details on valid callbacks.",
+      "description": "callback to handle both characters that cannot be transcoded from the original encoding and characters that cannot be transcoded to the destination encoding. See section CALLBACKS for details on valid callbacks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-l",
+      "short": null,
       "long": "--canon",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "produced  in  a  format compatible with convrtrs.txt(5).  If used with -L, --list-transliterators, print only one transliter‐ ator name per line.",
+      "description": "used  with  -l, --list or --default-code, the list of encodings is produced in a format compatible with convrtrs.txt(5).  If used with -L, --list-transliterators, print only one transliterator name per line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--fallback",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  fallback  mapping when transcoding from Unicode to the destination encoding.",
+      "description": "use fallback mapping",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--from-callback",
       "value_type": "String",
       "takes_value": true,
-      "description": "original  encoding.  See  section  CALLBACKS for details on valid callbacks.",
+      "description": "details  on  valid callbacks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -89,6 +89,16 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-l",
+      "long": "--list",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "list all available encodings",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +168,7 @@
       "long": "--to-callback",
       "value_type": "String",
       "takes_value": true,
-      "description": "transcoded  to the  destination  encoding. See section CALLBACKS for details on valid callbacks.",
+      "description": "callback  to handle characters that cannot be transcoded to the destination encoding. See section CALLBACKS for details on valid callbacks.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +218,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Omit invalid characters from the output.  Same as  --to-callback skip.",
+      "description": "Omit invalid characters from the output.  Same as --to-callback skip.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +228,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Ignore invalid sequences in the input.  Same as  --from-callback skip.",
+      "description": "Ignore invalid sequences in the input.  Same as --from-callback skip.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,15 +238,51 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "transcoded  Unicode  data, and  use the transliterated data as input for the transcoding to the destination encoding.",
+      "description": "the  transcoding  to  the destination encoding.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     }
   ],
   "subcommands": [],
-  "positional": [],
+  "positional": [
+    {
+      "name": "code",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "encoding",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "transliteration",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "ture",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    }
+  ],
   "source": "Merged",
-  "confidence": 0.8,
+  "confidence": 0.9,
   "version": "74.2"
 }

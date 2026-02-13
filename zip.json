@@ -6,9 +6,9 @@
     {
       "short": null,
       "long": "--DOS-names",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "paths  to  conform  to  MSDOS, store  only  the  MSDOS attribute (just the user write attribute from Unix), and mark the entry as made under MSDOS (even  though it  was  not);  for compatibility with PKUNZIP under MSDOS which cannot handle certain names such as those with two dots.",
+      "description": "mark the entry as made under MSDOS (even though it was not); for compatibility with PKUNZIP under MSDOS which cannot handle cer‐ tain names such as those with two dots.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--Q-flag",
       "value_type": "File",
       "takes_value": true,
-      "description": "store information about the file in the file header with n defined as bit  0: Don't add headers for any file bit  1: Add headers for all files bit  2: Don't wait for interactive key press on exit",
+      "description": "0: Don't add headers for any file bit  1: Add headers for all files bit  2: Don't wait for interactive key press on exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--VMS-dot-versions",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  name,  in‐ cluding  multiple versions of files, using the .nnn format.  De‐ fault is to use only the most  recent  version  of  a  specified file.",
+      "description": "Default is to use only the most recent version of a specified file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--VMS-portable",
       "value_type": "File",
       "takes_value": true,
-      "description": "Save VMS file attributes.  (Files are  truncated at EOF.) When a -V archive is unpacked on a non-VMS  system,   some  file types  (notably  Stream_LF  text  files   and  pure binary files like fixed-512) should be extracted intact.  Indexed  files  and file  types  with embedded record sizes (notably variable-length record types) will probably be seen as corrupt elsewhere.",
+      "description": "(Files are  truncated at EOF.)   When a -V archive is unpacked on a non-VMS system,  some file types (notably Stream_LF text files  and  pure binary files  like fixed-512) should be extracted intact.  Indexed files and file types with embedded record sizes (notably variable-length record types) will probably be seen as corrupt elsewhere.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--VMS-specific",
       "value_type": "File",
       "takes_value": true,
-      "description": "all allocated blocks  in  a file,   including  any  data beyond EOF.  Useful for moving ill- formed files  among  VMS systems.   When a -VV  archive  is  un‐ packed  on  a  non-VMS system, almost all files will appear cor‐ rupt.",
+      "description": "Save VMS file attributes, and  all allocated blocks in a file,  including  any  data beyond EOF.  Useful for moving ill-formed files  among  VMS systems.   When a -VV archive is unpacked on a non-VMS system, almost all files will appear corrupt.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--VMS-versions",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  name,  in‐ cluding  multiple versions of files.  Default is to use only the most recent version of a specified file.",
+      "description": "Default is to use only the most  re‐ cent version of a specified file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--absolute-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "will  be  stored.  By  default the relative path will be stored.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--adjust-sfx",
       "value_type": "Number",
       "takes_value": true,
-      "description": "self-extracting  executable  archive.  A self-extracting executable archive is created by prepending the SFX stub  to  an existing  archive.  The  -A option tells zip to adjust the entry offsets stored in the archive to take into account this  \"pream‐ ble\" data.",
+      "description": "A self-extracting executable archive is created by prepending the SFX stub to an existing archive. The -A option tells zip to adjust the entry offsets stored in the archive to take into account this \"preamble\" data.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--archive-clear",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Once archive is created (and  tested  if  -T  is  used, which   is   recommended),  clear  the  archive  bits  of  files processed.  WARNING: Once the bits are cleared they are cleared. You may want to use the -sf show files option to store the  list of  files  processed  in  case the archive operation must be re‐ peated.  Also consider using the -MM must match option.  Be sure to check out -DF as a possibly  better  way  to  do  incremental backups.",
+      "description": "Once archive is created (and tested if -T is used, which is recommended), clear the archive bits of files processed.  WARN‐ ING: Once the bits are cleared they are cleared.  You may want to use the -sf show files option to store the list of files  processed in case the archive operation must be repeated.  Also consider using the -MM must match option.  Be sure to check out -DF as a possi‐ bly better way to do incremental backups.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--archive-comment",
       "value_type": "File",
       "takes_value": true,
-      "description": "The comment is ended by a line containing just a period, or  an  end of file condition (^D on Unix, ^Z on MSDOS, OS/2, and VMS).  The comment can be taken from a file:",
+      "description": "The comment is ended by a line containing just a period, or  an  end  of file condition (^D on Unix, ^Z on MSDOS, OS/2, and VMS).  The comment can be taken from a file:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--archive-set",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only include files that have the archive bit set.  Di‐ rectories are not stored when -AS is used, though by default the paths of entries, including directories, are stored as usual and can be used by most unzips to recreate directories.",
+      "description": "Only include files that have the archive bit set.  Directories are not stored when -AS is used, though by default the paths of entries, including directories, are stored as usual and can be used by most unzips to recreate directories.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -126,9 +126,9 @@
     {
       "short": null,
       "long": "--before-date",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "mm  is  the  month  (00-12),  dd  is the day of the month (01-31), and  yyyy  is  the  year.   The  ISO 8601  date  format yyyy-mm-dd is also accepted.  For example:",
+      "description": "not  operate on files modified after or at the specified date, where mm is the month (00-12), dd is the day of the month (01-31), and yyyy is the year.  The ISO 8601 date format yyyy-mm-dd is also accepted.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--compression-method",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the default compression method.  Currently the main methods supported by zip are store and deflate.  Compression method  can be set to:",
+      "description": "the  default  compression method.  Currently the main methods supported by zip are store and deflate.  Compression method can be set to:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--copy-entries",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "entries  from  one archive to another.  Requires the --out option to  specify  a  different  output  file  than  the  input archive.  Copy mode is the reverse of -d delete.  When delete is being used with --out, the selected entries are deleted from the archive  and  all  other  entries are copied to the new archive, while copy mode selects the files to include in the new archive. Unlike -u update, input patterns on the command line are matched against archive entries only and not the file system files.  For instance,",
+      "description": "Requires the --out option to specify a different output file than the input archive.  Copy mode  is  the  reverse of -d delete.  When delete is being used with --out, the selected entries are deleted from the archive and all other entries are copied to the new archive, while copy mode selects the files to include in the new archive.  Unlike -u update,  in‐ put patterns on the command line are matched against archive entries only and not the file system files.  For instance,",
       "multiple": false,
       "conflicts_with": [],
       "requires": [
@@ -171,7 +171,7 @@
       "long": "--datafork",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "for  exporting  files  to  foreign operating-systems.  Re‐ source-forks will be ignored at all.",
+      "description": "Include  only data-fork of files zipped into the archive.  Good for exporting files to foreign operating-systems.  Resource- forks will be ignored at all.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -191,7 +191,7 @@
       "long": "--difference-archive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "since the  original  archive was created.  For this to work, the input file list and current directory must be the same as  during  the original zip operation.",
+      "description": "For this to work, the  input  file list and current directory must be the same as during the original zip operation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -201,7 +201,7 @@
       "long": "--display-bytes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "running  byte  counts  showing the bytes zipped and the bytes to go.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -221,7 +221,7 @@
       "long": "--display-dots",
       "value_type": "File",
       "takes_value": true,
-      "description": "on  ports  that have  their  own progress indicator).  See -ds below for setting dot size.  The default is a  dot  every  10  MB  of  input  file processed.   The  -v  option also displays dots (previously at a much higher rate than this but now -v also defaults  to  10  MB) and this rate is also controlled by -ds.",
+      "description": "dots  while  each  entry  is zipped (except on ports that have their own progress indicator).  See -ds below for setting dot size.  The default is a dot every 10 MB of input file processed.  The -v option also displays dots (previously at a much higher  rate than this but now -v also defaults to 10 MB) and this rate is also controlled by -ds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -231,7 +231,7 @@
       "long": "--display-globaldots",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "file. The command",
+      "description": "The command",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -251,7 +251,7 @@
       "long": "--display-volume",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the volume (disk) number each entry is being read from, if reading an existing archive, and being written to.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -259,9 +259,9 @@
     {
       "short": null,
       "long": "--dot-size",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "amount of input file processed for each dot displayed.  See",
+      "value_type": "Number",
+      "takes_value": true,
+      "description": "See -dd to enable displaying dots.   Setting  this  option  implies  -dd. Size is in the format nm where n is a number and m is a multiplier.  Currently m can be k (KB), m (MB), g (GB), or t (TB), so if n is 100 and m is k, size would be 100k which is 100 KB.  The default is 10 MB.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -271,7 +271,7 @@
       "long": "--encrypt",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "password  which is  entered  on  the terminal in response to a prompt (this will not be echoed; if standard error is not a  tty,  zip  will  exit with  an  error).   The  password prompt is repeated to save the user from typing errors.",
+      "description": "not  be echoed;  if  standard error is not a tty, zip will exit with an error).  The password prompt is repeated to save the user from typing errors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -281,7 +281,7 @@
       "long": "--entry-comments",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "File  operations  (adding, updating)  are  done  first, and the user is then prompted for a one-line comment for each file.  Enter the comment  followed  by return, or just return for no comment.",
+      "description": "File operations (adding, updating) are done first, and the user is then prompted for a one-line comment for each file.  Enter the comment followed by return, or just return for no comment.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -301,7 +301,7 @@
       "long": "--fifo",
       "value_type": "Number",
       "takes_value": true,
-      "description": "Normally zip skips reading any FIFOs (named  pipes)  en‐ countered,  as  zip can hang if the FIFO is not being fed.  This option tells zip to read the contents of any FIFO it finds.",
+      "description": "Normally  zip  skips reading any FIFOs (named pipes) encountered, as zip can hang if the FIFO is not being fed.  This option tells zip to read the contents of any FIFO it finds.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -311,7 +311,7 @@
       "long": "--filesync",
       "value_type": "File",
       "takes_value": true,
-      "description": "files  are  added  and changed  files are updated but files that no longer exist on the OS are not deleted from the archive.  This option enables a  new mode that checks entries in the archive against the file system. If  the file time and file size of the entry matches that of the OS file, the entry is copied from the old archive instead of be‐ ing read from the file system and compressed.  If  the  OS  file has  changed, the entry is read and compressed as usual.  If the entry in the archive does not match a file on the OS, the  entry is  deleted.   Enabling  this option should create archives that are the same as new archives, but  since  existing  entries  are copied  instead of compressed, updating an existing archive with",
+      "description": "Normally when an archive  is  updated,  new  files  are  added  and changed  files are updated but files that no longer exist on the OS are not deleted from the archive.  This option enables a new mode that checks entries in the archive against the file system.  If the file time and file size of the entry matches that of the OS file, the entry is copied from the old archive instead of being read from the file system and compressed.  If the OS file has changed,  the entry  is read and compressed as usual.  If the entry in the archive does not match a file on the OS, the entry is deleted.  Enabling this option should create archives that are the same as new archives, but since existing entries are copied  instead  of  compressed, updating  an  existing  archive  with  -FS  can  be  much faster than creating a new archive.  Also consider using -u for updating an archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -331,7 +331,7 @@
       "long": "--fixfix",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the zip archive. The -F option can be used if some portions of the archive are missing, but  requires  a  reasonably  intact central  directory.   The input archive is scanned as usual, but zip will ignore some problems.  The resulting archive should  be valid, but any inconsistent entries will be left out.",
+      "description": "the zip archive. The -F option can be used if some portions of the archive are missing, but requires a reasonably intact central directory.  The input archive is scanned as usual, but zip will ignore some problems.  The resulting archive should be valid, but any inconsistent entries will be left out.",
       "multiple": false,
       "conflicts_with": [],
       "requires": [
@@ -339,11 +339,11 @@
       ]
     },
     {
-      "short": null,
+      "short": "-u",
       "long": "--freshen",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "(freshen)  an existing entry in the zip archive only if it has been modified more recently than the version  already  in the zip archive; unlike the update option (-u) this will not add files that are not already in the zip archive.  For example:",
+      "description": "For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -353,7 +353,7 @@
       "long": "--from-crlf",
       "value_type": "File",
       "takes_value": true,
-      "description": "This option should not be used on binary files.  This option can be used  on MSDOS  if the zip file is intended for unzip under Unix.  If the file is converted and the file is later determined to be  binary a warning is issued and the file is probably corrupted.  In this release  if  -ll  detects binary in the first buffer read from a file, zip now issues a warning and skips line end conversion  on the  file.   This  check seems to catch all binary files tested, but the original check remains and if a converted file is  later determined to be binary that warning is still issued.  A new al‐ gorithm is now being used for binary detection that should allow line  end  conversion  of text files in UTF-8 and similar encod‐ ings.",
+      "description": "This option should not be used on binary files.  This option can be used on  MS‐ DOS if the zip file is intended for unzip under Unix.  If the file is converted and the file is later determined to be binary a warn‐ ing  is  issued  and the file is probably corrupted.  In this release if -ll detects binary in the first buffer read from a file, zip now issues a warning and skips line end conversion on the file.  This check seems to catch all binary files tested, but the  original check  remains  and  if a converted file is later determined to be binary that warning is still issued.  A new algorithm is now being used for binary detection that should allow line end conversion of text files in UTF-8 and similar encodings.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -361,9 +361,9 @@
     {
       "short": null,
       "long": "--from-date",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": "the  specified  date, where  mm  is  the  month  (00-12),  dd  is the day of the month (01-31), and  yyyy  is  the  year.   The  ISO 8601  date  format yyyy-mm-dd is also accepted.  For example:",
+      "description": "not operate on files modified prior to the specified date, where mm is the month (00-12), dd is the day of the month (01-31), and yyyy is the year.  The ISO 8601 date format yyyy-mm-dd is also accepted.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -373,7 +373,7 @@
       "long": "--grow",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "creating a  new one. If this operation fails, zip attempts to restore the archive to its original state. If  the  restoration  fails,  the archive  might  become  corrupted.  This  option is ignored when there's no existing archive or when at least one archive  member must be updated or deleted.",
+      "description": "fails,  zip  attempts  to  restore  the archive  to  its original state. If the restoration fails, the archive might become corrupted. This option is ignored when there's no existing archive or when at least one archive member must be updated or deleted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -383,7 +383,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  zip  help information (this also appears if zip is run with no arguments).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -393,7 +393,7 @@
       "long": "--ignore-case",
       "value_type": "File",
       "takes_value": true,
-      "description": "archive  entries.   This option  is  only available on systems where the case of files is ignored.  On systems with case-insensitive file systems, case is normally ignored when matching files on the file system  but  is not  ignored for -f (freshen), -d (delete), -U (copy), and simi‐ lar modes when matching against archive  entries  (currently  -f ignores case on VMS) because archive entries can be from systems where  case  does  matter and names that are the same except for case can exist in an archive.  The -ic option makes all matching case insensitive.  This can result in multiple  archive  entries matching a command line pattern.",
+      "description": "This option is only available on systems where the case of files is ignored. On systems with case-insensitive file systems, case is normally ignored when matching files on the file system but is not ignored for",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -413,7 +413,7 @@
       "long": "--junk-paths",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "just the name of a saved file (junk the path), and do not store directory names. By default, zip will store the full  path (relative to the current directory).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -433,7 +433,7 @@
       "long": "--latest-time",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "to  the  latest (oldest) \"last modified\" time found among the entries in the zip archive.   This can be used without any other operations, if de‐ sired.  For example:",
+      "description": "found  among  the  entries  in  the  zip archive.  This can be used without any other operations, if desired.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -463,7 +463,7 @@
       "long": "--log-info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "being  zipped, in  the  log.   The default is to only include the command line, any warnings and errors, and the final status.",
+      "description": "information  messages,  such  as  file names being zipped, in the log.  The default is to only include the command line, any warnings and errors, and the final status.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -473,7 +473,7 @@
       "long": "--logfile-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a logfile at the given path.  By default any existing file at that location is overwritten, but the -la option will  result in an existing file being opened and the new log information ap‐ pended  to  any  existing information.  Only warnings and errors are written to the log unless the -li option is also given, then all information messages are also written to the log.",
+      "description": "By default any existing file at that location is overwritten, but the -la option will result in an existing file being opened and the new log information appended to any existing information.  Only warnings and errors are written to the log unless the -li option is also given, then all information messages are also written to the log.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -483,7 +483,7 @@
       "long": "--longnames",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "file‐ name.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -503,7 +503,7 @@
       "long": "--more-help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  command  line  format, pattern matching, and more obscure options.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -513,7 +513,7 @@
       "long": "--move",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "archive;  actually,  this deletes  the target directories/files after making the specified zip archive. If a directory becomes empty after removal  of  the files,  the directory is also removed. No deletions are done un‐ til zip has created the archive without error.  This  is  useful for conserving disk space, but is potentially dangerous so it is recommended to use it in combination with -T to test the archive before removing all input files.",
+      "description": "making  the  specified  zip archive.  If a directory becomes empty after removal of the files, the directory is also removed. No deletions are done until zip has created the archive without error.  This is useful for conserving disk space, but is potentially dangerous so it  is  recommended  to use it in combination with -T to test the archive before removing all input files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -523,7 +523,7 @@
       "long": "--must-match",
       "value_type": "File",
       "takes_value": true,
-      "description": "input  patterns  must match at least one file and all input files found must be readable.  Normally when  an  input  pattern does  not  match a file the \"name not matched\" warning is issued and when an input file has been found but later  is  missing  or not  readable  a  missing or not readable warning is issued.  In either case zip continues creating the archive, with missing  or unreadable  new  files  being  skipped  and files already in the archive remaining unchanged.  After the archive is  created,  if any  files were not readable zip returns the OPEN error code (18 on most systems) instead of the normal success return (0 on most systems).  With -MM set, zip exits as soon as an  input  pattern is not matched (whenever the \"name not matched\" warning would be issued)  or  when an input file is not readable.  In either case zip exits with an OPEN error and no archive is created.",
+      "description": "input patterns must match at least one file and all input files found must be readable.  Normally when an input pattern does not match a file the \"name not matched\" warning is issued and when an input file has been found but later is missing or  not  readable  a missing  or  not readable warning is issued.  In either case zip continues creating the archive, with missing or unreadable new files being skipped and files already in the archive remaining unchanged.  After the archive is created, if any files were not readable zip returns the OPEN error code (18 on most systems) instead of the normal success return (0 on most systems).  With -MM set,  zip  exits as  soon  as  an  input pattern is not matched (whenever the \"name not matched\" warning would be issued) or when an input file is not readable.  In either case zip exits with an OPEN error and no archive is created.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -543,7 +543,7 @@
       "long": "--no-dir-entries",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "directories.   Di‐ rectory  entries are created by default so that their attributes can be saved in  the  zip  archive.   The  environment  variable ZIPOPT  can  be  used to change the default options. For example under Unix with sh:",
+      "description": "Directory entries are created by default so that their attributes  can  be saved in the zip archive.  The environment variable ZIPOPT can be used to change the default options. For example under Unix with sh:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -553,7 +553,7 @@
       "long": "--no-extra",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not save extra file attributes (Extended Attributes on OS/2, uid/gid and file times on Unix).   The  zip  format  uses  extra fields  to  include additional information for each entry.  Some extra fields are specific to particular systems while others are applicable to all systems.  Normally when zip reads entries from an existing archive, it reads the extra fields it knows,  strips the  rest,  and adds the extra fields applicable to that system. With -X, zip strips all old fields and only includes the Unicode and Zip64 extra fields (currently these two extra fields  cannot be disabled).",
+      "description": "The zip format uses extra fields to include  additional  information for each entry.  Some extra fields are specific to particular systems while others are applicable to all systems.  Normally when zip reads entries from an existing archive, it reads the extra fields it knows, strips the rest, and adds the extra fields applicable to that system.  With -X, zip strips all old fields and only includes the Unicode and Zip64 extra  fields (currently these two extra fields cannot be disabled).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -563,7 +563,7 @@
       "long": "--no-image",
       "value_type": "File",
       "takes_value": true,
-      "description": "RISC OS] Don't scan through Image files.  When used, zip will not consider Image  files  (eg.  DOS  partitions  or  Spark archives  when  SparkFS is loaded) as directories but will store them as single files.",
+      "description": "RISC  OS] Don't scan through Image files.  When used, zip will not consider Image files (eg. DOS partitions or Spark archives when SparkFS is loaded) as directories but will store them as single files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -573,17 +573,17 @@
       "long": "--no-wild",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is  still  done by the shell unless the arguments are escaped).  Useful if a list of paths is being read and no  wild‐ card substitution is desired.",
+      "description": "not  perform  internal wildcard processing (shell processing of wildcards is still done by the shell unless the arguments are es‐ caped).  Useful if a list of paths is being read and no wildcard substitution is desired.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-N",
       "long": "--notes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "MacOS]  Save  Amiga  or MacOS filenotes as zipfile com‐ ments. They can be restored by using the -N option of unzip.  If",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -593,7 +593,7 @@
       "long": "--output-file",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "instead  of  updating the  existing  archive,  output  the new archive to output-file. Useful for updating an archive  without  changing  the  existing archive  and the input archive must be a different file than the output archive.",
+      "description": "the  archive  changes as usual, but instead of updating the existing archive, output the new archive to output-file.  Useful for updating an archive without changing the existing archive and the input archive must be a different file than the output archive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -603,7 +603,7 @@
       "long": "--password",
       "value_type": "File",
       "takes_value": true,
-      "description": "THIS IS INSE‐ CURE!  Many multi-user operating systems provide  ways  for  any user  to see the current command line of any other user; even on stand-alone systems there is  always  the  threat  of  over-the- shoulder  peeking.   Storing the plaintext password as part of a command line in an automated script  is  even  worse.   Whenever possible, use the non-echoing, interactive prompt to enter pass‐ words.   (And  where security is truly important, use strong en‐ cryption such as Pretty Good Privacy instead of  the  relatively weak standard encryption provided by zipfile utilities.)",
+      "description": "password to encrypt zipfile entries (if any).  THIS IS INSECURE!  Many multi-user operating systems provide ways for any user to see the current command line of any other user; even on stand-alone systems there is always the threat of over-the-shoulder  peeking. Storing  the plaintext password as part of a command line in an automated script is even worse.  Whenever possible, use the non-echo‐ ing, interactive prompt to enter passwords.  (And where security is truly important, use strong encryption such as Pretty  Good  Pri‐ vacy instead of the relatively weak standard encryption provided by zipfile utilities.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -613,7 +613,7 @@
       "long": "--paths",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  archive.  This is the default.  The -j option junks the paths and just stores the names of the files.",
+      "description": "This is the default.  The -j option junks the paths and just stores the names of the files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -623,7 +623,7 @@
       "long": "--preserve-case",
       "value_type": "String",
       "takes_value": true,
-      "description": "Preserve  case  all  on VMS.  Negating this option (-C-) downcases.",
+      "description": "Preserve case all on VMS.  Negating this option (-C-) downcases.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -633,7 +633,7 @@
       "long": "--preserve-case-2",
       "value_type": "String",
       "takes_value": true,
-      "description": "Preserve case ODS2 on VMS.  Negating this  option  (-C2-) downcases.",
+      "description": "Preserve case ODS2 on VMS.  Negating this option (-C2-) downcases.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -643,7 +643,7 @@
       "long": "--preserve-case-5",
       "value_type": "String",
       "takes_value": true,
-      "description": "Preserve  case ODS5 on VMS.  Negating this option (-C5-) downcases.",
+      "description": "Preserve case ODS5 on VMS.  Negating this option (-C5-) downcases.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -653,7 +653,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "mode;   eliminate  informational  messages  and  comment prompts.  (Useful, for example, in shell scripts and  background tasks).",
+      "description": "(Useful, for example, in shell scripts and background tasks).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -673,7 +673,7 @@
       "long": "--recurse-patterns",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "cur‐ rent directory; for example:",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -683,7 +683,7 @@
       "long": "--regex",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Before zip 3.0, regular expression  list  matching  was enabled  by  default on Windows platforms.  Because of confusion resulting from the need to escape \"[\" and \"]\" in  names,  it  is now  off  by  default for Windows so \"[\" and \"]\" are just normal characters in names.  This option enables [] matching again.",
+      "description": "Before zip 3.0, regular expression list matching was enabled by default on Windows platforms.  Because of confusion  result‐ ing  from  the need to escape \"[\" and \"]\" in names, it is now off by default for Windows so \"[\" and \"]\" are just normal characters in names.  This option enables [] matching again.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -693,7 +693,7 @@
       "long": "--show-command",
       "value_type": "String",
       "takes_value": true,
-      "description": "exit.   The new  command  parser permutes the arguments, putting all options and any values associated with them before any non-option  argu‐ ments.   This allows an option to appear anywhere in the command line as long as any values that go with the option go  with  it. This  option displays the command line as zip sees it, including any arguments from the environment such as from the ZIPOPT vari‐ able.  Where allowed, options later  in  the  command  line  can override options earlier in the command line.",
+      "description": "The new command parser permutes the arguments, putting all options and any values associated with them before any non-option arguments.  This allows an option to appear anywhere in the command line as long as any values that go with the option go with it.  This option displays the command line as zip sees it, including  any  arguments  from the  environment  such as from the ZIPOPT variable.  Where allowed, options later in the command line can override options earlier in the command line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -703,7 +703,7 @@
       "long": "--show-files",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  files  that would be operated on, then exit.  For in‐ stance, if creating a new archive, this will list the files that would be added.  If the option is negated, -sf-, output only  to an  open  log file.  Screen display is not recommended for large lists.",
+      "description": "For instance, if creating a new archive, this will list the files that would be added.  If the option is negated, -sf-, output only to an open log file.  Screen display is not recommended for large lists.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -713,7 +713,7 @@
       "long": "--show-just-unicode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  path  if  exists, otherwise show the standard version of the path.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -723,7 +723,7 @@
       "long": "--show-options",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "on  the current  system.   As  this  command  reads the option table, it should include all options.  Each line includes the short option (if defined), the long option (if defined), the  format  of  any value  that  goes with the option, if the option can be negated, and a small description.  The value format can be no value,  re‐ quired  value,  optional  value,  single character value, number value, or a list of values.  The output of this  option  is  not intended  to  show  how to use any option but only show what op‐ tions are available.",
+      "description": "As this command reads the option table, it should in‐ clude all options.  Each line includes the short option (if defined), the long option (if defined), the format of any value that goes with the option, if the option can be negated, and a small description.  The value format can be no value, required  value,  optional value,  single  character value, number value, or a list of values.  The output of this option is not intended to show how to use any option but only show what options are available.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -733,7 +733,7 @@
       "long": "--split-bell",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "splitting and using split pause mode, ring the bell when zip pauses for each split destination.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -743,7 +743,7 @@
       "long": "--split-pause",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This creates split archives as -s does, but stream writing is used so each  split  can be closed as soon as it is written and zip will pause between each split to allow changing split destination  or media.",
+      "description": "This creates split archives as -s does, but stream writing is used so each split can be closed as soon as it is written and zip will pause between each split to allow changing split destination or media.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -753,7 +753,7 @@
       "long": "--split-size",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "A split archive is an archive that could be split over many  files.   As the  archive  is created, if the size of the archive reaches the specified split size, that split is closed and  the  next  split opened.   In  general  all splits but the last will be the split size and the last will be  whatever  is  left.   If  the  entire archive  is smaller than the split size a single-file archive is created.",
+      "description": "A split archive is an archive that could be split over many files.   As  the archive  is created, if the size of the archive reaches the specified split size, that split is closed and the next split opened.  In general all splits but the last will be the split size and the last will be whatever is left.  If the entire archive is smaller  than the split size a single-file archive is created.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -773,7 +773,7 @@
       "long": "--suffixes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "suffixes. Such  files are simply stored (0% compression) in the output zip file, so that zip doesn't waste  its  time  trying  to  compress them.   The  suffixes  are  separated  by either colons or semi‐ colons.  For example:",
+      "description": "Such files are simply stored (0%  compression)  in  the  output  zip file,  so  that  zip doesn't waste its time trying to compress them.  The suffixes are separated by either colons or semicolons.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -783,7 +783,7 @@
       "long": "--symlinks",
       "value_type": "File",
       "takes_value": true,
-      "description": "such in  the zip archive, instead of compressing and storing the file referred to by the link.  This  can  avoid  multiple  copies  of files  being  included in the archive as zip recurses the direc‐ tory trees and accesses files directly and by links.",
+      "description": "UNIX  and VMS (V8.3 and later), store symbolic links as such in the zip archive, instead of compressing and storing the file re‐ ferred to by the link.  This can avoid multiple copies of files being included in the archive as zip recurses the directory trees and accesses files directly and by links.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -791,9 +791,9 @@
     {
       "short": null,
       "long": "--system-hidden",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "Includes finder invisible files, which are ignored oth‐ erwise.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -803,17 +803,17 @@
       "long": "--temp-path",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "exam‐ ple:",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-m",
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the integrity of the new zip file. If the check fails, the old zip file is unchanged and (with  the  -m  option)  no  input files are removed.",
+      "description": "move into zipfile (delete OS files)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -823,7 +823,7 @@
       "long": "--to-crlf",
       "value_type": "File",
       "takes_value": true,
-      "description": "con‐ vention  CR  LF. This option should not be used on binary files. This option can be used on Unix if the zip file is intended  for PKUNZIP  under  MSDOS. If the input files already contain CR LF, this option adds an extra CR. This is to ensure that unzip -a on Unix will get back an exact copy of the original file,  to  undo the effect of zip -l.  See -ll for how binary files are handled.",
+      "description": "binary  files.   This option can be used on Unix if the zip file is intended for PKUNZIP under MSDOS. If the input files already contain CR LF, this option adds an extra CR. This is to ensure that unzip -a on Unix will get back an exact copy of the original file, to undo the effect of zip",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -833,17 +833,17 @@
       "long": "--unicode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "zip 3.0, in  addition  to  the standard file path, now includes the UTF-8 translation of the path if the entry path is not entirely  7-bit ASCII.   When  an entry is missing the Unicode path, zip reverts back to the standard file path.   The  problem  with  using  the standard  path is this path is in the local character set of the zip that created the entry, which may  contain  characters  that are  not  valid  in  the  character set being used by the unzip. When zip is reading an archive, if an entry also has  a  Unicode path, zip now defaults to using the Unicode path to recreate the standard path using the current local character set.",
+      "description": "what zip should do with Unicode file names.  zip 3.0, in addition to the standard file path, now includes the UTF-8 trans‐ lation of the path if the entry path is not entirely 7-bit ASCII.  When an entry is missing the Unicode path, zip reverts back to the standard file path.  The problem with using the standard path is this path is in the local character set of the zip that created  the entry, which may contain characters that are not valid in the character set being used by the unzip.  When zip is reading an archive, if an entry also has a Unicode path, zip now defaults to using the Unicode path to recreate the standard path using the current local character set.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-tqq",
       "long": "--unzip-command",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "command cmd instead of 'unzip -tqq' to test an archive when the -T option is used.  On Unix, to use a copy of unzip  in  the current  directory  instead  of the standard system unzip, could use:",
+      "description": "On Unix, to use a copy of unzip in  the  cur‐ rent directory instead of the standard system unzip, could use:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -853,7 +853,7 @@
       "long": "--update",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the zip archive.  For example:",
+      "description": "(update) an existing entry in the zip archive only if it has been modified more recently than the version already in the zip archive.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -863,7 +863,7 @@
       "long": "--use-privileges",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Use  privileges  (if  granted) to obtain all aspects of WinNT security.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -883,7 +883,7 @@
       "long": "--volume-label",
       "value_type": "File",
       "takes_value": true,
-      "description": "volume  label  for  the  drive holding the first file to be compressed.  If you want to include only  the  volume  label  or  to force a specific drive, use the drive name as first file name, as in:",
+      "description": "If you want to include only the volume label or to force a specific drive, use the drive name as first file name, as in:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -903,7 +903,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  speed of compression using the specified digit #, where -0 indicates no compression (store all  files),  -1  indi‐ cates  the  fastest  compression speed (less compression) and -9 indicates the slowest compression  speed  (optimal  compression, ignores the suffix list). The default compression level is -6.",
+      "description": "the fastest  compression speed (less compression) and -9 indicates the slowest compression speed (optimal compression, ignores the suffix list). The default compression level is -6.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1130,16 +1130,6 @@
     },
     {
       "short": "-MM",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-N",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -1489,16 +1479,6 @@
       "requires": []
     },
     {
-      "short": "-ifile",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "format  can  cause  problems if the first letter of file combines with i to form a two-letter  option  starting  with  i. Use -sc to see how your command line will be parsed.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-j",
       "long": null,
       "value_type": "Bool",
@@ -1574,16 +1554,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-m",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "move into zipfile (delete OS files)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1739,16 +1709,6 @@
       "requires": []
     },
     {
-      "short": "-u",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "update: only changed or new files",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-v",
       "long": null,
       "value_type": "Bool",
@@ -1821,32 +1781,8 @@
   ],
   "subcommands": [
     {
-      "name": "archives",
-      "description": "that are readable by any unzip that supports split",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "can",
-      "description": "be used to ring the bell when zip pauses for the next split destination.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "for",
-      "description": "how a split archive can be updated as it is copied to a new",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "split",
-      "description": "mode updates the splits as the archive is being created,",
+      "name": "updates",
+      "description": "the splits as the archive is being created, requiring all splits to remain writable, but creates split archives that are",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1854,6 +1790,27 @@
     }
   ],
   "positional": [
+    {
+      "name": "date",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "list",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "suffixes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
     {
       "name": "zipfile",
       "value_type": "File",

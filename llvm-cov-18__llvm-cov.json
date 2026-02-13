@@ -8,7 +8,7 @@
       "long": "--all-blocks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "all  basic  blocks.  If there are multiple blocks for a single line of source code, this option causes llvm-cov to  show the  count  for each block instead of just one count for the en‐ tire line.",
+      "description": "causes  llvm-cov  to  show  the count for each block instead of just one count for the entire line.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--hash-filenames",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "followed  by  MD5  hash calculated for it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--long-file-names",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output file  names.  This can be combined with the --preserve-paths op‐ tion to use complete paths for both the main file  and  the  in‐ cluded file.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--object-directory",
       "value_type": "File",
       "takes_value": true,
-      "description": "objects  in  DIR or based on FILE's path. If you specify a particular object file, the coverage data files are expected  to have  the same base name with .gcno and .gcda extensions. If you specify a directory, the files are expected  in  that  directory with the same base name as the source file.",
+      "description": "objects  in  DIR or based on FILE's path. If you specify a particular object file, the coverage data files are expected to have the same base name with .gcno and .gcda extensions. If you specify a directory, the files are expected in  that  directory  with  the same base name as the source file.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--preserve-paths",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "path components when naming the coverage output files. In addition to the source file  name,  include  the  directories from  the  path  to that file. The directories are separate by # characters, with . directories removed and  ..  directories  re‐ placed by ^ characters. When used with the --long-file-names op‐ tion,  this  applies to both the main file name and the included file name.",
+      "description": "to that file. The directories are separate by # characters, with . directories removed and .. directories replaced by ^ charac‐ ters. When used with the --long-file-names option, this applies to both the main file name and the included file name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--unconditional-branches",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "unconditional   branches   in   the   output  for  the",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "a  symbol  demangler.  This can be used to make reports more human-readable. This option can be specified multiple times to supply arguments to the demangler  (e.g  -Xdemangler  c++filt",
+      "description": "The demangler is expected to read  a  newline-sepa‐ rated list of symbols from stdin and write a newline-separated list of the same length to stdout.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "a  list of architectures such that the Nth entry in the list corresponds to the Nth specified binary. If the covered ob‐ ject is a universal binary, this specifies the  architecture  to use.  It  is an error to specify an architecture that is not in‐ cluded in the universal binary or to use  an  architecture  that does not match a non-universal binary.",
+      "description": "not  included  in  the universal binary or to use an architecture that does not match a non-universal binary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -156,9 +156,9 @@
     {
       "short": "-debuginfod",
       "long": null,
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "look  up  coverage  mapping  for  binary  IDs present  in  the profile but not in any object given on the com‐ mand line. Defaults to true if debuginfod  is  compiled  in  and configured via the DEBUGINFOD_URLS environment variable.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "format.  The  supported  formats  are: \"text\", \"html\".",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "N threads to write file reports (only applicable when -out‐ put-dir is specified). When N=0, llvm-cov auto-detects an appro‐ priate number of threads to use. This is the default.",
+      "description": "N  threads to write file reports (only applicable when -output-dir is specified). When N=0, llvm-cov auto-detects an appropriate number of threads to use. This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,13 +218,23 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Only dump files with relative paths or absolute paths  with  the prefix specified by -s.",
+      "description": "Only dump files with relative paths or absolute paths with the prefix specified by -s.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-s",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-show",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -246,14 +256,6 @@
   ],
   "subcommands": [
     {
-      "name": "created",
-      "description": "for each file included by the main source file, also with a .gcov suffix added.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "llvm-cov",
       "description": "Unrecognized command: llvm-cov.",
       "flags": [],
@@ -262,56 +264,8 @@
       "aliases": []
     },
     {
-      "name": "object",
-      "description": "files, but you can override that by setting the GCOV_PREFIX and GCOV_PREFIX_STRIP environment variables. The GCOV_PREFIX_STRIP variable specifies a number of directory components to be removed from the start",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "rate",
-      "description": ".gcda file for each object file. Each time you run the program,",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "sible",
-      "description": "the ob‐ ject file directories where llvm-cov gcov expects to find them.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "sure",
-      "description": "to remove any old files if you do not want their contents to be included.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "the",
-      "description": "gcov tool from version 4.2 of GCC and may also be compatible with some later versions of gcov.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "those",
-      "description": "directories, the prefix from the GCOV_PREFIX variable is added.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "your",
-      "description": "application that collects coverage data as it runs. Compile with",
+      "description": ".gcda file for each object file. Each time you run the program, the execution counts are summed into any existing .gcda files, so be sure to remove any old files if you do not want their contents to be included.",
       "flags": [],
       "positional": [],
       "subcommands": [],

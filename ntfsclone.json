@@ -8,7 +8,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "\"dirty\" for consistency check.",
+      "description": "Force to progress (DANGEROUS)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--full-logfile",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is  only  useful for  extracting  metadata, saving or cloning a file system which was not properly unmounted from Windows.",
+      "description": "the Windows log file in the copy. This is only useful for extracting metadata, saving or cloning a file system which was not properly unmounted from Windows.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,19 +38,17 @@
       "long": "--ignore-fs-check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "op‐ tion  is allowed to be used only with the --metadata option, for the safety of user's data. The clusters which cause  the  incon‐ sistency are saved too.",
+      "description": "--metadata  option,  for  the safety of user's data. The clusters which cause the inconsistency are saved too.",
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "--metadata"
-      ]
+      "requires": []
     },
     {
       "short": "-m",
       "long": "--metadata",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "ONLY  METADATA  (for  NTFS  experts).  Only  cloning to a (sparse) file is allowed, unless used the option --save-image is also used.  You can't metadata-only clone to a device.",
+      "description": "Clone *only* metadata (for NTFS experts)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -60,7 +58,7 @@
       "long": "--new-half-serial",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "serial  number is a 64 bit number used to identify the device during the mount‐ ing process, so it has to be changed to enable the original file system  and the clone to be mounted at the same time on the same computer.",
+      "description": "device  during  the  mounting process,  so  it  has  to be changed to enable the original file system and the clone to be mounted at the same time on the same com‐ puter.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -80,7 +78,7 @@
       "long": "--no-action",
       "value_type": "String",
       "takes_value": true,
-      "description": "the consistency of a saved image by simulating its restor‐ ing without writing anything. The NTFS data contained in the im‐ age is not tested.  The  option  --restore-image  must  also  be present,  and the options --output and --overwrite must be omit‐ ted.",
+      "description": "the  consistency of a saved image by simulating its restoring without writing anything. The NTFS data contained in the image is not tested.  The option --restore-image must also be present, and the options --output and --overwrite must be omitted.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -90,7 +88,7 @@
       "long": "--output",
       "value_type": "File",
       "takes_value": true,
-      "description": "If FILE is '-' then  clone to  the standard output. This option cannot be used for creating a partition, use --overwrite for an existing partition.",
+      "description": "If FILE is '-' then clone to the standard output. This option cannot be  used  for  creating  a partition, use --overwrite for an existing partition.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -110,12 +108,10 @@
       "long": "--preserve-timestamps",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not wipe the timestamps, to be used only with the --metadata option.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
-      "requires": [
-        "--metadata"
-      ]
+      "requires": []
     },
     {
       "short": "-q",
@@ -132,7 +128,7 @@
       "long": "--rescue",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "dying disks,  can  be  rescued  the most efficiently way, with minimal stress on them. Ntfsclone works at the lowest, sector  level  in this  mode  too  thus more data can be rescued.  The contents of the unreadable sectors are filled by character '?' and  the  be‐ ginning of such sectors are marked by \"BadSectoR\\0\".",
+      "description": "minimal  stress on  them. Ntfsclone works at the lowest, sector level in this mode too thus more data can be rescued.  The contents of the unreadable sectors are filled by character '?' and the beginning of such sectors are marked by \"BadSectoR\\0\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -142,7 +138,7 @@
       "long": "--restore-image",
       "value_type": "String",
       "takes_value": true,
-      "description": "argu‐ ment. If the SOURCE is '-' then the image is read from the stan‐ dard input.",
+      "description": "Restore from the special image format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -152,7 +148,7 @@
       "long": "--save-image",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "output, e.g.  for  image  compression, encryption or streaming through a network.",
+      "description": "Save to the special image format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -172,7 +168,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is equivalent to -f -v .  Long named options can be abbreviated to any unique prefix of their name.",
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

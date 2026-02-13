@@ -8,7 +8,7 @@
       "long": "--accum-time-toggle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the last remembered `S' state reversed. When Cumulative time mode is On, each process is listed with the cpu time that it and its dead children have used. See the `S' interactive command for additional information regarding this mode.",
+      "description": "When Cumulative time mode is On, each process is listed with the cpu time that it and its dead children have used. See the `S' interactive command for additional information regarding this mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--batch",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "sending output from top to other programs or to a file. In this mode, top will not accept input and runs until the iterations limit you've set with the `-n' command-line option or until killed.",
+      "description": "top in Batch mode, which could be useful for sending output from top to other programs or to a file. In this mode, top will not accept input and runs until the iterations limit you've set with the `-n' command-line option or until killed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--cmdline-toggle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "top with the last remembered `c' state reversed. Thus, if top was displaying command lines, now that field will show program names, and vice versa. See the `c' interactive command for additional information.",
+      "description": "Thus, if top was displaying command lines, now that field will show program names, and vice versa. See the `c' interactive command for additional information.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--delay",
       "value_type": "String",
       "takes_value": true,
-      "description": "delay between screen updates, and overrides the corresponding value in one's personal configuration file or the startup default. Later this can be changed with the `d' or `s' interactive commands.",
+      "description": "the delay between screen updates, and overrides the corresponding value in one's personal configuration file or the startup default. Later this can be changed with the `d' or `s' interactive commands.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--filter-any-user",
       "value_type": "String",
       "takes_value": true,
-      "description": "only processes with a user id or user name matching that given. This option matches on any user (real, effective, saved, or filesystem).",
+      "description": "This option matches on any user (real, effective, saved, or filesystem).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--filter-only-euser",
       "value_type": "String",
       "takes_value": true,
-      "description": "only processes with a user id or user name matching that given. This option matches on the effective user id only.",
+      "description": "This option matches on the effective user id only.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--idle-toggle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "When this toggle is Off, tasks that have not used any CPU since the last update will not be displayed. For additional information regarding this toggle see topic 4c. TASK AREA Commands, SIZE.",
+      "description": "top with the last remembered `i' state reversed. When this toggle is Off, tasks that have not used any CPU since the last update will not be displayed. For additional information regarding this toggle see topic 4c. TASK AREA Commands, SIZE.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--iterations",
       "value_type": "String",
       "takes_value": true,
-      "description": "the maximum number of iterations, or frames, top should produce before ending.",
+      "description": "exit on maximum iterations NUMBER",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--list-fields",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option shown below. It will cause top to print each of the available field names on a separate line, then quit. Such names are subject to NLS (National Language Support) translation.",
+      "description": "It will cause top to print each of the available field names on a separate line, then quit. Such names are subject to NLS (National Language Support) translation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--secure-mode",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This mode is far better controlled through a system configuration file (see topic 6. FILES).",
+      "description": "top with secure mode forced, even for root. This mode is far better controlled through a system configuration file (see topic 6. FILES).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--single-cpu-toggle",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "last remembered Cpu States portion of the summary area reversed. Either all cpu information will be displayed in a single line or each cpu will be displayed separately, depending on the state of the NUMA Node command toggle (`2').",
+      "description": "Either all cpu information will be displayed in a single line or each cpu will be displayed separately, depending on the state of the NUMA Node command toggle (`2').",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--threads-show",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "top to display individual threads. Without this command-line option a summation of all threads in each process is shown. Later this can be changed with the `H' interactive command.",
+      "description": "Without this command-line option a summation of all threads in each process is shown. Later this can be changed with the `H' interactive command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +188,7 @@
       "long": "--width",
       "value_type": "Number",
       "takes_value": true,
-      "description": "output using the COLUMNS= and LINES= environment variables, if set. Otherwise, width will be fixed at the maximum 512 columns. With an argument, output width can be decreased or increased (up to 512) but the number of rows is considered unlimited.",
+      "description": "Batch mode, when used without an argument top will format output using the COLUMNS= and LINES= environment variables, if set. Otherwise, width will be fixed at the maximum 512 columns. With an argument, output width can be decreased or increased (up to 512) but the number of rows is considered unlimited.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,6 +198,100 @@
     {
       "name": "0",
       "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "048",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "073",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "741"
+      ]
+    },
+    {
+      "name": "099",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "511",
+        "627"
+      ]
+    },
+    {
+      "name": "1",
+      "description": ":Single/Separate-Cpu-States toggle",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "125",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "842",
+        "899",
+        "906"
+      ]
+    },
+    {
+      "name": "152",
+      "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": [
+        "504",
+        "606",
+        "846",
+        "921"
+      ]
+    },
+    {
+      "name": "2",
+      "description": ":NUMA-Nodes/Cpu-Summary toggle",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "3",
+      "description": ":Expand-NUMA-Node",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "4",
+      "description": ":Display-Multiple-Elements-Adjacent toggle",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "5",
+      "description": ":Display-P-Cores-and-E-Cores toggle",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -276,38 +370,6 @@
       "aliases": []
     },
     {
-      "name": "accommodate",
-      "description": "current values. If you wish to see a more",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "additional",
-      "description": "scaling might still be necessary in order to",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "allocated",
-      "description": "all remaining screen width (up to the maximum 512 characters).",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "alternate-display",
-      "description": "mode. See topic 5. ALTERNATE-DISPLAY",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "avail",
       "description": "( MemAvailable, which is physical memory )",
       "flags": [],
@@ -317,15 +379,7 @@
     },
     {
       "name": "available",
-      "description": "for starting new applications, without swapping. Unlike the",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "backed",
-      "description": "pages. It also includes private pages mapped to files representing program images and shared libraries.",
+      "description": "once you have selected a particular file or command. They are familiar to anyone who has used the pager `less' and are summarized here for future reference.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -333,31 +387,15 @@
     },
     {
       "name": "be",
-      "description": "presented with a screen showing: 1) the `current' window name; 2)",
+      "description": "scaled from KiB through PiB. That scaling is influenced via the `e' interactive command or established for startup through a build option.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "convention",
-      "description": "process ID (see PID) of the process group leader (see PGRP).",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "could",
-      "description": "have its own `init/systemd' (PID #1) to manage various initialization tasks and reap orphaned child processes.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "current",
-      "description": "as you return to the top display. See topic 5.",
+      "name": "c",
+      "description": ":Command-Line/Program-Name toggle",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -372,48 +410,24 @@
       "aliases": []
     },
     {
-      "name": "decreased",
-      "description": "Whether using environment variables or an",
+      "name": "dead",
+      "description": "children have used. You toggle Cumulative mode with `S', which is both a command-line option and an interactive command. See the `S' interactive command for additional information regarding this mode.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "emphasis",
-      "description": "there will be no visual confirmation that they are even on.",
+      "name": "display",
+      "description": "It will not affect the last window's size, as all prior task displays will have already been painted.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "enforced",
-      "description": "with the `E' interactive command. The /proc/meminfo source fields are shown in parenthesis.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "entire",
-      "description": "display will be repainted. They also force an update of any hotplugged cpu or physical memory changes.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "environment",
-      "description": "additional lines can reflect individual CPU state percentages.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "established",
-      "description": "by the login shell. A newly forked process joins the",
+      "name": "divided",
+      "description": "between the non-cached portion of used and any remaining memory not otherwise accounted for by avail. See topic 4b. SUMMARY AREA Commands and the `m' command for additional information on that special 4-way toggle.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -435,8 +449,24 @@
       ]
     },
     {
-      "name": "fields",
-      "description": "with the Up and Down arrow keys. The PgUp, PgDn, Home and End keys can also be used to quickly reach the first or last available field.",
+      "name": "field",
+      "description": "it attempts to account for readily reclaimable page cache and memory slabs. It is available on kernels 3.14, emulated on kernels 2.6.27+, otherwise the same as free.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "focus",
+      "description": "commands that might be active. It also provides for an exit from PID monitoring, User filtering, Other filtering, Locate processing and Combine Cpus mode.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "forked",
+      "description": "processes in that session inherit membership in this autogroup. The kernel then attempts to equalize distribution of CPU cycles",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -459,24 +489,8 @@
       "aliases": []
     },
     {
-      "name": "homogeneous",
-      "description": "result in the memory columns, raising the scaling",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "inherited",
-      "description": "from a task's parent. They are displayed in a comma delimited list.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "instructs",
-      "description": "top to display only processes with users not matching the one provided.",
+      "name": "have",
+      "description": "maximized available task rows but (temporarily) sacrificed the program name in full-screen mode or the `current' window name when in alternate-display mode.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -500,7 +514,7 @@
     },
     {
       "name": "ioW",
-      "description": "-- I/O Bytes Written",
+      "description": "-- I/O Bytes Written The number of bytes a process caused to be sent to the storage layer.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -515,16 +529,8 @@
       "aliases": []
     },
     {
-      "name": "is",
-      "description": "not fixed-width.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "issuing",
-      "description": "this command, you'll be told the new state of this toggle.",
+      "name": "j",
+      "description": ":Justify-Character-Columns toggle",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -533,6 +539,14 @@
     {
       "name": "k",
       "description": "kibibytes",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "key",
+      "description": "function = alternate status-line, file or pipeline / find, equivalent to `L' locate",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -555,14 +569,6 @@
       ]
     },
     {
-      "name": "label",
-      "description": "it means that top was forced to truncate some portion of",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "m",
       "description": "mebibytes",
       "flags": [],
@@ -571,16 +577,8 @@
       "aliases": []
     },
     {
-      "name": "memory",
-      "description": "scaling which ranges from KiB (kibibytes or 1,024 bytes) through PiB (pebibytes or 1,125,899,906,842,624 bytes).",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "mode",
-      "description": "is On, each process is listed with the cpu time that it and",
+      "name": "n",
+      "description": "find next, equivalent to `&' locate next <Space> scroll down, equivalent to <PgDn>",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -619,6 +617,14 @@
       "aliases": []
     },
     {
+      "name": "node",
+      "description": "will be shown until the `1', `2' or `4' command toggle is pressed. This interactive command is only available if a system has the requisite NUMA support.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "nsCGROUP",
       "description": "-- CGROUP namespace The Inode of the namespace used to hide the identity of the control group of which process is a member.",
       "flags": [],
@@ -636,7 +642,7 @@
     },
     {
       "name": "nsMNT",
-      "description": "-- MNT namespace",
+      "description": "-- MNT namespace The Inode of the namespace used to isolate filesystem mount points thus offering different views of the filesystem hierarchy.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -644,7 +650,7 @@
     },
     {
       "name": "nsNET",
-      "description": "-- NET namespace",
+      "description": "-- NET namespace The Inode of the namespace used to isolate resources such as network devices, IP addresses, IP routing, port numbers, etc.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -660,7 +666,7 @@
     },
     {
       "name": "nsTIME",
-      "description": "-- TIME namespace",
+      "description": "-- TIME namespace The Inode of the namespace which allows processes to see different system times in a way similar to the UTS namespace.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -683,14 +689,6 @@
       "aliases": []
     },
     {
-      "name": "outside",
-      "description": "a user namespace while having a user ID of 0, with full root privileges, inside that namespace.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "p",
       "description": "pebibytes",
       "flags": [],
@@ -699,8 +697,8 @@
       "aliases": []
     },
     {
-      "name": "provides",
-      "description": "for an exit from PID monitoring, User filtering, Other filtering, Locate processing and Combine Cpus mode.",
+      "name": "presumably",
+      "description": "one with forked children. If forest view mode is Off this key has no effect.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -723,16 +721,8 @@
       "aliases": []
     },
     {
-      "name": "results",
-      "description": "will be further abridged eliminating the a) and b) elements.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "reverse",
-      "description": "any `i' (idle tasks), `n' (max tasks), `v' (hide",
+      "name": "reminder",
+      "description": "The sort field might not be visible because:",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -747,14 +737,6 @@
       "aliases": []
     },
     {
-      "name": "secured",
-      "description": "second line.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "t",
       "description": "tebibytes",
       "flags": [],
@@ -763,32 +745,8 @@
       "aliases": []
     },
     {
-      "name": "task",
-      "description": "is currently sleeping. Running tasks will display a dash (`-') in this column.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "tasks",
-      "description": "in this state depending on top's delay interval and nice value.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "the",
-      "description": "most recently started task will display the largest time interval.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "to",
-      "description": "run",
+      "description": "designated sort field; 3) all fields in their current order along with descriptions. Entries marked with an asterisk are the currently displayed fields, screen width permitting.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -803,32 +761,16 @@
       "aliases": []
     },
     {
-      "name": "tty",
-      "description": "or -1 if a process is not connected to a terminal. By",
+      "name": "unsatisfactory",
+      "description": "display as the system and tty driver try to keep up with top's demands. The delay value is inversely proportional to system loading, so set it with care.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "unless",
-      "description": "the `x' and/or `y' toggles are using reverse for",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "up",
-      "description": "with top's demands. The delay value is inversely proportional to system loading, so set it with care.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "using",
-      "description": "(RES) plus the swapped out portion of its address space (SWAP).",
+      "name": "v",
+      "description": ":Hide/Show-Children toggle When in forest view mode, this key serves as a toggle to collapse or expand the children of a parent.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -836,7 +778,7 @@
     },
     {
       "name": "vMj",
-      "description": "-- Major Page Fault Count Delta",
+      "description": "-- Major Page Fault Count Delta The number of major page faults that have occurred since the last update (see nMaj).",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -844,7 +786,7 @@
     },
     {
       "name": "vMn",
-      "description": "-- Minor Page Fault Count Delta",
+      "description": "-- Minor Page Fault Count Delta The number of minor page faults that have occurred since the last update (see nMin).",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -852,7 +794,7 @@
     },
     {
       "name": "variables",
-      "description": "if set. With an argument, output width can only be",
+      "description": "With an argument, output width can only be decreased, not increased. Whether using environment variables or an argument with -w, when not in Batch mode actual terminal dimensions can never be exceeded.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -860,23 +802,15 @@
     },
     {
       "name": "vertical",
-      "description": "scrolled position, however, will not be affected. See topic",
+      "description": "scrolled position, however, will not be affected. See topic 5c. SCROLLING a Window for additional information regarding vertical and horizontal scrolling.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "which",
-      "description": "is both a command-line option and an interactive command.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "with",
-      "description": "descriptions. Entries marked with an asterisk are the currently displayed fields, screen width permitting.",
+      "name": "virtual",
+      "description": "page that is not currently present in its address space. A major page fault is when auxiliary storage access is involved in making that page available.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1018,13 +952,6 @@
       "description": null
     },
     {
-      "name": "CGROUPS",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "COLOR",
       "value_type": "String",
       "required": true,
@@ -1110,20 +1037,6 @@
     },
     {
       "name": "MEMORY",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "MNT",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "NET",
       "value_type": "String",
       "required": true,
       "multiple": false,

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "unzstd",
-  "description": "zstdmt is equivalent to zstd -T0",
+  "description": "zstd - zstd, zstdmt, unzstd, zstdcat - Compress or decompress .zst files",
   "global_flags": [
     {
       "short": null,
@@ -38,7 +38,7 @@
       "long": "--compress",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This  is the default operation mode when no operation mode option is specified and no other operation mode is  implied from  the  command  name  (for  example, unzstd implies --decom‐ press).",
+      "description": "This  is the default operation mode when no operation mode option is specified and no other operation mode is implied from the command name (for example, unzstd implies --decompress).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--list",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "such  as size,  ratio,  and  checksum.  Some  of  these fields may not be available. This command´s output can be augmented  with  the  -v modifier.",
+      "description": "available. This command´s output can be augmented with the -v modifier.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -159,16 +159,6 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Limit dictionary to specified size #. [Default: 112640]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--memory",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -206,8 +196,8 @@
     {
       "short": null,
       "long": "--output-dir-flat",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "Store processed files in DIR.",
       "multiple": false,
       "conflicts_with": [],
@@ -268,7 +258,7 @@
       "long": "--rsyncable",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Compress using a rsync-friendly method (`-B` sets block size).",
+      "description": "with  many parallel worker threads. This feature does not work with --single-thread. You probably don´t want to use it with long range mode, since it will decrease the effectiveness of the synchronization points, but your mileage may vary.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +268,7 @@
       "long": "--single-thread",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It  sets  window size to 8 MiB by default (can be changed manually, see wlog). Due to the chaotic nature  of  dynamic adaptation, compressed result is not reproducible.",
+      "description": "Share a single thread for I/O and compression (slightly different than `-T1`).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +318,7 @@
       "long": "--test",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "is  equiva‐ lent  to --decompress --stdout > /dev/null, decompressed data is discarded and checksummed for errors. No files  are  created  or removed.",
+      "description": "decompressed  data  is  dis‐ carded and checksummed for errors. No files are created or removed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +338,7 @@
       "long": "--train",
       "value_type": "File",
       "takes_value": true,
-      "description": "should contain a lot of small files (> 100). See DICTIONARY BUILDER below for a description of this operation.",
+      "description": "FILES  as  a  training  set to create a dictionary. The training set should contain a lot of small files (> 100). See DICTIONARY BUILDER below for a description of this operation.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

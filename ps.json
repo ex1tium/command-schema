@@ -8,7 +8,7 @@
       "long": "--Group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "by real group ID (RGID) or name. This selects the processes whose real group name or ID is in the grplist list. The real group ID identifies the group of the user who created the process, see getgid(2).",
+      "description": "This selects the processes whose real group name or ID is in the grplist list. The real group ID identifies the group of the user who created the process, see getgid(2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--User",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "It selects the processes whose real user name or ID is in the userlist list. The real user ID identifies the user who created the process, see getuid(2).",
+      "description": "by real user ID (RUID) or name. It selects the processes whose real user name or ID is in the userlist list. The real user ID identifies the user who created the process, see getuid(2).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--group",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "effective group name. Selection by session is specified by many standards, but selection by effective group is the logical behavior that several other operating systems use. This ps will select by session when the list is completely numeric (as sessions are). Group ID numbers will work only when some group names are also specified. See the -s and --group options.",
+      "description": "by session OR by effective group name. Selection by session is specified by many standards, but selection by effective group is the logical behavior that several other operating systems use. This ps will select by session when the list is completely numeric (as sessions are). Group ID numbers will work only when some group names are also specified. See the -s and --group options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a help message. The section argument can be one of simple, list, output, threads, misc, or all. The argument can",
+      "description": "The section argument can be one of simple, list, output, threads, misc, or all. The argument can be shortened to one of the underlined letters as in: s|l|o|t|m|a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--no-headers",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "each page or disable headers entirely, respectively.",
+      "description": "do not print header at all",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--ppid",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "by parent process ID. This selects the processes with a parent process ID in pidlist. That is, it selects processes that are children of those listed in pidlist.",
+      "description": "This selects the processes with a parent process ID in pidlist. That is, it selects processes that are children of those listed in pidlist.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -226,9 +226,9 @@
     {
       "short": null,
       "long": "--sort",
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": "sorting order. Sorting syntax is [+|-]key[,[+|-]key[,...]]. Choose a multi-letter key from the STANDARD FORMAT SPECIFIERS section. The \"+\" is optional since default direction is increasing numerical or lexicographic order. Identical to k. For example: ps jax --sort=uid,-ppid, +pid",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Sorting syntax is [+|-]key[,[+|-]key[,...]]. Choose a multi-letter key from the STANDARD FORMAT SPECIFIERS",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,8 +248,8 @@
       "long": "--user",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Identical to -u and U.",
-      "multiple": false,
+      "description": null,
+      "multiple": true,
       "conflicts_with": [],
       "requires": []
     },
@@ -266,16 +266,6 @@
     {
       "short": null,
       "long": "--width",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-1",
-      "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": null,
@@ -308,7 +298,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This format is parsed by strftime(3) and should be a maximum of 24 characters to not mis-align columns.",
+      "description": "the date format of the lstart field to format. This format is parsed by strftime(3) and should be a maximum of 24 characters to not mis-align columns.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +318,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Show process hierarchy (forest).",
+      "description": "Show threads as if they were processes.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -338,7 +328,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "See the c option, the format keyword args, and the format keyword comm.",
+      "description": "Show threads, possibly with LWP and NLWP columns.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +348,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Identical to",
+      "description": "preloaded with default columns O <format> as -O, with BSD personality",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -448,7 +438,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do full-format listing. This option can be combined with many other UNIX-style options to add additional columns. It also causes the command arguments to be printed. When used with",
+      "description": "Do full-format listing. This option can be combined with many other UNIX-style options to add additional columns. It also causes the command arguments to be printed. When used with -L, the NLWP (number of threads) and LWP (thread ID) columns will be added. See the c option, the format keyword args, and the format keyword comm.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -508,7 +498,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "pid,ruser=RealUser",
+      "description": "format is a single argument in the form of a blank-separated or comma-separated list, which offers a way to specify individual output columns. The recognized keywords are described in the STANDARD FORMAT SPECIFIERS section below. Headers may be renamed (ps -o pid,ruser=RealUser -o comm=Command) as desired. If all column headers are empty (ps -o pid= -o comm=) then the header line will not be output. Column width will increase as needed for wide headers; this may be used to widen up columns such as WCHAN (ps -o pid,wchan=WIDE-WCHAN-COLUMN -o comm). Explicit width control (ps opid,wchan:42,cmd) is offered too. The behavior of ps",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -528,7 +518,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This selects the processes whose process ID numbers appear in pidlist. With this option ps reads the necessary info only for the pids listed in the pidlist and doesn't apply additional filtering rules. The order of pids is unsorted and preserved. No additional selection options, sorting and forest type listings are allowed in this mode. Identical to q and --quick-pid.",
+      "description": "This selects the processes whose process ID numbers appear in pidlist. With this option ps reads the necessary info only for the pids listed in the pidlist and doesn't apply additional filtering rules. The order of pids is unsorted and preserved. No additional selection options, sorting and forest type listings are allowed in this mode. Identical to q and",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -548,7 +538,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This selects the processes associated with the terminals given in ttylist. Terminals (ttys, or screens for text output) can be specified in several forms: /dev/ttyS1, ttyS1, S1. A plain \"-\" may be used to select processes not attached to any terminal.",
+      "description": "by tty. This selects the processes associated with the terminals given in ttylist. Terminals (ttys, or screens for text output) can be specified in several forms: /dev/ttyS1, ttyS1, S1. A plain \"-\" may be used to select processes not attached to any terminal.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -558,7 +548,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "by effective user ID (EUID) or name. This selects the processes whose effective user name or ID is in userlist.",
+      "description": "This selects the processes whose effective user name or ID is in userlist.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -596,43 +586,8 @@
   ],
   "subcommands": [
     {
-      "name": "a",
-      "description": "user named x. If that user doesn't exist, then ps will assume you really meant \"ps aux\".",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "aix",
       "description": "like AIX ps",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "associated",
-      "description": "with ps. Using the T option is considered cleaner than using t with an empty ttylist.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "be",
-      "description": "used with an empty ttylist to indicate the terminal",
       "flags": [
         {
           "short": null,
@@ -669,46 +624,8 @@
       "aliases": []
     },
     {
-      "name": "bsdstart",
-      "description": "START time the command started. If the process was started less than 24 hours ago, the output format",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "bsdtime",
-      "description": "TIME accumulated cpu time, user + system. The display format is usually \"MMM:SS\", but can be shifted to",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "c",
-      "description": "C processor utilization. Currently, this is the",
+      "description": "show true command name",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -717,14 +634,6 @@
     {
       "name": "compaq",
       "description": "like Digital Unix ps",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "context",
-      "description": "data. This is for the Mandatory Access Control (\"MAC\") found on high-security systems.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -769,131 +678,9 @@
       "aliases": []
     },
     {
-      "name": "dispatchable",
-      "description": "entity (alias spid, tid). See tid for additional information.",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "display",
-      "description": "width, as when output is redirected (piped) into a file or another command, the",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "e",
       "description": "show the environment after command",
       "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "effective",
-      "description": "user ID describes the user whose file access",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "eip",
-      "description": "EIP instruction pointer. As of kernel 4.9.xx will be",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "entity",
-      "description": "(alias spid, tid). This value may also appear as: a process ID (pid); a process group ID (pgrp); a session ID for the session leader (sid); a thread group ID for the thread group leader (tgid); and a tty process group ID for the process group leader (tpgid).",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "euser",
-      "description": "EUSER effective user name. This will be the textual",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "executable",
-      "description": "file. The output in this column may contain spaces.",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -907,44 +694,9 @@
       "aliases": []
     },
     {
-      "name": "fname",
-      "description": "COMMAND first 8 bytes of the base name of the process's",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "fuser",
-      "description": "FUSER filesystem access user ID. This will be the",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "g",
       "description": "pgrp process group ID",
       "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "hardware",
-      "description": "devices assigned to a specific workplace, if systemd support has been included.",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -988,46 +740,8 @@
       "aliases": []
     },
     {
-      "name": "if",
-      "description": "it can be obtained and the field width permits, or a decimal representation otherwise.",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "imposed",
-      "description": "upon the set of all processes when some BSD-style (without \"-\") options are used or when the ps personality",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "integer",
-      "description": "value of the percent usage over the",
+      "name": "individual",
+      "description": "threads. Use the m option or the -m option to see both. According to the width of the field, a 32 or 64",
       "flags": [
         {
           "short": null,
@@ -1047,25 +761,6 @@
     {
       "name": "irix",
       "description": "like Irix ps",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "is",
-      "description": "\" HH:MM\", else it is \" Mmm:SS\" (where Mmm is",
       "flags": [
         {
           "short": null,
@@ -1110,25 +805,6 @@
       "aliases": []
     },
     {
-      "name": "label",
-      "description": "LABEL security label, most commonly used for SELinux",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "linux",
       "description": "***** recommended *****",
       "flags": [
@@ -1148,62 +824,8 @@
       "aliases": []
     },
     {
-      "name": "lwp",
-      "description": "LWP light weight process (thread) ID of the",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "m",
       "description": "min_flt number of minor page faults",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "machine",
-      "description": "MACHINE displays the machine name for processes assigned",
-      "flags": [
-        {
-          "short": null,
-          "long": "--help",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "memory",
-      "description": "with shared memory proportionally accounted to all tasks mapping it.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "nwchan",
-      "description": "WCHAN address of the kernel function where the process",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1237,14 +859,6 @@
       "aliases": []
     },
     {
-      "name": "oomadj",
-      "description": "OOMADJ Out of Memory Adjustment Factor. The value is added to the current out of memory score which is",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "os390",
       "description": "like OS/390 Open Edition ps",
       "flags": [],
@@ -1253,16 +867,27 @@
       "aliases": []
     },
     {
-      "name": "output",
-      "description": "width is undefined (it may be 80,",
-      "flags": [],
+      "name": "p",
+      "description": "pid process ID",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "p",
-      "description": "pid process ID",
+      "name": "pending",
+      "description": "PENDING mask of the pending signals. See signal(7). Signals pending on the process are distinct from signals pending on",
       "flags": [
         {
           "short": null,
@@ -1299,46 +924,6 @@
       "aliases": []
     },
     {
-      "name": "processes",
-      "description": "whose effective user name or ID is in userlist. The",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "pss",
-      "description": "PSS Proportional share size, the non-swapped physical",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "required",
-      "description": "if the process were to dirty all",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "rss",
-      "description": "RSS resident set size, the non-swapped physical",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "ruser",
-      "description": "RUSER real user ID. This will be the textual user ID,",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "s",
       "description": "is a session leader",
       "flags": [],
@@ -1357,31 +942,18 @@
     {
       "name": "sco",
       "description": "like SCO ps",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "seat",
-      "description": "SEAT displays the identifier associated with all",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "section",
-      "description": "PROCESS STATE CODES for the different",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "setting",
-      "description": "is BSD-like. The set of processes selected in this",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1389,15 +961,18 @@
     {
       "name": "sgi",
       "description": "like Irix ps",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "size",
-      "description": "SIZE approximate amount of swap space that would be",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1411,17 +986,20 @@
       "aliases": []
     },
     {
-      "name": "standards",
-      "description": "the above command asks to display all processes with a TTY (generally the commands users are running) plus all processes owned by",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "start_time",
-      "description": "START starting time or date of the process. Only the",
-      "flags": [],
+      "description": "START starting time or date of the process. Only the year will be displayed if the process was not started the same year ps",
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1445,47 +1023,18 @@
     {
       "name": "sysv",
       "description": "standard",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "textual",
-      "description": "user ID, if it can be obtained and the",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "the",
-      "description": "three letters of the month). See also lstart, start, start_time, and stime.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "then",
-      "description": "used to determine which task to kill when memory is exhausted.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "tid",
-      "description": "TID the unique number representing a dispatchable",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "to",
-      "description": "VM or container, if systemd support has been included.",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1493,7 +1042,18 @@
     {
       "name": "tru64",
       "description": "like Tru64 (was Digital Unix, was OSF/1) ps",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1509,7 +1069,18 @@
     {
       "name": "unix",
       "description": "standard",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1517,7 +1088,18 @@
     {
       "name": "unix95",
       "description": "standard",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1525,23 +1107,18 @@
     {
       "name": "unix98",
       "description": "standard",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "unlimited",
-      "description": "determined by the TERM variable, and",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "user",
-      "description": "ID, if it can be obtained and the field",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1555,16 +1132,8 @@
       "aliases": []
     },
     {
-      "name": "width",
-      "description": "permits, or a decimal representation",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "x",
-      "description": "Lift the BSD-style \"must have a tty\" restriction, which is",
+      "name": "was",
+      "description": "invoked, or \"MmmDD\" if it was not started the same day, or \"HH:MM\" otherwise. See also bsdstart, start, lstart, and stime.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -1573,23 +1142,18 @@
     {
       "name": "y",
       "description": "priority kernel scheduling priority",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "year",
-      "description": "will be displayed if the process was not",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "zeroed",
-      "description": "out unless task is exiting or being core dumped.",
-      "flags": [],
+      "flags": [
+        {
+          "short": null,
+          "long": "--help",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        }
+      ],
       "positional": [],
       "subcommands": [],
       "aliases": []
@@ -1618,6 +1182,13 @@
       "description": null
     },
     {
+      "name": "FORMAT",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "ID",
       "value_type": "String",
       "required": true,
@@ -1633,6 +1204,20 @@
     },
     {
       "name": "SCO",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "SPECIFIERS",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "STANDARD",
       "value_type": "String",
       "required": true,
       "multiple": false,

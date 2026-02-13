@@ -48,7 +48,7 @@
       "long": "--data",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "hex string may be specified in any of the following formats: 0xAABBCCDDEEFF..., AABBCCDDEEFF... or \\xAA\\xBB\\xCC\\xDD\\xEE\\xFF.... Examples of use are --data 0xdeadbeef and --data \\xCA\\xFE\\x09. Note that if you specify a number like 0x00ff no byte-order conversion is performed. Make sure you specify the information in the byte order expected by the receiver.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--data-string",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
+      "description": "string can contain any string. However, note that some characters may depend on your system's locale and the receiver may not see the same information. Also, make sure you enclose the string in double quotes and escape any special characters from the shell. Examples: --data-string \"Scan conducted by Security Ops, extension 7192\" or --data-string \"Ph34r my l33t skills\". Keep in mind that nobody is likely to actually see any comments left by this option unless they are carefully monitoring the network with a sniffer or custom IDS rules.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -146,8 +146,8 @@
     {
       "short": null,
       "long": "--exclude-ports",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -188,7 +188,7 @@
       "long": "--initial-rtt-timeout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "T5 does the equivalent of",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,8 +238,8 @@
       "long": "--max-rtt-timeout",
       "value_type": "Bool",
       "takes_value": false,
-      "description": null,
-      "multiple": true,
+      "description": "T5 does the equivalent of",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -358,7 +358,7 @@
       "long": "--port-ratio",
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "ratio must be between 0.0 and 1.0.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -446,9 +446,9 @@
     {
       "short": null,
       "long": "--scanflags",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Let your creative juices flow, while evading intrusion detection systems whose vendors simply paged through the Nmap man page adding specific rules!",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -592,7 +592,7 @@
       "long": "--stylesheet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The XML output includes an xml-stylesheet directive which points to nmap.xml where it was initially installed by Nmap. Run the XML file through an XSLT processor such as xsltproc[16] to produce an HTML file. Directly opening the XML file in a browser no longer works well because modern browsers limit the locations a stylesheet may be loaded from. If you wish to use a different stylesheet, specify it as the argument to --stylesheet. You must pass the full pathname or URL. One common invocation is --stylesheet https://nmap.org/svn/docs/nmap.xsl. This tells an XSLT processor to load the latest version of the stylesheet from Nmap.Org. The",
+      "description": "The XML output includes an xml-stylesheet directive which points to nmap.xml where it was initially installed by Nmap. Run the XML file through an XSLT processor such as xsltproc[16] to produce an HTML file. Directly opening the XML file in a browser no longer works well because modern browsers limit the locations a stylesheet may be loaded from. If you wish to use a different stylesheet, specify it as the argument to",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -610,9 +610,9 @@
     {
       "short": null,
       "long": "--top-ports",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "n must be 1 or greater.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -718,6 +718,16 @@
       "requires": []
     },
     {
+      "short": "-1",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "Some lines are self explanatory, but the messages become more obscure as the debug level is increased.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-6",
       "long": null,
       "value_type": "Bool",
@@ -747,6 +757,16 @@
       "takes_value": false,
       "description": null,
       "multiple": true,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-F",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -785,7 +805,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Alternate ports can be specified as a parameter. The syntax is the same as for the",
+      "description": "Alternate ports can be specified as a parameter. The syntax is the same as for the -p except that port type specifiers like T: are not allowed. Examples are -PS22 and -PS22-25,80,113,1050,35000. Note that there can be no space between -PS and the port list. If multiple probes are specified they will be sent in parallel.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -851,21 +871,11 @@
       "requires": []
     },
     {
-      "short": "-T4",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-b",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
-      "description": null,
+      "description": "Server is the name or IP address of a vulnerable FTP server. As with a normal URL, you may omit username:password, in which case anonymous login credentials (user: anonymous password:-wwwuser@) are used. The port number (and preceding colon) may be omitted as well, in which case the default FTP port (21) on server is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -895,7 +905,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Or you can specify your own offset size with the --mtu option. Don't also specify -f if you use --mtu. The offset must be a multiple of eight. While fragmented packets won't get by packet filters and firewalls that queue all IP fragments, such as the CONFIG_IP_ALWAYS_DEFRAG option in the Linux kernel, some networks can't afford the performance hit this causes and thus leave it disabled. Others can't enable this because fragments may take different routes into their networks. Some source systems defragment outgoing packets in the kernel. Linux with the iptables connection tracking module is one such example. Do a scan while a sniffer such as Wireshark is running to ensure that sent packets are fragmented. If your host OS is causing problems, try the",
+      "description": "Or you can specify your own offset size with the --mtu option. Don't also specify -f if you use --mtu. The offset must be a multiple of eight. While fragmented packets won't get by packet filters and firewalls that queue all IP fragments, such as the CONFIG_IP_ALWAYS_DEFRAG option in the Linux kernel, some networks can't afford the performance hit this causes and thus leave it disabled. Others can't enable this because fragments may take different routes into their networks. Some source systems defragment outgoing packets in the kernel. Linux with the iptables connection tracking module is one such example. Do a scan while a sniffer such as Wireshark is running to ensure that sent packets are fragmented. If your host OS is causing problems, try the --send-eth option to bypass the IP layer and send raw ethernet frames.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -985,6 +995,26 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
+      "description": "1-1023). The beginning and/or end values of a range may be omitted, causing Nmap to use 1 and 65535, respectively. So you can specify -p- to scan ports from 1 through 65535. Scanning port zero is allowed if you specify it explicitly. For IP protocol scanning (-sO), this option specifies the protocol numbers you wish to scan for (0–255).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-r",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sA",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -1003,15 +1033,35 @@
     {
       "short": "-sI",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "This fascinating scan type is too complex to fully describe in this reference guide, so I wrote and posted an informal paper with full details at https://nmap.org/book/idlescan.html.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": "-sL",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sM",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "He described the technique in Phrack Magazine issue #49 (November 1996). Nmap, which included this technique, was released two issues later. This technique is exactly the same as NULL, FIN, and Xmas scans, except that the probe is FIN/ACK. According to RFC 793[7] (TCP), a RST packet should be generated in response to such a probe whether the port is open or closed. However, Uriel noticed that many BSD-derived systems simply drop the packet if the port is open.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sO",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -1071,7 +1121,27 @@
       "requires": []
     },
     {
+      "short": "-sW",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-sY",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-sZ",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,

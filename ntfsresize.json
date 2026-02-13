@@ -8,7 +8,7 @@
       "long": "--bad-sectors",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "disks  having  hardware  errors, bad sectors with those ntfsresize would refuse to work by default.",
+      "description": "Support disks having bad sectors",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--check",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "using  this  option ntfsresize will only check the device to ensure that it is ready to be resized. If not, it will print any errors detected.   If  the  device  is  fine,  nothing  will  be printed.",
+      "description": "If the device is fine, nothing will be printed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--expand",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "partition  size,  shifting down  its  beginning and keeping its end unchanged. The metadata is recreated in the expanded space and no  user  data  is  relo‐ cated.  This  is incompatible with option -s (or --size) and can only be made if the expanded space is an exact multiple  of  the cluster size. It must also be large enough to hold the new meta‐ data.",
+      "description": "its  end  unchanged.  The  metadata  is recreated  in  the expanded space and no user data is relocated. This is incompatible with option -s (or --size) and can only be made if the expanded space is an exact multiple of the cluster size. It must also be large enough to hold the new metadata.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--force",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ntfsresize  to  proceed with the resize operation either without prompting for an explicit acceptance, or if the filesys‐ tem is marked for consistency check.  Double  the  option  (-ff,",
+      "description": "ntfsresize  to proceed with the resize operation either without prompting for an explicit acceptance, or if the filesystem is marked for consistency check. Double the option (-ff, --force --force) to avoid prompting even if  the  file  system  is  marked  for check.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--info",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "theoretically  smallest shrunken filesystem size supported. Most of the time the result is the space  already  used  on  the filesystem.  Ntfsresize  will refuse shrinking to a smaller size than what you got by this option and depending on  several  fac‐ tors it might be unable to shrink very close to this theoretical size.  Although  the  integrity  of your data should be never in risk, it's still strongly recommended to make a test run by  us‐ ing the --no-action option before real resizing.",
+      "description": "Most of  the time the result is the space already used on the filesystem. Ntfsresize will refuse shrinking to a smaller size than what you got by this option and depending on several factors it might be unable to shrink very close to this theoretical  size.  Although  the integrity  of  your  data should be never in risk, it's still strongly recommended to make a test run by using the --no-action option before real resizing.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--info-mb-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "MB. Print  nothing  if  the  shrink size is the same as the original size (in MB).  This option cannot be used  in  association  with option --expand.",
+      "description": "the  info  option, only print out the shrinkable size in MB.  Print nothing if the shrink size is the same as the original size (in MB).  This option cannot be used in association with option --expand.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--no-action",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "resize operation.   Volume will be opened read-only and ntfsresize dis‐ plays what it would do if it  were  to  resize  the  filesystem. Continue with the real resizing only if the test run passed.",
+      "description": "this  option to make a test run before doing the real resize operation.  Volume will be opened read-only and ntfsresize displays what it would do if it were to resize the filesystem.  Continue with the real resizing only if the test run passed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--size",
       "value_type": "File",
       "takes_value": true,
-      "description": "filesystem   to  fit  in  a  partition  whose  size  is SIZE[k|M|G] bytes by shifting its end and keeping its  beginning unchanged.  The filesystem size is set to be at least one sector smaller than the partition.  The optional modifiers k, M, G mean the SIZE parameter is given in kilo-, mega- or gigabytes respec‐ tively.  Conforming to standards,  k=10^3,  M=10^6  and  G=10^9. ki=2^10,  Mi=2^20  and Gi=2^30 are also allowed. Use this option with --no-action first.",
+      "description": "The filesystem  size is set to be at least one sector smaller than the partition.  The optional modifiers k, M, G mean the SIZE parameter is given in kilo-, mega- or gigabytes respectively.  Conforming to standards, k=10^3, M=10^6 and G=10^9. ki=2^10, Mi=2^20 and Gi=2^30 are also allowed. Use this option with --no-action first.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Long named options can be  abbreviated  to any unique prefix of their name.",
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

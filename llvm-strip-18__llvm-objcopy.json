@@ -8,7 +8,7 @@
       "long": "--allow-broken-links",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "leave in‐ valid section references. Any invalid sh_link fields will be set to zero.",
+      "description": "llvm-strip to remove sections even if it would leave invalid section references. Any invalid sh_link fields will be set to zero.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--disable-deterministic-archives",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "GIDs and timestamps when updating archive member headers.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--discard-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "most local symbols from the output. Different file for‐ mats may limit this to a subset of the local symbols. For exam‐ ple, file and section symbols in ELF objects will not be dis‐ carded. Additionally, remove all debug sections.",
+      "description": "file and section symbols in ELF objects will not be discarded. Additionally, remove all debug sections.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--enable-deterministic-archives",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "i.e. use 0 for archive member header UIDs, GIDs and timestamp fields. On by default.",
+      "description": "deterministic mode when stripping archives, i.e. use 0 for archive member header UIDs, GIDs and timestamp fields. On by de‐ fault.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--keep-file-symbols",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "symbols of type STT_FILE, even if they would otherwise be stripped.",
+      "description": "Do not remove file symbols",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,8 +78,8 @@
       "long": "--keep-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "remove sections named <section>. Can be specified multiple times to keep multi‐ ple sections.",
-      "multiple": true,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -88,8 +88,8 @@
       "long": "--keep-symbol",
       "value_type": "String",
       "takes_value": true,
-      "description": "do not remove symbols named <symbol>. Can be specified multiple times to keep multiple symbols.",
-      "multiple": true,
+      "description": "keep multiple sym‐ bols.",
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -118,7 +118,7 @@
       "long": "--only-keep-debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "contents of sections useful for debugging purposes.",
+      "description": "Produce a debug file as the output that only preserves contents of sections useful for debugging purposes",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--regex",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "symbol and section names specified by other switches are treated as extended POSIX regular expression pat‐ terns.",
+      "description": "Permit regular expressions in name comparison",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,8 +148,8 @@
       "long": "--remove-section",
       "value_type": "String",
       "takes_value": true,
-      "description": "be specified multiple times to remove multiple sections simultaneously.",
-      "multiple": true,
+      "description": null,
+      "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
@@ -158,7 +158,7 @@
       "long": "--strip-all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "non-al‐ loc sections not within segments, except for .gnu.warning, .ARM.attribute sections and the section name table.",
+      "description": "ELF objects, remove from the output all symbols and non-alloc sections not within segments, except for .gnu.warning, .ARM.at‐ tribute sections and the section name table.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--strip-all-gnu",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This option is equivalent to GNU strip's --strip-all switch.",
+      "description": "Compatible with GNU's --strip-all",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--strip-unneeded",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "from the output all local or undefined symbols that are not required by relocations. Also remove all debug sections.",
+      "description": "Remove all symbols not needed by relocations",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,12 +228,9 @@
       "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "On by default for section-related flags. Incompatible with --regex.",
+      "description": "Allow wildcard syntax for symbol-related flags. Incompatible with --regex. Allows using '*' to match any number of characters, '?' to match any single character, '' to escape special characters, and '[]' to define character classes. Wildcards beginning with '!' will prevent a match, for example \"-N '*' -N '!x'\" will strip all symbols except for \"x\".",
       "multiple": false,
-      "conflicts_with": [
-        "-rel",
-        "--regex"
-      ],
+      "conflicts_with": [],
       "requires": []
     },
     {
@@ -259,8 +256,8 @@
     {
       "short": "-N",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Alias for --strip-symbol",
       "multiple": false,
       "conflicts_with": [],
@@ -351,7 +348,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "output to <file>. Multiple input files cannot be used in combination with -o.",
+      "description": "Write output to <file>",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

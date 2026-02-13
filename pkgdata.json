@@ -8,7 +8,7 @@
       "long": "--bldopt",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "internally by  pkgdata  to generate the correct packaged file. Such options include, but are not  limited  to,  setting  variables  used  by make(1) during the build of the packaged file. Note: If icu-con‐ fig is available, then this option is not needed.",
+      "description": "Such  options  in‐ clude, but are not limited to, setting variables used by make(1) during the build of the packaged file. Note: If icu-config is avail‐ able, then this option is not needed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--comment",
       "value_type": "String",
       "takes_value": true,
-      "description": "of the ICU copyright notice.",
+      "description": "Use a custom comment (instead of the copyright)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--destdir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the destination directory to destination.  The default des‐ tination directory is the current directory.",
+      "description": "The default destination directory is the current directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -48,7 +48,7 @@
       "long": "--entrypoint",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "library  form) to name.  The default entry point name is the name set by the -n, --name option.",
+      "description": "The default entry point name  is  the name set by the -n, --name option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-I",
       "long": "--install",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the packaged file (or all the files in the files mode). If the variable DESTDIR is set it will be used for installation.",
+      "description": "Install the data (specify target)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--mode",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  packaging  mode  to be used by pkgdata.  The different modes and their meaning are explained in the DESCRIPTION section above. The valid mode names are common (or archive), dll (or li‐ brary), and files.",
+      "description": "the packaging mode to be used by pkgdata.  The different modes and their meaning are explained in the DESCRIPTION section above. The valid mode names are common (or archive), dll (or library), and files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--name",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  packaged file name to name.  This name is also used as the default entry point name after having  been  turned  into  a valid C identifier.",
+      "description": "the  packaged file name to name.  This name is also used as the default entry point name after having been turned into a valid C identifier.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--revision",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "li‐ brary,  mode.  The  version  number  has  the  format  major.mi‐ nor.patchlevel and all parts except for major are  optional.  If only major is supplied then the version is assumed to be major.0 for versioning purposes.",
+      "description": "versioning  of the shared library produced in dll, or library, mode. The version number has the format major.minor.patchlevel and all parts except for major are optional. If only major is supplied then the version is assumed to be major.0 for versioning  pur‐ poses.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--sourcedir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default  source  direc‐ tory is the current directory.",
+      "description": "The default source directory is the current directory.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--tempdir",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  destination directory as set by the -d, --destdir option.",
+      "description": "the directory used to generate temporary files to directory.  The default temporary directory is the same as the destination di‐ rectory as set by the -d, --destdir option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -271,6 +271,27 @@
   "positional": [
     {
       "name": "destination",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "directory",
+      "value_type": "Directory",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "source",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "version",
       "value_type": "String",
       "required": true,
       "multiple": false,

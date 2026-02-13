@@ -18,7 +18,7 @@
       "long": "--addnodeonresume",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "/dev/mapper  node  exists  after dmsetup resume (default with udev).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--checks",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Useful when  debugging  scripts.   In  some cases these checks may slow down operations noticeably.",
+      "description": "additional  checks on the operations requested and report potential problems.  Useful when debugging scripts.  In some cases these checks may slow down operations noticeably.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,8 +36,8 @@
     {
       "short": "-c",
       "long": "--columns",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -108,7 +108,7 @@
       "long": "--help",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a summary of the commands available, optionally includ‐ ing the list of report fields (synonym with help command).",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--inactive",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "report  on the  inactive  table instead of the live table.  Requires kernel driver version 4.16.0 or above.",
+      "description": "Requires kernel  driver version 4.16.0 or above.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--interval",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "between  successive  iterations for repeating reports. If --interval is specified but --count is not, reports will continue to repeat until interrupted.  The de‐ fault interval is one second.",
+      "description": "the  interval in seconds between successive iterations for repeating reports. If --interval is specified but --count is not, reports will continue to repeat until interrupted.  The default interval is one second.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--manglename",
       "value_type": "String",
       "takes_value": true,
-      "description": "device-mapper  device names and UUIDs. The names and UUIDs are mangled on input and unmangled  on  output  where  the mangling  mode is one of: auto (only do the mangling if not man‐ gled yet, do nothing if already mangled, error  on  mixed),  hex (always  do  the mangling) and none (no mangling).  Default mode is auto.  Character whitelist: 0-9,  A-Z,  a-z,  #+-.:=@_.  This whitelist  is  also  supported  by  udev. Any character not on a whitelist is replaced with its hex value (two  digits)  prefixed by   \\x.   Mangling  mode  could  be  also  set  through  DM_DE‐ FAULT_NAME_MANGLING_MODE environment variable.",
+      "description": "not  mangled  yet,  do nothing  if  already mangled, error on mixed), hex (always do the mangling) and none (no mangling).  Default mode is auto.  Character whitelist: 0-9, A-Z, a-z, #+-.:=@_. This whitelist is also supported by udev. Any character not on a whitelist is replaced  with  its hex value (two digits) prefixed by \\x.  Mangling mode could be also set through DM_DEFAULT_NAME_MANGLING_MODE environment variable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--nameprefixes",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "the  output.   Useful with  --noheadings  to  produce a list of field=value pairs that can be used  to  set  environment  variables  (for  example,  in udev(7) rules).",
+      "description": "a  \"DM_\"  prefix plus the field name to the output.  Useful with --noheadings to produce a list of field=value pairs that can be used to set environment variables (for example, in udev(7) rules).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--nolockfs",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  attempt to synchronize filesystem eg, when suspending a device.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--noopencount",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "for  the device.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--noudevrules",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  allow udev to manage nodes for devices in device-mapper directory.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--readahead",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "The default  value is auto which allows the kernel to choose a suitable value auto‐ matically.   The + prefix lets you specify a minimum value which will not be used if it is smaller than the value chosen  by  the kernel.  The value none is equivalent to specifying zero.",
+      "description": "The default value is auto which allows the kernel to choose a suitable value  automati‐ cally.   The  +  prefix lets you specify a minimum value which will not be used if it is smaller than the value chosen by the kernel. The value none is equivalent to specifying zero.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--select",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "only  items that match selection criteria.  If the com‐ mand is producing report output, adding  the  \"selected\"  column (-o  selected)  displays all rows and shows 1 if the row matches the selection and 0 otherwise. The selection  criteria  are  de‐ fined  by  specifying  column names and their valid values while making use of supported comparison operators. As  a  quick  help and  to see full list of column names that can be used in selec‐ tion and the set of supported  selection  operators,  check  the output of dmsetup info -c -S help command.",
+      "description": "If the command is producing report output, adding the \"selected\"  column  (-o  se‐ lected)  displays all rows and shows 1 if the row matches the selection and 0 otherwise. The selection criteria are defined by speci‐ fying column names and their valid values while making use of supported comparison operators. As a quick help and to see full list of column names that can be used in selection and the set of supported selection operators, check the output of  dmsetup info -c -S help command.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -348,7 +348,7 @@
       "long": "--table",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "a one-line table directly on the command line.  See be‐ low for more information on the table format.",
+      "description": "See below for more information on the table format.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -366,8 +366,8 @@
     {
       "short": null,
       "long": "--tree",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -378,7 +378,7 @@
       "long": "--udevcookie",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Note: Same  cookie  should be  used  for  same type of operations i.e. creation of multiple different devices. It's not adviced to combine different  opera‐ tions on the single device.",
+      "description": "cookie for udev synchronisation.  Note: Same cookie should be used for same type of operations i.e. creation of multiple differ‐ ent devices. It's not adviced to combine different operations on the single device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +418,7 @@
       "long": "--verifyudev",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "udev synchronisation is enabled, verify that udev operations get performed correctly and try to fix up the device  nodes  af‐ terwards if not.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -446,8 +446,8 @@
     {
       "short": "-C",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -496,8 +496,16 @@
   ],
   "subcommands": [
     {
+      "name": "Creates",
+      "description": "a  new  cookie  to synchronize actions with udev processing.  The output is a cookie value. Normally we don't need to create cookies since dmsetup creates and destroys them for each action automatically. However, we can generate one explicitly to group  sev‐ eral  actions together and use only one cookie instead. We can define a cookie to use for each relevant command by using --udevcookie option. Alternatively, we can export this value into the environment of the dmsetup process as DM_UDEV_COOKIE variable and it will be used automatically with all subsequent commands until it is unset.  Invoking this command  will  create  system-wide  semaphore  that needs to be cleaned up explicitly by calling udevreleasecookie command.",
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
       "name": "Ensure",
-      "description": "existing  device-mapper  device_name  and UUID is in the correct mangled  form  containing  only  whitelisted  characters (supported  by udev) and do a rename if necessary. Any character not on the whitelist will be mangled based on  the  --manglename setting.  Automatic  rename  works only for device names and not for device UUIDs because the kernel does not allow changing  the UUID  of  active  devices. Any incorrect UUIDs are reported only and they must be manually corrected by deactivating  the  device first  and  then  reactivating it with proper mangling mode used (see also --manglename).",
+      "description": "existing  device-mapper device_name and UUID is in the correct mangled form containing only whitelisted characters (supported by udev) and do a rename if necessary. Any character not on the whitelist will be mangled based on the --manglename setting. Automat‐ ic rename works only for device names and not for device UUIDs because the kernel does not allow changing the UUID of active devices. Any incorrect UUIDs are reported only and they must be manually corrected by deactivating the device first and then  reactivating  it with proper mangling mode used (see also --manglename).",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -505,15 +513,15 @@
     },
     {
       "name": "List",
-      "description": "device  names.   Optionally only list devices that have at least one target of the specified type.   Optionally  execute  a command  for  each  device.   The device name is appended to the supplied command.  Device names on output can be  customised  by following  options:  devno  (major  and  minor pair, used by de‐ fault), blkdevname (block device name), devname  (map  name  for device-mapper  devices,  equal to blkdevname otherwise).  --tree displays dependencies between devices as a tree.  It  accepts  a comma-separate  list  of  options.  Some specify the information displayed against each node:  device/nodevice;  blkdevname;  ac‐ tive, open, rw, uuid.  Others specify how the tree is displayed: ascii, utf, vt100; compact, inverted, notrunc.",
+      "description": "device  names.  Optionally only list devices that have at least one target of the specified type.  Optionally execute a command for each device.  The device name is appended to the supplied command.  Device names on output can be  customised  by  following  op‐ tions:  devno  (major  and minor pair, used by default), blkdevname (block device name), devname (map name for device-mapper devices, equal to blkdevname otherwise).  --tree displays dependencies between devices as a tree.  It accepts a  comma-separate  list  of  op‐ tions.  Some specify the information displayed against each node: device/nodevice; blkdevname; active, open, rw, uuid.  Others speci‐ fy how the tree is displayed: ascii, utf, vt100; compact, inverted, notrunc.",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "Loads",
-      "description": "table  or table_file into the inactive table slot for de‐ vice_name.  If neither is supplied, reads a table from  standard input.",
+      "name": "Output",
+      "description": "you  can customise.  Fields are comma-separated and chosen from the following list: name, major, minor, attr, open, segments, events, uuid.  Attributes are: (L)ive, (I)nactive, (s)uspended, (r)ead-only, read-(w)rite.  Precede the list with '+'  to  append  to the default selection of columns instead of replacing it.  Precede any sort field with '-' for a reverse sort on that column.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -521,31 +529,15 @@
     },
     {
       "name": "Outputs",
-      "description": "a  list of devices referenced by the live table for the specified device. Device names on output can  be  customised  by following  options:  devno  (major  and  minor pair, used by de‐ fault), blkdevname (block device name), devname  (map  name  for device-mapper devices, equal to blkdevname otherwise).",
+      "description": "a list of devices referenced by the live table for the specified device. Device names on output can be customised by follow‐ ing options: devno (major and minor pair, used by default), blkdevname (block device name), devname (map name for  device-mapper  de‐ vices, equal to blkdevname otherwise).",
       "flags": [],
       "positional": [],
       "subcommands": [],
       "aliases": []
     },
     {
-      "name": "Removes",
-      "description": "a  device.   It  will  no longer be visible to dmsetup. Open devices cannot be removed, but adding --force will  replace the  table  with one that fails all I/O.  --deferred will enable deferred removal of open devices - the device  will  be  removed when  the  last  user closes it. The deferred removal feature is supported since  version  4.27.0  of  the  device-mapper  driver available in upstream kernel version 3.13.  (Use dmsetup version to check this.)  If an attempt to remove a device fails, perhaps because  a process run from a quick udev rule temporarily opened the device, the --retry option will cause the  operation  to  be retried  for  a  few  seconds  before  failing.   Do NOT combine",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Sets",
-      "description": "the uuid of a device that was created without a uuid.  Af‐ ter a uuid has been set it cannot be changed.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Splits",
-      "description": "given  device name into subsystem constituents.  The de‐ fault subsystem is LVM.  LVM currently generates device names by concatenating the names of the Volume Group, Logical Volume  and any  internal  Layer  with  a  hyphen as separator.  Any hyphens within the names are doubled to escape them.  The precise encod‐ ing might change without notice in any  future  release,  so  we recommend  you  always  decode using the current version of this command.",
+      "name": "Parses",
+      "description": "given cookie value and extracts any udev control flags encoded.  The output is in environment key format that is suitable for use  in  udev  rules.  If  the  flag  has  its  symbolic  name  assigned  then  the  output  is   DM_UDEV_FLAG_<flag_name>   =   '1', DM_UDEV_FLAG<flag_position>  =  '1' otherwise.  Subsystem udev flags don't have symbolic names assigned and these ones are always re‐ ported as DM_SUBSYSTEM_UDEV_FLAG<flag_position> = '1'. There are 16 udev flags altogether.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -554,14 +546,6 @@
     {
       "name": "UUID",
       "description": null,
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
-      "name": "Wake",
-      "description": "any  processes  that are waiting for udev to complete pro‐ cessing the specified cookie.",
       "flags": [],
       "positional": [],
       "subcommands": [],
@@ -664,14 +648,6 @@
       "aliases": []
     },
     {
-      "name": "ue",
-      "description": "and  clean  up  the cookie with underlying semaphore. If the cookie is not given directly, the command will try to use a val‐ ue defined by DM_UDEV_COOKIE environment variable.",
-      "flags": [],
-      "positional": [],
-      "subcommands": [],
-      "aliases": []
-    },
-    {
       "name": "version",
       "description": null,
       "flags": [],
@@ -724,6 +700,13 @@
       "description": null
     },
     {
+      "name": "fields",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "head",
       "value_type": "String",
       "required": true,
@@ -766,7 +749,21 @@
       "description": null
     },
     {
+      "name": "message",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "mknodes",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "new_name",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -801,6 +798,13 @@
       "description": null
     },
     {
+      "name": "seconds",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "sect",
       "value_type": "String",
       "required": true,
@@ -808,7 +812,21 @@
       "description": null
     },
     {
+      "name": "sector",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "setgeometry",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sort_fields",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -851,6 +869,13 @@
     },
     {
       "name": "suspend",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "target_type",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -900,6 +925,13 @@
     },
     {
       "name": "udevreleasecookie",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "uuid",
       "value_type": "String",
       "required": true,
       "multiple": false,

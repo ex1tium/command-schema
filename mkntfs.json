@@ -8,17 +8,17 @@
       "long": "--cluster-size",
       "value_type": "String",
       "takes_value": true,
-      "description": "bytes (2MB) per cluster. If omitted, mkntfs uses 4096 bytes as the de‐ fault cluster size.",
+      "description": "the  size  of  clusters  in bytes. Valid cluster size values are powers of two, with at least 256, and at most 2097152 bytes (2MB) per cluster. If omitted, mkntfs uses 4096 bytes as the default cluster size.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": null,
+      "short": "-v",
       "long": "--debug",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "verbose  execution; includes the verbose output from the",
+      "description": "Very verbose execution",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--fast",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "quick (fast) format. This will skip both zeroing of the volume and bad sector checking.",
+      "description": "Perform a quick format",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -58,7 +58,7 @@
       "long": "--heads",
       "value_type": "Number",
       "takes_value": true,
-      "description": "the  number of heads. The maximum is 65535 (0xffff). If omitted, mkntfs attempts to determine the number of heads  auto‐ matically  and  if  that fails a default of 0 is used. Note that heads is required for Windows to be able to boot from  the  cre‐ ated volume.",
+      "description": "the  number  of heads. The maximum is 65535 (0xffff). If omitted, mkntfs attempts to determine the number of heads automati‐ cally and if that fails a default of 0 is used. Note that heads is required for Windows to be able to boot from the created volume.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--mft-zone-multiplier",
       "value_type": "File",
       "takes_value": true,
-      "description": "the  MFT  zone multiplier, which determines the size of the MFT zone to use on the volume. The MFT zone is the area  at  the beginning  of  the  volume  reserved  for  the master file table (MFT), which stores the on disk inodes  (MFT  records).   It  is noteworthy  that  small files are stored entirely within the in‐ ode; thus, if you expect to use the  volume  for  storing  large numbers of very small files, it is useful to set the zone multi‐ plier  to  a higher value. Note, that the MFT zone is resized on the fly as required during operation  of  the  NTFS  driver  but choosing  a  good  value will reduce fragmentation. Valid values are 1, 2, 3 and 4. The values have the following meaning: ┌─────────────────────────────────┐ │ MFT zone     MFT zone size      │ │ multiplier   (% of volume size) │ │     1        12.5% (default)    │ │     2        25.0%              │ │     3        37.5%              │ │     4        50.0%              │ └─────────────────────────────────┘",
+      "description": "the  MFT zone multiplier, which determines the size of the MFT zone to use on the volume. The MFT zone is the area at the begin‐ ning of the volume reserved for the master file table (MFT), which stores the on disk inodes (MFT records).  It  is  noteworthy  that small  files  are  stored  entirely  within  the inode; thus, if you expect to use the volume for storing large numbers of very small files, it is useful to set the zone multiplier to a higher value. Note, that the MFT zone is resized on the fly  as  required  during operation of the NTFS driver but choosing a good value will reduce fragmentation. Valid values are 1, 2, 3 and 4. The values have the following meaning: ┌─────────────────────────────────┐ │ MFT zone     MFT zone size      │ │ multiplier   (% of volume size) │ │     1        12.5% (default)    │ │     2        25.0%              │ │     3        37.5%              │ │     4        50.0%              │ └─────────────────────────────────┘",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--no-action",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "but  display what it would do if it were to create a filesystem. All steps of the  format are carried out except the actual writing to the de‐ vice.",
+      "description": "of  the format are carried out except the actual writing to the device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--no-indexing",
       "value_type": "String",
       "takes_value": true,
-      "description": "4.0  and  earlier  ignore this as they do not implement content indexing at all.)",
+      "description": "Disable indexing on the volume",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -128,7 +128,7 @@
       "long": "--partition-start",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  partition  start sector. The maximum is 4294967295 (2^32-1).   If   omitted,   mkntfs   attempts    to    determine part-start-sect  automatically and if that fails or the value is oversized, a default of 0 is used. The partition is  usable  de‐ spite a wrong value, however note that a correct part-start-sect is required for Windows to be able to boot from the created vol‐ ume.",
+      "description": "the partition start sector. The maximum is 4294967295 (2^32-1). If omitted, mkntfs attempts to determine part-start-sect au‐ tomatically and if that fails or the value is oversized, a default of 0 is used. The partition is usable despite a wrong value,  how‐ ever note that a correct part-start-sect is required for Windows to be able to boot from the created volume.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--sector-size",
       "value_type": "String",
       "takes_value": true,
-      "description": "size  values are  256, 512, 1024, 2048 and 4096 bytes per sector. If omitted, mkntfs attempts to determine the sector-size  automatically  and if that fails a default of 512 bytes per sector is used.",
+      "description": "Specify the sector size for the device",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,19 +166,9 @@
     {
       "short": "-S",
       "long": "--sectors-per-track",
-      "value_type": "Number",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  number  of sectors per track. The maximum is 65535 (0xffff). If omitted, mkntfs attempts to determine the number of sectors-per-track automatically and if that fails a default of 0 is used. Note that sectors-per-track is required for Windows  to be able to boot from the created volume.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-v",
-      "long": "--verbose",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "additional output useful for debugging mkntfs.",
+      "description": "of  sec‐ tors-per-track automatically and if that fails a default of 0 is used. Note that sectors-per-track is required for Windows to be able to boot from the created volume.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +198,17 @@
       "long": "--zero-time",
       "value_type": "String",
       "takes_value": true,
-      "description": "1970  instead  of  the current  system  time.  This is only really useful for debugging purposes.",
+      "description": "This is only really useful for debugging purposes.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-fv",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Long named options can be abbreviated to any unique prefix of their name.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -217,7 +217,28 @@
   "subcommands": [],
   "positional": [
     {
+      "name": "cluster-size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
       "name": "device",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "heads",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "mft-zone-multiplier",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -227,6 +248,41 @@
       "name": "number-of-sectors",
       "value_type": "Number",
       "required": false,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "part-start-sect",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sector-size",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "sectors-per-track",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tors",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "volume-label",
+      "value_type": "String",
+      "required": true,
       "multiple": false,
       "description": null
     }

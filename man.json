@@ -8,7 +8,7 @@
       "long": "--all",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "displaying  the  most  suitable manual  page  it finds.  Using this option forces man to display all the manual pages with names that match the search criteria.",
+      "description": "options delimited by | cannot be used together. argument ... argument is repeatable. [expression] ... entire expression within [ ] is repeatable.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--apropos",
       "value_type": "String",
       "takes_value": true,
-      "description": "Search  the  short  manual page  descriptions  for  keywords  and display any matches.  See apropos(1) for details.",
+      "description": "Search the short manual page descriptions for keywords and display any matches.  See apropos(1) for details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--ascii",
       "value_type": "String",
       "takes_value": true,
-      "description": "or terminal  emulator,  some  characters  may not display correctly when using the latin1(7)  device  description  with  GNU  nroff. This  option  allows  pure ascii manual pages to be displayed in ascii with the latin1 device.  It will not translate any  latin1 text.   The  following  table  shows the translations performed: some parts of it may only be displayed properly when  using  GNU nroff's latin1(7) device.",
+      "description": "This option allows pure ascii manual pages to be displayed in  ascii  with  the latin1  device.   It  will not translate any latin1 text.  The following table shows the translations performed: some parts of it may only be displayed properly when using GNU nroff's latin1(7) device.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--catman",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "be  used  by the catman program.",
+      "description": "used by catman to reformat out of date cat pages",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -46,9 +46,9 @@
     {
       "short": "-C",
       "long": "--config-file",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "this  user  configuration  file  rather than the default of ~/.manpath.",
+      "description": "use this user configuration file",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -68,7 +68,7 @@
       "long": "--default",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "re‐ sets  man's behaviour to its default.  Its use is to reset those options that may have been set in  $MANOPT.   Any  options  that follow -D will have their usual effect.",
+      "description": "Its use is to reset those options that may have been set in $MANOPT.  Any options that follow -D will have their usual effect.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -78,7 +78,7 @@
       "long": "--ditroff",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "post-processor to  produce  output  suitable  for  the chosen device.  If groff",
+      "description": "If  groff  -mandoc is groff, this option is passed to groff and will suppress the use of a post-processor.  It implies -t.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--encoding",
       "value_type": "String",
       "takes_value": true,
-      "description": "character  encoding such as UTF-8.",
+      "description": "For backward compatibility, encoding may be an nroff device such as ascii, latin1, or utf8 as well as a true character encoding such as UTF-8.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--extension",
       "value_type": "String",
       "takes_value": true,
-      "description": "that accompany the Tcl package, into the main manual page hierarchy.  To get around the problem of having two manual pages with the same name such as exit(3), the Tcl pages  were  usually all  assigned  to  section l.  As this is unfortunate, it is now possible to put the pages in the correct section, and to  assign a specific \"extension\" to them, in this case, exit(3tcl).  Under normal  operation,  man  will  display  exit(3) in preference to exit(3tcl).  To negotiate this situation and to avoid having  to know  which  section  the page you require resides in, it is now possible to give man a  sub-extension  string  indicating  which package  the page must belong to.  Using the above example, sup‐ plying the option -e tcl to man  will  restrict  the  search  to pages having an extension of *tcl.",
+      "description": "hi‐ erarchy.  To get around the problem of having two manual pages with the same name such as exit(3), the Tcl pages were usually all as‐ signed  to  section  l.  As this is unfortunate, it is now possible to put the pages in the correct section, and to assign a specific \"extension\" to them, in this case, exit(3tcl).  Under normal operation, man will display exit(3) in preference to exit(3tcl).  To ne‐ gotiate this situation and to avoid having to know which section the page you require resides in, it is now possible to  give  man  a sub-extension  string  indicating which package the page must belong to.  Using the above example, supplying the option -e tcl to man will restrict the search to pages having an extension of *tcl.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -108,7 +108,7 @@
       "long": "--global-apropos",
       "value_type": "String",
       "takes_value": true,
-      "description": "pages.   This  is  a  brute-force search,  and is likely to take some time; if you can, you should specify a section to reduce the number of pages that need to  be searched.   Search terms may be simple strings (the default), or regular expressions if the --regex option is used.",
+      "description": "This is a brute-force search, and is likely to take some time; if you can, you should specify a section to reduce the number of pages that need to be searched.  Search terms may be simple strings (the default), or regular expres‐ sions if the --regex option is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -118,7 +118,7 @@
       "long": "--gxditview",
       "value_type": "String",
       "takes_value": true,
-      "description": "option  displays the output of groff in a graphical window using the gxditview program.  The dpi (dots per inch) may be 75, 75-12, 100, or 100-12, defaulting to 75; the -12 variants use  a 12-point  base  font.   This  option  implies  -T  with the X75, X75-12, X100, or X100-12 device respectively.",
+      "description": "The dpi  (dots  per  inch)  may  be  75, 75-12,  100,  or  100-12,  defaulting to 75; the -12 variants use a 12-point base font.  This option implies -T with the X75, X75-12, X100, or X100-12 device respectively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -138,7 +138,7 @@
       "long": "--html",
       "value_type": "String",
       "takes_value": true,
-      "description": "output,  and  will display  that output in a web browser.  The choice of browser is determined by the optional browser argument if one is  provided, by  the  $BROWSER environment variable, or by a compile-time de‐ fault if that is unset (usually lynx).  This option implies  -t, and will only work with GNU troff.",
+      "description": "option will cause groff to produce HTML output, and will display that output in a web browser.  The choice of browser is deter‐ mined by the optional browser argument if one is provided, by the $BROWSER environment variable, or by a compile-time default if that is unset (usually lynx).  This option implies -t, and will only work with GNU troff.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +148,7 @@
       "long": "--ignore-case",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "case  when  searching for manual pages.  This is the de‐ fault.",
+      "description": "This is the default.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +158,7 @@
       "long": "--local-file",
       "value_type": "String",
       "takes_value": true,
-      "description": "\"local\"  mode.   Format and display local manual files instead of searching through  the  system's  manual  collection. Each manual page argument will be interpreted as an nroff source file in the correct format.  No cat file is produced.  If '-' is listed as one of the arguments, input will be taken from stdin.",
+      "description": "Format and display local manual files instead of searching through the system's manual collection.  Each man‐ ual  page  argument will be interpreted as an nroff source file in the correct format.  No cat file is produced.  If '-' is listed as one of the arguments, input will be taken from stdin.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--locale",
       "value_type": "Directory",
       "takes_value": true,
-      "description": "function  setlocale(3) which interrogates various environment variables, possibly including $LC_MESSAGES and $LANG.   To  tem‐ porarily  override the determined value, use this option to sup‐ ply a locale string directly to man.  Note that it will not take effect until the search for pages actually begins.  Output  such as  the  help  message will always be displayed in the initially determined locale.",
+      "description": "To temporarily override the determined value, use this option to supply  a  locale string  directly to man.  Note that it will not take effect until the search for pages actually begins.  Output such as the help mes‐ sage will always be displayed in the initially determined locale.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +178,7 @@
       "long": "--manpath",
       "value_type": "File",
       "takes_value": true,
-      "description": "By default, man uses  man‐ path  derived code to determine the path to search.  This option overrides the $MANPATH environment variable and causes option -m to be ignored.",
+      "description": "an  alternate manpath to use.  By default, man uses manpath derived code to determine the path to search.  This option over‐ rides the $MANPATH environment variable and causes option -m to be ignored.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -198,7 +198,7 @@
       "long": "--names-only",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "used,  match  only  page names,  not page descriptions, as with whatis(1).  Otherwise, no effect.",
+      "description": "Otherwise, no effect.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--no-hyphenation",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "so  to  lay  out  words on a line without excessive spacing. This option disables automatic hyphenation, so words  will  only be hyphenated if they already contain hyphens.",
+      "description": "do so  to  lay out words on a line without excessive spacing.  This option disables automatic hyphenation, so words will only be hyphen‐ ated if they already contain hyphens.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -218,7 +218,7 @@
       "long": "--no-justification",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "option disables full justification, leaving justified only to the left margin, sometimes called \"ragged-right\" text.",
+      "description": "This option disables full justification, leaving justified only  to the left margin, sometimes called \"ragged-right\" text.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -228,7 +228,7 @@
       "long": "--no-subpages",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "page name  containing  a  hyphen or an underscore.  This supports the common pattern of programs that implement a  number  of  subcom‐ mands,  allowing  them to provide manual pages for each that can be accessed using similar syntax as would be used to invoke  the subcommands themselves.  For example:",
+      "description": "This supports the common pattern of programs that implement a number of subcommands,  allowing them  to  provide  manual  pages  for each that can be accessed using similar syntax as would be used to invoke the subcommands them‐ selves.  For example:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -238,7 +238,7 @@
       "long": "--pager",
       "value_type": "String",
       "takes_value": true,
-      "description": "which output pager to use.  By default, man uses pager, falling back to cat if pager is not found or is not  executable. This  option overrides the $MANPAGER environment variable, which in turn overrides the $PAGER environment variable.   It  is  not used in conjunction with -f or -k.",
+      "description": "By default, man uses pager, falling back to cat if pager is not found or is not executable.  This option overrides the $MANPAGER environment variable, which in turn overrides the $PAGER environment variable.  It is not used in con‐ junction with -f or -k.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -248,7 +248,7 @@
       "long": "--preprocessor",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  sequence  of  preprocessors to run before nroff or troff/groff.  Not all installations will have a full set of pre‐ processors.  Some of the preprocessors and the letters  used  to designate  them are: eqn (e), grap (g), pic (p), tbl (t), vgrind (v), refer (r).  This option overrides the $MANROFFSEQ  environ‐ ment  variable.   zsoelim  is  always run as the very first pre‐ processor.",
+      "description": "Not all installations will have a full set  of  preproces‐ sors.   Some  of the preprocessors and the letters used to designate them are: eqn (e), grap (g), pic (p), tbl (t), vgrind (v), refer (r).  This option overrides the $MANROFFSEQ environment variable.  zsoelim is always run as the very first preprocessor.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -258,7 +258,7 @@
       "long": "--prompt",
       "value_type": "String",
       "takes_value": true,
-      "description": "will  at‐ tempt  to set its prompt and some sensible options.  The default prompt looks like",
+      "description": "The  default  prompt looks like",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -268,7 +268,7 @@
       "long": "--recode",
       "value_type": "File",
       "takes_value": true,
-      "description": "of  formatting the manual page in the usual way, output its source converted to the specified encoding.  If you  already know  the  encoding  of  the  source file, you can also use man‐ conv(1) directly.  However, this option allows  you  to  convert several  manual pages to a single encoding without having to ex‐ plicitly state the encoding of each, provided that they were al‐ ready installed in a structure similar to a manual page  hierar‐ chy.",
+      "description": "of  formatting the manual page in the usual way, output its source converted to the specified encoding.  If you already know the encoding of the source file, you can also use manconv(1) directly.  However, this option allows you  to  convert  several  manual pages  to  a  single encoding without having to explicitly state the encoding of each, provided that they were already installed in a structure similar to a manual page hierarchy.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -278,7 +278,7 @@
       "long": "--regex",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "de‐ scriptions  matching each page argument as a regular expression, as with apropos(1).  Since there is usually no reasonable way to pick a \"best\" page when searching for a regular expression, this option implies -a.",
+      "description": "Since there is usually no reasonable way to pick a \"best\" page when searching for a regular expression, this option  im‐ plies -a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -288,7 +288,7 @@
       "long": "--sections",
       "value_type": "String",
       "takes_value": true,
-      "description": "given list is a colon- or comma-separated list of sections, used to determine which manual sections to search  and  in  what order.  This option overrides the $MANSECT environment variable. (The -s spelling is for compatibility with System V.)",
+      "description": "given list is a colon- or comma-separated list of sections, used to determine which manual sections to search and in what order. This option overrides the $MANSECT environment variable.  (The -s spelling is for compatibility with System V.)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -298,7 +298,7 @@
       "long": "--systems",
       "value_type": "String",
       "takes_value": true,
-      "description": "other  operating  systems'  manual pages,  they can be accessed using this option.  To search for a manual page from NewOS's manual page collection, use the  option",
+      "description": "To search for  a  manual page from NewOS's manual page collection, use the option -m NewOS.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -308,7 +308,7 @@
       "long": "--troff",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Examples (provided with Groff-1.17) include dvi, latin1, ps, utf8, X75 and X100.",
+      "description": "This option is not required in conjunction with -H, -T, or -Z.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": "--troff-device",
       "value_type": "String",
       "takes_value": true,
-      "description": "It  implies",
+      "description": "It implies  -t. Examples (provided with Groff-1.17) include dvi, latin1, ps, utf8, X75 and X100.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": "--update",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "its  database  caches  of  in‐ stalled  manual  pages.  This is only needed in rare situations, and it is normally better to run mandb(8) instead.",
+      "description": "option  causes  man to update its database caches of installed manual pages.  This is only needed in rare situations, and it is normally better to run mandb(8) instead.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +358,7 @@
       "long": "--warnings",
       "value_type": "String",
       "takes_value": true,
-      "description": "warnings from groff.  This may be used to perform sanity checks on the source text of manual pages.  warnings is a comma- separated list of warning names; if it is not supplied, the  de‐ fault is \"mac\".  To disable a groff warning, prefix it with \"!\": for example, --warnings=mac,!break enables warnings in the \"mac\" category and disables warnings in the \"break\" category.  See the “Warnings”  node  in  info groff for a list of available warning names.",
+      "description": "This may be used to perform sanity checks on the source text of manual pages.  warnings is a comma-sepa‐ rated list of warning names; if it is not supplied, the default is \"mac\".  To disable a groff warning, prefix it with \"!\": for  exam‐ ple,  --warnings=mac,!break enables warnings in the \"mac\" category and disables warnings in the \"break\" category.  See the “Warnings” node in info groff for a list of available warning names.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": "--where",
       "value_type": "String",
       "takes_value": true,
-      "description": "actually  display the manual page, but do print the loca‐ tion of the source nroff file that would be formatted.   If  the",
+      "description": "If the -a option is also used, then print the locations of all source files that match the search criteria.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -388,7 +388,7 @@
       "long": "--where-cat",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  loca‐ tion  of  the preformatted cat file that would be displayed.  If the -a option is also used, then print the locations of all pre‐ formatted cat files that match the search criteria.",
+      "description": "actually  display  the manual page, but do print the location of the preformatted cat file that would be displayed.  If the -a option is also used, then print the locations of all preformatted cat files that match the search criteria.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -398,17 +398,7 @@
       "long": "--wildcard",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "de‐ scriptions  matching  each page argument using shell-style wild‐ cards, as with apropos(1) --wildcard.  The  page  argument  must match  the  entire  name or description, or match on word bound‐ aries in the description.  Since there is usually no  reasonable way  to  pick  a \"best\" page when searching for a wildcard, this option implies -a.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-mandoc",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "will  sup‐ press the use of a post-processor.  It implies -t.",
+      "description": "all pages with any part of either their names or their descriptions matching each page argument using shell-style wildcards, as with apropos(1) --wildcard.  The page argument must match the entire name or description, or match on word boundaries in the descrip‐ tion.  Since there is usually no reasonable way to pick a \"best\" page when searching for a wildcard, this option implies -a.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

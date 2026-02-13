@@ -8,7 +8,7 @@
       "long": "--args",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "interpretation  of command line so that arguments following this option are  passed  as  arguments  to  the  inferior.   As  an example, take the following command:",
+      "description": "As  an  example, take the following command:",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--batch",
       "value_type": "File",
       "takes_value": true,
-      "description": "Exit with status 0  after  processing  all  the command  files  specified with -x (and .gdbinit, if not inhibited). Exit with nonzero status if an error occurs in  executing  the  GDB commands in the command files.",
+      "description": "in batch mode.  Exit with status 0 after processing all the command files specified with -x (and .gdbinit, if not inhibited).  Exit with nonzero status if an error occurs in executing the GDB commands in the command files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--batch-silent",
       "value_type": "String",
       "takes_value": true,
-      "description": "in batch mode, just like --batch, but totally silent.  All GDB output is suppressed (stderr is unaffected).  This is much  quieter than --silent and would be useless for an interactive session.",
+      "description": "in  batch  mode, just like --batch, but totally silent.  All GDB output is suppressed (stderr is unaffected).  This is much quieter than --silent and would be useless for an interactive session.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -36,9 +36,9 @@
     {
       "short": null,
       "long": "--cd",
-      "value_type": "Directory",
+      "value_type": "String",
       "takes_value": true,
-      "description": "GDB  using  directory as its working directory, instead of the current directory.",
+      "description": "Change current directory to DIR.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -168,7 +168,7 @@
       "long": "--nh",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "not  execute  commands  from ~/.config/gdb/gdbinit, ~/.gdbinit, ~/.config/gdb/gdbearlyinit, or ~/.gdbearlyinit",
+      "description": "Do not read ~/.gdbinit.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -208,7 +208,7 @@
       "long": "--quiet",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "\"Quiet\".   Do  not  print  the introductory and copyright messages. These messages are also suppressed in batch mode.",
+      "description": "\"Quiet\".  Do not print the introductory and copyright messages.  These messages are also suppressed in batch mode.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -318,7 +318,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Run GDB using directory as its data directory.  The data  directory is where GDB searches for its auxiliary files.",
+      "description": "Run GDB using directory as its data directory.  The data directory is where GDB searches for its auxiliary files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -328,7 +328,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "second)  of  any  serial interface used by GDB for remote debugging.",
+      "description": "Set serial port baud rate used for remote debugging.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -358,7 +358,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "when  appropriate,  and for examining pure data in conjunction with a core dump.",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -378,7 +378,7 @@
       "long": null,
       "value_type": "File",
       "takes_value": true,
-      "description": "Emacs  sets this option when it runs GDB as a subprocess.  It tells GDB to output the full file name and line  number  in  a  standard, recognizable  fashion  each  time a stack frame is displayed (which includes each time the program stops).   This  recognizable  format looks  like  two  \\032  characters, followed by the file name, line number and character position separated by colons, and  a  newline. The  Emacs-to-GDB interface program uses the two \\032 characters as a signal to display the source code for the frame.",
+      "description": "Emacs  sets  this  option  when  it  runs GDB as a subprocess.  It tells GDB to output the full file name and line number in a standard, recognizable fashion each time a stack frame is displayed (which includes each time the program stops).  This recognizable format  looks like  two \\032 characters, followed by the file name, line number and character position separated by colons, and a newline.  The Emacs- to-GDB interface program uses the two \\032 characters as a signal to display the source code for the frame.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -418,7 +418,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "Do  not  execute  commands  from  any  .gdbinit  or   .gdbearlyinit initialization files.",
+      "description": "Do not execute commands from any .gdbinit or .gdbearlyinit initialization files.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -482,6 +482,14 @@
     {
       "name": "edit",
       "description": null,
+      "flags": [],
+      "positional": [],
+      "subcommands": [],
+      "aliases": []
+    },
+    {
+      "name": "gdb-",
+      "description": "2024-04-03 GDB(1)",
       "flags": [],
       "positional": [],
       "subcommands": [],

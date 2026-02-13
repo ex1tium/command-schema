@@ -8,7 +8,7 @@
       "long": "--byte",
       "value_type": "String",
       "takes_value": true,
-      "description": "be  recovered,  the  missing parts will be filled with this byte.  The default is zeros.",
+      "description": "The default is zeros.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -18,7 +18,7 @@
       "long": "--case",
       "value_type": "File",
       "takes_value": true,
-      "description": "scanning  an NTFS volume, any filename matching (using the",
+      "description": "scanning  an NTFS volume, any filename matching (using the --match option) is case-insensitive.  This option makes the matching case-sensitive.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -28,7 +28,7 @@
       "long": "--copy",
       "value_type": "File",
       "takes_value": true,
-      "description": "The default file is mft which will be created in the cur‐ rent  directory.   This option can be combined with the --output and --destination options.",
+      "description": "The default file is mft which will be created in the  current directory.  This option can be combined with the --output and --destination options.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -38,7 +38,7 @@
       "long": "--destination",
       "value_type": "String",
       "takes_value": true,
-      "description": "the  --un‐ delete and --copy options.",
+      "description": "Destination directory",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +66,9 @@
     {
       "short": "-i",
       "long": "--inodes",
-      "value_type": "Number",
+      "value_type": "File",
       "takes_value": true,
-      "description": "RANGE can be a sin‐ gle  inode  number, several numbers separated by commas \",\" or a range separated by a dash \"-\".",
+      "description": "the  files with these inode numbers.  RANGE can be a single inode number, several numbers separated by commas \",\" or a range separated by a dash \"-\".",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,9 +76,9 @@
     {
       "short": "-m",
       "long": "--match",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "case-insensitive.   This  option  makes  the matching case-sensitive.",
+      "value_type": "String",
+      "takes_value": true,
+      "description": "The pattern can include the wildcards '?', match exactly one character  or '*',  match zero or more characters.  By default the matching is case-insensitive.  To make the search case sensitive, use the --case option.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -88,7 +88,7 @@
       "long": "--optimistic",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "parts  of the file even if they are currently marked as in use.",
+      "description": "Undelete in-use clusters as well",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -98,7 +98,7 @@
       "long": "--output",
       "value_type": "String",
       "takes_value": true,
-      "description": "that  --undelete  or",
+      "description": "Save with this filename",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -114,21 +114,11 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--percent",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-p",
       "long": "--percentage",
-      "value_type": "File",
+      "value_type": "String",
       "takes_value": true,
-      "description": "the  output of the --scan option, by only matching files with a certain amount of recoverable content.  Please  read  the caveats section for more details.",
+      "description": "Please read the caveats section for more details.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -148,7 +138,7 @@
       "long": "--scan",
       "value_type": "File",
       "takes_value": true,
-      "description": "through  an  NTFS  volume and print a list of files that could be recovered.  This is the default action of ntfsundelete. This list can be filtered by filename, size, percentage recover‐ able or last  modification  time,  using  the  --match,  --size,",
+      "description": "This is the default action of  ntfsundelete.   This list  can  be  filtered by filename, size, percentage recoverable or last modification time, using the --match, --size, --percent and",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -158,7 +148,7 @@
       "long": "--size",
       "value_type": "Number",
       "takes_value": true,
-      "description": "The range may  be  specified  as  two numbers  separated by a '-'.  The sizes may be abbreviated using the suffixes k, m, g, t, for kilobytes, megabytes, gigabytes and terabytes respectively.",
+      "description": "The range may be specified as  two  numbers separated  by  a  '-'.  The sizes may be abbreviated using the suffixes k, m, g, t, for kilobytes, megabytes, gigabytes and terabytes respectively.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -166,9 +156,9 @@
     {
       "short": "-t",
       "long": "--time",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Only match  files  that have  been  altered  since this time.  The time must be given as number using a suffix of d, w, m, y for days, weeks,  months  or years ago.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Last referenced since this time",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -178,7 +168,7 @@
       "long": "--truncate",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "ntfsundelete  is confident about the size of a deleted file, then it will restore the file to exactly that size.  The default behaviour is to round up the size to the nearest cluster  (which will be a multiple of 512 bytes).",
+      "description": "ntfsundelete  is confident about the size of a deleted file, then it will restore the file to exactly that size.  The default be‐ haviour is to round up the size to the nearest cluster (which will be a multiple of 512 bytes).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -188,7 +178,7 @@
       "long": "--undelete",
       "value_type": "Bool",
       "takes_value": false,
-      "description": "You can specify the files to be recovered using  by using --match or --inodes options.  This option can be combined with --output, --destination, and --byte.",
+      "description": "You can specify the files to be recovered using by using --match or --inodes options.  This option can be com‐ bined with --output, --destination, and --byte.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
