@@ -601,7 +601,7 @@ mod tests {
         assert_eq!(default_parallel_jobs(0), 1);
         assert!(default_parallel_jobs(1) >= 1);
         assert!(default_parallel_jobs(1) <= 1);
-        assert!(default_parallel_jobs(2000) <= 12);
+        assert!(default_parallel_jobs(2000) <= 8);
     }
 
     #[test]

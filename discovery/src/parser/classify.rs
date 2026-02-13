@@ -145,10 +145,14 @@ fn score_man_format(lines: &[&str]) -> f64 {
         .collect::<Vec<_>>();
 
     let has_mdoc_markers = lower.iter().any(|line| {
-        line.starts_with(".dt ") || line.starts_with(".dd ") || line.starts_with(".sh ")
+        starts_with_roff_macro(line, ".dt")
+            || starts_with_roff_macro(line, ".dd")
+            || starts_with_roff_macro(line, ".sh")
     });
     let has_man_markers = lower.iter().any(|line| {
-        line.starts_with(".th ") || line.starts_with(".sh ") || line.starts_with(".tp")
+        starts_with_roff_macro(line, ".th")
+            || starts_with_roff_macro(line, ".sh")
+            || starts_with_roff_macro(line, ".tp")
     });
 
     let mut score: f64 = 0.0;
@@ -189,15 +193,32 @@ fn score_man_format(lines: &[&str]) -> f64 {
     score.clamp(0.0, 1.0)
 }
 
-fn is_roff_macro_line(line: &str) -> bool {
-    let trimmed = line.trim_start();
-    let Some(first) = trimmed.chars().next() else {
-        return false;
-    };
-    if first != '.' && first != '\'' {
+fn starts_with_roff_macro(line: &str, macro_name: &str) -> bool {
+    if !line.starts_with(macro_name) {
         return false;
     }
-    trimmed.chars().nth(1).is_some_and(|ch| ch.is_ascii_alphabetic())
+    line[macro_name.len()..]
+        .chars()
+        .next()
+        .is_none_or(|ch| ch.is_ascii_whitespace())
+}
+
+fn is_roff_macro_line(line: &str) -> bool {
+    let trimmed = line.trim_start();
+    let mut chars = trimmed.chars();
+    let Some(control) = chars.next() else {
+        return false;
+    };
+    if control != '.' && control != '\'' {
+        return false;
+    }
+    let Some(a) = chars.next() else {
+        return false;
+    };
+    let Some(b) = chars.next() else {
+        return false;
+    };
+    a.is_ascii_alphabetic() && b.is_ascii_alphabetic()
 }
 
 fn looks_like_rendered_man_section_header(line: &str) -> bool {

@@ -772,14 +772,7 @@ fn is_valid_flag_name(name: &str) -> bool {
 }
 
 fn looks_like_command_name(token: &str) -> bool {
-    !token.is_empty()
-        && token
-            .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
-        && token
-            .chars()
-            .next()
-            .is_some_and(|ch| ch.is_ascii_alphabetic())
+    super::super::looks_like_command_name(token)
 }
 
 fn is_placeholder_command_token(token: &str) -> bool {

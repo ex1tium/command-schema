@@ -1,31 +1,5 @@
 //! Roff escape sequence handling.
 
-#[allow(dead_code)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum EscapeType {
-    Bold,
-    Italic,
-    Roman,
-    Revert,
-    Unknown,
-}
-
-/// Classifies a roff escape sequence into an [`EscapeType`].
-///
-/// Recognizes both standard `\f`-prefixed font escapes (`\fB`, `\fI`, `\fR`,
-/// `\fP`) and their non-standard shorthand forms (`\B`, `\I`, `\R`, `\P`)
-/// which appear in some third-party and legacy man page sources.
-#[allow(dead_code)]
-pub fn classify_escape(seq: &str) -> EscapeType {
-    match seq {
-        "\\B" | "\\fB" => EscapeType::Bold,
-        "\\I" | "\\fI" => EscapeType::Italic,
-        "\\R" | "\\fR" => EscapeType::Roman,
-        "\\P" | "\\fP" => EscapeType::Revert,
-        _ => EscapeType::Unknown,
-    }
-}
-
 pub fn decode_roff_escapes(input: &str) -> String {
     let mut out = String::with_capacity(input.len());
     let mut chars = input.chars().peekable();

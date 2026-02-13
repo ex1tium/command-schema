@@ -147,17 +147,19 @@ fn parse_flag_definition(definition: &str, description: Option<&str>) -> Vec<Fla
                     .is_some_and(|ch| ch.is_ascii_alphabetic())
                 && body
                     .chars()
-                    .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
+                    .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_' || ch == '.')
                 && first_long.is_none()
             {
                 first_long = Some(name.to_string());
             }
         } else {
-            // Short flag: `-` followed by alphanumeric chars only (no
-            // brackets, slashes, periods, or other punctuation).
+            // Short flag: `-` followed by alphanumeric chars or common
+            // symbolic flags like -? (help in some tools).
             let body = &name[1..];
             if !body.is_empty()
-                && body.chars().all(|ch| ch.is_ascii_alphanumeric())
+                && body
+                    .chars()
+                    .all(|ch| ch.is_ascii_alphanumeric() || ch == '?')
                 && first_short.is_none()
             {
                 first_short = Some(name.to_string());

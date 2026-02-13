@@ -45,20 +45,20 @@ pub fn detect_roff_variant(lines: &[&str]) -> Option<ManFormat> {
         .collect::<Vec<_>>();
 
     let has_mdoc = lower.iter().any(|line| {
-        line.starts_with(".dt ")
-            || line.starts_with(".dd ")
-            || line.starts_with(".sh ")
-            || line.starts_with(".ss ")
-            || line.starts_with(".fl ")
-            || line.starts_with(".ar ")
+        starts_with_roff_macro(line, ".dt")
+            || starts_with_roff_macro(line, ".dd")
+            || starts_with_roff_macro(line, ".sh")
+            || starts_with_roff_macro(line, ".ss")
+            || starts_with_roff_macro(line, ".fl")
+            || starts_with_roff_macro(line, ".ar")
     });
 
     let has_man = lower.iter().any(|line| {
-        line.starts_with(".th ")
-            || line.starts_with(".sh ")
-            || line.starts_with(".ss ")
-            || line.starts_with(".tp")
-            || line.starts_with(".ip")
+        starts_with_roff_macro(line, ".th")
+            || starts_with_roff_macro(line, ".sh")
+            || starts_with_roff_macro(line, ".ss")
+            || starts_with_roff_macro(line, ".tp")
+            || starts_with_roff_macro(line, ".ip")
     });
 
     match (has_mdoc, has_man) {
@@ -66,15 +66,15 @@ pub fn detect_roff_variant(lines: &[&str]) -> Option<ManFormat> {
         (false, true) => Some(ManFormat::Man),
         (true, true) => {
             // Prefer the format-specific title macro when available.
-            if lower.iter().any(|line| line.starts_with(".dt ")) {
+            if lower.iter().any(|line| starts_with_roff_macro(line, ".dt")) {
                 Some(ManFormat::Mdoc)
-            } else if lower.iter().any(|line| line.starts_with(".th ")) {
+            } else if lower.iter().any(|line| starts_with_roff_macro(line, ".th")) {
                 Some(ManFormat::Man)
             } else if lower.iter().any(|line| {
-                line.starts_with(".fl ")
-                    || line.starts_with(".ar ")
-                    || line.starts_with(".op ")
-                    || line.starts_with(".ic ")
+                starts_with_roff_macro(line, ".fl")
+                    || starts_with_roff_macro(line, ".ar")
+                    || starts_with_roff_macro(line, ".op")
+                    || starts_with_roff_macro(line, ".ic")
             }) {
                 // No title macro found, but mdoc-only macros are present —
                 // this is an mdoc page.
@@ -192,6 +192,19 @@ pub fn looks_like_rendered_section_header(line: &str) -> bool {
             | "EXAMPLES"
             | "EXIT STATUS"
     )
+}
+
+/// Returns `true` when a lowercased line starts with the given macro name
+/// (e.g. `".sh"`) followed by ASCII whitespace or end-of-line.
+fn starts_with_roff_macro(line: &str, macro_name: &str) -> bool {
+    if !line.starts_with(macro_name) {
+        return false;
+    }
+    // After the macro name: must be whitespace or end-of-line.
+    line[macro_name.len()..]
+        .chars()
+        .next()
+        .is_none_or(|ch| ch.is_ascii_whitespace())
 }
 
 fn is_roff_macro_line(line: &str) -> bool {

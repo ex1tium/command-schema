@@ -154,32 +154,74 @@ pub fn parse_mdoc_source(tokens: &[Token]) -> MdocDocument {
                         if args.is_empty() {
                             continue;
                         }
-                        let head = args[0].to_ascii_lowercase();
-                        if head == "fl" {
-                            if let Some(raw) = args.get(1)
-                                && let Some(flag_name) = normalize_flag_name(raw)
-                            {
-                                push_element(
-                                    &mut doc,
-                                    &current_section,
-                                    MdocElement::Flag {
-                                        name: flag_name,
-                                        optional: true,
-                                        line: *line,
-                                    },
-                                );
-                            }
-                        } else if head == "ar" {
-                            if let Some(arg) = args.get(1) {
-                                push_element(
-                                    &mut doc,
-                                    &current_section,
-                                    MdocElement::Arg {
-                                        name: normalize_arg_name(arg),
-                                        optional: true,
-                                        line: *line,
-                                    },
-                                );
+                        // Iterate the full args list to handle sequences
+                        // like ".Op Fl v Ar file" which should emit both
+                        // a Flag and an Arg element.
+                        let mut ai = 0usize;
+                        while ai < args.len() {
+                            let head = args[ai].to_ascii_lowercase();
+                            match head.as_str() {
+                                "fl" => {
+                                    if let Some(raw) = args.get(ai + 1)
+                                        && let Some(flag_name) = normalize_flag_name(raw)
+                                    {
+                                        push_element(
+                                            &mut doc,
+                                            &current_section,
+                                            MdocElement::Flag {
+                                                name: flag_name,
+                                                optional: true,
+                                                line: *line,
+                                            },
+                                        );
+                                        ai += 2;
+                                        // Check if the flag is followed by a value arg.
+                                        if ai < args.len() {
+                                            let next_lower =
+                                                args[ai].to_ascii_lowercase();
+                                            if next_lower == "ar" {
+                                                if let Some(arg) = args.get(ai + 1)
+                                                {
+                                                    push_element(
+                                                        &mut doc,
+                                                        &current_section,
+                                                        MdocElement::Arg {
+                                                            name: normalize_arg_name(
+                                                                arg,
+                                                            ),
+                                                            optional: true,
+                                                            line: *line,
+                                                        },
+                                                    );
+                                                    ai += 2;
+                                                } else {
+                                                    ai += 1;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        ai += 1;
+                                    }
+                                }
+                                "ar" => {
+                                    if let Some(arg) = args.get(ai + 1) {
+                                        push_element(
+                                            &mut doc,
+                                            &current_section,
+                                            MdocElement::Arg {
+                                                name: normalize_arg_name(arg),
+                                                optional: true,
+                                                line: *line,
+                                            },
+                                        );
+                                        ai += 2;
+                                    } else {
+                                        ai += 1;
+                                    }
+                                }
+                                _ => {
+                                    ai += 1;
+                                }
                             }
                         }
                     }
@@ -434,14 +476,7 @@ fn next_text_description(elements: &[MdocElement], start: usize) -> Option<Strin
 }
 
 fn looks_like_command_name(value: &str) -> bool {
-    !value.is_empty()
-        && value
-            .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
-        && value
-            .chars()
-            .next()
-            .is_some_and(|ch| ch.is_ascii_alphabetic())
+    super::super::looks_like_command_name(value)
 }
 
 fn parse_it_elements(args: &[String], line: usize) -> Vec<MdocElement> {

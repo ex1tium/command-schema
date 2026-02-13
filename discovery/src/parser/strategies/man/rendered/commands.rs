@@ -62,13 +62,5 @@ fn split_command_and_description(line: &str) -> (&str, Option<&str>) {
 }
 
 fn looks_like_command_name(value: &str) -> bool {
-    let token = value.trim();
-    !token.is_empty()
-        && token
-            .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
-        && token
-            .chars()
-            .next()
-            .is_some_and(|ch| ch.is_ascii_alphabetic())
+    super::super::looks_like_command_name(value.trim())
 }

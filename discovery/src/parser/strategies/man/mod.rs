@@ -12,6 +12,20 @@ use crate::parser::ast::{ArgCandidate, FlagCandidate, SourceSpan, SubcommandCand
 use crate::parser::strategies::ParserStrategy;
 use crate::parser::{HelpParser, IndexedLine};
 
+/// Returns `true` when `value` looks like a valid CLI command or subcommand
+/// name: non-empty, starts with an ASCII letter, and contains only
+/// alphanumeric characters, hyphens, or underscores.
+pub fn looks_like_command_name(value: &str) -> bool {
+    !value.is_empty()
+        && value
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
+        && value
+            .chars()
+            .next()
+            .is_some_and(|ch| ch.is_ascii_alphabetic())
+}
+
 /// Infers a [`ValueType`] from a token or description string by checking for
 /// common keywords (file/path, dir, url, num/count/number).
 pub fn infer_value_type(text: &str) -> ValueType {

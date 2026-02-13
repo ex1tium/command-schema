@@ -549,15 +549,21 @@ fn parse_flag_defs(definition: &str, description: &str) -> Vec<FlagSchema> {
             .unwrap_or((part.as_str(), false));
         has_inline_value |= inline_value;
 
-        if raw_name.starts_with("--") {
+        // Trim leftover placeholder brackets that leak through from
+        // inline value notation like "--backup[=CONTROL]".
+        let clean_name = raw_name.trim_end_matches(|ch: char| {
+            matches!(ch, '[' | ']' | '<' | '>' | '(' | ')' | ',' | ';')
+        });
+
+        if clean_name.starts_with("--") {
             if first_long.is_none() {
-                first_long = Some(raw_name.to_string());
+                first_long = Some(clean_name.to_string());
             }
         } else {
             // Treat all single-dash forms as short-style flags to avoid
             // generating invalid long names like "-foo".
             if first_short.is_none() {
-                first_short = Some(raw_name.to_string());
+                first_short = Some(clean_name.to_string());
             }
         }
     }
@@ -708,14 +714,7 @@ fn clean_description(text: &str) -> Option<String> {
 }
 
 fn looks_like_command_name(value: &str) -> bool {
-    !value.is_empty()
-        && value
-            .chars()
-            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_')
-        && value
-            .chars()
-            .next()
-            .is_some_and(|ch| ch.is_ascii_alphabetic())
+    super::super::looks_like_command_name(value)
 }
 
 #[cfg(test)]
