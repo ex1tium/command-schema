@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "nano",
-  "description": "NANO(1) General Commands Manual NANO(1)",
+  "description": "nano - Nano's ANOther editor, inspired by Pico",
   "global_flags": [
     {
       "short": "-y",
@@ -36,8 +36,8 @@
     {
       "short": "-B",
       "long": "--backup",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -56,8 +56,8 @@
     {
       "short": "-D",
       "long": "--boldtext",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "the  interface,  use bold instead of reverse video.  This will be overridden by setting the options titlecolor, statuscolor, key‐ color, functioncolor, numbercolor, and/or selectedcolor in your nanorc file.  See nanorc(5).",
       "multiple": false,
       "conflicts_with": [],
@@ -66,8 +66,8 @@
     {
       "short": "-O",
       "long": "--bookstyle",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -146,8 +146,8 @@
     {
       "short": "-H",
       "long": "--historylog",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -156,8 +156,8 @@
     {
       "short": "-I",
       "long": "--ignorercfiles",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -196,15 +196,15 @@
     {
       "short": "-G",
       "long": "--locking",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
-      "short": "-!",
+      "short": null,
       "long": "--magic",
       "value_type": "Bool",
       "takes_value": false,
@@ -214,10 +214,10 @@
       "requires": []
     },
     {
-      "short": "-_",
+      "short": null,
       "long": "--minibar",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "status bar.   In this \"minibar\" the filename is shown on the left, followed by an asterisk if the buffer has been modified.  On the right are displayed the current line and column number, the code of the character under the cursor (in Unicode format: U+xxxx), the  same  flags as  are  shown by --stateflags, and a percentage that expresses how far the cursor is into the file (linewise).  When a file is loaded or saved, and also when switching between buffers, the number of lines in the buffer is displayed after the filename.  This number  is cleared  upon  the next keystroke, or replaced with an [i/n] counter when multiple buffers are open.  The line plus column numbers and the character code are displayed only when --constantshow is used, and can be toggled on and off with M-C.  The state flags  are  dis‐ played only when --stateflags is used.",
       "multiple": false,
       "conflicts_with": [],
@@ -236,8 +236,8 @@
     {
       "short": "-F",
       "long": "--multibuffer",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -246,8 +246,8 @@
     {
       "short": "-N",
       "long": "--noconvert",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -266,8 +266,8 @@
     {
       "short": "-L",
       "long": "--nonewlines",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "(This can cause you to save non-POSIX text files.)",
       "multiple": false,
       "conflicts_with": [],
@@ -306,8 +306,8 @@
     {
       "short": "-P",
       "long": "--positionlog",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -326,8 +326,8 @@
     {
       "short": "-U",
       "long": "--quickblank",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "status-bar messages disappear after 1 keystroke instead of after 20.  Note that option -c (--constantshow) overrides this.  When option --minibar or --zero is in effect, --quickblank makes a message disappear after 0.8 seconds instead of  after  the  default  1.5 seconds.",
       "multiple": false,
       "conflicts_with": [],
@@ -376,8 +376,8 @@
     {
       "short": "-R",
       "long": "--restricted",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "mode:  don't  read or write to any file not specified on the command line.  This means: don't read or write history files; don't allow suspending; don't allow spell checking; don't allow a file to be appended to, prepended to, or  saved  under  a  different name  if it already has one; and don't make backup files.  Restricted mode can also be activated by invoking nano with any name begin‐ ning with 'r' (e.g. \"rnano\").",
       "multiple": false,
       "conflicts_with": [],
@@ -406,8 +406,8 @@
     {
       "short": "-A",
       "long": "--smarthome",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "When Home is pressed anywhere but at the very beginning of non-whitespace characters on a line, the cursor will  jump  to that beginning (either forwards or backwards).  If the cursor is already at that position, it will jump to the true be‐ ginning of the line.",
       "multiple": false,
       "conflicts_with": [],
@@ -416,8 +416,8 @@
     {
       "short": "-S",
       "long": "--softwrap",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "(You can make this soft-wrapping occur at whitespace  instead of rudely at the screen's edge, by using also --atblanks.)  (The old short option, -$, is deprecated.)",
       "multiple": false,
       "conflicts_with": [],
@@ -434,7 +434,7 @@
       "requires": []
     },
     {
-      "short": "-%",
+      "short": null,
       "long": "--stateflags",
       "value_type": "File",
       "takes_value": true,
@@ -476,8 +476,8 @@
     {
       "short": "-M",
       "long": "--trimblanks",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -496,8 +496,8 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -516,8 +516,8 @@
     {
       "short": "-W",
       "long": "--wordbounds",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -536,8 +536,8 @@
     {
       "short": "-Z",
       "long": "--zap",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],

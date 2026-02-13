@@ -1,18 +1,8 @@
 {
   "schema_version": "1.0.0",
   "command": "clang",
-  "description": "CLANG(1) Clang CLANG(1)",
+  "description": "clang - the Clang C, C++, and Objective-C compiler",
   "global_flags": [
-    {
-      "short": "-###",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Print (but do not run) the commands to run for this compilation.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": null,
       "long": "--amdgpu-arch-tool",
@@ -584,16 +574,6 @@
       "requires": []
     },
     {
-      "short": "-mcpu",
-      "long": "--print-supported-cpus.",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "For a list of available CPUs for the target use '-mcpu=help'",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": null,
       "long": "--ptxas-path",
       "value_type": "File",
@@ -709,16 +689,6 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Define <macro> to <value> (or 1 if <value> omitted)",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-D<macroname",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -916,8 +886,8 @@
     {
       "short": "-O0",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -2498,7 +2468,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "debug  info  for these unused types, the negation -fno-eliminate-unused-debug-types can be used.",
+      "description": "debug info for defined but unused types",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3976,9 +3946,9 @@
     {
       "short": "-fkeep-system-includes",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "a  “small”  reproduceable  test case.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Instead of expanding system headers when emitting preprocessor output, preserve the #include directive. Useful when producing preprocessed output for test case reduction. May produce incorrect output if preprocessor symbols that control the included content (e.g. _XOPEN_SOURCE) are defined in the including source file. The portability of the resulting source to other compilation environments is not guaranteed.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3988,7 +3958,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "Possible values of <kind>:",
+      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -4356,9 +4326,9 @@
     {
       "short": "-fmsc-version",
       "long": null,
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
-      "description": "_MSC_VER.  When on Windows, this defaults to either the same value as the currently installed version of cl.exe, or 1933. Not set otherwise.",
+      "description": "Microsoft compiler version number to report in _MSC_VER (0 = don't define it (default))",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -4488,27 +4458,7 @@
       "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": "special  handling  and optimizations for the specific library function.  For example, -fno-builtin-strlen removes any special handling for the strlen() library function.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fno-builtin-std-",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "and  optimizations  for  the  specific  C++  standard  library  function  in  namespace  std.  For  example,",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fno-builtin-std-move_if_noexcept",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "Disable implicit builtin knowledge of a specific function",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -5075,16 +5025,6 @@
     },
     {
       "short": "-fno-objc-infer-related-result-type",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fno-objc-nonfragile-abi.",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -5744,16 +5684,6 @@
       "requires": []
     },
     {
-      "short": "-fobjc-abi-version",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "(non-fragile ABI 2).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-fobjc-arc",
       "long": null,
       "value_type": "Bool",
@@ -5809,26 +5739,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Enable Objective-C exceptions",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fobjc-nonfragile-abi",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "non-fragile  ABI.  On  platforms  for  which  this  is  the  default  ABI,  it  can  be  disabled  with",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fobjc-nonfragile-abi-version",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "the  Objective-C non-fragile ABI version to use by default. This will only be used as the Objective-C ABI when the non-fragile ABI is enabled (either via -fobjc-nonfragile-abi, or because it is the platform default).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -6814,16 +6724,6 @@
       "requires": []
     },
     {
-      "short": "-fshow-column",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-fshow-overloads",
       "long": null,
       "value_type": "String",
@@ -7018,7 +6918,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "debug type information can be spread out over multiple compilation units.  For instance, Clang will not emit type definitions for types that are not needed by a module and could be replaced with a forward declaration.  Further, Clang will only emit type info for a dynamic C++ class in the module that contains the vtable for the class.",
+      "description": "Emit full debug info for all types used by the program",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -7166,8 +7066,8 @@
     {
       "short": "-ftime-report",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "(For new pass manager) 'per-pass': one report for each pass; 'per-pass-run': one report for each pass invocation",
       "multiple": false,
       "conflicts_with": [],
@@ -7189,16 +7089,6 @@
       "value_type": "File",
       "takes_value": true,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-ftls-model",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "values  are:  “global-dynamic”,  “local-dy‐ namic”,  “initial-exec”  and “local-exec”. The default is “global-dynamic”. The default model can be overridden with the tls_model at‐ tribute. The compiler will try to choose a more efficient model if possible.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -7548,7 +7438,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This disables uniquing of strings and other optimizations.",
+      "description": "Store string literals as writable data",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -7858,7 +7748,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "inlining  information, but does not include any information about variables, their locations or types.",
+      "description": "Emit debug line number tables only",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -8049,16 +7939,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Make the next included directory (-I or -F) an indexer header map",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-integrated-as",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "to  enable  and disable, respectively, the use of the integrated assembler. Whether the integrated assembler is on by default is target dependent.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -8319,6 +8199,16 @@
       "value_type": "String",
       "takes_value": true,
       "description": null,
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
+      "short": "-mcpu",
+      "long": null,
+      "value_type": "String",
+      "takes_value": true,
+      "description": "For a list of available CPUs for the target use '-mcpu=help'",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -10266,7 +10156,7 @@
     {
       "short": "-print-file-name",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -10306,7 +10196,7 @@
     {
       "short": "-print-prog-name",
       "long": null,
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": null,
       "multiple": false,
@@ -10466,8 +10356,8 @@
     {
       "short": "-save-temps",
       "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Save intermediate compilation results.",
       "multiple": false,
       "conflicts_with": [],

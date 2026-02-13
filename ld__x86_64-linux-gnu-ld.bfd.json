@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "ld",
-  "description": "LD(1) GNU Development Tools LD(1)",
+  "description": "ld - The GNU linker",
   "global_flags": [
     {
       "short": null,
@@ -249,16 +249,6 @@
       "value_type": "String",
       "takes_value": true,
       "description": "Demangle symbol names [using STYLE]",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--demangle[",
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -626,8 +616,8 @@
     {
       "short": null,
       "long": "--embedded-relocs",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "option  is similar to the --emit-relocs option except that the relocs are stored in a target-specific section.  This option is only supported by the BFIN, CR16 and M68K targets.",
       "multiple": false,
       "conflicts_with": [],
@@ -909,26 +899,6 @@
       "value_type": "String",
       "takes_value": true,
       "description": "This  tells  the  dynamic  linker  that  the symbol table of the shared object which is being created should be used as a filter on the symbol table of the shared object name.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--foo.c",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--foo.h",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2046,16 +2016,6 @@
     {
       "short": null,
       "long": "--split-by-file",
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Split output sections every SIZE octets",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--split-by-file[",
       "value_type": "String",
       "takes_value": true,
       "description": "size defaults to a size of  1  if not given.",
@@ -2066,16 +2026,6 @@
     {
       "short": null,
       "long": "--split-by-reloc",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "Split output sections every COUNT relocs",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--split-by-reloc[",
       "value_type": "File",
       "takes_value": true,
       "description": "to  creates  extra  sections in the output file so that no single output section in the file contains more than count relocations. This is useful when generating huge relocatable files for downloading into certain real time kernels with the COFF  object  file  format; since  COFF  cannot represent more than 65535 relocations in a single section.  Note that this will fail to work with object file formats which do not support arbitrary sections.  The linker will not split up individual input sections for redistribution, so if a single input section contains more than count relocations one output section will contain that many relocations.  count defaults to a value of 32768.",
@@ -2278,16 +2228,6 @@
       "long": "--unique",
       "value_type": "String",
       "takes_value": true,
-      "description": "Don't merge input [SECTION | orphan] sections",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--unique[",
-      "value_type": "String",
-      "takes_value": true,
       "description": "a separate output section for every input section matching SECTION, or if the optional wildcard SECTION argument is missing, for every orphan input section.  An orphan section is one not specifically mentioned in a linker script.  You may use  this  option  multiple times on the command line;  It prevents the normal merging of input sections with the same name, overriding output section assignments in a linker script.",
       "multiple": false,
       "conflicts_with": [],
@@ -2306,16 +2246,6 @@
     {
       "short": null,
       "long": "--verbose",
-      "value_type": "Url",
-      "takes_value": true,
-      "description": "Output lots of information during link",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--verbose[",
       "value_type": "File",
       "takes_value": true,
       "description": "Display which input files can and cannot be opened.  Display the linker script being used by the linker. If the optional NUMBER argument > 1, plugin symbol status will also be displayed.",
@@ -2586,9 +2516,9 @@
     {
       "short": "-Bsymbolic-functions",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "creating  a  shared  library, bind references to global function symbols to the definition within the shared library, if any.  This option is only meaningful on ELF platforms which support shared libraries.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Bind global function references locally",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2736,9 +2666,9 @@
     {
       "short": "-Tldata-segment",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": "the  ldata segment.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set address of ldata segment",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -2746,8 +2676,8 @@
     {
       "short": "-Trodata-segment",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Set address of rodata segment",
       "multiple": false,
       "conflicts_with": [],
@@ -2766,8 +2696,8 @@
     {
       "short": "-Ttext-segment",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Set address of text segment",
       "multiple": false,
       "conflicts_with": [],
@@ -2849,16 +2779,6 @@
       "value_type": "Bool",
       "takes_value": false,
       "description": "Read MRI format linker script",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-call_shared",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "against dynamic libraries.  This is only meaningful on platforms for which shared libraries are supported.  This option is normally the default on such platforms.  The different variants of this option are for compatibility with  various  systems.   You  may  use  this option multiple times on the command line: it affects library searching for -l options which follow it.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3048,17 +2968,7 @@
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
-      "description": "This is the default.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-non_shared",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
+      "description": "Create a position dependent executable (default)",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -3116,9 +3026,9 @@
     {
       "short": "-rpath-link",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "This happens when an \"ld -shared\" link includes a shared library as one of the input files.",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "Set link time shared library search path",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

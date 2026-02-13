@@ -1,30 +1,10 @@
 {
   "schema_version": "1.0.0",
   "command": "pod2usage",
-  "description": "POD2USAGE(1) Perl Programmers Reference Guide POD2USAGE(1)",
+  "description": "pod2usage - print usage messages from embedded pod docs in files",
   "global_flags": [
     {
       "short": "-exit",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-formatter",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-formatter.",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
@@ -34,10 +14,20 @@
       "requires": []
     },
     {
+      "short": "-formatter",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "text formatter to use. Default is Pod::Text, or for very old Perl versions Pod::PlainText. An alternative would be e.g. Pod::Text::Termcap.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-help",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Print a brief help message and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -46,8 +36,8 @@
     {
       "short": "-man",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "Print this command's manual page and exit.",
       "multiple": false,
       "conflicts_with": [],
@@ -56,9 +46,9 @@
     {
       "short": "-output",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "output file to print to. If the special names \"-\" or \">&1\" or \">&STDOUT\" are used then standard output is used. If \">&2\" or \">&STDERR\" is used then standard error is used.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -66,9 +56,9 @@
     {
       "short": "-pathlist",
       "long": null,
-      "value_type": "Directory",
-      "takes_value": true,
-      "description": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "path in the given list should be separated by a ':' on Unix (';' on MSWin32 and DOS).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -76,8 +66,8 @@
     {
       "short": "-utf8",
       "long": null,
-      "value_type": "File",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "This option assumes that the formatter (see above) understands the option \"utf8\". It turns on generation of utf8 output.",
       "multiple": false,
       "conflicts_with": [],
@@ -86,8 +76,8 @@
     {
       "short": "-verbose",
       "long": null,
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": null,
       "multiple": false,
       "conflicts_with": [],
@@ -251,7 +241,14 @@
       "description": null
     },
     {
-      "name": "e.g.",
+      "name": "dos",
+      "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "e.g",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -286,13 +283,6 @@
       "description": null
     },
     {
-      "name": "exit.",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "exitval",
       "value_type": "String",
       "required": true,
@@ -307,7 +297,7 @@
       "description": null
     },
     {
-      "name": "format.",
+      "name": "format",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -524,22 +514,8 @@
       "description": null
     },
     {
-      "name": "output.",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "page",
       "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "path.",
-      "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null
@@ -587,7 +563,7 @@
       "description": null
     },
     {
-      "name": "return.",
+      "name": "return",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -741,13 +717,6 @@
       "description": null
     },
     {
-      "name": "to.",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "turns",
       "value_type": "String",
       "required": true,
@@ -783,7 +752,7 @@
       "description": null
     },
     {
-      "name": "use.",
+      "name": "use",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -791,13 +760,6 @@
     },
     {
       "name": "used",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "used.",
       "value_type": "String",
       "required": true,
       "multiple": false,

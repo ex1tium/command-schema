@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "sudoreplay",
-  "description": "SUDOREPLAY(8) System Manager's Manual SUDOREPLAY(8)",
+  "description": "sudoreplay — replay sudo session logs",
   "global_flags": [
     {
       "short": "-d",
@@ -26,8 +26,8 @@
     {
       "short": "-F",
       "long": "--follow",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "When replaying a session, sudoreplay will ignore end-of-file and keep replaying until  the  log  is  complete. This  can  be used to replay a session that is still in progress, similar to “tail -f”.  An I/O log file is considered to be complete when the write bits have been cleared on the session's timing file.  Versions of sudo prior to 1.9.1 do not clear the write bits upon completion.",
       "multiple": false,
       "conflicts_with": [],
@@ -66,8 +66,8 @@
     {
       "short": "-R",
       "long": "--no-resize",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "do not attempt to re-size the terminal",
       "multiple": false,
       "conflicts_with": [],
@@ -106,19 +106,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "display version information and exit",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-FhnRS",
-      "long": null,
       "value_type": "String",
       "takes_value": true,
-      "description": null,
+      "description": "display version information and exit",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

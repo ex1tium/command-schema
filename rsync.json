@@ -1,18 +1,8 @@
 {
   "schema_version": "1.0.0",
   "command": "rsync",
-  "description": "rsync(1) User Commands rsync(1)",
+  "description": "rsync - a fast, versatile, remote (and local) file-copying tool",
   "global_flags": [
-    {
-      "short": "-8",
-      "long": "--8-bit-output",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "they're  valid  in the  current locale and escaping the invalid ones.  All control characters (but never tabs) are always escaped, regardless of this op‐ tion's setting.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
     {
       "short": "-A",
       "long": "--acls",
@@ -56,8 +46,8 @@
     {
       "short": "-a",
       "long": "--archive",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "will cause the next transfer to behave as if it used --ignore-times (-I), causing all files to be updated (though rsync's delta- transfer algorithm will make the update fairly efficient if the files haven't actually changed, you're much better off using -t).",
       "multiple": false,
       "conflicts_with": [],
@@ -296,8 +286,8 @@
     {
       "short": "-N",
       "long": "--crtimes",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "preserve create times (newness)",
       "multiple": false,
       "conflicts_with": [],
@@ -562,8 +552,8 @@
     {
       "short": "-0",
       "long": "--from0",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "File",
+      "takes_value": true,
       "description": "tells  rsync  that  the  rules/filenames it reads from a file are terminated by a null ('\\0') character, not a NL, CR, or CR+LF. This affects --exclude-from, --include-from, --files-from, and any merged files specified in a --filter  rule.   It  does  not  affect",
       "multiple": false,
       "conflicts_with": [],
@@ -890,7 +880,7 @@
       "requires": []
     },
     {
-      "short": "-@",
+      "short": null,
       "long": "--modify-window",
       "value_type": "File",
       "takes_value": true,
@@ -952,19 +942,9 @@
     {
       "short": null,
       "long": "--no-motd",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "This suppresses  the  message-of- the-day (MOTD) text, but it also affects the list of modules that the daemon sends in response to the \"rsync host::\" request (due to a limitation in the rsync protocol), so omit this option if you want to request the list of modules from the daemon.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--no-old-args).",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -1520,6 +1500,16 @@
       "requires": []
     },
     {
+      "short": "-8",
+      "long": null,
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "they're  valid  in the  current locale and escaping the invalid ones.  All control characters (but never tabs) are always escaped, regardless of this op‐ tion's setting.",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-D",
       "long": null,
       "value_type": "String",
@@ -1545,56 +1535,6 @@
       "value_type": "String",
       "takes_value": true,
       "description": "The -P option is equivalent to \"--partial --progress\".  Its purpose is to make it much easier to specify these two options for a  long transfer that may be interrupted.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a.",
-      "long": null,
-      "value_type": "File",
-      "takes_value": true,
-      "description": "Also note that the effect of the (enabled by default) -r option is to duplicate only the path info that is read from the  file -- it does not force the duplication of the source-spec path (/usr in this case).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f'+r",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f'-/",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "would  exclude  the  passwd  file  any time the transfer was sending files from the \"/etc\" directory, and \"-/ sub‐ dir/foo\" would always exclude \"foo\" when it is in a dir named \"subdir\", even if \"foo\" is at the root of the current transfer.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-f'-s",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-rw-rw-r--",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "80 2005/01/11 10:37:37 support/Makefile",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -8895,7 +8835,7 @@
       "description": null
     },
     {
-      "name": "copying.",
+      "name": "copying",
       "value_type": "String",
       "required": true,
       "multiple": false,

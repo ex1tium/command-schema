@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "numactl",
-  "description": "NUMACTL(8) Linux Administrator's Manual NUMACTL(8)",
+  "description": "numactl - Control NUMA policy for processes or shared memory",
   "global_flags": [
     {
       "short": "-a",
@@ -106,8 +106,8 @@
     {
       "short": null,
       "long": "--length",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "the  remaining  length  Required when a shared memory segment is created and specifies the length of the new segment then. Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
       "multiple": false,
       "conflicts_with": [],
@@ -136,8 +136,8 @@
     {
       "short": null,
       "long": "--offset",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Valid units are m (for MB), g (for GB), k (for KB), otherwise it specifies bytes.",
       "multiple": false,
       "conflicts_with": [],
@@ -374,13 +374,6 @@
   ],
   "positional": [
     {
-      "name": "arguments",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "cpus",
       "value_type": "String",
       "required": true,
@@ -402,13 +395,6 @@
       "description": null
     },
     {
-      "name": "memory",
-      "value_type": "String",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
       "name": "node",
       "value_type": "String",
       "required": true,
@@ -416,21 +402,14 @@
       "description": null
     },
     {
-      "name": "numactl",
-      "value_type": "Number",
-      "required": true,
-      "multiple": false,
-      "description": null
-    },
-    {
-      "name": "offset",
+      "name": "nodes",
       "value_type": "String",
       "required": true,
       "multiple": false,
       "description": null
     },
     {
-      "name": "policy",
+      "name": "offset",
       "value_type": "String",
       "required": true,
       "multiple": false,
@@ -446,6 +425,13 @@
     {
       "name": "shmmode",
       "value_type": "String",
+      "required": true,
+      "multiple": false,
+      "description": null
+    },
+    {
+      "name": "tmpfsfile",
+      "value_type": "File",
       "required": true,
       "multiple": false,
       "description": null

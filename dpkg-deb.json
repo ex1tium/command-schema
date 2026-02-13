@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-deb",
-  "description": "dpkg-deb(1) dpkg suite dpkg-deb(1)",
+  "description": "dpkg-deb - Debian package archive (.deb) manipulation tool",
   "global_flags": [
     {
       "short": null,
@@ -26,8 +26,8 @@
     {
       "short": "-D",
       "long": "--debug",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "This is not very interesting.",
       "multiple": false,
       "conflicts_with": [],
@@ -94,6 +94,16 @@
       "requires": []
     },
     {
+      "short": null,
+      "long": "--uniform-compression",
+      "value_type": "Bool",
+      "takes_value": false,
+      "description": "that  the same compression parameters should be used for all archive members (i.e. control.tar and data.tar; since dpkg 1.17.6). Otherwise only the data.tar member will use those parameters.  The only supported compression types allowed  to  be  uniformly  used  are none,  gzip,  xz and zstd.  The --no-uniform-compression option disables uniform compression (since dpkg 1.19.0).  Uniform compression is the default (since dpkg 1.19.0).",
+      "multiple": false,
+      "conflicts_with": [],
+      "requires": []
+    },
+    {
       "short": "-v",
       "long": "--verbose",
       "value_type": "Bool",
@@ -134,16 +144,6 @@
       "requires": []
     },
     {
-      "short": "-Scompress-strategy",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "which  compression  strategy  to use on the compressor backend, when building a package (since dpkg 1.16.2).  Allowed values are none (since dpkg 1.16.4), filtered, huffman, rle and fixed for gzip (since dpkg 1.17.0) and extreme for xz.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-W",
       "long": null,
       "value_type": "String",
@@ -159,16 +159,6 @@
       "value_type": "File",
       "takes_value": true,
       "description": "Extract & list files.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-Zcompress-type",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "Allowed values are  gzip,  xz  (since  dpkg  1.15.6),  zstd  (since  dpkg 1.21.18) and none (default is zstd).",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -219,16 +209,6 @@
       "value_type": "File",
       "takes_value": true,
       "description": "Extract files.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-zcompress-level",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "For gzip, from 0-9 with 0 being mapped to compressor none.  For xz from 0-9.  For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.  Before  dpkg  1.16.2  level  0  was  equivalent  to  compressor  none  for  all compressors.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "man",
-  "description": "MAN(1) Manual pager utils MAN(1)",
+  "description": "man - an interface to the system reference manuals",
   "global_flags": [
     {
       "short": "-a",
@@ -76,8 +76,8 @@
     {
       "short": "-Z",
       "long": "--ditroff",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "If groff -mandoc is groff, this option is passed to groff and will suppress the use of a post-processor.  It implies -t.",
       "multiple": false,
       "conflicts_with": [],
@@ -106,7 +106,7 @@
     {
       "short": "-K",
       "long": "--global-apropos",
-      "value_type": "String",
+      "value_type": "Number",
       "takes_value": true,
       "description": "for text in all manual pages.  This is a brute-force search, and is likely to take some time; if you can, you should specify a section to reduce the number of pages that need to be searched.  Search terms may be simple strings (the default), or regular  expres‐ sions if the --regex option is used.",
       "multiple": false,
@@ -115,7 +115,7 @@
     },
     {
       "short": "-X",
-      "long": "--gxditview[",
+      "long": "--gxditview",
       "value_type": "String",
       "takes_value": true,
       "description": "The dpi (dots per inch) may be 75, 75-12, 100, or 100-12, defaulting to 75; the -12 variants use a 12-point base font.  This option implies -T with the X75,  X75-12,  X100,  or X100-12 device respectively.",
@@ -135,7 +135,7 @@
     },
     {
       "short": "-H",
-      "long": "--html[",
+      "long": "--html",
       "value_type": "String",
       "takes_value": true,
       "description": "The choice of browser  is  deter‐ mined  by the optional browser argument if one is provided, by the $BROWSER environment variable, or by a compile-time default if that is unset (usually lynx).  This option implies -t, and will only work with GNU troff.",
@@ -186,8 +186,8 @@
     {
       "short": "-I",
       "long": "--match-case",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "look for pages case-sensitively",
       "multiple": false,
       "conflicts_with": [],
@@ -306,8 +306,8 @@
     {
       "short": "-t",
       "long": "--troff",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "This option is not required in conjunction with -H, -T, or -Z.",
       "multiple": false,
       "conflicts_with": [],
@@ -315,7 +315,7 @@
     },
     {
       "short": "-T",
-      "long": "--troff-device[",
+      "long": "--troff-device",
       "value_type": "String",
       "takes_value": true,
       "description": "option  is used to change groff (or possibly troff's) output to be suitable for a device other than the default.  It implies -t. Examples (provided with Groff-1.17) include dvi, latin1, ps, utf8, X75 and X100.",
@@ -346,8 +346,8 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "print program version",
       "multiple": false,
       "conflicts_with": [],
@@ -356,16 +356,6 @@
     {
       "short": null,
       "long": "--warnings",
-      "value_type": "String",
-      "takes_value": true,
-      "description": "enable warnings from groff",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--warnings[",
       "value_type": "String",
       "takes_value": true,
       "description": "warnings from groff.  This may be used to perform sanity checks on the source text of manual pages.  warnings is a comma-sepa‐ rated list of warning names; if it is not supplied, the default is \"mac\".  To disable a groff warning, prefix it with \"!\":  for  exam‐ ple,  --warnings=mac,!break  enables warnings in the \"mac\" category and disables warnings in the \"break\" category.  See the “Warnings” node in info groff for a list of available warning names.",
@@ -396,7 +386,7 @@
     {
       "short": "-W",
       "long": "--where-cat",
-      "value_type": "String",
+      "value_type": "File",
       "takes_value": true,
       "description": "If the -a op‐ tion is also used, then print the locations of all preformatted cat files that match the search criteria.",
       "multiple": false,

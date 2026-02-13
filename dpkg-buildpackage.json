@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "dpkg-buildpackage",
-  "description": "dpkg-buildpackage(1) dpkg suite dpkg-buildpackage(1)",
+  "description": "dpkg-buildpackage - build binary or source packages from sources",
   "global_flags": [
     {
       "short": null,
@@ -116,8 +116,8 @@
     {
       "short": "-D",
       "long": "--check-builddeps",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "This is the default behavior.",
       "multiple": false,
       "conflicts_with": [],
@@ -129,16 +129,6 @@
       "value_type": "File",
       "takes_value": true,
       "description": "used  to  check  the .changes file itself and any artifact built referenced in the file (since dpkg 1.17.6).  The command should take the .changes pathname as an argument.  This command will usually be lintian.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--check-command).",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -175,7 +165,7 @@
     },
     {
       "short": "-i",
-      "long": "--diff-ignore[",
+      "long": "--diff-ignore",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -244,18 +234,18 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--jobs-force",
-      "value_type": "String",
+      "short": "-j",
+      "long": "--jobs",
+      "value_type": "Number",
       "takes_value": true,
-      "description": null,
+      "description": "The  number  of  jobs matching  the  number  of online processors if auto is specified (since dpkg 1.17.10), or unlimited number if jobs is not specified.  The default behavior is auto (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer  to  use  with  any package including those that are not parallel-build safe.  Setting the number of jobs to 1 will restore serial execution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
     },
     {
       "short": null,
-      "long": "--jobs-force[",
+      "long": "--jobs-force",
       "value_type": "String",
       "takes_value": true,
       "description": "the  make",
@@ -265,20 +255,10 @@
     },
     {
       "short": "-J",
-      "long": "--jobs-try[",
+      "long": "--jobs-try",
       "value_type": "String",
       "takes_value": true,
       "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-j",
-      "long": "--jobs[",
-      "value_type": "Number",
-      "takes_value": true,
-      "description": "The  number  of  jobs matching  the  number  of online processors if auto is specified (since dpkg 1.17.10), or unlimited number if jobs is not specified.  The default behavior is auto (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer  to  use  with  any package including those that are not parallel-build safe.  Setting the number of jobs to 1 will restore serial execution.",
       "multiple": false,
       "conflicts_with": [],
       "requires": []
@@ -306,8 +286,8 @@
     {
       "short": "-nc",
       "long": "--no-pre-clean",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "Implies -b if nothing else has been selected among -F, -g,",
       "multiple": false,
       "conflicts_with": [],
@@ -485,7 +465,7 @@
     },
     {
       "short": "-I",
-      "long": "--tar-ignore[",
+      "long": "--tar-ignore",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -584,16 +564,6 @@
       "requires": []
     },
     {
-      "short": "-Cchanges-description",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-F",
       "long": null,
       "value_type": "String",
@@ -634,31 +604,11 @@
       "requires": []
     },
     {
-      "short": "-emaintainer-address",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": "See its manual page.",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-g",
       "long": null,
       "value_type": "Bool",
       "takes_value": false,
       "description": "Equivalent to --build=source,all (since dpkg 1.17.11).",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-mmaintainer-address",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []

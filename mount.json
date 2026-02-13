@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
   "command": "mount",
-  "description": "MOUNT(8) System Administration MOUNT(8)",
+  "description": "mount - mount a filesystem",
   "global_flags": [
     {
       "short": "-a",
       "long": "--all",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "mount all filesystems mentioned in fstab",
       "multiple": false,
       "conflicts_with": [],
@@ -16,8 +16,8 @@
     {
       "short": "-B",
       "long": "--bind",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "mount a subtree somewhere else (same as -o bind)",
       "multiple": false,
       "conflicts_with": [],
@@ -46,8 +46,8 @@
     {
       "short": "-T",
       "long": "--fstab",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "alternative file to /etc/fstab",
       "multiple": false,
       "conflicts_with": [],
@@ -76,8 +76,8 @@
     {
       "short": "-L",
       "long": "--label",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "synonym for LABEL=<label>",
       "multiple": false,
       "conflicts_with": [],
@@ -85,7 +85,7 @@
     },
     {
       "short": null,
-      "long": "--make-[shared",
+      "long": "--make-",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -175,7 +175,7 @@
     },
     {
       "short": "-m",
-      "long": "--mkdir[",
+      "long": "--mkdir",
       "value_type": "String",
       "takes_value": true,
       "description": "alias to '-o X-mount.mkdir[=<mode>]'",
@@ -186,8 +186,8 @@
     {
       "short": "-M",
       "long": "--move",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "move a subtree to some other place",
       "multiple": false,
       "conflicts_with": [],
@@ -236,8 +236,8 @@
     {
       "short": "-o",
       "long": "--options",
-      "value_type": "String",
-      "takes_value": true,
+      "value_type": "Bool",
+      "takes_value": false,
       "description": "comma-separated list of mount options",
       "multiple": false,
       "conflicts_with": [],
@@ -274,20 +274,10 @@
       "requires": []
     },
     {
-      "short": null,
-      "long": "--options-source-force.",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
       "short": "-R",
       "long": "--rbind",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "mount a subtree and all submounts somewhere else",
       "multiple": false,
       "conflicts_with": [],
@@ -376,8 +366,8 @@
     {
       "short": "-U",
       "long": "--uuid",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "synonym for UUID=<uuid> LABEL=<label> specifies device by filesystem label UUID=<uuid> specifies device by filesystem UUID PARTLABEL=<label> specifies device by partition label PARTUUID=<uuid> specifies device by partition UUID ID=<id> specifies device by udev hardware ID <device> specifies device by path <directory> mountpoint for bind mounts (see --bind/rbind) <file> regular file for loopdev setup",
       "multiple": false,
       "conflicts_with": [],
@@ -396,39 +386,9 @@
     {
       "short": "-V",
       "long": "--version",
-      "value_type": "Bool",
-      "takes_value": false,
+      "value_type": "String",
+      "takes_value": true,
       "description": "display version",
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-a.",
-      "long": null,
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fFnrsvw",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": "-fnrsvw",
-      "long": null,
-      "value_type": "String",
-      "takes_value": true,
-      "description": null,
       "multiple": false,
       "conflicts_with": [],
       "requires": []

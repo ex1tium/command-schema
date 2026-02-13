@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "command": "git",
-  "description": "GIT(1) Git Manual GIT(1)",
+  "description": "git - the stupid content tracker",
   "global_flags": [
     {
       "short": null,
@@ -36,16 +36,6 @@
     {
       "short": null,
       "long": "--exec-path",
-      "value_type": "Bool",
-      "takes_value": false,
-      "description": null,
-      "multiple": false,
-      "conflicts_with": [],
-      "requires": []
-    },
-    {
-      "short": null,
-      "long": "--exec-path[",
       "value_type": "String",
       "takes_value": true,
       "description": null,
@@ -250,37 +240,17 @@
       "description": "Add file contents to the index",
       "flags": [
         {
-          "short": null,
-          "long": "--[no-]all",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]ignore-removal",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-A",
           "long": "--all",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
-          "short": "-)x",
+          "short": null,
           "long": "--chmod",
           "value_type": "String",
           "takes_value": true,
@@ -332,6 +302,16 @@
         {
           "short": null,
           "long": "--ignore-missing",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--ignore-removal",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -401,6 +381,16 @@
         },
         {
           "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--refresh",
           "value_type": "Bool",
           "takes_value": false,
@@ -448,28 +438,19 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
-        },
+        }
+      ],
+      "positional": [],
+      "subcommands": [
         {
-          "short": "-u.",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
+          "name": "x",
           "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
+          "flags": [],
+          "positional": [],
+          "subcommands": [],
+          "aliases": []
         }
       ],
-      "positional": [
-        {
-          "name": "add",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
-      "subcommands": [],
       "aliases": []
     },
     {
@@ -489,16 +470,6 @@
         {
           "short": null,
           "long": "--no-checkout",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--term-(new|bad)",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -579,7 +550,7 @@
         },
         {
           "short": null,
-          "long": "--color[",
+          "long": "--color",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -589,7 +560,7 @@
         },
         {
           "short": null,
-          "long": "--column[",
+          "long": "--column",
           "value_type": "String",
           "takes_value": true,
           "description": "--column and --no-column without options are equivalent to always and never respectively.",
@@ -600,8 +571,8 @@
         {
           "short": null,
           "long": "--contains",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -690,8 +661,8 @@
         {
           "short": null,
           "long": "--merged",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -740,8 +711,8 @@
         {
           "short": null,
           "long": "--no-contains",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -750,8 +721,8 @@
         {
           "short": null,
           "long": "--no-merged",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -828,18 +799,8 @@
           "requires": []
         },
         {
-          "short": "-u",
-          "long": "--set-upstream-to",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": null,
-          "long": "--set-upstream-to.",
+          "long": "--set-upstream-to",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -858,8 +819,18 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--sort",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "prefix). This lists detached HEAD (if present) first, then local branches and finally remote-tracking branches. See git-config(1).",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-t",
-          "long": "--track[",
+          "long": "--track",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -916,18 +887,21 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        },
+        {
+          "short": "-u",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         }
       ],
       "positional": [
         {
           "name": "branchname",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "commit",
           "value_type": "String",
           "required": false,
           "multiple": false,
@@ -941,90 +915,20 @@
           "description": null
         },
         {
-          "name": "object",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "oldbranch",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
           "name": "start-point",
           "value_type": "String",
           "required": false,
           "multiple": false,
           "description": null
-        },
-        {
-          "name": "upstream",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
         }
       ],
-      "subcommands": [
-        {
-          "name": "inherit",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
+      "subcommands": [],
       "aliases": []
     },
     {
       "name": "clone",
       "description": "Clone a repository into a new directory",
       "flags": [
-        {
-          "short": null,
-          "long": "--[no-]reject-shallow",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]remote-submodules",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]shallow-submodules",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]single-branch",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
         {
           "short": null,
           "long": "--also-filter-submodules",
@@ -1197,7 +1101,7 @@
         },
         {
           "short": null,
-          "long": "--recurse-submodules[",
+          "long": "--recurse-submodules",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1210,6 +1114,26 @@
           "long": "--reference",
           "value_type": "String",
           "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--reject-shallow",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--remote-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1247,16 +1171,6 @@
         },
         {
           "short": null,
-          "long": "--shallow-exclude.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
           "long": "--shallow-since",
           "value_type": "String",
           "takes_value": true,
@@ -1266,8 +1180,28 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--shallow-submodules",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-s",
           "long": "--shared",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--single-branch",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1318,58 +1252,9 @@
       ],
       "positional": [
         {
-          "name": "clone",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "depth",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
           "name": "directory",
           "value_type": "Directory",
           "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "git-dir",
-          "value_type": "Directory",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "n",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "name",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "repository",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "upload-pack",
-          "value_type": "String",
-          "required": true,
           "multiple": false,
           "description": null
         }
@@ -1381,16 +1266,6 @@
       "name": "commit",
       "description": "Record changes to the repository",
       "flags": [
-        {
-          "short": null,
-          "long": "--[no-]status",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
         {
           "short": "-a",
           "long": "--all",
@@ -1503,7 +1378,7 @@
         },
         {
           "short": "-S",
-          "long": "--gpg-sign[",
+          "long": "--gpg-sign",
           "value_type": "Number",
           "takes_value": true,
           "description": "--no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier --gpg-sign.",
@@ -1584,8 +1459,8 @@
         {
           "short": "-z",
           "long": "--null",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1614,6 +1489,16 @@
         {
           "short": null,
           "long": "--pathspec-file-nul",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--pathspec-from-file",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1652,7 +1537,7 @@
           "requires": []
         },
         {
-          "short": "-C/-c/--amend",
+          "short": null,
           "long": "--reset-author",
           "value_type": "Bool",
           "takes_value": false,
@@ -1692,7 +1577,7 @@
           "requires": []
         },
         {
-          "short": "-m/-c/-C/-F).",
+          "short": null,
           "long": "--squash",
           "value_type": "String",
           "takes_value": true,
@@ -1733,7 +1618,7 @@
         },
         {
           "short": "-u",
-          "long": "--untracked-files[",
+          "long": "--untracked-files",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1752,20 +1637,10 @@
           "requires": []
         },
         {
-          "short": "-S[<keyid",
-          "long": null,
+          "short": "-n",
+          "long": "--verify",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-u<mode",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -1774,6 +1649,13 @@
       ],
       "positional": [
         {
+          "name": "commit",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
           "name": "msg",
           "value_type": "String",
           "required": true,
@@ -1781,16 +1663,7 @@
           "description": null
         }
       ],
-      "subcommands": [
-        {
-          "name": "amend",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
+      "subcommands": [],
       "aliases": []
     },
     {
@@ -1798,18 +1671,8 @@
       "description": "Show changes between commits, commit and working tree, etc",
       "flags": [
         {
-          "short": "-98",
-          "long": "---",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": null,
-          "long": "--abbrev[",
+          "long": "--abbrev",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1849,7 +1712,7 @@
         },
         {
           "short": "-B",
-          "long": "--break-rewrites[",
+          "long": "--break-rewrites",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1879,6 +1742,26 @@
         },
         {
           "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto. It can be changed by the color.ui and color.diff configuration settings.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color-moved",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--color-moved-ws",
           "value_type": "String",
           "takes_value": true,
@@ -1889,30 +1772,10 @@
         },
         {
           "short": null,
-          "long": "--color-moved[",
+          "long": "--color-words",
           "value_type": "String",
           "takes_value": true,
           "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--color-words[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--color[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto. It can be changed by the color.ui and color.diff configuration settings.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -1968,8 +1831,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--dirstat-by-file[",
+          "short": "-X",
+          "long": "--dirstat",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -1978,8 +1841,8 @@
           "requires": []
         },
         {
-          "short": "-X",
-          "long": "--dirstat[",
+          "short": null,
+          "long": "--dirstat-by-file",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2019,7 +1882,7 @@
         },
         {
           "short": "-C",
-          "long": "--find-copies-harder",
+          "long": "--find-copies",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2039,7 +1902,7 @@
         },
         {
           "short": "-M",
-          "long": "--find-renames[",
+          "long": "--find-renames",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2060,8 +1923,8 @@
         {
           "short": "-W",
           "long": "--function-context",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2139,7 +2002,7 @@
         },
         {
           "short": null,
-          "long": "--ignore-submodules[",
+          "long": "--ignore-submodules",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2170,8 +2033,8 @@
         {
           "short": "-D",
           "long": "--irreversible-delete",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2189,7 +2052,7 @@
         },
         {
           "short": null,
-          "long": "--ita-visible-in-index.",
+          "long": "--ita-visible-in-index",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -2339,7 +2202,27 @@
         },
         {
           "short": null,
+          "long": "--numstat",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--output",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--output-indicator-new",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2389,20 +2272,20 @@
         },
         {
           "short": null,
-          "long": "--relative.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
+          "long": "--relative",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--relative[",
-          "value_type": "Number",
-          "takes_value": true,
-          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
+          "long": "--rename-empty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -2439,6 +2322,16 @@
         },
         {
           "short": null,
+          "long": "--stat",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--stat-graph-width",
           "value_type": "Bool",
           "takes_value": false,
@@ -2449,17 +2342,7 @@
         },
         {
           "short": null,
-          "long": "--stat[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--submodule[",
+          "long": "--submodule",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2509,7 +2392,7 @@
         },
         {
           "short": null,
-          "long": "--word-diff-regex",
+          "long": "--word-diff",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2519,7 +2402,7 @@
         },
         {
           "short": null,
-          "long": "--word-diff[",
+          "long": "--word-diff-regex",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2542,6 +2425,16 @@
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-98",
+          "long": null,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -2612,13 +2505,6 @@
           "required": false,
           "multiple": false,
           "description": null
-        },
-        {
-          "name": "diff",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
         }
       ],
       "subcommands": [],
@@ -2660,6 +2546,16 @@
         },
         {
           "short": null,
+          "long": "--auto-maintenance",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--deepen",
           "value_type": "String",
           "takes_value": true,
@@ -2691,16 +2587,6 @@
         {
           "short": "-f",
           "long": "--force",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--force).",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -2851,16 +2737,6 @@
         {
           "short": "-P",
           "long": "--prune-tags",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--recurse-submodules-default",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -2870,7 +2746,17 @@
         },
         {
           "short": null,
-          "long": "--recurse-submodules[",
+          "long": "--recurse-submodules",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules-default",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3027,21 +2913,41 @@
           "multiple": false,
           "conflicts_with": [],
           "requires": []
+        },
+        {
+          "short": null,
+          "long": "--write-commit-graph",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--write-fetch-head",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
         }
       ],
       "positional": [
         {
-          "name": "fetch",
+          "name": "group",
           "value_type": "String",
           "required": true,
           "multiple": false,
           "description": null
         },
         {
-          "name": "group",
+          "name": "refspec",
           "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "required": false,
+          "multiple": true,
           "description": null
         },
         {
@@ -3117,26 +3023,6 @@
       "description": "Print lines matching a pattern",
       "flags": [
         {
-          "short": null,
-          "long": "--[no-]exclude-standard",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]recursive",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-A",
           "long": "--after-context",
           "value_type": "String",
@@ -3208,7 +3094,7 @@
         },
         {
           "short": null,
-          "long": "--color[",
+          "long": "--color",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3221,6 +3107,16 @@
           "long": "--column",
           "value_type": "Bool",
           "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-C",
+          "long": "--context",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3259,8 +3155,8 @@
         {
           "short": "-l",
           "long": "--files-with-matches",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3279,8 +3175,8 @@
         {
           "short": "-F",
           "long": "--fixed-strings",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3299,8 +3195,8 @@
         {
           "short": "-W",
           "long": "--function-context",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3419,8 +3315,8 @@
         {
           "short": null,
           "long": "--not",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3447,18 +3343,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--open-files-in-pager",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-O",
-          "long": "--open-files-in-pager[",
+          "long": "--open-files-in-pager",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3469,16 +3355,6 @@
         {
           "short": null,
           "long": "--or",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--or.",
           "value_type": "Bool",
           "takes_value": false,
           "description": "-e has to be used for all patterns.",
@@ -3499,8 +3375,8 @@
         {
           "short": "-P",
           "long": "--perl-regexp",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3597,16 +3473,6 @@
           "requires": []
         },
         {
-          "short": "-C",
-          "long": null,
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-G",
           "long": null,
           "value_type": "Bool",
@@ -3679,66 +3545,10 @@
       ],
       "positional": [
         {
-          "name": "basename",
+          "name": "tree",
           "value_type": "String",
           "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "context",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "depth",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "grep",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "num",
-          "value_type": "Number",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "pager",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "pattern",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "post-context",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "pre-context",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "multiple": true,
           "description": null
         }
       ],
@@ -3809,7 +3619,7 @@
         },
         {
           "short": null,
-          "long": "--shared[",
+          "long": "--shared",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -3849,13 +3659,6 @@
           "required": true,
           "multiple": false,
           "description": null
-        },
-        {
-          "name": "init",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
         }
       ],
       "subcommands": [],
@@ -3866,21 +3669,11 @@
       "description": "Show commit logs",
       "flags": [
         {
-          "short": "-98",
-          "long": "---",
+          "short": null,
+          "long": "--abbrev",
           "value_type": "String",
           "takes_value": true,
           "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "---1----2----4----7",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "\\ 3----5----6----8---",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -3897,19 +3690,9 @@
         },
         {
           "short": null,
-          "long": "--abbrev[",
+          "long": "--all",
           "value_type": "String",
           "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--all",
-          "value_type": "Bool",
-          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -3937,7 +3720,7 @@
         },
         {
           "short": null,
-          "long": "--ancestry-path[",
+          "long": "--ancestry-path",
           "value_type": "String",
           "takes_value": true,
           "description": "commit1..commit2 or commit2 ^commit1), only display commits in that range that are ancestors of <commit>, descendants of <commit>, or <commit> itself. If no commit is specified, use commit1 (the excluded part of the range) as <commit>. Can be passed multiple times; if so, a commit is included if it is any of the commits given or if it is an ancestor or descendant of one of them.",
@@ -4006,7 +3789,7 @@
           "requires": []
         },
         {
-          "short": "-.",
+          "short": null,
           "long": "--boundary",
           "value_type": "Bool",
           "takes_value": false,
@@ -4017,7 +3800,7 @@
         },
         {
           "short": null,
-          "long": "--branches[",
+          "long": "--branches",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4027,7 +3810,7 @@
         },
         {
           "short": "-B",
-          "long": "--break-rewrites[",
+          "long": "--break-rewrites",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4036,11 +3819,11 @@
           "requires": []
         },
         {
-          "short": "-p.",
+          "short": "-p",
           "long": "--cc",
           "value_type": "String",
           "takes_value": true,
-          "description": null,
+          "description": "shows commits that touch the specified paths, and diffs about the same specified paths. With this, the full diff is shown for commits that touch the specified paths; this means that \"<path>...\" limits only commits, and doesn’t limit diff for those commits.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -4107,6 +3890,26 @@
         },
         {
           "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color-moved",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--color-moved-ws",
           "value_type": "String",
           "takes_value": true,
@@ -4117,30 +3920,10 @@
         },
         {
           "short": null,
-          "long": "--color-moved[",
+          "long": "--color-words",
           "value_type": "String",
           "takes_value": true,
           "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--color-words[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--color[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -4266,8 +4049,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--dirstat-by-file[",
+          "short": "-X",
+          "long": "--dirstat",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4276,8 +4059,8 @@
           "requires": []
         },
         {
-          "short": "-X",
-          "long": "--dirstat[",
+          "short": null,
+          "long": "--dirstat-by-file",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4368,8 +4151,8 @@
         {
           "short": "-E",
           "long": "--extended-regexp",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4377,7 +4160,7 @@
         },
         {
           "short": "-C",
-          "long": "--find-copies-harder",
+          "long": "--find-copies",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4397,7 +4180,7 @@
         },
         {
           "short": "-M",
-          "long": "--find-renames[",
+          "long": "--find-renames",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4418,8 +4201,8 @@
         {
           "short": "-F",
           "long": "--fixed-strings",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4431,26 +4214,6 @@
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-M90%",
-          "long": "--follow.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-p",
-          "long": "--full-diff",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "shows commits that touch the specified paths, and diffs about the same specified paths. With this, the full diff is shown for commits that touch the specified paths; this means that \"<path>...\" limits only commits, and doesn’t limit diff for those commits.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -4478,8 +4241,8 @@
         {
           "short": "-W",
           "long": "--function-context",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4607,7 +4370,7 @@
         },
         {
           "short": null,
-          "long": "--ignore-submodules[",
+          "long": "--ignore-submodules",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4648,8 +4411,8 @@
         {
           "short": "-D",
           "long": "--irreversible-delete",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4667,7 +4430,7 @@
         },
         {
           "short": null,
-          "long": "--ita-visible-in-index.",
+          "long": "--ita-visible-in-index",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -4687,6 +4450,16 @@
         },
         {
           "short": null,
+          "long": "--left-right",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--line-prefix",
           "value_type": "String",
           "takes_value": true,
@@ -4700,6 +4473,26 @@
           "long": "--log-size",
           "value_type": "Bool",
           "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--mailmap",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": "-n",
+          "long": "--max-count",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4907,7 +4700,7 @@
         },
         {
           "short": null,
-          "long": "--no-walk[",
+          "long": "--no-walk",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4927,7 +4720,17 @@
         },
         {
           "short": null,
-          "long": "--notes[",
+          "long": "--notes",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--numstat",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4957,6 +4760,16 @@
         },
         {
           "short": null,
+          "long": "--output-indicator-new",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--parents",
           "value_type": "Bool",
           "takes_value": false,
@@ -4967,7 +4780,7 @@
         },
         {
           "short": "-L",
-          "long": "--patch.",
+          "long": "--patch",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -4988,8 +4801,8 @@
         {
           "short": "-P",
           "long": "--perl-regexp",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -4997,7 +4810,7 @@
         },
         {
           "short": null,
-          "long": "--pretty[",
+          "long": "--pretty",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5037,6 +4850,16 @@
         },
         {
           "short": null,
+          "long": "--relative",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--relative-date",
           "value_type": "String",
           "takes_value": true,
@@ -5047,27 +4870,7 @@
         },
         {
           "short": null,
-          "long": "--relative.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--relative[",
-          "value_type": "Number",
-          "takes_value": true,
-          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--remotes[",
+          "long": "--remotes",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5087,7 +4890,7 @@
         },
         {
           "short": null,
-          "long": "--reverse",
+          "long": "--rename-empty",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -5097,7 +4900,7 @@
         },
         {
           "short": null,
-          "long": "--reverse.",
+          "long": "--reverse",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -5117,7 +4920,17 @@
         },
         {
           "short": null,
-          "long": "--show-linear-break[",
+          "long": "--show-linear-break",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--show-notes",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5130,16 +4943,6 @@
           "long": "--show-notes-by-default",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--show-notes[",
-          "value_type": "String",
-          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -5267,20 +5070,20 @@
         },
         {
           "short": null,
-          "long": "--stat-graph-width",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": "if there are more.",
+          "long": "--stat",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--stat[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
+          "long": "--stat-graph-width",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": "if there are more.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -5297,7 +5100,7 @@
         },
         {
           "short": null,
-          "long": "--submodule[",
+          "long": "--submodule",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5317,7 +5120,7 @@
         },
         {
           "short": null,
-          "long": "--tags[",
+          "long": "--tags",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5387,6 +5190,16 @@
         },
         {
           "short": null,
+          "long": "--word-diff",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--word-diff-regex",
           "value_type": "String",
           "takes_value": true,
@@ -5397,7 +5210,7 @@
         },
         {
           "short": null,
-          "long": "--word-diff[",
+          "long": "--ws-error-highlight",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5406,8 +5219,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--ws-error-highlight",
+          "short": "-98",
+          "long": null,
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5476,7 +5289,7 @@
           "requires": []
         },
         {
-          "short": "-xxxxxxx...",
+          "short": "-xxxxxxx",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
@@ -5486,7 +5299,7 @@
           "requires": []
         },
         {
-          "short": "-yyyyyyy...",
+          "short": "-yyyyyyy",
           "long": null,
           "value_type": "Bool",
           "takes_value": false,
@@ -5508,13 +5321,6 @@
       ],
       "positional": [
         {
-          "name": "log",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
           "name": "revision-range",
           "value_type": "String",
           "required": false,
@@ -5529,36 +5335,6 @@
       "name": "merge",
       "description": "Join two or more development histories together",
       "flags": [
-        {
-          "short": null,
-          "long": "--[no-]allow-unrelated-histories",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]edit",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]rerere-autoupdate",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
         {
           "short": null,
           "long": "--abort",
@@ -5650,18 +5426,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--gpg-sign.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-S",
-          "long": "--gpg-sign[",
+          "long": "--gpg-sign",
           "value_type": "Number",
           "takes_value": true,
           "description": "--no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier",
@@ -5681,7 +5447,7 @@
         },
         {
           "short": null,
-          "long": "--log[",
+          "long": "--log",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -5772,8 +5538,8 @@
         {
           "short": null,
           "long": "--squash",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -5831,7 +5597,7 @@
         },
         {
           "short": null,
-          "long": "--verify-signatures",
+          "long": "--verify",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -5840,8 +5606,8 @@
           "requires": []
         },
         {
-          "short": "-S[<keyid",
-          "long": null,
+          "short": null,
+          "long": "--verify-signatures",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -5862,38 +5628,10 @@
       ],
       "positional": [
         {
-          "name": "branch",
+          "name": "commit",
           "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "merge",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "msg",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "strategy",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "strategy-option",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "required": false,
+          "multiple": true,
           "description": null
         }
       ],
@@ -5954,10 +5692,10 @@
           "description": null
         },
         {
-          "name": "mv",
+          "name": "source",
           "value_type": "String",
           "required": true,
-          "multiple": false,
+          "multiple": true,
           "description": null
         }
       ],
@@ -5968,16 +5706,6 @@
       "name": "pull",
       "description": "Fetch from and integrate with another repository or a local branch",
       "flags": [
-        {
-          "short": null,
-          "long": "--[no-]recurse-submodules[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
         {
           "short": null,
           "long": "--all",
@@ -6119,28 +5847,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--force).",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--gpg-sign.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-S",
-          "long": "--gpg-sign[",
+          "long": "--gpg-sign",
           "value_type": "Number",
           "takes_value": true,
           "description": "--no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier",
@@ -6190,7 +5898,7 @@
         },
         {
           "short": null,
-          "long": "--log[",
+          "long": "--log",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -6290,7 +5998,17 @@
         },
         {
           "short": "-r",
-          "long": "--rebase[",
+          "long": "--rebase",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -6371,8 +6089,8 @@
         {
           "short": null,
           "long": "--squash",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -6470,6 +6188,16 @@
         },
         {
           "short": null,
+          "long": "--verify",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--verify-signatures",
           "value_type": "Bool",
           "takes_value": false,
@@ -6481,10 +6209,10 @@
       ],
       "positional": [
         {
-          "name": "pull",
+          "name": "refspec",
           "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "required": false,
+          "multiple": true,
           "description": null
         },
         {
@@ -6504,26 +6232,6 @@
       "flags": [
         {
           "short": null,
-          "long": "---X---A",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--[no-]signed",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
           "long": "--all",
           "value_type": "Bool",
           "takes_value": false,
@@ -6535,8 +6243,8 @@
         {
           "short": null,
           "long": "--atomic",
-          "value_type": "String",
-          "takes_value": true,
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -6605,16 +6313,6 @@
         {
           "short": null,
           "long": "--force-with-lease",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--force-with-lease[",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -6773,8 +6471,28 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--thin",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-v",
           "long": "--verbose",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--verify",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -6785,54 +6503,20 @@
       ],
       "positional": [
         {
-          "name": "repository",
+          "name": "refspec",
           "value_type": "String",
           "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "string",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "multiple": true,
           "description": null
         }
       ],
-      "subcommands": [
-        {
-          "name": "false",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        },
-        {
-          "name": "if-asked",
-          "description": null,
-          "flags": [],
-          "positional": [],
-          "subcommands": [],
-          "aliases": []
-        }
-      ],
+      "subcommands": [],
       "aliases": []
     },
     {
       "name": "rebase",
       "description": "Reapply commits on top of another base tip",
       "flags": [
-        {
-          "short": null,
-          "long": "---o---O---P---Q",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
         {
           "short": null,
           "long": "--abort",
@@ -6858,16 +6542,6 @@
           "long": "--apply",
           "value_type": "Bool",
           "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": "-C",
-          "long": "--apply.",
-          "value_type": "String",
-          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -6924,7 +6598,7 @@
           "requires": []
         },
         {
-          "short": "-i/--interactive",
+          "short": null,
           "long": "--empty",
           "value_type": "String",
           "takes_value": true,
@@ -6955,7 +6629,7 @@
         },
         {
           "short": "-S",
-          "long": "--gpg-sign[",
+          "long": "--gpg-sign",
           "value_type": "Number",
           "takes_value": true,
           "description": "--no-gpg-sign is useful to countermand both commit.gpgSign configuration variable, and earlier --gpg-sign.",
@@ -7094,18 +6768,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--rebase-merges",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-r",
-          "long": "--rebase-merges[",
+          "long": "--rebase-merges",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7261,34 +6925,6 @@
           "required": false,
           "multiple": false,
           "description": null
-        },
-        {
-          "name": "git",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "newbase",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "rebase",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "upstream",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
         }
       ],
       "subcommands": [
@@ -7338,8 +6974,8 @@
         {
           "short": null,
           "long": "--merge",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -7376,8 +7012,28 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-q",
           "long": "--quiet",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--recurse-submodules",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7431,13 +7087,6 @@
           "name": "commit",
           "value_type": "String",
           "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "reset",
-          "value_type": "String",
-          "required": true,
           "multiple": false,
           "description": null
         },
@@ -7538,6 +7187,16 @@
         },
         {
           "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--progress",
           "value_type": "Bool",
           "takes_value": false,
@@ -7599,33 +7258,15 @@
         {
           "short": "-W",
           "long": "--worktree",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--worktree.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        }
-      ],
-      "positional": [
-        {
-          "name": "restore",
           "value_type": "String",
-          "required": true,
+          "takes_value": true,
+          "description": null,
           "multiple": false,
-          "description": null
+          "conflicts_with": [],
+          "requires": []
         }
       ],
+      "positional": [],
       "subcommands": [],
       "aliases": []
     },
@@ -7684,6 +7325,16 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--pathspec-from-file",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-q",
           "long": "--quiet",
           "value_type": "Bool",
@@ -7714,15 +7365,7 @@
           "requires": []
         }
       ],
-      "positional": [
-        {
-          "name": "rm",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        }
-      ],
+      "positional": [],
       "subcommands": [],
       "aliases": []
     },
@@ -7731,8 +7374,8 @@
       "description": "Show various types of objects",
       "flags": [
         {
-          "short": "-98",
-          "long": "---",
+          "short": null,
+          "long": "--abbrev",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7743,16 +7386,6 @@
         {
           "short": null,
           "long": "--abbrev-commit",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--abbrev[",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7782,7 +7415,7 @@
         },
         {
           "short": "-B",
-          "long": "--break-rewrites[",
+          "long": "--break-rewrites",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7791,20 +7424,10 @@
           "requires": []
         },
         {
-          "short": "-p.",
+          "short": "-p",
           "long": "--cc",
           "value_type": "String",
           "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--cc.",
-          "value_type": "Bool",
-          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -7822,6 +7445,26 @@
         },
         {
           "short": null,
+          "long": "--color",
+          "value_type": "String",
+          "takes_value": true,
+          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto.",
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--color-moved",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--color-moved-ws",
           "value_type": "String",
           "takes_value": true,
@@ -7832,30 +7475,10 @@
         },
         {
           "short": null,
-          "long": "--color-moved[",
+          "long": "--color-words",
           "value_type": "String",
           "takes_value": true,
           "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--color-words[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--color[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "--color (i.e. without =<when>) is the same as --color=always.  <when> can be one of always, never, or auto.",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -7931,8 +7554,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--dirstat-by-file[",
+          "short": "-X",
+          "long": "--dirstat",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7941,8 +7564,8 @@
           "requires": []
         },
         {
-          "short": "-X",
-          "long": "--dirstat[",
+          "short": null,
+          "long": "--dirstat-by-file",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -7992,7 +7615,7 @@
         },
         {
           "short": "-C",
-          "long": "--find-copies-harder",
+          "long": "--find-copies",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8012,7 +7635,7 @@
         },
         {
           "short": "-M",
-          "long": "--find-renames[",
+          "long": "--find-renames",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8021,8 +7644,8 @@
           "requires": []
         },
         {
-          "short": "-M90%",
-          "long": "--follow.",
+          "short": "-M5",
+          "long": "--follow",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -8043,8 +7666,8 @@
         {
           "short": "-W",
           "long": "--function-context",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -8122,7 +7745,7 @@
         },
         {
           "short": null,
-          "long": "--ignore-submodules[",
+          "long": "--ignore-submodules",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8153,8 +7776,8 @@
         {
           "short": "-D",
           "long": "--irreversible-delete",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -8172,7 +7795,7 @@
         },
         {
           "short": null,
-          "long": "--ita-visible-in-index.",
+          "long": "--ita-visible-in-index",
           "value_type": "Bool",
           "takes_value": false,
           "description": null,
@@ -8332,7 +7955,17 @@
         },
         {
           "short": null,
-          "long": "--notes[",
+          "long": "--notes",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
+          "long": "--numstat",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8361,8 +7994,8 @@
           "requires": []
         },
         {
-          "short": "-p",
-          "long": "--patch",
+          "short": null,
+          "long": "--output-indicator-new",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8382,7 +8015,7 @@
         },
         {
           "short": null,
-          "long": "--pretty[",
+          "long": "--pretty",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8402,20 +8035,20 @@
         },
         {
           "short": null,
-          "long": "--relative.",
-          "value_type": "Bool",
-          "takes_value": false,
-          "description": null,
+          "long": "--relative",
+          "value_type": "Number",
+          "takes_value": true,
+          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
           "multiple": false,
           "conflicts_with": [],
           "requires": []
         },
         {
           "short": null,
-          "long": "--relative[",
-          "value_type": "Number",
-          "takes_value": true,
-          "description": "--no-relative can be used to countermand both diff.relative config option and previous",
+          "long": "--rename-empty",
+          "value_type": "Bool",
+          "takes_value": false,
+          "description": null,
           "multiple": false,
           "conflicts_with": [],
           "requires": []
@@ -8432,9 +8065,9 @@
         },
         {
           "short": null,
-          "long": "--show-notes-by-default",
-          "value_type": "Bool",
-          "takes_value": false,
+          "long": "--show-notes",
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -8442,9 +8075,9 @@
         },
         {
           "short": null,
-          "long": "--show-notes[",
-          "value_type": "String",
-          "takes_value": true,
+          "long": "--show-notes-by-default",
+          "value_type": "Bool",
+          "takes_value": false,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -8482,6 +8115,16 @@
         },
         {
           "short": null,
+          "long": "--stat",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--stat-graph-width",
           "value_type": "Bool",
           "takes_value": false,
@@ -8492,17 +8135,7 @@
         },
         {
           "short": null,
-          "long": "--stat[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--submodule[",
+          "long": "--submodule",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8552,6 +8185,16 @@
         },
         {
           "short": null,
+          "long": "--word-diff",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
+          "short": null,
           "long": "--word-diff-regex",
           "value_type": "String",
           "takes_value": true,
@@ -8562,7 +8205,7 @@
         },
         {
           "short": null,
-          "long": "--word-diff[",
+          "long": "--ws-error-highlight",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8571,8 +8214,8 @@
           "requires": []
         },
         {
-          "short": null,
-          "long": "--ws-error-highlight",
+          "short": "-98",
+          "long": null,
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8653,10 +8296,10 @@
       ],
       "positional": [
         {
-          "name": "show",
+          "name": "object",
           "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "required": false,
+          "multiple": true,
           "description": null
         }
       ],
@@ -8689,7 +8332,7 @@
         },
         {
           "short": null,
-          "long": "--column[",
+          "long": "--column",
           "value_type": "String",
           "takes_value": true,
           "description": "--column and --no-column without options are equivalent to always and never respectively.",
@@ -8699,7 +8342,7 @@
         },
         {
           "short": null,
-          "long": "--find-renames[",
+          "long": "--find-renames",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8719,17 +8362,7 @@
         },
         {
           "short": null,
-          "long": "--ignore-submodules[",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
-          "short": null,
-          "long": "--ignored[",
+          "long": "--ignored",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8748,18 +8381,8 @@
           "requires": []
         },
         {
-          "short": "-z",
-          "long": "--porcelain",
-          "value_type": "String",
-          "takes_value": true,
-          "description": null,
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": null,
-          "long": "--porcelain[",
+          "long": "--porcelain",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8799,7 +8422,7 @@
         },
         {
           "short": "-u",
-          "long": "--untracked-files[",
+          "long": "--untracked-files",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -8820,7 +8443,63 @@
       ],
       "positional": [
         {
-          "name": "status",
+          "name": "A",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "AMD",
+          "value_type": "String",
+          "required": false,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "M",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "MTD",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "ORIG_PATH",
+          "value_type": "Directory",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "T",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "X",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "XY",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": null
+        },
+        {
+          "name": "Y",
           "value_type": "String",
           "required": true,
           "multiple": false,
@@ -8997,30 +8676,9 @@
       ],
       "positional": [
         {
-          "name": "branch",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "new-branch",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
           "name": "start-point",
           "value_type": "String",
           "required": false,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "switch",
-          "value_type": "String",
-          "required": true,
           "multiple": false,
           "description": null
         }
@@ -9054,7 +8712,7 @@
         },
         {
           "short": null,
-          "long": "--color[",
+          "long": "--color",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -9064,7 +8722,7 @@
         },
         {
           "short": null,
-          "long": "--column[",
+          "long": "--column",
           "value_type": "String",
           "takes_value": true,
           "description": "--column and --no-column without options are equivalent to always and never respectively.",
@@ -9075,8 +8733,8 @@
         {
           "short": null,
           "long": "--contains",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -9095,8 +8753,8 @@
         {
           "short": "-d",
           "long": "--delete",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -9153,18 +8811,8 @@
           "requires": []
         },
         {
-          "short": "-l",
-          "long": "--list",
-          "value_type": "String",
-          "takes_value": true,
-          "description": "git tag --list 'v-*', list only the tags that match the pattern(s).",
-          "multiple": false,
-          "conflicts_with": [],
-          "requires": []
-        },
-        {
           "short": "-n",
-          "long": "--list.",
+          "long": "--list",
           "value_type": "String",
           "takes_value": true,
           "description": null,
@@ -9185,8 +8833,8 @@
         {
           "short": null,
           "long": "--merged",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -9215,8 +8863,8 @@
         {
           "short": null,
           "long": "--no-contains",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -9235,8 +8883,8 @@
         {
           "short": null,
           "long": "--no-merged",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -9265,8 +8913,8 @@
         {
           "short": null,
           "long": "--points-at",
-          "value_type": "Bool",
-          "takes_value": false,
+          "value_type": "String",
+          "takes_value": true,
           "description": null,
           "multiple": false,
           "conflicts_with": [],
@@ -9283,6 +8931,16 @@
           "requires": []
         },
         {
+          "short": null,
+          "long": "--sort",
+          "value_type": "String",
+          "takes_value": true,
+          "description": null,
+          "multiple": false,
+          "conflicts_with": [],
+          "requires": []
+        },
+        {
           "short": "-v",
           "long": "--verify",
           "value_type": "String",
@@ -9293,7 +8951,7 @@
           "requires": []
         },
         {
-          "short": "-n[<num",
+          "short": "-l",
           "long": null,
           "value_type": "String",
           "takes_value": true,
@@ -9312,20 +8970,6 @@
           "description": null
         },
         {
-          "name": "key-id",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
-          "name": "msg",
-          "value_type": "String",
-          "required": true,
-          "multiple": false,
-          "description": null
-        },
-        {
           "name": "object",
           "value_type": "String",
           "required": true,
@@ -9333,10 +8977,10 @@
           "description": null
         },
         {
-          "name": "tag",
+          "name": "pattern",
           "value_type": "String",
-          "required": true,
-          "multiple": false,
+          "required": false,
+          "multiple": true,
           "description": null
         },
         {
