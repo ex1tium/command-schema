@@ -160,11 +160,11 @@
       ],
       "positional": [
         {
-          "name": "DATA",
+          "name": "endpoint",
           "value_type": "String",
           "required": true,
           "multiple": false,
-          "description": null
+          "description": "API endpoint to call"
         }
       ],
       "subcommands": [],
@@ -217,18 +217,11 @@
       ],
       "positional": [
         {
-          "name": "ATTACH_CONFIG",
+          "name": "token",
           "value_type": "String",
           "required": true,
           "multiple": false,
-          "description": null
-        },
-        {
-          "name": "token",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
+          "description": "token obtained for Ubuntu Pro authentication"
         }
       ],
       "subcommands": [],
@@ -322,7 +315,15 @@
               "requires": []
             }
           ],
-          "positional": [],
+          "positional": [
+            {
+              "name": "key_value_pair",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": "key=value pair to configure for Ubuntu Pro services. Key must be one of: http_proxy, https_proxy, apt_http_proxy,"
+            }
+          ],
           "subcommands": [],
           "aliases": []
         },
@@ -345,9 +346,9 @@
             {
               "name": "key",
               "value_type": "String",
-              "required": false,
+              "required": true,
               "multiple": false,
-              "description": null
+              "description": "Optional key or key(s) to show configuration settings."
             }
           ],
           "subcommands": [],
@@ -368,7 +369,15 @@
               "requires": []
             }
           ],
-          "positional": [],
+          "positional": [
+            {
+              "name": "key",
+              "value_type": "String",
+              "required": true,
+              "multiple": false,
+              "description": "configuration key to unset from Ubuntu Pro services. One of:"
+            }
+          ],
           "subcommands": [],
           "aliases": []
         }
@@ -390,7 +399,15 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "cve",
+          "value_type": "String",
+          "required": true,
+          "multiple": false,
+          "description": "CVE to display information. Format: CVE-yyyy-nnnn or CVE-yyyy-"
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
@@ -521,9 +538,9 @@
         {
           "name": "service",
           "value_type": "String",
-          "required": false,
+          "required": true,
           "multiple": false,
-          "description": null
+          "description": "the name(s) of the Ubuntu Pro services to disable. One of: anbox-cloud, cc-eal, cis, esm-apps, esm-apps-"
         }
       ],
       "subcommands": [],
@@ -606,18 +623,11 @@
       ],
       "positional": [
         {
-          "name": "VARIANT",
+          "name": "service",
           "value_type": "String",
           "required": true,
           "multiple": false,
-          "description": null
-        },
-        {
-          "name": "service",
-          "value_type": "String",
-          "required": false,
-          "multiple": false,
-          "description": null
+          "description": "the name(s) of the Ubuntu Pro services to enable. One of: anbox-cloud, cc-eal, cis, esm-apps, esm-apps-"
         }
       ],
       "subcommands": [],
@@ -658,7 +668,15 @@
           "requires": []
         }
       ],
-      "positional": [],
+      "positional": [
+        {
+          "name": "security_issue",
+          "value_type": "Url",
+          "required": true,
+          "multiple": false,
+          "description": "Security vulnerability ID to inspect and resolve on this system. Format: CVE-yyyy-nnnn, CVE-yyyy-nnnnnnn or USN-nnnn-"
+        }
+      ],
       "subcommands": [],
       "aliases": []
     },
